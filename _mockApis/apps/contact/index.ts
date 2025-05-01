@@ -1,16 +1,15 @@
 import mock from '../../mockAdapter';
 // import type { ContactType } from '@/types/apps/ContactType';
 
-import user1 from '/images/profile/user1.jpg';
-import user2 from '/images/profile/user2.jpg';
-import user3 from '/images/profile/user3.jpg';
-import user4 from '/images/profile/user4.jpg';
-import user5 from '/images/profile/user5.jpg';
-import user6 from '/images/profile/user6.jpg';
-import user7 from '/images/profile/user-7.jpg';
-import user8 from '/images/profile/user-8.jpg';
-import user9 from '/images/profile/user-9.jpg';
-import user10 from '/images/profile/user-10.jpg';
+import user1 from '/images/profile/1.jpg';
+import user2 from '/images/profile/2.jpg';
+import user3 from '/images/profile/3.jpg';
+import user4 from '/images/profile/4.jpg';
+import user5 from '/images/profile/5.jpg';
+import user6 from '/images/profile/6.jpg';
+import user7 from '/images/profile/7.jpg';
+import user8 from '/images/profile/8.jpg';
+import user9 from '/images/profile/9.jpg';
 
 
 // types
@@ -109,16 +108,6 @@ const contacts: KeyedObject[] = [
         role: 'Designer',
         rolestatus: 'error'
     },
-    {
-        id: '#152',
-        avatar: user10,
-        userinfo: 'Clementina DuBuque',
-        usermail: 'hgover@gmail.com',
-        phone: '+456 456 789',
-        jdate: '18-5-2009',
-        role: 'Developer',
-        rolestatus: 'success'
-    }
 ];
 
 // ==============================|| MOCK SERVICES ||============================== //

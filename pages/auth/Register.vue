@@ -31,19 +31,19 @@ definePageMeta({
                     Bienvenue sur Manie !
                   </h2>
                   <div class="text-h6 mb-6 font-weight-medium mt-3 mb-8">
-                    Your Admin Dashboard
+                    Votre assistant à la création et gestion d'évènements
                   </div>
                   <RegisterForm />
                   <h6
                     class="text-subtitle-1 text-grey100 d-flex align-center mt-6 font-weight-medium"
                   >
-                    Already have an Account?
+                    Vous avez déjà un compte?
                     <v-btn
                       class="pl-0 text-primary text-body-1 opacity-1 pl-2 font-weight-medium"
                       height="auto"
                       to="/auth/login"
                       variant="plain"
-                      >Sign In</v-btn
+                      >Identifiez-vous</v-btn
                     >
                   </h6>
                 </div>

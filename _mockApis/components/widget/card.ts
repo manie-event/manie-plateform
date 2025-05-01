@@ -1,48 +1,47 @@
-import type { cardsType, followCard, musicCards, productsCards, socialiconCards, profileCard, upcommingLists, userCard, paymentGateway, recentTrans, backIcon,imgCard,topCards } from '@/types/components/widget/card';
+import type { backIcon, cardsType, followCard, imgCard, musicCards, paymentGateway, productsCards, profileCard, recentTrans, socialiconCards, topCards, upcommingLists, userCard } from '@/types/components/widget/card';
 /*import tabler icons*/
 import {
-    BrandFacebookIcon,
-    BrandGithubIcon,
-    BrandInstagramIcon,
-    BrandTwitterIcon,
-    MapPinIcon,
-    DatabaseIcon,
-    PhoneIcon,
-    ScreenShareIcon,
-    MailIcon,
-    LayoutGridIcon,
-    ArchiveIcon,
-    UserIcon,
-    GiftIcon,
-    GitBranchIcon,
-    CardboardsIcon
+  ArchiveIcon,
+  BrandFacebookIcon,
+  BrandGithubIcon,
+  BrandInstagramIcon,
+  BrandTwitterIcon,
+  CardboardsIcon,
+  DatabaseIcon,
+  GiftIcon,
+  GitBranchIcon,
+  LayoutGridIcon,
+  MailIcon,
+  MapPinIcon,
+  PhoneIcon,
+  ScreenShareIcon,
+  UserIcon
 } from 'vue-tabler-icons';
 
-import user1 from '/images/profile/user-1.jpg';
-import user2 from '/images/profile/user-2.jpg';
-import user3 from '/images/profile/user-3.jpg';
-import user4 from '/images/profile/user-4.jpg';
 import img1 from '/images/blog/blog-img1.jpg';
 import img2 from '/images/blog/blog-img2.jpg';
 import img3 from '/images/blog/blog-img3.jpg';
+import user1 from '/images/profile/1.jpg';
+import user2 from '/images/profile/2.jpg';
+import user3 from '/images/profile/3.jpg';
+import user4 from '/images/profile/4.jpg';
 /*--Products Cards Images--*/
-import proimg1 from '/images/products/s4.jpg';
-import proimg2 from '/images/products/s5.jpg';
-import proimg3 from '/images/products/s4.jpg';
 import proimg4 from '/images/products/s11.jpg';
+import { default as proimg1, default as proimg3 } from '/images/products/s4.jpg';
+import proimg2 from '/images/products/s5.jpg';
 /*--Payment gateways--*/
-import icon1 from "/images/svgs/paypal2.svg";
-import icon2 from "/images/svgs/wallet.svg";
-import icon3 from "/images/svgs/credit-card.svg";
 import icon4 from "/images/svgs/bank-transfer.svg";
+import icon3 from "/images/svgs/credit-card.svg";
+import icon1 from "/images/svgs/paypal2.svg";
 import icon5 from "/images/svgs/refund.svg";
+import icon2 from "/images/svgs/wallet.svg";
 /*--Top cards--*/
-import card_icon1 from "/images/svgs/icon-user-male.svg"
-import card_icon2 from "/images/svgs/icon-briefcase.svg"
-import card_icon3 from "/images/svgs/icon-mailbox.svg"
-import card_icon4 from "/images/svgs/icon-favorites.svg"
-import card_icon5 from "/images/svgs/icon-speech-bubble.svg"
-import card_icon6 from "/images/svgs/icon-connect.svg"
+import card_icon2 from "/images/svgs/icon-briefcase.svg";
+import card_icon6 from "/images/svgs/icon-connect.svg";
+import card_icon4 from "/images/svgs/icon-favorites.svg";
+import card_icon3 from "/images/svgs/icon-mailbox.svg";
+import card_icon5 from "/images/svgs/icon-speech-bubble.svg";
+import card_icon1 from "/images/svgs/icon-user-male.svg";
 
 /*--Blog Cards--*/
 const blogCard: cardsType[] = [
@@ -516,4 +515,4 @@ const topCardsData: topCards[] = [
     }
 ]
 
-export { blogCard, followerCard, musicCard, productsCard, socialiconCard, profileCards, upcommingCards, userCards, paymentGateways, recentTransaction, backIconData,imgCardData,topCardsData }
+export { backIconData, blogCard, followerCard, imgCardData, musicCard, paymentGateways, productsCard, profileCards, recentTransaction, socialiconCard, topCardsData, upcommingCards, userCards };

@@ -14,12 +14,12 @@ import mock from '../../mockAdapter';
 // import image11 from '/images/products/s11.jpg';
 // import image12 from '/images/products/s12.jpg';
 
-import image1 from '/images/profile/user1.jpg';
-import image2 from '/images/profile/user2.jpg';
-import image3 from '/images/profile/user3.jpg';
-import image4 from '/images/profile/user4.jpg';
-import image5 from '/images/profile/user5.jpg';
-import image6 from '/images/profile/user6.jpg';
+import image1 from '/images/profile/1.jpg';
+import image2 from '/images/profile/2.jpg';
+import image3 from '/images/profile/3.jpg';
+import image4 from '/images/profile/4.jpg';
+import image5 from '/images/profile/5.jpg';
+import image6 from '/images/profile/6.jpg';
 
 
 

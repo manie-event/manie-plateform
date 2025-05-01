@@ -1,8 +1,9 @@
 import { Chance } from 'chance';
-import { random } from 'lodash';
 import { sub } from 'date-fns';
+import { random } from 'lodash';
 import mock from '../../mockAdapter';
 import s1 from '/images/blog/blog-img1.jpg';
+import s10 from '/images/blog/blog-img10.jpg';
 import s2 from '/images/blog/blog-img2.jpg';
 import s3 from '/images/blog/blog-img3.jpg';
 import s4 from '/images/blog/blog-img4.jpg';
@@ -11,15 +12,14 @@ import s6 from '/images/blog/blog-img6.jpg';
 import s7 from '/images/blog/blog-img7.jpg';
 import s8 from '/images/blog/blog-img8.jpg';
 import s9 from '/images/blog/blog-img9.jpg';
-import s10 from '/images/blog/blog-img10.jpg';
 
-import user1 from '/images/profile/user1.jpg';
-import user2 from '/images/profile/user2.jpg';
-import user3 from '/images/profile/user3.jpg';
-import user4 from '/images/profile/user4.jpg';
-import user5 from '/images/profile/user5.jpg';
-import user6 from '/images/profile/user6.jpg';
 import { uniqueId } from 'lodash';
+import user1 from '/images/profile/1.jpg';
+import user2 from '/images/profile/2.jpg';
+import user3 from '/images/profile/3.jpg';
+import user4 from '/images/profile/4.jpg';
+import user5 from '/images/profile/5.jpg';
+import user6 from '/images/profile/6.jpg';
 
 import type { blogType, blogpostType } from '@/types/apps/BlogTypes';
 

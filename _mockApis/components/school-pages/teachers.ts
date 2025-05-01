@@ -1,16 +1,12 @@
 import mock from '../../mockAdapter';
 // import type { ContactType } from '@/types/apps/ContactType';
 
-import user1 from '/images/profile/user1.jpg';
-import user2 from '/images/profile/user2.jpg';
-import user3 from '/images/profile/user3.jpg';
-import user4 from '/images/profile/user4.jpg';
-import user5 from '/images/profile/user5.jpg';
-import user6 from '/images/profile/user6.jpg';
-import user7 from '/images/profile/user1.jpg';
-import user8 from '/images/profile/user2.jpg';
-import user9 from '/images/profile/user3.jpg';
-import user10 from '/images/profile/user4.jpg';
+import { default as user1, default as user7 } from '/images/profile/1.jpg';
+import { default as user2, default as user8 } from '/images/profile/2.jpg';
+import { default as user3, default as user9 } from '/images/profile/3.jpg';
+import { default as user4 } from '/images/profile/4.jpg';
+import user5 from '/images/profile/5.jpg';
+import user6 from '/images/profile/6.jpg';
 
 
 // types
@@ -19,7 +15,7 @@ export type KeyedObject = {
 };
 
 const teachers: KeyedObject[] = [
-    {   
+    {
         avatar: user1,
         userinfo: 'Budo Masuta',
         class:'6',
@@ -29,7 +25,7 @@ const teachers: KeyedObject[] = [
         phone: '+ 123 9988568',
         usermail: 'sparkdoe@gmail.com',
     },
-    {   
+    {
         avatar: user2,
         userinfo: 'Garima Singh',
         class:'5',
@@ -39,7 +35,7 @@ const teachers: KeyedObject[] = [
         phone: '+ 123 9988568',
         usermail: 'ronaldosingh007@gmail.com',
     },
-    {   
+    {
         avatar: user3,
         userinfo: 'Inkyu Basu',
         class:'12',
@@ -49,7 +45,7 @@ const teachers: KeyedObject[] = [
         phone: '+ 123 9988568',
         usermail: 'davidzonar@gmail.com',
     },
-    {   
+    {
         avatar: user4,
         userinfo: 'John Deo',
         class:'12',
@@ -59,7 +55,7 @@ const teachers: KeyedObject[] = [
         phone: '+ 123 9988568',
         usermail: 'patelaleis@gmail.com',
     },
-    {   
+    {
         avatar: user5,
         userinfo: 'Juku Ren',
         class:'12',
@@ -69,7 +65,7 @@ const teachers: KeyedObject[] = [
         phone: '+ 123 9988568',
         usermail: 'davidzonar@gmail.com',
     },
-    {   
+    {
         avatar: user6,
         userinfo: 'Kuu Dere',
         class:'5',
@@ -79,7 +75,7 @@ const teachers: KeyedObject[] = [
         phone: '+ 123 9988568',
         usermail: 'ronaldosingh007@gmail.com',
     },
-    {   
+    {
         avatar: user7,
         userinfo: 'Mai Waifu',
         class:'10',
@@ -89,7 +85,7 @@ const teachers: KeyedObject[] = [
         phone: '+ 123 9988568',
         usermail: 'markmaria223@gmail.com',
     },
-    {   
+    {
         avatar: user8,
         userinfo: 'Mark J. Freeman',
         class:'2',
@@ -99,7 +95,7 @@ const teachers: KeyedObject[] = [
         phone: '+ 123 9988568',
         usermail: 'kazifahim93@gmail.com',
     },
-    {   
+    {
         avatar: user9,
         userinfo: 'Mark Willy',
         class:'5',
@@ -109,8 +105,8 @@ const teachers: KeyedObject[] = [
         phone: '+ 123 9988568',
         usermail: 'jackdude224@gmail.com',
     },
-    {   
-        avatar: user10,
+    {
+        avatar: user9,
         userinfo: 'Mina Rai',
         class:'5',
         sec:'B',

@@ -1,14 +1,14 @@
 // project imports
-import mock from '../../mockAdapter';
 import { Chance } from 'chance';
+import mock from '../../mockAdapter';
 
 
-import user1 from '/images/profile/user1.jpg';
-import user2 from '/images/profile/user2.jpg';
-import user3 from '/images/profile/user3.jpg';
-import user4 from '/images/profile/user4.jpg';
-import user5 from '/images/profile/user5.jpg';
-import user6 from '/images/profile/user6.jpg';
+import user1 from '/images/profile/1.jpg';
+import user2 from '/images/profile/2.jpg';
+import user3 from '/images/profile/3.jpg';
+import user4 from '/images/profile/4.jpg';
+import user5 from '/images/profile/5.jpg';
+import user6 from '/images/profile/6.jpg';
 
 
 const chance = new Chance();

@@ -1,16 +1,11 @@
 // project imports
 import mock from '../../mockAdapter';
-import user1 from '/images/profile/user1.jpg';
-import user2 from '/images/profile/user2.jpg';
-import user3 from '/images/profile/user3.jpg';
-import user4 from '/images/profile/user4.jpg';
-import user5 from '/images/profile/user5.jpg';
-import user6 from '/images/profile/user6.jpg';
-import user7 from '/images/profile/user-7.jpg';
-import user11 from '/images/profile/user3.jpg';
-import user12 from '/images/profile/user4.jpg';
-import user9 from '/images/profile/user5.jpg';
-import user10 from '/images/profile/user2.jpg';
+import user1 from '/images/profile/1.jpg';
+import user2 from '/images/profile/2.jpg';
+import user3 from '/images/profile/3.jpg';
+import { default as user12, default as user4 } from '/images/profile/4.jpg';
+import user5 from '/images/profile/5.jpg';
+import user6 from '/images/profile/6.jpg';
 
 // types
 export type KeyedObject = {

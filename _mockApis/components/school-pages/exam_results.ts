@@ -1,12 +1,12 @@
 import mock from '../../mockAdapter';
 // import type { ContactType } from '@/types/apps/ContactType';
 
-import user1 from '/images/profile/user1.jpg';
-import user2 from '/images/profile/user2.jpg';
-import user3 from '/images/profile/user3.jpg';
-import user4 from '/images/profile/user4.jpg';
-import user5 from '/images/profile/user5.jpg';
-import user6 from '/images/profile/user6.jpg';
+import user1 from '/images/profile/1.jpg';
+import user2 from '/images/profile/2.jpg';
+import user3 from '/images/profile/3.jpg';
+import user4 from '/images/profile/4.jpg';
+import user5 from '/images/profile/5.jpg';
+import user6 from '/images/profile/6.jpg';
 
 
 // types
@@ -15,7 +15,7 @@ export type KeyedObject = {
 };
 
 const results: KeyedObject[] = [
-    {   
+    {
         avatar: user2,
         userinfo: 'Mark J. Freeman',
         class:'10',
@@ -26,7 +26,7 @@ const results: KeyedObject[] = [
         remarks: 'Fail',
         color:'error'
     },
-    {   
+    {
         avatar: user1,
         userinfo: 'Mark Maria',
         class:'6',
@@ -37,7 +37,7 @@ const results: KeyedObject[] = [
         remarks: 'Pass',
         color:'success'
     },
-    {   
+    {
         avatar: user3,
         userinfo: 'Midori Gurin',
         class:'10',
@@ -48,7 +48,7 @@ const results: KeyedObject[] = [
         remarks: 'Fail',
         color:'error'
     },
-    {   
+    {
         avatar: user4,
         userinfo: 'Nirav Joshi',
         class:'7',
@@ -59,7 +59,7 @@ const results: KeyedObject[] = [
         remarks: 'Pass',
         color:'success'
     },
-    {   
+    {
         avatar: user5,
         userinfo: 'Ryuto Ippongo',
         class:'12',
@@ -70,7 +70,7 @@ const results: KeyedObject[] = [
         remarks: 'Pass',
         color:'success'
     },
-    {   
+    {
         avatar: user6,
         userinfo: 'Sakyu Basu',
         class:'7',
@@ -81,7 +81,7 @@ const results: KeyedObject[] = [
         remarks: 'Pass',
         color:'success'
     },
-   
+
 ];
 
 // ==============================|| MOCK SERVICES ||============================== //

@@ -1,22 +1,26 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { Form } from 'vee-validate';
+import { ref } from "vue";
+import { Form } from "vee-validate";
 
 /*Social icons*/
-import google from '/images/svgs/google-icon.svg';
-import facebook from '/images/svgs/icon-facebook.svg';
+// import google from "/images/svgs/google-icon.svg";
+// import facebook from "/images/svgs/icon-facebook.svg";
 
 const router = useRouter();
 const checkbox = ref(false);
 const valid = ref(false);
 const show1 = ref(false);
-const password = ref('admin123');
-const username = ref('info@wrappixel.com');
+const password = ref("");
+const username = ref("");
 const passwordRules = ref([
-    (v: string) => !!v || 'Password is required',
-    (v: string) => (v && v.length <= 10) || 'Password must be less than 10 characters'
+  (v: string) => !!v || "Le mot de passe est obligatoire",
+  (v: string) =>
+    (v && v.length >= 10) || "Le mot de passe doit faire 10 caractères minimum",
 ]);
-const emailRules = ref([(v: string) => !!v || 'E-mail is required', (v: string) => /.+@.+\..+/.test(v) || 'E-mail must be valid']);
+const emailRules = ref([
+  (v: string) => !!v || "L'e-mail est obligatoire",
+  (v: string) => /.+@.+\..+/.test(v) || "L'e-mail doit être valide",
+]);
 
 function validate() {
   router.push({ path: "/dashboards/dashboard1" });
@@ -24,7 +28,7 @@ function validate() {
 </script>
 
 <template>
-    <v-row class="d-flex mb-3">
+  <!-- <v-row class="d-flex mb-3">
         <v-col cols="6" sm="6">
             <v-btn variant="outlined" size="large" class="border text-subtitle-1 text-gray200 font-weight-semibold" block>
                 <img :src="google" height="16" class="mr-2" alt="google" />
@@ -37,43 +41,72 @@ function validate() {
                 <span class="d-sm-flex d-none mr-1">Sign in with</span>FB
             </v-btn>
         </v-col>
-    </v-row>
-    <div class="d-flex align-center text-center mb-6">
-        <div class="text-h6 w-100 px-5 font-weight-regular auth-divider position-relative">
-            <span class="bg-surface px-5 py-3 position-relative text-subtitle-1 text-grey100">or sign in with</span>
-        </div>  
+    </v-row> -->
+  <div class="d-flex align-center text-center mb-6">
+    <div
+      class="text-h6 w-100 px-5 font-weight-regular auth-divider position-relative"
+    >
+      <span
+        class="bg-surface px-5 py-3 position-relative text-subtitle-1 text-grey100"
+        >Identifiez-vous avec</span
+      >
     </div>
-    <Form @submit="validate" v-slot="{ errors, isSubmitting }" class="mt-5">
-        <v-label class="text-subtitle-1 font-weight-semibold pb-2 text-grey200">Username</v-label>
-        <VTextField
-            v-model="username"
-            :rules="emailRules"
-            class="mb-8"
-            required
-            hide-details="auto"
-        ></VTextField>
-        <v-label class="text-subtitle-1 font-weight-semibold pb-2 text-grey200">Password</v-label>
-        <VTextField
-            v-model="password"
-            :rules="passwordRules"
-            required
-            hide-details="auto"
-            type="password"
-            class="pwdInput"
-        ></VTextField>
-        <div class="d-flex flex-wrap align-center my-3 ml-n2">
-            <v-checkbox v-model="checkbox" :rules="[(v:any) => !!v || 'You must agree to continue!']" required hide-details color="primary">
-                <template v-slot:label class="">Remeber this Device</template>
-            </v-checkbox>
-            <div class="ml-sm-auto">
-                <NuxtLink to="/auth/forgot-password" class="text-primary text-decoration-none text-body-1 opacity-1 font-weight-medium"
-                    >Forgot Password ?</NuxtLink
-                >
-            </div>
-        </div>
-        <v-btn size="large" rounded="pill" :loading="isSubmitting" color="primary" :disabled="valid" block type="submit" flat>Sign In</v-btn>
-        <div v-if="errors.apiError" class="mt-2">
-            <v-alert color="error">{{ errors.apiError }}</v-alert>
-        </div>
-    </Form>
+  </div>
+  <Form @submit="validate" v-slot="{ errors, isSubmitting }" class="mt-5">
+    <v-label class="text-subtitle-1 font-weight-semibold pb-2 text-grey200"
+      >Email</v-label
+    >
+    <VTextField
+      v-model="username"
+      :rules="emailRules"
+      class="mb-8"
+      placeholder="info@manie.com"
+      required
+      hide-details="auto"
+    ></VTextField>
+    <v-label class="text-subtitle-1 font-weight-semibold pb-2 text-grey200"
+      >Mot de passe</v-label
+    >
+    <VTextField
+      v-model="password"
+      :rules="passwordRules"
+      required
+      hide-details="auto"
+      placeholder="**********"
+      type="password"
+      class="pwdInput"
+    ></VTextField>
+    <div class="d-flex flex-wrap align-center my-3 ml-n2">
+      <v-checkbox
+        v-model="checkbox"
+        :rules="[(v:any) => !!v || 'You must agree to continue!']"
+        required
+        hide-details
+        color="primary"
+      >
+        <template v-slot:label class="">Se souvenir de cet appareil</template>
+      </v-checkbox>
+      <div class="ml-sm-auto">
+        <NuxtLink
+          to="/auth/forgot-password"
+          class="text-primary text-decoration-none text-body-1 opacity-1 font-weight-medium"
+          >Mot de passe oublié ?</NuxtLink
+        >
+      </div>
+    </div>
+    <v-btn
+      size="large"
+      rounded="pill"
+      :loading="isSubmitting"
+      color="primary"
+      :disabled="valid"
+      block
+      type="submit"
+      flat
+      >M'identifier</v-btn
+    >
+    <div v-if="errors.apiError" class="mt-2">
+      <v-alert color="error">{{ errors.apiError }}</v-alert>
+    </div>
+  </Form>
 </template>

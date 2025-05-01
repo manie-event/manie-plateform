@@ -1,15 +1,14 @@
-import type { textCards, profileImg,projectTable } from '@/types/components/dashboards/dashboard';
-import { BrandProducthuntIcon, ReportMoneyIcon, CurrencyDollarIcon } from 'vue-tabler-icons';
-import shape1 from '/images/svgs/warning-shap.svg';
+import type { profileImg, projectTable, textCards } from '@/types/components/dashboards/dashboard';
 import shape2 from '/images/svgs/danger-shap.svg';
 import shape3 from '/images/svgs/info-shap.svg';
+import shape1 from '/images/svgs/warning-shap.svg';
 
 
-import profile1 from '/images/profile/user1.jpg';
-import profile2 from '/images/profile/user2.jpg';
-import profile3 from '/images/profile/user3.jpg';
-import profile4 from '/images/profile/user4.jpg';
-import profile5 from '/images/profile/user5.jpg';
+import profile1 from '/images/profile/1.jpg';
+import profile2 from '/images/profile/2.jpg';
+import profile3 from '/images/profile/3.jpg';
+import profile4 from '/images/profile/4.jpg';
+import profile5 from '/images/profile/5.jpg';
 
 
 /*--Blog Cards--*/
@@ -111,4 +110,4 @@ const projectTableData: projectTable[] = [
     skill: "Angular",
   },
 ];
-export { textCardsData, profileImgData,projectTableData }
+export { profileImgData, projectTableData, textCardsData };

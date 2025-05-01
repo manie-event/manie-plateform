@@ -1,15 +1,14 @@
 // project imports
-import mock from './mockAdapter';
 
-import type { notificationType, profileType, languageType, appsLinkType, quickLinksType,searchType,optionIcon } from '@/types/HeaderTypes'
-// 
+import type { appsLinkType, languageType, notificationType, optionIcon, profileType, quickLinksType, searchType } from '@/types/HeaderTypes';
+//
 // Notification
-// 
-import user1 from '/images/profile/user1.jpg';
-import user2 from '/images/profile/user2.jpg';
-import user3 from '/images/profile/user3.jpg';
-import user4 from '/images/profile/user4.jpg';
-import user5 from '/images/profile/user5.jpg';
+//
+import user1 from '/images/profile/1.jpg';
+import user2 from '/images/profile/2.jpg';
+import user3 from '/images/profile/3.jpg';
+import user4 from '/images/profile/4.jpg';
+import user5 from '/images/profile/5.jpg';
 
 const notifications:notificationType[] = [
     {
@@ -50,9 +49,9 @@ const notifications:notificationType[] = [
     }
 ];
 
-// 
-// Profile 
-// 
+//
+// Profile
+//
 
 const profileDD: profileType[] = [
     {
@@ -78,9 +77,9 @@ const profileDD: profileType[] = [
     }
 ];
 
-// 
+//
 // Language
-// 
+//
 import flag1 from '/images/flag/icon-flag-en.svg';
 import flag2 from '/images/flag/icon-flag-fr.svg';
 import flag3 from '/images/flag/icon-flag-ro.svg';
@@ -92,17 +91,17 @@ const languageDD: languageType[] = [
     { title: '中国人', subtext: 'Chinese', value: 'zh', avatar: flag4 }
 ];
 
-// 
+//
 // AppsLink
-// 
-import img1 from '/images/svgs/icon-dd-chat.svg';
+//
+import img8 from '/images/svgs/icon-dd-application.svg';
 import img2 from '/images/svgs/icon-dd-cart.svg';
-import img3 from '/images/svgs/icon-dd-invoice.svg';
+import img1 from '/images/svgs/icon-dd-chat.svg';
 import img4 from '/images/svgs/icon-dd-date.svg';
-import img5 from '/images/svgs/icon-dd-mobile.svg';
+import img3 from '/images/svgs/icon-dd-invoice.svg';
 import img6 from '/images/svgs/icon-dd-lifebuoy.svg';
 import img7 from '/images/svgs/icon-dd-message-box.svg';
-import img8 from '/images/svgs/icon-dd-application.svg';
+import img5 from '/images/svgs/icon-dd-mobile.svg';
 const appsLink: appsLinkType[] = [
     {
         avatar: img1,
@@ -154,9 +153,9 @@ const appsLink: appsLinkType[] = [
     }
 ];
 
-// 
+//
 // Quick Links
-// 
+//
 const quickLink: quickLinksType[] = [
     {
         title: 'Pricing Page',
@@ -192,11 +191,11 @@ const quickLink: quickLinksType[] = [
     }
 ];
 
-// 
+//
 // Search Data
-// 
+//
 const searchSugg: searchType[] = [
-    
+
     {
         title: 'Contacts',
         href: '/apps/contacts'
@@ -250,5 +249,4 @@ const optionIconData:optionIcon[] = [
     },
 ]
 
-export { notifications, profileDD, languageDD, appsLink, quickLink, searchSugg,optionIconData };
-
+export { appsLink, languageDD, notifications, optionIconData, profileDD, quickLink, searchSugg };

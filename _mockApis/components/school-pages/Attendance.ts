@@ -1,11 +1,11 @@
 import type { Attendance } from "@/types/components/school-pages/attendance";
-import img1 from '/images/profile/user1.jpg';
-import img2 from '/images/profile/user2.jpg';
-import img3 from '/images/profile/user3.jpg';
-import img4 from '/images/profile/user4.jpg';
-import img5 from '/images/profile/user5.jpg';
-import img6 from '/images/profile/user6.jpg';
-import { CheckIcon, XIcon,MinusIcon } from "vue-tabler-icons";
+import { CheckIcon, MinusIcon, XIcon } from "vue-tabler-icons";
+import img1 from '/images/profile/1.jpg';
+import img2 from '/images/profile/2.jpg';
+import img3 from '/images/profile/3.jpg';
+import img4 from '/images/profile/4.jpg';
+import img5 from '/images/profile/5.jpg';
+import img6 from '/images/profile/6.jpg';
 
 const AttendanceData: Attendance[] = [
     {
@@ -290,4 +290,4 @@ const AttendanceData: Attendance[] = [
     }
 ]
 
-export { AttendanceData}
+export { AttendanceData };

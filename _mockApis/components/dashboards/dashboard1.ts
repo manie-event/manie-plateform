@@ -1,10 +1,10 @@
-import type { profileImg, ProductTable, tableAction, LatestReview } from '@/types/components/dashboards/dashboard';
+import type { LatestReview, ProductTable, profileImg, tableAction } from '@/types/components/dashboards/dashboard';
 
-import profile1 from '/images/profile/user1.jpg';
-import profile2 from '/images/profile/user2.jpg';
-import profile3 from '/images/profile/user3.jpg';
-import profile4 from '/images/profile/user4.jpg';
-import profile5 from '/images/profile/user5.jpg';
+import profile1 from '/images/profile/1.jpg';
+import profile2 from '/images/profile/2.jpg';
+import profile3 from '/images/profile/3.jpg';
+import profile4 from '/images/profile/4.jpg';
+import profile5 from '/images/profile/5.jpg';
 
 const profileImages: profileImg[] = [
     {
@@ -23,13 +23,12 @@ const profileImages: profileImg[] = [
 
 //Products Table
 
+import { EditIcon, PlusIcon, TrashIcon } from 'vue-tabler-icons';
 import product1 from '/images/products/product-5.png';
 import product2 from '/images/products/product-6.png';
 import product3 from '/images/products/product-7.png';
-import product4 from '/images/products/product-9.png';
 import product5 from '/images/products/product-8.png';
-import product6 from '/images/products/product-9.png';
-import { EditIcon, PlusIcon, TrashIcon } from 'vue-tabler-icons';
+import product4 from '/images/products/product-9.png';
 
 
 const ProductTableData: ProductTable[] = [
@@ -169,4 +168,4 @@ const LatestReviewData: LatestReview[] = [
 
 
 
-export { profileImages, ProductTableData, tableActionData, LatestReviewData }
+export { LatestReviewData, ProductTableData, profileImages, tableActionData };

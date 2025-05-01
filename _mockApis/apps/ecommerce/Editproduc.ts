@@ -1,13 +1,11 @@
 import type { Productreview } from "@/types/apps/Editproducts";
 
-import img1 from '/images/profile/user-5.jpg';
-import img2 from '/images/profile/user-8.jpg';
-import img3 from '/images/profile/user-3.jpg';
-import img4 from '/images/profile/user-4.jpg';
-import img5 from '/images/profile/user-5.jpg';
-import img6 from '/images/profile/user-6.jpg';
-import img7 from '/images/profile/user-7.jpg';
-import img8 from '/images/profile/user-10.jpg';
+import img3 from '/images/profile/3.jpg';
+import img4 from '/images/profile/4.jpg';
+import { default as img1, default as img5 } from '/images/profile/5.jpg';
+import img6 from '/images/profile/6.jpg';
+import img7 from '/images/profile/7.jpg';
+import img2 from '/images/profile/8.jpg';
 
 
 const ProductreviewData: Productreview[] = [
@@ -59,14 +57,7 @@ const ProductreviewData: Productreview[] = [
         name: 'Jon Miller',
         comment:'Firesale is on! Buy now! Totally worth it!',
         date:'25 April 2024'
-    },
-    {
-        review:3.5,
-        image:img8,
-        name: 'Anaa Crown',
-        comment:'Excellent quality, I got it for my sons birthday and he loved it',
-        date:'1 May 2024'
     }
 ];
 
-export {ProductreviewData}
+export { ProductreviewData };

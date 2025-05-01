@@ -3,14 +3,14 @@ import { ref, onMounted, computed, watch } from "vue";
 import { useTicketstore } from "@/stores/apps/tickets";
 import { format } from "date-fns";
 import { Icon } from "@iconify/vue";
-import user3 from '/images/profile/user-3.jpg';
+import user3 from "/images/profile/3.jpg";
 const store = useTicketstore();
 
 // Fetch tickets and ensure tickets are available
 onMounted(async () => {
   await store.fetchTicket();
-  console.log("Fetched tickets:", getTickets.value); 
-  setTicketType(TicketTypeVal.value); 
+  console.log("Fetched tickets:", getTickets.value);
+  setTicketType(TicketTypeVal.value);
 });
 
 // Get tickets from the store
@@ -31,23 +31,23 @@ const createTicket = () => {
     newTicket.value.description &&
     newTicket.value.usernm
   ) {
-    const newId = getTickets.value.length + 1; 
+    const newId = getTickets.value.length + 1;
     const newTicketData = {
       Id: newId,
       ticketTitle: newTicket.value.title,
       ticketDescription: newTicket.value.description,
-      AgentName: newTicket.value.usernm, 
+      AgentName: newTicket.value.usernm,
       Label: "success",
-      Status: "Open", 
-      Date: new Date().toISOString(), 
-      thumb: user3, 
+      Status: "Open",
+      Date: new Date().toISOString(),
+      thumb: user3,
     };
 
     store.addTicket(newTicketData);
-    setTicketType("total"); 
-    newTicket.value.title = ""; 
+    setTicketType("total");
+    newTicket.value.title = "";
     newTicket.value.description = "";
-    showCreateTicketModal.value = false; 
+    showCreateTicketModal.value = false;
   }
 };
 
@@ -56,12 +56,11 @@ const setTicketType = (type: string) => {
   TicketTypeVal.value = type;
   console.log(`TicketTypeVal changed to: ${type}`);
 
-  
   if (TicketTypeVal.value === "total") {
-    FinalTickets.value = [...getTickets.value]; 
+    FinalTickets.value = [...getTickets.value];
   } else {
     FinalTickets.value = getTickets.value.filter((ticket) => {
-      console.log("Filtering ticket:", ticket); 
+      console.log("Filtering ticket:", ticket);
       return (
         ticket.Status &&
         ticket.Status.toLowerCase() === TicketTypeVal.value.toLowerCase()
@@ -69,7 +68,6 @@ const setTicketType = (type: string) => {
     });
   }
 
-  
   applySearchFilter();
 };
 
@@ -86,7 +84,6 @@ const applySearchFilter = () => {
 
 watch(searchValue, applySearchFilter);
 
-
 const totalTicketCount = computed(() => getTickets.value.length);
 const pendingTicketCount = computed(
   () => getTickets.value.filter((ticket) => ticket.Status === "Pending").length
@@ -100,7 +97,7 @@ const closedTicketCount = computed(
 
 const handleDeleteTicket = (ticketId: number) => {
   store.deleteTicket(ticketId);
-  setTicketType(TicketTypeVal.value); 
+  setTicketType(TicketTypeVal.value);
 };
 </script>
 
@@ -108,7 +105,7 @@ const handleDeleteTicket = (ticketId: number) => {
   <v-card elevation="10">
     <v-card-item>
       <div class="overflow-x-reposive">
-        <v-row class="d-flex  flex-nowrap">
+        <v-row class="d-flex flex-nowrap">
           <v-col cols="10" md="3" sm="6">
             <div
               class="bg-lightprimary pa-7 text-center cursor-pointer rounded-md"
@@ -149,7 +146,10 @@ const handleDeleteTicket = (ticketId: number) => {
       </div>
       <div class="">
         <div class="d-sm-flex justify-space-between align-center my-7">
-          <v-btn color="primary" rounded="pill" @click="showCreateTicketModal = true"
+          <v-btn
+            color="primary"
+            rounded="pill"
+            @click="showCreateTicketModal = true"
             >Create Ticket</v-btn
           >
           <v-sheet width="255" class="mt-lg-0 mt-4">
@@ -173,7 +173,7 @@ const handleDeleteTicket = (ticketId: number) => {
           <template v-slot:default>
             <thead>
               <tr>
-                <th class="text-h6 text-no-wrap ">Id</th>
+                <th class="text-h6 text-no-wrap">Id</th>
                 <th class="text-h6 text-no-wrap">Ticket</th>
                 <th class="text-h6 text-no-wrap">Assigned To</th>
                 <th class="text-h6 text-no-wrap">Status</th>
@@ -215,7 +215,6 @@ const handleDeleteTicket = (ticketId: number) => {
                     :color="ticket.Label"
                     size="small"
                     label
-                    
                     >{{ ticket.Status }}</v-chip
                   >
                 </td>
@@ -241,7 +240,8 @@ const handleDeleteTicket = (ticketId: number) => {
                       >Delete Ticket</v-tooltip
                     >
                     <Icon
-                      icon="solar:trash-bin-minimalistic-linear"  class="text-error"
+                      icon="solar:trash-bin-minimalistic-linear"
+                      class="text-error"
                       height="18"
                     />
                   </v-btn>
@@ -290,7 +290,12 @@ const handleDeleteTicket = (ticketId: number) => {
           @click="showCreateTicketModal = false"
           >Cancel</v-btn
         >
-        <v-btn color="primary" variant="flat" class="px-5"  rounded="pill" @click="createTicket"
+        <v-btn
+          color="primary"
+          variant="flat"
+          class="px-5"
+          rounded="pill"
+          @click="createTicket"
           >Create</v-btn
         >
       </v-card-actions>

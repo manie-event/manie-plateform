@@ -1,12 +1,12 @@
 import mock from '../../mockAdapter';
 // import type { ContactType } from '@/types/apps/ContactType';
 
-import user1 from '/images/profile/user1.jpg';
-import user2 from '/images/profile/user2.jpg';
-import user3 from '/images/profile/user3.jpg';
-import user4 from '/images/profile/user4.jpg';
-import user5 from '/images/profile/user5.jpg';
-import user6 from '/images/profile/user6.jpg';
+import user1 from '/images/profile/1.jpg';
+import user2 from '/images/profile/2.jpg';
+import user3 from '/images/profile/3.jpg';
+import user4 from '/images/profile/4.jpg';
+import user5 from '/images/profile/5.jpg';
+import user6 from '/images/profile/6.jpg';
 
 
 
@@ -16,7 +16,7 @@ export type KeyedObject = {
 };
 
 const students: KeyedObject[] = [
-    {   
+    {
         avatar: user1,
         userinfo: 'Garima Singh',
         class:'5',
@@ -26,7 +26,7 @@ const students: KeyedObject[] = [
         phone: '+ 123 9988568',
         usermail: 'r93@gmail.com',
     },
-    {   
+    {
         avatar: user2,
         userinfo: 'Haruto Yuto',
         class:'12',
@@ -36,7 +36,7 @@ const students: KeyedObject[] = [
         phone: '+ 123 9988568',
         usermail: 'd93@gmail.com',
     },
-    {   
+    {
         avatar: user3,
         userinfo: 'Hayato Haruki',
         class:'5',
@@ -46,7 +46,7 @@ const students: KeyedObject[] = [
         phone: '+ 123 9988568',
         usermail: 'd93@gmail.com',
     },
-    {   
+    {
         avatar: user4,
         userinfo: 'John Deo',
         class:'12',
@@ -57,7 +57,7 @@ const students: KeyedObject[] = [
         usermail: 'p93@gmail.com',
     },
 
-    {   
+    {
         avatar: user5,
         userinfo: 'Koharu Hinata',
         class:'5',
@@ -67,7 +67,7 @@ const students: KeyedObject[] = [
         phone: '+ 123 9988568',
         usermail: 'r93@gmail.com',
     },
-    {   
+    {
         avatar: user6,
         userinfo: 'Kokona Haruka',
         class:'2',
@@ -77,7 +77,7 @@ const students: KeyedObject[] = [
         phone: '+ 123 9988568',
         usermail: 'k93@gmail.com',
     },
-    {   
+    {
         avatar: user1,
         userinfo: 'Mark J. Freeman',
         class:'2',
@@ -87,7 +87,7 @@ const students: KeyedObject[] = [
         phone: '+ 123 9988568',
         usermail: 'k93@gmail.com',
     },
-    {   
+    {
         avatar: user2,
         userinfo: 'Mark J. Freeman',
         class:'2',
@@ -97,7 +97,7 @@ const students: KeyedObject[] = [
         phone: '+ 123 9988568',
         usermail: 'k93@gmail.com',
     },
-    {   
+    {
         avatar: user3,
         userinfo: 'Mark Willy',
         class:'5',
@@ -107,7 +107,7 @@ const students: KeyedObject[] = [
         phone: '+ 123 9988568',
         usermail: 'j93@gmail.com',
     },
-    {   
+    {
         avatar: user4,
         userinfo: 'Mei Mio',
         class:'10',
@@ -117,7 +117,7 @@ const students: KeyedObject[] = [
         phone: '+ 123 9988568',
         usermail: 'j93@gmail.com',
     },
-    {   
+    {
         avatar: user5,
         userinfo: 'Midori Gurin',
         class:'6',

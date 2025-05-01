@@ -1,9 +1,9 @@
-import type { LeaderType, TemplateType, ThemeFeatures, PackageType, FooterType, Feature } from '@/types/components/front-pages/index';
+import type { Feature, FooterType, LeaderType, PackageType, TemplateType, ThemeFeatures } from '@/types/components/front-pages/index';
 import type { faqPageType } from '@/types/components/pages/faqData';
 
-import review1 from '/images/profile/user-1.jpg';
-import review2 from '/images/profile/user-2.jpg';
-import review3 from '/images/profile/user-3.jpg';
+import review1 from '/images/profile/1.jpg';
+import review2 from '/images/profile/2.jpg';
+import review3 from '/images/profile/3.jpg';
 
 const Features: Feature[] = [
     {
@@ -126,32 +126,29 @@ const QA4: faqPageType[] = [
 ];
 
 // OurLeaders
+import type { UserReviewTypes } from '@/types/landingpage/LandingpageTypes';
+import {
+  AdjustmentsIcon,
+  ArchiveIcon,
+  ArrowsShuffleIcon,
+  BookIcon,
+  BuildingCarouselIcon,
+  CalendarIcon,
+  ChartPieIcon,
+  DatabaseIcon,
+  DiamondIcon,
+  LanguageKatakanaIcon,
+  LayersIntersectIcon,
+  MessageIcon,
+  RefreshIcon,
+  ShieldLockIcon,
+  TagIcon,
+  WandIcon
+} from 'vue-tabler-icons';
 import leader1 from '/images/front-pages/leaders/leader1.png';
 import leader2 from '/images/front-pages/leaders/leader2.png';
 import leader3 from '/images/front-pages/leaders/leader3.png';
 import leader4 from '/images/front-pages/leaders/leader4.png';
-import leader5 from '/images/front-pages/leaders/leader4.png';
-import {
-    WandIcon,
-    ShieldLockIcon,
-    ArchiveIcon,
-    AdjustmentsIcon,
-    TagIcon,
-    DiamondIcon,
-    DatabaseIcon,
-    LanguageKatakanaIcon,
-    BuildingCarouselIcon,
-    ArrowsShuffleIcon,
-    ChartPieIcon,
-    LayersIntersectIcon,
-    RefreshIcon,
-    BookIcon,
-    CalendarIcon,
-    MessageIcon,
-    CircleCheckIcon,
-    CircleXIcon
-} from 'vue-tabler-icons';
-import type { UserReviewTypes } from '@/types/landingpage/LandingpageTypes';
 const OurLeaders: LeaderType[] = [
     {
         img: leader1,
@@ -571,21 +568,13 @@ const userReviewFrront: UserReviewTypes[] = [
     }
 ];
 export {
-    QA1,
-    QA2,
-    QA3,
-    QA4,
-    OurLeaders,
-    templateText,
-    ThemeFeature1,
-    ThemeFeature2,
-    ThemeFeature3,
-    Packages,
-    FAQData,
-    FooterMenu1,
-    FooterMenu2,
-    FooterMenu3,
-    Features,
-    userReviewFrront,
-    AboutFeatures
+  AboutFeatures, FAQData, Features, FooterMenu1,
+  FooterMenu2,
+  FooterMenu3, OurLeaders, Packages, QA1,
+  QA2,
+  QA3,
+  QA4, templateText,
+  ThemeFeature1,
+  ThemeFeature2,
+  ThemeFeature3, userReviewFrront
 };

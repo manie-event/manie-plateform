@@ -1,18 +1,15 @@
-import { Chance } from 'chance';
-import { random } from 'lodash';
-import { sub } from 'date-fns';
 import mock from '@/_mockApis/mockAdapter';
+import { Chance } from 'chance';
 import classimg1 from '/images/backgrounds/bootstrap.png';
+import classimg4 from '/images/backgrounds/flutter.png';
+import classimg6 from '/images/backgrounds/jquery.png';
+import classimg5 from '/images/backgrounds/js.png';
 import classimg2 from '/images/backgrounds/python.png';
 import classimg3 from '/images/backgrounds/vuejs.png';
-import classimg4 from '/images/backgrounds/flutter.png';
-import classimg5 from '/images/backgrounds/js.png';
-import classimg6 from '/images/backgrounds/jquery.png';
 
-import user1 from '/images/profile/user2.jpg';
-import user2 from '/images/profile/user1.jpg';
+import user2 from '/images/profile/1.jpg';
+import user1 from '/images/profile/2.jpg';
 
-import { uniqueId } from 'lodash';
 
 import type { ClassesType } from '@/types/components/school-pages/classes';
 
@@ -91,7 +88,7 @@ const ClassesTypeData: ClassesType[] = [
         profileimg:user2 ,
         name: 'Arya B. Rao',
     },
-   
+
 ];
 
 mock.onGet('/api/classes').reply(() => {
@@ -121,5 +118,3 @@ mock.onPost('/api/classes').reply((config: string | any) => {
         return [500, { message: 'Internal server error' }];
     }
 });
-
-

@@ -1,14 +1,14 @@
-import mock from '../../mockAdapter';
-import { Chance } from 'chance';
 import type { ChatType } from '@/types/apps/ChatType';
+import { Chance } from 'chance';
 import { sub } from 'date-fns';
 import { uniqueId } from 'lodash';
+import mock from '../../mockAdapter';
 
-import user1 from '/images/profile/user-2.jpg';
-import user2 from '/images/profile/user-3.jpg';
-import user3 from '/images/profile/user-4.jpg';
-import user4 from '/images/profile/user-5.jpg';
-import user5 from '/images/profile/user-6.jpg';
+import user1 from '/images/profile/2.jpg';
+import user2 from '/images/profile/3.jpg';
+import user3 from '/images/profile/4.jpg';
+import user4 from '/images/profile/5.jpg';
+import user5 from '/images/profile/user6.jpg';
 
 import background1 from '/images/blog/blog-img5.jpg';
 

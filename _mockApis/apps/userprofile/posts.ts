@@ -1,6 +1,6 @@
 // project imports
-import mock from '../../mockAdapter';
 import { Chance } from 'chance';
+import mock from '../../mockAdapter';
 
 // types
 import type { Post } from '@/types/apps/PostType';
@@ -9,11 +9,11 @@ import type { Post } from '@/types/apps/PostType';
 import image1 from '/images/products/s1.jpg';
 import image2 from '/images/products/s2.jpg';
 import image4 from '/images/products/s4.jpg';
-import user1 from '/images/profile/user1.jpg';
-import user2 from '/images/profile/user2.jpg';
-import user3 from '/images/profile/user3.jpg';
-import user4 from '/images/profile/user4.jpg';
-import user5 from '/images/profile/user5.jpg';
+import user1 from '/images/profile/1.jpg';
+import user2 from '/images/profile/2.jpg';
+import user3 from '/images/profile/3.jpg';
+import user4 from '/images/profile/4.jpg';
+import user5 from '/images/profile/5.jpg';
 
 const chance = new Chance();
 

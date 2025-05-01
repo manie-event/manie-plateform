@@ -1,18 +1,18 @@
 
-import type { basicTable1, basicTable2, basicTable3, basicTable4, basicTable5, tableDark, tableDensity, tableFixedHeader, heightTable, tableAction } from '@/types/components/table/index';
+import type { basicTable1, basicTable2, basicTable3, basicTable4, basicTable5, heightTable, tableAction, tableDark, tableDensity, tableFixedHeader } from '@/types/components/table/index';
 /*import tabler icons*/
-import { PlusIcon, EditIcon, TrashIcon, CheckIcon, XIcon, ArrowBackUpIcon } from 'vue-tabler-icons';
-import img1 from '/images/profile/user1.jpg';
-import img2 from '/images/profile/user2.jpg';
-import img3 from '/images/profile/user3.jpg';
-import img4 from '/images/profile/user4.jpg';
-import img5 from '/images/profile/user5.jpg';
-import img6 from '/images/profile/user-6.jpg';
+import { ArrowBackUpIcon, CheckIcon, EditIcon, PlusIcon, TrashIcon, XIcon } from 'vue-tabler-icons';
 import authimg1 from '/images/blog/blog-img1.jpg';
 import authimg2 from '/images/blog/blog-img2.jpg';
 import authimg3 from '/images/blog/blog-img3.jpg';
 import authimg4 from '/images/blog/blog-img4.jpg';
 import authimg5 from '/images/blog/blog-img5.jpg';
+import img1 from '/images/profile/1.jpg';
+import img2 from '/images/profile/2.jpg';
+import img3 from '/images/profile/3.jpg';
+import img4 from '/images/profile/4.jpg';
+import img5 from '/images/profile/5.jpg';
+import img6 from '/images/profile/6.jpg';
 
 /*Basic Table 1*/
 const basicTableData1: basicTable1[] = [
@@ -957,4 +957,4 @@ const tableActionData: tableAction[] = [
         listtitle: 'Delete'
     }
 ]
-export { basicTableData1, basicTableData2, basicTableData3, basicTableData4, basicTableData5, darkTableData, tableDensityData, tableFixedHeaderData, heightTableData, tableActionData };
+export { basicTableData1, basicTableData2, basicTableData3, basicTableData4, basicTableData5, darkTableData, heightTableData, tableActionData, tableDensityData, tableFixedHeaderData };

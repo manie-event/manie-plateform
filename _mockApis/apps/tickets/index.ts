@@ -1,5 +1,5 @@
-import mock from '../../mockAdapter';
 import { Chance } from 'chance';
+import mock from '../../mockAdapter';
 const chance = new Chance();
 interface TicketType {
     Id?: number | any;
@@ -12,27 +12,15 @@ interface TicketType {
     Date?: string | Date;
 }
 
-import user1 from '/images/profile/user-2.jpg';
-import user2 from '/images/profile/user-3.jpg';
-import user3 from '/images/profile/user-4.jpg';
-import user4 from '/images/profile/user-5.jpg';
-import user5 from '/images/profile/user-6.jpg';
-import user6 from '/images/profile/user-7.jpg';
-import user7 from '/images/profile/user-8.jpg';
-import user10 from '/images/profile/user-10.jpg';
+import user1 from '/images/profile/2.jpg';
+import user2 from '/images/profile/3.jpg';
+import user3 from '/images/profile/4.jpg';
+import user4 from '/images/profile/5.jpg';
+import user5 from '/images/profile/6.jpg';
+import user6 from '/images/profile/7.jpg';
+import user7 from '/images/profile/8.jpg';
 
 const TicketData: TicketType[] = [
-    {
-        Id: 1,
-        ticketTitle: 'Sed ut perspiciatis unde omnis iste',
-        ticketDescription:
-            'ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos',
-        Status: 'Closed',
-        Label: 'error',
-        thumb: user10,
-        AgentName: 'Liam',
-        Date: chance.date()
-    },
     {
         Id: 2,
         ticketTitle: 'Consequuntur magni dolores eos qui ratione',

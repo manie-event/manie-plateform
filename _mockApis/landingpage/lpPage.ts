@@ -1,30 +1,29 @@
-import { ref } from 'vue';
 
 import type {
-    ProductsSliderTypes,
-    UserReviewTypes,
-    ListFeatureTypes,
-    DemosMegaMenuTypes,
-    AppsMegaMenuTypes
+  AppsMegaMenuTypes,
+  DemosMegaMenuTypes,
+  ListFeatureTypes,
+  ProductsSliderTypes,
+  UserReviewTypes
 } from '@/types/landingpage/LandingpageTypes';
 
-import img1 from '/images/landingpage/demos/demo-main.jpg';
-import img2 from '/images/landingpage/demos/demo-dark.jpg';
-import img3 from '/images/landingpage/demos/demo-horizontal.jpg';
-import img4 from '/images/landingpage/demos/demo-mini.jpg';
-import img5 from '/images/landingpage/demos/demo-rtl.jpg';
+import img15 from '/images/landingpage/apps/app-blog-detail.jpg';
+import img11 from '/images/landingpage/apps/app-blog.jpg';
 import img6 from '/images/landingpage/apps/app-calendar.jpg';
 import img7 from '/images/landingpage/apps/app-chat.jpg';
 import img8 from '/images/landingpage/apps/app-contact.jpg';
-import img9 from '/images/landingpage/apps/app-user-profile.jpg';
-import img10 from '/images/landingpage/apps/app-note.jpg';
-import img11 from '/images/landingpage/apps/app-blog.jpg';
-import img12 from '/images/landingpage/apps/app-shop.jpg';
-import img13 from '/images/landingpage/apps/app-productlist.jpg';
 import img14 from '/images/landingpage/apps/app-invoice.jpg';
-import img15 from '/images/landingpage/apps/app-blog-detail.jpg';
-import img16 from '/images/landingpage/apps/app-product-detail.jpg';
 import img17 from '/images/landingpage/apps/app-kanban.jpg';
+import img10 from '/images/landingpage/apps/app-note.jpg';
+import img16 from '/images/landingpage/apps/app-product-detail.jpg';
+import img13 from '/images/landingpage/apps/app-productlist.jpg';
+import img12 from '/images/landingpage/apps/app-shop.jpg';
+import img9 from '/images/landingpage/apps/app-user-profile.jpg';
+import img2 from '/images/landingpage/demos/demo-dark.jpg';
+import img3 from '/images/landingpage/demos/demo-horizontal.jpg';
+import img1 from '/images/landingpage/demos/demo-main.jpg';
+import img4 from '/images/landingpage/demos/demo-mini.jpg';
+import img5 from '/images/landingpage/demos/demo-rtl.jpg';
 
 const productsSlider: ProductsSliderTypes[] = [
      {
@@ -133,9 +132,9 @@ const productsSlider: ProductsSliderTypes[] = [
 ];
 
 /*User Review Section*/
-import review1 from '/images/profile/user1.jpg';
-import review2 from '/images/profile/user2.jpg';
-import review3 from '/images/profile/user3.jpg';
+import review1 from '/images/profile/1.jpg';
+import review2 from '/images/profile/2.jpg';
+import review3 from '/images/profile/3.jpg';
 
 const userReview: UserReviewTypes[] = [
     {
@@ -161,24 +160,30 @@ const userReview: UserReviewTypes[] = [
 /*Feature Section*/
 /*import tabler icons*/
 import {
-    WandIcon,
-    ShieldLockIcon,
-    ArchiveIcon,
-    AdjustmentsIcon,
-    TagIcon,
-    DiamondIcon,
-    DatabaseIcon,
-    LanguageKatakanaIcon,
-    BuildingCarouselIcon,
-    ArrowsShuffleIcon,
-    ChartPieIcon,
-    LayersIntersectIcon,
-    RefreshIcon,
-    BookIcon,
-    CalendarIcon,
-    MessageIcon,
-    PresentationIcon
+  AdjustmentsIcon,
+  ArchiveIcon,
+  ArrowsShuffleIcon,
+  BookIcon,
+  BuildingCarouselIcon,
+  CalendarIcon,
+  ChartPieIcon,
+  DatabaseIcon,
+  DiamondIcon,
+  LanguageKatakanaIcon,
+  LayersIntersectIcon,
+  MessageIcon,
+  PresentationIcon,
+  RefreshIcon,
+  ShieldLockIcon,
+  TagIcon,
+  WandIcon
 } from 'vue-tabler-icons';
+import frnt2 from '/images/landingpage/frontpages/aboutus.jpg';
+import frnt6 from '/images/landingpage/frontpages/blogpage.jpg';
+import frnt3 from '/images/landingpage/frontpages/contactus.jpg';
+import frnt1 from '/images/landingpage/frontpages/homepage.jpg';
+import frnt4 from '/images/landingpage/frontpages/portfolio.jpg';
+import frnt5 from '/images/landingpage/frontpages/pricing.jpg';
 const listFeature: ListFeatureTypes[] = [
     {
         icon: WandIcon,
@@ -233,7 +238,7 @@ const listFeature: ListFeatureTypes[] = [
         title: 'i18n Vue',
         subtitle: 'Vue i18n is a powerful internationalization framework for Vue.',
         bgcolor:'primary'
-        
+
     },
     {
         icon: BuildingCarouselIcon,
@@ -341,12 +346,6 @@ const appsMegamenu: AppsMegaMenuTypes[] = [
         link: '/apps/notes'
     }
 ];
-import frnt1 from '/images/landingpage/frontpages/homepage.jpg';
-import frnt2 from '/images/landingpage/frontpages/aboutus.jpg';
-import frnt3 from '/images/landingpage/frontpages/contactus.jpg';
-import frnt4 from '/images/landingpage/frontpages/portfolio.jpg';
-import frnt5 from '/images/landingpage/frontpages/pricing.jpg';
-import frnt6 from '/images/landingpage/frontpages/blogpage.jpg';
 
 const FrontPageMenu: DemosMegaMenuTypes[] = [
     {
@@ -381,4 +380,4 @@ const FrontPageMenu: DemosMegaMenuTypes[] = [
     }
 ];
 
-export { productsSlider, userReview, listFeature, demosMegamenu, appsMegamenu,FrontPageMenu };
+export { appsMegamenu, demosMegamenu, FrontPageMenu, listFeature, productsSlider, userReview };
