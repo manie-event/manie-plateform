@@ -1,5 +1,4 @@
 import { createResolver } from "@nuxt/kit";
-import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 
 const { resolve } = createResolver(import.meta.url);
 
@@ -7,7 +6,11 @@ const { resolve } = createResolver(import.meta.url);
 export default defineNuxtConfig({
   // Enable server-side rendering
   ssr: false,
-
+    runtimeConfig: {
+    public: {
+      apiUrl: process.env.NUXT_API_URL || 'https://manie-api.onrender.com'
+    }
+  },
   // TypeScript configuration
   typescript: {
     shim: false,

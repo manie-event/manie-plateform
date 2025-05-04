@@ -14,7 +14,6 @@ definePageMeta({
       >
         <v-card elevation="0" class="overflow-hidden px-sm-3">
           <v-card-item class="px-sm-8 px-3">
-            <LcFullLogo />
             <v-row class="justify-md-space-around align-center py-md-8">
               <v-col cols="12" lg="5" md="6" class="d-md-flex d-none">
                 <img

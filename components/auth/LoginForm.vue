@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref } from "vue";
 import { Form } from "vee-validate";
+import { ref } from "vue";
+import { useAuthentification } from "../../composables/UseAuthentification";
 
 /*Social icons*/
 // import google from "/images/svgs/google-icon.svg";
@@ -9,9 +10,11 @@ import { Form } from "vee-validate";
 const router = useRouter();
 const checkbox = ref(false);
 const valid = ref(false);
-const show1 = ref(false);
-const password = ref("");
-const username = ref("");
+const authentification = ref({
+  password: "",
+  email: "",
+});
+const { sendLogin } = useAuthentification();
 const passwordRules = ref([
   (v: string) => !!v || "Le mot de passe est obligatoire",
   (v: string) =>
@@ -22,9 +25,16 @@ const emailRules = ref([
   (v: string) => /.+@.+\..+/.test(v) || "L'e-mail doit être valide",
 ]);
 
-function validate() {
-  router.push({ path: "/dashboards/dashboard1" });
-}
+const validate = async () => {
+  const login = await sendLogin(authentification.value);
+  if (login && login.category) {
+    if (login.category === "consumer") {
+      router.push({ path: "/dashboards/dashboard1" });
+    } else {
+      router.push({ path: "/dashboards/dashboard2" });
+    }
+  }
+};
 </script>
 
 <template>
@@ -57,23 +67,25 @@ function validate() {
       >Email</v-label
     >
     <VTextField
-      v-model="username"
+      v-model="authentification.email"
       :rules="emailRules"
       class="mb-8"
       placeholder="info@manie.com"
       required
+      autocomplete="current-email"
       hide-details="auto"
     ></VTextField>
     <v-label class="text-subtitle-1 font-weight-semibold pb-2 text-grey200"
       >Mot de passe</v-label
     >
     <VTextField
-      v-model="password"
+      v-model="authentification.password"
       :rules="passwordRules"
       required
       hide-details="auto"
       placeholder="**********"
       type="password"
+      autocomplete="current-password"
       class="pwdInput"
     ></VTextField>
     <div class="d-flex flex-wrap align-center my-3 ml-n2">

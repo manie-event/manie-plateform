@@ -799,7 +799,9 @@ const _inlineRuntimeConfig = {
       }
     }
   },
-  "public": {}
+  "public": {
+    "apiUrl": "https://manie-api.onrender.com"
+  }
 };
 const envOptions = {
   prefix: "NITRO_",
