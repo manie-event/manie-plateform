@@ -4,10 +4,6 @@ import ResetPassword from "@/components/auth/ResetForm.vue";
 definePageMeta({
   layout: "blank",
 });
-
-function definePageMeta(arg0: { layout: string }) {
-  throw new Error("Function not implemented.");
-}
 </script>
 
 <template>
