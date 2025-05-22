@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import {XIcon } from "vue-tabler-icons"
+import { ref } from 'vue';
+import { XIcon } from 'vue-tabler-icons';
 const dialog = ref(false);
 const notifications = ref(false);
 const sound = ref(true);
@@ -9,19 +9,16 @@ const widgets = ref(false);
 
 <template>
   <div class="text-center">
-    <v-dialog
-      v-model="dialog"
-      fullscreen
-      :scrim="false"
-      transition="dialog-bottom-transition"
-    >
+    <v-dialog v-model="dialog" fullscreen :scrim="false" transition="dialog-bottom-transition">
       <template v-slot:activator="{ props }">
-        <v-btn color="error" class="w-100 px-4 rounded-pill" dark v-bind="props" > Open Fullscreen Dialog </v-btn>
+        <v-btn color="error" class="w-100 px-4 rounded-pill" dark v-bind="props">
+          Open Fullscreen Dialog
+        </v-btn>
       </template>
       <v-card>
         <v-toolbar dark style="flex: unset">
           <v-btn icon color="white" @click="dialog = false" flat>
-            <XIcon  width="20" />
+            <XIcon width="20" />
           </v-btn>
           <v-toolbar-title class="text-white">Settings</v-toolbar-title>
           <v-spacer></v-spacer>
@@ -60,10 +57,7 @@ const widgets = ref(false);
                 <v-checkbox v-model="sound"></v-checkbox>
               </template>
             </v-list-item>
-            <v-list-item
-              title="Auto-add widgets"
-              subtitle="Automatically add home screen widgets"
-            >
+            <v-list-item title="Auto-add widgets" subtitle="Automatically add home screen widgets">
               <template v-slot:prepend>
                 <v-checkbox v-model="widgets"></v-checkbox>
               </template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue';
 const dialog = ref(false);
 </script>
 
@@ -7,7 +7,9 @@ const dialog = ref(false);
   <div class="text-center">
     <v-dialog transition="dialog-bottom-transition" max-width="800">
       <template v-slot:activator="{ props }">
-        <v-btn color="success" class="w-100 px-4 rounded-pill" v-bind="props" >Open Transition Dialog</v-btn>
+        <v-btn color="success" class="w-100 px-4 rounded-pill" v-bind="props"
+          >Open Transition Dialog</v-btn
+        >
       </template>
       <template v-slot:default="{ isActive }">
         <v-card>
@@ -16,7 +18,13 @@ const dialog = ref(false);
             <div class="text-h2 pa-12">Hello world!</div>
           </v-card-item>
           <v-card-actions class="justify-end">
-            <v-btn color="error" variant="tonal" @click="isActive.value = false"  class="px-4 rounded-pill">Close</v-btn>
+            <v-btn
+              color="error"
+              variant="tonal"
+              @click="isActive.value = false"
+              class="px-4 rounded-pill"
+              >Close</v-btn
+            >
           </v-card-actions>
         </v-card>
       </template>

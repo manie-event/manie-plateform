@@ -3,13 +3,11 @@ import shape2 from '/images/svgs/danger-shap.svg';
 import shape3 from '/images/svgs/info-shap.svg';
 import shape1 from '/images/svgs/warning-shap.svg';
 
-
 import profile1 from '/images/profile/1.jpg';
 import profile2 from '/images/profile/2.jpg';
 import profile3 from '/images/profile/3.jpg';
 import profile4 from '/images/profile/4.jpg';
 import profile5 from '/images/profile/5.jpg';
-
 
 /*--Blog Cards--*/
 const textCardsData: textCards[] = [
@@ -17,97 +15,97 @@ const textCardsData: textCards[] = [
     icon: 'ruble-linear',
     num: '2358',
     percent: '+23%',
-    title: "Sales",
+    title: 'Sales',
     shape: shape1,
   },
   {
     icon: 'archive-down-minimlistic-line-duotone',
     num: '356',
     percent: '+8%',
-    title: "Refunds",
+    title: 'Refunds',
     shape: shape2,
   },
   {
     icon: 'dollar-linear',
     num: '$23.8K',
     percent: '-3%',
-    title: "Earnings",
+    title: 'Earnings',
     shape: shape3,
   },
   {
     icon: 'ruble-linear',
     num: '2358',
     percent: '+23%',
-    title: "Sales",
+    title: 'Sales',
     shape: shape1,
   },
 ];
 
 const profileImgData: profileImg[] = [
   {
-    img: profile4
+    img: profile4,
   },
   {
-    img: profile5
+    img: profile5,
   },
   {
-    img: profile3
+    img: profile3,
   },
   {
-    img: profile2
-  }
+    img: profile2,
+  },
 ];
 
 const projectTableData: projectTable[] = [
   {
     img: profile1,
-    activestate: "",
-    leadname: "Mark J. Freeman",
-    leademail: "Developer",
-    projectname: "$80/hour",
-    statuscolor: "success",
-    statustext: "Available",
-    skill: "HTML",
+    activestate: '',
+    leadname: 'Mark J. Freeman',
+    leademail: 'Developer',
+    projectname: '$80/hour',
+    statuscolor: 'success',
+    statustext: 'Available',
+    skill: 'HTML',
   },
   {
     img: profile4,
-    activestate: "active",
-    leadname: "Nina R. Oldman",
-    leademail: "Designer",
-    projectname: "$70/hour",
-    statuscolor: "primary",
-    statustext: "On Holiday",
-    skill: "JavaScript",
+    activestate: 'active',
+    leadname: 'Nina R. Oldman',
+    leademail: 'Designer',
+    projectname: '$70/hour',
+    statuscolor: 'primary',
+    statustext: 'On Holiday',
+    skill: 'JavaScript',
   },
   {
     img: profile3,
-    activestate: "",
-    leadname: "Arya H. Shah",
-    leademail: "Developer",
-    projectname: "$40/hour",
-    statuscolor: "error",
-    statustext: "Absent",
-    skill: "React",
+    activestate: '',
+    leadname: 'Arya H. Shah',
+    leademail: 'Developer',
+    projectname: '$40/hour',
+    statuscolor: 'error',
+    statustext: 'Absent',
+    skill: 'React',
   },
   {
     img: profile5,
-    activestate: "",
-    leadname: "June R. Smith",
-    leademail: "Designer",
-    projectname: "$20/hour",
-    statuscolor: "warning",
-    statustext: "On Leave",
-    skill: "Vuejs",
+    activestate: '',
+    leadname: 'June R. Smith',
+    leademail: 'Designer',
+    projectname: '$20/hour',
+    statuscolor: 'warning',
+    statustext: 'On Leave',
+    skill: 'Vuejs',
   },
   {
     img: profile2,
-    activestate: "",
-    leadname: "Mark J. Freeman",
-    leademail: "Developer",
-    projectname: "$65/hour",
-    statuscolor: "indigo",
-    statustext: "Available",
-    skill: "Angular",
+    activestate: '',
+    leadname: 'Mark J. Freeman',
+    leademail: 'Developer',
+    projectname: '$65/hour',
+    statuscolor: 'indigo',
+    statustext: 'Available',
+    skill: 'Angular',
   },
 ];
 export { profileImgData, projectTableData, textCardsData };

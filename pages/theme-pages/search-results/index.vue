@@ -5,20 +5,19 @@ import SearchLinks from '@/components/pages/search-results/SearchLinks.vue';
 /* Breadcrumb text */
 const page = ref({ title: 'Search Results' });
 const breadcrumbs = ref([
-    {
-        text: 'Dashboard',
-        disabled: false,
-        href: '#'
-    },
-    {
-        text: 'Search Results',
-        disabled: true,
-        href: '#'
-    }
+  {
+    text: 'Dashboard',
+    disabled: false,
+    href: '#',
+  },
+  {
+    text: 'Search Results',
+    disabled: true,
+    href: '#',
+  },
 ]);
-
 </script>
 <template>
-    <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
-    <SearchLinks/>
+  <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
+  <SearchLinks />
 </template>

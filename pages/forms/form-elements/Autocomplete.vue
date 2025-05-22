@@ -14,45 +14,45 @@ import MultipleOptions from '@/components/forms/form-elements/autocomplete/Multi
 // theme breadcrumb
 const page = ref({ title: 'Autocomplete' });
 const breadcrumbs = ref([
-    {
-        text: 'Dashboard',
-        disabled: false,
-        href: '/'
-    },
-    {
-        text: 'Autocomplete',
-        disabled: true,
-        href: '#'
-    }
+  {
+    text: 'Dashboard',
+    disabled: false,
+    href: '/',
+  },
+  {
+    text: 'Autocomplete',
+    disabled: true,
+    href: '#',
+  },
 ]);
 </script>
 
 <template>
-    <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
-    <v-row>
-        <v-col cols="12">
-            <UiParentCard title="Autocomplete">
-                <v-row>
-                    <!-- Combo Box -->
-                    <v-col cols="12" lg="4">
-                        <UiChildCard title="Combo Box">
-                            <ComboBox />
-                        </UiChildCard>
-                    </v-col>
-                    <!-- With Caption -->
-                    <v-col cols="12" lg="4">
-                        <UiChildCard title="With Caption">
-                            <WithCaption />
-                        </UiChildCard>
-                    </v-col>
-                    <!-- Combo with Multiple Options -->
-                    <v-col cols="12" lg="4">
-                        <UiChildCard title="Combo with Multiple Options">
-                            <MultipleOptions />
-                        </UiChildCard>
-                    </v-col>
-                </v-row>
-            </UiParentCard>
-        </v-col>
-    </v-row>
+  <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
+  <v-row>
+    <v-col cols="12">
+      <UiParentCard title="Autocomplete">
+        <v-row>
+          <!-- Combo Box -->
+          <v-col cols="12" lg="4">
+            <UiChildCard title="Combo Box">
+              <ComboBox />
+            </UiChildCard>
+          </v-col>
+          <!-- With Caption -->
+          <v-col cols="12" lg="4">
+            <UiChildCard title="With Caption">
+              <WithCaption />
+            </UiChildCard>
+          </v-col>
+          <!-- Combo with Multiple Options -->
+          <v-col cols="12" lg="4">
+            <UiChildCard title="Combo with Multiple Options">
+              <MultipleOptions />
+            </UiChildCard>
+          </v-col>
+        </v-row>
+      </UiParentCard>
+    </v-col>
+  </v-row>
 </template>

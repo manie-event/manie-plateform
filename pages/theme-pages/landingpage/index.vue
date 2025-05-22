@@ -12,29 +12,29 @@ import 'aos/dist/aos.css';
 import AOS from 'aos';
 
 onMounted(() => {
-    AOS.init();
+  AOS.init();
 });
 
 /*for Blank Layout*/
 definePageMeta({
-  layout: "blank",
+  layout: 'blank',
 });
 </script>
 
 <template>
-    <div class="lp-wraper">
-        <!--Header-->
-        <Header />
-        <!----------->
-        <!--Content-->
-        <Revolution/>
-        <OurProducts/>
-        <Features/>
-        <UserReview />
-        <Purchase/>
-        <!----------->
-        <!--Footer-->
-        <Footer />
-        <!----------->
-    </div>
+  <div class="lp-wraper">
+    <!--Header-->
+    <Header />
+    <!----------->
+    <!--Content-->
+    <Revolution />
+    <OurProducts />
+    <Features />
+    <UserReview />
+    <Purchase />
+    <!----------->
+    <!--Footer-->
+    <Footer />
+    <!----------->
+  </div>
 </template>

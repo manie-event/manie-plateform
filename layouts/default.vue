@@ -1,16 +1,14 @@
 <script setup lang="ts">
-import { useCustomizerStore } from "@/stores/customizer";
-import { pl, zhHans } from "vuetify/locale";
+import { useCustomizerStore } from '@/stores/customizer';
+import { pl, zhHans } from 'vuetify/locale';
 const customizer = useCustomizerStore();
-const title = ref(
-  "Spikeadmin - Nuxt3 Typescript based Admin Dashboard Template"
-);
+const title = ref('Spikeadmin - Nuxt3 Typescript based Admin Dashboard Template');
 useHead({
   meta: [{ content: title }],
   titleTemplate: (titleChunk) => {
     return titleChunk
       ? `${titleChunk} - Nuxt3 Typescript based Admin Dashboard Template`
-      : "Spikeadmin - Nuxt3 Typescript based Admin Dashboard Template";
+      : 'Spikeadmin - Nuxt3 Typescript based Admin Dashboard Template';
   },
 });
 </script>
@@ -51,10 +49,7 @@ useHead({
       </ClientOnly>
       <v-main>
         <div class="rtl-lyt mb-3 hr-layout">
-          <v-container
-            fluid
-            class="page-wrapper bg-background px-sm-5 px-4 pt-12 rounded-xl"
-          >
+          <v-container fluid class="page-wrapper bg-background px-sm-5 px-4 pt-12 rounded-xl">
             <div class="">
               <div :class="customizer.boxed ? 'maxWidth' : ''">
                 <NuxtPage />
@@ -64,11 +59,7 @@ useHead({
                   icon
                   variant="flat"
                   color="primary"
-                  @click.stop="
-                    customizer.SET_CUSTOMIZER_DRAWER(
-                      !customizer.Customizer_drawer
-                    )
-                  "
+                  @click.stop="customizer.SET_CUSTOMIZER_DRAWER(!customizer.Customizer_drawer)"
                 >
                   <SettingsIcon />
                 </v-btn>
@@ -114,10 +105,7 @@ useHead({
       </ClientOnly>
       <v-main>
         <div class="mb-3 hr-layout">
-          <v-container
-            fluid
-            class="page-wrapper bg-background px-sm-5 px-4 pt-12 rounded-xl"
-          >
+          <v-container fluid class="page-wrapper bg-background px-sm-5 px-4 pt-12 rounded-xl">
             <div class="">
               <div :class="customizer.boxed ? 'maxWidth' : ''">
                 <NuxtPage />
@@ -127,11 +115,7 @@ useHead({
                   icon
                   variant="flat"
                   color="primary"
-                  @click.stop="
-                    customizer.SET_CUSTOMIZER_DRAWER(
-                      !customizer.Customizer_drawer
-                    )
-                  "
+                  @click.stop="customizer.SET_CUSTOMIZER_DRAWER(!customizer.Customizer_drawer)"
                 >
                   <SettingsIcon />
                 </v-btn>

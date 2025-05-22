@@ -1,28 +1,25 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue';
 // common components
-import BaseBreadcrumb from "@/components/shared/BaseBreadcrumb.vue";
-import EditInvoice from "@/components/apps/invoice/Edit.vue";
+import BaseBreadcrumb from '@/components/shared/BaseBreadcrumb.vue';
+import EditInvoice from '@/components/apps/invoice/Edit.vue';
 
-const page = ref({ title: "Edit Invoice" });
+const page = ref({ title: 'Edit Invoice' });
 const breadcrumbs = ref([
   {
-    text: "Dashboard",
+    text: 'Dashboard',
     disabled: false,
-    href: "#",
+    href: '#',
   },
   {
-    text: "Edit Invoice",
+    text: 'Edit Invoice',
     disabled: true,
-    href: "#",
+    href: '#',
   },
 ]);
 </script>
 
 <template>
-  <BaseBreadcrumb
-    :title="page.title"
-    :breadcrumbs="breadcrumbs"
-  ></BaseBreadcrumb>
+  <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
   <EditInvoice />
 </template>

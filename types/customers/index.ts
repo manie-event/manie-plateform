@@ -6,16 +6,16 @@ export interface CustomerStateProps {
   error?: object | string | null;
 }
 
-export type Customer = {
+export interface Customer {
   name: string;
   email: string;
   location: string;
   orders: number;
   date: string;
   status: number;
-};
+}
 
-export type Order = {
+export interface Order {
   id: string;
   name: string;
   company: string;
@@ -23,22 +23,22 @@ export type Order = {
   qty: number;
   date: string;
   status: number;
-};
+}
 
-export type Product = {
+export interface Product {
   id: string;
   name: string;
   category: string;
   price: number;
   date: string;
   qty: number;
-};
+}
 
-export type ProductReview = {
+export interface ProductReview {
   name: string;
   author: string;
   review: string;
   rating: number;
   date: string;
   status: number;
-};
+}

@@ -5,7 +5,7 @@ const customizer = useCustomizerStore();
 // ===============================|| Blank Layout ||=============================== //
 <template>
   <!-----RTL LAYOUT------->
-  
+
   <v-locale-provider v-if="customizer.setRTLLayout" rtl>
     <v-app class="authpage" :theme="customizer.actTheme">
       <NuxtPage />
@@ -18,6 +18,4 @@ const customizer = useCustomizerStore();
       <NuxtPage />
     </v-app>
   </v-locale-provider>
-
 </template>
-

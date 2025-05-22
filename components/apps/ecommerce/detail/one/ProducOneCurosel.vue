@@ -17,110 +17,114 @@ const store = useEcomStore();
 const route = useRoute();
 
 const getDetailImage = computed(() => {
-    return store.products[route.params.id - 1].image;
+  return store.products[route.params.id - 1].image;
 });
 
 const slideShow = [
-    {
-        image: getDetailImage.value,
-        id: 1
-    },
-    {
-        image: product1,
-        id: 2
-    },
-    {
-        image: product2,
-        id: 3
-    },
-    {
-        image: product3,
-        id: 4
-    },
-    {
-        image: product4,
-        id: 5
-    },
-    {
-        image: product5,
-        id: 6
-    },
-    {
-        image: product6,
-        id: 7
-    },
-    {
-        image: product7,
-        id: 8
-    },
-    {
-        image: product8,
-        id: 9
-    }
+  {
+    image: getDetailImage.value,
+    id: 1,
+  },
+  {
+    image: product1,
+    id: 2,
+  },
+  {
+    image: product2,
+    id: 3,
+  },
+  {
+    image: product3,
+    id: 4,
+  },
+  {
+    image: product4,
+    id: 5,
+  },
+  {
+    image: product5,
+    id: 6,
+  },
+  {
+    image: product6,
+    id: 7,
+  },
+  {
+    image: product7,
+    id: 8,
+  },
+  {
+    image: product8,
+    id: 9,
+  },
 ];
 
 const currentSlide = ref(0);
 function slideTo(val) {
-    currentSlide.value = val;
+  currentSlide.value = val;
 }
-
-
 </script>
 
 <template>
-    <div>
-        <Carousel id="gallery" :items-to-show="1" :wrap-around="false" v-model="currentSlide">
-            <Slide v-for="(slide, i) in slideShow" :key="i">
-                <div class="carousel__item">
-                    <img alt="product" :src="slide.image" class="w-100 rounded-xl" />
-                </div>
-            </Slide>
-        </Carousel>
+  <div>
+    <Carousel id="gallery" :items-to-show="1" :wrap-around="false" v-model="currentSlide">
+      <Slide v-for="(slide, i) in slideShow" :key="i">
+        <div class="carousel__item">
+          <img alt="product" :src="slide.image" class="w-100 rounded-xl" />
+        </div>
+      </Slide>
+    </Carousel>
 
-        <Carousel id="thumbnails" class="mt-4" :currentSlide="currentSlide" :transition="500"  :items-to-show="7" :wrap-around="false"
-            v-model="currentSlide" ref="carousel">
-            <Slide v-for="(slide, i) in slideShow" :key="i">
-                <div class="carousel__item cursor-pointer" @click="slideTo(slide.id - 1)">
-                    <v-avatar  class="thumb">
-                        <img alt="product" :src="slide.image"  class="rounded-circle w-100" />
-                    </v-avatar>
-                </div>
-            </Slide>
+    <Carousel
+      id="thumbnails"
+      class="mt-4"
+      :currentSlide="currentSlide"
+      :transition="500"
+      :items-to-show="7"
+      :wrap-around="false"
+      v-model="currentSlide"
+      ref="carousel"
+    >
+      <Slide v-for="(slide, i) in slideShow" :key="i">
+        <div class="carousel__item cursor-pointer" @click="slideTo(slide.id - 1)">
+          <v-avatar class="thumb">
+            <img alt="product" :src="slide.image" class="rounded-circle w-100" />
+          </v-avatar>
+        </div>
+      </Slide>
 
-            
-            <!-- <template #addons>
+      <!-- <template #addons>
                 <Navigation />
             </template> -->
-        </Carousel>
-    </div>
+    </Carousel>
+  </div>
 </template>
 <style lang="scss">
 #thumbnails {
-    .carousel__slide {
-        border: 2px solid transparent;
-        line-height: 0px;
+  .carousel__slide {
+    border: 2px solid transparent;
+    line-height: 0px;
+  }
+  .thumb {
+    height: 75px;
+    width: 75px;
+    @media screen and (max-width: 1024px) {
+      height: 50px;
+      width: 50px;
     }
-    .thumb{
-            height: 75px;
-            width: 75px;
-            @media screen and (max-width:1024px){
-                height: 50px;
-                width: 50px;
-            }
-            @media screen and (max-width:600px){
-                height: 30px;
-                width: 30px;
-            }
+    @media screen and (max-width: 600px) {
+      height: 30px;
+      width: 30px;
     }
+  }
 
-    .carousel__slide--active {
-        .thumb{
-            border: 2px solid rgb(var(--v-theme-primary));
-            img{
-                padding:4px;
-            }
-        }
-        
+  .carousel__slide--active {
+    .thumb {
+      border: 2px solid rgb(var(--v-theme-primary));
+      img {
+        padding: 4px;
+      }
     }
+  }
 }
 </style>

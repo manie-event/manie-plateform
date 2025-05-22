@@ -3,21 +3,21 @@ import { defineStore } from 'pinia';
 import axios from '@/utils/axios';
 
 export const useScheduleStore = defineStore({
-    id: 'Schedule',
-    state: () => ({
-        schedule: []
-    }),
-    getters: {},
-    actions: {
-        // Fetch followers from action
-        async fetchSchedule() {
-            try {
-                const response = await axios.get('/api/contacts');
-                this.schedule = response.data.schedule;
-            } catch (error) {
-                alert(error);
-                console.log(error);
-            }
-        }
-    }
+  id: 'Schedule',
+  state: () => ({
+    schedule: [],
+  }),
+  getters: {},
+  actions: {
+    // Fetch followers from action
+    async fetchSchedule() {
+      try {
+        const response = await axios.get('/api/contacts');
+        this.schedule = response.data.schedule;
+      } catch (error) {
+        alert(error);
+        console.log(error);
+      }
+    },
+  },
 });

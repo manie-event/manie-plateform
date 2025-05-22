@@ -21,52 +21,50 @@ import image4 from '/images/profile/4.jpg';
 import image5 from '/images/profile/5.jpg';
 import image6 from '/images/profile/6.jpg';
 
-
-
 // types
-export type KeyedObject = {
-    [key: string]: string | number | KeyedObject | any;
-};
+export interface KeyedObject {
+  [key: string]: string | number | KeyedObject | any;
+}
 
 // Photos components
 
 const photos: KeyedObject[] = [
-    {
-        id: '#1Photos',
-        avatar: image1,
-    },
-    {
-        id: '#2Photos',
-        avatar: image2,
-    },
-    {
-        id: '#3Photos',
-        avatar: image3,
-    },
-    {
-        id: '#4Photos',
-        avatar: image4,
-    },
-    {
-        id: '#5Photos',
-        avatar: image5,
-    },
-    {
-        id: '#6Photos',
-        avatar: image6,
-    },
-    {
-        id: '#7Photos',
-        avatar: image1,
-    },
-    {
-        id: '#8Photos',
-        avatar: image2,
-    },
-    {
-        id: '#9Photos',
-        avatar: image3,
-    }
+  {
+    id: '#1Photos',
+    avatar: image1,
+  },
+  {
+    id: '#2Photos',
+    avatar: image2,
+  },
+  {
+    id: '#3Photos',
+    avatar: image3,
+  },
+  {
+    id: '#4Photos',
+    avatar: image4,
+  },
+  {
+    id: '#5Photos',
+    avatar: image5,
+  },
+  {
+    id: '#6Photos',
+    avatar: image6,
+  },
+  {
+    id: '#7Photos',
+    avatar: image1,
+  },
+  {
+    id: '#8Photos',
+    avatar: image2,
+  },
+  {
+    id: '#9Photos',
+    avatar: image3,
+  },
 ];
 
 // ==============================|| MOCK SERVICES ||============================== //

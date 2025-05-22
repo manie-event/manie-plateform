@@ -3,22 +3,22 @@ import { defineStore } from 'pinia';
 import axios from '@/utils/axios';
 
 export const useTeachersStore = defineStore({
-    id: 'Teachers',
-    state: () => ({
-        teachers: []
-    }),
+  id: 'Teachers',
+  state: () => ({
+    teachers: [],
+  }),
 
-    getters: {},
-    actions: {
-        // Fetch followers from action
-        async fetchTeachers() {
-            try {
-                const response = await axios.get('/api/contacts');
-                this.teachers = response.data.teachers;
-            } catch (error) {
-                alert(error);
-                console.log(error);
-            }
-        }
-    }
+  getters: {},
+  actions: {
+    // Fetch followers from action
+    async fetchTeachers() {
+      try {
+        const response = await axios.get('/api/contacts');
+        this.teachers = response.data.teachers;
+      } catch (error) {
+        alert(error);
+        console.log(error);
+      }
+    },
+  },
 });

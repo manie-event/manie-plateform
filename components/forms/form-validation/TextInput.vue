@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { toRef } from "vue";
-import { useField } from "vee-validate";
+import { toRef } from 'vue';
+import { useField } from 'vee-validate';
 
 const props = defineProps({
   type: {
     type: String,
-    default: "text",
+    default: 'text',
   },
   value: {
     type: String,
-    default: "",
+    default: '',
   },
   name: {
     type: String,
@@ -21,18 +21,18 @@ const props = defineProps({
   },
   successMessage: {
     type: String,
-    default: "",
+    default: '',
   },
   placeholder: {
     type: String,
-    default: "",
+    default: '',
   },
 });
 
 // use `toRef` to create reactive references to `name` prop which is passed to `useField`
 // this is important because vee-validte needs to know if the field name changes
 // https://vee-validate.logaretm.com/v4/guide/composition-api/caveats
-const name = toRef(props, "name");
+const name = toRef(props, 'name');
 
 // we don't provide any rules here because we are using form-level validation
 // https://vee-validate.logaretm.com/v4/guide/validation#form-level-validation
@@ -47,10 +47,7 @@ const {
 });
 </script>
 <template>
-  <div
-    class="TextInput"
-    :class="{ 'has-error': !!errorMessage, success: meta.valid }"
-  >
+  <div class="TextInput" :class="{ 'has-error': !!errorMessage, success: meta.valid }">
     <v-text-field
       :name="name"
       :id="name"

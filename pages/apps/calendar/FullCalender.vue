@@ -1,12 +1,12 @@
 <script lang="ts">
-import { ref } from "vue";
-import { defineComponent } from "vue";
-import FullCalendar from "@fullcalendar/vue3";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import interactionPlugin from "@fullcalendar/interaction";
-import { format } from "date-fns"; // Import date-fns for formatting dates
-import type { CalendarOptions } from "@fullcalendar/core";
+import { ref } from 'vue';
+import { defineComponent } from 'vue';
+import FullCalendar from '@fullcalendar/vue3';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import { format } from 'date-fns'; // Import date-fns for formatting dates
+import type { CalendarOptions } from '@fullcalendar/core';
 
 let eventGuid = 0;
 const today = new Date();
@@ -17,50 +17,50 @@ const d = today.getDate();
 export const INITIAL_EVENTS = [
   {
     id: createEventId(),
-    title: "Twice event For two Days",
+    title: 'Twice event For two Days',
     allDay: true,
     start: new Date(y, m, 3),
     end: new Date(y, m, 5),
-    color: "#635BFF",
+    color: '#635BFF',
   },
   {
     id: createEventId(),
-    title: "Learn ReactJs",
+    title: 'Learn ReactJs',
     start: new Date(y, m, d + 3, 10, 30),
     end: new Date(y, m, d + 3, 11, 30),
     allDay: true,
-    color: "#13DEB9",
+    color: '#13DEB9',
   },
   {
     id: createEventId(),
-    title: "Launching MaterialArt Angular",
+    title: 'Launching MaterialArt Angular',
     start: new Date(y, m, d + 7, 12, 0),
     end: new Date(y, m, d + 7, 14, 0),
     allDay: true,
-    color: "#ff6692",
+    color: '#ff6692',
   },
   {
     id: createEventId(),
-    title: "Lunch with Mr.Raw",
+    title: 'Lunch with Mr.Raw',
     start: new Date(y, m, d - 2),
     end: new Date(y, m, d - 2),
     allDay: true,
-    color: "#16CDC7",
+    color: '#16CDC7',
   },
   {
     id: createEventId(),
-    title: "Going For Party of Sahs",
+    title: 'Going For Party of Sahs',
     start: new Date(y, m, d + 1, 19, 0),
     end: new Date(y, m, d + 1, 22, 30),
     allDay: true,
-    color: "#1a97f5",
+    color: '#1a97f5',
   },
   {
     id: createEventId(),
-    title: "Learn Ionic",
+    title: 'Learn Ionic',
     start: new Date(y, m, 23),
     end: new Date(y, m, 25),
-    color: "#ffd648",
+    color: '#ffd648',
   },
 ];
 
@@ -79,25 +79,25 @@ export default defineComponent({
       updateModalShow: false,
       addModalShow: false,
       selectedEvent: {
-        id: "",
-        title: "",
-        color: "",
-        start: "",
-        end: "",
+        id: '',
+        title: '',
+        color: '',
+        start: '',
+        end: '',
         allDay: true,
       },
-      newEvent: { title: "", color: "", start: "", end: "", allDay: true },
-      updatedTitle: "",
-      updatedColor: "",
+      newEvent: { title: '', color: '', start: '', end: '', allDay: true },
+      updatedTitle: '',
+      updatedColor: '',
 
       calendarOptions: {
         plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
         headerToolbar: {
-          left: "prev,next today",
-          center: "title",
-          right: "dayGridMonth,timeGridWeek,timeGridDay",
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay',
         },
-        initialView: "dayGridMonth",
+        initialView: 'dayGridMonth',
         initialEvents: INITIAL_EVENTS,
         editable: true,
         selectable: true,
@@ -108,18 +108,18 @@ export default defineComponent({
         eventClick: this.handleEventClick,
         eventsSet: this.handleEvents,
       } as CalendarOptions,
-    
+
       activeColor: {
-        newEvent: "", // Store the active color for the new event
-        updateEvent: "", // Store the active color for the update event
+        newEvent: '', // Store the active color for the new event
+        updateEvent: '', // Store the active color for the update event
       },
       currentEvents: [],
       colorOptions: [
-        { id: 1, label: "Primary", value: "#615dff" },
-        { id: 2, label: "Success", value: "#39b69a" },
-        { id: 3, label: "Error", value: "#fc4b6c" },
-        { id: 4, label: "Secondary", value: "#1a97f5" },
-        { id: 5, label: "Warning", value: "#fdd43f" },
+        { id: 1, label: 'Primary', value: '#615dff' },
+        { id: 2, label: 'Success', value: '#39b69a' },
+        { id: 3, label: 'Error', value: '#fc4b6c' },
+        { id: 4, label: 'Secondary', value: '#1a97f5' },
+        { id: 5, label: 'Warning', value: '#fdd43f' },
       ],
     };
   },
@@ -141,8 +141,8 @@ export default defineComponent({
         id: clickInfo.event.id,
         title: clickInfo.event.title,
         color: clickInfo.event.backgroundColor,
-        start: eventStart ? format(eventStart, "yyyy-MM-dd") : "", // If the date exists, format it, otherwise use an empty string
-        end: eventEnd ? format(eventEnd, "yyyy-MM-dd") : "", // Handle no end date case
+        start: eventStart ? format(eventStart, 'yyyy-MM-dd') : '', // If the date exists, format it, otherwise use an empty string
+        end: eventEnd ? format(eventEnd, 'yyyy-MM-dd') : '', // Handle no end date case
         allDay: clickInfo.event.allDay,
       };
 
@@ -164,47 +164,49 @@ export default defineComponent({
 
       this.addModalShow = false;
       this.newEvent = {
-        title: "",
-        color: "",
-        start: "",
-        end: "",
+        title: '',
+        color: '',
+        start: '',
+        end: '',
         allDay: true,
       };
     },
     updateEvent() {
-  const calendarApi = (this.$refs.fullCalendar as InstanceType<typeof FullCalendar>).getApi();
-  const event = calendarApi.getEventById(this.selectedEvent.id);
+      const calendarApi = (this.$refs.fullCalendar as InstanceType<typeof FullCalendar>).getApi();
+      const event = calendarApi.getEventById(this.selectedEvent.id);
 
-  if (event) {
-    // Ensure updatedStart and updatedEnd are not null before calling getTime()
-    const updatedStart = this.selectedEvent.start ? new Date(this.selectedEvent.start) : null;
-    const updatedEnd = this.selectedEvent.end ? new Date(this.selectedEvent.end) : null;
+      if (event) {
+        // Ensure updatedStart and updatedEnd are not null before calling getTime()
+        const updatedStart = this.selectedEvent.start ? new Date(this.selectedEvent.start) : null;
+        const updatedEnd = this.selectedEvent.end ? new Date(this.selectedEvent.end) : null;
 
-    if (!updatedStart || isNaN(updatedStart.getTime()) || (updatedEnd && isNaN(updatedEnd.getTime()))) {
-      console.error("Invalid start or end date.");
-      return;
-    }
+        if (
+          !updatedStart ||
+          isNaN(updatedStart.getTime()) ||
+          (updatedEnd && isNaN(updatedEnd.getTime()))
+        ) {
+          console.error('Invalid start or end date.');
+          return;
+        }
 
-    event.setProp("title", this.updatedTitle);
-    event.setProp("backgroundColor", this.updatedColor);
-    event.setStart(updatedStart);
-    event.setEnd(updatedEnd);
+        event.setProp('title', this.updatedTitle);
+        event.setProp('backgroundColor', this.updatedColor);
+        event.setStart(updatedStart);
+        event.setEnd(updatedEnd);
 
-    this.updateModalShow = false;
-    this.updatedTitle = "";
-    this.updatedColor = "";
-    this.selectedEvent = {
-      id: "",
-      title: "",
-      color: "",
-      start: "",
-      end: "",
-      allDay: true,
-    };
-  }
-},
-
-
+        this.updateModalShow = false;
+        this.updatedTitle = '';
+        this.updatedColor = '';
+        this.selectedEvent = {
+          id: '',
+          title: '',
+          color: '',
+          start: '',
+          end: '',
+          allDay: true,
+        };
+      }
+    },
 
     deleteEvent() {
       const calendarApi = (this.$refs.fullCalendar as InstanceType<typeof FullCalendar>).getApi();
@@ -244,8 +246,8 @@ export default defineComponent({
               <div>
                 <h4 class="text-h4 mb-2">Add Event</h4>
                 <p class="text-muted">
-                  Fill in the title, choose the event color, and select the
-                  start and end dates to add an event.
+                  Fill in the title, choose the event color, and select the start and end dates to
+                  add an event.
                 </p>
               </div>
               <v-btn
@@ -298,18 +300,12 @@ export default defineComponent({
                     backgroundColor: option.value,
                   }"
                 >
-                  <CheckIcon
-                    size="18"
-                    color="#fff"
-                    v-if="activeColor.newEvent === option.value"
-                  />
+                  <CheckIcon size="18" color="#fff" v-if="activeColor.newEvent === option.value" />
                 </div>
               </v-list-item>
             </v-list>
             <!-- Add Event Button -->
-            <v-btn @click="addEvent" color="primary" rounded="pill" class="mt-6"
-              >Add Event</v-btn
-            >
+            <v-btn @click="addEvent" color="primary" rounded="pill" class="mt-6">Add Event</v-btn>
           </v-card-text>
         </v-card>
       </v-dialog>
@@ -323,8 +319,8 @@ export default defineComponent({
               <div>
                 <h4 class="text-h4 mb-2">Update Event</h4>
                 <p class="text-muted">
-                  To add Event kindly fill up the title and choose the event
-                  color and press the add button
+                  To add Event kindly fill up the title and choose the event color and press the add
+                  button
                 </p>
               </div>
               <v-btn

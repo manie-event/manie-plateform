@@ -3,21 +3,21 @@ import { defineStore } from 'pinia';
 import axios from '@/utils/axios';
 
 export const useAttendenceStore = defineStore({
-    id: 'Attendence',
-    state: () => ({
-        attendence: []
-    }),
-    getters: {},
-    actions: {
-        // Fetch followers from action
-        async fetchAttendence() {
-            try {
-                const response = await axios.get('/api/contacts');
-                this.attendence = response.data.attendence;
-            } catch (error) {
-                alert(error);
-                console.log(error);
-            }
-        }
-    }
+  id: 'Attendence',
+  state: () => ({
+    attendence: [],
+  }),
+  getters: {},
+  actions: {
+    // Fetch followers from action
+    async fetchAttendence() {
+      try {
+        const response = await axios.get('/api/contacts');
+        this.attendence = response.data.attendence;
+      } catch (error) {
+        alert(error);
+        console.log(error);
+      }
+    },
+  },
 });

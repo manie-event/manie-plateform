@@ -4,11 +4,7 @@ const toggle = ref(null);
 </script>
 <template>
   <div class="d-flex justify-center">
-    <v-btn-toggle
-      v-model="toggle"
-      color="primary"
-      class="text-center"
-    >
+    <v-btn-toggle v-model="toggle" color="primary" class="text-center">
       <v-btn icon="mdi-format-align-left"></v-btn>
       <v-btn icon="mdi-format-align-center"></v-btn>
       <v-btn icon="mdi-format-align-right"></v-btn>

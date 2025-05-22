@@ -1,8 +1,8 @@
 <script setup lang="ts">
 /* Reset form */
-import ResetPassword from "@/components/auth/ResetForm.vue";
+import ResetPassword from '@/components/auth/ResetForm.vue';
 definePageMeta({
-  layout: "blank",
+  layout: 'blank',
 });
 </script>
 
@@ -11,9 +11,7 @@ definePageMeta({
     <div
       class="auth-login position-relative d-flex align-center justify-content-center px-lg-16 px-sm-8 px-3 rounded-xl"
     >
-      <div
-        class="auth-login-wrapper position-relative rounded-xl mx-lg-16 mx-4 mx-auto w-100"
-      >
+      <div class="auth-login-wrapper position-relative rounded-xl mx-lg-16 mx-4 mx-auto w-100">
         <v-card elevation="0" class="overflow-hidden px-sm-3">
           <v-card-item class="px-sm-8 px-3">
             <v-row class="justify-md-space-around align-center py-md-8">
@@ -30,8 +28,8 @@ definePageMeta({
                     Vous avez oublié votre mot de passe ?
                   </h2>
                   <div class="text-14 mb-6 font-weight-medium mt-3 mb-8">
-                    Entrez l'email associé à votre compte et nous vous enverrons
-                    un lien pour en saisir un nouveau.
+                    Entrez l'email associé à votre compte et nous vous enverrons un lien pour en
+                    saisir un nouveau.
                   </div>
                   <ResetPassword />
                   <v-btn

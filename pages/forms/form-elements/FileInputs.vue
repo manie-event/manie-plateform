@@ -15,76 +15,74 @@ import BaseBreadcrumb from '@/components/shared/BaseBreadcrumb.vue';
 // theme breadcrumb
 const page = ref({ title: 'File Inputs' });
 const breadcrumbs = ref([
-    {
-        text: 'Home',
-        disabled: false,
-        href: '/'
-    },
-    {
-        text: 'File inputs',
-        disabled: true,
-        href: '#'
-    }
+  {
+    text: 'Home',
+    disabled: false,
+    href: '/',
+  },
+  {
+    text: 'File inputs',
+    disabled: true,
+    href: '#',
+  },
 ]);
 </script>
 <template>
-
-<BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
-    <v-row>
-        <v-col cols="12">
-            <UiParentCard title="File Inputs">
-                <v-row>
-                    <!-- File accept-->
-                    <v-col cols="12" sm="6">
-                        <UiChildCard title="Accept">
-                            <FileAccept />
-                        </UiChildCard>
-                    </v-col>
-                    <!-- File chips-->
-                    <v-col cols="12" sm="6">
-                        <UiChildCard title="Chips">
-                            <FileChips />
-                        </UiChildCard>
-                    </v-col>
-                    <!-- File counter-->
-                    <v-col cols="12" sm="6">
-                        <UiChildCard title="Counter">
-                            <FileCounter />
-                        </UiChildCard>
-                    </v-col>
-                    <!-- File density-->
-                    <v-col cols="12" sm="6">
-                        <UiChildCard title="Density">
-                            <FileDensity />
-                        </UiChildCard>
-                    </v-col>
-                    <!-- File multiple-->
-                    <v-col cols="12" sm="6">
-                        <UiChildCard title="Multiple">
-                            <FileMultiple />
-                        </UiChildCard>
-                    </v-col>
-                    <!-- File prepend icon-->
-                    <v-col cols="12" sm="6">
-                        <UiChildCard title="Prepend Icon">
-                            <FilePrepand/>
-                        </UiChildCard>
-                    </v-col>
-                    <!-- File validation-->
-                    <v-col cols="12" sm="6">
-                        <UiChildCard title="Validation">
-                            <FileValidation/>
-                        </UiChildCard>
-                    </v-col>
-                      <!-- File selection slots-->
-                      <v-col cols="12" sm="6">
-                        <UiChildCard title="Complex selection slots">
-                            <FileSelection/>
-                        </UiChildCard>
-                    </v-col>
-                </v-row>
-            </UiParentCard>
-        </v-col>
-    </v-row>
+  <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
+  <v-row>
+    <v-col cols="12">
+      <UiParentCard title="File Inputs">
+        <v-row>
+          <!-- File accept-->
+          <v-col cols="12" sm="6">
+            <UiChildCard title="Accept">
+              <FileAccept />
+            </UiChildCard>
+          </v-col>
+          <!-- File chips-->
+          <v-col cols="12" sm="6">
+            <UiChildCard title="Chips">
+              <FileChips />
+            </UiChildCard>
+          </v-col>
+          <!-- File counter-->
+          <v-col cols="12" sm="6">
+            <UiChildCard title="Counter">
+              <FileCounter />
+            </UiChildCard>
+          </v-col>
+          <!-- File density-->
+          <v-col cols="12" sm="6">
+            <UiChildCard title="Density">
+              <FileDensity />
+            </UiChildCard>
+          </v-col>
+          <!-- File multiple-->
+          <v-col cols="12" sm="6">
+            <UiChildCard title="Multiple">
+              <FileMultiple />
+            </UiChildCard>
+          </v-col>
+          <!-- File prepend icon-->
+          <v-col cols="12" sm="6">
+            <UiChildCard title="Prepend Icon">
+              <FilePrepand />
+            </UiChildCard>
+          </v-col>
+          <!-- File validation-->
+          <v-col cols="12" sm="6">
+            <UiChildCard title="Validation">
+              <FileValidation />
+            </UiChildCard>
+          </v-col>
+          <!-- File selection slots-->
+          <v-col cols="12" sm="6">
+            <UiChildCard title="Complex selection slots">
+              <FileSelection />
+            </UiChildCard>
+          </v-col>
+        </v-row>
+      </UiParentCard>
+    </v-col>
+  </v-row>
 </template>
-

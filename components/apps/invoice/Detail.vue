@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useRouter, useRoute } from "vue-router";
-import { computed, onMounted, ref } from "vue";
-import { useInvoicestore } from "@/stores/apps/invoice";
-import type { InvoiceType } from "@/types/apps/InvoiceTypes";
-import Logo from "~/components/lc/Full/logo/Logo.vue";
+import { useRouter, useRoute } from 'vue-router';
+import { computed, onMounted, ref } from 'vue';
+import { useInvoicestore } from '@/stores/apps/invoice';
+import type { InvoiceType } from '@/types/apps/InvoiceTypes';
+import Logo from '~/components/lc/Full/logo/Logo.vue';
 
 const route = useRoute();
 const store = useInvoicestore();
@@ -11,7 +11,6 @@ const store = useInvoicestore();
 const invoiceId = route.params.id;
 
 const invoiceDetail = ref<InvoiceType | null>(null);
-
 
 const vatRate = 0.1;
 
@@ -31,23 +30,17 @@ const grandTotal = computed(() => {
   return subtotal.value + vat.value;
 });
 
-
 onMounted(async () => {
-
   await store.fetchinvoice();
 
-  invoiceDetail.value =
-  store.invoice.find((invoice) => invoice.id === Number(invoiceId)) || null;
+  invoiceDetail.value = store.invoice.find((invoice) => invoice.id === Number(invoiceId)) || null;
 
   if (!invoiceDetail.value) {
-    console.error("Invoice not found");
+    console.error('Invoice not found');
   }
 });
 
-const calculateTotalCost = (
-  unitPrice: number | undefined,
-  units: number | undefined
-): number => {
+const calculateTotalCost = (unitPrice: number | undefined, units: number | undefined): number => {
   return (unitPrice ?? 0) * (units ?? 0);
 };
 </script>
@@ -65,10 +58,10 @@ const calculateTotalCost = (
                 invoiceDetail.status === 'Shipped'
                   ? 'success'
                   : invoiceDetail.status === 'Delivered'
-                  ? 'info'
-                  : invoiceDetail.status === 'Pending'
-                  ? 'warning'
-                  : 'primary'
+                    ? 'info'
+                    : invoiceDetail.status === 'Pending'
+                      ? 'warning'
+                      : 'primary'
               "
               variant="flat"
               size="small"
@@ -112,10 +105,7 @@ const calculateTotalCost = (
               </tr>
             </thead>
             <tbody>
-              <tr
-                v-for="invoice in invoiceDetail.orders"
-                :key="invoice.itemName"
-              >
+              <tr v-for="invoice in invoiceDetail.orders" :key="invoice.itemName">
                 <td class="text-14 font-weight-semibold">
                   {{ invoice.itemName }}
                 </td>
@@ -142,25 +132,17 @@ const calculateTotalCost = (
               <p class="text-muted">Vat:</p>
               <p class="text-16">{{ vat }}</p>
             </div>
-            <div
-              class="d-flex align-center justify-space-between text-14 font-weight-semibold"
-            >
+            <div class="d-flex align-center justify-space-between text-14 font-weight-semibold">
               <p class="text-muted">Grand Total:</p>
               <p class="text-16">{{ grandTotal }}</p>
             </div>
           </v-col>
         </v-row>
         <div class="d-flex ga-3 justify-end mt-6">
-          <v-btn
-            color="warning"
-            :to="`/apps/invoice/edit/${invoiceDetail.id}`"
-            flat
-            rounded="pill"
+          <v-btn color="warning" :to="`/apps/invoice/edit/${invoiceDetail.id}`" flat rounded="pill"
             >Edit Invoice</v-btn
           >
-          <v-btn to="/apps/invoice" color="primary" rounded="pill" flat
-            >Back To Invoice List</v-btn
-          >
+          <v-btn to="/apps/invoice" color="primary" rounded="pill" flat>Back To Invoice List</v-btn>
         </div>
       </div>
       <div v-else>

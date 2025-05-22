@@ -42,9 +42,7 @@
           <div class="py-3">
             <p class="text-subtitle-1 font-weight-semibold mb-0">
               Name:
-              <span class="text-subtitle-1 text-grey100 ms-1"
-                >Violet Mendoza</span
-              >
+              <span class="text-subtitle-1 text-grey100 ms-1">Violet Mendoza</span>
             </p>
           </div>
 
@@ -79,18 +77,14 @@
           <div class="py-3">
             <p class="text-subtitle-1 font-weight-semibold mb-0">
               Phone:
-              <span class="text-subtitle-1 text-grey100 ms-1"
-                >+ 123 9988568</span
-              >
+              <span class="text-subtitle-1 text-grey100 ms-1">+ 123 9988568</span>
             </p>
           </div>
 
           <div class="py-3">
             <p class="text-subtitle-1 font-weight-semibold mb-0">
               Email:
-              <span class="text-subtitle-1 text-grey100 ms-1"
-                >davidzonar@gmail.com</span
-              >
+              <span class="text-subtitle-1 text-grey100 ms-1">davidzonar@gmail.com</span>
             </p>
           </div>
         </div>

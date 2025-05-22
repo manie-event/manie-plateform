@@ -1,27 +1,19 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue';
 import {
   demosMegamenu,
   appsMegamenu,
   productsSlider,
   FrontPageMenu,
-} from "@/_mockApis/landingpage/lpPage";
+} from '@/_mockApis/landingpage/lpPage';
 </script>
 <template>
   <div class="py-md-16 bg-containerBg">
     <v-container class="maxWidth py-md-16" id="demos">
       <v-row class="justify-center">
-        <v-col
-          cols="12"
-          lg="8"
-          sm="10"
-          data-aos="fade-up"
-          data-aos-duration="500"
-        >
+        <v-col cols="12" lg="8" sm="10" data-aos="fade-up" data-aos-duration="500">
           <div class="d-sm-flex align-center text-center justify-center">
-            <div
-              class="d-flex flex-row-reverse justify-sm-start justify-center ml-sm-0 ml-3"
-            >
+            <div class="d-flex flex-row-reverse justify-sm-start justify-center ml-sm-0 ml-3">
               <v-avatar class="ml-n2 avtar-border" size="28">
                 <img src="/images/profile/3.jpg" height="28" alt="usericon" />
               </v-avatar>
@@ -33,13 +25,9 @@ import {
               </v-avatar>
             </div>
             <h6 class="text-h5 ml-2 mt-2 mt-sm-0 text-grey100">52,589+</h6>
-            <h6 class="text-h5 ml-2 text-grey100">
-              developers & agencies using our templates
-            </h6>
+            <h6 class="text-h5 ml-2 text-grey100">developers & agencies using our templates</h6>
           </div>
-          <h2
-            class="text-center mt-6 sectionTitle font-weight-bold text-grey200"
-          >
+          <h2 class="text-center mt-6 sectionTitle font-weight-bold text-grey200">
             Production Ready & Developer Friendly Vuetify Vue Admin Template
           </h2>
         </v-col>
@@ -52,12 +40,7 @@ import {
           <v-row class="mt-3 row-up">
             <template v-for="demo in productsSlider" :key="demo.img">
               <v-col cols="12" md="4" sm="6" v-if="demo.type">
-                <v-card
-                  class="border"
-                  elevation="0"
-                  variant="outlined"
-                  rounded="lg"
-                >
+                <v-card class="border" elevation="0" variant="outlined" rounded="lg">
                   <v-sheet class="text-center pa-5 pb-0 bg-light rounded-t-md">
                     <div class="overflow-hidden position-relative rounded-t-md">
                       <v-hover v-slot="{ isHovering, props }">
@@ -98,12 +81,7 @@ import {
           <v-row class="mt-3 row-up">
             <template v-for="demo in productsSlider" :key="demo.img">
               <v-col cols="12" md="4" sm="6" v-if="!demo.type">
-                <v-card
-                  class="border"
-                  elevation="0"
-                  variant="outlined"
-                  rounded="lg"
-                >
+                <v-card class="border" elevation="0" variant="outlined" rounded="lg">
                   <v-sheet class="text-center pa-5 pb-0 bg-light rounded-t-md">
                     <div class="overflow-hidden position-relative rounded-t-md">
                       <v-hover v-slot="{ isHovering, props }">
@@ -182,9 +160,7 @@ import {
                     <h6 class="text-h6 font-weight-semibold">
                       {{ demo.name }}
                     </h6>
-                    <p class="text-subtitle-1 textSecondary mt-1">
-                      Frontend Pages
-                    </p>
+                    <p class="text-subtitle-1 textSecondary mt-1">Frontend Pages</p>
                   </div>
                 </v-card>
               </v-col>

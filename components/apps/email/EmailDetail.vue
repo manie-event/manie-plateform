@@ -1,8 +1,8 @@
 <!-- EmailDetail.vue -->
 <script setup lang="ts">
-import { useEmailStore } from "@/stores/apps/email";
-import { Icon } from "@iconify/vue";
-import type { EmailType } from "@/types/apps/EmailTypes";
+import { useEmailStore } from '@/stores/apps/email';
+import { Icon } from '@iconify/vue';
+import type { EmailType } from '@/types/apps/EmailTypes';
 const store = useEmailStore();
 // Method to delete the selected email
 const deleteEmail = () => {
@@ -47,7 +47,7 @@ const toggleIconimportant = (email: EmailType): void => {
         color="primary"
         @click.stop="toggleIconimportant(store.selectedEmail)"
       >
-      <icon
+        <icon
           v-if="store.selectedEmail.important"
           icon="solar:info-circle-bold"
           height="18"
@@ -56,14 +56,7 @@ const toggleIconimportant = (email: EmailType): void => {
         <icon v-else icon="solar:info-circle-outline" class="textPrimary" height="18" />
         <v-tooltip activator="parent" location="bottom">Importnat</v-tooltip>
       </v-btn>
-      <v-btn
-        icon
-        rounded="circle"
-        size="small"
-        variant="text"
-        color="primary"
-        @click="deleteEmail"
-      >
+      <v-btn icon rounded="circle" size="small" variant="text" color="primary" @click="deleteEmail">
         <icon icon="solar:trash-bin-minimalistic-linear" class="textPrimary" height="18" />
         <v-tooltip activator="parent" location="bottom">Delete</v-tooltip>
       </v-btn>
@@ -85,10 +78,10 @@ const toggleIconimportant = (email: EmailType): void => {
           store.selectedEmail.label === 'Promotional'
             ? 'primary'
             : store.selectedEmail.label === 'Social'
-            ? 'error'
-            : store.selectedEmail.label === 'Health'
-            ? 'success'
-            : 'secondary'
+              ? 'error'
+              : store.selectedEmail.label === 'Health'
+                ? 'success'
+                : 'secondary'
         "
         variant="flat"
         size="small"
@@ -104,12 +97,7 @@ const toggleIconimportant = (email: EmailType): void => {
       <v-divider class="my-6"></v-divider>
       <h6 class="text-14 mb-3">Attachments</h6>
       <v-row>
-        <v-col
-          cols="12"
-          md="4"
-          v-for="item in store.selectedEmail.attchments"
-          :key="item.id"
-        >
+        <v-col cols="12" md="4" v-for="item in store.selectedEmail.attchments" :key="item.id">
           <div class="d-flex align-center ga-3">
             <v-avatar size="48" rounded="md" color="light">
               <img :src="item.image" alt="user" width="24" />

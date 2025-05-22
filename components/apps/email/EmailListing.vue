@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from "vue";
-import { useEmailStore } from "@/stores/apps/email"; // Import the store
-import type { EmailType } from "@/types/apps/EmailTypes";
-import { Icon } from "@iconify/vue";
-import { format } from "date-fns";
+import { ref, computed, watch, onMounted } from 'vue';
+import { useEmailStore } from '@/stores/apps/email'; // Import the store
+import type { EmailType } from '@/types/apps/EmailTypes';
+import { Icon } from '@iconify/vue';
+import { format } from 'date-fns';
 
 interface Props {
   emails: EmailType[];
@@ -14,7 +14,7 @@ const store = useEmailStore();
 
 const selectedEmail = ref<EmailType | null>(null);
 const selectedEmails = ref<EmailType[]>([]);
-const searchTerm = ref("");
+const searchTerm = ref('');
 
 // Computed property to filter emails by name
 const filteredEmails = computed(() => {
@@ -120,10 +120,10 @@ const toggleIconimportant = (email: EmailType): void => {
                 email.label === 'Promotional'
                   ? 'primary'
                   : email.label === 'Social'
-                  ? 'error'
-                  : email.label === 'Health'
-                  ? 'success'
-                  : 'secondary'
+                    ? 'error'
+                    : email.label === 'Health'
+                      ? 'success'
+                      : 'secondary'
               "
               variant="flat"
               size="small"
@@ -134,7 +134,7 @@ const toggleIconimportant = (email: EmailType): void => {
             </v-chip>
           </div>
           <div class="ps-8 mt-n1">
-            <p class=" text-truncate text-14">{{ email.subject }}</p>
+            <p class="text-truncate text-14">{{ email.subject }}</p>
             <div class="d-flex align-center justify-space-between mt-3">
               <div class="d-flex align-center ga-2">
                 <!-- Toggle icon for each email based on its id -->
@@ -167,9 +167,7 @@ const toggleIconimportant = (email: EmailType): void => {
                 </button>
               </div>
               <small class="text-muted">
-                {{
-                  email.time ? format(new Date(email.time), "E, MMM d") : "N/A"
-                }}
+                {{ email.time ? format(new Date(email.time), 'E, MMM d') : 'N/A' }}
               </small>
             </div>
           </div>

@@ -6,55 +6,62 @@ const sDrawer = ref(false);
 </script>
 
 <template>
-    <!---/Left chat list -->
-    <div class="d-flex mainbox">
-        <!---right chat conversation -->
-        <div class="shop-two w-100">
-            <!---Toggle Button For mobile-->
-            <v-btn block @click="sDrawer = !sDrawer" variant="text" class="d-lg-none d-md-flex d-sm-flex">
-                <Menu2Icon size="20" class="mr-2" /> Menu
-            </v-btn>
-            <v-divider class="d-lg-none d-block" />
-            <slot name="rightpart"></slot>
-        </div>
-
-        <!---right chat conversation -->
+  <!---/Left chat list -->
+  <div class="d-flex mainbox">
+    <!---right chat conversation -->
+    <div class="shop-two w-100">
+      <!---Toggle Button For mobile-->
+      <v-btn block @click="sDrawer = !sDrawer" variant="text" class="d-lg-none d-md-flex d-sm-flex">
+        <Menu2Icon size="20" class="mr-2" /> Menu
+      </v-btn>
+      <v-divider class="d-lg-none d-block" />
+      <slot name="rightpart"></slot>
     </div>
 
-    <v-navigation-drawer temporary v-model="sDrawer" class="app_drawer drawer-top-zero" width="320" top v-if="!lgAndUp">
-        <perfect-scrollbar class="max-h-100">
-        <v-card-text class="pa-0">
-            <slot name="mobileLeftContent"></slot>
-        </v-card-text>
-        </perfect-scrollbar>
-    </v-navigation-drawer>
+    <!---right chat conversation -->
+  </div>
+
+  <v-navigation-drawer
+    temporary
+    v-model="sDrawer"
+    class="app_drawer drawer-top-zero"
+    width="320"
+    top
+    v-if="!lgAndUp"
+  >
+    <perfect-scrollbar class="max-h-100">
+      <v-card-text class="pa-0">
+        <slot name="mobileLeftContent"></slot>
+      </v-card-text>
+    </perfect-scrollbar>
+  </v-navigation-drawer>
 </template>
 
 <style lang="scss">
 .mainbox {
-    position: relative;
-    overflow: hidden;
+  position: relative;
+  overflow: hidden;
 }
 .left-part {
-    width: 320px;
-    border-right: 1px solid rgb(var(--v-theme-borderColor));
-    min-height: 500px;
-    transition: 0.1s ease-in;
-    flex-shrink: 0;
+  width: 320px;
+  border-right: 1px solid rgb(var(--v-theme-borderColor));
+  min-height: 500px;
+  transition: 0.1s ease-in;
+  flex-shrink: 0;
 }
 .v-theme--light {
-    .left-part {
-        background: white;
-    }
+  .left-part {
+    background: white;
+  }
 }
 .v-theme--dark {
-    .left-part {
-        background: #2b2b2b;
-    }
+  .left-part {
+    background: #2b2b2b;
+  }
 }
 .right-part {
-    width: 100%;
-    min-height: 500px;
-    position: relative;
+  width: 100%;
+  min-height: 500px;
+  position: relative;
 }
 </style>

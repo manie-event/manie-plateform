@@ -10,25 +10,25 @@ import OurTeam from '@/components/frontpages/Homepage/OurTeam.vue';
 import Packages from '@/components/frontpages/Homepage/Packages.vue';
 import PurchaseTemplate from '@/components/frontpages/Homepage/PurchaseTemplate.vue';
 import SecurePayment from '@/components/frontpages/Homepage/SecurePayment.vue';
-import DefaultLayout from './Layout.vue'
+import DefaultLayout from './Layout.vue';
 /*for Blank Layout*/
 definePageMeta({
-  layout: "blank",
+  layout: 'blank',
 });
 </script>
 
 <template>
-    <DefaultLayout>
-        <HeroText />
-        <SetupProcess />
-        <Archivement />
-        <OurTeam />
-        <ClientReviews />
-        <Componies />
-        <Highlights />
-        <Packages />
-        <SecurePayment />
-        <FAQ />
-        <PurchaseTemplate />
-    </DefaultLayout>
+  <DefaultLayout>
+    <HeroText />
+    <SetupProcess />
+    <Archivement />
+    <OurTeam />
+    <ClientReviews />
+    <Componies />
+    <Highlights />
+    <Packages />
+    <SecurePayment />
+    <FAQ />
+    <PurchaseTemplate />
+  </DefaultLayout>
 </template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from "vue";
-const dialogm1 = ref("");
+import { ref } from 'vue';
+const dialogm1 = ref('');
 const dialog = ref(false);
 </script>
 
@@ -8,7 +8,9 @@ const dialog = ref(false);
   <div class="text-center">
     <v-dialog v-model="dialog" scrollable max-width="800">
       <template v-slot:activator="{ props }">
-        <v-btn color="success" class="w-100 px-4 rounded-pill" v-bind="props" > Open  Scrolling Dialog </v-btn>
+        <v-btn color="success" class="w-100 px-4 rounded-pill" v-bind="props">
+          Open Scrolling Dialog
+        </v-btn>
       </template>
       <v-card>
         <v-card-title>Select Country</v-card-title>
@@ -37,10 +39,10 @@ const dialog = ref(false);
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
-          <v-btn color="error" variant="tonal"  @click="dialog = false" class="px-4 rounded-pill">
+          <v-btn color="error" variant="tonal" @click="dialog = false" class="px-4 rounded-pill">
             Close
           </v-btn>
-          <v-btn color="success" variant="tonal"  @click="dialog = false" class="px-4 rounded-pill">
+          <v-btn color="success" variant="tonal" @click="dialog = false" class="px-4 rounded-pill">
             Save
           </v-btn>
         </v-card-actions>

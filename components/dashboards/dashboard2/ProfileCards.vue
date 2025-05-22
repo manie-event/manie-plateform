@@ -24,9 +24,7 @@
         <v-avatar class="mb-8" size="68">
           <img src="/images/profile/user-1.jpg" height="68" width="68" />
         </v-avatar>
-        <p class="text-subtitle-1 font-weight-semibold text-warning">
-          #1 in DevOps
-        </p>
+        <p class="text-subtitle-1 font-weight-semibold text-warning">#1 in DevOps</p>
       </div>
 
       <div class="">

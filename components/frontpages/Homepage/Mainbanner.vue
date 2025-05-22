@@ -1,36 +1,36 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import icon1 from "/images/front-pages/technology/nuxt.svg";
-import icon2 from "/images/front-pages/technology/Vuetify.svg";
-import icon3 from "/images/front-pages/technology/Vite.svg";
-import icon4 from "/images/front-pages/technology/Typescript.svg";
-import icon5 from "/images/front-pages/technology/Pinia.svg";
-import icon6 from "/images/front-pages/technology/Apexchart.svg";
+import { ref } from 'vue';
+import icon1 from '/images/front-pages/technology/nuxt.svg';
+import icon2 from '/images/front-pages/technology/Vuetify.svg';
+import icon3 from '/images/front-pages/technology/Vite.svg';
+import icon4 from '/images/front-pages/technology/Typescript.svg';
+import icon5 from '/images/front-pages/technology/Pinia.svg';
+import icon6 from '/images/front-pages/technology/Apexchart.svg';
 
 const technology = ref([
   {
     img: icon1,
-    name: "NuxtJs",
+    name: 'NuxtJs',
   },
   {
     img: icon2,
-    name: "Vuetify",
+    name: 'Vuetify',
   },
   {
     img: icon3,
-    name: "Vite",
+    name: 'Vite',
   },
   {
     img: icon4,
-    name: "Typescript",
+    name: 'Typescript',
   },
   {
     img: icon5,
-    name: "Pinia",
+    name: 'Pinia',
   },
   {
     img: icon6,
-    name: "ApexChart",
+    name: 'ApexChart',
   },
 ]);
 </script>
@@ -45,9 +45,7 @@ const technology = ref([
           <div
             class="d-sm-flex align-center text-center justify-md-start justify-center pt-5 gap-3"
           >
-            <div
-              class="d-flex flex-row-reverse justify-sm-start justify-center ml-2"
-            >
+            <div class="d-flex flex-row-reverse justify-sm-start justify-center ml-2">
               <v-avatar class="ml-n2 avtar-border" size="40">
                 <img src="/images/profile/3.jpg" height="40" alt="usericon" />
               </v-avatar>
@@ -74,9 +72,7 @@ const technology = ref([
               >
                 <img :src="item.img" alt="technology" height="30" width="30" />
               </div>
-              <v-tooltip activator="parent" location="bottom">{{
-                item.name
-              }}</v-tooltip>
+              <v-tooltip activator="parent" location="bottom">{{ item.name }}</v-tooltip>
             </div>
           </div>
           <div class="d-flex justify-md-start justify-center">

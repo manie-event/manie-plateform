@@ -5,16 +5,16 @@ import RelatedProducts from '@/components/apps/ecommerce/detail/one/RelatedProdu
 </script>
 
 <template>
-    <!-- <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb> -->
-    <v-row>
-        <v-col cols="12">
-            <v-card elevation="10">
-                <v-card-text>
-                    <ProductDetail />
-                    <v-divider class="mt-10"></v-divider>
-                    <RelatedProducts />
-                </v-card-text>
-            </v-card>
-        </v-col>  
-    </v-row>
+  <!-- <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb> -->
+  <v-row>
+    <v-col cols="12">
+      <v-card elevation="10">
+        <v-card-text>
+          <ProductDetail />
+          <v-divider class="mt-10"></v-divider>
+          <RelatedProducts />
+        </v-card-text>
+      </v-card>
+    </v-col>
+  </v-row>
 </template>

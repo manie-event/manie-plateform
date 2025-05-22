@@ -13,57 +13,56 @@ import BaseBreadcrumb from '@/components/shared/BaseBreadcrumb.vue';
 // theme breadcrumb
 const page = ref({ title: 'Select' });
 const breadcrumbs = ref([
-    {
-        text: 'Home',
-        disabled: false,
-        href: '/'
-    },
-    {
-        text: 'Select',
-        disabled: true,
-        href: '#'
-    }
+  {
+    text: 'Home',
+    disabled: false,
+    href: '/',
+  },
+  {
+    text: 'Select',
+    disabled: true,
+    href: '#',
+  },
 ]);
 </script>
 <template>
-    <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
-    <v-row>
-        <v-col cols="12">
-            <UiParentCard title="Select">
-                <v-row>
-                    <!--Select Basic-->
-                    <v-col cols="12" sm="6">
-                        <UiChildCard title="Basic">
-                            <SelectDefualt />
-                        </UiChildCard>
-                    </v-col>
-                    <!--Select Readonly-->
-                    <v-col cols="12" sm="6">
-                        <UiChildCard title="Read only">
-                            <SelectReadonly/>
-                        </UiChildCard>
-                    </v-col>
-                    <!--Select Multiple-->
-                    <v-col cols="12" sm="6">
-                        <UiChildCard title="Multiple">
-                            <SelectMultiple/>
-                        </UiChildCard>
-                    </v-col>
-                    <!--Select Chip-->
-                    <v-col cols="12" sm="6">
-                        <UiChildCard title="Chips">
-                            <SelectChip/>
-                        </UiChildCard>
-                    </v-col>
-                    <!--Select Density-->
-                    <v-col cols="12" sm="12">
-                        <UiChildCard title="Density">
-                            <SelectDensity/>
-                        </UiChildCard>
-                    </v-col>
-                </v-row>
-            </UiParentCard>
-        </v-col>
-    </v-row>
+  <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
+  <v-row>
+    <v-col cols="12">
+      <UiParentCard title="Select">
+        <v-row>
+          <!--Select Basic-->
+          <v-col cols="12" sm="6">
+            <UiChildCard title="Basic">
+              <SelectDefualt />
+            </UiChildCard>
+          </v-col>
+          <!--Select Readonly-->
+          <v-col cols="12" sm="6">
+            <UiChildCard title="Read only">
+              <SelectReadonly />
+            </UiChildCard>
+          </v-col>
+          <!--Select Multiple-->
+          <v-col cols="12" sm="6">
+            <UiChildCard title="Multiple">
+              <SelectMultiple />
+            </UiChildCard>
+          </v-col>
+          <!--Select Chip-->
+          <v-col cols="12" sm="6">
+            <UiChildCard title="Chips">
+              <SelectChip />
+            </UiChildCard>
+          </v-col>
+          <!--Select Density-->
+          <v-col cols="12" sm="12">
+            <UiChildCard title="Density">
+              <SelectDensity />
+            </UiChildCard>
+          </v-col>
+        </v-row>
+      </UiParentCard>
+    </v-col>
+  </v-row>
 </template>
-

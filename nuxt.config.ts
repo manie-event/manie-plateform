@@ -1,4 +1,4 @@
-import { createResolver } from "@nuxt/kit";
+import { createResolver } from '@nuxt/kit';
 
 const { resolve } = createResolver(import.meta.url);
 
@@ -6,10 +6,10 @@ const { resolve } = createResolver(import.meta.url);
 export default defineNuxtConfig({
   // Enable server-side rendering
   ssr: false,
-    runtimeConfig: {
+  runtimeConfig: {
     public: {
-      apiUrl: process.env.NUXT_API_URL || 'https://manie-api.onrender.com'
-    }
+      apiUrl: process.env.NUXT_API_URL || 'https://manie-api.onrender.com',
+    },
   },
   // TypeScript configuration
   typescript: {
@@ -18,17 +18,16 @@ export default defineNuxtConfig({
 
   // Vuetify build configuration
   build: {
-    transpile: ["vuetify"],
+    transpile: ['vuetify'],
   },
 
   // Modules
-  modules: ["@pinia/nuxt"],
+  modules: ['@pinia/nuxt'],
 
   // Application metadata
   app: {
     head: {
-      title:
-        "SpikeAdmin Nuxt 3 - Vuetify 3 - vite - Typescript Based Admin Dashboard Template",
+      title: 'SpikeAdmin Nuxt 3 - Vuetify 3 - vite - Typescript Based Admin Dashboard Template',
     },
   },
 
@@ -40,5 +39,5 @@ export default defineNuxtConfig({
   // Dev server handlers
   devServerHandlers: [],
 
-  compatibilityDate: "2024-09-06",
+  compatibilityDate: '2024-09-06',
 });

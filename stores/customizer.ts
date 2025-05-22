@@ -1,18 +1,17 @@
-import { defineStore } from "pinia";
-import config from '@/config'
-
+import { defineStore } from 'pinia';
+import config from '@/config';
 
 export const useCustomizerStore = defineStore({
-  id: "customizer",
+  id: 'customizer',
   state: () => ({
     Sidebar_drawer: config.Sidebar_drawer,
     Customizer_drawer: config.Customizer_drawer,
     mini_sidebar: config.mini_sidebar,
     setHorizontalLayout: config.setHorizontalLayout, // Horizontal layout
-    setRTLLayout:config.setRTLLayout, // RTL layout
+    setRTLLayout: config.setRTLLayout, // RTL layout
     actTheme: config.actTheme,
     boxed: config.boxed,
-    setBorderCard: config.setBorderCard
+    setBorderCard: config.setBorderCard,
   }),
 
   getters: {},
@@ -33,8 +32,8 @@ export const useCustomizerStore = defineStore({
     SET_THEME(payload: any) {
       this.actTheme = payload;
     },
-    SET_CARD_BORDER(payload: any){
-      this.setBorderCard = payload
-    }
+    SET_CARD_BORDER(payload: any) {
+      this.setBorderCard = payload;
+    },
   },
 });

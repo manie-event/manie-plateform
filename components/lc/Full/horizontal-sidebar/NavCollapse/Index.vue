@@ -1,5 +1,5 @@
 <script setup>
-import { Icon } from "@iconify/vue";
+import { Icon } from '@iconify/vue';
 const props = defineProps({ item: Object, level: Number });
 </script>
 
@@ -43,12 +43,7 @@ const props = defineProps({ item: Object, level: Number });
   </a>
   <!---Sub Item-->
   <ul :class="`ddMenu ddLevel-${level + 1}`">
-    <li
-      v-for="(subitem, i) in item.children"
-      :key="i"
-      v-if="item.children"
-      class="navItem"
-    >
+    <li v-for="(subitem, i) in item.children" :key="i" v-if="item.children" class="navItem">
       <Index :item="subitem" v-if="subitem.children" :level="level + 1" />
       <LcFullHorizontalSidebarNavItem
         :item="subitem"

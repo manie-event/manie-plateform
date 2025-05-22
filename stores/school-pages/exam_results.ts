@@ -3,21 +3,21 @@ import { defineStore } from 'pinia';
 import axios from '@/utils/axios';
 
 export const useResultsStore = defineStore({
-    id: 'Results',
-    state: () => ({
-        results: []
-    }),
-    getters: {},
-    actions: {
-        // Fetch followers from action
-        async fetchResults() {
-            try {
-                const response = await axios.get('/api/contacts');
-                this.results = response.data.results;
-            } catch (error) {
-                alert(error);
-                console.log(error);
-            }
-        }
-    }
+  id: 'Results',
+  state: () => ({
+    results: [],
+  }),
+  getters: {},
+  actions: {
+    // Fetch followers from action
+    async fetchResults() {
+      try {
+        const response = await axios.get('/api/contacts');
+        this.results = response.data.results;
+      } catch (error) {
+        alert(error);
+        console.log(error);
+      }
+    },
+  },
 });

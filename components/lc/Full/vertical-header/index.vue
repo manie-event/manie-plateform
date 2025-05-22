@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref, watch, onBeforeMount } from "vue";
-import { useCustomizerStore } from "@/stores/customizer";
-import { useEcomStore } from "@/stores/apps/eCommerce";
+import { ref, watch, onBeforeMount } from 'vue';
+import { useCustomizerStore } from '@/stores/customizer';
+import { useEcomStore } from '@/stores/apps/eCommerce';
 // Icon Imports
 import {
   GridDotsIcon,
@@ -10,8 +10,8 @@ import {
   Menu2Icon,
   BellRingingIcon,
   ShoppingCartIcon,
-} from "vue-tabler-icons";
-import { Icon } from "@iconify/vue";
+} from 'vue-tabler-icons';
+import { Icon } from '@iconify/vue';
 const customizer = useCustomizerStore();
 const showSearch = ref(false);
 const drawer = ref(false);
@@ -32,7 +32,7 @@ const getCart = computed(() => {
 
 //For on Scroll Effect on Header
 onBeforeMount(() => {
-  window.addEventListener("scroll", handleScroll);
+  window.addEventListener('scroll', handleScroll);
 });
 const stickyHeader = ref(false);
 function handleScroll() {
@@ -105,13 +105,14 @@ function handleScroll() {
     <!-- ShoppingCart -->
     <!-- ---------------------------------------------- -->
     <div class="hidden-sm-and-down me-sm-4 me-4">
-      <v-btn icon variant="text" to="/apps/ecommerce/checkout" class="custom-hover-primary" size="small">
-        <v-badge
-          color="primary"
-          :content="getCart?.length"
-          offset-x="-4"
-          offset-y="-6"
-        >
+      <v-btn
+        icon
+        variant="text"
+        to="/apps/ecommerce/checkout"
+        class="custom-hover-primary"
+        size="small"
+      >
+        <v-badge color="primary" :content="getCart?.length" offset-x="-4" offset-y="-6">
           <Icon icon="solar:cart-3-line-duotone" height="24" width="24" />
         </v-badge>
       </v-btn>
@@ -145,15 +146,15 @@ function handleScroll() {
       </template>
       <v-sheet rounded="lg" elevation="10" class="mt-5 dropdown-box px-4 py-6">
         <div class="d-flex justify-space-between align-center">
-        
           <LcFullVerticalHeaderLanguageDD />
-          <v-btn icon variant="text" to="/apps/ecommerce/checkout" class="custom-hover-primary"size="small">
-            <v-badge
-              color="primary"
-              :content="getCart?.length"
-              offset-x="-4"
-              offset-y="-6"
-            >
+          <v-btn
+            icon
+            variant="text"
+            to="/apps/ecommerce/checkout"
+            class="custom-hover-primary"
+            size="small"
+          >
+            <v-badge color="primary" :content="getCart?.length" offset-x="-4" offset-y="-6">
               <Icon icon="solar:cart-3-line-duotone" height="24" width="24" />
             </v-badge>
           </v-btn>

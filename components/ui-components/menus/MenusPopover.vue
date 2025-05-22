@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue';
 const fav = ref(true);
 const menu = ref(false);
 const message = ref(false);
@@ -26,7 +26,8 @@ const hints = ref(true);
                 :class="fav ? 'text-primary' : ''"
                 icon="mdi-heart"
                 @click="fav = !fav"
-              flat></v-btn>
+                flat
+              ></v-btn>
             </template>
           </v-list-item>
         </v-list>
@@ -34,7 +35,7 @@ const hints = ref(true);
         <v-divider></v-divider>
 
         <v-list>
-          <v-list-item >
+          <v-list-item>
             <v-switch
               v-model="message"
               color="primary"
@@ -65,4 +66,3 @@ const hints = ref(true);
     </v-menu>
   </div>
 </template>
-

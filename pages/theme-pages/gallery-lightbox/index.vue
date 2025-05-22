@@ -19,112 +19,109 @@ import image12 from '/images/products/s12.jpg';
 const store = useGalleryStore();
 
 onMounted(() => {
-    store.fetchGallery();
+  store.fetchGallery();
 });
 
 const getPhotos: any = computed(() => {
-    return store.gallery;
+  return store.gallery;
 });
 const searchValue = ref('');
 // dropdown data
 const actionDD = ref([
-    { title: 'Remove Tag' },
-    { title: 'Download' },
-    { title: 'Make Profile Picture' },
-    { title: 'Make Cover Photo' },
-    { title: 'Find support or Report Photo' }
+  { title: 'Remove Tag' },
+  { title: 'Download' },
+  { title: 'Make Profile Picture' },
+  { title: 'Make Cover Photo' },
+  { title: 'Find support or Report Photo' },
 ]);
 
-
 const filteredCards = computed(() => {
-    return getPhotos.value.filter((card: any) => {
-        return card.title.toLowerCase().includes(searchValue.value.toLowerCase());
-    });
+  return getPhotos.value.filter((card: any) => {
+    return card.title.toLowerCase().includes(searchValue.value.toLowerCase());
+  });
 });
 
 const page = ref({ title: 'Gallery Lightbox' });
 const breadcrumbs = ref([
-    {
-        text: 'Dashboard',
-        disabled: false,
-        href: '/'
-    },
-    {
-        text: 'Gallery Lightbox',
-        disabled: true,
-        href: '#'
-    }
+  {
+    text: 'Dashboard',
+    disabled: false,
+    href: '/',
+  },
+  {
+    text: 'Gallery Lightbox',
+    disabled: true,
+    href: '#',
+  },
 ]);
 
-
 //Fancybox
-const visibleRef = ref(false)
-const indexRef = ref(0)
+const visibleRef = ref(false);
+const indexRef = ref(0);
 const imgs = [
-    image1,
-    image2,
-    image3,
-    image4,
-    image5,
-    image6,
-    image7,
-    image8,
-    image9,
-    image10,
-    image11,
-    image12
-]
+  image1,
+  image2,
+  image3,
+  image4,
+  image5,
+  image6,
+  image7,
+  image8,
+  image9,
+  image10,
+  image11,
+  image12,
+];
 const showImg = (index: number) => {
-    indexRef.value = index
-    visibleRef.value = true
-}
+  indexRef.value = index;
+  visibleRef.value = true;
+};
 
-const onHide = () => visibleRef.value = false;
+const onHide = () => (visibleRef.value = false);
 const moveDisabled = ref(true);
 </script>
 
-
-
 <template>
-     <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
-    <v-row class="justify-content-end mt-5">
-        <v-col cols="12">
-            <v-row>
-                <v-col cols="12" md="4" sm="6" v-for="(card, index) in filteredCards" :key="index" >
+  <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
+  <v-row class="justify-content-end mt-5">
+    <v-col cols="12">
+      <v-row>
+        <v-col cols="12" md="4" sm="6" v-for="(card, index) in filteredCards" :key="index">
+          <v-card elevation="10" class="card-hover overflow-hidden" @click="() => showImg(index)">
+            <v-avatar size="220" class="rounded-0 w-100">
+              <img :src="card.image" alt="gallery" width="450" />
+            </v-avatar>
 
+            <v-card-text>
+              <div class="d-flex align-center gap-3">
+                <div>
+                  <h6 class="text-h6 mb-1">{{ card.title }}</h6>
+                  <span class="d-block text-truncate d-flex align-center gap-2 textSecondary">
+                    {{ card.dateTime }}
+                  </span>
+                </div>
+              </div>
+            </v-card-text>
+          </v-card>
 
-                    <v-card elevation="10" class="card-hover overflow-hidden" @click="() => showImg(index)">
-
-                        <v-avatar size="220" class="rounded-0 w-100">
-                            <img :src="card.image" alt="gallery" width="450"  />
-                        </v-avatar>
-                        
-
-                        <v-card-text>
-                            <div class="d-flex align-center gap-3">
-                                <div>
-                                    <h6 class="text-h6 mb-1">{{ card.title }}</h6>
-                                    <span class="d-block text-truncate d-flex align-center gap-2 textSecondary">
-                                        {{ card.dateTime }}
-                                    </span>
-                                </div>
-                            </div>
-                        </v-card-text>
-                    </v-card>
-
-                    <vue-easy-lightbox :visible="visibleRef" :moveDisabled  ="moveDisabled"  :imgs="imgs" :index="indexRef" @hide="onHide" />
-
-                </v-col>
-            </v-row>
+          <vue-easy-lightbox
+            :visible="visibleRef"
+            :moveDisabled="moveDisabled"
+            :imgs="imgs"
+            :index="indexRef"
+            @hide="onHide"
+          />
         </v-col>
-    </v-row>
+      </v-row>
+    </v-col>
+  </v-row>
 </template>
 
 <style>
 .vel-modal {
-    background: rgba(0,0,0,.1);
+  background: rgba(0, 0, 0, 0.1);
 }
-.vel-img{
-    box-shadow:none;
+.vel-img {
+  box-shadow: none;
 }
 </style>

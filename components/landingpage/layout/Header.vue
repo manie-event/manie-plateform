@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
-import { useCustomizerStore } from "@/stores/customizer";
+import { useCustomizerStore } from '@/stores/customizer';
+import { ref } from 'vue';
 // import RtlLogo from '@/layouts/full/logo/RtlLogo.vue';
-import Navigations from "@/components/landingpage/layout/Navigation.vue";
+import Navigations from '@/components/landingpage/layout/Navigation.vue';
 /*Mobile Sidebar*/
-import MobileSidebar from "@/components/landingpage/layout/MobileSidebar.vue";
+import MobileSidebar from '@/components/landingpage/layout/MobileSidebar.vue';
 /*import tabler icons*/
-import { Menu2Icon } from "vue-tabler-icons";
+import { Menu2Icon } from 'vue-tabler-icons';
 const appsdrawer = ref(false);
 const customizer = useCustomizerStore();
 </script>
@@ -31,7 +31,7 @@ const customizer = useCustomizerStore();
               class="custom-hover-primary bg-primary d-lg-flex d-none px-8 align-center login-shadow"
               rounded="pill"
               to="/auth/login"
-              ><span class="text-white">Login</span></v-btn
+              ><span class="text-white">Se connecter</span></v-btn
             >
             <!-- Mobile Toggle Button -->
             <v-btn
@@ -51,12 +51,7 @@ const customizer = useCustomizerStore();
     </div>
 
     <!----sidebar menu drawer start----->
-    <v-navigation-drawer
-      class="lp-drawer"
-      v-model="appsdrawer"
-      location="left"
-      temporary
-    >
+    <v-navigation-drawer class="lp-drawer" v-model="appsdrawer" location="left" temporary>
       <MobileSidebar />
     </v-navigation-drawer>
   </div>

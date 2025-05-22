@@ -1,30 +1,25 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue';
 
 /*Location Select*/
-const select = ref("United States");
-const location = ref(["United States", "United Kingdom", "India", "Russia"]);
+const select = ref('United States');
+const location = ref(['United States', 'United Kingdom', 'India', 'Russia']);
 
 /*Currency Select*/
-const Currencyselect = ref("US Dollar ($)");
-const Currency = ref([
-  "US Dollar ($)",
-  "United Kingdom (Pound)",
-  "India (INR)",
-  "Russia (Ruble)",
-]);
+const Currencyselect = ref('US Dollar ($)');
+const Currency = ref(['US Dollar ($)', 'United Kingdom (Pound)', 'India (INR)', 'Russia (Ruble)']);
 
 /*change password*/
-const currenypwd = ref("123456789142");
-const newpwd = ref("123456789142");
-const confirmpwd = ref("123456789142");
+const currenypwd = ref('123456789142');
+const newpwd = ref('123456789142');
+const confirmpwd = ref('123456789142');
 
 /*personal detail*/
-const namemodel = ref("Mike Nielsen");
-const storemodel = ref("Maxima Studio");
-const storemail = ref("info@Spike.com");
-const storephone = ref("+91 12345 65478");
-const storeaddress = ref("814 Howard Street, 120065, India");
+const namemodel = ref('Mike Nielsen');
+const storemodel = ref('Maxima Studio');
+const storemail = ref('info@Spike.com');
+const storephone = ref('+91 12345 65478');
+const storeaddress = ref('814 Howard Street, 120065, India');
 </script>
 
 <template>
@@ -39,22 +34,12 @@ const storeaddress = ref("814 Howard Street, 120065, India");
             </div>
             <div class="text-center mt-6 mb-6">
               <v-avatar size="120">
-                <img
-                  src="public/images/profile/user-1.jpg"
-                  height="120"
-                  alt="image"
-                />
+                <img src="public/images/profile/user-1.jpg" height="120" alt="image" />
               </v-avatar>
             </div>
             <div class="d-flex justify-center">
               <v-btn color="primary" class="mx-2" rounded="pill"> Upload</v-btn>
-              <v-btn
-                color="error"
-                class="mx-2"
-                variant="outlined"
-                rounded="pill"
-                >Reset</v-btn
-              >
+              <v-btn color="error" class="mx-2" variant="outlined" rounded="pill">Reset</v-btn>
             </div>
             <div class="text-subtitle-1 text-grey100 text-center my-sm-8 my-6">
               Allowed JPG, GIF or PNG. Max size of 800K
@@ -70,9 +55,7 @@ const storeaddress = ref("814 Howard Street, 120065, India");
               To change your password please confirm here
             </div>
             <div class="mt-5">
-              <v-label class="mb-2 font-weight-medium"
-                >Current Password</v-label
-              >
+              <v-label class="mb-2 font-weight-medium">Current Password</v-label>
               <v-text-field
                 color="primary"
                 variant="outlined"
@@ -80,15 +63,8 @@ const storeaddress = ref("814 Howard Street, 120065, India");
                 v-model="currenypwd"
               />
               <v-label class="mb-2 font-weight-medium">New Password</v-label>
-              <v-text-field
-                color="primary"
-                variant="outlined"
-                type="password"
-                v-model="newpwd"
-              />
-              <v-label class="mb-2 font-weight-medium"
-                >Confirm Password</v-label
-              >
+              <v-text-field color="primary" variant="outlined" type="password" v-model="newpwd" />
+              <v-label class="mb-2 font-weight-medium">Confirm Password</v-label>
               <v-text-field
                 color="primary"
                 variant="outlined"
@@ -194,14 +170,8 @@ const storeaddress = ref("814 Howard Street, 120065, India");
       </v-col>
     </v-row>
     <div class="d-flex justify-end mt-5 pb-3">
-      <v-btn size="large" color="primary" rounded="pill" class="mr-4"
-        >Save</v-btn
-      >
-      <v-btn
-        size="large"
-        elevation="0"
-        class="bg-lighterror text-error"
-        rounded="pill"
+      <v-btn size="large" color="primary" rounded="pill" class="mr-4">Save</v-btn>
+      <v-btn size="large" elevation="0" class="bg-lighterror text-error" rounded="pill"
         >Cancel</v-btn
       >
     </div>

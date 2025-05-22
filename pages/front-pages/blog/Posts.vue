@@ -2,19 +2,19 @@
 import BlogPagesPosts from '@/components/frontpages/Blog/BlogPagesPosts.vue';
 import PurchaseTemplate from '@/components/frontpages/Homepage/PurchaseTemplate.vue';
 import TextBannerCard from '@/components/frontpages/Shared/TextBannerCard.vue';
-import DefaultLayout from '../Layout.vue'
+import DefaultLayout from '../Layout.vue';
 /*for Blank Layout*/
 definePageMeta({
-  layout: "blank",
+  layout: 'blank',
 });
 </script>
 
 <template>
-    <DefaultLayout>
-        <TextBannerCard title="Latest blog & news" caption="Blog Page" />
-        <div class="bg-background">
-            <BlogPagesPosts />
-        </div>
-        <PurchaseTemplate />
-    </DefaultLayout>
+  <DefaultLayout>
+    <TextBannerCard title="Latest blog & news" caption="Blog Page" />
+    <div class="bg-background">
+      <BlogPagesPosts />
+    </div>
+    <PurchaseTemplate />
+  </DefaultLayout>
 </template>

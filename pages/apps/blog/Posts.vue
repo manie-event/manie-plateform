@@ -5,12 +5,12 @@ import BlogPosts from '@/components/apps/blog/blogPosts.vue';
 </script>
 
 <template>
-    <!-- ---------------------------------------------------- -->
-    <!-- Table Basic -->
-    <!-- ---------------------------------------------------- -->
-    <v-row>
-        <v-col cols="12">
-          <BlogPosts/>
-        </v-col>
-    </v-row>
+  <!-- ---------------------------------------------------- -->
+  <!-- Table Basic -->
+  <!-- ---------------------------------------------------- -->
+  <v-row>
+    <v-col cols="12">
+      <BlogPosts />
+    </v-col>
+  </v-row>
 </template>

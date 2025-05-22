@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
-import { useInvoicestore } from "@/stores/apps/invoice";
-import type { InvoiceType } from "@/types/apps/InvoiceTypes";
-import { format } from "date-fns";
+import { ref, computed, watch } from 'vue';
+import { useInvoicestore } from '@/stores/apps/invoice';
+import type { InvoiceType } from '@/types/apps/InvoiceTypes';
+import { format } from 'date-fns';
 
-import { CirclePlusIcon } from "vue-tabler-icons";
-import { Icon } from "@iconify/vue";
-import { useRoute, useRouter } from "vue-router";
+import { CirclePlusIcon } from 'vue-tabler-icons';
+import { Icon } from '@iconify/vue';
+import { useRoute, useRouter } from 'vue-router';
 const store = useInvoicestore();
 const valid = ref(false);
 const loading = ref(true);
@@ -15,27 +15,25 @@ const route = useRoute();
 
 const invoiceId = parseInt(route.params.id as string);
 const invoice = ref<InvoiceType | null>({
-  orders: [], 
+  orders: [],
 });
 watch(
   () => invoiceId,
   async (newId) => {
-    await store.fetchinvoice(); 
+    await store.fetchinvoice();
     invoice.value = store.invoice.find((inv) => inv.id === newId) || null;
-    loading.value = false; 
+    loading.value = false;
     if (!invoice.value) {
-      router.push("/apps/invoice"); 
+      router.push('/apps/invoice');
     }
   },
   { immediate: true }
 );
 
-
-const statuses = ["Pending", "Shipped", "Delivered"];
-const rules = [(v: any) => !!v || "This field is required"];
+const statuses = ['Pending', 'Shipped', 'Delivered'];
+const rules = [(v: any) => !!v || 'This field is required'];
 // VAT percentage
 const vatRate = 0.1;
-
 
 const subtotal = computed(() => {
   return (invoice.value?.orders ?? []).reduce((sum, order) => {
@@ -53,31 +51,28 @@ const grandTotal = computed(() => {
   return subtotal.value + vat.value;
 });
 
-
-
 const addOrderRow = () => {
   if (invoice.value) {
-    invoice.value.orders = invoice.value.orders || []; 
+    invoice.value.orders = invoice.value.orders || [];
     invoice.value.orders.push({
-      itemName: "",
+      itemName: '',
       unitPrice: 0,
       units: 0,
       unitTotalPrice: 0,
     });
-  } 
+  }
 };
 // Function to update invoice
 const submitInvoice = async () => {
   if (valid.value && invoice.value) {
     try {
-      await store.updateInvoice(invoice.value); 
-      router.push("/apps/invoice");
+      await store.updateInvoice(invoice.value);
+      router.push('/apps/invoice');
     } catch (error) {
-      console.error("Update failed:", error);
-      
+      console.error('Update failed:', error);
     }
   } else {
-    console.log("Form is invalid or invoice not found");
+    console.log('Form is invalid or invoice not found');
   }
 };
 
@@ -86,9 +81,6 @@ const deleteOrderRow = (index: number) => {
     invoice.value.orders.splice(index, 1);
   }
 };
-
-
-
 </script>
 
 <template>
@@ -98,11 +90,7 @@ const deleteOrderRow = (index: number) => {
       <p v-if="invoice" class="textSecondary text-14">ID: {{ invoice.id }}</p>
       <p v-if="invoice" class="textSecondary text-14">
         Date:
-        {{
-          invoice.orderDate
-            ? format(new Date(invoice.orderDate), "E, MMM dd, yyyy")
-            : "N/A"
-        }}
+        {{ invoice.orderDate ? format(new Date(invoice.orderDate), 'E, MMM dd, yyyy') : 'N/A' }}
       </p>
       <p v-else class="textSecondary">Loading invoice...</p>
 
@@ -111,30 +99,15 @@ const deleteOrderRow = (index: number) => {
           <v-row>
             <v-col cols="12" md="4">
               <v-label class="font-weight-semibold pb-2">Bill From</v-label>
-              <v-text-field
-                hide-details
-                v-model="invoice.billFrom"
-                :rules="rules"
-                required
-              />
+              <v-text-field hide-details v-model="invoice.billFrom" :rules="rules" required />
             </v-col>
             <v-col cols="12" md="4">
               <v-label class="font-weight-semibold pb-2">Bill To</v-label>
-              <v-text-field
-                v-model="invoice.billTo"
-                :rules="rules"
-                required
-                hide-details
-              />
+              <v-text-field v-model="invoice.billTo" :rules="rules" required hide-details />
             </v-col>
             <v-col cols="12" md="4">
               <v-label class="font-weight-semibold pb-2">Status</v-label>
-              <v-select
-                v-model="invoice.status"
-                hide-details
-                :items="statuses"
-                required
-              />
+              <v-select v-model="invoice.status" hide-details :items="statuses" required />
             </v-col>
 
             <v-col cols="12" md="6">
@@ -148,12 +121,7 @@ const deleteOrderRow = (index: number) => {
             </v-col>
             <v-col cols="12" md="6">
               <v-label class="font-weight-semibold pb-2">Bill To Address</v-label>
-              <v-text-field
-                v-model="invoice.billToAddress"
-                :rules="rules"
-                required
-                hide-details
-              />
+              <v-text-field v-model="invoice.billToAddress" :rules="rules" required hide-details />
             </v-col>
           </v-row>
         </div>
@@ -162,22 +130,27 @@ const deleteOrderRow = (index: number) => {
           <template v-slot:default>
             <thead>
               <tr>
-                <th class="text-14  text-no-wrap"></th>
-                <th class="text-14  text-no-wrap">Item Name</th>
-                <th class="text-14  text-no-wrap">Unit Price</th>
-                <th class="text-14  text-no-wrap">Units</th>
-                <th class="text-14  text-no-wrap">Total Cost</th>
-                <th class="text-14  text-no-wrap text-end">Actions</th>
+                <th class="text-14 text-no-wrap"></th>
+                <th class="text-14 text-no-wrap">Item Name</th>
+                <th class="text-14 text-no-wrap">Unit Price</th>
+                <th class="text-14 text-no-wrap">Units</th>
+                <th class="text-14 text-no-wrap">Total Cost</th>
+                <th class="text-14 text-no-wrap text-end">Actions</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(inv, index) in invoice.orders" :key="index">
                 <td>
-                  <v-btn flat icon color="lightprimary" size="x-small" @click="addOrderRow" class="ms-3">
-                   <CirclePlusIcon class="text-primary" size="18"/>
-                   <v-tooltip activator="parent" location="bottom"
-                      >Add Item</v-tooltip
-                    >
+                  <v-btn
+                    flat
+                    icon
+                    color="lightprimary"
+                    size="x-small"
+                    @click="addOrderRow"
+                    class="ms-3"
+                  >
+                    <CirclePlusIcon class="text-primary" size="18" />
+                    <v-tooltip activator="parent" location="bottom">Add Item</v-tooltip>
                   </v-btn>
                 </td>
                 <td width="300">
@@ -191,33 +164,33 @@ const deleteOrderRow = (index: number) => {
                     width="300"
                   />
                 </td>
-                <td  width="150">
+                <td width="150">
                   <v-text-field
                     v-model="inv.unitPrice"
                     label="Unit Price"
                     :rules="rules"
                     required
                     hide-details
-                     width="150"
+                    width="150"
                     type="number"
                   />
                 </td>
-                <td  width="150">
+                <td width="150">
                   <v-text-field
                     v-model="inv.units"
                     label="Units"
                     :rules="rules"
                     required
                     hide-details
-                     width="150"
+                    width="150"
                     type="number"
                   />
                 </td>
                 <td class="text-14">
                   {{ store.grandTotal(invoice) }}
                 </td>
-                <td class="text-end ">
-                  <RouterLink to="" class="cursor-pointer me-lg-3" >
+                <td class="text-end">
+                  <RouterLink to="" class="cursor-pointer me-lg-3">
                     <v-avatar color="lighterror" size="32" @click="deleteOrderRow(index)">
                       <Icon
                         icon="solar:trash-bin-minimalistic-linear"
@@ -225,9 +198,7 @@ const deleteOrderRow = (index: number) => {
                         height="18"
                       />
                     </v-avatar>
-                    <v-tooltip activator="parent" location="bottom"
-                      >Delete Invoice</v-tooltip
-                    >
+                    <v-tooltip activator="parent" location="bottom">Delete Invoice</v-tooltip>
                   </RouterLink>
                 </td>
               </tr>
@@ -249,9 +220,7 @@ const deleteOrderRow = (index: number) => {
               <p class="text-muted">Vat:</p>
               <p class="text-16">{{ vat }}</p>
             </div>
-            <div
-              class="d-flex align-center justify-space-between text-14 font-weight-semibold"
-            >
+            <div class="d-flex align-center justify-space-between text-14 font-weight-semibold">
               <p class="text-muted">Grand Total:</p>
               <p class="text-16">{{ grandTotal }}</p>
             </div>
@@ -259,7 +228,9 @@ const deleteOrderRow = (index: number) => {
         </v-row>
 
         <div class="d-flex align-center justify-end ga-3">
-          <v-btn flat color="success" @click="submitInvoice" rounded="pill" class="mt-6">Save</v-btn>
+          <v-btn flat color="success" @click="submitInvoice" rounded="pill" class="mt-6"
+            >Save</v-btn
+          >
           <v-btn flat color="error" to="/apps/invoice" rounded="pill" class="mt-6">Cancel</v-btn>
         </div>
       </v-form>

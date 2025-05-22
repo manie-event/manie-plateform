@@ -1,7 +1,7 @@
-import { defineStore } from "pinia";
-import axios from "@/utils/axios";
-import { uniqueId } from "lodash";
-import { sub } from "date-fns";
+import { defineStore } from 'pinia';
+import axios from '@/utils/axios';
+import { uniqueId } from 'lodash';
+import { sub } from 'date-fns';
 
 interface EmailType {
   emails: any[];
@@ -9,7 +9,7 @@ interface EmailType {
 }
 
 export const useEmailStore = defineStore({
-  id: "email",
+  id: 'email',
   state: (): EmailType => ({
     emails: [],
     selectedEmail: null, // Initialize as null
@@ -29,7 +29,7 @@ export const useEmailStore = defineStore({
     },
     async fetchEmails() {
       try {
-        const data = await axios.get("/api/data/email/EmailData");
+        const data = await axios.get('/api/data/email/EmailData');
         this.emails = data.data;
       } catch (error) {
         alert(error);
@@ -44,6 +44,5 @@ export const useEmailStore = defineStore({
       this.emails = this.emails.filter((email) => email.id !== id);
       this.selectedEmail = null; // Clear selected email after deletion
     },
-    
   },
 });

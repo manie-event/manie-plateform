@@ -8,12 +8,22 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "type": "module"
+    "type": "module",
+    "eslint": "npx eslint .",
+    "eslint:fix": "npx eslint . --fix",
+    "format": "prettier --write ."
   },
   "devDependencies": {
+    "@eslint/js": "^9.27.0",
     "@types/chance": "^1.1.6",
     "@types/lodash": "^4.17.9",
-    "nuxt": "^3.13.2"
+    "eslint": "^9.27.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.4.0",
+    "nuxt": "^3.13.2",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.32.1"
   },
   "dependencies": {
     "@fullcalendar/core": "6.1.10",
@@ -30,6 +40,8 @@
     "@tiptap/starter-kit": "2.7.4",
     "@tiptap/vue-3": "2.7.4",
     "@types/aos": "3.0.7",
+    "@typescript-eslint/eslint-plugin": "^8.32.1",
+    "@typescript-eslint/parser": "^8.32.1",
     "aos": "2.3.4",
     "apexcharts": "3.45.2",
     "axios": "1.7.6",
@@ -43,7 +55,6 @@
     "remixicon": "2.5.0",
     "sass": "1.70.0",
     "svgmap": "2.10.1",
-    "typescript": "^5.8.3",
     "vee-validate": "4.6.7",
     "vite-plugin-vuetify": "2.0.4",
     "vue": "^3.5.7",

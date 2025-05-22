@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue';
 const items = ref([
-  { title: "Click Me" },
-  { title: "Click Me" },
-  { title: "Click Me" },
-  { title: "Click Me 2" },
+  { title: 'Click Me' },
+  { title: 'Click Me' },
+  { title: 'Click Me' },
+  { title: 'Click Me 2' },
 ]);
 </script>
 
@@ -23,4 +23,3 @@ const items = ref([
     </v-menu>
   </div>
 </template>
-

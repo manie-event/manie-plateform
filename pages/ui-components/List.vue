@@ -17,76 +17,76 @@ import ScrollableList from '@/components/ui-components/list/ScrollableList.vue';
 // theme breadcrumb
 const page = ref({ title: 'Lists' });
 const breadcrumbs = ref([
-    {
-        text: 'Dashboard',
-        disabled: false,
-        href: '/'
-    },
-    {
-        text: 'Lists',
-        disabled: true,
-        href: '#'
-    }
+  {
+    text: 'Dashboard',
+    disabled: false,
+    href: '/',
+  },
+  {
+    text: 'Lists',
+    disabled: true,
+    href: '#',
+  },
 ]);
 </script>
 
 <template>
-    <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
-    <v-row>
-        <v-col cols="12">
-            <UiParentCard title="List">
-                <v-row>
-                    <!-- Basic -->
-                    <v-col cols="12" lg="6">
-                        <UiChildCard title="Simple List">
-                            <SimpleList/>
-                        </UiChildCard>
-                    </v-col>
-                    <!-- Nested List -->
-                    <v-col cols="12" lg="6">
-                        <UiChildCard title="Nested List">
-                           <NestedList/>
-                        </UiChildCard>
-                    </v-col>
-                    <!-- Folder List -->
-                    <v-col cols="12" lg="6">
-                        <UiChildCard title="Folder List">
-                            <FolderList/>
-                        </UiChildCard>
-                    </v-col>
-                    <!-- DisabledList-->
-                    <v-col cols="12" lg="6">
-                        <UiChildCard title="Disabled List">
-                           <DisabledList/>
-                        </UiChildCard>
-                    </v-col>
-                    <!-- Radio Button List -->
-                    <v-col cols="12" lg="6">
-                        <UiChildCard title="Switch List">
-                           <SwitchList/>
-                        </UiChildCard>
-                    </v-col>
-                    
-                    <!-- Rounded List -->
-                    <v-col cols="12" lg="6">
-                        <UiChildCard title="Rounded List">
-                            <RoundedList/>
-                        </UiChildCard>
-                    </v-col>
-                    <!-- Custom Aligned List -->
-                    <v-col cols="12" lg="6">
-                        <UiChildCard title="Custom Aligned List">
-                            <CustomAlignList/>
-                        </UiChildCard>
-                    </v-col>
-                    <!-- Scrollable List -->
-                    <v-col cols="12" lg="6">
-                        <UiChildCard title="Scrollable List">
-                            <ScrollableList/>
-                        </UiChildCard>
-                    </v-col>
-                </v-row>
-            </UiParentCard>
-        </v-col>
-    </v-row>
+  <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
+  <v-row>
+    <v-col cols="12">
+      <UiParentCard title="List">
+        <v-row>
+          <!-- Basic -->
+          <v-col cols="12" lg="6">
+            <UiChildCard title="Simple List">
+              <SimpleList />
+            </UiChildCard>
+          </v-col>
+          <!-- Nested List -->
+          <v-col cols="12" lg="6">
+            <UiChildCard title="Nested List">
+              <NestedList />
+            </UiChildCard>
+          </v-col>
+          <!-- Folder List -->
+          <v-col cols="12" lg="6">
+            <UiChildCard title="Folder List">
+              <FolderList />
+            </UiChildCard>
+          </v-col>
+          <!-- DisabledList-->
+          <v-col cols="12" lg="6">
+            <UiChildCard title="Disabled List">
+              <DisabledList />
+            </UiChildCard>
+          </v-col>
+          <!-- Radio Button List -->
+          <v-col cols="12" lg="6">
+            <UiChildCard title="Switch List">
+              <SwitchList />
+            </UiChildCard>
+          </v-col>
+
+          <!-- Rounded List -->
+          <v-col cols="12" lg="6">
+            <UiChildCard title="Rounded List">
+              <RoundedList />
+            </UiChildCard>
+          </v-col>
+          <!-- Custom Aligned List -->
+          <v-col cols="12" lg="6">
+            <UiChildCard title="Custom Aligned List">
+              <CustomAlignList />
+            </UiChildCard>
+          </v-col>
+          <!-- Scrollable List -->
+          <v-col cols="12" lg="6">
+            <UiChildCard title="Scrollable List">
+              <ScrollableList />
+            </UiChildCard>
+          </v-col>
+        </v-row>
+      </UiParentCard>
+    </v-col>
+  </v-row>
 </template>

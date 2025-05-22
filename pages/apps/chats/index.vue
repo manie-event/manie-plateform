@@ -11,44 +11,44 @@ import ChatProfile from '@/components/apps/chats/ChatProfile.vue';
 const page = ref({ title: 'Chat app' });
 
 const breadcrumbs = ref([
-    {
-        text: 'Messenger',
-        disabled: true,
-        href: '#'
-    }
+  {
+    text: 'Messenger',
+    disabled: true,
+    href: '#',
+  },
 ]);
 </script>
 
 <template>
-    <!-- ---------------------------------------------------- -->
-    <!-- Table Basic -->
-    <!-- ---------------------------------------------------- -->
-    <!-- <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb> -->
+  <!-- ---------------------------------------------------- -->
+  <!-- Table Basic -->
+  <!-- ---------------------------------------------------- -->
+  <!-- <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb> -->
 
-    <v-card elevation="10">
-        <AppBaseCard>
-            <template v-slot:leftpart>
-                <div class="no-scrollbar">
-                <ChatProfile />
-                <ChatListing />
-                </div>
-            </template>
-            <template v-slot:rightpart>
-                <ChatDetail />
-            </template>
+  <v-card elevation="10">
+    <AppBaseCard>
+      <template v-slot:leftpart>
+        <div class="no-scrollbar">
+          <ChatProfile />
+          <ChatListing />
+        </div>
+      </template>
+      <template v-slot:rightpart>
+        <ChatDetail />
+      </template>
 
-            <template v-slot:mobileLeftContent>
-                <ChatProfile />
-                <ChatListing />
-            </template>
-        </AppBaseCard>
-    </v-card>
+      <template v-slot:mobileLeftContent>
+        <ChatProfile />
+        <ChatListing />
+      </template>
+    </AppBaseCard>
+  </v-card>
 </template>
 
 <style scoped lang="scss">
 @media (max-width: 1279px) {
-    .v-card {
-        position: unset;
-    }
+  .v-card {
+    position: unset;
+  }
 }
 </style>

@@ -4,5 +4,5 @@ import CartCheckout from '@/components/apps/ecommerce/cart/CartCheckout.vue';
 </script>
 
 <template>
-    <CartCheckout />
+  <CartCheckout />
 </template>

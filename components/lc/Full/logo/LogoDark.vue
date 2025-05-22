@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
-import logodark from '/images/logos/logo-dark.svg';
+import logoManie from '/images/logos/logo-manie.svg';
 </script>
 <template>
-    <div class="logo">
-        <NuxtLink to="/">
-            <img :src="logodark" alt="home" />
-        </NuxtLink>
-    </div>
+  <div class="logo">
+    <NuxtLink to="/">
+      <img :src="logoManie" alt="home" class="w-50 h-10" />
+    </NuxtLink>
+  </div>
 </template>

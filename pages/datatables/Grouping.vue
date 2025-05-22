@@ -1,38 +1,35 @@
 <script setup lang="ts">
-import { BasicDatatables } from "@/_mockApis/components/datatable/dataTable";
-import BaseBreadcrumb from "@/components/shared/BaseBreadcrumb.vue";
-import UiParentCard from "@/components/shared/UiParentCard.vue";
-import { ref } from "vue";
-const page = ref({ title: "Data Tables Grouping" });
+import { BasicDatatables } from '@/_mockApis/components/datatable/dataTable';
+import BaseBreadcrumb from '@/components/shared/BaseBreadcrumb.vue';
+import UiParentCard from '@/components/shared/UiParentCard.vue';
+import { ref } from 'vue';
+const page = ref({ title: 'Data Tables Grouping' });
 const breadcrumbs = ref([
   {
-    text: "Dashboard",
+    text: 'Dashboard',
     disabled: false,
-    href: "/",
+    href: '/',
   },
   {
-    text: "Data Tables Grouping",
+    text: 'Data Tables Grouping',
     disabled: true,
-    href: "#",
+    href: '#',
   },
 ]);
 
 /*Header Data*/
-const sortBy = ref([{ key: "name", order: "asc" }]);
-const groupBy = ref([{ key: "status", order: "asc" }]);
+const sortBy = ref([{ key: 'name', order: 'asc' }]);
+const groupBy = ref([{ key: 'status', order: 'asc' }]);
 const headers = ref([
-  { title: "Name", align: "start", key: "name", groupable: false },
-  { title: "Project Name", align: "start", key: "project" },
-  { title: "Post", align: "start", key: "post" },
-  { title: "Status", align: "start", key: "status" },
-  { title: "Budget", align: "end", key: "budget" },
+  { title: 'Name', align: 'start', key: 'name', groupable: false },
+  { title: 'Project Name', align: 'start', key: 'project' },
+  { title: 'Post', align: 'start', key: 'post' },
+  { title: 'Status', align: 'start', key: 'status' },
+  { title: 'Budget', align: 'end', key: 'budget' },
 ]);
 </script>
 <template>
-  <BaseBreadcrumb
-    :title="page.title"
-    :breadcrumbs="breadcrumbs"
-  ></BaseBreadcrumb>
+  <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
   <v-row>
     <v-col cols="12">
       <UiParentCard title="Grouping">

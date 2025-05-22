@@ -6,16 +6,15 @@ import { useClassesStore } from '@/stores/school-pages/classes';
 const store = useClassesStore();
 const route = useRoute();
 onMounted(() => {
-    store.fetchPosts();
+  store.fetchPosts();
 });
 
 // const getProduct = computed(() => {
 //     return store.classinfo[route.params.id - 1];
 // });
-
 </script>
 <template>
-    <!-- <div v-if="getProduct">
+  <!-- <div v-if="getProduct">
         <h5 class="text-h5 font-weight-semibold mb-6">Class Detail</h5>
         <v-row>
             <v-col cols="12">
@@ -43,4 +42,4 @@ onMounted(() => {
             </v-col>
         </v-row>
     </div> -->
-    </template>
+</template>

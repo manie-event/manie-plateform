@@ -1,6 +1,6 @@
-import { defineStore } from 'pinia';
-import axios from '@/utils/axios';
 import type { InvoiceType } from '@/types/apps/InvoiceTypes';
+import axios from '@/utils/axios';
+import { defineStore } from 'pinia';
 
 interface InvoiceState {
   invoice: InvoiceType[];
@@ -16,14 +16,14 @@ export const useInvoicestore = defineStore({
     invoiceSearch: '',
   }),
   getters: {
-    grandTotal: (state) => (invoice: InvoiceType) => {
+    grandTotal: () => (invoice: InvoiceType) => {
       const subtotal = (invoice.orders ?? []).reduce((sum, order) => {
         return sum + (order.unitPrice ?? 0) * (order.units ?? 0);
       }, 0);
       const vatRate = 0.1;
       const vat = subtotal * vatRate;
       return subtotal + vat;
-    }
+    },
   },
   actions: {
     async fetchinvoice() {
@@ -39,7 +39,7 @@ export const useInvoicestore = defineStore({
       try {
         const response = await axios.post('/api/data/invoices/invoiceData', invoice);
         this.invoice.push(response.data);
-        
+
         return response.data;
       } catch (error) {
         console.error('Error adding invoice:', error);
@@ -47,10 +47,13 @@ export const useInvoicestore = defineStore({
     },
     async updateInvoice(updatedInvoice: InvoiceType) {
       try {
-        const response = await axios.put(`/api/data/invoices/invoiceData/${updatedInvoice.id}`, updatedInvoice);
+        const response = await axios.put(
+          `/api/data/invoices/invoiceData/${updatedInvoice.id}`,
+          updatedInvoice
+        );
         console.log('Response from update:', response); // This will show the updated data
-    
-        const index = this.invoice.findIndex(inv => inv.id === updatedInvoice.id);
+
+        const index = this.invoice.findIndex((inv) => inv.id === updatedInvoice.id);
         if (index !== -1) {
           this.invoice[index] = response.data; // Update the local store
         }
@@ -60,8 +63,6 @@ export const useInvoicestore = defineStore({
       }
     },
 
-
-    
     deleteinvoice(itemID: number) {
       this.invoice = this.invoice.filter((invoice) => invoice.id !== itemID);
     },

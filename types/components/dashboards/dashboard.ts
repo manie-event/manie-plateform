@@ -1,59 +1,56 @@
-import type { TablerIconComponent } from "vue-tabler-icons";
+import type { TablerIconComponent } from 'vue-tabler-icons';
 
-type textCards = {
-    icon: string,
-    num: string,
-    percent: string,
-    title: string,
-    shape:string
+interface textCards {
+  icon: string;
+  num: string;
+  percent: string;
+  title: string;
+  shape: string;
 }
 
-type profileImg = {
-  img:string
+interface profileImg {
+  img: string;
 }
 
-type projectTable = {
-    img: string;
-    activestate: string;
-    leadname: string;
-    leademail: string;
-    projectname: string;
-    statuscolor: string;
-    statustext: string;
-    skill: string;
+interface projectTable {
+  img: string;
+  activestate: string;
+  leadname: string;
+  leademail: string;
+  projectname: string;
+  statuscolor: string;
+  statustext: string;
+  skill: string;
 }
 
-type ProductTable = {
+interface ProductTable {
   img: string;
   name: string;
   payment: string;
   paymentstatus: string;
   process: number;
-  processcolor:string;
+  processcolor: string;
   statuscolor: string;
   statustext: string;
 }
 
-
 /*Table Action*/
-type tableAction = {
+interface tableAction {
   icon: TablerIconComponent;
   listtitle: string;
-};
+}
 
-
-type LatestReview = {
+interface LatestReview {
   img: string;
   name: string;
-  profile:string;
+  profile: string;
   customername: string;
   customeremail: string;
   review: number;
-  reviewtext:string;
+  reviewtext: string;
   statuscolor: string;
   statustext: string;
-  time:string
+  time: string;
 }
 
-
-export type {textCards,profileImg,projectTable,ProductTable,tableAction,LatestReview}
+export type { textCards, profileImg, projectTable, ProductTable, tableAction, LatestReview };

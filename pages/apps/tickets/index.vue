@@ -4,31 +4,26 @@ import { ref } from 'vue';
 import BaseBreadcrumb from '@/components/shared/BaseBreadcrumb.vue';
 import TicketList from '~/components/apps/tickets/TicketList.vue';
 
-
-
-const page = ref({ title: "Tickets App" });
+const page = ref({ title: 'Tickets App' });
 const breadcrumbs = ref([
   {
-    text: "Dashboard",
+    text: 'Dashboard',
     disabled: false,
-    href: "#",
+    href: '#',
   },
   {
-    text: "Tickets App",
+    text: 'Tickets App',
     disabled: true,
-    href: "#",
+    href: '#',
   },
 ]);
 </script>
 
 <template>
-    <!-- ---------------------------------------------------- -->
-    <!-- Table Basic -->
-    <!-- ---------------------------------------------------- -->
-    <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
-    
-    <TicketList/>
-   
+  <!-- ---------------------------------------------------- -->
+  <!-- Table Basic -->
+  <!-- ---------------------------------------------------- -->
+  <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
+
+  <TicketList />
 </template>
-
-

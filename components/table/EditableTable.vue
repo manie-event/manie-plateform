@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import contact from "@/_mockApis/apps/contact";
-import { useContactStore } from "@/stores/apps/contact";
-import { computed, onMounted, ref } from "vue";
-import user1 from "/images/profile/user-1.jpg";
+import contact from '@/_mockApis/apps/contact';
+import { useContactStore } from '@/stores/apps/contact';
+import { computed, onMounted, ref } from 'vue';
+import user1 from '/images/profile/user-1.jpg';
 const store = useContactStore();
 
 onMounted(() => {
@@ -14,29 +14,29 @@ const getContacts: any = computed(() => {
 
 const valid = ref(true);
 const dialog = ref(false);
-const search = ref("");
-const rolesbg = ref(["primary", "secondary", "error", "success", "warning"]);
+const search = ref('');
+const rolesbg = ref(['primary', 'secondary', 'error', 'success', 'warning']);
 const desserts = ref(contact);
 const editedIndex = ref(-1);
 const editedItem = ref({
-  id: "",
+  id: '',
   avatar: user1,
-  userinfo: "",
-  usermail: "",
-  phone: "",
-  jdate: "",
-  role: "",
-  rolestatus: "",
+  userinfo: '',
+  usermail: '',
+  phone: '',
+  jdate: '',
+  role: '',
+  rolestatus: '',
 });
 const defaultItem = ref({
-  id: "",
+  id: '',
   avatar: user1,
-  userinfo: "",
-  usermail: "",
-  phone: "",
-  jdate: "",
-  role: "",
-  rolestatus: "",
+  userinfo: '',
+  usermail: '',
+  phone: '',
+  jdate: '',
+  role: '',
+  rolestatus: '',
 });
 
 //Methods
@@ -53,8 +53,7 @@ function editItem(item: any) {
 }
 function deleteItem(item: any) {
   const index = desserts.value.indexOf(item);
-  confirm("Are you sure you want to delete this item?") &&
-    desserts.value.splice(index, 1);
+  confirm('Are you sure you want to delete this item?') && desserts.value.splice(index, 1);
 }
 
 function close() {
@@ -75,7 +74,7 @@ function save() {
 
 //Computed Property
 const formTitle = computed(() => {
-  return editedIndex.value === -1 ? "New Contact" : "Edit Contact";
+  return editedIndex.value === -1 ? 'New Contact' : 'Edit Contact';
 });
 </script>
 <template>
@@ -97,9 +96,7 @@ const formTitle = computed(() => {
           </v-btn>
         </template>
         <v-card>
-          <v-card-title
-            class="px-4 pt-6 justify-space-between d-flex align-center"
-          >
+          <v-card-title class="px-4 pt-6 justify-space-between d-flex align-center">
             <span class="text-h5">{{ formTitle }}</span>
             <v-btn
               @click="dialog = false"
@@ -109,12 +106,7 @@ const formTitle = computed(() => {
             ></v-btn>
           </v-card-title>
           <v-card-text class="px-4">
-            <v-form
-              class="dialog_form"
-              ref="form"
-              v-model="valid"
-              lazy-validation
-            >
+            <v-form class="dialog_form" ref="form" v-model="valid" lazy-validation>
               <v-row>
                 <v-col cols="12" sm="6">
                   <v-text-field
@@ -181,9 +173,7 @@ const formTitle = computed(() => {
 
           <div class="pa-4 d-flex justify-end gap-2">
             <v-spacer></v-spacer>
-            <v-btn @click="close" class="bg-error px-3 rounded-pill"
-              >Cancel</v-btn
-            >
+            <v-btn @click="close" class="bg-error px-3 rounded-pill">Cancel</v-btn>
             <v-btn
               color="primary"
               :disabled="editedItem.userinfo == '' || editedItem.usermail == ''"
@@ -215,11 +205,7 @@ const formTitle = computed(() => {
             <td>
               <div class="d-flex align-center">
                 <div>
-                  <v-img
-                    :src="item.avatar"
-                    width="45px"
-                    class="rounded-circle img-fluid"
-                  ></v-img>
+                  <v-img :src="item.avatar" width="45px" class="rounded-circle img-fluid"></v-img>
                 </div>
 
                 <div class="ml-5">
@@ -235,33 +221,23 @@ const formTitle = computed(() => {
             <td class="text-subtitle-1">{{ item.phone }}</td>
             <td class="text-subtitle-1">{{ item.jdate }}</td>
             <td>
-              <v-chip
-                rounded="pill"
-                :color="item.rolestatus"
-                size="small"
-                label
-                >{{ item.role }}</v-chip
-              >
+              <v-chip rounded="pill" :color="item.rolestatus" size="small" label>{{
+                item.role
+              }}</v-chip>
             </td>
             <td>
               <div class="d-flex align-center">
                 <v-tooltip text="Edit">
                   <template v-slot:activator="{ props }">
                     <v-btn icon flat @click="editItem(item)" v-bind="props"
-                      ><PencilIcon
-                        stroke-width="1.5"
-                        size="20"
-                        class="text-primary"
+                      ><PencilIcon stroke-width="1.5" size="20" class="text-primary"
                     /></v-btn>
                   </template>
                 </v-tooltip>
                 <v-tooltip text="Delete">
                   <template v-slot:activator="{ props }">
                     <v-btn icon flat @click="deleteItem(item)" v-bind="props"
-                      ><TrashIcon
-                        stroke-width="1.5"
-                        size="20"
-                        class="text-error"
+                      ><TrashIcon stroke-width="1.5" size="20" class="text-error"
                     /></v-btn>
                   </template>
                 </v-tooltip>

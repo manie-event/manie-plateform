@@ -1,14 +1,11 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { HeartIcon, PhoneIcon, UserIcon } from "vue-tabler-icons";
+import { ref } from 'vue';
+import { HeartIcon, PhoneIcon, UserIcon } from 'vue-tabler-icons';
 const tab5 = ref(null);
 </script>
 <template>
-    <v-card elevation="0" >
-    <v-tabs
-      bg-color="primary"
-      center-active
-    >
+  <v-card elevation="0">
+    <v-tabs bg-color="primary" center-active>
       <v-tab>One</v-tab>
       <v-tab>Two</v-tab>
       <v-tab>Three</v-tab>

@@ -7,26 +7,26 @@ import { useBlogStore } from '@/stores/apps/blog';
 const store = useBlogStore();
 
 onMounted(() => {
-    store.fetchPosts();
+  store.fetchPosts();
 });
 
 const getPosts = computed(() => {
-    return store.blogposts;
+  return store.blogposts;
 });
 
 const filterFeaturedpost = computed(() => {
-    return getPosts.value.filter((post) => {
-        return post.featured;
-    });
+  return getPosts.value.filter((post) => {
+    return post.featured;
+  });
 });
 </script>
 <template>
-    <v-row>
-        <template v-for="(post, i) in filterFeaturedpost" :key="post.id">
-            <FeatuteBlogCard :post="post" :index="i" />
-        </template>
-        <template v-for="(post, i) in getPosts" :key="post.id">
-            <BlogGrid :post="post" />
-        </template>
-    </v-row>
+  <v-row>
+    <template v-for="(post, i) in filterFeaturedpost" :key="post.id">
+      <FeatuteBlogCard :post="post" :index="i" />
+    </template>
+    <template v-for="(post, i) in getPosts" :key="post.id">
+      <BlogGrid :post="post" />
+    </template>
+  </v-row>
 </template>

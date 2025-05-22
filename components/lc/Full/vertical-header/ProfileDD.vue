@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import { profileDD } from "@/_mockApis/headerData";
-import { Icon } from "@iconify/vue";
-import { CircleXIcon, MailIcon } from "vue-tabler-icons";
+import { profileDD } from '@/_mockApis/headerData';
+import { Icon } from '@iconify/vue';
+import { CircleXIcon, MailIcon } from 'vue-tabler-icons';
+import { useAuthentification } from '../../../../composables/UseAuthentification';
 
+const { sendLogout } = useAuthentification();
 const router = useRouter();
 
 const callLogOut = () => {
-  const token = useCookie("token");
-  token.value = null; // ou: undefined
-  router.push("/");
+  const token = useCookie('token');
+  sendLogout();
+  router.push('/');
 };
 </script>
 
@@ -21,21 +23,13 @@ const callLogOut = () => {
       <div class="text-left px-0 cursor-pointer" variant="text" v-bind="props">
         <div class="d-flex align-center">
           <v-avatar size="50">
-            <img
-              src="/images/profile/user6.jpg"
-              width="50"
-              alt="Mike Nielsen"
-            />
+            <img src="/images/profile/user6.jpg" width="50" alt="Mike Nielsen" />
           </v-avatar>
           <div class="ml-md-4 d-md-block d-none">
-            <h6
-              class="text-h6 d-flex align-center text-black font-weight-semibold"
-            >
+            <h6 class="text-h6 d-flex align-center text-black font-weight-semibold">
               Mike Nielsen
             </h6>
-            <span class="text-subtitle-2 font-weight-medium text-grey100"
-              >Admin</span
-            >
+            <span class="text-subtitle-2 font-weight-medium text-grey100">Admin</span>
           </div>
         </div>
       </div>
@@ -44,10 +38,7 @@ const callLogOut = () => {
       <div class="px-8 pt-6">
         <div class="d-flex align-center justify-space-between">
           <h6 class="text-h5 font-weight-semibold">User Profile</h6>
-          <CircleXIcon
-            size="22"
-            class="text-grey100 cursor-pointer opacity-50"
-          />
+          <CircleXIcon size="22" class="text-grey100 cursor-pointer opacity-50" />
         </div>
 
         <div class="d-flex align-center mt-5 pb-6">
@@ -56,8 +47,7 @@ const callLogOut = () => {
           </v-avatar>
           <div class="ml-5">
             <h6 class="text-h5 mb-n1">Mike Nielsen</h6>
-            <span
-              class="text-subtitle-1 font-weight-regular text-grey100 font-weight-medium"
+            <span class="text-subtitle-1 font-weight-regular text-grey100 font-weight-medium"
               >Admin</span
             >
             <div class="d-flex align-center mt-1">
@@ -79,11 +69,7 @@ const callLogOut = () => {
             :to="item.href"
           >
             <template v-slot:prepend>
-              <v-avatar
-                size="40"
-                class="rounded-lg"
-                :class="'bg-light' + item.bgcolor"
-              >
+              <v-avatar size="40" class="rounded-lg" :class="'bg-light' + item.bgcolor">
                 <!-- <component :is="item.avatar" stroke-width="2" size="25" :class="'text-' + item.bgcolor" /> -->
                 <Icon
                   :icon="'solar:' + item.avatar"
@@ -105,12 +91,7 @@ const callLogOut = () => {
         </v-list>
       </perfect-scrollbar>
       <div class="pb-6 px-8 text-center">
-        <v-btn
-          color="primary"
-          size="large"
-          rounded="pill"
-          block
-          @click="callLogOut"
+        <v-btn color="primary" size="large" rounded="pill" block @click="callLogOut"
           >Me déconnecter</v-btn
         >
       </div>

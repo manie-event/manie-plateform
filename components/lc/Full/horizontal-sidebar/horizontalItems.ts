@@ -19,609 +19,609 @@ export interface menu {
 
 const horizontalItems: menu[] = [
   {
-    title: "Dashboards",
-    icon: "screencast-2-linear",
-    BgColor: "primary",
-    to: "#",
+    title: 'Dashboards',
+    icon: 'screencast-2-linear',
+    BgColor: 'primary',
+    to: '#',
     children: [
       {
-        title: "Dashboard",
-        to: "/dashboards/dashboard1",
+        title: 'Dashboard',
+        to: '/dashboards/dashboard1',
       },
       {
-        title: "Dashboard 2",
-        to: "/dashboards/dashboard2",
+        title: 'Dashboard 2',
+        to: '/dashboards/dashboard2',
       },
     ],
   },
   {
-    title: "Front Pages",
-    icon: "home-angle-linear",
-    BgColor: "error",
-    to: "#",
+    title: 'Front Pages',
+    icon: 'home-angle-linear',
+    BgColor: 'error',
+    to: '#',
     children: [
       {
-        title: "Homepage",
-        to: "/front-pages/homepage",
+        title: 'Homepage',
+        to: '/front-pages/homepage',
       },
       {
-        title: "About Us",
-        to: "/front-pages/about-us",
+        title: 'About Us',
+        to: '/front-pages/about-us',
       },
       {
-        title: "Blog",
-        to: "/front-pages/blog/posts",
+        title: 'Blog',
+        to: '/front-pages/blog/posts',
       },
       {
-        title: "Blog Details",
-        to: "/front-pages/blog/early-black-friday-amazon-deals-cheap-tvs-headphones",
+        title: 'Blog Details',
+        to: '/front-pages/blog/early-black-friday-amazon-deals-cheap-tvs-headphones',
       },
       {
-        title: "Contact Us",
-        to: "/front-pages/contact-us",
+        title: 'Contact Us',
+        to: '/front-pages/contact-us',
       },
       {
-        title: "Portfolio",
-        to: "/front-pages/portfolio",
+        title: 'Portfolio',
+        to: '/front-pages/portfolio',
       },
       {
-        title: "Pricing",
-        to: "/front-pages/pricing",
-      },
-    ],
-  },
-
-  {
-    title: "Apps",
-    icon: "clapperboard-text-line-duotone",
-    BgColor: "indigo",
-    to: "#",
-    children: [
-      {
-        title: "Contact",
-        to: "/apps/contacts",
-      },
-      {
-        title: "Chats",
-        to: "/apps/chats",
-      },
-      {
-        title: "Blog",
-        to: "/",
-        children: [
-          {
-            title: "Posts",
-            to: "/apps/blog/posts",
-          },
-          {
-            title: "Detail",
-            to: "/apps/blog/early-black-friday-amazon-deals-cheap-tvs-headphones",
-          },
-        ],
-      },
-      {
-        title: "E-Commerce",
-        to: "/ecommerce/",
-        children: [
-          {
-            title: "Shop One",
-            to: "/apps/ecommerce/productsone",
-          },
-          {
-            title: "Shop Two",
-            to: "/apps/ecommerce/productstwo",
-          },
-          {
-            title: "Details One",
-            to: "/apps/ecommerce/product/one/detail/1",
-          },
-          {
-            title: "Details Two",
-            to: "/apps/ecommerce/producttwo/two/detail/1",
-          },
-          {
-            title: "List",
-            to: "/apps/ecommerce/productlist",
-          },
-          {
-            title: "Checkout",
-            to: "/apps/ecommerce/checkout",
-          },
-          {
-            title: "Add Product",
-            to: "/apps/ecommerce/addproduct",
-          },
-          {
-            title: "Edit Product",
-            to: "/apps/ecommerce/editproduct",
-          },
-        ],
-      },
-      {
-        title: "User Profile",
-        to: "/",
-        children: [
-          {
-            title: "Profile One",
-            to: "/apps/userprofile/one",
-          },
-          {
-            title: "Profile Two",
-            to: "/apps/userprofile/two",
-          },
-        ],
-      },
-      {
-        title: "Invoice",
-        to: "/",
-        children: [
-          {
-            title: "List",
-            to: "/apps/invoice",
-          },
-          {
-            title: "Details",
-            to: "/apps/invoice/details/102",
-          },
-          {
-            title: "Create",
-            to: "/apps/invoice/create",
-          },
-          {
-            title: "Edit",
-            to: "/apps/invoice/edit/102",
-          },
-        ],
-      },
-      {
-        title: "Email",
-        to: "/apps/email",
-      },
-      {
-        title: "Notes",
-        to: "/apps/notes",
-      },
-      {
-        title: "Calendar",
-        to: "/apps/calendar",
-      },
-      {
-        title: "Kanban",
-        to: "/apps/kanban",
-      },
-      {
-        title: "Tickets",
-        to: "/apps/tickets",
+        title: 'Pricing',
+        to: '/front-pages/pricing',
       },
     ],
   },
 
   {
-    title: "Pages",
-    icon: "folder-with-files-line-duotone",
-    BgColor: "error",
-    to: "#",
+    title: 'Apps',
+    icon: 'clapperboard-text-line-duotone',
+    BgColor: 'indigo',
+    to: '#',
     children: [
       {
-        title: "Pricing",
-        to: "/theme-pages/pricing",
+        title: 'Contact',
+        to: '/apps/contacts',
       },
       {
-        title: "Account Setting",
-        to: "/theme-pages/account-settings",
+        title: 'Chats',
+        to: '/apps/chats',
       },
       {
-        title: "FAQ",
-        to: "/theme-pages/pricing",
-      },
-      {
-        title: "Gallery Lightbox",
-
-        to: "/theme-pages/gallery-lightbox",
-      },
-      {
-        title: "Search Results",
-
-        to: "/theme-pages/search-results",
-      },
-      {
-        title: "Social Contacts",
-
-        to: "/theme-pages/social-media-contacts",
-      },
-      {
-        title: "Treeview",
-
-        to: "/theme-pages/treeview",
-      },
-      {
-        title: "Widget",
-        to: "/widget-card",
+        title: 'Blog',
+        to: '/',
         children: [
           {
-            title: "Cards",
-            to: "/widgets/cards",
+            title: 'Posts',
+            to: '/apps/blog/posts',
           },
           {
-            title: "Banners",
-            to: "/widgets/banners",
-          },
-          {
-            title: "Charts",
-            to: "/widgets/charts",
+            title: 'Detail',
+            to: '/apps/blog/early-black-friday-amazon-deals-cheap-tvs-headphones',
           },
         ],
       },
       {
-        title: "UI",
-        to: "#",
+        title: 'E-Commerce',
+        to: '/ecommerce/',
         children: [
           {
-            title: "Alert",
-            to: "/ui-components/alert",
+            title: 'Shop One',
+            to: '/apps/ecommerce/productsone',
           },
           {
-            title: "Accordion",
-            to: "/ui-components/accordion",
+            title: 'Shop Two',
+            to: '/apps/ecommerce/productstwo',
           },
           {
-            title: "Avatar",
-            to: "/ui-components/avatar",
+            title: 'Details One',
+            to: '/apps/ecommerce/product/one/detail/1',
           },
           {
-            title: "Chip",
-            to: "/ui-components/chip",
+            title: 'Details Two',
+            to: '/apps/ecommerce/producttwo/two/detail/1',
           },
           {
-            title: "Dialog",
-            to: "/ui-components/dialogs",
+            title: 'List',
+            to: '/apps/ecommerce/productlist',
           },
           {
-            title: "List",
-            to: "/ui-components/list",
+            title: 'Checkout',
+            to: '/apps/ecommerce/checkout',
           },
           {
-            title: "Menus",
-            to: "/ui-components/menus",
+            title: 'Add Product',
+            to: '/apps/ecommerce/addproduct',
           },
           {
-            title: "Rating",
-            to: "/ui-components/rating",
-          },
-          {
-            title: "Tabs",
-            to: "/ui-components/tabs",
-          },
-          {
-            title: "Tooltip",
-            to: "/ui-components/tooltip",
-          },
-          {
-            title: "Typography",
-            to: "/ui-components/typography",
+            title: 'Edit Product',
+            to: '/apps/ecommerce/editproduct',
           },
         ],
       },
       {
-        title: "Charts",
-        to: "#",
+        title: 'User Profile',
+        to: '/',
         children: [
           {
-            title: "Line",
-            to: "/charts/line-chart",
+            title: 'Profile One',
+            to: '/apps/userprofile/one',
           },
           {
-            title: "Gredient",
-            to: "/charts/gredient-chart",
-          },
-          {
-            title: "Area",
-            to: "/charts/area-chart",
-          },
-          {
-            title: "Candlestick",
-            to: "/charts/candlestick-chart",
-          },
-          {
-            title: "Column",
-            to: "/charts/column-chart",
-          },
-          {
-            title: "Doughnut & Pie",
-            to: "/charts/doughnut-pie-chart",
-          },
-          {
-            title: "Radialbar & Radar",
-            to: "/charts/radialbar-chart",
+            title: 'Profile Two',
+            to: '/apps/userprofile/two',
           },
         ],
       },
       {
-        title: "Auth",
-        to: "#",
+        title: 'Invoice',
+        to: '/',
         children: [
           {
-            title: "Error",
-            to: "/auth/404",
+            title: 'List',
+            to: '/apps/invoice',
           },
           {
-            title: "Maintenance",
-            to: "/auth/maintenance",
+            title: 'Details',
+            to: '/apps/invoice/details/102',
           },
           {
-            title: "Login",
-            to: "#",
+            title: 'Create',
+            to: '/apps/invoice/create',
+          },
+          {
+            title: 'Edit',
+            to: '/apps/invoice/edit/102',
+          },
+        ],
+      },
+      {
+        title: 'Email',
+        to: '/apps/email',
+      },
+      {
+        title: 'Notes',
+        to: '/apps/notes',
+      },
+      {
+        title: 'Calendar',
+        to: '/apps/calendar',
+      },
+      {
+        title: 'Kanban',
+        to: '/apps/kanban',
+      },
+      {
+        title: 'Tickets',
+        to: '/apps/tickets',
+      },
+    ],
+  },
+
+  {
+    title: 'Pages',
+    icon: 'folder-with-files-line-duotone',
+    BgColor: 'error',
+    to: '#',
+    children: [
+      {
+        title: 'Pricing',
+        to: '/theme-pages/pricing',
+      },
+      {
+        title: 'Account Setting',
+        to: '/theme-pages/account-settings',
+      },
+      {
+        title: 'FAQ',
+        to: '/theme-pages/pricing',
+      },
+      {
+        title: 'Gallery Lightbox',
+
+        to: '/theme-pages/gallery-lightbox',
+      },
+      {
+        title: 'Search Results',
+
+        to: '/theme-pages/search-results',
+      },
+      {
+        title: 'Social Contacts',
+
+        to: '/theme-pages/social-media-contacts',
+      },
+      {
+        title: 'Treeview',
+
+        to: '/theme-pages/treeview',
+      },
+      {
+        title: 'Widget',
+        to: '/widget-card',
+        children: [
+          {
+            title: 'Cards',
+            to: '/widgets/cards',
+          },
+          {
+            title: 'Banners',
+            to: '/widgets/banners',
+          },
+          {
+            title: 'Charts',
+            to: '/widgets/charts',
+          },
+        ],
+      },
+      {
+        title: 'UI',
+        to: '#',
+        children: [
+          {
+            title: 'Alert',
+            to: '/ui-components/alert',
+          },
+          {
+            title: 'Accordion',
+            to: '/ui-components/accordion',
+          },
+          {
+            title: 'Avatar',
+            to: '/ui-components/avatar',
+          },
+          {
+            title: 'Chip',
+            to: '/ui-components/chip',
+          },
+          {
+            title: 'Dialog',
+            to: '/ui-components/dialogs',
+          },
+          {
+            title: 'List',
+            to: '/ui-components/list',
+          },
+          {
+            title: 'Menus',
+            to: '/ui-components/menus',
+          },
+          {
+            title: 'Rating',
+            to: '/ui-components/rating',
+          },
+          {
+            title: 'Tabs',
+            to: '/ui-components/tabs',
+          },
+          {
+            title: 'Tooltip',
+            to: '/ui-components/tooltip',
+          },
+          {
+            title: 'Typography',
+            to: '/ui-components/typography',
+          },
+        ],
+      },
+      {
+        title: 'Charts',
+        to: '#',
+        children: [
+          {
+            title: 'Line',
+            to: '/charts/line-chart',
+          },
+          {
+            title: 'Gredient',
+            to: '/charts/gredient-chart',
+          },
+          {
+            title: 'Area',
+            to: '/charts/area-chart',
+          },
+          {
+            title: 'Candlestick',
+            to: '/charts/candlestick-chart',
+          },
+          {
+            title: 'Column',
+            to: '/charts/column-chart',
+          },
+          {
+            title: 'Doughnut & Pie',
+            to: '/charts/doughnut-pie-chart',
+          },
+          {
+            title: 'Radialbar & Radar',
+            to: '/charts/radialbar-chart',
+          },
+        ],
+      },
+      {
+        title: 'Auth',
+        to: '#',
+        children: [
+          {
+            title: 'Error',
+            to: '/auth/404',
+          },
+          {
+            title: 'Maintenance',
+            to: '/auth/maintenance',
+          },
+          {
+            title: 'Login',
+            to: '#',
             children: [
               {
-                title: "Side Login",
-                to: "/auth/login",
+                title: 'Side Login',
+                to: '/auth/login',
               },
               {
-                title: "Boxed Login",
-                to: "/auth/login2",
+                title: 'Boxed Login',
+                to: '/auth/login2',
               },
             ],
           },
           {
-            title: "Register",
+            title: 'Register',
 
-            to: "#",
+            to: '#',
             children: [
               {
-                title: "Side Register",
-                to: "/auth/register2",
+                title: 'Side Register',
+                to: '/auth/register2',
               },
               {
-                title: "Boxed Register",
-                to: "/auth/register",
+                title: 'Boxed Register',
+                to: '/auth/register',
               },
             ],
           },
           {
-            title: "Forgot Password",
-            to: "#",
+            title: 'Forgot Password',
+            to: '#',
             children: [
               {
-                title: "Side Forgot Password",
-                to: "/auth/forgot-password",
+                title: 'Side Forgot Password',
+                to: '/auth/forgot-password',
               },
               {
-                title: "Boxed Forgot Password",
-                to: "/auth/forgot-password2",
+                title: 'Boxed Forgot Password',
+                to: '/auth/forgot-password2',
               },
             ],
           },
           {
-            title: "Two Steps",
-            to: "#",
+            title: 'Two Steps',
+            to: '#',
             children: [
               {
-                title: "Side Two Steps",
-                to: "/auth/two-step",
+                title: 'Side Two Steps',
+                to: '/auth/two-step',
               },
               {
-                title: "Boxed Two Steps",
-                to: "/auth/two-step2",
+                title: 'Boxed Two Steps',
+                to: '/auth/two-step2',
               },
             ],
           },
         ],
       },
       {
-        title: "Teachers",
-        to: "",
+        title: 'Teachers',
+        to: '',
         children: [
           {
-            title: "All Teachers",
-            to: "/school-pages/teachers",
+            title: 'All Teachers',
+            to: '/school-pages/teachers',
           },
           {
-            title: "Teachers Details",
-            to: "/school-pages/teachers/details",
+            title: 'Teachers Details',
+            to: '/school-pages/teachers/details',
           },
         ],
       },
       {
-        title: "Exam",
-        to: "",
+        title: 'Exam',
+        to: '',
         children: [
           {
-            title: "Exam Schedule",
-            to: "/school-pages/exam/schedule",
+            title: 'Exam Schedule',
+            to: '/school-pages/exam/schedule',
           },
           {
-            title: "Exam Result",
-            to: "/school-pages/exam/result",
+            title: 'Exam Result',
+            to: '/school-pages/exam/result',
           },
           {
-            title: "Exam Result Details",
-            to: "/school-pages/exam/result-details",
+            title: 'Exam Result Details',
+            to: '/school-pages/exam/result-details',
           },
         ],
       },
       {
-        title: "Students",
-        to: "",
+        title: 'Students',
+        to: '',
         children: [
           {
-            title: "All Students",
-            to: "/school-pages/students",
+            title: 'All Students',
+            to: '/school-pages/students',
           },
           {
-            title: "Students Details",
-            to: "/school-pages/students/details",
+            title: 'Students Details',
+            to: '/school-pages/students/details',
           },
         ],
       },
       {
-        title: "Classes",
-        to: "/school-pages/classes",
+        title: 'Classes',
+        to: '/school-pages/classes',
       },
       {
-        title: "Attendance",
-        to: "/school-pages/attendance",
+        title: 'Attendance',
+        to: '/school-pages/attendance',
       },
     ],
   },
   {
-    title: "Forms",
-    icon: "file-line-duotone",
-    BgColor: "success",
-    to: "#",
+    title: 'Forms',
+    icon: 'file-line-duotone',
+    BgColor: 'success',
+    to: '#',
     children: [
       {
-        title: "Form Elements",
-        to: "/components/",
+        title: 'Form Elements',
+        to: '/components/',
         children: [
           {
-            title: "Autocomplete",
-            to: "/forms/form-elements/autocomplete",
+            title: 'Autocomplete',
+            to: '/forms/form-elements/autocomplete',
           },
           {
-            title: "Combobox",
-            to: "/forms/form-elements/combobox",
+            title: 'Combobox',
+            to: '/forms/form-elements/combobox',
           },
           {
-            title: "Button",
-            to: "/forms/form-elements/button",
+            title: 'Button',
+            to: '/forms/form-elements/button',
           },
           {
-            title: "Checkbox",
-            to: "/forms/form-elements/checkbox",
+            title: 'Checkbox',
+            to: '/forms/form-elements/checkbox',
           },
           {
-            title: "Custom Inputs",
-            to: "/forms/form-elements/custominputs",
+            title: 'Custom Inputs',
+            to: '/forms/form-elements/custominputs',
           },
           {
-            title: "File Inputs",
-            to: "/forms/form-elements/fileinputs",
+            title: 'File Inputs',
+            to: '/forms/form-elements/fileinputs',
           },
           {
-            title: "Radio",
-            to: "/forms/form-elements/radio",
+            title: 'Radio',
+            to: '/forms/form-elements/radio',
           },
           {
-            title: "Date Time",
-            to: "/forms/form-elements/date-time",
+            title: 'Date Time',
+            to: '/forms/form-elements/date-time',
           },
           {
-            title: "Select",
-            to: "/forms/form-elements/select",
+            title: 'Select',
+            to: '/forms/form-elements/select',
           },
           {
-            title: "Slider",
-            to: "/forms/form-elements/slider",
+            title: 'Slider',
+            to: '/forms/form-elements/slider',
           },
           {
-            title: "Switch",
-            to: "/forms/form-elements/switch",
+            title: 'Switch',
+            to: '/forms/form-elements/switch',
           },
           {
-            title: "Time Picker",
-            to: "/forms/form-elements/timepicker",
+            title: 'Time Picker',
+            to: '/forms/form-elements/timepicker',
           },
           {
-            title: "Stepper",
-            to: "/forms/form-elements/stepper",
+            title: 'Stepper',
+            to: '/forms/form-elements/stepper',
           },
         ],
       },
       {
-        title: "Form Layout",
-        to: "/forms/form-layouts",
+        title: 'Form Layout',
+        to: '/forms/form-layouts',
       },
       {
-        title: "Form Horizontal",
-        to: "/forms/form-horizontal",
+        title: 'Form Horizontal',
+        to: '/forms/form-horizontal',
       },
       {
-        title: "Form Vertical",
-        to: "/forms/form-vertical",
+        title: 'Form Vertical',
+        to: '/forms/form-vertical',
       },
       {
-        title: "Form Custom",
-        to: "/forms/form-custom",
+        title: 'Form Custom',
+        to: '/forms/form-custom',
       },
       {
-        title: "Form Validation",
-        to: "/forms/form-validation",
-      },
-    ],
-  },
-  {
-    title: "Tables",
-    icon: "layers-minimalistic-line-duotone",
-    BgColor: "warning",
-    to: "#",
-    children: [
-      {
-        title: "Basic Table",
-        to: "/tables/basic",
-      },
-      {
-        title: "Dark Table",
-        to: "/tables/dark",
-      },
-      {
-        title: "Density Table",
-        to: "/tables/density",
-      },
-      {
-        title: "Fixed Header Table",
-        to: "/tables/fixed-header",
-      },
-      {
-        title: "Height Table",
-        to: "/tables/height",
-      },
-      {
-        title: "Editable Table",
-        to: "/tables/editable",
+        title: 'Form Validation',
+        to: '/forms/form-validation',
       },
     ],
   },
   {
-    title: "Data Tables",
-    BgColor: "secondary",
-    icon: "database-outline",
-    to: "#",
+    title: 'Tables',
+    icon: 'layers-minimalistic-line-duotone',
+    BgColor: 'warning',
+    to: '#',
     children: [
       {
-        title: "Basic Table",
-        to: "/datatables/basic",
+        title: 'Basic Table',
+        to: '/tables/basic',
       },
       {
-        title: "Header Table",
-        to: "/datatables/header",
+        title: 'Dark Table',
+        to: '/tables/dark',
       },
       {
-        title: "Selection Table",
-        to: "/datatables/selection",
+        title: 'Density Table',
+        to: '/tables/density',
       },
       {
-        title: "Sorting Table",
-        to: "/datatables/sorting",
+        title: 'Fixed Header Table',
+        to: '/tables/fixed-header',
       },
       {
-        title: "Pagination Table",
-        to: "/datatables/pagination",
+        title: 'Height Table',
+        to: '/tables/height',
       },
       {
-        title: "Filtering Table",
-        to: "/datatables/filtering",
+        title: 'Editable Table',
+        to: '/tables/editable',
+      },
+    ],
+  },
+  {
+    title: 'Data Tables',
+    BgColor: 'secondary',
+    icon: 'database-outline',
+    to: '#',
+    children: [
+      {
+        title: 'Basic Table',
+        to: '/datatables/basic',
       },
       {
-        title: "Grouping Table",
-        to: "/datatables/grouping",
+        title: 'Header Table',
+        to: '/datatables/header',
       },
       {
-        title: "Table Slots",
-        to: "/datatables/slots",
+        title: 'Selection Table',
+        to: '/datatables/selection',
       },
       {
-        title: "CRUD Table",
-        to: "/datatables/crudtable",
+        title: 'Sorting Table',
+        to: '/datatables/sorting',
+      },
+      {
+        title: 'Pagination Table',
+        to: '/datatables/pagination',
+      },
+      {
+        title: 'Filtering Table',
+        to: '/datatables/filtering',
+      },
+      {
+        title: 'Grouping Table',
+        to: '/datatables/grouping',
+      },
+      {
+        title: 'Table Slots',
+        to: '/datatables/slots',
+      },
+      {
+        title: 'CRUD Table',
+        to: '/datatables/crudtable',
       },
     ],
   },

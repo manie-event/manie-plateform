@@ -1,42 +1,37 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue';
 /*Social icons*/
 // import google from "/images/svgs/google-icon.svg";
 // import facebook from "/images/svgs/icon-facebook.svg";
 const { sendRegister } = useAuthentification();
 
 const registerForm = ref({
-  lastname: "",
-  firstname: "",
-  category: "",
-  password: "",
-  confirmPassword: "",
-  email: "",
+  username: '',
+  category: '',
+  password: '',
+  confirmPassword: '',
+  email: '',
 });
 const router = useRouter();
 const valid = ref(true);
 const passwordRules = ref([
-  (v: string) => !!v || "Le mot de passe est obligatoire",
-  (v: string) =>
-    (v && v.length >= 10) || "Le mot de passe doit faire 10 caractères minimum",
+  (v: string) => !!v || 'Le mot de passe est obligatoire',
+  (v: string) => (v && v.length >= 10) || 'Le mot de passe doit faire 10 caractères minimum',
 ]);
 const checkPasswordRules = ref([
-  (v: string) => !!v || "La confirmation du mot de passe est obligatoire",
-  (v: string) =>
-    v === registerForm.value.password ||
-    "Les mots de passe doivent être identiques",
+  (v: string) => !!v || 'La confirmation du mot de passe est obligatoire',
+  (v: string) => v === registerForm.value.password || 'Les mots de passe doivent être identiques',
 ]);
 const emailRules = ref([
   (v: string) => !!v || "L'e-mail est obligatoire",
   (v: string) => /.+@.+\..+/.test(v) || "L'e-mail doit être valide",
 ]);
-const nameRules = ref([(v: string) => !!v || "Votre nom est obligatoire"]);
-const fnameRules = ref([(v: string) => !!v || "Votre prénom est obligatoire"]);
+const nameRules = ref([(v: string) => !!v || 'Votre pseudo est obligatoire']);
 
 const register = async () => {
   const registerResponse = await sendRegister(registerForm.value);
   if (registerResponse) {
-    router.push({ path: "/auth/login" });
+    router.push({ path: '/auth/login' });
   }
 };
 </script>
@@ -56,67 +51,37 @@ const register = async () => {
         </v-col>
     </v-row> -->
   <div class="d-flex align-center text-center mb-6">
-    <div
-      class="text-h6 w-100 px-5 font-weight-regular auth-divider position-relative"
-    >
-      <span
-        class="bg-surface px-5 py-3 position-relative text-subtitle-1 text-grey100"
+    <div class="text-h6 w-100 px-5 font-weight-regular auth-divider position-relative">
+      <span class="bg-surface px-5 py-3 position-relative text-subtitle-1 text-grey100"
         >M'enregistrer avec</span
       >
     </div>
   </div>
-  <v-form
-    ref="form"
-    v-model="valid"
-    lazy-validation
-    action="/pages/boxedlogin"
-    class="mt-5"
-  >
-    <v-label class="text-subtitle-1 font-weight-medium pb-2">Vous êtes</v-label>
-    <div class="d-flex align-center">
-      <span>Prestataire</span>
-      <v-switch
-        v-model="registerForm.category"
-        label="Client"
-        false-value="professional"
-        true-value="consumer"
-        hide-details
-        >{{ registerForm.category }}</v-switch
-      >
+  <v-form ref="form" v-model="valid" lazy-validation action="/pages/boxedlogin" class="mt-5">
+    <div class="d-flex gap-2 align-center">
+      <v-label class="text-subtitle-1 font-weight-medium">Vous êtes :</v-label>
+      <div class="d-flex align-center gap-2">
+        <v-label class="text-subtitle-1 font-weight-medium">Prestataire</v-label>
+        <v-switch
+          v-model="registerForm.category"
+          false-value="professional"
+          true-value="consumer"
+          :color="registerForm.category === 'consumer' ? 'success' : 'primary'"
+          hide-details
+          >{{ registerForm.category }}</v-switch
+        >
+        <v-label class="text-subtitle-1 font-weight-medium">Client</v-label>
+      </div>
     </div>
 
-    <div class="d-flex gap-4" v-if="registerForm.category === 'consumer'">
+    <div class="d-flex gap-4">
       <div class="w-100">
-        <v-label class="text-subtitle-1 font-weight-medium pb-2">Nom</v-label>
+        <v-label class="text-subtitle-1 font-weight-medium pb-2">Pseudo</v-label>
         <VTextField
-          v-model="registerForm.lastname"
+          v-model="registerForm.username"
           :rules="nameRules"
           required
-          placeholder="Votre nom"
-        ></VTextField>
-      </div>
-      <div class="w-100">
-        <v-label class="text-subtitle-1 font-weight-medium pb-2"
-          >Prénom</v-label
-        >
-        <VTextField
-          v-model="registerForm.firstname"
-          :rules="fnameRules"
-          required
-          placeholder="Votre nom"
-        ></VTextField>
-      </div>
-    </div>
-    <div class="d-flex gap-4" v-else>
-      <div class="w-100">
-        <v-label class="text-subtitle-1 font-weight-medium pb-2"
-          >Raison Social</v-label
-        >
-        <VTextField
-          v-model="registerForm.lastname"
-          :rules="nameRules"
-          required
-          placeholder="Votre raison social"
+          placeholder="Votre nom d'utilisateur"
         ></VTextField>
       </div>
     </div>
@@ -128,9 +93,7 @@ const register = async () => {
       autocomplete="new-email"
       placeholder="info@manie.com"
     ></VTextField>
-    <v-label class="text-subtitle-1 font-weight-medium pb-2"
-      >Mot de passe</v-label
-    >
+    <v-label class="text-subtitle-1 font-weight-medium pb-2">Mot de passe</v-label>
     <VTextField
       v-model="registerForm.password"
       :rules="passwordRules"
@@ -141,9 +104,7 @@ const register = async () => {
       variant="outlined"
       color="primary"
     ></VTextField>
-    <v-label class="text-subtitle-1 font-weight-medium pb-2"
-      >Je confirme mon mot de passe</v-label
-    >
+    <v-label class="text-subtitle-1 font-weight-medium pb-2">Je confirme mon mot de passe</v-label>
     <VTextField
       v-model="registerForm.confirmPassword"
       :rules="checkPasswordRules"
@@ -154,14 +115,7 @@ const register = async () => {
       variant="outlined"
       color="primary"
     ></VTextField>
-    <v-btn
-      size="large"
-      class="mt-2"
-      color="primary"
-      block
-      submit
-      rounded="pill"
-      @click="register"
+    <v-btn size="large" class="mt-2" color="primary" block submit rounded="pill" @click="register"
       >Je créer mon compte</v-btn
     >
   </v-form>

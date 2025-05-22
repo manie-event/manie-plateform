@@ -6,23 +6,23 @@ import BaseBreadcrumb from '@/components/shared/BaseBreadcrumb.vue';
 // theme breadcrumb
 const page = ref({ title: 'Attendence Sheet' });
 const breadcrumbs = ref([
-    {
-        text: 'Home',
-        disabled: false,
-        href: '/'
-    },
-    {
-        text: 'Attendence Sheet',
-        disabled: true,
-        href: '#'
-    }
+  {
+    text: 'Home',
+    disabled: false,
+    href: '/',
+  },
+  {
+    text: 'Attendence Sheet',
+    disabled: true,
+    href: '#',
+  },
 ]);
 </script>
 <template>
-    <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
-    <v-card elevation="10">
-        <v-card-text>
-            <AttendenceSheet />
-        </v-card-text>
-    </v-card>
+  <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
+  <v-card elevation="10">
+    <v-card-text>
+      <AttendenceSheet />
+    </v-card-text>
+  </v-card>
 </template>

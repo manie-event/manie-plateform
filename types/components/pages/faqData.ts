@@ -1,7 +1,7 @@
 /*Faq page data*/
-type faqPageType = {
-    question:string;
-    answer: string;
-};
+interface faqPageType {
+  question: string;
+  answer: string;
+}
 
 export type { faqPageType };

@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, watch } from "vue";
-import { useTicketstore } from "@/stores/apps/tickets";
-import { format } from "date-fns";
-import { Icon } from "@iconify/vue";
-import user3 from "/images/profile/3.jpg";
+import { ref, onMounted, computed, watch } from 'vue';
+import { useTicketstore } from '@/stores/apps/tickets';
+import { format } from 'date-fns';
+import { Icon } from '@iconify/vue';
+import user3 from '/images/profile/3.jpg';
 const store = useTicketstore();
 
 // Fetch tickets and ensure tickets are available
 onMounted(async () => {
   await store.fetchTicket();
-  console.log("Fetched tickets:", getTickets.value);
+  console.log('Fetched tickets:', getTickets.value);
   setTicketType(TicketTypeVal.value);
 });
 
@@ -18,35 +18,31 @@ const getTickets = computed(() => store.ticket);
 
 let FinalTickets = ref([...getTickets.value]);
 
-const searchValue = ref("");
-const TicketTypeVal = ref("total");
+const searchValue = ref('');
+const TicketTypeVal = ref('total');
 
 // Create New Ticket
 const showCreateTicketModal = ref(false);
-const newTicket = ref({ title: "", description: "", usernm: "Liam" });
+const newTicket = ref({ title: '', description: '', usernm: 'Liam' });
 
 const createTicket = () => {
-  if (
-    newTicket.value.title &&
-    newTicket.value.description &&
-    newTicket.value.usernm
-  ) {
+  if (newTicket.value.title && newTicket.value.description && newTicket.value.usernm) {
     const newId = getTickets.value.length + 1;
     const newTicketData = {
       Id: newId,
       ticketTitle: newTicket.value.title,
       ticketDescription: newTicket.value.description,
       AgentName: newTicket.value.usernm,
-      Label: "success",
-      Status: "Open",
+      Label: 'success',
+      Status: 'Open',
       Date: new Date().toISOString(),
       thumb: user3,
     };
 
     store.addTicket(newTicketData);
-    setTicketType("total");
-    newTicket.value.title = "";
-    newTicket.value.description = "";
+    setTicketType('total');
+    newTicket.value.title = '';
+    newTicket.value.description = '';
     showCreateTicketModal.value = false;
   }
 };
@@ -56,15 +52,12 @@ const setTicketType = (type: string) => {
   TicketTypeVal.value = type;
   console.log(`TicketTypeVal changed to: ${type}`);
 
-  if (TicketTypeVal.value === "total") {
+  if (TicketTypeVal.value === 'total') {
     FinalTickets.value = [...getTickets.value];
   } else {
     FinalTickets.value = getTickets.value.filter((ticket) => {
-      console.log("Filtering ticket:", ticket);
-      return (
-        ticket.Status &&
-        ticket.Status.toLowerCase() === TicketTypeVal.value.toLowerCase()
-      );
+      console.log('Filtering ticket:', ticket);
+      return ticket.Status && ticket.Status.toLowerCase() === TicketTypeVal.value.toLowerCase();
     });
   }
 
@@ -75,9 +68,7 @@ const setTicketType = (type: string) => {
 const applySearchFilter = () => {
   if (searchValue.value) {
     FinalTickets.value = FinalTickets.value.filter((ticket) =>
-      ticket.ticketTitle
-        ?.toLowerCase()
-        .includes(searchValue.value.toLowerCase())
+      ticket.ticketTitle?.toLowerCase().includes(searchValue.value.toLowerCase())
     );
   }
 };
@@ -86,13 +77,13 @@ watch(searchValue, applySearchFilter);
 
 const totalTicketCount = computed(() => getTickets.value.length);
 const pendingTicketCount = computed(
-  () => getTickets.value.filter((ticket) => ticket.Status === "Pending").length
+  () => getTickets.value.filter((ticket) => ticket.Status === 'Pending').length
 );
 const openTicketCount = computed(
-  () => getTickets.value.filter((ticket) => ticket.Status === "Open").length
+  () => getTickets.value.filter((ticket) => ticket.Status === 'Open').length
 );
 const closedTicketCount = computed(
-  () => getTickets.value.filter((ticket) => ticket.Status === "Closed").length
+  () => getTickets.value.filter((ticket) => ticket.Status === 'Closed').length
 );
 
 const handleDeleteTicket = (ticketId: number) => {
@@ -146,10 +137,7 @@ const handleDeleteTicket = (ticketId: number) => {
       </div>
       <div class="">
         <div class="d-sm-flex justify-space-between align-center my-7">
-          <v-btn
-            color="primary"
-            rounded="pill"
-            @click="showCreateTicketModal = true"
+          <v-btn color="primary" rounded="pill" @click="showCreateTicketModal = true"
             >Create Ticket</v-btn
           >
           <v-sheet width="255" class="mt-lg-0 mt-4">
@@ -193,10 +181,7 @@ const handleDeleteTicket = (ticketId: number) => {
                 </td>
                 <td>
                   <h6 class="text-h6">{{ ticket.ticketTitle }}</h6>
-                  <p
-                    style="max-width: 280px"
-                    class="text-body-1 text-muted text-truncate"
-                  >
+                  <p style="max-width: 280px" class="text-body-1 text-muted text-truncate">
                     {{ ticket.ticketDescription }}
                   </p>
                 </td>
@@ -220,11 +205,7 @@ const handleDeleteTicket = (ticketId: number) => {
                 </td>
                 <td>
                   <p class="text-muted text-body-1 text-no-wrap">
-                    {{
-                      ticket?.Date
-                        ? format(new Date(ticket.Date), "E, MMM d")
-                        : "N/A"
-                    }}
+                    {{ ticket?.Date ? format(new Date(ticket.Date), 'E, MMM d') : 'N/A' }}
                   </p>
                 </td>
                 <td class="text-center">
@@ -236,9 +217,7 @@ const handleDeleteTicket = (ticketId: number) => {
                     size="x-small"
                     @click.stop="handleDeleteTicket(ticket.Id)"
                   >
-                    <v-tooltip activator="parent" location="top"
-                      >Delete Ticket</v-tooltip
-                    >
+                    <v-tooltip activator="parent" location="top">Delete Ticket</v-tooltip>
                     <Icon
                       icon="solar:trash-bin-minimalistic-linear"
                       class="text-error"
@@ -261,11 +240,7 @@ const handleDeleteTicket = (ticketId: number) => {
       <v-card-title class="pa-4 bg-primary">Create New Ticket</v-card-title>
       <v-card-text>
         <v-form>
-          <v-text-field
-            label="Ticket Title"
-            v-model="newTicket.title"
-            required
-          ></v-text-field>
+          <v-text-field label="Ticket Title" v-model="newTicket.title" required></v-text-field>
           <v-textarea
             label="Ticket Description"
             v-model="newTicket.description"
@@ -290,12 +265,7 @@ const handleDeleteTicket = (ticketId: number) => {
           @click="showCreateTicketModal = false"
           >Cancel</v-btn
         >
-        <v-btn
-          color="primary"
-          variant="flat"
-          class="px-5"
-          rounded="pill"
-          @click="createTicket"
+        <v-btn color="primary" variant="flat" class="px-5" rounded="pill" @click="createTicket"
           >Create</v-btn
         >
       </v-card-actions>
