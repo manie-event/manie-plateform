@@ -8,9 +8,7 @@ const { sendLogout } = useAuthentification();
 const router = useRouter();
 
 const callLogOut = () => {
-  const token = useCookie('token');
   sendLogout();
-  router.push('/');
 };
 </script>
 

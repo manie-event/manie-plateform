@@ -1,5 +1,4 @@
 import type { AuthentificationModel } from '~/models/authentification/authentificationModel';
-import type { patchNewPasswordModel } from '../models/authentification/patchNewPasswordModel';
 import type { RegisterModel } from '../models/authentification/registerModel';
 
 export const useAuthentification = () => {
@@ -7,7 +6,6 @@ export const useAuthentification = () => {
   const router = useRouter();
 
   const sendRegister = async (registerInfo: RegisterModel) => {
-    console.log(registerInfo, 'username');
     try {
       const response = await axios.post(`${config.public.apiUrl}/auth/register`, registerInfo);
       if (response.data) {
@@ -19,13 +17,11 @@ export const useAuthentification = () => {
   };
 
   const sendLogin = async (authentification: AuthentificationModel) => {
-    console.log(authentification, 'authentification');
-
     try {
       const response = await axios.post(`${config.public.apiUrl}/auth/login`, authentification);
       if (response.data.token.token) {
         const token = useCookie('token', {
-          maxAge: 60 * 60 * 24,
+          maxAge: 60 * 60 * 24 * 30,
           path: '/',
           sameSite: 'strict',
           secure: true,
@@ -38,30 +34,32 @@ export const useAuthentification = () => {
     }
   };
 
-  const sendNewPassword = async (resetObject: patchNewPasswordModel) => {
+  const checkEmail = async (token: string) => {
     try {
-      const response = await axios.patch(`${config.public.apiUrl}/auth/resetPassword`, resetObject);
-      if (response.data.token.token) {
+      const response = await axios.get(`${config.public.apiUrl}/auth/verify-email/${token}`);
+      if (response.data) {
+        console.log('reponse', response.data);
         return response.data;
+      }
+    } catch (error) {}
+  };
+
+  const sendLogout = async () => {
+    try {
+      const token = useCookie('token');
+      const response = await axios.post(`${config.public.apiUrl}/auth/logout`, null, {
+        headers: {
+          Authorization: `Bearer  ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      if (response.data) {
+        router.push('/');
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const sendLogout = async () => {
-    try {
-      const token = useCookie('token');
-      await axios.post(`${config.public.apiUrl}/auth/logout`, null, {
-        headers: {
-          Authorization: `Bearer  ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  return { sendRegister, sendLogin, sendNewPassword, sendLogout };
+  return { sendRegister, sendLogin, sendLogout, checkEmail };
 };
