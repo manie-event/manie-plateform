@@ -116,6 +116,7 @@ declare global {
   const useCssVars: typeof import('vue')['useCssVars']
   const useCustomizerStore: typeof import('../../stores/customizer')['useCustomizerStore']
   const useError: typeof import('../../node_modules/nuxt/dist/app/composables/error')['useError']
+  const useErrorToaster: typeof import('../../utils/errorToaster')['useErrorToaster']
   const useFetch: typeof import('../../node_modules/nuxt/dist/app/composables/fetch')['useFetch']
   const useHead: typeof import('../../node_modules/@unhead/vue')['useHead']
   const useHeadSafe: typeof import('../../node_modules/@unhead/vue')['useHeadSafe']
@@ -311,6 +312,7 @@ declare module 'vue' {
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
     readonly useCustomizerStore: UnwrapRef<typeof import('../../stores/customizer')['useCustomizerStore']>
     readonly useError: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/error')['useError']>
+    readonly useErrorToaster: UnwrapRef<typeof import('../../utils/errorToaster')['useErrorToaster']>
     readonly useFetch: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/fetch')['useFetch']>
     readonly useHead: UnwrapRef<typeof import('../../node_modules/@unhead/vue')['useHead']>
     readonly useHeadSafe: UnwrapRef<typeof import('../../node_modules/@unhead/vue')['useHeadSafe']>

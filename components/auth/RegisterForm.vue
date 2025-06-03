@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useAuthentification } from '../../composables/useAuthentification';
+import errorToaster from '../common/errorToaster.vue';
+
 /*Social icons*/
 // import google from "/images/svgs/google-icon.svg";
 // import facebook from "/images/svgs/icon-facebook.svg";
@@ -7,12 +10,11 @@ const { sendRegister } = useAuthentification();
 
 const registerForm = ref({
   username: '',
-  category: '',
+  category: 'professional',
   password: '',
   confirmPassword: '',
   email: '',
 });
-const router = useRouter();
 const valid = ref(true);
 const passwordRules = ref([
   (v: string) => !!v || 'Le mot de passe est obligatoire',
@@ -29,10 +31,14 @@ const emailRules = ref([
 const nameRules = ref([(v: string) => !!v || 'Votre pseudo est obligatoire']);
 
 const register = async () => {
-  const registerResponse = await sendRegister(registerForm.value);
-  if (registerResponse) {
-    router.push({ path: '/auth/login' });
-  }
+  await sendRegister(registerForm.value);
+  registerForm.value = {
+    username: '',
+    category: 'professional',
+    password: '',
+    confirmPassword: '',
+    email: '',
+  };
 };
 </script>
 <template>
@@ -57,7 +63,7 @@ const register = async () => {
       >
     </div>
   </div>
-  <v-form ref="form" v-model="valid" lazy-validation action="/pages/boxedlogin" class="mt-5">
+  <v-form ref="form" v-model="valid" lazy-validation class="mt-5">
     <div class="d-flex gap-2 align-center">
       <v-label class="text-subtitle-1 font-weight-medium">Vous êtes :</v-label>
       <div class="d-flex align-center gap-2">
@@ -119,4 +125,5 @@ const register = async () => {
       >Je créer mon compte</v-btn
     >
   </v-form>
+  <errorToaster />
 </template>

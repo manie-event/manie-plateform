@@ -8,6 +8,7 @@ import { getRequestDependencies, getPreloadLinks, getPrefetchLinks, createRender
 import { stringify, uneval } from 'file:///Users/clementmoreno/Documents/manie-plateform/node_modules/devalue/index.js';
 import destr from 'file:///Users/clementmoreno/Documents/manie-plateform/node_modules/destr/dist/index.mjs';
 import { withQuery, joinURL, withTrailingSlash, decodePath, withLeadingSlash, withoutTrailingSlash, parseURL, withoutBase, getQuery, joinRelativeURL } from 'file:///Users/clementmoreno/Documents/manie-plateform/node_modules/ufo/dist/index.mjs';
+import { renderToString } from 'file:///Users/clementmoreno/Documents/manie-plateform/node_modules/vue/server-renderer/index.mjs';
 import { propsToString, renderSSRHead } from 'file:///Users/clementmoreno/Documents/manie-plateform/node_modules/@unhead/ssr/dist/index.mjs';
 import { createHooks } from 'file:///Users/clementmoreno/Documents/manie-plateform/node_modules/hookable/dist/index.mjs';
 import { createFetch as createFetch$1, Headers as Headers$1 } from 'file:///Users/clementmoreno/Documents/manie-plateform/node_modules/ofetch/dist/node.mjs';
@@ -181,7 +182,7 @@ const _3RNn2680dT = (function(nitro) {
 
 const rootDir = "/Users/clementmoreno/Documents/manie-plateform";
 
-const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"}],"link":[],"style":[],"script":[],"noscript":[],"title":"SpikeAdmin Nuxt 3 - Vuetify 3 - vite - Typescript Based Admin Dashboard Template"};
+const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"}],"link":[],"style":[],"script":[],"noscript":[],"title":"Manie - Facilite vos événements"};
 
 const appRootTag = "div";
 
@@ -1263,7 +1264,32 @@ function publicAssetsURL(...path) {
 globalThis.__buildAssetsURL = buildAssetsURL;
 globalThis.__publicAssetsURL = publicAssetsURL;
 const getClientManifest = () => import('file:///Users/clementmoreno/Documents/manie-plateform/.nuxt/dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
+const getServerEntry = () => import('file:///Users/clementmoreno/Documents/manie-plateform/.nuxt/dist/server/server.mjs').then((r) => r.default || r);
 const getSSRStyles = lazyCachedFunction(() => Promise.resolve().then(function () { return styles$1; }).then((r) => r.default || r));
+const getSSRRenderer = lazyCachedFunction(async () => {
+  const manifest = await getClientManifest();
+  if (!manifest) {
+    throw new Error("client.manifest is not available");
+  }
+  const createSSRApp = await getServerEntry();
+  if (!createSSRApp) {
+    throw new Error("Server bundle is not available");
+  }
+  const options = {
+    manifest,
+    renderToString: renderToString$1,
+    buildAssetsURL
+  };
+  const renderer = createRenderer(createSSRApp, options);
+  async function renderToString$1(input, context) {
+    const html = await renderToString(input, context);
+    if (process.env.NUXT_VITE_NODE_OPTIONS) {
+      renderer.rendererContext.updateManifest(await getClientManifest());
+    }
+    return APP_ROOT_OPEN_TAG + html + APP_ROOT_CLOSE_TAG;
+  }
+  return renderer;
+});
 const getSPARenderer = lazyCachedFunction(async () => {
   const manifest = await getClientManifest();
   const spaTemplate = await Promise.resolve().then(function () { return _virtual__spaTemplate; }).then((r) => r.template).catch(() => "").then((r) => {
@@ -1352,7 +1378,7 @@ const renderer = defineRenderHandler(async (event) => {
     url,
     event,
     runtimeConfig: useRuntimeConfig(event),
-    noSSR: true,
+    noSSR: event.context.nuxt?.noSSR || routeOptions.ssr === false && !isRenderingIsland || (false),
     head,
     error: !!ssrError,
     nuxt: void 0,
@@ -1362,7 +1388,7 @@ const renderer = defineRenderHandler(async (event) => {
     modules: /* @__PURE__ */ new Set(),
     islandContext
   };
-  const renderer = await getSPARenderer() ;
+  const renderer = ssrContext.noSSR ? await getSPARenderer() : await getSSRRenderer();
   const _rendered = await renderer.renderToString(ssrContext).catch(async (error) => {
     if (ssrContext._renderResponse && error.message === "skipping render") {
       return {};
@@ -1551,7 +1577,7 @@ function renderPayloadJsonScript(opts) {
     "type": "application/json",
     "innerHTML": contents,
     "data-nuxt-data": appId,
-    "data-ssr": false
+    "data-ssr": !(opts.ssrContext.noSSR)
   };
   {
     payload.id = "__NUXT_DATA__";

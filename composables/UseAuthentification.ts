@@ -1,18 +1,24 @@
 import type { AuthentificationModel } from '~/models/authentification/authentificationModel';
+import type { errorModel } from '~/models/errorModel';
 import type { RegisterModel } from '../models/authentification/registerModel';
 
 export const useAuthentification = () => {
   const config = useRuntimeConfig();
   const router = useRouter();
+  const { addError } = useErrorToaster();
 
-  const sendRegister = async (registerInfo: RegisterModel) => {
+  const sendRegister = async (registerInfo: RegisterModel): Promise<void> => {
     try {
-      const response = await axios.post(`${config.public.apiUrl}/auth/register`, registerInfo);
-      if (response.data) {
-        return response.data;
-      }
-    } catch (error) {
-      console.log(error);
+      await axios
+        .post(`${config.public.apiUrl}/auth/register`, registerInfo)
+        .then((res) => {
+          return res.data;
+        })
+        .then(() => {
+          router.push('/auth/login');
+        });
+    } catch (error: unknown) {
+      addError(error as errorModel);
     }
   };
 
@@ -54,7 +60,7 @@ export const useAuthentification = () => {
         },
       });
       if (response.data) {
-        router.push('/');
+        await router.push('/');
       }
     } catch (error) {
       console.log(error);

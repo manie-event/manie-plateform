@@ -1,51 +1,55 @@
-import eslint from '@eslint/js';
-import pluginPrettier from 'eslint-plugin-prettier';
+// eslint.config.js
+import { defineFlatConfig } from 'eslint-define-config';
+import vue from 'eslint-plugin-vue';
 import tseslint from 'typescript-eslint';
 
-export default tseslint.config(
-  eslint.configs.recommended,
-  tseslint.configs.strictTypeChecked,
-  tseslint.configs.stylisticTypeChecked,
+export default defineFlatConfig([
   {
+    files: ['**/*.ts', '**/*.vue'],
     languageOptions: {
+      parser: tseslint.parser,
       parserOptions: {
         project: './tsconfig.json',
+        extraFileExtensions: ['.vue'],
       },
     },
     plugins: {
-      prettier: pluginPrettier,
+      vue,
+      '@typescript-eslint': tseslint.plugin,
     },
     rules: {
-      // ✅ Règles Prettier
-      'prettier/prettier': 'error',
-
-      // ✅ Règles TypeScript strictes
+      '@typescript-eslint/explicit-function-return-type': ['warn'],
+      '@typescript-eslint/no-floating-promises': ['error'],
+      '@typescript-eslint/no-explicit-any': ['warn'],
+      '@typescript-eslint/no-unsafe-assignment': 'warn',
+      '@typescript-eslint/no-unsafe-call': 'warn',
+      '@typescript-eslint/no-unsafe-member-access': 'warn',
+      '@typescript-eslint/no-unsafe-return': 'warn',
+      'no-console': ['warn', { allow: ['warn', 'error', 'info'] }],
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-      '@typescript-eslint/explicit-function-return-type': ['warn', { allowExpressions: true }],
-      '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/consistent-type-imports': 'error',
+      'no-empty': ['warn'],
+      '@typescript-eslint/no-base-to-string': 'warn',
       '@typescript-eslint/no-floating-promises': 'error',
-      '@typescript-eslint/no-misused-promises': 'error',
+      '@typescript-eslint/no-unsafe-return': 'error',
+      '@typescript-eslint/no-unsafe-call': 'error',
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': 'error',
 
-      // ✅ ESLint Core Rules — fais bien attention qu'elles existent dans la version Flat
-      'no-console': 'warn',
-      'no-debugger': 'error',
-      eqeqeq: ['error', 'always'],
-      'object-curly-spacing': ['error', 'always'],
+      // Règles spécifiques au parsing
+      '@typescript-eslint/consistent-type-assertions': ['error', { assertionStyle: 'as' }],
 
-      // ❌ Supprimé : "curly" → non reconnu ici dans ce contexte
-      // Si tu veux la garder, utilise une config personnalisée avec le plugin adapté
+      // Pour éviter les conflits avec les génériques
+      '@typescript-eslint/no-unnecessary-type-constraint': 'error',
 
-      // 🔁 Désactivation des règles de style (gérées par Prettier)
-      semi: 'off',
-      quotes: 'off',
-      indent: 'off',
-      '@typescript-eslint/indent': 'off',
-      '@typescript-eslint/quotes': 'off',
-
-      // 🔁 Désactivation des délimiteurs car Prettier les gère aussi
-      '@typescript-eslint/member-delimiter-style': 'off',
-      '@typescript-eslint/type-annotation-spacing': 'off',
+      '@typescript-eslint/restrict-template-expressions': [
+        'warn',
+        {
+          allowNumber: true,
+          allowBoolean: true,
+          allowAny: false,
+          allowNullish: false,
+        },
+      ],
     },
-  }
-);
+  },
+]);
