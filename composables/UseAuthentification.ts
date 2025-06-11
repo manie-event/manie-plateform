@@ -9,14 +9,8 @@ export const useAuthentification = () => {
 
   const sendRegister = async (registerInfo: RegisterModel): Promise<void> => {
     try {
-      await axios
-        .post(`${config.public.apiUrl}/auth/register`, registerInfo)
-        .then((res) => {
-          return res.data;
-        })
-        .then(() => {
-          router.push('/auth/login');
-        });
+      const { data } = await axios.post(`${config.public.apiUrl}/auth/register`, registerInfo);
+      return data;
     } catch (error: unknown) {
       addError(error as errorModel);
     }
@@ -24,46 +18,47 @@ export const useAuthentification = () => {
 
   const sendLogin = async (authentification: AuthentificationModel) => {
     try {
-      const response = await axios.post(`${config.public.apiUrl}/auth/login`, authentification);
-      if (response.data.token.token) {
+      const { data } = await axios.post(`${config.public.apiUrl}/auth/login`, authentification);
+      if (data?.token?.token) {
         const token = useCookie('token', {
           maxAge: 60 * 60 * 24 * 30,
           path: '/',
           sameSite: 'strict',
           secure: true,
         });
-        token.value = response.data.token;
-        return response.data;
+        token.value = data.token;
+        return data;
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: unknown) {
+      addError(error as errorModel);
     }
   };
 
   const checkEmail = async (token: string) => {
     try {
-      const response = await axios.get(`${config.public.apiUrl}/auth/verify-email/${token}`);
-      if (response.data) {
-        console.log('reponse', response.data);
-        return response.data;
+      const { data } = await axios.get(`${config.public.apiUrl}/auth/verify-email/${token}`);
+      if (data) {
+        return data;
       }
-    } catch (error) {}
+    } catch (error: unknown) {
+      addError(error as errorModel);
+    }
   };
 
   const sendLogout = async () => {
     try {
       const token = useCookie('token');
-      const response = await axios.post(`${config.public.apiUrl}/auth/logout`, null, {
+      const { data } = await axios.post(`${config.public.apiUrl}/auth/logout`, null, {
         headers: {
           Authorization: `Bearer  ${token}`,
           'Content-Type': 'application/json',
         },
       });
-      if (response.data) {
+      if (data) {
         await router.push('/');
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: unknown) {
+      addError(error as errorModel);
     }
   };
 

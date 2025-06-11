@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useAuthentification } from '../../composables/useAuthentification';
 import errorToaster from '../common/errorToaster.vue';
 
 /*Social icons*/
@@ -125,5 +124,7 @@ const register = async () => {
       >Je créer mon compte</v-btn
     >
   </v-form>
-  <errorToaster />
+  <Teleport to="body">
+    <errorToaster />
+  </Teleport>
 </template>
