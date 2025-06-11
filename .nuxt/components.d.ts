@@ -1,6 +1,16 @@
 
 import type { DefineComponent, SlotsType } from 'vue'
 type IslandComponent<T extends DefineComponent> = T & DefineComponent<{}, {refresh: () => Promise<void>}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, SlotsType<{ fallback: { error: unknown } }>>
+type HydrationStrategies = {
+  hydrateOnVisible?: IntersectionObserverInit | true
+  hydrateOnIdle?: number | true
+  hydrateOnInteraction?: keyof HTMLElementEventMap | Array<keyof HTMLElementEventMap> | true
+  hydrateOnMediaQuery?: string
+  hydrateAfter?: number
+  hydrateWhen?: boolean
+  hydrateNever?: true
+}
+type LazyComponent<T> = (T & DefineComponent<HydrationStrategies, {}, {}, {}, {}, {}, {}, { hydrated: () => void }>)
 interface _GlobalComponents {
       'AppsBlogCardGrid': typeof import("../components/apps/blog/blogCardGrid.vue")['default']
     'AppsBlogPosts': typeof import("../components/apps/blog/blogPosts.vue")['default']
@@ -404,12 +414,13 @@ interface _GlobalComponents {
     'WidgetsChartsTraficDistributionChart': typeof import("../components/widgets/charts/TraficDistributionChart.vue")['default']
     'NuxtWelcome': typeof import("../node_modules/nuxt/dist/app/components/welcome.vue")['default']
     'NuxtLayout': typeof import("../node_modules/nuxt/dist/app/components/nuxt-layout")['default']
-    'NuxtErrorBoundary': typeof import("../node_modules/nuxt/dist/app/components/nuxt-error-boundary")['default']
+    'NuxtErrorBoundary': typeof import("../node_modules/nuxt/dist/app/components/nuxt-error-boundary.vue")['default']
     'ClientOnly': typeof import("../node_modules/nuxt/dist/app/components/client-only")['default']
     'DevOnly': typeof import("../node_modules/nuxt/dist/app/components/dev-only")['default']
     'ServerPlaceholder': typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']
     'NuxtLink': typeof import("../node_modules/nuxt/dist/app/components/nuxt-link")['default']
     'NuxtLoadingIndicator': typeof import("../node_modules/nuxt/dist/app/components/nuxt-loading-indicator")['default']
+    'NuxtTime': typeof import("../node_modules/nuxt/dist/app/components/nuxt-time.vue")['default']
     'NuxtRouteAnnouncer': typeof import("../node_modules/nuxt/dist/app/components/nuxt-route-announcer")['default']
     'NuxtImg': typeof import("../node_modules/nuxt/dist/app/components/nuxt-stubs")['NuxtImg']
     'NuxtPicture': typeof import("../node_modules/nuxt/dist/app/components/nuxt-stubs")['NuxtPicture']
@@ -425,429 +436,430 @@ interface _GlobalComponents {
     'Body': typeof import("../node_modules/nuxt/dist/head/runtime/components")['Body']
     'NuxtIsland': typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']
     'NuxtRouteAnnouncer': IslandComponent<typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']>
-      'LazyAppsBlogCardGrid': typeof import("../components/apps/blog/blogCardGrid.vue")['default']
-    'LazyAppsBlogPosts': typeof import("../components/apps/blog/blogPosts.vue")['default']
-    'LazyAppsBlogDetailAddCommnet': typeof import("../components/apps/blog/detail/addCommnet.vue")['default']
-    'LazyAppsBlogDetail': typeof import("../components/apps/blog/detail/blogDetail.vue")['default']
-    'LazyAppsBlogFeatureBlogCard': typeof import("../components/apps/blog/featureBlogCard.vue")['default']
-    'LazyAppsChatsChatDetail': typeof import("../components/apps/chats/ChatDetail.vue")['default']
-    'LazyAppsChatsChatInfo': typeof import("../components/apps/chats/ChatInfo.vue")['default']
-    'LazyAppsChatsChatListing': typeof import("../components/apps/chats/ChatListing.vue")['default']
-    'LazyAppsChatsChatProfile': typeof import("../components/apps/chats/ChatProfile.vue")['default']
-    'LazyAppsChatsChatSendMsg': typeof import("../components/apps/chats/ChatSendMsg.vue")['default']
-    'LazyAppsEcommerceAddproductAdvanceTab': typeof import("../components/apps/ecommerce/addproduct/AdvanceTab.vue")['default']
-    'LazyAppsEcommerceAddproductGeneralTab': typeof import("../components/apps/ecommerce/addproduct/GeneralTab.vue")['default']
-    'LazyAppsEcommerceAddproductLeftSide': typeof import("../components/apps/ecommerce/addproduct/LeftSide.vue")['default']
-    'LazyAppsEcommerceAddproductRightSide': typeof import("../components/apps/ecommerce/addproduct/RightSide.vue")['default']
-    'LazyAppsEcommerceCartCheckout': typeof import("../components/apps/ecommerce/cart/CartCheckout.vue")['default']
-    'LazyAppsEcommerceCartEmpty': typeof import("../components/apps/ecommerce/cart/CartEmpty.vue")['default']
-    'LazyAppsEcommerceCartStepsAddAddress': typeof import("../components/apps/ecommerce/cart/steps/AddAddress.vue")['default']
-    'LazyAppsEcommerceCartStepsAddCard': typeof import("../components/apps/ecommerce/cart/steps/AddCard.vue")['default']
-    'LazyAppsEcommerceCartStepsAddressCard': typeof import("../components/apps/ecommerce/cart/steps/AddressCard.vue")['default']
-    'LazyAppsEcommerceCartStepsOrderSummary': typeof import("../components/apps/ecommerce/cart/steps/OrderSummary.vue")['default']
-    'LazyAppsEcommerceCartStepsPayment': typeof import("../components/apps/ecommerce/cart/steps/Payment.vue")['default']
-    'LazyAppsEcommerceCartStepsStepFirst': typeof import("../components/apps/ecommerce/cart/steps/StepFirst.vue")['default']
-    'LazyAppsEcommerceCartStepsStepSecond': typeof import("../components/apps/ecommerce/cart/steps/StepSecond.vue")['default']
-    'LazyAppsEcommerceCartStepsThankyou': typeof import("../components/apps/ecommerce/cart/steps/Thankyou.vue")['default']
-    'LazyAppsEcommerceDetailProductCarousel': typeof import("../components/apps/ecommerce/detail/ProductCarousel.vue")['default']
-    'LazyAppsEcommerceDetailProductDescription': typeof import("../components/apps/ecommerce/detail/ProductDescription.vue")['default']
-    'LazyAppsEcommerceDetailProductDetail': typeof import("../components/apps/ecommerce/detail/ProductDetail.vue")['default']
-    'LazyAppsEcommerceDetailProductReview': typeof import("../components/apps/ecommerce/detail/ProductReview.vue")['default']
-    'LazyAppsEcommerceDetailProductTab': typeof import("../components/apps/ecommerce/detail/ProductTab.vue")['default']
-    'LazyAppsEcommerceDetailRelatedProducts': typeof import("../components/apps/ecommerce/detail/RelatedProducts.vue")['default']
-    'LazyAppsEcommerceDetailOneProducOneCurosel': typeof import("../components/apps/ecommerce/detail/one/ProducOneCurosel.vue")['default']
-    'LazyAppsEcommerceDetailOneProductDetailOne': typeof import("../components/apps/ecommerce/detail/one/ProductDetailOne.vue")['default']
-    'LazyAppsEcommerceDetailOneProductReviewOne': typeof import("../components/apps/ecommerce/detail/one/ProductReviewOne.vue")['default']
-    'LazyAppsEcommerceDetailOneRelatedProductOne': typeof import("../components/apps/ecommerce/detail/one/RelatedProductOne.vue")['default']
-    'LazyAppsEcommerceEditproductAdvanceTab': typeof import("../components/apps/ecommerce/editproduct/AdvanceTab.vue")['default']
-    'LazyAppsEcommerceEditproductDailySalesChart': typeof import("../components/apps/ecommerce/editproduct/DailySalesChart.vue")['default']
-    'LazyAppsEcommerceEditproductGeneralTab': typeof import("../components/apps/ecommerce/editproduct/GeneralTab.vue")['default']
-    'LazyAppsEcommerceEditproductLeftSide': typeof import("../components/apps/ecommerce/editproduct/LeftSide.vue")['default']
-    'LazyAppsEcommerceEditproductReviewsTab': typeof import("../components/apps/ecommerce/editproduct/ReviewsTab.vue")['default']
-    'LazyAppsEcommerceEditproductRightSide': typeof import("../components/apps/ecommerce/editproduct/RightSide.vue")['default']
-    'LazyAppsEcommerceListingProductEmplty': typeof import("../components/apps/ecommerce/listing/ProductEmplty.vue")['default']
-    'LazyAppsEcommerceListingProductFilters': typeof import("../components/apps/ecommerce/listing/ProductFilters.vue")['default']
-    'LazyAppsEcommerceListingProductItem': typeof import("../components/apps/ecommerce/listing/ProductItem.vue")['default']
-    'LazyAppsEcommerceListingProductItemOne': typeof import("../components/apps/ecommerce/listing/ProductItemOne.vue")['default']
-    'LazyAppsEcommerceListingProductfilterOne': typeof import("../components/apps/ecommerce/listing/ProductfilterOne.vue")['default']
-    'LazyAppsEcommerceListingColorsOption': typeof import("../components/apps/ecommerce/listing/colorsOption")['default']
-    'LazyAppsEmailCompose': typeof import("../components/apps/email/EmailCompose.vue")['default']
-    'LazyAppsEmailDetail': typeof import("../components/apps/email/EmailDetail.vue")['default']
-    'LazyAppsEmailListing': typeof import("../components/apps/email/EmailListing.vue")['default']
-    'LazyAppsInvoiceCreate': typeof import("../components/apps/invoice/Create.vue")['default']
-    'LazyAppsInvoiceDetail': typeof import("../components/apps/invoice/Detail.vue")['default']
-    'LazyAppsInvoiceEdit': typeof import("../components/apps/invoice/Edit.vue")['default']
-    'LazyAppsInvoiceList': typeof import("../components/apps/invoice/List.vue")['default']
-    'LazyAppsKanbanAddTask': typeof import("../components/apps/kanban/AddTask.vue")['default']
-    'LazyAppsKanbanTaskCard': typeof import("../components/apps/kanban/TaskCard.vue")['default']
-    'LazyAppsKanbanTaskColumn': typeof import("../components/apps/kanban/TaskColumn.vue")['default']
-    'LazyAppsKanbanTaskItemCard': typeof import("../components/apps/kanban/TaskItemCard.vue")['default']
-    'LazyAppsNotesAddNote': typeof import("../components/apps/notes/AddNote.vue")['default']
-    'LazyAppsNotesContent': typeof import("../components/apps/notes/NotesContent.vue")['default']
-    'LazyAppsNotesListing': typeof import("../components/apps/notes/NotesListing.vue")['default']
-    'LazyAppsTicketsTicketList': typeof import("../components/apps/tickets/TicketList.vue")['default']
-    'LazyAppsUserProfileIntroCard': typeof import("../components/apps/user-profile/IntroCard.vue")['default']
-    'LazyAppsUserProfilePhotosCard': typeof import("../components/apps/user-profile/PhotosCard.vue")['default']
-    'LazyAppsUserProfilePostListing': typeof import("../components/apps/user-profile/PostListing.vue")['default']
-    'LazyAppsUserProfileBanner': typeof import("../components/apps/user-profile/ProfileBanner.vue")['default']
-    'LazyAppsUserProfileBannerOne': typeof import("../components/apps/user-profile/ProfileBannerOne.vue")['default']
-    'LazyAppsUserProfilePostsAddPost': typeof import("../components/apps/user-profile/posts/AddPost.vue")['default']
-    'LazyAppsUserProfilePostsComments': typeof import("../components/apps/user-profile/posts/Comments.vue")['default']
-    'LazyAppsUserProfilePostsPostItem': typeof import("../components/apps/user-profile/posts/PostItem.vue")['default']
-    'LazyAppsUserProfileProfileOneIntroCard': typeof import("../components/apps/user-profile/profile-one/IntroCard.vue")['default']
-    'LazyAppsUserProfileProfileOneNumberCards': typeof import("../components/apps/user-profile/profile-one/NumberCards.vue")['default']
-    'LazyAppsUserProfileProfileOneTeamsCard': typeof import("../components/apps/user-profile/profile-one/TeamsCard.vue")['default']
-    'LazyAuthLoginForm': typeof import("../components/auth/LoginForm.vue")['default']
-    'LazyAuthRegisterForm': typeof import("../components/auth/RegisterForm.vue")['default']
-    'LazyAuthResetForm': typeof import("../components/auth/ResetForm.vue")['default']
-    'LazyAuthTwoStepForm': typeof import("../components/auth/TwoStepForm.vue")['default']
-    'LazyCommonErrorToaster': typeof import("../components/common/errorToaster.vue")['default']
-    'LazyDashboardsDashboard1CongratulationsCard': typeof import("../components/dashboards/dashboard1/CongratulationsCard.vue")['default']
-    'LazyDashboardsDashboard1Customers': typeof import("../components/dashboards/dashboard1/Customers.vue")['default']
-    'LazyDashboardsDashboard1LatestDeals': typeof import("../components/dashboards/dashboard1/LatestDeals.vue")['default']
-    'LazyDashboardsDashboard1LatestReviews': typeof import("../components/dashboards/dashboard1/LatestReviews.vue")['default']
-    'LazyDashboardsDashboard1Payments': typeof import("../components/dashboards/dashboard1/Payments.vue")['default']
-    'LazyDashboardsDashboard1ProductsChart': typeof import("../components/dashboards/dashboard1/ProductsChart.vue")['default']
-    'LazyDashboardsDashboard1ProductsTable': typeof import("../components/dashboards/dashboard1/ProductsTable.vue")['default']
-    'LazyDashboardsDashboard1VisitFromUsa': typeof import("../components/dashboards/dashboard1/VisitFromUsa.vue")['default']
-    'LazyDashboardsDashboard2FigmaCard': typeof import("../components/dashboards/dashboard2/FigmaCard.vue")['default']
-    'LazyDashboardsDashboard2PayingTable': typeof import("../components/dashboards/dashboard2/PayingTable.vue")['default']
-    'LazyDashboardsDashboard2ProductSales': typeof import("../components/dashboards/dashboard2/ProductSales.vue")['default']
-    'LazyDashboardsDashboard2ProfileCards': typeof import("../components/dashboards/dashboard2/ProfileCards.vue")['default']
-    'LazyDashboardsDashboard2ProfitExpanse': typeof import("../components/dashboards/dashboard2/ProfitExpanse.vue")['default']
-    'LazyDashboardsDashboard2TextCards': typeof import("../components/dashboards/dashboard2/TextCards.vue")['default']
-    'LazyDashboardsDashboard2TrafficDistribution': typeof import("../components/dashboards/dashboard2/TrafficDistribution.vue")['default']
-    'LazyDashboardsDashboard2UpcommingSchedule': typeof import("../components/dashboards/dashboard2/UpcommingSchedule.vue")['default']
-    'LazyDashboardsDashboard2WelcomeCard': typeof import("../components/dashboards/dashboard2/WelcomeCard.vue")['default']
-    'LazyDashboardsSnackbar': typeof import("../components/dashboards/snackbar.vue")['default']
-    'LazyFormsFormCustomFrom': typeof import("../components/forms/form-custom/CustomFrom.vue")['default']
-    'LazyFormsFormElementsAutocompleteComboBox': typeof import("../components/forms/form-elements/autocomplete/ComboBox.vue")['default']
-    'LazyFormsFormElementsAutocompleteMultipleOptions': typeof import("../components/forms/form-elements/autocomplete/MultipleOptions.vue")['default']
-    'LazyFormsFormElementsAutocompleteWithCaption': typeof import("../components/forms/form-elements/autocomplete/WithCaption.vue")['default']
-    'LazyFormsFormElementsButtonBaseButtons': typeof import("../components/forms/form-elements/button/BaseButtons.vue")['default']
-    'LazyFormsFormElementsButtonColorsButtons': typeof import("../components/forms/form-elements/button/ColorsButtons.vue")['default']
-    'LazyFormsFormElementsButtonIconColor': typeof import("../components/forms/form-elements/button/IconColor.vue")['default']
-    'LazyFormsFormElementsButtonIconColorSizes': typeof import("../components/forms/form-elements/button/IconColorSizes.vue")['default']
-    'LazyFormsFormElementsButtonIconsButtons': typeof import("../components/forms/form-elements/button/IconsButtons.vue")['default']
-    'LazyFormsFormElementsButtonOutlineIconColor': typeof import("../components/forms/form-elements/button/OutlineIconColor.vue")['default']
-    'LazyFormsFormElementsButtonOutlineSizes': typeof import("../components/forms/form-elements/button/OutlineSizes.vue")['default']
-    'LazyFormsFormElementsButtonOutlinedButtons': typeof import("../components/forms/form-elements/button/OutlinedButtons.vue")['default']
-    'LazyFormsFormElementsButtonOutlinedIconSize': typeof import("../components/forms/form-elements/button/OutlinedIconSize.vue")['default']
-    'LazyFormsFormElementsButtonSizeButtons': typeof import("../components/forms/form-elements/button/SizeButtons.vue")['default']
-    'LazyFormsFormElementsButtonTextButtons': typeof import("../components/forms/form-elements/button/TextButtons.vue")['default']
-    'LazyFormsFormElementsButtonButtonGroupDefault': typeof import("../components/forms/form-elements/button/buttonGroup/Default.vue")['default']
-    'LazyFormsFormElementsButtonButtonGroupOutlined': typeof import("../components/forms/form-elements/button/buttonGroup/Outlined.vue")['default']
-    'LazyFormsFormElementsButtonButtonGroupPlain': typeof import("../components/forms/form-elements/button/buttonGroup/Plain.vue")['default']
-    'LazyFormsFormElementsButtonButtonGroupText': typeof import("../components/forms/form-elements/button/buttonGroup/Text.vue")['default']
-    'LazyFormsFormElementsCheckboxBasicCheckboxes': typeof import("../components/forms/form-elements/checkbox/BasicCheckboxes.vue")['default']
-    'LazyFormsFormElementsCheckboxColorCheckboxes': typeof import("../components/forms/form-elements/checkbox/ColorCheckboxes.vue")['default']
-    'LazyFormsFormElementsCheckboxCustomCheckbox': typeof import("../components/forms/form-elements/checkbox/CustomCheckbox.vue")['default']
-    'LazyFormsFormElementsCheckboxLabelCheckboxes': typeof import("../components/forms/form-elements/checkbox/LabelCheckboxes.vue")['default']
-    'LazyFormsFormElementsComboboxDense': typeof import("../components/forms/form-elements/combobox/ComboboxDense.vue")['default']
-    'LazyFormsFormElementsComboboxMultiple': typeof import("../components/forms/form-elements/combobox/ComboboxMultiple.vue")['default']
-    'LazyFormsFormElementsCustominputInputAppendPrepend': typeof import("../components/forms/form-elements/custominput/InputAppendPrepend.vue")['default']
-    'LazyFormsFormElementsCustominputInputError': typeof import("../components/forms/form-elements/custominput/InputError.vue")['default']
-    'LazyFormsFormElementsCustominputInputHideDetails': typeof import("../components/forms/form-elements/custominput/InputHideDetails.vue")['default']
-    'LazyFormsFormElementsCustominputInputLoading': typeof import("../components/forms/form-elements/custominput/InputLoading.vue")['default']
-    'LazyFormsFormElementsCustominputInputMultipleError': typeof import("../components/forms/form-elements/custominput/InputMultipleError.vue")['default']
-    'LazyFormsFormElementsCustominputInputRules': typeof import("../components/forms/form-elements/custominput/InputRules.vue")['default']
-    'LazyFormsFormElementsDatetimeDatePicker': typeof import("../components/forms/form-elements/datetime/DatePicker.vue")['default']
-    'LazyFormsFormElementsDatetimeTimePicker': typeof import("../components/forms/form-elements/datetime/TimePicker.vue")['default']
-    'LazyFormsFormElementsFileinputFileInputAccept': typeof import("../components/forms/form-elements/fileinput/FileInputAccept.vue")['default']
-    'LazyFormsFormElementsFileinputFileInputChips': typeof import("../components/forms/form-elements/fileinput/FileInputChips.vue")['default']
-    'LazyFormsFormElementsFileinputFileInputCounter': typeof import("../components/forms/form-elements/fileinput/FileInputCounter.vue")['default']
-    'LazyFormsFormElementsFileinputFileInputDensity': typeof import("../components/forms/form-elements/fileinput/FileInputDensity.vue")['default']
-    'LazyFormsFormElementsFileinputFileInputMultiple': typeof import("../components/forms/form-elements/fileinput/FileInputMultiple.vue")['default']
-    'LazyFormsFormElementsFileinputFileInputPrepand': typeof import("../components/forms/form-elements/fileinput/FileInputPrepand.vue")['default']
-    'LazyFormsFormElementsFileinputFileInputSelection': typeof import("../components/forms/form-elements/fileinput/FileInputSelection.vue")['default']
-    'LazyFormsFormElementsFileinputFileInputValidation': typeof import("../components/forms/form-elements/fileinput/FileInputValidation.vue")['default']
-    'LazyFormsFormElementsRadioColor': typeof import("../components/forms/form-elements/radio/Color.vue")['default']
-    'LazyFormsFormElementsRadioDefault': typeof import("../components/forms/form-elements/radio/Default.vue")['default']
-    'LazyFormsFormElementsRadioDefaultDirection': typeof import("../components/forms/form-elements/radio/DefaultDirection.vue")['default']
-    'LazyFormsFormElementsRadioInlineDirection': typeof import("../components/forms/form-elements/radio/InlineDirection.vue")['default']
-    'LazyFormsFormElementsRadioLabel': typeof import("../components/forms/form-elements/radio/Label.vue")['default']
-    'LazyFormsFormElementsRadioLabelwithColor': typeof import("../components/forms/form-elements/radio/LabelwithColor.vue")['default']
-    'LazyFormsFormElementsSelectChip': typeof import("../components/forms/form-elements/select/SelectChip.vue")['default']
-    'LazyFormsFormElementsSelectDefault': typeof import("../components/forms/form-elements/select/SelectDefault.vue")['default']
-    'LazyFormsFormElementsSelectDensity': typeof import("../components/forms/form-elements/select/SelectDensity.vue")['default']
-    'LazyFormsFormElementsSelectMultiple': typeof import("../components/forms/form-elements/select/SelectMultiple.vue")['default']
-    'LazyFormsFormElementsSelectReadOnly': typeof import("../components/forms/form-elements/select/SelectReadOnly.vue")['default']
-    'LazyFormsFormElementsSliderCustom': typeof import("../components/forms/form-elements/slider/Custom.vue")['default']
-    'LazyFormsFormElementsSliderDefault': typeof import("../components/forms/form-elements/slider/Default.vue")['default']
-    'LazyFormsFormElementsSliderDisabled': typeof import("../components/forms/form-elements/slider/Disabled.vue")['default']
-    'LazyFormsFormElementsSliderSteps': typeof import("../components/forms/form-elements/slider/Steps.vue")['default']
-    'LazyFormsFormElementsSliderTickSize': typeof import("../components/forms/form-elements/slider/TickSize.vue")['default']
-    'LazyFormsFormElementsSliderTicks': typeof import("../components/forms/form-elements/slider/Ticks.vue")['default']
-    'LazyFormsFormElementsSliderVertical': typeof import("../components/forms/form-elements/slider/Vertical.vue")['default']
-    'LazyFormsFormElementsSliderVolume': typeof import("../components/forms/form-elements/slider/Volume.vue")['default']
-    'LazyFormsFormElementsStepperAlternatelabel': typeof import("../components/forms/form-elements/stepper/Alternatelabel.vue")['default']
-    'LazyFormsFormElementsStepperAlternativeErrors': typeof import("../components/forms/form-elements/stepper/AlternativeErrors.vue")['default']
-    'LazyFormsFormElementsStepperEditableStepper': typeof import("../components/forms/form-elements/stepper/EditableStepper.vue")['default']
-    'LazyFormsFormElementsStepperItemStepper': typeof import("../components/forms/form-elements/stepper/ItemStepper.vue")['default']
-    'LazyFormsFormElementsStepperLinearSteppers': typeof import("../components/forms/form-elements/stepper/LinearSteppers.vue")['default']
-    'LazyFormsFormElementsStepperNoEditable': typeof import("../components/forms/form-elements/stepper/NoEditable.vue")['default']
-    'LazyFormsFormElementsStepperOptionalSteps': typeof import("../components/forms/form-elements/stepper/OptionalSteps.vue")['default']
-    'LazyFormsFormElementsSwitchColors': typeof import("../components/forms/form-elements/switch/Colors.vue")['default']
-    'LazyFormsFormElementsSwitchDefault': typeof import("../components/forms/form-elements/switch/Default.vue")['default']
-    'LazyFormsFormElementsSwitchInset': typeof import("../components/forms/form-elements/switch/Inset.vue")['default']
-    'LazyFormsFormElementsSwitchInsetColors': typeof import("../components/forms/form-elements/switch/InsetColors.vue")['default']
-    'LazyFormsFormElementsSwitchLabel': typeof import("../components/forms/form-elements/switch/Label.vue")['default']
-    'LazyFormsFormElementsSwitchStates': typeof import("../components/forms/form-elements/switch/States.vue")['default']
-    'LazyFormsFormElementsTreeviewActivatable': typeof import("../components/forms/form-elements/treeview/Activatable.vue")['default']
-    'LazyFormsFormElementsTreeviewBasic': typeof import("../components/forms/form-elements/treeview/Basic.vue")['default']
-    'LazyFormsFormElementsTreeviewColors': typeof import("../components/forms/form-elements/treeview/Colors.vue")['default']
-    'LazyFormsFormElementsTreeviewDenseMode': typeof import("../components/forms/form-elements/treeview/DenseMode.vue")['default']
-    'LazyFormsFormElementsTreeviewOpenAll': typeof import("../components/forms/form-elements/treeview/OpenAll.vue")['default']
-    'LazyFormsFormHorizontalAccountDetailsTab': typeof import("../components/forms/form-horizontal/AccountDetailsTab.vue")['default']
-    'LazyFormsFormHorizontalBasicLayout': typeof import("../components/forms/form-horizontal/BasicLayout.vue")['default']
-    'LazyFormsFormHorizontalBasicWithIcons': typeof import("../components/forms/form-horizontal/BasicWithIcons.vue")['default']
-    'LazyFormsFormHorizontalCollapsible': typeof import("../components/forms/form-horizontal/Collapsible.vue")['default']
-    'LazyFormsFormHorizontalFormLabelAlign': typeof import("../components/forms/form-horizontal/FormLabelAlign.vue")['default']
-    'LazyFormsFormHorizontalFormSeprator': typeof import("../components/forms/form-horizontal/FormSeprator.vue")['default']
-    'LazyFormsFormHorizontalPersonalInfoTab': typeof import("../components/forms/form-horizontal/PersonalInfoTab.vue")['default']
-    'LazyFormsFormHorizontalSocialLinksTab': typeof import("../components/forms/form-horizontal/SocialLinksTab.vue")['default']
-    'LazyFormsFormLayoutsBasicHeaderForm': typeof import("../components/forms/form-layouts/BasicHeaderForm.vue")['default']
-    'LazyFormsFormLayoutsDefaultForm': typeof import("../components/forms/form-layouts/DefaultForm.vue")['default']
-    'LazyFormsFormLayoutsDisabledForm': typeof import("../components/forms/form-layouts/DisabledForm.vue")['default']
-    'LazyFormsFormLayoutsFormLeftIcon': typeof import("../components/forms/form-layouts/FormLeftIcon.vue")['default']
-    'LazyFormsFormLayoutsFormRightIcon': typeof import("../components/forms/form-layouts/FormRightIcon.vue")['default']
-    'LazyFormsFormLayoutsInputVarients': typeof import("../components/forms/form-layouts/InputVarients.vue")['default']
-    'LazyFormsFormLayoutsOrdinaryForm': typeof import("../components/forms/form-layouts/OrdinaryForm.vue")['default']
-    'LazyFormsFormValidationCheckBox': typeof import("../components/forms/form-validation/CheckBox.vue")['default']
-    'LazyFormsFormValidationMailValidation': typeof import("../components/forms/form-validation/MailValidation.vue")['default']
-    'LazyFormsFormValidationOnType': typeof import("../components/forms/form-validation/OnType.vue")['default']
-    'LazyFormsFormValidationRadio': typeof import("../components/forms/form-validation/Radio.vue")['default']
-    'LazyFormsFormValidationSelect': typeof import("../components/forms/form-validation/Select.vue")['default']
-    'LazyFormsFormValidationTextInput': typeof import("../components/forms/form-validation/TextInput.vue")['default']
-    'LazyFormsFormValidationVeeValidation': typeof import("../components/forms/form-validation/VeeValidation.vue")['default']
-    'LazyFormsFormVerticalAccountDetailsTab': typeof import("../components/forms/form-vertical/AccountDetailsTab.vue")['default']
-    'LazyFormsFormVerticalBasicLayout': typeof import("../components/forms/form-vertical/BasicLayout.vue")['default']
-    'LazyFormsFormVerticalBasicWithIcons': typeof import("../components/forms/form-vertical/BasicWithIcons.vue")['default']
-    'LazyFormsFormVerticalCollapsible': typeof import("../components/forms/form-vertical/Collapsible.vue")['default']
-    'LazyFormsFormVerticalFormSeprator': typeof import("../components/forms/form-vertical/FormSeprator.vue")['default']
-    'LazyFormsFormVerticalPersonalInfoTab': typeof import("../components/forms/form-vertical/PersonalInfoTab.vue")['default']
-    'LazyFormsFormVerticalSocialLinksTab': typeof import("../components/forms/form-vertical/SocialLinksTab.vue")['default']
-    'LazyFormsPluginsEditorMenu': typeof import("../components/forms/plugins/editor/EditorMenu.vue")['default']
-    'LazyFormsPluginsEditorMenubar': typeof import("../components/forms/plugins/editor/EditorMenubar.vue")['default']
-    'LazyFrontpagesAboutUsArchivement': typeof import("../components/frontpages/AboutUs/Archivement.vue")['default']
-    'LazyFrontpagesAboutUsHeroText': typeof import("../components/frontpages/AboutUs/HeroText.vue")['default']
-    'LazyFrontpagesAboutUsSetupProcess': typeof import("../components/frontpages/AboutUs/SetupProcess.vue")['default']
-    'LazyFrontpagesBlogGrid': typeof import("../components/frontpages/Blog/BlogGrid.vue")['default']
-    'LazyFrontpagesBlogPagesPosts': typeof import("../components/frontpages/Blog/BlogPagesPosts.vue")['default']
-    'LazyFrontpagesBlogDetails': typeof import("../components/frontpages/Blog/details/BlogDetails.vue")['default']
-    'LazyFrontpagesContactUsContactForm': typeof import("../components/frontpages/ContactUs/ContactForm.vue")['default']
-    'LazyFrontpagesContactUsContactMap': typeof import("../components/frontpages/ContactUs/ContactMap.vue")['default']
-    'LazyFrontpagesHomepageClientReviews': typeof import("../components/frontpages/Homepage/ClientReviews.vue")['default']
-    'LazyFrontpagesHomepageComponies': typeof import("../components/frontpages/Homepage/Componies.vue")['default']
-    'LazyFrontpagesHomepageContactBar': typeof import("../components/frontpages/Homepage/ContactBar.vue")['default']
-    'LazyFrontpagesHomepageFAQ': typeof import("../components/frontpages/Homepage/FAQ.vue")['default']
-    'LazyFrontpagesHomepageFeatureTabs': typeof import("../components/frontpages/Homepage/FeatureTabs.vue")['default']
-    'LazyFrontpagesHomepageHighlights': typeof import("../components/frontpages/Homepage/Highlights.vue")['default']
-    'LazyFrontpagesHomepageMainbanner': typeof import("../components/frontpages/Homepage/Mainbanner.vue")['default']
-    'LazyFrontpagesHomepageOurClients': typeof import("../components/frontpages/Homepage/OurClients.vue")['default']
-    'LazyFrontpagesHomepageOurTeam': typeof import("../components/frontpages/Homepage/OurTeam.vue")['default']
-    'LazyFrontpagesHomepagePackages': typeof import("../components/frontpages/Homepage/Packages.vue")['default']
-    'LazyFrontpagesHomepagePurchaseTemplate': typeof import("../components/frontpages/Homepage/PurchaseTemplate.vue")['default']
-    'LazyFrontpagesHomepageSecurePayment': typeof import("../components/frontpages/Homepage/SecurePayment.vue")['default']
-    'LazyFrontpagesPortfolioGalleryBox': typeof import("../components/frontpages/Portfolio/GalleryBox.vue")['default']
-    'LazyFrontpagesSharedTextBannerCard': typeof import("../components/frontpages/Shared/TextBannerCard.vue")['default']
-    'LazyFrontpagesLayoutAnnounceBar': typeof import("../components/frontpages/layout/AnnounceBar.vue")['default']
-    'LazyFrontpagesLayoutFooter': typeof import("../components/frontpages/layout/Footer.vue")['default']
-    'LazyFrontpagesLayoutHeader': typeof import("../components/frontpages/layout/Header.vue")['default']
-    'LazyFrontpagesLayoutNavigation': typeof import("../components/frontpages/layout/Navigation.vue")['default']
-    'LazyLandingpageLayoutFooter': typeof import("../components/landingpage/layout/Footer.vue")['default']
-    'LazyLandingpageLayoutHeader': typeof import("../components/landingpage/layout/Header.vue")['default']
-    'LazyLandingpageLayoutMobileSidebar': typeof import("../components/landingpage/layout/MobileSidebar.vue")['default']
-    'LazyLandingpageLayoutNavigation': typeof import("../components/landingpage/layout/Navigation.vue")['default']
-    'LazyLandingpageLayoutPageMegamenu': typeof import("../components/landingpage/layout/PageMegamenu.vue")['default']
-    'LazyLandingpageLayoutPageMenuQuicklinks': typeof import("../components/landingpage/layout/PageMenuQuicklinks.vue")['default']
-    'LazyLandingpageSectionPurchase': typeof import("../components/landingpage/section/Purchase.vue")['default']
-    'LazyLandingpageSectionRevolution': typeof import("../components/landingpage/section/Revolution.vue")['default']
-    'LazyLandingpageSectionOtherFeatures': typeof import("../components/landingpage/section/otherFeatures.vue")['default']
-    'LazyLandingpageSectionOurProducts': typeof import("../components/landingpage/section/ourProducts.vue")['default']
-    'LazyLandingpageSectionUserReview': typeof import("../components/landingpage/section/userReview.vue")['default']
-    'LazyLcFullCustomizer': typeof import("../components/lc/Full/customizer/Customizer.vue")['default']
-    'LazyLcFullHorizontalHeader': typeof import("../components/lc/Full/horizontal-header/index.vue")['default']
-    'LazyLcFullHorizontalSidebarNavCollapse': typeof import("../components/lc/Full/horizontal-sidebar/NavCollapse/Index.vue")['default']
-    'LazyLcFullHorizontalSidebarNavItem': typeof import("../components/lc/Full/horizontal-sidebar/NavItem/Index.vue")['default']
-    'LazyLcFullHorizontalSidebarHorizontalItems': typeof import("../components/lc/Full/horizontal-sidebar/horizontalItems")['default']
-    'LazyLcFullHorizontalSidebar': typeof import("../components/lc/Full/horizontal-sidebar/index.vue")['default']
-    'LazyLcFullLogo': typeof import("../components/lc/Full/logo/Logo.vue")['default']
-    'LazyLcFullLogoDark': typeof import("../components/lc/Full/logo/LogoDark.vue")['default']
-    'LazyLcFullLogoDarkRtl': typeof import("../components/lc/Full/logo/LogoDarkRtl.vue")['default']
-    'LazyLcFullLogoIcon': typeof import("../components/lc/Full/logo/LogoIcon.vue")['default']
-    'LazyLcFullLogoLight': typeof import("../components/lc/Full/logo/LogoLight.vue")['default']
-    'LazyLcFullLogoLightRtl': typeof import("../components/lc/Full/logo/LogoLightRtl.vue")['default']
-    'LazyLcFullVerticalHeaderAppsLink': typeof import("../components/lc/Full/vertical-header/AppsLink.vue")['default']
-    'LazyLcFullVerticalHeaderLanguageDD': typeof import("../components/lc/Full/vertical-header/LanguageDD.vue")['default']
-    'LazyLcFullVerticalHeaderNavigations': typeof import("../components/lc/Full/vertical-header/Navigations.vue")['default']
-    'LazyLcFullVerticalHeaderNotificationDD': typeof import("../components/lc/Full/vertical-header/NotificationDD.vue")['default']
-    'LazyLcFullVerticalHeaderProfileDD': typeof import("../components/lc/Full/vertical-header/ProfileDD.vue")['default']
-    'LazyLcFullVerticalHeaderQuickLinks': typeof import("../components/lc/Full/vertical-header/QuickLinks.vue")['default']
-    'LazyLcFullVerticalHeaderRightMobileSidebar': typeof import("../components/lc/Full/vertical-header/RightMobileSidebar.vue")['default']
-    'LazyLcFullVerticalHeaderSearchbar': typeof import("../components/lc/Full/vertical-header/Searchbar.vue")['default']
-    'LazyLcFullVerticalHeaderThemeToggler': typeof import("../components/lc/Full/vertical-header/ThemeToggler.vue")['default']
-    'LazyLcFullVerticalHeader': typeof import("../components/lc/Full/vertical-header/index.vue")['default']
-    'LazyLcFullVerticalSidebarDropDown': typeof import("../components/lc/Full/vertical-sidebar/DropDown/index.vue")['default']
-    'LazyLcFullVerticalSidebarIcon': typeof import("../components/lc/Full/vertical-sidebar/Icon.vue")['default']
-    'LazyLcFullVerticalSidebarMoreOption': typeof import("../components/lc/Full/vertical-sidebar/MoreOption/index.vue")['default']
-    'LazyLcFullVerticalSidebarNavCollapse': typeof import("../components/lc/Full/vertical-sidebar/NavCollapse/index.vue")['default']
-    'LazyLcFullVerticalSidebarNavGroup': typeof import("../components/lc/Full/vertical-sidebar/NavGroup/index.vue")['default']
-    'LazyLcFullVerticalSidebarNavItem': typeof import("../components/lc/Full/vertical-sidebar/NavItem/index.vue")['default']
-    'LazyLcFullVerticalSidebarExtrabox': typeof import("../components/lc/Full/vertical-sidebar/extrabox/index.vue")['default']
-    'LazyLcFullVerticalSidebar': typeof import("../components/lc/Full/vertical-sidebar/index.vue")['default']
-    'LazyLcFullVerticalSidebarItem': typeof import("../components/lc/Full/vertical-sidebar/sidebarItem")['default']
-    'LazyPagesAccountSettingsAccountTab': typeof import("../components/pages/account-settings/AccountTab.vue")['default']
-    'LazyPagesAccountSettingsBillsTab': typeof import("../components/pages/account-settings/BillsTab.vue")['default']
-    'LazyPagesAccountSettingsNotificationTab': typeof import("../components/pages/account-settings/NotificationTab.vue")['default']
-    'LazyPagesAccountSettingsSecurityTab': typeof import("../components/pages/account-settings/SecurityTab.vue")['default']
-    'LazyPagesFaqQuestion': typeof import("../components/pages/faq/FaqQuestion.vue")['default']
-    'LazyPagesFaqStillHaveQuestions': typeof import("../components/pages/faq/StillHaveQuestions.vue")['default']
-    'LazyPagesSearchResultsSearchLinks': typeof import("../components/pages/search-results/SearchLinks.vue")['default']
-    'LazySchoolPagesAttendenceSheet': typeof import("../components/school-pages/attendence/AttendenceSheet.vue")['default']
-    'LazySchoolPagesClassesData': typeof import("../components/school-pages/classes/ClassesData.vue")['default']
-    'LazySchoolPagesClassesDetail': typeof import("../components/school-pages/classes/ClassesDetail.vue")['default']
-    'LazySchoolPagesExamProgressReport': typeof import("../components/school-pages/exam/ProgressReport.vue")['default']
-    'LazySchoolPagesExamResultTable': typeof import("../components/school-pages/exam/ResultTable.vue")['default']
-    'LazySchoolPagesExamScheduleTable': typeof import("../components/school-pages/exam/ScheduleTable.vue")['default']
-    'LazySchoolPagesExamStudentProfile': typeof import("../components/school-pages/exam/StudentProfile.vue")['default']
-    'LazySchoolPagesStudentsStudentProfile': typeof import("../components/school-pages/students/StudentProfile.vue")['default']
-    'LazySchoolPagesStudentsStudentReport': typeof import("../components/school-pages/students/StudentReport.vue")['default']
-    'LazySchoolPagesStudentsStudentTable': typeof import("../components/school-pages/students/StudentTable.vue")['default']
-    'LazySchoolPagesTeachersTeacherProfile': typeof import("../components/school-pages/teachers/TeacherProfile.vue")['default']
-    'LazySchoolPagesTeachersTeacherSkills': typeof import("../components/school-pages/teachers/TeacherSkills.vue")['default']
-    'LazySchoolPagesTeachersTable': typeof import("../components/school-pages/teachers/TeachersTable.vue")['default']
-    'LazySharedAppBaseCard': typeof import("../components/shared/AppBaseCard.vue")['default']
-    'LazySharedAppEmailCard': typeof import("../components/shared/AppEmailCard.vue")['default']
-    'LazySharedBaseBreadcrumb': typeof import("../components/shared/BaseBreadcrumb.vue")['default']
-    'LazySharedBaseCard': typeof import("../components/shared/BaseCard.vue")['default']
-    'LazySharedCardHeaderFooter': typeof import("../components/shared/CardHeaderFooter.vue")['default']
-    'LazySharedProductBaseCard': typeof import("../components/shared/ProductBaseCard.vue")['default']
-    'LazySharedUiChildCard': typeof import("../components/shared/UiChildCard.vue")['default']
-    'LazySharedUiParentCard': typeof import("../components/shared/UiParentCard.vue")['default']
-    'LazySharedUiParentCardLogo': typeof import("../components/shared/UiParentCardLogo.vue")['default']
-    'LazySharedUiTableCard': typeof import("../components/shared/UiTableCard.vue")['default']
-    'LazySharedUiTextfieldPrimary': typeof import("../components/shared/UiTextfieldPrimary.vue")['default']
-    'LazySharedUiTittleSubtitleCard': typeof import("../components/shared/UiTittleSubtitleCard.vue")['default']
-    'LazySharedWidgetCard': typeof import("../components/shared/WidgetCard.vue")['default']
-    'LazySharedWidgetCardv2': typeof import("../components/shared/WidgetCardv2.vue")['default']
-    'LazySharedECommerceCard': typeof import("../components/shared/eCommerceCard.vue")['default']
-    'LazyStyleComponentsTypographyDefaultText': typeof import("../components/style-components/typography/DefaultText.vue")['default']
-    'LazyStyleComponentsTypographyHeading': typeof import("../components/style-components/typography/Heading.vue")['default']
-    'LazyStyleComponentsTypographyOpacity': typeof import("../components/style-components/typography/Opacity.vue")['default']
-    'LazyStyleComponentsTypographyTextAlignment': typeof import("../components/style-components/typography/TextAlignment.vue")['default']
-    'LazyStyleComponentsTypographyTextDecoration': typeof import("../components/style-components/typography/TextDecoration.vue")['default']
-    'LazyTableEditableTable': typeof import("../components/table/EditableTable.vue")['default']
-    'LazyTableTable1': typeof import("../components/table/Table1.vue")['default']
-    'LazyTableTable2': typeof import("../components/table/Table2.vue")['default']
-    'LazyTableTable3': typeof import("../components/table/Table3.vue")['default']
-    'LazyTableTable4': typeof import("../components/table/Table4.vue")['default']
-    'LazyTableTable5': typeof import("../components/table/Table5.vue")['default']
-    'LazyUiComponentsAlertAction': typeof import("../components/ui-components/alert/Action.vue")['default']
-    'LazyUiComponentsAlertBasic': typeof import("../components/ui-components/alert/Basic.vue")['default']
-    'LazyUiComponentsAlertClosable': typeof import("../components/ui-components/alert/Closable.vue")['default']
-    'LazyUiComponentsAlertDescription': typeof import("../components/ui-components/alert/Description.vue")['default']
-    'LazyUiComponentsAlertFilled': typeof import("../components/ui-components/alert/Filled.vue")['default']
-    'LazyUiComponentsAlertIcons': typeof import("../components/ui-components/alert/Icons.vue")['default']
-    'LazyUiComponentsAlertOutlined': typeof import("../components/ui-components/alert/Outlined.vue")['default']
-    'LazyUiComponentsAvatarBasicAvatar': typeof import("../components/ui-components/avatar/BasicAvatar.vue")['default']
-    'LazyUiComponentsAvatarIconAvatar': typeof import("../components/ui-components/avatar/IconAvatar.vue")['default']
-    'LazyUiComponentsAvatarImageAvatar': typeof import("../components/ui-components/avatar/ImageAvatar.vue")['default']
-    'LazyUiComponentsAvatarLetterAvatar': typeof import("../components/ui-components/avatar/LetterAvatar.vue")['default']
-    'LazyUiComponentsAvatarSizeAvatar': typeof import("../components/ui-components/avatar/SizeAvatar.vue")['default']
-    'LazyUiComponentsAvatarVariantAvatar': typeof import("../components/ui-components/avatar/VariantAvatar.vue")['default']
-    'LazyUiComponentsChipClosable': typeof import("../components/ui-components/chip/Closable.vue")['default']
-    'LazyUiComponentsChipCustomIcon': typeof import("../components/ui-components/chip/CustomIcon.vue")['default']
-    'LazyUiComponentsChipCustomIconOutlined': typeof import("../components/ui-components/chip/CustomIconOutlined.vue")['default']
-    'LazyUiComponentsChipDisabled': typeof import("../components/ui-components/chip/Disabled.vue")['default']
-    'LazyUiComponentsChipFilledColor': typeof import("../components/ui-components/chip/FilledColor.vue")['default']
-    'LazyUiComponentsChipLabelChip': typeof import("../components/ui-components/chip/LabelChip.vue")['default']
-    'LazyUiComponentsChipOutlined': typeof import("../components/ui-components/chip/Outlined.vue")['default']
-    'LazyUiComponentsChipSizes': typeof import("../components/ui-components/chip/Sizes.vue")['default']
-    'LazyUiComponentsDialogsActivator': typeof import("../components/ui-components/dialogs/DialogsActivator.vue")['default']
-    'LazyUiComponentsDialogsForm': typeof import("../components/ui-components/dialogs/DialogsForm.vue")['default']
-    'LazyUiComponentsDialogsFullscreen': typeof import("../components/ui-components/dialogs/DialogsFullscreen.vue")['default']
-    'LazyUiComponentsDialogsModel': typeof import("../components/ui-components/dialogs/DialogsModel.vue")['default']
-    'LazyUiComponentsDialogsNested': typeof import("../components/ui-components/dialogs/DialogsNested.vue")['default']
-    'LazyUiComponentsDialogsPersistent': typeof import("../components/ui-components/dialogs/DialogsPersistent.vue")['default']
-    'LazyUiComponentsDialogsScrollable': typeof import("../components/ui-components/dialogs/DialogsScrollable.vue")['default']
-    'LazyUiComponentsDialogsTransitions': typeof import("../components/ui-components/dialogs/DialogsTransitions.vue")['default']
-    'LazyUiComponentsExpansionpanelAdvance': typeof import("../components/ui-components/expansionpanel/Advance.vue")['default']
-    'LazyUiComponentsExpansionpanelBasic': typeof import("../components/ui-components/expansionpanel/Basic.vue")['default']
-    'LazyUiComponentsExpansionpanelCustomizedIcon': typeof import("../components/ui-components/expansionpanel/CustomizedIcon.vue")['default']
-    'LazyUiComponentsExpansionpanelDefaultExpand': typeof import("../components/ui-components/expansionpanel/DefaultExpand.vue")['default']
-    'LazyUiComponentsExpansionpanelInset': typeof import("../components/ui-components/expansionpanel/Inset.vue")['default']
-    'LazyUiComponentsExpansionpanelPopout': typeof import("../components/ui-components/expansionpanel/Popout.vue")['default']
-    'LazyUiComponentsListCustomAlignList': typeof import("../components/ui-components/list/CustomAlignList.vue")['default']
-    'LazyUiComponentsListDisabledList': typeof import("../components/ui-components/list/DisabledList.vue")['default']
-    'LazyUiComponentsListFolderList': typeof import("../components/ui-components/list/FolderList.vue")['default']
-    'LazyUiComponentsListNestedList': typeof import("../components/ui-components/list/NestedList.vue")['default']
-    'LazyUiComponentsListRoundedList': typeof import("../components/ui-components/list/RoundedList.vue")['default']
-    'LazyUiComponentsListScrollableList': typeof import("../components/ui-components/list/ScrollableList.vue")['default']
-    'LazyUiComponentsListSimpleList': typeof import("../components/ui-components/list/SimpleList.vue")['default']
-    'LazyUiComponentsListSwitchList': typeof import("../components/ui-components/list/SwitchList.vue")['default']
-    'LazyUiComponentsMenusActivatorTooltip': typeof import("../components/ui-components/menus/MenusActivatorTooltip.vue")['default']
-    'LazyUiComponentsMenusAnchor': typeof import("../components/ui-components/menus/MenusAnchor.vue")['default']
-    'LazyUiComponentsMenusHover': typeof import("../components/ui-components/menus/MenusHover.vue")['default']
-    'LazyUiComponentsMenusPopover': typeof import("../components/ui-components/menus/MenusPopover.vue")['default']
-    'LazyUiComponentsRattingBasicRatting': typeof import("../components/ui-components/ratting/BasicRatting.vue")['default']
-    'LazyUiComponentsRattingClearableRatting': typeof import("../components/ui-components/ratting/ClearableRatting.vue")['default']
-    'LazyUiComponentsRattingHalfRatting': typeof import("../components/ui-components/ratting/HalfRatting.vue")['default']
-    'LazyUiComponentsRattingHoverRatting': typeof import("../components/ui-components/ratting/HoverRatting.vue")['default']
-    'LazyUiComponentsRattingIconsRatting': typeof import("../components/ui-components/ratting/IconsRatting.vue")['default']
-    'LazyUiComponentsRattingLabelRatting': typeof import("../components/ui-components/ratting/LabelRatting.vue")['default']
-    'LazyUiComponentsRattingLengthRatting': typeof import("../components/ui-components/ratting/LengthRatting.vue")['default']
-    'LazyUiComponentsRattingReadOnlyRatting': typeof import("../components/ui-components/ratting/ReadOnlyRatting.vue")['default']
-    'LazyUiComponentsRattingSizeRatting': typeof import("../components/ui-components/ratting/SizeRatting.vue")['default']
-    'LazyUiComponentsTabsAlignCenterTabs': typeof import("../components/ui-components/tabs/AlignCenterTabs.vue")['default']
-    'LazyUiComponentsTabsAlignEndTabs': typeof import("../components/ui-components/tabs/AlignEndTabs.vue")['default']
-    'LazyUiComponentsTabsBasicTabs': typeof import("../components/ui-components/tabs/BasicTabs.vue")['default']
-    'LazyUiComponentsTabsCenterTabs': typeof import("../components/ui-components/tabs/CenterTabs.vue")['default']
-    'LazyUiComponentsTabsColorTabs': typeof import("../components/ui-components/tabs/ColorTabs.vue")['default']
-    'LazyUiComponentsTabsCustomIcons': typeof import("../components/ui-components/tabs/CustomIcons.vue")['default']
-    'LazyUiComponentsTabsDisableTabs': typeof import("../components/ui-components/tabs/DisableTabs.vue")['default']
-    'LazyUiComponentsTabsIconTabs': typeof import("../components/ui-components/tabs/IconTabs.vue")['default']
-    'LazyUiComponentsTabsIconsWithLabelTabs': typeof import("../components/ui-components/tabs/IconsWithLabelTabs.vue")['default']
-    'LazyUiComponentsTooltipIconTooltip': typeof import("../components/ui-components/tooltip/IconTooltip.vue")['default']
-    'LazyUiComponentsTooltipSimpleTooltip': typeof import("../components/ui-components/tooltip/SimpleTooltip.vue")['default']
-    'LazyUiComponentsTooltipToggleTolltip': typeof import("../components/ui-components/tooltip/ToggleTolltip.vue")['default']
-    'LazyWidgetsBannersBanner1': typeof import("../components/widgets/banners/Banner1.vue")['default']
-    'LazyWidgetsBannersBanner2': typeof import("../components/widgets/banners/Banner2.vue")['default']
-    'LazyWidgetsBannersBanner3': typeof import("../components/widgets/banners/Banner3.vue")['default']
-    'LazyWidgetsBannersBanner4': typeof import("../components/widgets/banners/Banner4.vue")['default']
-    'LazyWidgetsBannersBanner5': typeof import("../components/widgets/banners/Banner5.vue")['default']
-    'LazyWidgetsBannersBanner6': typeof import("../components/widgets/banners/Banner6.vue")['default']
-    'LazyWidgetsCardsCongtsCard': typeof import("../components/widgets/cards/CongtsCard.vue")['default']
-    'LazyWidgetsCardsPaymentGateway': typeof import("../components/widgets/cards/PaymentGateway.vue")['default']
-    'LazyWidgetsCardsProfileBoxCards': typeof import("../components/widgets/cards/ProfileBoxCards.vue")['default']
-    'LazyWidgetsCardsRecentTransactions': typeof import("../components/widgets/cards/RecentTransactions.vue")['default']
-    'LazyWidgetsCardsTopCards': typeof import("../components/widgets/cards/TopCards.vue")['default']
-    'LazyWidgetsChartsNetSells': typeof import("../components/widgets/charts/NetSells.vue")['default']
-    'LazyWidgetsChartsPayingChart': typeof import("../components/widgets/charts/PayingChart.vue")['default']
-    'LazyWidgetsChartsTraficDistributionChart': typeof import("../components/widgets/charts/TraficDistributionChart.vue")['default']
-    'LazyNuxtWelcome': typeof import("../node_modules/nuxt/dist/app/components/welcome.vue")['default']
-    'LazyNuxtLayout': typeof import("../node_modules/nuxt/dist/app/components/nuxt-layout")['default']
-    'LazyNuxtErrorBoundary': typeof import("../node_modules/nuxt/dist/app/components/nuxt-error-boundary")['default']
-    'LazyClientOnly': typeof import("../node_modules/nuxt/dist/app/components/client-only")['default']
-    'LazyDevOnly': typeof import("../node_modules/nuxt/dist/app/components/dev-only")['default']
-    'LazyServerPlaceholder': typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']
-    'LazyNuxtLink': typeof import("../node_modules/nuxt/dist/app/components/nuxt-link")['default']
-    'LazyNuxtLoadingIndicator': typeof import("../node_modules/nuxt/dist/app/components/nuxt-loading-indicator")['default']
-    'LazyNuxtRouteAnnouncer': typeof import("../node_modules/nuxt/dist/app/components/nuxt-route-announcer")['default']
-    'LazyNuxtImg': typeof import("../node_modules/nuxt/dist/app/components/nuxt-stubs")['NuxtImg']
-    'LazyNuxtPicture': typeof import("../node_modules/nuxt/dist/app/components/nuxt-stubs")['NuxtPicture']
-    'LazyNuxtPage': typeof import("../node_modules/nuxt/dist/pages/runtime/page")['default']
-    'LazyNoScript': typeof import("../node_modules/nuxt/dist/head/runtime/components")['NoScript']
-    'LazyLink': typeof import("../node_modules/nuxt/dist/head/runtime/components")['Link']
-    'LazyBase': typeof import("../node_modules/nuxt/dist/head/runtime/components")['Base']
-    'LazyTitle': typeof import("../node_modules/nuxt/dist/head/runtime/components")['Title']
-    'LazyMeta': typeof import("../node_modules/nuxt/dist/head/runtime/components")['Meta']
-    'LazyStyle': typeof import("../node_modules/nuxt/dist/head/runtime/components")['Style']
-    'LazyHead': typeof import("../node_modules/nuxt/dist/head/runtime/components")['Head']
-    'LazyHtml': typeof import("../node_modules/nuxt/dist/head/runtime/components")['Html']
-    'LazyBody': typeof import("../node_modules/nuxt/dist/head/runtime/components")['Body']
-    'LazyNuxtIsland': typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']
-    'LazyNuxtRouteAnnouncer': IslandComponent<typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']>
+      'LazyAppsBlogCardGrid': LazyComponent<typeof import("../components/apps/blog/blogCardGrid.vue")['default']>
+    'LazyAppsBlogPosts': LazyComponent<typeof import("../components/apps/blog/blogPosts.vue")['default']>
+    'LazyAppsBlogDetailAddCommnet': LazyComponent<typeof import("../components/apps/blog/detail/addCommnet.vue")['default']>
+    'LazyAppsBlogDetail': LazyComponent<typeof import("../components/apps/blog/detail/blogDetail.vue")['default']>
+    'LazyAppsBlogFeatureBlogCard': LazyComponent<typeof import("../components/apps/blog/featureBlogCard.vue")['default']>
+    'LazyAppsChatsChatDetail': LazyComponent<typeof import("../components/apps/chats/ChatDetail.vue")['default']>
+    'LazyAppsChatsChatInfo': LazyComponent<typeof import("../components/apps/chats/ChatInfo.vue")['default']>
+    'LazyAppsChatsChatListing': LazyComponent<typeof import("../components/apps/chats/ChatListing.vue")['default']>
+    'LazyAppsChatsChatProfile': LazyComponent<typeof import("../components/apps/chats/ChatProfile.vue")['default']>
+    'LazyAppsChatsChatSendMsg': LazyComponent<typeof import("../components/apps/chats/ChatSendMsg.vue")['default']>
+    'LazyAppsEcommerceAddproductAdvanceTab': LazyComponent<typeof import("../components/apps/ecommerce/addproduct/AdvanceTab.vue")['default']>
+    'LazyAppsEcommerceAddproductGeneralTab': LazyComponent<typeof import("../components/apps/ecommerce/addproduct/GeneralTab.vue")['default']>
+    'LazyAppsEcommerceAddproductLeftSide': LazyComponent<typeof import("../components/apps/ecommerce/addproduct/LeftSide.vue")['default']>
+    'LazyAppsEcommerceAddproductRightSide': LazyComponent<typeof import("../components/apps/ecommerce/addproduct/RightSide.vue")['default']>
+    'LazyAppsEcommerceCartCheckout': LazyComponent<typeof import("../components/apps/ecommerce/cart/CartCheckout.vue")['default']>
+    'LazyAppsEcommerceCartEmpty': LazyComponent<typeof import("../components/apps/ecommerce/cart/CartEmpty.vue")['default']>
+    'LazyAppsEcommerceCartStepsAddAddress': LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/AddAddress.vue")['default']>
+    'LazyAppsEcommerceCartStepsAddCard': LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/AddCard.vue")['default']>
+    'LazyAppsEcommerceCartStepsAddressCard': LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/AddressCard.vue")['default']>
+    'LazyAppsEcommerceCartStepsOrderSummary': LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/OrderSummary.vue")['default']>
+    'LazyAppsEcommerceCartStepsPayment': LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/Payment.vue")['default']>
+    'LazyAppsEcommerceCartStepsStepFirst': LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/StepFirst.vue")['default']>
+    'LazyAppsEcommerceCartStepsStepSecond': LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/StepSecond.vue")['default']>
+    'LazyAppsEcommerceCartStepsThankyou': LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/Thankyou.vue")['default']>
+    'LazyAppsEcommerceDetailProductCarousel': LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductCarousel.vue")['default']>
+    'LazyAppsEcommerceDetailProductDescription': LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductDescription.vue")['default']>
+    'LazyAppsEcommerceDetailProductDetail': LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductDetail.vue")['default']>
+    'LazyAppsEcommerceDetailProductReview': LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductReview.vue")['default']>
+    'LazyAppsEcommerceDetailProductTab': LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductTab.vue")['default']>
+    'LazyAppsEcommerceDetailRelatedProducts': LazyComponent<typeof import("../components/apps/ecommerce/detail/RelatedProducts.vue")['default']>
+    'LazyAppsEcommerceDetailOneProducOneCurosel': LazyComponent<typeof import("../components/apps/ecommerce/detail/one/ProducOneCurosel.vue")['default']>
+    'LazyAppsEcommerceDetailOneProductDetailOne': LazyComponent<typeof import("../components/apps/ecommerce/detail/one/ProductDetailOne.vue")['default']>
+    'LazyAppsEcommerceDetailOneProductReviewOne': LazyComponent<typeof import("../components/apps/ecommerce/detail/one/ProductReviewOne.vue")['default']>
+    'LazyAppsEcommerceDetailOneRelatedProductOne': LazyComponent<typeof import("../components/apps/ecommerce/detail/one/RelatedProductOne.vue")['default']>
+    'LazyAppsEcommerceEditproductAdvanceTab': LazyComponent<typeof import("../components/apps/ecommerce/editproduct/AdvanceTab.vue")['default']>
+    'LazyAppsEcommerceEditproductDailySalesChart': LazyComponent<typeof import("../components/apps/ecommerce/editproduct/DailySalesChart.vue")['default']>
+    'LazyAppsEcommerceEditproductGeneralTab': LazyComponent<typeof import("../components/apps/ecommerce/editproduct/GeneralTab.vue")['default']>
+    'LazyAppsEcommerceEditproductLeftSide': LazyComponent<typeof import("../components/apps/ecommerce/editproduct/LeftSide.vue")['default']>
+    'LazyAppsEcommerceEditproductReviewsTab': LazyComponent<typeof import("../components/apps/ecommerce/editproduct/ReviewsTab.vue")['default']>
+    'LazyAppsEcommerceEditproductRightSide': LazyComponent<typeof import("../components/apps/ecommerce/editproduct/RightSide.vue")['default']>
+    'LazyAppsEcommerceListingProductEmplty': LazyComponent<typeof import("../components/apps/ecommerce/listing/ProductEmplty.vue")['default']>
+    'LazyAppsEcommerceListingProductFilters': LazyComponent<typeof import("../components/apps/ecommerce/listing/ProductFilters.vue")['default']>
+    'LazyAppsEcommerceListingProductItem': LazyComponent<typeof import("../components/apps/ecommerce/listing/ProductItem.vue")['default']>
+    'LazyAppsEcommerceListingProductItemOne': LazyComponent<typeof import("../components/apps/ecommerce/listing/ProductItemOne.vue")['default']>
+    'LazyAppsEcommerceListingProductfilterOne': LazyComponent<typeof import("../components/apps/ecommerce/listing/ProductfilterOne.vue")['default']>
+    'LazyAppsEcommerceListingColorsOption': LazyComponent<typeof import("../components/apps/ecommerce/listing/colorsOption")['default']>
+    'LazyAppsEmailCompose': LazyComponent<typeof import("../components/apps/email/EmailCompose.vue")['default']>
+    'LazyAppsEmailDetail': LazyComponent<typeof import("../components/apps/email/EmailDetail.vue")['default']>
+    'LazyAppsEmailListing': LazyComponent<typeof import("../components/apps/email/EmailListing.vue")['default']>
+    'LazyAppsInvoiceCreate': LazyComponent<typeof import("../components/apps/invoice/Create.vue")['default']>
+    'LazyAppsInvoiceDetail': LazyComponent<typeof import("../components/apps/invoice/Detail.vue")['default']>
+    'LazyAppsInvoiceEdit': LazyComponent<typeof import("../components/apps/invoice/Edit.vue")['default']>
+    'LazyAppsInvoiceList': LazyComponent<typeof import("../components/apps/invoice/List.vue")['default']>
+    'LazyAppsKanbanAddTask': LazyComponent<typeof import("../components/apps/kanban/AddTask.vue")['default']>
+    'LazyAppsKanbanTaskCard': LazyComponent<typeof import("../components/apps/kanban/TaskCard.vue")['default']>
+    'LazyAppsKanbanTaskColumn': LazyComponent<typeof import("../components/apps/kanban/TaskColumn.vue")['default']>
+    'LazyAppsKanbanTaskItemCard': LazyComponent<typeof import("../components/apps/kanban/TaskItemCard.vue")['default']>
+    'LazyAppsNotesAddNote': LazyComponent<typeof import("../components/apps/notes/AddNote.vue")['default']>
+    'LazyAppsNotesContent': LazyComponent<typeof import("../components/apps/notes/NotesContent.vue")['default']>
+    'LazyAppsNotesListing': LazyComponent<typeof import("../components/apps/notes/NotesListing.vue")['default']>
+    'LazyAppsTicketsTicketList': LazyComponent<typeof import("../components/apps/tickets/TicketList.vue")['default']>
+    'LazyAppsUserProfileIntroCard': LazyComponent<typeof import("../components/apps/user-profile/IntroCard.vue")['default']>
+    'LazyAppsUserProfilePhotosCard': LazyComponent<typeof import("../components/apps/user-profile/PhotosCard.vue")['default']>
+    'LazyAppsUserProfilePostListing': LazyComponent<typeof import("../components/apps/user-profile/PostListing.vue")['default']>
+    'LazyAppsUserProfileBanner': LazyComponent<typeof import("../components/apps/user-profile/ProfileBanner.vue")['default']>
+    'LazyAppsUserProfileBannerOne': LazyComponent<typeof import("../components/apps/user-profile/ProfileBannerOne.vue")['default']>
+    'LazyAppsUserProfilePostsAddPost': LazyComponent<typeof import("../components/apps/user-profile/posts/AddPost.vue")['default']>
+    'LazyAppsUserProfilePostsComments': LazyComponent<typeof import("../components/apps/user-profile/posts/Comments.vue")['default']>
+    'LazyAppsUserProfilePostsPostItem': LazyComponent<typeof import("../components/apps/user-profile/posts/PostItem.vue")['default']>
+    'LazyAppsUserProfileProfileOneIntroCard': LazyComponent<typeof import("../components/apps/user-profile/profile-one/IntroCard.vue")['default']>
+    'LazyAppsUserProfileProfileOneNumberCards': LazyComponent<typeof import("../components/apps/user-profile/profile-one/NumberCards.vue")['default']>
+    'LazyAppsUserProfileProfileOneTeamsCard': LazyComponent<typeof import("../components/apps/user-profile/profile-one/TeamsCard.vue")['default']>
+    'LazyAuthLoginForm': LazyComponent<typeof import("../components/auth/LoginForm.vue")['default']>
+    'LazyAuthRegisterForm': LazyComponent<typeof import("../components/auth/RegisterForm.vue")['default']>
+    'LazyAuthResetForm': LazyComponent<typeof import("../components/auth/ResetForm.vue")['default']>
+    'LazyAuthTwoStepForm': LazyComponent<typeof import("../components/auth/TwoStepForm.vue")['default']>
+    'LazyCommonErrorToaster': LazyComponent<typeof import("../components/common/errorToaster.vue")['default']>
+    'LazyDashboardsDashboard1CongratulationsCard': LazyComponent<typeof import("../components/dashboards/dashboard1/CongratulationsCard.vue")['default']>
+    'LazyDashboardsDashboard1Customers': LazyComponent<typeof import("../components/dashboards/dashboard1/Customers.vue")['default']>
+    'LazyDashboardsDashboard1LatestDeals': LazyComponent<typeof import("../components/dashboards/dashboard1/LatestDeals.vue")['default']>
+    'LazyDashboardsDashboard1LatestReviews': LazyComponent<typeof import("../components/dashboards/dashboard1/LatestReviews.vue")['default']>
+    'LazyDashboardsDashboard1Payments': LazyComponent<typeof import("../components/dashboards/dashboard1/Payments.vue")['default']>
+    'LazyDashboardsDashboard1ProductsChart': LazyComponent<typeof import("../components/dashboards/dashboard1/ProductsChart.vue")['default']>
+    'LazyDashboardsDashboard1ProductsTable': LazyComponent<typeof import("../components/dashboards/dashboard1/ProductsTable.vue")['default']>
+    'LazyDashboardsDashboard1VisitFromUsa': LazyComponent<typeof import("../components/dashboards/dashboard1/VisitFromUsa.vue")['default']>
+    'LazyDashboardsDashboard2FigmaCard': LazyComponent<typeof import("../components/dashboards/dashboard2/FigmaCard.vue")['default']>
+    'LazyDashboardsDashboard2PayingTable': LazyComponent<typeof import("../components/dashboards/dashboard2/PayingTable.vue")['default']>
+    'LazyDashboardsDashboard2ProductSales': LazyComponent<typeof import("../components/dashboards/dashboard2/ProductSales.vue")['default']>
+    'LazyDashboardsDashboard2ProfileCards': LazyComponent<typeof import("../components/dashboards/dashboard2/ProfileCards.vue")['default']>
+    'LazyDashboardsDashboard2ProfitExpanse': LazyComponent<typeof import("../components/dashboards/dashboard2/ProfitExpanse.vue")['default']>
+    'LazyDashboardsDashboard2TextCards': LazyComponent<typeof import("../components/dashboards/dashboard2/TextCards.vue")['default']>
+    'LazyDashboardsDashboard2TrafficDistribution': LazyComponent<typeof import("../components/dashboards/dashboard2/TrafficDistribution.vue")['default']>
+    'LazyDashboardsDashboard2UpcommingSchedule': LazyComponent<typeof import("../components/dashboards/dashboard2/UpcommingSchedule.vue")['default']>
+    'LazyDashboardsDashboard2WelcomeCard': LazyComponent<typeof import("../components/dashboards/dashboard2/WelcomeCard.vue")['default']>
+    'LazyDashboardsSnackbar': LazyComponent<typeof import("../components/dashboards/snackbar.vue")['default']>
+    'LazyFormsFormCustomFrom': LazyComponent<typeof import("../components/forms/form-custom/CustomFrom.vue")['default']>
+    'LazyFormsFormElementsAutocompleteComboBox': LazyComponent<typeof import("../components/forms/form-elements/autocomplete/ComboBox.vue")['default']>
+    'LazyFormsFormElementsAutocompleteMultipleOptions': LazyComponent<typeof import("../components/forms/form-elements/autocomplete/MultipleOptions.vue")['default']>
+    'LazyFormsFormElementsAutocompleteWithCaption': LazyComponent<typeof import("../components/forms/form-elements/autocomplete/WithCaption.vue")['default']>
+    'LazyFormsFormElementsButtonBaseButtons': LazyComponent<typeof import("../components/forms/form-elements/button/BaseButtons.vue")['default']>
+    'LazyFormsFormElementsButtonColorsButtons': LazyComponent<typeof import("../components/forms/form-elements/button/ColorsButtons.vue")['default']>
+    'LazyFormsFormElementsButtonIconColor': LazyComponent<typeof import("../components/forms/form-elements/button/IconColor.vue")['default']>
+    'LazyFormsFormElementsButtonIconColorSizes': LazyComponent<typeof import("../components/forms/form-elements/button/IconColorSizes.vue")['default']>
+    'LazyFormsFormElementsButtonIconsButtons': LazyComponent<typeof import("../components/forms/form-elements/button/IconsButtons.vue")['default']>
+    'LazyFormsFormElementsButtonOutlineIconColor': LazyComponent<typeof import("../components/forms/form-elements/button/OutlineIconColor.vue")['default']>
+    'LazyFormsFormElementsButtonOutlineSizes': LazyComponent<typeof import("../components/forms/form-elements/button/OutlineSizes.vue")['default']>
+    'LazyFormsFormElementsButtonOutlinedButtons': LazyComponent<typeof import("../components/forms/form-elements/button/OutlinedButtons.vue")['default']>
+    'LazyFormsFormElementsButtonOutlinedIconSize': LazyComponent<typeof import("../components/forms/form-elements/button/OutlinedIconSize.vue")['default']>
+    'LazyFormsFormElementsButtonSizeButtons': LazyComponent<typeof import("../components/forms/form-elements/button/SizeButtons.vue")['default']>
+    'LazyFormsFormElementsButtonTextButtons': LazyComponent<typeof import("../components/forms/form-elements/button/TextButtons.vue")['default']>
+    'LazyFormsFormElementsButtonButtonGroupDefault': LazyComponent<typeof import("../components/forms/form-elements/button/buttonGroup/Default.vue")['default']>
+    'LazyFormsFormElementsButtonButtonGroupOutlined': LazyComponent<typeof import("../components/forms/form-elements/button/buttonGroup/Outlined.vue")['default']>
+    'LazyFormsFormElementsButtonButtonGroupPlain': LazyComponent<typeof import("../components/forms/form-elements/button/buttonGroup/Plain.vue")['default']>
+    'LazyFormsFormElementsButtonButtonGroupText': LazyComponent<typeof import("../components/forms/form-elements/button/buttonGroup/Text.vue")['default']>
+    'LazyFormsFormElementsCheckboxBasicCheckboxes': LazyComponent<typeof import("../components/forms/form-elements/checkbox/BasicCheckboxes.vue")['default']>
+    'LazyFormsFormElementsCheckboxColorCheckboxes': LazyComponent<typeof import("../components/forms/form-elements/checkbox/ColorCheckboxes.vue")['default']>
+    'LazyFormsFormElementsCheckboxCustomCheckbox': LazyComponent<typeof import("../components/forms/form-elements/checkbox/CustomCheckbox.vue")['default']>
+    'LazyFormsFormElementsCheckboxLabelCheckboxes': LazyComponent<typeof import("../components/forms/form-elements/checkbox/LabelCheckboxes.vue")['default']>
+    'LazyFormsFormElementsComboboxDense': LazyComponent<typeof import("../components/forms/form-elements/combobox/ComboboxDense.vue")['default']>
+    'LazyFormsFormElementsComboboxMultiple': LazyComponent<typeof import("../components/forms/form-elements/combobox/ComboboxMultiple.vue")['default']>
+    'LazyFormsFormElementsCustominputInputAppendPrepend': LazyComponent<typeof import("../components/forms/form-elements/custominput/InputAppendPrepend.vue")['default']>
+    'LazyFormsFormElementsCustominputInputError': LazyComponent<typeof import("../components/forms/form-elements/custominput/InputError.vue")['default']>
+    'LazyFormsFormElementsCustominputInputHideDetails': LazyComponent<typeof import("../components/forms/form-elements/custominput/InputHideDetails.vue")['default']>
+    'LazyFormsFormElementsCustominputInputLoading': LazyComponent<typeof import("../components/forms/form-elements/custominput/InputLoading.vue")['default']>
+    'LazyFormsFormElementsCustominputInputMultipleError': LazyComponent<typeof import("../components/forms/form-elements/custominput/InputMultipleError.vue")['default']>
+    'LazyFormsFormElementsCustominputInputRules': LazyComponent<typeof import("../components/forms/form-elements/custominput/InputRules.vue")['default']>
+    'LazyFormsFormElementsDatetimeDatePicker': LazyComponent<typeof import("../components/forms/form-elements/datetime/DatePicker.vue")['default']>
+    'LazyFormsFormElementsDatetimeTimePicker': LazyComponent<typeof import("../components/forms/form-elements/datetime/TimePicker.vue")['default']>
+    'LazyFormsFormElementsFileinputFileInputAccept': LazyComponent<typeof import("../components/forms/form-elements/fileinput/FileInputAccept.vue")['default']>
+    'LazyFormsFormElementsFileinputFileInputChips': LazyComponent<typeof import("../components/forms/form-elements/fileinput/FileInputChips.vue")['default']>
+    'LazyFormsFormElementsFileinputFileInputCounter': LazyComponent<typeof import("../components/forms/form-elements/fileinput/FileInputCounter.vue")['default']>
+    'LazyFormsFormElementsFileinputFileInputDensity': LazyComponent<typeof import("../components/forms/form-elements/fileinput/FileInputDensity.vue")['default']>
+    'LazyFormsFormElementsFileinputFileInputMultiple': LazyComponent<typeof import("../components/forms/form-elements/fileinput/FileInputMultiple.vue")['default']>
+    'LazyFormsFormElementsFileinputFileInputPrepand': LazyComponent<typeof import("../components/forms/form-elements/fileinput/FileInputPrepand.vue")['default']>
+    'LazyFormsFormElementsFileinputFileInputSelection': LazyComponent<typeof import("../components/forms/form-elements/fileinput/FileInputSelection.vue")['default']>
+    'LazyFormsFormElementsFileinputFileInputValidation': LazyComponent<typeof import("../components/forms/form-elements/fileinput/FileInputValidation.vue")['default']>
+    'LazyFormsFormElementsRadioColor': LazyComponent<typeof import("../components/forms/form-elements/radio/Color.vue")['default']>
+    'LazyFormsFormElementsRadioDefault': LazyComponent<typeof import("../components/forms/form-elements/radio/Default.vue")['default']>
+    'LazyFormsFormElementsRadioDefaultDirection': LazyComponent<typeof import("../components/forms/form-elements/radio/DefaultDirection.vue")['default']>
+    'LazyFormsFormElementsRadioInlineDirection': LazyComponent<typeof import("../components/forms/form-elements/radio/InlineDirection.vue")['default']>
+    'LazyFormsFormElementsRadioLabel': LazyComponent<typeof import("../components/forms/form-elements/radio/Label.vue")['default']>
+    'LazyFormsFormElementsRadioLabelwithColor': LazyComponent<typeof import("../components/forms/form-elements/radio/LabelwithColor.vue")['default']>
+    'LazyFormsFormElementsSelectChip': LazyComponent<typeof import("../components/forms/form-elements/select/SelectChip.vue")['default']>
+    'LazyFormsFormElementsSelectDefault': LazyComponent<typeof import("../components/forms/form-elements/select/SelectDefault.vue")['default']>
+    'LazyFormsFormElementsSelectDensity': LazyComponent<typeof import("../components/forms/form-elements/select/SelectDensity.vue")['default']>
+    'LazyFormsFormElementsSelectMultiple': LazyComponent<typeof import("../components/forms/form-elements/select/SelectMultiple.vue")['default']>
+    'LazyFormsFormElementsSelectReadOnly': LazyComponent<typeof import("../components/forms/form-elements/select/SelectReadOnly.vue")['default']>
+    'LazyFormsFormElementsSliderCustom': LazyComponent<typeof import("../components/forms/form-elements/slider/Custom.vue")['default']>
+    'LazyFormsFormElementsSliderDefault': LazyComponent<typeof import("../components/forms/form-elements/slider/Default.vue")['default']>
+    'LazyFormsFormElementsSliderDisabled': LazyComponent<typeof import("../components/forms/form-elements/slider/Disabled.vue")['default']>
+    'LazyFormsFormElementsSliderSteps': LazyComponent<typeof import("../components/forms/form-elements/slider/Steps.vue")['default']>
+    'LazyFormsFormElementsSliderTickSize': LazyComponent<typeof import("../components/forms/form-elements/slider/TickSize.vue")['default']>
+    'LazyFormsFormElementsSliderTicks': LazyComponent<typeof import("../components/forms/form-elements/slider/Ticks.vue")['default']>
+    'LazyFormsFormElementsSliderVertical': LazyComponent<typeof import("../components/forms/form-elements/slider/Vertical.vue")['default']>
+    'LazyFormsFormElementsSliderVolume': LazyComponent<typeof import("../components/forms/form-elements/slider/Volume.vue")['default']>
+    'LazyFormsFormElementsStepperAlternatelabel': LazyComponent<typeof import("../components/forms/form-elements/stepper/Alternatelabel.vue")['default']>
+    'LazyFormsFormElementsStepperAlternativeErrors': LazyComponent<typeof import("../components/forms/form-elements/stepper/AlternativeErrors.vue")['default']>
+    'LazyFormsFormElementsStepperEditableStepper': LazyComponent<typeof import("../components/forms/form-elements/stepper/EditableStepper.vue")['default']>
+    'LazyFormsFormElementsStepperItemStepper': LazyComponent<typeof import("../components/forms/form-elements/stepper/ItemStepper.vue")['default']>
+    'LazyFormsFormElementsStepperLinearSteppers': LazyComponent<typeof import("../components/forms/form-elements/stepper/LinearSteppers.vue")['default']>
+    'LazyFormsFormElementsStepperNoEditable': LazyComponent<typeof import("../components/forms/form-elements/stepper/NoEditable.vue")['default']>
+    'LazyFormsFormElementsStepperOptionalSteps': LazyComponent<typeof import("../components/forms/form-elements/stepper/OptionalSteps.vue")['default']>
+    'LazyFormsFormElementsSwitchColors': LazyComponent<typeof import("../components/forms/form-elements/switch/Colors.vue")['default']>
+    'LazyFormsFormElementsSwitchDefault': LazyComponent<typeof import("../components/forms/form-elements/switch/Default.vue")['default']>
+    'LazyFormsFormElementsSwitchInset': LazyComponent<typeof import("../components/forms/form-elements/switch/Inset.vue")['default']>
+    'LazyFormsFormElementsSwitchInsetColors': LazyComponent<typeof import("../components/forms/form-elements/switch/InsetColors.vue")['default']>
+    'LazyFormsFormElementsSwitchLabel': LazyComponent<typeof import("../components/forms/form-elements/switch/Label.vue")['default']>
+    'LazyFormsFormElementsSwitchStates': LazyComponent<typeof import("../components/forms/form-elements/switch/States.vue")['default']>
+    'LazyFormsFormElementsTreeviewActivatable': LazyComponent<typeof import("../components/forms/form-elements/treeview/Activatable.vue")['default']>
+    'LazyFormsFormElementsTreeviewBasic': LazyComponent<typeof import("../components/forms/form-elements/treeview/Basic.vue")['default']>
+    'LazyFormsFormElementsTreeviewColors': LazyComponent<typeof import("../components/forms/form-elements/treeview/Colors.vue")['default']>
+    'LazyFormsFormElementsTreeviewDenseMode': LazyComponent<typeof import("../components/forms/form-elements/treeview/DenseMode.vue")['default']>
+    'LazyFormsFormElementsTreeviewOpenAll': LazyComponent<typeof import("../components/forms/form-elements/treeview/OpenAll.vue")['default']>
+    'LazyFormsFormHorizontalAccountDetailsTab': LazyComponent<typeof import("../components/forms/form-horizontal/AccountDetailsTab.vue")['default']>
+    'LazyFormsFormHorizontalBasicLayout': LazyComponent<typeof import("../components/forms/form-horizontal/BasicLayout.vue")['default']>
+    'LazyFormsFormHorizontalBasicWithIcons': LazyComponent<typeof import("../components/forms/form-horizontal/BasicWithIcons.vue")['default']>
+    'LazyFormsFormHorizontalCollapsible': LazyComponent<typeof import("../components/forms/form-horizontal/Collapsible.vue")['default']>
+    'LazyFormsFormHorizontalFormLabelAlign': LazyComponent<typeof import("../components/forms/form-horizontal/FormLabelAlign.vue")['default']>
+    'LazyFormsFormHorizontalFormSeprator': LazyComponent<typeof import("../components/forms/form-horizontal/FormSeprator.vue")['default']>
+    'LazyFormsFormHorizontalPersonalInfoTab': LazyComponent<typeof import("../components/forms/form-horizontal/PersonalInfoTab.vue")['default']>
+    'LazyFormsFormHorizontalSocialLinksTab': LazyComponent<typeof import("../components/forms/form-horizontal/SocialLinksTab.vue")['default']>
+    'LazyFormsFormLayoutsBasicHeaderForm': LazyComponent<typeof import("../components/forms/form-layouts/BasicHeaderForm.vue")['default']>
+    'LazyFormsFormLayoutsDefaultForm': LazyComponent<typeof import("../components/forms/form-layouts/DefaultForm.vue")['default']>
+    'LazyFormsFormLayoutsDisabledForm': LazyComponent<typeof import("../components/forms/form-layouts/DisabledForm.vue")['default']>
+    'LazyFormsFormLayoutsFormLeftIcon': LazyComponent<typeof import("../components/forms/form-layouts/FormLeftIcon.vue")['default']>
+    'LazyFormsFormLayoutsFormRightIcon': LazyComponent<typeof import("../components/forms/form-layouts/FormRightIcon.vue")['default']>
+    'LazyFormsFormLayoutsInputVarients': LazyComponent<typeof import("../components/forms/form-layouts/InputVarients.vue")['default']>
+    'LazyFormsFormLayoutsOrdinaryForm': LazyComponent<typeof import("../components/forms/form-layouts/OrdinaryForm.vue")['default']>
+    'LazyFormsFormValidationCheckBox': LazyComponent<typeof import("../components/forms/form-validation/CheckBox.vue")['default']>
+    'LazyFormsFormValidationMailValidation': LazyComponent<typeof import("../components/forms/form-validation/MailValidation.vue")['default']>
+    'LazyFormsFormValidationOnType': LazyComponent<typeof import("../components/forms/form-validation/OnType.vue")['default']>
+    'LazyFormsFormValidationRadio': LazyComponent<typeof import("../components/forms/form-validation/Radio.vue")['default']>
+    'LazyFormsFormValidationSelect': LazyComponent<typeof import("../components/forms/form-validation/Select.vue")['default']>
+    'LazyFormsFormValidationTextInput': LazyComponent<typeof import("../components/forms/form-validation/TextInput.vue")['default']>
+    'LazyFormsFormValidationVeeValidation': LazyComponent<typeof import("../components/forms/form-validation/VeeValidation.vue")['default']>
+    'LazyFormsFormVerticalAccountDetailsTab': LazyComponent<typeof import("../components/forms/form-vertical/AccountDetailsTab.vue")['default']>
+    'LazyFormsFormVerticalBasicLayout': LazyComponent<typeof import("../components/forms/form-vertical/BasicLayout.vue")['default']>
+    'LazyFormsFormVerticalBasicWithIcons': LazyComponent<typeof import("../components/forms/form-vertical/BasicWithIcons.vue")['default']>
+    'LazyFormsFormVerticalCollapsible': LazyComponent<typeof import("../components/forms/form-vertical/Collapsible.vue")['default']>
+    'LazyFormsFormVerticalFormSeprator': LazyComponent<typeof import("../components/forms/form-vertical/FormSeprator.vue")['default']>
+    'LazyFormsFormVerticalPersonalInfoTab': LazyComponent<typeof import("../components/forms/form-vertical/PersonalInfoTab.vue")['default']>
+    'LazyFormsFormVerticalSocialLinksTab': LazyComponent<typeof import("../components/forms/form-vertical/SocialLinksTab.vue")['default']>
+    'LazyFormsPluginsEditorMenu': LazyComponent<typeof import("../components/forms/plugins/editor/EditorMenu.vue")['default']>
+    'LazyFormsPluginsEditorMenubar': LazyComponent<typeof import("../components/forms/plugins/editor/EditorMenubar.vue")['default']>
+    'LazyFrontpagesAboutUsArchivement': LazyComponent<typeof import("../components/frontpages/AboutUs/Archivement.vue")['default']>
+    'LazyFrontpagesAboutUsHeroText': LazyComponent<typeof import("../components/frontpages/AboutUs/HeroText.vue")['default']>
+    'LazyFrontpagesAboutUsSetupProcess': LazyComponent<typeof import("../components/frontpages/AboutUs/SetupProcess.vue")['default']>
+    'LazyFrontpagesBlogGrid': LazyComponent<typeof import("../components/frontpages/Blog/BlogGrid.vue")['default']>
+    'LazyFrontpagesBlogPagesPosts': LazyComponent<typeof import("../components/frontpages/Blog/BlogPagesPosts.vue")['default']>
+    'LazyFrontpagesBlogDetails': LazyComponent<typeof import("../components/frontpages/Blog/details/BlogDetails.vue")['default']>
+    'LazyFrontpagesContactUsContactForm': LazyComponent<typeof import("../components/frontpages/ContactUs/ContactForm.vue")['default']>
+    'LazyFrontpagesContactUsContactMap': LazyComponent<typeof import("../components/frontpages/ContactUs/ContactMap.vue")['default']>
+    'LazyFrontpagesHomepageClientReviews': LazyComponent<typeof import("../components/frontpages/Homepage/ClientReviews.vue")['default']>
+    'LazyFrontpagesHomepageComponies': LazyComponent<typeof import("../components/frontpages/Homepage/Componies.vue")['default']>
+    'LazyFrontpagesHomepageContactBar': LazyComponent<typeof import("../components/frontpages/Homepage/ContactBar.vue")['default']>
+    'LazyFrontpagesHomepageFAQ': LazyComponent<typeof import("../components/frontpages/Homepage/FAQ.vue")['default']>
+    'LazyFrontpagesHomepageFeatureTabs': LazyComponent<typeof import("../components/frontpages/Homepage/FeatureTabs.vue")['default']>
+    'LazyFrontpagesHomepageHighlights': LazyComponent<typeof import("../components/frontpages/Homepage/Highlights.vue")['default']>
+    'LazyFrontpagesHomepageMainbanner': LazyComponent<typeof import("../components/frontpages/Homepage/Mainbanner.vue")['default']>
+    'LazyFrontpagesHomepageOurClients': LazyComponent<typeof import("../components/frontpages/Homepage/OurClients.vue")['default']>
+    'LazyFrontpagesHomepageOurTeam': LazyComponent<typeof import("../components/frontpages/Homepage/OurTeam.vue")['default']>
+    'LazyFrontpagesHomepagePackages': LazyComponent<typeof import("../components/frontpages/Homepage/Packages.vue")['default']>
+    'LazyFrontpagesHomepagePurchaseTemplate': LazyComponent<typeof import("../components/frontpages/Homepage/PurchaseTemplate.vue")['default']>
+    'LazyFrontpagesHomepageSecurePayment': LazyComponent<typeof import("../components/frontpages/Homepage/SecurePayment.vue")['default']>
+    'LazyFrontpagesPortfolioGalleryBox': LazyComponent<typeof import("../components/frontpages/Portfolio/GalleryBox.vue")['default']>
+    'LazyFrontpagesSharedTextBannerCard': LazyComponent<typeof import("../components/frontpages/Shared/TextBannerCard.vue")['default']>
+    'LazyFrontpagesLayoutAnnounceBar': LazyComponent<typeof import("../components/frontpages/layout/AnnounceBar.vue")['default']>
+    'LazyFrontpagesLayoutFooter': LazyComponent<typeof import("../components/frontpages/layout/Footer.vue")['default']>
+    'LazyFrontpagesLayoutHeader': LazyComponent<typeof import("../components/frontpages/layout/Header.vue")['default']>
+    'LazyFrontpagesLayoutNavigation': LazyComponent<typeof import("../components/frontpages/layout/Navigation.vue")['default']>
+    'LazyLandingpageLayoutFooter': LazyComponent<typeof import("../components/landingpage/layout/Footer.vue")['default']>
+    'LazyLandingpageLayoutHeader': LazyComponent<typeof import("../components/landingpage/layout/Header.vue")['default']>
+    'LazyLandingpageLayoutMobileSidebar': LazyComponent<typeof import("../components/landingpage/layout/MobileSidebar.vue")['default']>
+    'LazyLandingpageLayoutNavigation': LazyComponent<typeof import("../components/landingpage/layout/Navigation.vue")['default']>
+    'LazyLandingpageLayoutPageMegamenu': LazyComponent<typeof import("../components/landingpage/layout/PageMegamenu.vue")['default']>
+    'LazyLandingpageLayoutPageMenuQuicklinks': LazyComponent<typeof import("../components/landingpage/layout/PageMenuQuicklinks.vue")['default']>
+    'LazyLandingpageSectionPurchase': LazyComponent<typeof import("../components/landingpage/section/Purchase.vue")['default']>
+    'LazyLandingpageSectionRevolution': LazyComponent<typeof import("../components/landingpage/section/Revolution.vue")['default']>
+    'LazyLandingpageSectionOtherFeatures': LazyComponent<typeof import("../components/landingpage/section/otherFeatures.vue")['default']>
+    'LazyLandingpageSectionOurProducts': LazyComponent<typeof import("../components/landingpage/section/ourProducts.vue")['default']>
+    'LazyLandingpageSectionUserReview': LazyComponent<typeof import("../components/landingpage/section/userReview.vue")['default']>
+    'LazyLcFullCustomizer': LazyComponent<typeof import("../components/lc/Full/customizer/Customizer.vue")['default']>
+    'LazyLcFullHorizontalHeader': LazyComponent<typeof import("../components/lc/Full/horizontal-header/index.vue")['default']>
+    'LazyLcFullHorizontalSidebarNavCollapse': LazyComponent<typeof import("../components/lc/Full/horizontal-sidebar/NavCollapse/Index.vue")['default']>
+    'LazyLcFullHorizontalSidebarNavItem': LazyComponent<typeof import("../components/lc/Full/horizontal-sidebar/NavItem/Index.vue")['default']>
+    'LazyLcFullHorizontalSidebarHorizontalItems': LazyComponent<typeof import("../components/lc/Full/horizontal-sidebar/horizontalItems")['default']>
+    'LazyLcFullHorizontalSidebar': LazyComponent<typeof import("../components/lc/Full/horizontal-sidebar/index.vue")['default']>
+    'LazyLcFullLogo': LazyComponent<typeof import("../components/lc/Full/logo/Logo.vue")['default']>
+    'LazyLcFullLogoDark': LazyComponent<typeof import("../components/lc/Full/logo/LogoDark.vue")['default']>
+    'LazyLcFullLogoDarkRtl': LazyComponent<typeof import("../components/lc/Full/logo/LogoDarkRtl.vue")['default']>
+    'LazyLcFullLogoIcon': LazyComponent<typeof import("../components/lc/Full/logo/LogoIcon.vue")['default']>
+    'LazyLcFullLogoLight': LazyComponent<typeof import("../components/lc/Full/logo/LogoLight.vue")['default']>
+    'LazyLcFullLogoLightRtl': LazyComponent<typeof import("../components/lc/Full/logo/LogoLightRtl.vue")['default']>
+    'LazyLcFullVerticalHeaderAppsLink': LazyComponent<typeof import("../components/lc/Full/vertical-header/AppsLink.vue")['default']>
+    'LazyLcFullVerticalHeaderLanguageDD': LazyComponent<typeof import("../components/lc/Full/vertical-header/LanguageDD.vue")['default']>
+    'LazyLcFullVerticalHeaderNavigations': LazyComponent<typeof import("../components/lc/Full/vertical-header/Navigations.vue")['default']>
+    'LazyLcFullVerticalHeaderNotificationDD': LazyComponent<typeof import("../components/lc/Full/vertical-header/NotificationDD.vue")['default']>
+    'LazyLcFullVerticalHeaderProfileDD': LazyComponent<typeof import("../components/lc/Full/vertical-header/ProfileDD.vue")['default']>
+    'LazyLcFullVerticalHeaderQuickLinks': LazyComponent<typeof import("../components/lc/Full/vertical-header/QuickLinks.vue")['default']>
+    'LazyLcFullVerticalHeaderRightMobileSidebar': LazyComponent<typeof import("../components/lc/Full/vertical-header/RightMobileSidebar.vue")['default']>
+    'LazyLcFullVerticalHeaderSearchbar': LazyComponent<typeof import("../components/lc/Full/vertical-header/Searchbar.vue")['default']>
+    'LazyLcFullVerticalHeaderThemeToggler': LazyComponent<typeof import("../components/lc/Full/vertical-header/ThemeToggler.vue")['default']>
+    'LazyLcFullVerticalHeader': LazyComponent<typeof import("../components/lc/Full/vertical-header/index.vue")['default']>
+    'LazyLcFullVerticalSidebarDropDown': LazyComponent<typeof import("../components/lc/Full/vertical-sidebar/DropDown/index.vue")['default']>
+    'LazyLcFullVerticalSidebarIcon': LazyComponent<typeof import("../components/lc/Full/vertical-sidebar/Icon.vue")['default']>
+    'LazyLcFullVerticalSidebarMoreOption': LazyComponent<typeof import("../components/lc/Full/vertical-sidebar/MoreOption/index.vue")['default']>
+    'LazyLcFullVerticalSidebarNavCollapse': LazyComponent<typeof import("../components/lc/Full/vertical-sidebar/NavCollapse/index.vue")['default']>
+    'LazyLcFullVerticalSidebarNavGroup': LazyComponent<typeof import("../components/lc/Full/vertical-sidebar/NavGroup/index.vue")['default']>
+    'LazyLcFullVerticalSidebarNavItem': LazyComponent<typeof import("../components/lc/Full/vertical-sidebar/NavItem/index.vue")['default']>
+    'LazyLcFullVerticalSidebarExtrabox': LazyComponent<typeof import("../components/lc/Full/vertical-sidebar/extrabox/index.vue")['default']>
+    'LazyLcFullVerticalSidebar': LazyComponent<typeof import("../components/lc/Full/vertical-sidebar/index.vue")['default']>
+    'LazyLcFullVerticalSidebarItem': LazyComponent<typeof import("../components/lc/Full/vertical-sidebar/sidebarItem")['default']>
+    'LazyPagesAccountSettingsAccountTab': LazyComponent<typeof import("../components/pages/account-settings/AccountTab.vue")['default']>
+    'LazyPagesAccountSettingsBillsTab': LazyComponent<typeof import("../components/pages/account-settings/BillsTab.vue")['default']>
+    'LazyPagesAccountSettingsNotificationTab': LazyComponent<typeof import("../components/pages/account-settings/NotificationTab.vue")['default']>
+    'LazyPagesAccountSettingsSecurityTab': LazyComponent<typeof import("../components/pages/account-settings/SecurityTab.vue")['default']>
+    'LazyPagesFaqQuestion': LazyComponent<typeof import("../components/pages/faq/FaqQuestion.vue")['default']>
+    'LazyPagesFaqStillHaveQuestions': LazyComponent<typeof import("../components/pages/faq/StillHaveQuestions.vue")['default']>
+    'LazyPagesSearchResultsSearchLinks': LazyComponent<typeof import("../components/pages/search-results/SearchLinks.vue")['default']>
+    'LazySchoolPagesAttendenceSheet': LazyComponent<typeof import("../components/school-pages/attendence/AttendenceSheet.vue")['default']>
+    'LazySchoolPagesClassesData': LazyComponent<typeof import("../components/school-pages/classes/ClassesData.vue")['default']>
+    'LazySchoolPagesClassesDetail': LazyComponent<typeof import("../components/school-pages/classes/ClassesDetail.vue")['default']>
+    'LazySchoolPagesExamProgressReport': LazyComponent<typeof import("../components/school-pages/exam/ProgressReport.vue")['default']>
+    'LazySchoolPagesExamResultTable': LazyComponent<typeof import("../components/school-pages/exam/ResultTable.vue")['default']>
+    'LazySchoolPagesExamScheduleTable': LazyComponent<typeof import("../components/school-pages/exam/ScheduleTable.vue")['default']>
+    'LazySchoolPagesExamStudentProfile': LazyComponent<typeof import("../components/school-pages/exam/StudentProfile.vue")['default']>
+    'LazySchoolPagesStudentsStudentProfile': LazyComponent<typeof import("../components/school-pages/students/StudentProfile.vue")['default']>
+    'LazySchoolPagesStudentsStudentReport': LazyComponent<typeof import("../components/school-pages/students/StudentReport.vue")['default']>
+    'LazySchoolPagesStudentsStudentTable': LazyComponent<typeof import("../components/school-pages/students/StudentTable.vue")['default']>
+    'LazySchoolPagesTeachersTeacherProfile': LazyComponent<typeof import("../components/school-pages/teachers/TeacherProfile.vue")['default']>
+    'LazySchoolPagesTeachersTeacherSkills': LazyComponent<typeof import("../components/school-pages/teachers/TeacherSkills.vue")['default']>
+    'LazySchoolPagesTeachersTable': LazyComponent<typeof import("../components/school-pages/teachers/TeachersTable.vue")['default']>
+    'LazySharedAppBaseCard': LazyComponent<typeof import("../components/shared/AppBaseCard.vue")['default']>
+    'LazySharedAppEmailCard': LazyComponent<typeof import("../components/shared/AppEmailCard.vue")['default']>
+    'LazySharedBaseBreadcrumb': LazyComponent<typeof import("../components/shared/BaseBreadcrumb.vue")['default']>
+    'LazySharedBaseCard': LazyComponent<typeof import("../components/shared/BaseCard.vue")['default']>
+    'LazySharedCardHeaderFooter': LazyComponent<typeof import("../components/shared/CardHeaderFooter.vue")['default']>
+    'LazySharedProductBaseCard': LazyComponent<typeof import("../components/shared/ProductBaseCard.vue")['default']>
+    'LazySharedUiChildCard': LazyComponent<typeof import("../components/shared/UiChildCard.vue")['default']>
+    'LazySharedUiParentCard': LazyComponent<typeof import("../components/shared/UiParentCard.vue")['default']>
+    'LazySharedUiParentCardLogo': LazyComponent<typeof import("../components/shared/UiParentCardLogo.vue")['default']>
+    'LazySharedUiTableCard': LazyComponent<typeof import("../components/shared/UiTableCard.vue")['default']>
+    'LazySharedUiTextfieldPrimary': LazyComponent<typeof import("../components/shared/UiTextfieldPrimary.vue")['default']>
+    'LazySharedUiTittleSubtitleCard': LazyComponent<typeof import("../components/shared/UiTittleSubtitleCard.vue")['default']>
+    'LazySharedWidgetCard': LazyComponent<typeof import("../components/shared/WidgetCard.vue")['default']>
+    'LazySharedWidgetCardv2': LazyComponent<typeof import("../components/shared/WidgetCardv2.vue")['default']>
+    'LazySharedECommerceCard': LazyComponent<typeof import("../components/shared/eCommerceCard.vue")['default']>
+    'LazyStyleComponentsTypographyDefaultText': LazyComponent<typeof import("../components/style-components/typography/DefaultText.vue")['default']>
+    'LazyStyleComponentsTypographyHeading': LazyComponent<typeof import("../components/style-components/typography/Heading.vue")['default']>
+    'LazyStyleComponentsTypographyOpacity': LazyComponent<typeof import("../components/style-components/typography/Opacity.vue")['default']>
+    'LazyStyleComponentsTypographyTextAlignment': LazyComponent<typeof import("../components/style-components/typography/TextAlignment.vue")['default']>
+    'LazyStyleComponentsTypographyTextDecoration': LazyComponent<typeof import("../components/style-components/typography/TextDecoration.vue")['default']>
+    'LazyTableEditableTable': LazyComponent<typeof import("../components/table/EditableTable.vue")['default']>
+    'LazyTableTable1': LazyComponent<typeof import("../components/table/Table1.vue")['default']>
+    'LazyTableTable2': LazyComponent<typeof import("../components/table/Table2.vue")['default']>
+    'LazyTableTable3': LazyComponent<typeof import("../components/table/Table3.vue")['default']>
+    'LazyTableTable4': LazyComponent<typeof import("../components/table/Table4.vue")['default']>
+    'LazyTableTable5': LazyComponent<typeof import("../components/table/Table5.vue")['default']>
+    'LazyUiComponentsAlertAction': LazyComponent<typeof import("../components/ui-components/alert/Action.vue")['default']>
+    'LazyUiComponentsAlertBasic': LazyComponent<typeof import("../components/ui-components/alert/Basic.vue")['default']>
+    'LazyUiComponentsAlertClosable': LazyComponent<typeof import("../components/ui-components/alert/Closable.vue")['default']>
+    'LazyUiComponentsAlertDescription': LazyComponent<typeof import("../components/ui-components/alert/Description.vue")['default']>
+    'LazyUiComponentsAlertFilled': LazyComponent<typeof import("../components/ui-components/alert/Filled.vue")['default']>
+    'LazyUiComponentsAlertIcons': LazyComponent<typeof import("../components/ui-components/alert/Icons.vue")['default']>
+    'LazyUiComponentsAlertOutlined': LazyComponent<typeof import("../components/ui-components/alert/Outlined.vue")['default']>
+    'LazyUiComponentsAvatarBasicAvatar': LazyComponent<typeof import("../components/ui-components/avatar/BasicAvatar.vue")['default']>
+    'LazyUiComponentsAvatarIconAvatar': LazyComponent<typeof import("../components/ui-components/avatar/IconAvatar.vue")['default']>
+    'LazyUiComponentsAvatarImageAvatar': LazyComponent<typeof import("../components/ui-components/avatar/ImageAvatar.vue")['default']>
+    'LazyUiComponentsAvatarLetterAvatar': LazyComponent<typeof import("../components/ui-components/avatar/LetterAvatar.vue")['default']>
+    'LazyUiComponentsAvatarSizeAvatar': LazyComponent<typeof import("../components/ui-components/avatar/SizeAvatar.vue")['default']>
+    'LazyUiComponentsAvatarVariantAvatar': LazyComponent<typeof import("../components/ui-components/avatar/VariantAvatar.vue")['default']>
+    'LazyUiComponentsChipClosable': LazyComponent<typeof import("../components/ui-components/chip/Closable.vue")['default']>
+    'LazyUiComponentsChipCustomIcon': LazyComponent<typeof import("../components/ui-components/chip/CustomIcon.vue")['default']>
+    'LazyUiComponentsChipCustomIconOutlined': LazyComponent<typeof import("../components/ui-components/chip/CustomIconOutlined.vue")['default']>
+    'LazyUiComponentsChipDisabled': LazyComponent<typeof import("../components/ui-components/chip/Disabled.vue")['default']>
+    'LazyUiComponentsChipFilledColor': LazyComponent<typeof import("../components/ui-components/chip/FilledColor.vue")['default']>
+    'LazyUiComponentsChipLabelChip': LazyComponent<typeof import("../components/ui-components/chip/LabelChip.vue")['default']>
+    'LazyUiComponentsChipOutlined': LazyComponent<typeof import("../components/ui-components/chip/Outlined.vue")['default']>
+    'LazyUiComponentsChipSizes': LazyComponent<typeof import("../components/ui-components/chip/Sizes.vue")['default']>
+    'LazyUiComponentsDialogsActivator': LazyComponent<typeof import("../components/ui-components/dialogs/DialogsActivator.vue")['default']>
+    'LazyUiComponentsDialogsForm': LazyComponent<typeof import("../components/ui-components/dialogs/DialogsForm.vue")['default']>
+    'LazyUiComponentsDialogsFullscreen': LazyComponent<typeof import("../components/ui-components/dialogs/DialogsFullscreen.vue")['default']>
+    'LazyUiComponentsDialogsModel': LazyComponent<typeof import("../components/ui-components/dialogs/DialogsModel.vue")['default']>
+    'LazyUiComponentsDialogsNested': LazyComponent<typeof import("../components/ui-components/dialogs/DialogsNested.vue")['default']>
+    'LazyUiComponentsDialogsPersistent': LazyComponent<typeof import("../components/ui-components/dialogs/DialogsPersistent.vue")['default']>
+    'LazyUiComponentsDialogsScrollable': LazyComponent<typeof import("../components/ui-components/dialogs/DialogsScrollable.vue")['default']>
+    'LazyUiComponentsDialogsTransitions': LazyComponent<typeof import("../components/ui-components/dialogs/DialogsTransitions.vue")['default']>
+    'LazyUiComponentsExpansionpanelAdvance': LazyComponent<typeof import("../components/ui-components/expansionpanel/Advance.vue")['default']>
+    'LazyUiComponentsExpansionpanelBasic': LazyComponent<typeof import("../components/ui-components/expansionpanel/Basic.vue")['default']>
+    'LazyUiComponentsExpansionpanelCustomizedIcon': LazyComponent<typeof import("../components/ui-components/expansionpanel/CustomizedIcon.vue")['default']>
+    'LazyUiComponentsExpansionpanelDefaultExpand': LazyComponent<typeof import("../components/ui-components/expansionpanel/DefaultExpand.vue")['default']>
+    'LazyUiComponentsExpansionpanelInset': LazyComponent<typeof import("../components/ui-components/expansionpanel/Inset.vue")['default']>
+    'LazyUiComponentsExpansionpanelPopout': LazyComponent<typeof import("../components/ui-components/expansionpanel/Popout.vue")['default']>
+    'LazyUiComponentsListCustomAlignList': LazyComponent<typeof import("../components/ui-components/list/CustomAlignList.vue")['default']>
+    'LazyUiComponentsListDisabledList': LazyComponent<typeof import("../components/ui-components/list/DisabledList.vue")['default']>
+    'LazyUiComponentsListFolderList': LazyComponent<typeof import("../components/ui-components/list/FolderList.vue")['default']>
+    'LazyUiComponentsListNestedList': LazyComponent<typeof import("../components/ui-components/list/NestedList.vue")['default']>
+    'LazyUiComponentsListRoundedList': LazyComponent<typeof import("../components/ui-components/list/RoundedList.vue")['default']>
+    'LazyUiComponentsListScrollableList': LazyComponent<typeof import("../components/ui-components/list/ScrollableList.vue")['default']>
+    'LazyUiComponentsListSimpleList': LazyComponent<typeof import("../components/ui-components/list/SimpleList.vue")['default']>
+    'LazyUiComponentsListSwitchList': LazyComponent<typeof import("../components/ui-components/list/SwitchList.vue")['default']>
+    'LazyUiComponentsMenusActivatorTooltip': LazyComponent<typeof import("../components/ui-components/menus/MenusActivatorTooltip.vue")['default']>
+    'LazyUiComponentsMenusAnchor': LazyComponent<typeof import("../components/ui-components/menus/MenusAnchor.vue")['default']>
+    'LazyUiComponentsMenusHover': LazyComponent<typeof import("../components/ui-components/menus/MenusHover.vue")['default']>
+    'LazyUiComponentsMenusPopover': LazyComponent<typeof import("../components/ui-components/menus/MenusPopover.vue")['default']>
+    'LazyUiComponentsRattingBasicRatting': LazyComponent<typeof import("../components/ui-components/ratting/BasicRatting.vue")['default']>
+    'LazyUiComponentsRattingClearableRatting': LazyComponent<typeof import("../components/ui-components/ratting/ClearableRatting.vue")['default']>
+    'LazyUiComponentsRattingHalfRatting': LazyComponent<typeof import("../components/ui-components/ratting/HalfRatting.vue")['default']>
+    'LazyUiComponentsRattingHoverRatting': LazyComponent<typeof import("../components/ui-components/ratting/HoverRatting.vue")['default']>
+    'LazyUiComponentsRattingIconsRatting': LazyComponent<typeof import("../components/ui-components/ratting/IconsRatting.vue")['default']>
+    'LazyUiComponentsRattingLabelRatting': LazyComponent<typeof import("../components/ui-components/ratting/LabelRatting.vue")['default']>
+    'LazyUiComponentsRattingLengthRatting': LazyComponent<typeof import("../components/ui-components/ratting/LengthRatting.vue")['default']>
+    'LazyUiComponentsRattingReadOnlyRatting': LazyComponent<typeof import("../components/ui-components/ratting/ReadOnlyRatting.vue")['default']>
+    'LazyUiComponentsRattingSizeRatting': LazyComponent<typeof import("../components/ui-components/ratting/SizeRatting.vue")['default']>
+    'LazyUiComponentsTabsAlignCenterTabs': LazyComponent<typeof import("../components/ui-components/tabs/AlignCenterTabs.vue")['default']>
+    'LazyUiComponentsTabsAlignEndTabs': LazyComponent<typeof import("../components/ui-components/tabs/AlignEndTabs.vue")['default']>
+    'LazyUiComponentsTabsBasicTabs': LazyComponent<typeof import("../components/ui-components/tabs/BasicTabs.vue")['default']>
+    'LazyUiComponentsTabsCenterTabs': LazyComponent<typeof import("../components/ui-components/tabs/CenterTabs.vue")['default']>
+    'LazyUiComponentsTabsColorTabs': LazyComponent<typeof import("../components/ui-components/tabs/ColorTabs.vue")['default']>
+    'LazyUiComponentsTabsCustomIcons': LazyComponent<typeof import("../components/ui-components/tabs/CustomIcons.vue")['default']>
+    'LazyUiComponentsTabsDisableTabs': LazyComponent<typeof import("../components/ui-components/tabs/DisableTabs.vue")['default']>
+    'LazyUiComponentsTabsIconTabs': LazyComponent<typeof import("../components/ui-components/tabs/IconTabs.vue")['default']>
+    'LazyUiComponentsTabsIconsWithLabelTabs': LazyComponent<typeof import("../components/ui-components/tabs/IconsWithLabelTabs.vue")['default']>
+    'LazyUiComponentsTooltipIconTooltip': LazyComponent<typeof import("../components/ui-components/tooltip/IconTooltip.vue")['default']>
+    'LazyUiComponentsTooltipSimpleTooltip': LazyComponent<typeof import("../components/ui-components/tooltip/SimpleTooltip.vue")['default']>
+    'LazyUiComponentsTooltipToggleTolltip': LazyComponent<typeof import("../components/ui-components/tooltip/ToggleTolltip.vue")['default']>
+    'LazyWidgetsBannersBanner1': LazyComponent<typeof import("../components/widgets/banners/Banner1.vue")['default']>
+    'LazyWidgetsBannersBanner2': LazyComponent<typeof import("../components/widgets/banners/Banner2.vue")['default']>
+    'LazyWidgetsBannersBanner3': LazyComponent<typeof import("../components/widgets/banners/Banner3.vue")['default']>
+    'LazyWidgetsBannersBanner4': LazyComponent<typeof import("../components/widgets/banners/Banner4.vue")['default']>
+    'LazyWidgetsBannersBanner5': LazyComponent<typeof import("../components/widgets/banners/Banner5.vue")['default']>
+    'LazyWidgetsBannersBanner6': LazyComponent<typeof import("../components/widgets/banners/Banner6.vue")['default']>
+    'LazyWidgetsCardsCongtsCard': LazyComponent<typeof import("../components/widgets/cards/CongtsCard.vue")['default']>
+    'LazyWidgetsCardsPaymentGateway': LazyComponent<typeof import("../components/widgets/cards/PaymentGateway.vue")['default']>
+    'LazyWidgetsCardsProfileBoxCards': LazyComponent<typeof import("../components/widgets/cards/ProfileBoxCards.vue")['default']>
+    'LazyWidgetsCardsRecentTransactions': LazyComponent<typeof import("../components/widgets/cards/RecentTransactions.vue")['default']>
+    'LazyWidgetsCardsTopCards': LazyComponent<typeof import("../components/widgets/cards/TopCards.vue")['default']>
+    'LazyWidgetsChartsNetSells': LazyComponent<typeof import("../components/widgets/charts/NetSells.vue")['default']>
+    'LazyWidgetsChartsPayingChart': LazyComponent<typeof import("../components/widgets/charts/PayingChart.vue")['default']>
+    'LazyWidgetsChartsTraficDistributionChart': LazyComponent<typeof import("../components/widgets/charts/TraficDistributionChart.vue")['default']>
+    'LazyNuxtWelcome': LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/welcome.vue")['default']>
+    'LazyNuxtLayout': LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-layout")['default']>
+    'LazyNuxtErrorBoundary': LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-error-boundary.vue")['default']>
+    'LazyClientOnly': LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/client-only")['default']>
+    'LazyDevOnly': LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/dev-only")['default']>
+    'LazyServerPlaceholder': LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']>
+    'LazyNuxtLink': LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-link")['default']>
+    'LazyNuxtLoadingIndicator': LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-loading-indicator")['default']>
+    'LazyNuxtTime': LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-time.vue")['default']>
+    'LazyNuxtRouteAnnouncer': LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-route-announcer")['default']>
+    'LazyNuxtImg': LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-stubs")['NuxtImg']>
+    'LazyNuxtPicture': LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-stubs")['NuxtPicture']>
+    'LazyNuxtPage': LazyComponent<typeof import("../node_modules/nuxt/dist/pages/runtime/page")['default']>
+    'LazyNoScript': LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['NoScript']>
+    'LazyLink': LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['Link']>
+    'LazyBase': LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['Base']>
+    'LazyTitle': LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['Title']>
+    'LazyMeta': LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['Meta']>
+    'LazyStyle': LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['Style']>
+    'LazyHead': LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['Head']>
+    'LazyHtml': LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['Html']>
+    'LazyBody': LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['Body']>
+    'LazyNuxtIsland': LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']>
+    'LazyNuxtRouteAnnouncer': LazyComponent<IslandComponent<typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']>>
 }
 
 declare module 'vue' {
@@ -1256,12 +1268,13 @@ export const WidgetsChartsPayingChart: typeof import("../components/widgets/char
 export const WidgetsChartsTraficDistributionChart: typeof import("../components/widgets/charts/TraficDistributionChart.vue")['default']
 export const NuxtWelcome: typeof import("../node_modules/nuxt/dist/app/components/welcome.vue")['default']
 export const NuxtLayout: typeof import("../node_modules/nuxt/dist/app/components/nuxt-layout")['default']
-export const NuxtErrorBoundary: typeof import("../node_modules/nuxt/dist/app/components/nuxt-error-boundary")['default']
+export const NuxtErrorBoundary: typeof import("../node_modules/nuxt/dist/app/components/nuxt-error-boundary.vue")['default']
 export const ClientOnly: typeof import("../node_modules/nuxt/dist/app/components/client-only")['default']
 export const DevOnly: typeof import("../node_modules/nuxt/dist/app/components/dev-only")['default']
 export const ServerPlaceholder: typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']
 export const NuxtLink: typeof import("../node_modules/nuxt/dist/app/components/nuxt-link")['default']
 export const NuxtLoadingIndicator: typeof import("../node_modules/nuxt/dist/app/components/nuxt-loading-indicator")['default']
+export const NuxtTime: typeof import("../node_modules/nuxt/dist/app/components/nuxt-time.vue")['default']
 export const NuxtRouteAnnouncer: typeof import("../node_modules/nuxt/dist/app/components/nuxt-route-announcer")['default']
 export const NuxtImg: typeof import("../node_modules/nuxt/dist/app/components/nuxt-stubs")['NuxtImg']
 export const NuxtPicture: typeof import("../node_modules/nuxt/dist/app/components/nuxt-stubs")['NuxtPicture']
@@ -1277,428 +1290,429 @@ export const Html: typeof import("../node_modules/nuxt/dist/head/runtime/compone
 export const Body: typeof import("../node_modules/nuxt/dist/head/runtime/components")['Body']
 export const NuxtIsland: typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']
 export const NuxtRouteAnnouncer: IslandComponent<typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']>
-export const LazyAppsBlogCardGrid: typeof import("../components/apps/blog/blogCardGrid.vue")['default']
-export const LazyAppsBlogPosts: typeof import("../components/apps/blog/blogPosts.vue")['default']
-export const LazyAppsBlogDetailAddCommnet: typeof import("../components/apps/blog/detail/addCommnet.vue")['default']
-export const LazyAppsBlogDetail: typeof import("../components/apps/blog/detail/blogDetail.vue")['default']
-export const LazyAppsBlogFeatureBlogCard: typeof import("../components/apps/blog/featureBlogCard.vue")['default']
-export const LazyAppsChatsChatDetail: typeof import("../components/apps/chats/ChatDetail.vue")['default']
-export const LazyAppsChatsChatInfo: typeof import("../components/apps/chats/ChatInfo.vue")['default']
-export const LazyAppsChatsChatListing: typeof import("../components/apps/chats/ChatListing.vue")['default']
-export const LazyAppsChatsChatProfile: typeof import("../components/apps/chats/ChatProfile.vue")['default']
-export const LazyAppsChatsChatSendMsg: typeof import("../components/apps/chats/ChatSendMsg.vue")['default']
-export const LazyAppsEcommerceAddproductAdvanceTab: typeof import("../components/apps/ecommerce/addproduct/AdvanceTab.vue")['default']
-export const LazyAppsEcommerceAddproductGeneralTab: typeof import("../components/apps/ecommerce/addproduct/GeneralTab.vue")['default']
-export const LazyAppsEcommerceAddproductLeftSide: typeof import("../components/apps/ecommerce/addproduct/LeftSide.vue")['default']
-export const LazyAppsEcommerceAddproductRightSide: typeof import("../components/apps/ecommerce/addproduct/RightSide.vue")['default']
-export const LazyAppsEcommerceCartCheckout: typeof import("../components/apps/ecommerce/cart/CartCheckout.vue")['default']
-export const LazyAppsEcommerceCartEmpty: typeof import("../components/apps/ecommerce/cart/CartEmpty.vue")['default']
-export const LazyAppsEcommerceCartStepsAddAddress: typeof import("../components/apps/ecommerce/cart/steps/AddAddress.vue")['default']
-export const LazyAppsEcommerceCartStepsAddCard: typeof import("../components/apps/ecommerce/cart/steps/AddCard.vue")['default']
-export const LazyAppsEcommerceCartStepsAddressCard: typeof import("../components/apps/ecommerce/cart/steps/AddressCard.vue")['default']
-export const LazyAppsEcommerceCartStepsOrderSummary: typeof import("../components/apps/ecommerce/cart/steps/OrderSummary.vue")['default']
-export const LazyAppsEcommerceCartStepsPayment: typeof import("../components/apps/ecommerce/cart/steps/Payment.vue")['default']
-export const LazyAppsEcommerceCartStepsStepFirst: typeof import("../components/apps/ecommerce/cart/steps/StepFirst.vue")['default']
-export const LazyAppsEcommerceCartStepsStepSecond: typeof import("../components/apps/ecommerce/cart/steps/StepSecond.vue")['default']
-export const LazyAppsEcommerceCartStepsThankyou: typeof import("../components/apps/ecommerce/cart/steps/Thankyou.vue")['default']
-export const LazyAppsEcommerceDetailProductCarousel: typeof import("../components/apps/ecommerce/detail/ProductCarousel.vue")['default']
-export const LazyAppsEcommerceDetailProductDescription: typeof import("../components/apps/ecommerce/detail/ProductDescription.vue")['default']
-export const LazyAppsEcommerceDetailProductDetail: typeof import("../components/apps/ecommerce/detail/ProductDetail.vue")['default']
-export const LazyAppsEcommerceDetailProductReview: typeof import("../components/apps/ecommerce/detail/ProductReview.vue")['default']
-export const LazyAppsEcommerceDetailProductTab: typeof import("../components/apps/ecommerce/detail/ProductTab.vue")['default']
-export const LazyAppsEcommerceDetailRelatedProducts: typeof import("../components/apps/ecommerce/detail/RelatedProducts.vue")['default']
-export const LazyAppsEcommerceDetailOneProducOneCurosel: typeof import("../components/apps/ecommerce/detail/one/ProducOneCurosel.vue")['default']
-export const LazyAppsEcommerceDetailOneProductDetailOne: typeof import("../components/apps/ecommerce/detail/one/ProductDetailOne.vue")['default']
-export const LazyAppsEcommerceDetailOneProductReviewOne: typeof import("../components/apps/ecommerce/detail/one/ProductReviewOne.vue")['default']
-export const LazyAppsEcommerceDetailOneRelatedProductOne: typeof import("../components/apps/ecommerce/detail/one/RelatedProductOne.vue")['default']
-export const LazyAppsEcommerceEditproductAdvanceTab: typeof import("../components/apps/ecommerce/editproduct/AdvanceTab.vue")['default']
-export const LazyAppsEcommerceEditproductDailySalesChart: typeof import("../components/apps/ecommerce/editproduct/DailySalesChart.vue")['default']
-export const LazyAppsEcommerceEditproductGeneralTab: typeof import("../components/apps/ecommerce/editproduct/GeneralTab.vue")['default']
-export const LazyAppsEcommerceEditproductLeftSide: typeof import("../components/apps/ecommerce/editproduct/LeftSide.vue")['default']
-export const LazyAppsEcommerceEditproductReviewsTab: typeof import("../components/apps/ecommerce/editproduct/ReviewsTab.vue")['default']
-export const LazyAppsEcommerceEditproductRightSide: typeof import("../components/apps/ecommerce/editproduct/RightSide.vue")['default']
-export const LazyAppsEcommerceListingProductEmplty: typeof import("../components/apps/ecommerce/listing/ProductEmplty.vue")['default']
-export const LazyAppsEcommerceListingProductFilters: typeof import("../components/apps/ecommerce/listing/ProductFilters.vue")['default']
-export const LazyAppsEcommerceListingProductItem: typeof import("../components/apps/ecommerce/listing/ProductItem.vue")['default']
-export const LazyAppsEcommerceListingProductItemOne: typeof import("../components/apps/ecommerce/listing/ProductItemOne.vue")['default']
-export const LazyAppsEcommerceListingProductfilterOne: typeof import("../components/apps/ecommerce/listing/ProductfilterOne.vue")['default']
-export const LazyAppsEcommerceListingColorsOption: typeof import("../components/apps/ecommerce/listing/colorsOption")['default']
-export const LazyAppsEmailCompose: typeof import("../components/apps/email/EmailCompose.vue")['default']
-export const LazyAppsEmailDetail: typeof import("../components/apps/email/EmailDetail.vue")['default']
-export const LazyAppsEmailListing: typeof import("../components/apps/email/EmailListing.vue")['default']
-export const LazyAppsInvoiceCreate: typeof import("../components/apps/invoice/Create.vue")['default']
-export const LazyAppsInvoiceDetail: typeof import("../components/apps/invoice/Detail.vue")['default']
-export const LazyAppsInvoiceEdit: typeof import("../components/apps/invoice/Edit.vue")['default']
-export const LazyAppsInvoiceList: typeof import("../components/apps/invoice/List.vue")['default']
-export const LazyAppsKanbanAddTask: typeof import("../components/apps/kanban/AddTask.vue")['default']
-export const LazyAppsKanbanTaskCard: typeof import("../components/apps/kanban/TaskCard.vue")['default']
-export const LazyAppsKanbanTaskColumn: typeof import("../components/apps/kanban/TaskColumn.vue")['default']
-export const LazyAppsKanbanTaskItemCard: typeof import("../components/apps/kanban/TaskItemCard.vue")['default']
-export const LazyAppsNotesAddNote: typeof import("../components/apps/notes/AddNote.vue")['default']
-export const LazyAppsNotesContent: typeof import("../components/apps/notes/NotesContent.vue")['default']
-export const LazyAppsNotesListing: typeof import("../components/apps/notes/NotesListing.vue")['default']
-export const LazyAppsTicketsTicketList: typeof import("../components/apps/tickets/TicketList.vue")['default']
-export const LazyAppsUserProfileIntroCard: typeof import("../components/apps/user-profile/IntroCard.vue")['default']
-export const LazyAppsUserProfilePhotosCard: typeof import("../components/apps/user-profile/PhotosCard.vue")['default']
-export const LazyAppsUserProfilePostListing: typeof import("../components/apps/user-profile/PostListing.vue")['default']
-export const LazyAppsUserProfileBanner: typeof import("../components/apps/user-profile/ProfileBanner.vue")['default']
-export const LazyAppsUserProfileBannerOne: typeof import("../components/apps/user-profile/ProfileBannerOne.vue")['default']
-export const LazyAppsUserProfilePostsAddPost: typeof import("../components/apps/user-profile/posts/AddPost.vue")['default']
-export const LazyAppsUserProfilePostsComments: typeof import("../components/apps/user-profile/posts/Comments.vue")['default']
-export const LazyAppsUserProfilePostsPostItem: typeof import("../components/apps/user-profile/posts/PostItem.vue")['default']
-export const LazyAppsUserProfileProfileOneIntroCard: typeof import("../components/apps/user-profile/profile-one/IntroCard.vue")['default']
-export const LazyAppsUserProfileProfileOneNumberCards: typeof import("../components/apps/user-profile/profile-one/NumberCards.vue")['default']
-export const LazyAppsUserProfileProfileOneTeamsCard: typeof import("../components/apps/user-profile/profile-one/TeamsCard.vue")['default']
-export const LazyAuthLoginForm: typeof import("../components/auth/LoginForm.vue")['default']
-export const LazyAuthRegisterForm: typeof import("../components/auth/RegisterForm.vue")['default']
-export const LazyAuthResetForm: typeof import("../components/auth/ResetForm.vue")['default']
-export const LazyAuthTwoStepForm: typeof import("../components/auth/TwoStepForm.vue")['default']
-export const LazyCommonErrorToaster: typeof import("../components/common/errorToaster.vue")['default']
-export const LazyDashboardsDashboard1CongratulationsCard: typeof import("../components/dashboards/dashboard1/CongratulationsCard.vue")['default']
-export const LazyDashboardsDashboard1Customers: typeof import("../components/dashboards/dashboard1/Customers.vue")['default']
-export const LazyDashboardsDashboard1LatestDeals: typeof import("../components/dashboards/dashboard1/LatestDeals.vue")['default']
-export const LazyDashboardsDashboard1LatestReviews: typeof import("../components/dashboards/dashboard1/LatestReviews.vue")['default']
-export const LazyDashboardsDashboard1Payments: typeof import("../components/dashboards/dashboard1/Payments.vue")['default']
-export const LazyDashboardsDashboard1ProductsChart: typeof import("../components/dashboards/dashboard1/ProductsChart.vue")['default']
-export const LazyDashboardsDashboard1ProductsTable: typeof import("../components/dashboards/dashboard1/ProductsTable.vue")['default']
-export const LazyDashboardsDashboard1VisitFromUsa: typeof import("../components/dashboards/dashboard1/VisitFromUsa.vue")['default']
-export const LazyDashboardsDashboard2FigmaCard: typeof import("../components/dashboards/dashboard2/FigmaCard.vue")['default']
-export const LazyDashboardsDashboard2PayingTable: typeof import("../components/dashboards/dashboard2/PayingTable.vue")['default']
-export const LazyDashboardsDashboard2ProductSales: typeof import("../components/dashboards/dashboard2/ProductSales.vue")['default']
-export const LazyDashboardsDashboard2ProfileCards: typeof import("../components/dashboards/dashboard2/ProfileCards.vue")['default']
-export const LazyDashboardsDashboard2ProfitExpanse: typeof import("../components/dashboards/dashboard2/ProfitExpanse.vue")['default']
-export const LazyDashboardsDashboard2TextCards: typeof import("../components/dashboards/dashboard2/TextCards.vue")['default']
-export const LazyDashboardsDashboard2TrafficDistribution: typeof import("../components/dashboards/dashboard2/TrafficDistribution.vue")['default']
-export const LazyDashboardsDashboard2UpcommingSchedule: typeof import("../components/dashboards/dashboard2/UpcommingSchedule.vue")['default']
-export const LazyDashboardsDashboard2WelcomeCard: typeof import("../components/dashboards/dashboard2/WelcomeCard.vue")['default']
-export const LazyDashboardsSnackbar: typeof import("../components/dashboards/snackbar.vue")['default']
-export const LazyFormsFormCustomFrom: typeof import("../components/forms/form-custom/CustomFrom.vue")['default']
-export const LazyFormsFormElementsAutocompleteComboBox: typeof import("../components/forms/form-elements/autocomplete/ComboBox.vue")['default']
-export const LazyFormsFormElementsAutocompleteMultipleOptions: typeof import("../components/forms/form-elements/autocomplete/MultipleOptions.vue")['default']
-export const LazyFormsFormElementsAutocompleteWithCaption: typeof import("../components/forms/form-elements/autocomplete/WithCaption.vue")['default']
-export const LazyFormsFormElementsButtonBaseButtons: typeof import("../components/forms/form-elements/button/BaseButtons.vue")['default']
-export const LazyFormsFormElementsButtonColorsButtons: typeof import("../components/forms/form-elements/button/ColorsButtons.vue")['default']
-export const LazyFormsFormElementsButtonIconColor: typeof import("../components/forms/form-elements/button/IconColor.vue")['default']
-export const LazyFormsFormElementsButtonIconColorSizes: typeof import("../components/forms/form-elements/button/IconColorSizes.vue")['default']
-export const LazyFormsFormElementsButtonIconsButtons: typeof import("../components/forms/form-elements/button/IconsButtons.vue")['default']
-export const LazyFormsFormElementsButtonOutlineIconColor: typeof import("../components/forms/form-elements/button/OutlineIconColor.vue")['default']
-export const LazyFormsFormElementsButtonOutlineSizes: typeof import("../components/forms/form-elements/button/OutlineSizes.vue")['default']
-export const LazyFormsFormElementsButtonOutlinedButtons: typeof import("../components/forms/form-elements/button/OutlinedButtons.vue")['default']
-export const LazyFormsFormElementsButtonOutlinedIconSize: typeof import("../components/forms/form-elements/button/OutlinedIconSize.vue")['default']
-export const LazyFormsFormElementsButtonSizeButtons: typeof import("../components/forms/form-elements/button/SizeButtons.vue")['default']
-export const LazyFormsFormElementsButtonTextButtons: typeof import("../components/forms/form-elements/button/TextButtons.vue")['default']
-export const LazyFormsFormElementsButtonButtonGroupDefault: typeof import("../components/forms/form-elements/button/buttonGroup/Default.vue")['default']
-export const LazyFormsFormElementsButtonButtonGroupOutlined: typeof import("../components/forms/form-elements/button/buttonGroup/Outlined.vue")['default']
-export const LazyFormsFormElementsButtonButtonGroupPlain: typeof import("../components/forms/form-elements/button/buttonGroup/Plain.vue")['default']
-export const LazyFormsFormElementsButtonButtonGroupText: typeof import("../components/forms/form-elements/button/buttonGroup/Text.vue")['default']
-export const LazyFormsFormElementsCheckboxBasicCheckboxes: typeof import("../components/forms/form-elements/checkbox/BasicCheckboxes.vue")['default']
-export const LazyFormsFormElementsCheckboxColorCheckboxes: typeof import("../components/forms/form-elements/checkbox/ColorCheckboxes.vue")['default']
-export const LazyFormsFormElementsCheckboxCustomCheckbox: typeof import("../components/forms/form-elements/checkbox/CustomCheckbox.vue")['default']
-export const LazyFormsFormElementsCheckboxLabelCheckboxes: typeof import("../components/forms/form-elements/checkbox/LabelCheckboxes.vue")['default']
-export const LazyFormsFormElementsComboboxDense: typeof import("../components/forms/form-elements/combobox/ComboboxDense.vue")['default']
-export const LazyFormsFormElementsComboboxMultiple: typeof import("../components/forms/form-elements/combobox/ComboboxMultiple.vue")['default']
-export const LazyFormsFormElementsCustominputInputAppendPrepend: typeof import("../components/forms/form-elements/custominput/InputAppendPrepend.vue")['default']
-export const LazyFormsFormElementsCustominputInputError: typeof import("../components/forms/form-elements/custominput/InputError.vue")['default']
-export const LazyFormsFormElementsCustominputInputHideDetails: typeof import("../components/forms/form-elements/custominput/InputHideDetails.vue")['default']
-export const LazyFormsFormElementsCustominputInputLoading: typeof import("../components/forms/form-elements/custominput/InputLoading.vue")['default']
-export const LazyFormsFormElementsCustominputInputMultipleError: typeof import("../components/forms/form-elements/custominput/InputMultipleError.vue")['default']
-export const LazyFormsFormElementsCustominputInputRules: typeof import("../components/forms/form-elements/custominput/InputRules.vue")['default']
-export const LazyFormsFormElementsDatetimeDatePicker: typeof import("../components/forms/form-elements/datetime/DatePicker.vue")['default']
-export const LazyFormsFormElementsDatetimeTimePicker: typeof import("../components/forms/form-elements/datetime/TimePicker.vue")['default']
-export const LazyFormsFormElementsFileinputFileInputAccept: typeof import("../components/forms/form-elements/fileinput/FileInputAccept.vue")['default']
-export const LazyFormsFormElementsFileinputFileInputChips: typeof import("../components/forms/form-elements/fileinput/FileInputChips.vue")['default']
-export const LazyFormsFormElementsFileinputFileInputCounter: typeof import("../components/forms/form-elements/fileinput/FileInputCounter.vue")['default']
-export const LazyFormsFormElementsFileinputFileInputDensity: typeof import("../components/forms/form-elements/fileinput/FileInputDensity.vue")['default']
-export const LazyFormsFormElementsFileinputFileInputMultiple: typeof import("../components/forms/form-elements/fileinput/FileInputMultiple.vue")['default']
-export const LazyFormsFormElementsFileinputFileInputPrepand: typeof import("../components/forms/form-elements/fileinput/FileInputPrepand.vue")['default']
-export const LazyFormsFormElementsFileinputFileInputSelection: typeof import("../components/forms/form-elements/fileinput/FileInputSelection.vue")['default']
-export const LazyFormsFormElementsFileinputFileInputValidation: typeof import("../components/forms/form-elements/fileinput/FileInputValidation.vue")['default']
-export const LazyFormsFormElementsRadioColor: typeof import("../components/forms/form-elements/radio/Color.vue")['default']
-export const LazyFormsFormElementsRadioDefault: typeof import("../components/forms/form-elements/radio/Default.vue")['default']
-export const LazyFormsFormElementsRadioDefaultDirection: typeof import("../components/forms/form-elements/radio/DefaultDirection.vue")['default']
-export const LazyFormsFormElementsRadioInlineDirection: typeof import("../components/forms/form-elements/radio/InlineDirection.vue")['default']
-export const LazyFormsFormElementsRadioLabel: typeof import("../components/forms/form-elements/radio/Label.vue")['default']
-export const LazyFormsFormElementsRadioLabelwithColor: typeof import("../components/forms/form-elements/radio/LabelwithColor.vue")['default']
-export const LazyFormsFormElementsSelectChip: typeof import("../components/forms/form-elements/select/SelectChip.vue")['default']
-export const LazyFormsFormElementsSelectDefault: typeof import("../components/forms/form-elements/select/SelectDefault.vue")['default']
-export const LazyFormsFormElementsSelectDensity: typeof import("../components/forms/form-elements/select/SelectDensity.vue")['default']
-export const LazyFormsFormElementsSelectMultiple: typeof import("../components/forms/form-elements/select/SelectMultiple.vue")['default']
-export const LazyFormsFormElementsSelectReadOnly: typeof import("../components/forms/form-elements/select/SelectReadOnly.vue")['default']
-export const LazyFormsFormElementsSliderCustom: typeof import("../components/forms/form-elements/slider/Custom.vue")['default']
-export const LazyFormsFormElementsSliderDefault: typeof import("../components/forms/form-elements/slider/Default.vue")['default']
-export const LazyFormsFormElementsSliderDisabled: typeof import("../components/forms/form-elements/slider/Disabled.vue")['default']
-export const LazyFormsFormElementsSliderSteps: typeof import("../components/forms/form-elements/slider/Steps.vue")['default']
-export const LazyFormsFormElementsSliderTickSize: typeof import("../components/forms/form-elements/slider/TickSize.vue")['default']
-export const LazyFormsFormElementsSliderTicks: typeof import("../components/forms/form-elements/slider/Ticks.vue")['default']
-export const LazyFormsFormElementsSliderVertical: typeof import("../components/forms/form-elements/slider/Vertical.vue")['default']
-export const LazyFormsFormElementsSliderVolume: typeof import("../components/forms/form-elements/slider/Volume.vue")['default']
-export const LazyFormsFormElementsStepperAlternatelabel: typeof import("../components/forms/form-elements/stepper/Alternatelabel.vue")['default']
-export const LazyFormsFormElementsStepperAlternativeErrors: typeof import("../components/forms/form-elements/stepper/AlternativeErrors.vue")['default']
-export const LazyFormsFormElementsStepperEditableStepper: typeof import("../components/forms/form-elements/stepper/EditableStepper.vue")['default']
-export const LazyFormsFormElementsStepperItemStepper: typeof import("../components/forms/form-elements/stepper/ItemStepper.vue")['default']
-export const LazyFormsFormElementsStepperLinearSteppers: typeof import("../components/forms/form-elements/stepper/LinearSteppers.vue")['default']
-export const LazyFormsFormElementsStepperNoEditable: typeof import("../components/forms/form-elements/stepper/NoEditable.vue")['default']
-export const LazyFormsFormElementsStepperOptionalSteps: typeof import("../components/forms/form-elements/stepper/OptionalSteps.vue")['default']
-export const LazyFormsFormElementsSwitchColors: typeof import("../components/forms/form-elements/switch/Colors.vue")['default']
-export const LazyFormsFormElementsSwitchDefault: typeof import("../components/forms/form-elements/switch/Default.vue")['default']
-export const LazyFormsFormElementsSwitchInset: typeof import("../components/forms/form-elements/switch/Inset.vue")['default']
-export const LazyFormsFormElementsSwitchInsetColors: typeof import("../components/forms/form-elements/switch/InsetColors.vue")['default']
-export const LazyFormsFormElementsSwitchLabel: typeof import("../components/forms/form-elements/switch/Label.vue")['default']
-export const LazyFormsFormElementsSwitchStates: typeof import("../components/forms/form-elements/switch/States.vue")['default']
-export const LazyFormsFormElementsTreeviewActivatable: typeof import("../components/forms/form-elements/treeview/Activatable.vue")['default']
-export const LazyFormsFormElementsTreeviewBasic: typeof import("../components/forms/form-elements/treeview/Basic.vue")['default']
-export const LazyFormsFormElementsTreeviewColors: typeof import("../components/forms/form-elements/treeview/Colors.vue")['default']
-export const LazyFormsFormElementsTreeviewDenseMode: typeof import("../components/forms/form-elements/treeview/DenseMode.vue")['default']
-export const LazyFormsFormElementsTreeviewOpenAll: typeof import("../components/forms/form-elements/treeview/OpenAll.vue")['default']
-export const LazyFormsFormHorizontalAccountDetailsTab: typeof import("../components/forms/form-horizontal/AccountDetailsTab.vue")['default']
-export const LazyFormsFormHorizontalBasicLayout: typeof import("../components/forms/form-horizontal/BasicLayout.vue")['default']
-export const LazyFormsFormHorizontalBasicWithIcons: typeof import("../components/forms/form-horizontal/BasicWithIcons.vue")['default']
-export const LazyFormsFormHorizontalCollapsible: typeof import("../components/forms/form-horizontal/Collapsible.vue")['default']
-export const LazyFormsFormHorizontalFormLabelAlign: typeof import("../components/forms/form-horizontal/FormLabelAlign.vue")['default']
-export const LazyFormsFormHorizontalFormSeprator: typeof import("../components/forms/form-horizontal/FormSeprator.vue")['default']
-export const LazyFormsFormHorizontalPersonalInfoTab: typeof import("../components/forms/form-horizontal/PersonalInfoTab.vue")['default']
-export const LazyFormsFormHorizontalSocialLinksTab: typeof import("../components/forms/form-horizontal/SocialLinksTab.vue")['default']
-export const LazyFormsFormLayoutsBasicHeaderForm: typeof import("../components/forms/form-layouts/BasicHeaderForm.vue")['default']
-export const LazyFormsFormLayoutsDefaultForm: typeof import("../components/forms/form-layouts/DefaultForm.vue")['default']
-export const LazyFormsFormLayoutsDisabledForm: typeof import("../components/forms/form-layouts/DisabledForm.vue")['default']
-export const LazyFormsFormLayoutsFormLeftIcon: typeof import("../components/forms/form-layouts/FormLeftIcon.vue")['default']
-export const LazyFormsFormLayoutsFormRightIcon: typeof import("../components/forms/form-layouts/FormRightIcon.vue")['default']
-export const LazyFormsFormLayoutsInputVarients: typeof import("../components/forms/form-layouts/InputVarients.vue")['default']
-export const LazyFormsFormLayoutsOrdinaryForm: typeof import("../components/forms/form-layouts/OrdinaryForm.vue")['default']
-export const LazyFormsFormValidationCheckBox: typeof import("../components/forms/form-validation/CheckBox.vue")['default']
-export const LazyFormsFormValidationMailValidation: typeof import("../components/forms/form-validation/MailValidation.vue")['default']
-export const LazyFormsFormValidationOnType: typeof import("../components/forms/form-validation/OnType.vue")['default']
-export const LazyFormsFormValidationRadio: typeof import("../components/forms/form-validation/Radio.vue")['default']
-export const LazyFormsFormValidationSelect: typeof import("../components/forms/form-validation/Select.vue")['default']
-export const LazyFormsFormValidationTextInput: typeof import("../components/forms/form-validation/TextInput.vue")['default']
-export const LazyFormsFormValidationVeeValidation: typeof import("../components/forms/form-validation/VeeValidation.vue")['default']
-export const LazyFormsFormVerticalAccountDetailsTab: typeof import("../components/forms/form-vertical/AccountDetailsTab.vue")['default']
-export const LazyFormsFormVerticalBasicLayout: typeof import("../components/forms/form-vertical/BasicLayout.vue")['default']
-export const LazyFormsFormVerticalBasicWithIcons: typeof import("../components/forms/form-vertical/BasicWithIcons.vue")['default']
-export const LazyFormsFormVerticalCollapsible: typeof import("../components/forms/form-vertical/Collapsible.vue")['default']
-export const LazyFormsFormVerticalFormSeprator: typeof import("../components/forms/form-vertical/FormSeprator.vue")['default']
-export const LazyFormsFormVerticalPersonalInfoTab: typeof import("../components/forms/form-vertical/PersonalInfoTab.vue")['default']
-export const LazyFormsFormVerticalSocialLinksTab: typeof import("../components/forms/form-vertical/SocialLinksTab.vue")['default']
-export const LazyFormsPluginsEditorMenu: typeof import("../components/forms/plugins/editor/EditorMenu.vue")['default']
-export const LazyFormsPluginsEditorMenubar: typeof import("../components/forms/plugins/editor/EditorMenubar.vue")['default']
-export const LazyFrontpagesAboutUsArchivement: typeof import("../components/frontpages/AboutUs/Archivement.vue")['default']
-export const LazyFrontpagesAboutUsHeroText: typeof import("../components/frontpages/AboutUs/HeroText.vue")['default']
-export const LazyFrontpagesAboutUsSetupProcess: typeof import("../components/frontpages/AboutUs/SetupProcess.vue")['default']
-export const LazyFrontpagesBlogGrid: typeof import("../components/frontpages/Blog/BlogGrid.vue")['default']
-export const LazyFrontpagesBlogPagesPosts: typeof import("../components/frontpages/Blog/BlogPagesPosts.vue")['default']
-export const LazyFrontpagesBlogDetails: typeof import("../components/frontpages/Blog/details/BlogDetails.vue")['default']
-export const LazyFrontpagesContactUsContactForm: typeof import("../components/frontpages/ContactUs/ContactForm.vue")['default']
-export const LazyFrontpagesContactUsContactMap: typeof import("../components/frontpages/ContactUs/ContactMap.vue")['default']
-export const LazyFrontpagesHomepageClientReviews: typeof import("../components/frontpages/Homepage/ClientReviews.vue")['default']
-export const LazyFrontpagesHomepageComponies: typeof import("../components/frontpages/Homepage/Componies.vue")['default']
-export const LazyFrontpagesHomepageContactBar: typeof import("../components/frontpages/Homepage/ContactBar.vue")['default']
-export const LazyFrontpagesHomepageFAQ: typeof import("../components/frontpages/Homepage/FAQ.vue")['default']
-export const LazyFrontpagesHomepageFeatureTabs: typeof import("../components/frontpages/Homepage/FeatureTabs.vue")['default']
-export const LazyFrontpagesHomepageHighlights: typeof import("../components/frontpages/Homepage/Highlights.vue")['default']
-export const LazyFrontpagesHomepageMainbanner: typeof import("../components/frontpages/Homepage/Mainbanner.vue")['default']
-export const LazyFrontpagesHomepageOurClients: typeof import("../components/frontpages/Homepage/OurClients.vue")['default']
-export const LazyFrontpagesHomepageOurTeam: typeof import("../components/frontpages/Homepage/OurTeam.vue")['default']
-export const LazyFrontpagesHomepagePackages: typeof import("../components/frontpages/Homepage/Packages.vue")['default']
-export const LazyFrontpagesHomepagePurchaseTemplate: typeof import("../components/frontpages/Homepage/PurchaseTemplate.vue")['default']
-export const LazyFrontpagesHomepageSecurePayment: typeof import("../components/frontpages/Homepage/SecurePayment.vue")['default']
-export const LazyFrontpagesPortfolioGalleryBox: typeof import("../components/frontpages/Portfolio/GalleryBox.vue")['default']
-export const LazyFrontpagesSharedTextBannerCard: typeof import("../components/frontpages/Shared/TextBannerCard.vue")['default']
-export const LazyFrontpagesLayoutAnnounceBar: typeof import("../components/frontpages/layout/AnnounceBar.vue")['default']
-export const LazyFrontpagesLayoutFooter: typeof import("../components/frontpages/layout/Footer.vue")['default']
-export const LazyFrontpagesLayoutHeader: typeof import("../components/frontpages/layout/Header.vue")['default']
-export const LazyFrontpagesLayoutNavigation: typeof import("../components/frontpages/layout/Navigation.vue")['default']
-export const LazyLandingpageLayoutFooter: typeof import("../components/landingpage/layout/Footer.vue")['default']
-export const LazyLandingpageLayoutHeader: typeof import("../components/landingpage/layout/Header.vue")['default']
-export const LazyLandingpageLayoutMobileSidebar: typeof import("../components/landingpage/layout/MobileSidebar.vue")['default']
-export const LazyLandingpageLayoutNavigation: typeof import("../components/landingpage/layout/Navigation.vue")['default']
-export const LazyLandingpageLayoutPageMegamenu: typeof import("../components/landingpage/layout/PageMegamenu.vue")['default']
-export const LazyLandingpageLayoutPageMenuQuicklinks: typeof import("../components/landingpage/layout/PageMenuQuicklinks.vue")['default']
-export const LazyLandingpageSectionPurchase: typeof import("../components/landingpage/section/Purchase.vue")['default']
-export const LazyLandingpageSectionRevolution: typeof import("../components/landingpage/section/Revolution.vue")['default']
-export const LazyLandingpageSectionOtherFeatures: typeof import("../components/landingpage/section/otherFeatures.vue")['default']
-export const LazyLandingpageSectionOurProducts: typeof import("../components/landingpage/section/ourProducts.vue")['default']
-export const LazyLandingpageSectionUserReview: typeof import("../components/landingpage/section/userReview.vue")['default']
-export const LazyLcFullCustomizer: typeof import("../components/lc/Full/customizer/Customizer.vue")['default']
-export const LazyLcFullHorizontalHeader: typeof import("../components/lc/Full/horizontal-header/index.vue")['default']
-export const LazyLcFullHorizontalSidebarNavCollapse: typeof import("../components/lc/Full/horizontal-sidebar/NavCollapse/Index.vue")['default']
-export const LazyLcFullHorizontalSidebarNavItem: typeof import("../components/lc/Full/horizontal-sidebar/NavItem/Index.vue")['default']
-export const LazyLcFullHorizontalSidebarHorizontalItems: typeof import("../components/lc/Full/horizontal-sidebar/horizontalItems")['default']
-export const LazyLcFullHorizontalSidebar: typeof import("../components/lc/Full/horizontal-sidebar/index.vue")['default']
-export const LazyLcFullLogo: typeof import("../components/lc/Full/logo/Logo.vue")['default']
-export const LazyLcFullLogoDark: typeof import("../components/lc/Full/logo/LogoDark.vue")['default']
-export const LazyLcFullLogoDarkRtl: typeof import("../components/lc/Full/logo/LogoDarkRtl.vue")['default']
-export const LazyLcFullLogoIcon: typeof import("../components/lc/Full/logo/LogoIcon.vue")['default']
-export const LazyLcFullLogoLight: typeof import("../components/lc/Full/logo/LogoLight.vue")['default']
-export const LazyLcFullLogoLightRtl: typeof import("../components/lc/Full/logo/LogoLightRtl.vue")['default']
-export const LazyLcFullVerticalHeaderAppsLink: typeof import("../components/lc/Full/vertical-header/AppsLink.vue")['default']
-export const LazyLcFullVerticalHeaderLanguageDD: typeof import("../components/lc/Full/vertical-header/LanguageDD.vue")['default']
-export const LazyLcFullVerticalHeaderNavigations: typeof import("../components/lc/Full/vertical-header/Navigations.vue")['default']
-export const LazyLcFullVerticalHeaderNotificationDD: typeof import("../components/lc/Full/vertical-header/NotificationDD.vue")['default']
-export const LazyLcFullVerticalHeaderProfileDD: typeof import("../components/lc/Full/vertical-header/ProfileDD.vue")['default']
-export const LazyLcFullVerticalHeaderQuickLinks: typeof import("../components/lc/Full/vertical-header/QuickLinks.vue")['default']
-export const LazyLcFullVerticalHeaderRightMobileSidebar: typeof import("../components/lc/Full/vertical-header/RightMobileSidebar.vue")['default']
-export const LazyLcFullVerticalHeaderSearchbar: typeof import("../components/lc/Full/vertical-header/Searchbar.vue")['default']
-export const LazyLcFullVerticalHeaderThemeToggler: typeof import("../components/lc/Full/vertical-header/ThemeToggler.vue")['default']
-export const LazyLcFullVerticalHeader: typeof import("../components/lc/Full/vertical-header/index.vue")['default']
-export const LazyLcFullVerticalSidebarDropDown: typeof import("../components/lc/Full/vertical-sidebar/DropDown/index.vue")['default']
-export const LazyLcFullVerticalSidebarIcon: typeof import("../components/lc/Full/vertical-sidebar/Icon.vue")['default']
-export const LazyLcFullVerticalSidebarMoreOption: typeof import("../components/lc/Full/vertical-sidebar/MoreOption/index.vue")['default']
-export const LazyLcFullVerticalSidebarNavCollapse: typeof import("../components/lc/Full/vertical-sidebar/NavCollapse/index.vue")['default']
-export const LazyLcFullVerticalSidebarNavGroup: typeof import("../components/lc/Full/vertical-sidebar/NavGroup/index.vue")['default']
-export const LazyLcFullVerticalSidebarNavItem: typeof import("../components/lc/Full/vertical-sidebar/NavItem/index.vue")['default']
-export const LazyLcFullVerticalSidebarExtrabox: typeof import("../components/lc/Full/vertical-sidebar/extrabox/index.vue")['default']
-export const LazyLcFullVerticalSidebar: typeof import("../components/lc/Full/vertical-sidebar/index.vue")['default']
-export const LazyLcFullVerticalSidebarItem: typeof import("../components/lc/Full/vertical-sidebar/sidebarItem")['default']
-export const LazyPagesAccountSettingsAccountTab: typeof import("../components/pages/account-settings/AccountTab.vue")['default']
-export const LazyPagesAccountSettingsBillsTab: typeof import("../components/pages/account-settings/BillsTab.vue")['default']
-export const LazyPagesAccountSettingsNotificationTab: typeof import("../components/pages/account-settings/NotificationTab.vue")['default']
-export const LazyPagesAccountSettingsSecurityTab: typeof import("../components/pages/account-settings/SecurityTab.vue")['default']
-export const LazyPagesFaqQuestion: typeof import("../components/pages/faq/FaqQuestion.vue")['default']
-export const LazyPagesFaqStillHaveQuestions: typeof import("../components/pages/faq/StillHaveQuestions.vue")['default']
-export const LazyPagesSearchResultsSearchLinks: typeof import("../components/pages/search-results/SearchLinks.vue")['default']
-export const LazySchoolPagesAttendenceSheet: typeof import("../components/school-pages/attendence/AttendenceSheet.vue")['default']
-export const LazySchoolPagesClassesData: typeof import("../components/school-pages/classes/ClassesData.vue")['default']
-export const LazySchoolPagesClassesDetail: typeof import("../components/school-pages/classes/ClassesDetail.vue")['default']
-export const LazySchoolPagesExamProgressReport: typeof import("../components/school-pages/exam/ProgressReport.vue")['default']
-export const LazySchoolPagesExamResultTable: typeof import("../components/school-pages/exam/ResultTable.vue")['default']
-export const LazySchoolPagesExamScheduleTable: typeof import("../components/school-pages/exam/ScheduleTable.vue")['default']
-export const LazySchoolPagesExamStudentProfile: typeof import("../components/school-pages/exam/StudentProfile.vue")['default']
-export const LazySchoolPagesStudentsStudentProfile: typeof import("../components/school-pages/students/StudentProfile.vue")['default']
-export const LazySchoolPagesStudentsStudentReport: typeof import("../components/school-pages/students/StudentReport.vue")['default']
-export const LazySchoolPagesStudentsStudentTable: typeof import("../components/school-pages/students/StudentTable.vue")['default']
-export const LazySchoolPagesTeachersTeacherProfile: typeof import("../components/school-pages/teachers/TeacherProfile.vue")['default']
-export const LazySchoolPagesTeachersTeacherSkills: typeof import("../components/school-pages/teachers/TeacherSkills.vue")['default']
-export const LazySchoolPagesTeachersTable: typeof import("../components/school-pages/teachers/TeachersTable.vue")['default']
-export const LazySharedAppBaseCard: typeof import("../components/shared/AppBaseCard.vue")['default']
-export const LazySharedAppEmailCard: typeof import("../components/shared/AppEmailCard.vue")['default']
-export const LazySharedBaseBreadcrumb: typeof import("../components/shared/BaseBreadcrumb.vue")['default']
-export const LazySharedBaseCard: typeof import("../components/shared/BaseCard.vue")['default']
-export const LazySharedCardHeaderFooter: typeof import("../components/shared/CardHeaderFooter.vue")['default']
-export const LazySharedProductBaseCard: typeof import("../components/shared/ProductBaseCard.vue")['default']
-export const LazySharedUiChildCard: typeof import("../components/shared/UiChildCard.vue")['default']
-export const LazySharedUiParentCard: typeof import("../components/shared/UiParentCard.vue")['default']
-export const LazySharedUiParentCardLogo: typeof import("../components/shared/UiParentCardLogo.vue")['default']
-export const LazySharedUiTableCard: typeof import("../components/shared/UiTableCard.vue")['default']
-export const LazySharedUiTextfieldPrimary: typeof import("../components/shared/UiTextfieldPrimary.vue")['default']
-export const LazySharedUiTittleSubtitleCard: typeof import("../components/shared/UiTittleSubtitleCard.vue")['default']
-export const LazySharedWidgetCard: typeof import("../components/shared/WidgetCard.vue")['default']
-export const LazySharedWidgetCardv2: typeof import("../components/shared/WidgetCardv2.vue")['default']
-export const LazySharedECommerceCard: typeof import("../components/shared/eCommerceCard.vue")['default']
-export const LazyStyleComponentsTypographyDefaultText: typeof import("../components/style-components/typography/DefaultText.vue")['default']
-export const LazyStyleComponentsTypographyHeading: typeof import("../components/style-components/typography/Heading.vue")['default']
-export const LazyStyleComponentsTypographyOpacity: typeof import("../components/style-components/typography/Opacity.vue")['default']
-export const LazyStyleComponentsTypographyTextAlignment: typeof import("../components/style-components/typography/TextAlignment.vue")['default']
-export const LazyStyleComponentsTypographyTextDecoration: typeof import("../components/style-components/typography/TextDecoration.vue")['default']
-export const LazyTableEditableTable: typeof import("../components/table/EditableTable.vue")['default']
-export const LazyTableTable1: typeof import("../components/table/Table1.vue")['default']
-export const LazyTableTable2: typeof import("../components/table/Table2.vue")['default']
-export const LazyTableTable3: typeof import("../components/table/Table3.vue")['default']
-export const LazyTableTable4: typeof import("../components/table/Table4.vue")['default']
-export const LazyTableTable5: typeof import("../components/table/Table5.vue")['default']
-export const LazyUiComponentsAlertAction: typeof import("../components/ui-components/alert/Action.vue")['default']
-export const LazyUiComponentsAlertBasic: typeof import("../components/ui-components/alert/Basic.vue")['default']
-export const LazyUiComponentsAlertClosable: typeof import("../components/ui-components/alert/Closable.vue")['default']
-export const LazyUiComponentsAlertDescription: typeof import("../components/ui-components/alert/Description.vue")['default']
-export const LazyUiComponentsAlertFilled: typeof import("../components/ui-components/alert/Filled.vue")['default']
-export const LazyUiComponentsAlertIcons: typeof import("../components/ui-components/alert/Icons.vue")['default']
-export const LazyUiComponentsAlertOutlined: typeof import("../components/ui-components/alert/Outlined.vue")['default']
-export const LazyUiComponentsAvatarBasicAvatar: typeof import("../components/ui-components/avatar/BasicAvatar.vue")['default']
-export const LazyUiComponentsAvatarIconAvatar: typeof import("../components/ui-components/avatar/IconAvatar.vue")['default']
-export const LazyUiComponentsAvatarImageAvatar: typeof import("../components/ui-components/avatar/ImageAvatar.vue")['default']
-export const LazyUiComponentsAvatarLetterAvatar: typeof import("../components/ui-components/avatar/LetterAvatar.vue")['default']
-export const LazyUiComponentsAvatarSizeAvatar: typeof import("../components/ui-components/avatar/SizeAvatar.vue")['default']
-export const LazyUiComponentsAvatarVariantAvatar: typeof import("../components/ui-components/avatar/VariantAvatar.vue")['default']
-export const LazyUiComponentsChipClosable: typeof import("../components/ui-components/chip/Closable.vue")['default']
-export const LazyUiComponentsChipCustomIcon: typeof import("../components/ui-components/chip/CustomIcon.vue")['default']
-export const LazyUiComponentsChipCustomIconOutlined: typeof import("../components/ui-components/chip/CustomIconOutlined.vue")['default']
-export const LazyUiComponentsChipDisabled: typeof import("../components/ui-components/chip/Disabled.vue")['default']
-export const LazyUiComponentsChipFilledColor: typeof import("../components/ui-components/chip/FilledColor.vue")['default']
-export const LazyUiComponentsChipLabelChip: typeof import("../components/ui-components/chip/LabelChip.vue")['default']
-export const LazyUiComponentsChipOutlined: typeof import("../components/ui-components/chip/Outlined.vue")['default']
-export const LazyUiComponentsChipSizes: typeof import("../components/ui-components/chip/Sizes.vue")['default']
-export const LazyUiComponentsDialogsActivator: typeof import("../components/ui-components/dialogs/DialogsActivator.vue")['default']
-export const LazyUiComponentsDialogsForm: typeof import("../components/ui-components/dialogs/DialogsForm.vue")['default']
-export const LazyUiComponentsDialogsFullscreen: typeof import("../components/ui-components/dialogs/DialogsFullscreen.vue")['default']
-export const LazyUiComponentsDialogsModel: typeof import("../components/ui-components/dialogs/DialogsModel.vue")['default']
-export const LazyUiComponentsDialogsNested: typeof import("../components/ui-components/dialogs/DialogsNested.vue")['default']
-export const LazyUiComponentsDialogsPersistent: typeof import("../components/ui-components/dialogs/DialogsPersistent.vue")['default']
-export const LazyUiComponentsDialogsScrollable: typeof import("../components/ui-components/dialogs/DialogsScrollable.vue")['default']
-export const LazyUiComponentsDialogsTransitions: typeof import("../components/ui-components/dialogs/DialogsTransitions.vue")['default']
-export const LazyUiComponentsExpansionpanelAdvance: typeof import("../components/ui-components/expansionpanel/Advance.vue")['default']
-export const LazyUiComponentsExpansionpanelBasic: typeof import("../components/ui-components/expansionpanel/Basic.vue")['default']
-export const LazyUiComponentsExpansionpanelCustomizedIcon: typeof import("../components/ui-components/expansionpanel/CustomizedIcon.vue")['default']
-export const LazyUiComponentsExpansionpanelDefaultExpand: typeof import("../components/ui-components/expansionpanel/DefaultExpand.vue")['default']
-export const LazyUiComponentsExpansionpanelInset: typeof import("../components/ui-components/expansionpanel/Inset.vue")['default']
-export const LazyUiComponentsExpansionpanelPopout: typeof import("../components/ui-components/expansionpanel/Popout.vue")['default']
-export const LazyUiComponentsListCustomAlignList: typeof import("../components/ui-components/list/CustomAlignList.vue")['default']
-export const LazyUiComponentsListDisabledList: typeof import("../components/ui-components/list/DisabledList.vue")['default']
-export const LazyUiComponentsListFolderList: typeof import("../components/ui-components/list/FolderList.vue")['default']
-export const LazyUiComponentsListNestedList: typeof import("../components/ui-components/list/NestedList.vue")['default']
-export const LazyUiComponentsListRoundedList: typeof import("../components/ui-components/list/RoundedList.vue")['default']
-export const LazyUiComponentsListScrollableList: typeof import("../components/ui-components/list/ScrollableList.vue")['default']
-export const LazyUiComponentsListSimpleList: typeof import("../components/ui-components/list/SimpleList.vue")['default']
-export const LazyUiComponentsListSwitchList: typeof import("../components/ui-components/list/SwitchList.vue")['default']
-export const LazyUiComponentsMenusActivatorTooltip: typeof import("../components/ui-components/menus/MenusActivatorTooltip.vue")['default']
-export const LazyUiComponentsMenusAnchor: typeof import("../components/ui-components/menus/MenusAnchor.vue")['default']
-export const LazyUiComponentsMenusHover: typeof import("../components/ui-components/menus/MenusHover.vue")['default']
-export const LazyUiComponentsMenusPopover: typeof import("../components/ui-components/menus/MenusPopover.vue")['default']
-export const LazyUiComponentsRattingBasicRatting: typeof import("../components/ui-components/ratting/BasicRatting.vue")['default']
-export const LazyUiComponentsRattingClearableRatting: typeof import("../components/ui-components/ratting/ClearableRatting.vue")['default']
-export const LazyUiComponentsRattingHalfRatting: typeof import("../components/ui-components/ratting/HalfRatting.vue")['default']
-export const LazyUiComponentsRattingHoverRatting: typeof import("../components/ui-components/ratting/HoverRatting.vue")['default']
-export const LazyUiComponentsRattingIconsRatting: typeof import("../components/ui-components/ratting/IconsRatting.vue")['default']
-export const LazyUiComponentsRattingLabelRatting: typeof import("../components/ui-components/ratting/LabelRatting.vue")['default']
-export const LazyUiComponentsRattingLengthRatting: typeof import("../components/ui-components/ratting/LengthRatting.vue")['default']
-export const LazyUiComponentsRattingReadOnlyRatting: typeof import("../components/ui-components/ratting/ReadOnlyRatting.vue")['default']
-export const LazyUiComponentsRattingSizeRatting: typeof import("../components/ui-components/ratting/SizeRatting.vue")['default']
-export const LazyUiComponentsTabsAlignCenterTabs: typeof import("../components/ui-components/tabs/AlignCenterTabs.vue")['default']
-export const LazyUiComponentsTabsAlignEndTabs: typeof import("../components/ui-components/tabs/AlignEndTabs.vue")['default']
-export const LazyUiComponentsTabsBasicTabs: typeof import("../components/ui-components/tabs/BasicTabs.vue")['default']
-export const LazyUiComponentsTabsCenterTabs: typeof import("../components/ui-components/tabs/CenterTabs.vue")['default']
-export const LazyUiComponentsTabsColorTabs: typeof import("../components/ui-components/tabs/ColorTabs.vue")['default']
-export const LazyUiComponentsTabsCustomIcons: typeof import("../components/ui-components/tabs/CustomIcons.vue")['default']
-export const LazyUiComponentsTabsDisableTabs: typeof import("../components/ui-components/tabs/DisableTabs.vue")['default']
-export const LazyUiComponentsTabsIconTabs: typeof import("../components/ui-components/tabs/IconTabs.vue")['default']
-export const LazyUiComponentsTabsIconsWithLabelTabs: typeof import("../components/ui-components/tabs/IconsWithLabelTabs.vue")['default']
-export const LazyUiComponentsTooltipIconTooltip: typeof import("../components/ui-components/tooltip/IconTooltip.vue")['default']
-export const LazyUiComponentsTooltipSimpleTooltip: typeof import("../components/ui-components/tooltip/SimpleTooltip.vue")['default']
-export const LazyUiComponentsTooltipToggleTolltip: typeof import("../components/ui-components/tooltip/ToggleTolltip.vue")['default']
-export const LazyWidgetsBannersBanner1: typeof import("../components/widgets/banners/Banner1.vue")['default']
-export const LazyWidgetsBannersBanner2: typeof import("../components/widgets/banners/Banner2.vue")['default']
-export const LazyWidgetsBannersBanner3: typeof import("../components/widgets/banners/Banner3.vue")['default']
-export const LazyWidgetsBannersBanner4: typeof import("../components/widgets/banners/Banner4.vue")['default']
-export const LazyWidgetsBannersBanner5: typeof import("../components/widgets/banners/Banner5.vue")['default']
-export const LazyWidgetsBannersBanner6: typeof import("../components/widgets/banners/Banner6.vue")['default']
-export const LazyWidgetsCardsCongtsCard: typeof import("../components/widgets/cards/CongtsCard.vue")['default']
-export const LazyWidgetsCardsPaymentGateway: typeof import("../components/widgets/cards/PaymentGateway.vue")['default']
-export const LazyWidgetsCardsProfileBoxCards: typeof import("../components/widgets/cards/ProfileBoxCards.vue")['default']
-export const LazyWidgetsCardsRecentTransactions: typeof import("../components/widgets/cards/RecentTransactions.vue")['default']
-export const LazyWidgetsCardsTopCards: typeof import("../components/widgets/cards/TopCards.vue")['default']
-export const LazyWidgetsChartsNetSells: typeof import("../components/widgets/charts/NetSells.vue")['default']
-export const LazyWidgetsChartsPayingChart: typeof import("../components/widgets/charts/PayingChart.vue")['default']
-export const LazyWidgetsChartsTraficDistributionChart: typeof import("../components/widgets/charts/TraficDistributionChart.vue")['default']
-export const LazyNuxtWelcome: typeof import("../node_modules/nuxt/dist/app/components/welcome.vue")['default']
-export const LazyNuxtLayout: typeof import("../node_modules/nuxt/dist/app/components/nuxt-layout")['default']
-export const LazyNuxtErrorBoundary: typeof import("../node_modules/nuxt/dist/app/components/nuxt-error-boundary")['default']
-export const LazyClientOnly: typeof import("../node_modules/nuxt/dist/app/components/client-only")['default']
-export const LazyDevOnly: typeof import("../node_modules/nuxt/dist/app/components/dev-only")['default']
-export const LazyServerPlaceholder: typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']
-export const LazyNuxtLink: typeof import("../node_modules/nuxt/dist/app/components/nuxt-link")['default']
-export const LazyNuxtLoadingIndicator: typeof import("../node_modules/nuxt/dist/app/components/nuxt-loading-indicator")['default']
-export const LazyNuxtRouteAnnouncer: typeof import("../node_modules/nuxt/dist/app/components/nuxt-route-announcer")['default']
-export const LazyNuxtImg: typeof import("../node_modules/nuxt/dist/app/components/nuxt-stubs")['NuxtImg']
-export const LazyNuxtPicture: typeof import("../node_modules/nuxt/dist/app/components/nuxt-stubs")['NuxtPicture']
-export const LazyNuxtPage: typeof import("../node_modules/nuxt/dist/pages/runtime/page")['default']
-export const LazyNoScript: typeof import("../node_modules/nuxt/dist/head/runtime/components")['NoScript']
-export const LazyLink: typeof import("../node_modules/nuxt/dist/head/runtime/components")['Link']
-export const LazyBase: typeof import("../node_modules/nuxt/dist/head/runtime/components")['Base']
-export const LazyTitle: typeof import("../node_modules/nuxt/dist/head/runtime/components")['Title']
-export const LazyMeta: typeof import("../node_modules/nuxt/dist/head/runtime/components")['Meta']
-export const LazyStyle: typeof import("../node_modules/nuxt/dist/head/runtime/components")['Style']
-export const LazyHead: typeof import("../node_modules/nuxt/dist/head/runtime/components")['Head']
-export const LazyHtml: typeof import("../node_modules/nuxt/dist/head/runtime/components")['Html']
-export const LazyBody: typeof import("../node_modules/nuxt/dist/head/runtime/components")['Body']
-export const LazyNuxtIsland: typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']
-export const LazyNuxtRouteAnnouncer: IslandComponent<typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']>
+export const LazyAppsBlogCardGrid: LazyComponent<typeof import("../components/apps/blog/blogCardGrid.vue")['default']>
+export const LazyAppsBlogPosts: LazyComponent<typeof import("../components/apps/blog/blogPosts.vue")['default']>
+export const LazyAppsBlogDetailAddCommnet: LazyComponent<typeof import("../components/apps/blog/detail/addCommnet.vue")['default']>
+export const LazyAppsBlogDetail: LazyComponent<typeof import("../components/apps/blog/detail/blogDetail.vue")['default']>
+export const LazyAppsBlogFeatureBlogCard: LazyComponent<typeof import("../components/apps/blog/featureBlogCard.vue")['default']>
+export const LazyAppsChatsChatDetail: LazyComponent<typeof import("../components/apps/chats/ChatDetail.vue")['default']>
+export const LazyAppsChatsChatInfo: LazyComponent<typeof import("../components/apps/chats/ChatInfo.vue")['default']>
+export const LazyAppsChatsChatListing: LazyComponent<typeof import("../components/apps/chats/ChatListing.vue")['default']>
+export const LazyAppsChatsChatProfile: LazyComponent<typeof import("../components/apps/chats/ChatProfile.vue")['default']>
+export const LazyAppsChatsChatSendMsg: LazyComponent<typeof import("../components/apps/chats/ChatSendMsg.vue")['default']>
+export const LazyAppsEcommerceAddproductAdvanceTab: LazyComponent<typeof import("../components/apps/ecommerce/addproduct/AdvanceTab.vue")['default']>
+export const LazyAppsEcommerceAddproductGeneralTab: LazyComponent<typeof import("../components/apps/ecommerce/addproduct/GeneralTab.vue")['default']>
+export const LazyAppsEcommerceAddproductLeftSide: LazyComponent<typeof import("../components/apps/ecommerce/addproduct/LeftSide.vue")['default']>
+export const LazyAppsEcommerceAddproductRightSide: LazyComponent<typeof import("../components/apps/ecommerce/addproduct/RightSide.vue")['default']>
+export const LazyAppsEcommerceCartCheckout: LazyComponent<typeof import("../components/apps/ecommerce/cart/CartCheckout.vue")['default']>
+export const LazyAppsEcommerceCartEmpty: LazyComponent<typeof import("../components/apps/ecommerce/cart/CartEmpty.vue")['default']>
+export const LazyAppsEcommerceCartStepsAddAddress: LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/AddAddress.vue")['default']>
+export const LazyAppsEcommerceCartStepsAddCard: LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/AddCard.vue")['default']>
+export const LazyAppsEcommerceCartStepsAddressCard: LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/AddressCard.vue")['default']>
+export const LazyAppsEcommerceCartStepsOrderSummary: LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/OrderSummary.vue")['default']>
+export const LazyAppsEcommerceCartStepsPayment: LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/Payment.vue")['default']>
+export const LazyAppsEcommerceCartStepsStepFirst: LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/StepFirst.vue")['default']>
+export const LazyAppsEcommerceCartStepsStepSecond: LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/StepSecond.vue")['default']>
+export const LazyAppsEcommerceCartStepsThankyou: LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/Thankyou.vue")['default']>
+export const LazyAppsEcommerceDetailProductCarousel: LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductCarousel.vue")['default']>
+export const LazyAppsEcommerceDetailProductDescription: LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductDescription.vue")['default']>
+export const LazyAppsEcommerceDetailProductDetail: LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductDetail.vue")['default']>
+export const LazyAppsEcommerceDetailProductReview: LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductReview.vue")['default']>
+export const LazyAppsEcommerceDetailProductTab: LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductTab.vue")['default']>
+export const LazyAppsEcommerceDetailRelatedProducts: LazyComponent<typeof import("../components/apps/ecommerce/detail/RelatedProducts.vue")['default']>
+export const LazyAppsEcommerceDetailOneProducOneCurosel: LazyComponent<typeof import("../components/apps/ecommerce/detail/one/ProducOneCurosel.vue")['default']>
+export const LazyAppsEcommerceDetailOneProductDetailOne: LazyComponent<typeof import("../components/apps/ecommerce/detail/one/ProductDetailOne.vue")['default']>
+export const LazyAppsEcommerceDetailOneProductReviewOne: LazyComponent<typeof import("../components/apps/ecommerce/detail/one/ProductReviewOne.vue")['default']>
+export const LazyAppsEcommerceDetailOneRelatedProductOne: LazyComponent<typeof import("../components/apps/ecommerce/detail/one/RelatedProductOne.vue")['default']>
+export const LazyAppsEcommerceEditproductAdvanceTab: LazyComponent<typeof import("../components/apps/ecommerce/editproduct/AdvanceTab.vue")['default']>
+export const LazyAppsEcommerceEditproductDailySalesChart: LazyComponent<typeof import("../components/apps/ecommerce/editproduct/DailySalesChart.vue")['default']>
+export const LazyAppsEcommerceEditproductGeneralTab: LazyComponent<typeof import("../components/apps/ecommerce/editproduct/GeneralTab.vue")['default']>
+export const LazyAppsEcommerceEditproductLeftSide: LazyComponent<typeof import("../components/apps/ecommerce/editproduct/LeftSide.vue")['default']>
+export const LazyAppsEcommerceEditproductReviewsTab: LazyComponent<typeof import("../components/apps/ecommerce/editproduct/ReviewsTab.vue")['default']>
+export const LazyAppsEcommerceEditproductRightSide: LazyComponent<typeof import("../components/apps/ecommerce/editproduct/RightSide.vue")['default']>
+export const LazyAppsEcommerceListingProductEmplty: LazyComponent<typeof import("../components/apps/ecommerce/listing/ProductEmplty.vue")['default']>
+export const LazyAppsEcommerceListingProductFilters: LazyComponent<typeof import("../components/apps/ecommerce/listing/ProductFilters.vue")['default']>
+export const LazyAppsEcommerceListingProductItem: LazyComponent<typeof import("../components/apps/ecommerce/listing/ProductItem.vue")['default']>
+export const LazyAppsEcommerceListingProductItemOne: LazyComponent<typeof import("../components/apps/ecommerce/listing/ProductItemOne.vue")['default']>
+export const LazyAppsEcommerceListingProductfilterOne: LazyComponent<typeof import("../components/apps/ecommerce/listing/ProductfilterOne.vue")['default']>
+export const LazyAppsEcommerceListingColorsOption: LazyComponent<typeof import("../components/apps/ecommerce/listing/colorsOption")['default']>
+export const LazyAppsEmailCompose: LazyComponent<typeof import("../components/apps/email/EmailCompose.vue")['default']>
+export const LazyAppsEmailDetail: LazyComponent<typeof import("../components/apps/email/EmailDetail.vue")['default']>
+export const LazyAppsEmailListing: LazyComponent<typeof import("../components/apps/email/EmailListing.vue")['default']>
+export const LazyAppsInvoiceCreate: LazyComponent<typeof import("../components/apps/invoice/Create.vue")['default']>
+export const LazyAppsInvoiceDetail: LazyComponent<typeof import("../components/apps/invoice/Detail.vue")['default']>
+export const LazyAppsInvoiceEdit: LazyComponent<typeof import("../components/apps/invoice/Edit.vue")['default']>
+export const LazyAppsInvoiceList: LazyComponent<typeof import("../components/apps/invoice/List.vue")['default']>
+export const LazyAppsKanbanAddTask: LazyComponent<typeof import("../components/apps/kanban/AddTask.vue")['default']>
+export const LazyAppsKanbanTaskCard: LazyComponent<typeof import("../components/apps/kanban/TaskCard.vue")['default']>
+export const LazyAppsKanbanTaskColumn: LazyComponent<typeof import("../components/apps/kanban/TaskColumn.vue")['default']>
+export const LazyAppsKanbanTaskItemCard: LazyComponent<typeof import("../components/apps/kanban/TaskItemCard.vue")['default']>
+export const LazyAppsNotesAddNote: LazyComponent<typeof import("../components/apps/notes/AddNote.vue")['default']>
+export const LazyAppsNotesContent: LazyComponent<typeof import("../components/apps/notes/NotesContent.vue")['default']>
+export const LazyAppsNotesListing: LazyComponent<typeof import("../components/apps/notes/NotesListing.vue")['default']>
+export const LazyAppsTicketsTicketList: LazyComponent<typeof import("../components/apps/tickets/TicketList.vue")['default']>
+export const LazyAppsUserProfileIntroCard: LazyComponent<typeof import("../components/apps/user-profile/IntroCard.vue")['default']>
+export const LazyAppsUserProfilePhotosCard: LazyComponent<typeof import("../components/apps/user-profile/PhotosCard.vue")['default']>
+export const LazyAppsUserProfilePostListing: LazyComponent<typeof import("../components/apps/user-profile/PostListing.vue")['default']>
+export const LazyAppsUserProfileBanner: LazyComponent<typeof import("../components/apps/user-profile/ProfileBanner.vue")['default']>
+export const LazyAppsUserProfileBannerOne: LazyComponent<typeof import("../components/apps/user-profile/ProfileBannerOne.vue")['default']>
+export const LazyAppsUserProfilePostsAddPost: LazyComponent<typeof import("../components/apps/user-profile/posts/AddPost.vue")['default']>
+export const LazyAppsUserProfilePostsComments: LazyComponent<typeof import("../components/apps/user-profile/posts/Comments.vue")['default']>
+export const LazyAppsUserProfilePostsPostItem: LazyComponent<typeof import("../components/apps/user-profile/posts/PostItem.vue")['default']>
+export const LazyAppsUserProfileProfileOneIntroCard: LazyComponent<typeof import("../components/apps/user-profile/profile-one/IntroCard.vue")['default']>
+export const LazyAppsUserProfileProfileOneNumberCards: LazyComponent<typeof import("../components/apps/user-profile/profile-one/NumberCards.vue")['default']>
+export const LazyAppsUserProfileProfileOneTeamsCard: LazyComponent<typeof import("../components/apps/user-profile/profile-one/TeamsCard.vue")['default']>
+export const LazyAuthLoginForm: LazyComponent<typeof import("../components/auth/LoginForm.vue")['default']>
+export const LazyAuthRegisterForm: LazyComponent<typeof import("../components/auth/RegisterForm.vue")['default']>
+export const LazyAuthResetForm: LazyComponent<typeof import("../components/auth/ResetForm.vue")['default']>
+export const LazyAuthTwoStepForm: LazyComponent<typeof import("../components/auth/TwoStepForm.vue")['default']>
+export const LazyCommonErrorToaster: LazyComponent<typeof import("../components/common/errorToaster.vue")['default']>
+export const LazyDashboardsDashboard1CongratulationsCard: LazyComponent<typeof import("../components/dashboards/dashboard1/CongratulationsCard.vue")['default']>
+export const LazyDashboardsDashboard1Customers: LazyComponent<typeof import("../components/dashboards/dashboard1/Customers.vue")['default']>
+export const LazyDashboardsDashboard1LatestDeals: LazyComponent<typeof import("../components/dashboards/dashboard1/LatestDeals.vue")['default']>
+export const LazyDashboardsDashboard1LatestReviews: LazyComponent<typeof import("../components/dashboards/dashboard1/LatestReviews.vue")['default']>
+export const LazyDashboardsDashboard1Payments: LazyComponent<typeof import("../components/dashboards/dashboard1/Payments.vue")['default']>
+export const LazyDashboardsDashboard1ProductsChart: LazyComponent<typeof import("../components/dashboards/dashboard1/ProductsChart.vue")['default']>
+export const LazyDashboardsDashboard1ProductsTable: LazyComponent<typeof import("../components/dashboards/dashboard1/ProductsTable.vue")['default']>
+export const LazyDashboardsDashboard1VisitFromUsa: LazyComponent<typeof import("../components/dashboards/dashboard1/VisitFromUsa.vue")['default']>
+export const LazyDashboardsDashboard2FigmaCard: LazyComponent<typeof import("../components/dashboards/dashboard2/FigmaCard.vue")['default']>
+export const LazyDashboardsDashboard2PayingTable: LazyComponent<typeof import("../components/dashboards/dashboard2/PayingTable.vue")['default']>
+export const LazyDashboardsDashboard2ProductSales: LazyComponent<typeof import("../components/dashboards/dashboard2/ProductSales.vue")['default']>
+export const LazyDashboardsDashboard2ProfileCards: LazyComponent<typeof import("../components/dashboards/dashboard2/ProfileCards.vue")['default']>
+export const LazyDashboardsDashboard2ProfitExpanse: LazyComponent<typeof import("../components/dashboards/dashboard2/ProfitExpanse.vue")['default']>
+export const LazyDashboardsDashboard2TextCards: LazyComponent<typeof import("../components/dashboards/dashboard2/TextCards.vue")['default']>
+export const LazyDashboardsDashboard2TrafficDistribution: LazyComponent<typeof import("../components/dashboards/dashboard2/TrafficDistribution.vue")['default']>
+export const LazyDashboardsDashboard2UpcommingSchedule: LazyComponent<typeof import("../components/dashboards/dashboard2/UpcommingSchedule.vue")['default']>
+export const LazyDashboardsDashboard2WelcomeCard: LazyComponent<typeof import("../components/dashboards/dashboard2/WelcomeCard.vue")['default']>
+export const LazyDashboardsSnackbar: LazyComponent<typeof import("../components/dashboards/snackbar.vue")['default']>
+export const LazyFormsFormCustomFrom: LazyComponent<typeof import("../components/forms/form-custom/CustomFrom.vue")['default']>
+export const LazyFormsFormElementsAutocompleteComboBox: LazyComponent<typeof import("../components/forms/form-elements/autocomplete/ComboBox.vue")['default']>
+export const LazyFormsFormElementsAutocompleteMultipleOptions: LazyComponent<typeof import("../components/forms/form-elements/autocomplete/MultipleOptions.vue")['default']>
+export const LazyFormsFormElementsAutocompleteWithCaption: LazyComponent<typeof import("../components/forms/form-elements/autocomplete/WithCaption.vue")['default']>
+export const LazyFormsFormElementsButtonBaseButtons: LazyComponent<typeof import("../components/forms/form-elements/button/BaseButtons.vue")['default']>
+export const LazyFormsFormElementsButtonColorsButtons: LazyComponent<typeof import("../components/forms/form-elements/button/ColorsButtons.vue")['default']>
+export const LazyFormsFormElementsButtonIconColor: LazyComponent<typeof import("../components/forms/form-elements/button/IconColor.vue")['default']>
+export const LazyFormsFormElementsButtonIconColorSizes: LazyComponent<typeof import("../components/forms/form-elements/button/IconColorSizes.vue")['default']>
+export const LazyFormsFormElementsButtonIconsButtons: LazyComponent<typeof import("../components/forms/form-elements/button/IconsButtons.vue")['default']>
+export const LazyFormsFormElementsButtonOutlineIconColor: LazyComponent<typeof import("../components/forms/form-elements/button/OutlineIconColor.vue")['default']>
+export const LazyFormsFormElementsButtonOutlineSizes: LazyComponent<typeof import("../components/forms/form-elements/button/OutlineSizes.vue")['default']>
+export const LazyFormsFormElementsButtonOutlinedButtons: LazyComponent<typeof import("../components/forms/form-elements/button/OutlinedButtons.vue")['default']>
+export const LazyFormsFormElementsButtonOutlinedIconSize: LazyComponent<typeof import("../components/forms/form-elements/button/OutlinedIconSize.vue")['default']>
+export const LazyFormsFormElementsButtonSizeButtons: LazyComponent<typeof import("../components/forms/form-elements/button/SizeButtons.vue")['default']>
+export const LazyFormsFormElementsButtonTextButtons: LazyComponent<typeof import("../components/forms/form-elements/button/TextButtons.vue")['default']>
+export const LazyFormsFormElementsButtonButtonGroupDefault: LazyComponent<typeof import("../components/forms/form-elements/button/buttonGroup/Default.vue")['default']>
+export const LazyFormsFormElementsButtonButtonGroupOutlined: LazyComponent<typeof import("../components/forms/form-elements/button/buttonGroup/Outlined.vue")['default']>
+export const LazyFormsFormElementsButtonButtonGroupPlain: LazyComponent<typeof import("../components/forms/form-elements/button/buttonGroup/Plain.vue")['default']>
+export const LazyFormsFormElementsButtonButtonGroupText: LazyComponent<typeof import("../components/forms/form-elements/button/buttonGroup/Text.vue")['default']>
+export const LazyFormsFormElementsCheckboxBasicCheckboxes: LazyComponent<typeof import("../components/forms/form-elements/checkbox/BasicCheckboxes.vue")['default']>
+export const LazyFormsFormElementsCheckboxColorCheckboxes: LazyComponent<typeof import("../components/forms/form-elements/checkbox/ColorCheckboxes.vue")['default']>
+export const LazyFormsFormElementsCheckboxCustomCheckbox: LazyComponent<typeof import("../components/forms/form-elements/checkbox/CustomCheckbox.vue")['default']>
+export const LazyFormsFormElementsCheckboxLabelCheckboxes: LazyComponent<typeof import("../components/forms/form-elements/checkbox/LabelCheckboxes.vue")['default']>
+export const LazyFormsFormElementsComboboxDense: LazyComponent<typeof import("../components/forms/form-elements/combobox/ComboboxDense.vue")['default']>
+export const LazyFormsFormElementsComboboxMultiple: LazyComponent<typeof import("../components/forms/form-elements/combobox/ComboboxMultiple.vue")['default']>
+export const LazyFormsFormElementsCustominputInputAppendPrepend: LazyComponent<typeof import("../components/forms/form-elements/custominput/InputAppendPrepend.vue")['default']>
+export const LazyFormsFormElementsCustominputInputError: LazyComponent<typeof import("../components/forms/form-elements/custominput/InputError.vue")['default']>
+export const LazyFormsFormElementsCustominputInputHideDetails: LazyComponent<typeof import("../components/forms/form-elements/custominput/InputHideDetails.vue")['default']>
+export const LazyFormsFormElementsCustominputInputLoading: LazyComponent<typeof import("../components/forms/form-elements/custominput/InputLoading.vue")['default']>
+export const LazyFormsFormElementsCustominputInputMultipleError: LazyComponent<typeof import("../components/forms/form-elements/custominput/InputMultipleError.vue")['default']>
+export const LazyFormsFormElementsCustominputInputRules: LazyComponent<typeof import("../components/forms/form-elements/custominput/InputRules.vue")['default']>
+export const LazyFormsFormElementsDatetimeDatePicker: LazyComponent<typeof import("../components/forms/form-elements/datetime/DatePicker.vue")['default']>
+export const LazyFormsFormElementsDatetimeTimePicker: LazyComponent<typeof import("../components/forms/form-elements/datetime/TimePicker.vue")['default']>
+export const LazyFormsFormElementsFileinputFileInputAccept: LazyComponent<typeof import("../components/forms/form-elements/fileinput/FileInputAccept.vue")['default']>
+export const LazyFormsFormElementsFileinputFileInputChips: LazyComponent<typeof import("../components/forms/form-elements/fileinput/FileInputChips.vue")['default']>
+export const LazyFormsFormElementsFileinputFileInputCounter: LazyComponent<typeof import("../components/forms/form-elements/fileinput/FileInputCounter.vue")['default']>
+export const LazyFormsFormElementsFileinputFileInputDensity: LazyComponent<typeof import("../components/forms/form-elements/fileinput/FileInputDensity.vue")['default']>
+export const LazyFormsFormElementsFileinputFileInputMultiple: LazyComponent<typeof import("../components/forms/form-elements/fileinput/FileInputMultiple.vue")['default']>
+export const LazyFormsFormElementsFileinputFileInputPrepand: LazyComponent<typeof import("../components/forms/form-elements/fileinput/FileInputPrepand.vue")['default']>
+export const LazyFormsFormElementsFileinputFileInputSelection: LazyComponent<typeof import("../components/forms/form-elements/fileinput/FileInputSelection.vue")['default']>
+export const LazyFormsFormElementsFileinputFileInputValidation: LazyComponent<typeof import("../components/forms/form-elements/fileinput/FileInputValidation.vue")['default']>
+export const LazyFormsFormElementsRadioColor: LazyComponent<typeof import("../components/forms/form-elements/radio/Color.vue")['default']>
+export const LazyFormsFormElementsRadioDefault: LazyComponent<typeof import("../components/forms/form-elements/radio/Default.vue")['default']>
+export const LazyFormsFormElementsRadioDefaultDirection: LazyComponent<typeof import("../components/forms/form-elements/radio/DefaultDirection.vue")['default']>
+export const LazyFormsFormElementsRadioInlineDirection: LazyComponent<typeof import("../components/forms/form-elements/radio/InlineDirection.vue")['default']>
+export const LazyFormsFormElementsRadioLabel: LazyComponent<typeof import("../components/forms/form-elements/radio/Label.vue")['default']>
+export const LazyFormsFormElementsRadioLabelwithColor: LazyComponent<typeof import("../components/forms/form-elements/radio/LabelwithColor.vue")['default']>
+export const LazyFormsFormElementsSelectChip: LazyComponent<typeof import("../components/forms/form-elements/select/SelectChip.vue")['default']>
+export const LazyFormsFormElementsSelectDefault: LazyComponent<typeof import("../components/forms/form-elements/select/SelectDefault.vue")['default']>
+export const LazyFormsFormElementsSelectDensity: LazyComponent<typeof import("../components/forms/form-elements/select/SelectDensity.vue")['default']>
+export const LazyFormsFormElementsSelectMultiple: LazyComponent<typeof import("../components/forms/form-elements/select/SelectMultiple.vue")['default']>
+export const LazyFormsFormElementsSelectReadOnly: LazyComponent<typeof import("../components/forms/form-elements/select/SelectReadOnly.vue")['default']>
+export const LazyFormsFormElementsSliderCustom: LazyComponent<typeof import("../components/forms/form-elements/slider/Custom.vue")['default']>
+export const LazyFormsFormElementsSliderDefault: LazyComponent<typeof import("../components/forms/form-elements/slider/Default.vue")['default']>
+export const LazyFormsFormElementsSliderDisabled: LazyComponent<typeof import("../components/forms/form-elements/slider/Disabled.vue")['default']>
+export const LazyFormsFormElementsSliderSteps: LazyComponent<typeof import("../components/forms/form-elements/slider/Steps.vue")['default']>
+export const LazyFormsFormElementsSliderTickSize: LazyComponent<typeof import("../components/forms/form-elements/slider/TickSize.vue")['default']>
+export const LazyFormsFormElementsSliderTicks: LazyComponent<typeof import("../components/forms/form-elements/slider/Ticks.vue")['default']>
+export const LazyFormsFormElementsSliderVertical: LazyComponent<typeof import("../components/forms/form-elements/slider/Vertical.vue")['default']>
+export const LazyFormsFormElementsSliderVolume: LazyComponent<typeof import("../components/forms/form-elements/slider/Volume.vue")['default']>
+export const LazyFormsFormElementsStepperAlternatelabel: LazyComponent<typeof import("../components/forms/form-elements/stepper/Alternatelabel.vue")['default']>
+export const LazyFormsFormElementsStepperAlternativeErrors: LazyComponent<typeof import("../components/forms/form-elements/stepper/AlternativeErrors.vue")['default']>
+export const LazyFormsFormElementsStepperEditableStepper: LazyComponent<typeof import("../components/forms/form-elements/stepper/EditableStepper.vue")['default']>
+export const LazyFormsFormElementsStepperItemStepper: LazyComponent<typeof import("../components/forms/form-elements/stepper/ItemStepper.vue")['default']>
+export const LazyFormsFormElementsStepperLinearSteppers: LazyComponent<typeof import("../components/forms/form-elements/stepper/LinearSteppers.vue")['default']>
+export const LazyFormsFormElementsStepperNoEditable: LazyComponent<typeof import("../components/forms/form-elements/stepper/NoEditable.vue")['default']>
+export const LazyFormsFormElementsStepperOptionalSteps: LazyComponent<typeof import("../components/forms/form-elements/stepper/OptionalSteps.vue")['default']>
+export const LazyFormsFormElementsSwitchColors: LazyComponent<typeof import("../components/forms/form-elements/switch/Colors.vue")['default']>
+export const LazyFormsFormElementsSwitchDefault: LazyComponent<typeof import("../components/forms/form-elements/switch/Default.vue")['default']>
+export const LazyFormsFormElementsSwitchInset: LazyComponent<typeof import("../components/forms/form-elements/switch/Inset.vue")['default']>
+export const LazyFormsFormElementsSwitchInsetColors: LazyComponent<typeof import("../components/forms/form-elements/switch/InsetColors.vue")['default']>
+export const LazyFormsFormElementsSwitchLabel: LazyComponent<typeof import("../components/forms/form-elements/switch/Label.vue")['default']>
+export const LazyFormsFormElementsSwitchStates: LazyComponent<typeof import("../components/forms/form-elements/switch/States.vue")['default']>
+export const LazyFormsFormElementsTreeviewActivatable: LazyComponent<typeof import("../components/forms/form-elements/treeview/Activatable.vue")['default']>
+export const LazyFormsFormElementsTreeviewBasic: LazyComponent<typeof import("../components/forms/form-elements/treeview/Basic.vue")['default']>
+export const LazyFormsFormElementsTreeviewColors: LazyComponent<typeof import("../components/forms/form-elements/treeview/Colors.vue")['default']>
+export const LazyFormsFormElementsTreeviewDenseMode: LazyComponent<typeof import("../components/forms/form-elements/treeview/DenseMode.vue")['default']>
+export const LazyFormsFormElementsTreeviewOpenAll: LazyComponent<typeof import("../components/forms/form-elements/treeview/OpenAll.vue")['default']>
+export const LazyFormsFormHorizontalAccountDetailsTab: LazyComponent<typeof import("../components/forms/form-horizontal/AccountDetailsTab.vue")['default']>
+export const LazyFormsFormHorizontalBasicLayout: LazyComponent<typeof import("../components/forms/form-horizontal/BasicLayout.vue")['default']>
+export const LazyFormsFormHorizontalBasicWithIcons: LazyComponent<typeof import("../components/forms/form-horizontal/BasicWithIcons.vue")['default']>
+export const LazyFormsFormHorizontalCollapsible: LazyComponent<typeof import("../components/forms/form-horizontal/Collapsible.vue")['default']>
+export const LazyFormsFormHorizontalFormLabelAlign: LazyComponent<typeof import("../components/forms/form-horizontal/FormLabelAlign.vue")['default']>
+export const LazyFormsFormHorizontalFormSeprator: LazyComponent<typeof import("../components/forms/form-horizontal/FormSeprator.vue")['default']>
+export const LazyFormsFormHorizontalPersonalInfoTab: LazyComponent<typeof import("../components/forms/form-horizontal/PersonalInfoTab.vue")['default']>
+export const LazyFormsFormHorizontalSocialLinksTab: LazyComponent<typeof import("../components/forms/form-horizontal/SocialLinksTab.vue")['default']>
+export const LazyFormsFormLayoutsBasicHeaderForm: LazyComponent<typeof import("../components/forms/form-layouts/BasicHeaderForm.vue")['default']>
+export const LazyFormsFormLayoutsDefaultForm: LazyComponent<typeof import("../components/forms/form-layouts/DefaultForm.vue")['default']>
+export const LazyFormsFormLayoutsDisabledForm: LazyComponent<typeof import("../components/forms/form-layouts/DisabledForm.vue")['default']>
+export const LazyFormsFormLayoutsFormLeftIcon: LazyComponent<typeof import("../components/forms/form-layouts/FormLeftIcon.vue")['default']>
+export const LazyFormsFormLayoutsFormRightIcon: LazyComponent<typeof import("../components/forms/form-layouts/FormRightIcon.vue")['default']>
+export const LazyFormsFormLayoutsInputVarients: LazyComponent<typeof import("../components/forms/form-layouts/InputVarients.vue")['default']>
+export const LazyFormsFormLayoutsOrdinaryForm: LazyComponent<typeof import("../components/forms/form-layouts/OrdinaryForm.vue")['default']>
+export const LazyFormsFormValidationCheckBox: LazyComponent<typeof import("../components/forms/form-validation/CheckBox.vue")['default']>
+export const LazyFormsFormValidationMailValidation: LazyComponent<typeof import("../components/forms/form-validation/MailValidation.vue")['default']>
+export const LazyFormsFormValidationOnType: LazyComponent<typeof import("../components/forms/form-validation/OnType.vue")['default']>
+export const LazyFormsFormValidationRadio: LazyComponent<typeof import("../components/forms/form-validation/Radio.vue")['default']>
+export const LazyFormsFormValidationSelect: LazyComponent<typeof import("../components/forms/form-validation/Select.vue")['default']>
+export const LazyFormsFormValidationTextInput: LazyComponent<typeof import("../components/forms/form-validation/TextInput.vue")['default']>
+export const LazyFormsFormValidationVeeValidation: LazyComponent<typeof import("../components/forms/form-validation/VeeValidation.vue")['default']>
+export const LazyFormsFormVerticalAccountDetailsTab: LazyComponent<typeof import("../components/forms/form-vertical/AccountDetailsTab.vue")['default']>
+export const LazyFormsFormVerticalBasicLayout: LazyComponent<typeof import("../components/forms/form-vertical/BasicLayout.vue")['default']>
+export const LazyFormsFormVerticalBasicWithIcons: LazyComponent<typeof import("../components/forms/form-vertical/BasicWithIcons.vue")['default']>
+export const LazyFormsFormVerticalCollapsible: LazyComponent<typeof import("../components/forms/form-vertical/Collapsible.vue")['default']>
+export const LazyFormsFormVerticalFormSeprator: LazyComponent<typeof import("../components/forms/form-vertical/FormSeprator.vue")['default']>
+export const LazyFormsFormVerticalPersonalInfoTab: LazyComponent<typeof import("../components/forms/form-vertical/PersonalInfoTab.vue")['default']>
+export const LazyFormsFormVerticalSocialLinksTab: LazyComponent<typeof import("../components/forms/form-vertical/SocialLinksTab.vue")['default']>
+export const LazyFormsPluginsEditorMenu: LazyComponent<typeof import("../components/forms/plugins/editor/EditorMenu.vue")['default']>
+export const LazyFormsPluginsEditorMenubar: LazyComponent<typeof import("../components/forms/plugins/editor/EditorMenubar.vue")['default']>
+export const LazyFrontpagesAboutUsArchivement: LazyComponent<typeof import("../components/frontpages/AboutUs/Archivement.vue")['default']>
+export const LazyFrontpagesAboutUsHeroText: LazyComponent<typeof import("../components/frontpages/AboutUs/HeroText.vue")['default']>
+export const LazyFrontpagesAboutUsSetupProcess: LazyComponent<typeof import("../components/frontpages/AboutUs/SetupProcess.vue")['default']>
+export const LazyFrontpagesBlogGrid: LazyComponent<typeof import("../components/frontpages/Blog/BlogGrid.vue")['default']>
+export const LazyFrontpagesBlogPagesPosts: LazyComponent<typeof import("../components/frontpages/Blog/BlogPagesPosts.vue")['default']>
+export const LazyFrontpagesBlogDetails: LazyComponent<typeof import("../components/frontpages/Blog/details/BlogDetails.vue")['default']>
+export const LazyFrontpagesContactUsContactForm: LazyComponent<typeof import("../components/frontpages/ContactUs/ContactForm.vue")['default']>
+export const LazyFrontpagesContactUsContactMap: LazyComponent<typeof import("../components/frontpages/ContactUs/ContactMap.vue")['default']>
+export const LazyFrontpagesHomepageClientReviews: LazyComponent<typeof import("../components/frontpages/Homepage/ClientReviews.vue")['default']>
+export const LazyFrontpagesHomepageComponies: LazyComponent<typeof import("../components/frontpages/Homepage/Componies.vue")['default']>
+export const LazyFrontpagesHomepageContactBar: LazyComponent<typeof import("../components/frontpages/Homepage/ContactBar.vue")['default']>
+export const LazyFrontpagesHomepageFAQ: LazyComponent<typeof import("../components/frontpages/Homepage/FAQ.vue")['default']>
+export const LazyFrontpagesHomepageFeatureTabs: LazyComponent<typeof import("../components/frontpages/Homepage/FeatureTabs.vue")['default']>
+export const LazyFrontpagesHomepageHighlights: LazyComponent<typeof import("../components/frontpages/Homepage/Highlights.vue")['default']>
+export const LazyFrontpagesHomepageMainbanner: LazyComponent<typeof import("../components/frontpages/Homepage/Mainbanner.vue")['default']>
+export const LazyFrontpagesHomepageOurClients: LazyComponent<typeof import("../components/frontpages/Homepage/OurClients.vue")['default']>
+export const LazyFrontpagesHomepageOurTeam: LazyComponent<typeof import("../components/frontpages/Homepage/OurTeam.vue")['default']>
+export const LazyFrontpagesHomepagePackages: LazyComponent<typeof import("../components/frontpages/Homepage/Packages.vue")['default']>
+export const LazyFrontpagesHomepagePurchaseTemplate: LazyComponent<typeof import("../components/frontpages/Homepage/PurchaseTemplate.vue")['default']>
+export const LazyFrontpagesHomepageSecurePayment: LazyComponent<typeof import("../components/frontpages/Homepage/SecurePayment.vue")['default']>
+export const LazyFrontpagesPortfolioGalleryBox: LazyComponent<typeof import("../components/frontpages/Portfolio/GalleryBox.vue")['default']>
+export const LazyFrontpagesSharedTextBannerCard: LazyComponent<typeof import("../components/frontpages/Shared/TextBannerCard.vue")['default']>
+export const LazyFrontpagesLayoutAnnounceBar: LazyComponent<typeof import("../components/frontpages/layout/AnnounceBar.vue")['default']>
+export const LazyFrontpagesLayoutFooter: LazyComponent<typeof import("../components/frontpages/layout/Footer.vue")['default']>
+export const LazyFrontpagesLayoutHeader: LazyComponent<typeof import("../components/frontpages/layout/Header.vue")['default']>
+export const LazyFrontpagesLayoutNavigation: LazyComponent<typeof import("../components/frontpages/layout/Navigation.vue")['default']>
+export const LazyLandingpageLayoutFooter: LazyComponent<typeof import("../components/landingpage/layout/Footer.vue")['default']>
+export const LazyLandingpageLayoutHeader: LazyComponent<typeof import("../components/landingpage/layout/Header.vue")['default']>
+export const LazyLandingpageLayoutMobileSidebar: LazyComponent<typeof import("../components/landingpage/layout/MobileSidebar.vue")['default']>
+export const LazyLandingpageLayoutNavigation: LazyComponent<typeof import("../components/landingpage/layout/Navigation.vue")['default']>
+export const LazyLandingpageLayoutPageMegamenu: LazyComponent<typeof import("../components/landingpage/layout/PageMegamenu.vue")['default']>
+export const LazyLandingpageLayoutPageMenuQuicklinks: LazyComponent<typeof import("../components/landingpage/layout/PageMenuQuicklinks.vue")['default']>
+export const LazyLandingpageSectionPurchase: LazyComponent<typeof import("../components/landingpage/section/Purchase.vue")['default']>
+export const LazyLandingpageSectionRevolution: LazyComponent<typeof import("../components/landingpage/section/Revolution.vue")['default']>
+export const LazyLandingpageSectionOtherFeatures: LazyComponent<typeof import("../components/landingpage/section/otherFeatures.vue")['default']>
+export const LazyLandingpageSectionOurProducts: LazyComponent<typeof import("../components/landingpage/section/ourProducts.vue")['default']>
+export const LazyLandingpageSectionUserReview: LazyComponent<typeof import("../components/landingpage/section/userReview.vue")['default']>
+export const LazyLcFullCustomizer: LazyComponent<typeof import("../components/lc/Full/customizer/Customizer.vue")['default']>
+export const LazyLcFullHorizontalHeader: LazyComponent<typeof import("../components/lc/Full/horizontal-header/index.vue")['default']>
+export const LazyLcFullHorizontalSidebarNavCollapse: LazyComponent<typeof import("../components/lc/Full/horizontal-sidebar/NavCollapse/Index.vue")['default']>
+export const LazyLcFullHorizontalSidebarNavItem: LazyComponent<typeof import("../components/lc/Full/horizontal-sidebar/NavItem/Index.vue")['default']>
+export const LazyLcFullHorizontalSidebarHorizontalItems: LazyComponent<typeof import("../components/lc/Full/horizontal-sidebar/horizontalItems")['default']>
+export const LazyLcFullHorizontalSidebar: LazyComponent<typeof import("../components/lc/Full/horizontal-sidebar/index.vue")['default']>
+export const LazyLcFullLogo: LazyComponent<typeof import("../components/lc/Full/logo/Logo.vue")['default']>
+export const LazyLcFullLogoDark: LazyComponent<typeof import("../components/lc/Full/logo/LogoDark.vue")['default']>
+export const LazyLcFullLogoDarkRtl: LazyComponent<typeof import("../components/lc/Full/logo/LogoDarkRtl.vue")['default']>
+export const LazyLcFullLogoIcon: LazyComponent<typeof import("../components/lc/Full/logo/LogoIcon.vue")['default']>
+export const LazyLcFullLogoLight: LazyComponent<typeof import("../components/lc/Full/logo/LogoLight.vue")['default']>
+export const LazyLcFullLogoLightRtl: LazyComponent<typeof import("../components/lc/Full/logo/LogoLightRtl.vue")['default']>
+export const LazyLcFullVerticalHeaderAppsLink: LazyComponent<typeof import("../components/lc/Full/vertical-header/AppsLink.vue")['default']>
+export const LazyLcFullVerticalHeaderLanguageDD: LazyComponent<typeof import("../components/lc/Full/vertical-header/LanguageDD.vue")['default']>
+export const LazyLcFullVerticalHeaderNavigations: LazyComponent<typeof import("../components/lc/Full/vertical-header/Navigations.vue")['default']>
+export const LazyLcFullVerticalHeaderNotificationDD: LazyComponent<typeof import("../components/lc/Full/vertical-header/NotificationDD.vue")['default']>
+export const LazyLcFullVerticalHeaderProfileDD: LazyComponent<typeof import("../components/lc/Full/vertical-header/ProfileDD.vue")['default']>
+export const LazyLcFullVerticalHeaderQuickLinks: LazyComponent<typeof import("../components/lc/Full/vertical-header/QuickLinks.vue")['default']>
+export const LazyLcFullVerticalHeaderRightMobileSidebar: LazyComponent<typeof import("../components/lc/Full/vertical-header/RightMobileSidebar.vue")['default']>
+export const LazyLcFullVerticalHeaderSearchbar: LazyComponent<typeof import("../components/lc/Full/vertical-header/Searchbar.vue")['default']>
+export const LazyLcFullVerticalHeaderThemeToggler: LazyComponent<typeof import("../components/lc/Full/vertical-header/ThemeToggler.vue")['default']>
+export const LazyLcFullVerticalHeader: LazyComponent<typeof import("../components/lc/Full/vertical-header/index.vue")['default']>
+export const LazyLcFullVerticalSidebarDropDown: LazyComponent<typeof import("../components/lc/Full/vertical-sidebar/DropDown/index.vue")['default']>
+export const LazyLcFullVerticalSidebarIcon: LazyComponent<typeof import("../components/lc/Full/vertical-sidebar/Icon.vue")['default']>
+export const LazyLcFullVerticalSidebarMoreOption: LazyComponent<typeof import("../components/lc/Full/vertical-sidebar/MoreOption/index.vue")['default']>
+export const LazyLcFullVerticalSidebarNavCollapse: LazyComponent<typeof import("../components/lc/Full/vertical-sidebar/NavCollapse/index.vue")['default']>
+export const LazyLcFullVerticalSidebarNavGroup: LazyComponent<typeof import("../components/lc/Full/vertical-sidebar/NavGroup/index.vue")['default']>
+export const LazyLcFullVerticalSidebarNavItem: LazyComponent<typeof import("../components/lc/Full/vertical-sidebar/NavItem/index.vue")['default']>
+export const LazyLcFullVerticalSidebarExtrabox: LazyComponent<typeof import("../components/lc/Full/vertical-sidebar/extrabox/index.vue")['default']>
+export const LazyLcFullVerticalSidebar: LazyComponent<typeof import("../components/lc/Full/vertical-sidebar/index.vue")['default']>
+export const LazyLcFullVerticalSidebarItem: LazyComponent<typeof import("../components/lc/Full/vertical-sidebar/sidebarItem")['default']>
+export const LazyPagesAccountSettingsAccountTab: LazyComponent<typeof import("../components/pages/account-settings/AccountTab.vue")['default']>
+export const LazyPagesAccountSettingsBillsTab: LazyComponent<typeof import("../components/pages/account-settings/BillsTab.vue")['default']>
+export const LazyPagesAccountSettingsNotificationTab: LazyComponent<typeof import("../components/pages/account-settings/NotificationTab.vue")['default']>
+export const LazyPagesAccountSettingsSecurityTab: LazyComponent<typeof import("../components/pages/account-settings/SecurityTab.vue")['default']>
+export const LazyPagesFaqQuestion: LazyComponent<typeof import("../components/pages/faq/FaqQuestion.vue")['default']>
+export const LazyPagesFaqStillHaveQuestions: LazyComponent<typeof import("../components/pages/faq/StillHaveQuestions.vue")['default']>
+export const LazyPagesSearchResultsSearchLinks: LazyComponent<typeof import("../components/pages/search-results/SearchLinks.vue")['default']>
+export const LazySchoolPagesAttendenceSheet: LazyComponent<typeof import("../components/school-pages/attendence/AttendenceSheet.vue")['default']>
+export const LazySchoolPagesClassesData: LazyComponent<typeof import("../components/school-pages/classes/ClassesData.vue")['default']>
+export const LazySchoolPagesClassesDetail: LazyComponent<typeof import("../components/school-pages/classes/ClassesDetail.vue")['default']>
+export const LazySchoolPagesExamProgressReport: LazyComponent<typeof import("../components/school-pages/exam/ProgressReport.vue")['default']>
+export const LazySchoolPagesExamResultTable: LazyComponent<typeof import("../components/school-pages/exam/ResultTable.vue")['default']>
+export const LazySchoolPagesExamScheduleTable: LazyComponent<typeof import("../components/school-pages/exam/ScheduleTable.vue")['default']>
+export const LazySchoolPagesExamStudentProfile: LazyComponent<typeof import("../components/school-pages/exam/StudentProfile.vue")['default']>
+export const LazySchoolPagesStudentsStudentProfile: LazyComponent<typeof import("../components/school-pages/students/StudentProfile.vue")['default']>
+export const LazySchoolPagesStudentsStudentReport: LazyComponent<typeof import("../components/school-pages/students/StudentReport.vue")['default']>
+export const LazySchoolPagesStudentsStudentTable: LazyComponent<typeof import("../components/school-pages/students/StudentTable.vue")['default']>
+export const LazySchoolPagesTeachersTeacherProfile: LazyComponent<typeof import("../components/school-pages/teachers/TeacherProfile.vue")['default']>
+export const LazySchoolPagesTeachersTeacherSkills: LazyComponent<typeof import("../components/school-pages/teachers/TeacherSkills.vue")['default']>
+export const LazySchoolPagesTeachersTable: LazyComponent<typeof import("../components/school-pages/teachers/TeachersTable.vue")['default']>
+export const LazySharedAppBaseCard: LazyComponent<typeof import("../components/shared/AppBaseCard.vue")['default']>
+export const LazySharedAppEmailCard: LazyComponent<typeof import("../components/shared/AppEmailCard.vue")['default']>
+export const LazySharedBaseBreadcrumb: LazyComponent<typeof import("../components/shared/BaseBreadcrumb.vue")['default']>
+export const LazySharedBaseCard: LazyComponent<typeof import("../components/shared/BaseCard.vue")['default']>
+export const LazySharedCardHeaderFooter: LazyComponent<typeof import("../components/shared/CardHeaderFooter.vue")['default']>
+export const LazySharedProductBaseCard: LazyComponent<typeof import("../components/shared/ProductBaseCard.vue")['default']>
+export const LazySharedUiChildCard: LazyComponent<typeof import("../components/shared/UiChildCard.vue")['default']>
+export const LazySharedUiParentCard: LazyComponent<typeof import("../components/shared/UiParentCard.vue")['default']>
+export const LazySharedUiParentCardLogo: LazyComponent<typeof import("../components/shared/UiParentCardLogo.vue")['default']>
+export const LazySharedUiTableCard: LazyComponent<typeof import("../components/shared/UiTableCard.vue")['default']>
+export const LazySharedUiTextfieldPrimary: LazyComponent<typeof import("../components/shared/UiTextfieldPrimary.vue")['default']>
+export const LazySharedUiTittleSubtitleCard: LazyComponent<typeof import("../components/shared/UiTittleSubtitleCard.vue")['default']>
+export const LazySharedWidgetCard: LazyComponent<typeof import("../components/shared/WidgetCard.vue")['default']>
+export const LazySharedWidgetCardv2: LazyComponent<typeof import("../components/shared/WidgetCardv2.vue")['default']>
+export const LazySharedECommerceCard: LazyComponent<typeof import("../components/shared/eCommerceCard.vue")['default']>
+export const LazyStyleComponentsTypographyDefaultText: LazyComponent<typeof import("../components/style-components/typography/DefaultText.vue")['default']>
+export const LazyStyleComponentsTypographyHeading: LazyComponent<typeof import("../components/style-components/typography/Heading.vue")['default']>
+export const LazyStyleComponentsTypographyOpacity: LazyComponent<typeof import("../components/style-components/typography/Opacity.vue")['default']>
+export const LazyStyleComponentsTypographyTextAlignment: LazyComponent<typeof import("../components/style-components/typography/TextAlignment.vue")['default']>
+export const LazyStyleComponentsTypographyTextDecoration: LazyComponent<typeof import("../components/style-components/typography/TextDecoration.vue")['default']>
+export const LazyTableEditableTable: LazyComponent<typeof import("../components/table/EditableTable.vue")['default']>
+export const LazyTableTable1: LazyComponent<typeof import("../components/table/Table1.vue")['default']>
+export const LazyTableTable2: LazyComponent<typeof import("../components/table/Table2.vue")['default']>
+export const LazyTableTable3: LazyComponent<typeof import("../components/table/Table3.vue")['default']>
+export const LazyTableTable4: LazyComponent<typeof import("../components/table/Table4.vue")['default']>
+export const LazyTableTable5: LazyComponent<typeof import("../components/table/Table5.vue")['default']>
+export const LazyUiComponentsAlertAction: LazyComponent<typeof import("../components/ui-components/alert/Action.vue")['default']>
+export const LazyUiComponentsAlertBasic: LazyComponent<typeof import("../components/ui-components/alert/Basic.vue")['default']>
+export const LazyUiComponentsAlertClosable: LazyComponent<typeof import("../components/ui-components/alert/Closable.vue")['default']>
+export const LazyUiComponentsAlertDescription: LazyComponent<typeof import("../components/ui-components/alert/Description.vue")['default']>
+export const LazyUiComponentsAlertFilled: LazyComponent<typeof import("../components/ui-components/alert/Filled.vue")['default']>
+export const LazyUiComponentsAlertIcons: LazyComponent<typeof import("../components/ui-components/alert/Icons.vue")['default']>
+export const LazyUiComponentsAlertOutlined: LazyComponent<typeof import("../components/ui-components/alert/Outlined.vue")['default']>
+export const LazyUiComponentsAvatarBasicAvatar: LazyComponent<typeof import("../components/ui-components/avatar/BasicAvatar.vue")['default']>
+export const LazyUiComponentsAvatarIconAvatar: LazyComponent<typeof import("../components/ui-components/avatar/IconAvatar.vue")['default']>
+export const LazyUiComponentsAvatarImageAvatar: LazyComponent<typeof import("../components/ui-components/avatar/ImageAvatar.vue")['default']>
+export const LazyUiComponentsAvatarLetterAvatar: LazyComponent<typeof import("../components/ui-components/avatar/LetterAvatar.vue")['default']>
+export const LazyUiComponentsAvatarSizeAvatar: LazyComponent<typeof import("../components/ui-components/avatar/SizeAvatar.vue")['default']>
+export const LazyUiComponentsAvatarVariantAvatar: LazyComponent<typeof import("../components/ui-components/avatar/VariantAvatar.vue")['default']>
+export const LazyUiComponentsChipClosable: LazyComponent<typeof import("../components/ui-components/chip/Closable.vue")['default']>
+export const LazyUiComponentsChipCustomIcon: LazyComponent<typeof import("../components/ui-components/chip/CustomIcon.vue")['default']>
+export const LazyUiComponentsChipCustomIconOutlined: LazyComponent<typeof import("../components/ui-components/chip/CustomIconOutlined.vue")['default']>
+export const LazyUiComponentsChipDisabled: LazyComponent<typeof import("../components/ui-components/chip/Disabled.vue")['default']>
+export const LazyUiComponentsChipFilledColor: LazyComponent<typeof import("../components/ui-components/chip/FilledColor.vue")['default']>
+export const LazyUiComponentsChipLabelChip: LazyComponent<typeof import("../components/ui-components/chip/LabelChip.vue")['default']>
+export const LazyUiComponentsChipOutlined: LazyComponent<typeof import("../components/ui-components/chip/Outlined.vue")['default']>
+export const LazyUiComponentsChipSizes: LazyComponent<typeof import("../components/ui-components/chip/Sizes.vue")['default']>
+export const LazyUiComponentsDialogsActivator: LazyComponent<typeof import("../components/ui-components/dialogs/DialogsActivator.vue")['default']>
+export const LazyUiComponentsDialogsForm: LazyComponent<typeof import("../components/ui-components/dialogs/DialogsForm.vue")['default']>
+export const LazyUiComponentsDialogsFullscreen: LazyComponent<typeof import("../components/ui-components/dialogs/DialogsFullscreen.vue")['default']>
+export const LazyUiComponentsDialogsModel: LazyComponent<typeof import("../components/ui-components/dialogs/DialogsModel.vue")['default']>
+export const LazyUiComponentsDialogsNested: LazyComponent<typeof import("../components/ui-components/dialogs/DialogsNested.vue")['default']>
+export const LazyUiComponentsDialogsPersistent: LazyComponent<typeof import("../components/ui-components/dialogs/DialogsPersistent.vue")['default']>
+export const LazyUiComponentsDialogsScrollable: LazyComponent<typeof import("../components/ui-components/dialogs/DialogsScrollable.vue")['default']>
+export const LazyUiComponentsDialogsTransitions: LazyComponent<typeof import("../components/ui-components/dialogs/DialogsTransitions.vue")['default']>
+export const LazyUiComponentsExpansionpanelAdvance: LazyComponent<typeof import("../components/ui-components/expansionpanel/Advance.vue")['default']>
+export const LazyUiComponentsExpansionpanelBasic: LazyComponent<typeof import("../components/ui-components/expansionpanel/Basic.vue")['default']>
+export const LazyUiComponentsExpansionpanelCustomizedIcon: LazyComponent<typeof import("../components/ui-components/expansionpanel/CustomizedIcon.vue")['default']>
+export const LazyUiComponentsExpansionpanelDefaultExpand: LazyComponent<typeof import("../components/ui-components/expansionpanel/DefaultExpand.vue")['default']>
+export const LazyUiComponentsExpansionpanelInset: LazyComponent<typeof import("../components/ui-components/expansionpanel/Inset.vue")['default']>
+export const LazyUiComponentsExpansionpanelPopout: LazyComponent<typeof import("../components/ui-components/expansionpanel/Popout.vue")['default']>
+export const LazyUiComponentsListCustomAlignList: LazyComponent<typeof import("../components/ui-components/list/CustomAlignList.vue")['default']>
+export const LazyUiComponentsListDisabledList: LazyComponent<typeof import("../components/ui-components/list/DisabledList.vue")['default']>
+export const LazyUiComponentsListFolderList: LazyComponent<typeof import("../components/ui-components/list/FolderList.vue")['default']>
+export const LazyUiComponentsListNestedList: LazyComponent<typeof import("../components/ui-components/list/NestedList.vue")['default']>
+export const LazyUiComponentsListRoundedList: LazyComponent<typeof import("../components/ui-components/list/RoundedList.vue")['default']>
+export const LazyUiComponentsListScrollableList: LazyComponent<typeof import("../components/ui-components/list/ScrollableList.vue")['default']>
+export const LazyUiComponentsListSimpleList: LazyComponent<typeof import("../components/ui-components/list/SimpleList.vue")['default']>
+export const LazyUiComponentsListSwitchList: LazyComponent<typeof import("../components/ui-components/list/SwitchList.vue")['default']>
+export const LazyUiComponentsMenusActivatorTooltip: LazyComponent<typeof import("../components/ui-components/menus/MenusActivatorTooltip.vue")['default']>
+export const LazyUiComponentsMenusAnchor: LazyComponent<typeof import("../components/ui-components/menus/MenusAnchor.vue")['default']>
+export const LazyUiComponentsMenusHover: LazyComponent<typeof import("../components/ui-components/menus/MenusHover.vue")['default']>
+export const LazyUiComponentsMenusPopover: LazyComponent<typeof import("../components/ui-components/menus/MenusPopover.vue")['default']>
+export const LazyUiComponentsRattingBasicRatting: LazyComponent<typeof import("../components/ui-components/ratting/BasicRatting.vue")['default']>
+export const LazyUiComponentsRattingClearableRatting: LazyComponent<typeof import("../components/ui-components/ratting/ClearableRatting.vue")['default']>
+export const LazyUiComponentsRattingHalfRatting: LazyComponent<typeof import("../components/ui-components/ratting/HalfRatting.vue")['default']>
+export const LazyUiComponentsRattingHoverRatting: LazyComponent<typeof import("../components/ui-components/ratting/HoverRatting.vue")['default']>
+export const LazyUiComponentsRattingIconsRatting: LazyComponent<typeof import("../components/ui-components/ratting/IconsRatting.vue")['default']>
+export const LazyUiComponentsRattingLabelRatting: LazyComponent<typeof import("../components/ui-components/ratting/LabelRatting.vue")['default']>
+export const LazyUiComponentsRattingLengthRatting: LazyComponent<typeof import("../components/ui-components/ratting/LengthRatting.vue")['default']>
+export const LazyUiComponentsRattingReadOnlyRatting: LazyComponent<typeof import("../components/ui-components/ratting/ReadOnlyRatting.vue")['default']>
+export const LazyUiComponentsRattingSizeRatting: LazyComponent<typeof import("../components/ui-components/ratting/SizeRatting.vue")['default']>
+export const LazyUiComponentsTabsAlignCenterTabs: LazyComponent<typeof import("../components/ui-components/tabs/AlignCenterTabs.vue")['default']>
+export const LazyUiComponentsTabsAlignEndTabs: LazyComponent<typeof import("../components/ui-components/tabs/AlignEndTabs.vue")['default']>
+export const LazyUiComponentsTabsBasicTabs: LazyComponent<typeof import("../components/ui-components/tabs/BasicTabs.vue")['default']>
+export const LazyUiComponentsTabsCenterTabs: LazyComponent<typeof import("../components/ui-components/tabs/CenterTabs.vue")['default']>
+export const LazyUiComponentsTabsColorTabs: LazyComponent<typeof import("../components/ui-components/tabs/ColorTabs.vue")['default']>
+export const LazyUiComponentsTabsCustomIcons: LazyComponent<typeof import("../components/ui-components/tabs/CustomIcons.vue")['default']>
+export const LazyUiComponentsTabsDisableTabs: LazyComponent<typeof import("../components/ui-components/tabs/DisableTabs.vue")['default']>
+export const LazyUiComponentsTabsIconTabs: LazyComponent<typeof import("../components/ui-components/tabs/IconTabs.vue")['default']>
+export const LazyUiComponentsTabsIconsWithLabelTabs: LazyComponent<typeof import("../components/ui-components/tabs/IconsWithLabelTabs.vue")['default']>
+export const LazyUiComponentsTooltipIconTooltip: LazyComponent<typeof import("../components/ui-components/tooltip/IconTooltip.vue")['default']>
+export const LazyUiComponentsTooltipSimpleTooltip: LazyComponent<typeof import("../components/ui-components/tooltip/SimpleTooltip.vue")['default']>
+export const LazyUiComponentsTooltipToggleTolltip: LazyComponent<typeof import("../components/ui-components/tooltip/ToggleTolltip.vue")['default']>
+export const LazyWidgetsBannersBanner1: LazyComponent<typeof import("../components/widgets/banners/Banner1.vue")['default']>
+export const LazyWidgetsBannersBanner2: LazyComponent<typeof import("../components/widgets/banners/Banner2.vue")['default']>
+export const LazyWidgetsBannersBanner3: LazyComponent<typeof import("../components/widgets/banners/Banner3.vue")['default']>
+export const LazyWidgetsBannersBanner4: LazyComponent<typeof import("../components/widgets/banners/Banner4.vue")['default']>
+export const LazyWidgetsBannersBanner5: LazyComponent<typeof import("../components/widgets/banners/Banner5.vue")['default']>
+export const LazyWidgetsBannersBanner6: LazyComponent<typeof import("../components/widgets/banners/Banner6.vue")['default']>
+export const LazyWidgetsCardsCongtsCard: LazyComponent<typeof import("../components/widgets/cards/CongtsCard.vue")['default']>
+export const LazyWidgetsCardsPaymentGateway: LazyComponent<typeof import("../components/widgets/cards/PaymentGateway.vue")['default']>
+export const LazyWidgetsCardsProfileBoxCards: LazyComponent<typeof import("../components/widgets/cards/ProfileBoxCards.vue")['default']>
+export const LazyWidgetsCardsRecentTransactions: LazyComponent<typeof import("../components/widgets/cards/RecentTransactions.vue")['default']>
+export const LazyWidgetsCardsTopCards: LazyComponent<typeof import("../components/widgets/cards/TopCards.vue")['default']>
+export const LazyWidgetsChartsNetSells: LazyComponent<typeof import("../components/widgets/charts/NetSells.vue")['default']>
+export const LazyWidgetsChartsPayingChart: LazyComponent<typeof import("../components/widgets/charts/PayingChart.vue")['default']>
+export const LazyWidgetsChartsTraficDistributionChart: LazyComponent<typeof import("../components/widgets/charts/TraficDistributionChart.vue")['default']>
+export const LazyNuxtWelcome: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/welcome.vue")['default']>
+export const LazyNuxtLayout: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-layout")['default']>
+export const LazyNuxtErrorBoundary: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-error-boundary.vue")['default']>
+export const LazyClientOnly: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/client-only")['default']>
+export const LazyDevOnly: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/dev-only")['default']>
+export const LazyServerPlaceholder: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']>
+export const LazyNuxtLink: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-link")['default']>
+export const LazyNuxtLoadingIndicator: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-loading-indicator")['default']>
+export const LazyNuxtTime: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-time.vue")['default']>
+export const LazyNuxtRouteAnnouncer: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-route-announcer")['default']>
+export const LazyNuxtImg: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-stubs")['NuxtImg']>
+export const LazyNuxtPicture: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-stubs")['NuxtPicture']>
+export const LazyNuxtPage: LazyComponent<typeof import("../node_modules/nuxt/dist/pages/runtime/page")['default']>
+export const LazyNoScript: LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['NoScript']>
+export const LazyLink: LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['Link']>
+export const LazyBase: LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['Base']>
+export const LazyTitle: LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['Title']>
+export const LazyMeta: LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['Meta']>
+export const LazyStyle: LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['Style']>
+export const LazyHead: LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['Head']>
+export const LazyHtml: LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['Html']>
+export const LazyBody: LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['Body']>
+export const LazyNuxtIsland: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']>
+export const LazyNuxtRouteAnnouncer: LazyComponent<IslandComponent<typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']>>
 
 export const componentNames: string[]

@@ -1,9 +1,9 @@
 {
-  "_hash": "I8eOQIf2mGZk4Bl84P_3Ua7wUnAIh094wy6PQF2EU2g",
+  "_hash": "eyE7le44_WTLnFtrN1VRas9S5N0Zfg35kI4VxCVFtZg",
   "project": {
     "rootDir": "/Users/clementmoreno/Documents/manie-plateform"
   },
   "versions": {
-    "nuxt": "3.15.4"
+    "nuxt": "3.17.5"
   }
 }

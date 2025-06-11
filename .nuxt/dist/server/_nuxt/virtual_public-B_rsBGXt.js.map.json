@@ -1,1 +1,0 @@
-{"file":"virtual_public-B_rsBGXt.js","mappings":";AAAuD,MAAe,aAAA,gBAAgB,qCAAqC;","names":[],"sources":["../../../../virtual:public?%2Fimages%2Fbackgrounds%2Fmaintenance.svg"],"sourcesContent":["import { publicAssetsURL } from '#internal/nuxt/paths';export default publicAssetsURL(\"/images/backgrounds/maintenance.svg\")"],"version":3}

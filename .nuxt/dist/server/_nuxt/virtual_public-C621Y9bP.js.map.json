@@ -1,1 +1,0 @@
-{"file":"virtual_public-C621Y9bP.js","mappings":";AAAuD,MAAe,aAAA,gBAAgB,4BAA4B;","names":[],"sources":["../../../../virtual:public?%2Fimages%2Fprofile%2Fuser-2.jpg"],"sourcesContent":["import { publicAssetsURL } from '#internal/nuxt/paths';export default publicAssetsURL(\"/images/profile/user-2.jpg\")"],"version":3}

@@ -1,1 +1,0 @@
-{"version":3,"file":"virtual_public-YD_fu6S0.js","sources":["../../../../virtual:public?%2Fimages%2Fbackgrounds%2Fman-working-on-laptop.png"],"sourcesContent":["import { publicAssetsURL } from '#internal/nuxt/paths';export default publicAssetsURL(\"/images/backgrounds/man-working-on-laptop.png\")"],"names":[],"mappings":";AAAuD,MAAe,aAAA,gBAAgB,+CAA+C;"}

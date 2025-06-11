@@ -1,1 +1,0 @@
-import{d as n,i as s,a7 as r,l as e,j as c,c as u,o as i}from"./aI3ctD-H.js";import{u as m}from"./RPcseqXW.js";const d=n({__name:"[token]",setup(l){const t=s();r();const o=t.params.token,{checkEmail:a}=m();return e(!0),e(!1),e(""),c(async()=>{await a(o)}),(f,p)=>(i(),u("h3",null,"Verify Email view"))}});export{d as default};

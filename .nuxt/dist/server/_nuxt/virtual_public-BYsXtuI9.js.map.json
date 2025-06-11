@@ -1,1 +1,0 @@
-{"file":"virtual_public-BYsXtuI9.js","mappings":";AAAuD,MAAe,aAAA,gBAAgB,0CAA0C;","names":[],"sources":["../../../../virtual:public?%2Fimages%2Fproducts%2Fempty-shopping-cart.svg"],"sourcesContent":["import { publicAssetsURL } from '#internal/nuxt/paths';export default publicAssetsURL(\"/images/products/empty-shopping-cart.svg\")"],"version":3}

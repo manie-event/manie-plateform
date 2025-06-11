@@ -1,4 +1,0 @@
-const AppEmailCard_vue_vue_type_style_index_0_lang = ".compose{max-width:235px;width:100%}.mail-list{max-width:340px;width:100%}.mail-details{width:100%}@media screen and (max-width:991px){.mail-list{max-width:100%}}@media screen and (min-width:991px){.compose,.mail-list{border-inline-end-color:rgba(var(--v-border-color),var(--v-border-opacity))!important;border-inline-end-style:solid!important;border-inline-end-width:thin!important}}";
-
-export { AppEmailCard_vue_vue_type_style_index_0_lang as A };
-//# sourceMappingURL=AppEmailCard-styles-1.mjs-BcXjg3yu.mjs.map

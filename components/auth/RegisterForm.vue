@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useAuthentification } from '../../composables/useAuthentification';
 import errorToaster from '../common/errorToaster.vue';
 
 /*Social icons*/
