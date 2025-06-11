@@ -1,0 +1,1 @@
+{"version":3,"file":"virtual_public-DE-cyr71.js","sources":["../../../../virtual:public?%2Fimages%2Fbackgrounds%2Flogin-bg.svg"],"sourcesContent":["import { publicAssetsURL } from '#internal/nuxt/paths';export default publicAssetsURL(\"/images/backgrounds/login-bg.svg\")"],"names":[],"mappings":";AAAuD,MAAe,aAAA,gBAAgB,kCAAkC;"}

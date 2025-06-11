@@ -2,6 +2,7 @@
 import { Form } from 'vee-validate';
 import { ref } from 'vue';
 import { useAuthentification } from '../../composables/UseAuthentification';
+import errorToaster from '../common/errorToaster.vue';
 
 /*Social icons*/
 // import google from "/images/svgs/google-icon.svg";
@@ -113,4 +114,7 @@ const validate = async () => {
       <v-alert color="error">{{ errors.apiError }}</v-alert>
     </div>
   </Form>
+  <Teleport to="body">
+    <errorToaster />
+  </Teleport>
 </template>

@@ -1,0 +1,1 @@
+{"file":"virtual_public-CZ8aUjQN.js","mappings":";AAAuD,MAAe,aAAA,gBAAgB,wCAAwC;","names":[],"sources":["../../../../virtual:public?%2Fimages%2Fbackgrounds%2Flogin-security.png"],"sourcesContent":["import { publicAssetsURL } from '#internal/nuxt/paths';export default publicAssetsURL(\"/images/backgrounds/login-security.png\")"],"version":3}

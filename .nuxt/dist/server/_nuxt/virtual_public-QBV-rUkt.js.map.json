@@ -1,0 +1,1 @@
+{"file":"virtual_public-QBV-rUkt.js","mappings":";AAAuD,MAAe,aAAA,gBAAgB,2BAA2B;","names":[],"sources":["../../../../virtual:public?%2Fimages%2Fprofile%2Fuser1.jpg"],"sourcesContent":["import { publicAssetsURL } from '#internal/nuxt/paths';export default publicAssetsURL(\"/images/profile/user1.jpg\")"],"version":3}

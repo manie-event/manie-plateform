@@ -8,5 +8,6 @@ export const ERROR_MESSAGES = {
   'The password field must be defined': 'Le champ mot de passe doit être défini.',
   'The email field must be a valid email address':
     "Le champ d'adresse e-mail doit être une adresse e-mail valide.",
+  'User not found or invalid': 'Utilisateur non trouvé ou invalide.',
   'The email has already been taken': "L'adresse e-mail a déjà été prise.",
 };

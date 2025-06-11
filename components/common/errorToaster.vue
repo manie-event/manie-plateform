@@ -1,8 +1,8 @@
 <template>
   <TransitionGroup name="fade" tag="div" class="alerts-wrapper">
     <v-alert
-      v-for="(error, index) in errorMessageArray"
-      :key="index"
+      v-for="error in errorMessageArray"
+      :key="error.id"
       class="alert-card"
       type="error"
       :text="error.message"
@@ -14,12 +14,6 @@
 </template>
 <script setup lang="ts">
 const { errorMessageArray } = useErrorToaster();
-
-watch(errorMessageArray, () => {
-  setTimeout(() => {
-    errorMessageArray.value = [];
-  }, 5000);
-});
 </script>
 <style>
 .alerts-wrapper {

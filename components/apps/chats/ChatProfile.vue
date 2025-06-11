@@ -1,6 +1,5 @@
 <script setup>
-import { ref } from 'vue';
-import user1 from '/images/profile/user-1.jpg';
+import user1 from '/images/profile/1.jpg';
 </script>
 
 <template>

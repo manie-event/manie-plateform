@@ -125,5 +125,7 @@ const register = async () => {
       >Je créer mon compte</v-btn
     >
   </v-form>
-  <errorToaster />
+  <Teleport to="body">
+    <errorToaster />
+  </Teleport>
 </template>

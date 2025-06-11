@@ -1,0 +1,1 @@
+{"file":"virtual_public-Do_DI_-i.js","mappings":";AAAuD,MAAe,aAAA,gBAAgB,4BAA4B;","names":[],"sources":["../../../../virtual:public?%2Fimages%2Fprofile%2Fuser-1.jpg"],"sourcesContent":["import { publicAssetsURL } from '#internal/nuxt/paths';export default publicAssetsURL(\"/images/profile/user-1.jpg\")"],"version":3}
