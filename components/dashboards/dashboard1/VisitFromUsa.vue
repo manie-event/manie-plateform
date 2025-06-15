@@ -3,8 +3,6 @@
     <v-card-text class="position-relative">
       <h5 class="text-h5 mb-3 font-weight-semibold">Visit From USA</h5>
 
-      <div id="svgMap" ref="map" class="mt-5"></div>
-
       <v-row class="align-center justify-space-between mt-6">
         <v-col cols="2" md="auto" sm="2">
           <h6 class="text-subtitle-1 font-weight-semibold text-grey200">LA</h6>
@@ -76,43 +74,4 @@
     </v-card-text>
   </VCard>
 </template>
-<script setup>
-import svgMap from 'svgmap';
-import 'svgmap/dist/svgMap.min.css';
-import { onMounted, ref } from 'vue';
-const map = ref(null);
-
-onMounted(() => {
-  new svgMap({
-    targetElementID: 'svgMap',
-    mouseWheelZoomEnabled: false,
-    hideFlag: true,
-    initialZoom: 1.23,
-
-    data: {
-      data: {
-        countresidents: {
-          format: '{0}',
-          thousandSeparator: ',',
-          thresholdMax: 50000,
-          thresholdMin: 1000,
-        },
-      },
-      applyData: 'countresidents',
-      values: {
-        AF: { countresidents: 587, color: '#4bd08b' },
-        IN: { countresidents: 232, color: '#46caeb' },
-        US: { countresidents: 42393, color: '#0085db' },
-      },
-    },
-  });
-});
-</script>
-
-<style lang="scss">
-.svgMap-map-wrapper {
-  background: transparent;
-  padding-top: 70%;
-  top: -20px;
-}
-</style>
+<script setup></script>

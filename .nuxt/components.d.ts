@@ -73,14 +73,12 @@ interface _GlobalComponents {
     'AppsNotesContent': typeof import("../components/apps/notes/NotesContent.vue")['default']
     'AppsNotesListing': typeof import("../components/apps/notes/NotesListing.vue")['default']
     'AppsTicketsTicketList': typeof import("../components/apps/tickets/TicketList.vue")['default']
+    'AppsUserProfileEditUserProfil': typeof import("../components/apps/user-profile/EditUserProfil.vue")['default']
     'AppsUserProfileIntroCard': typeof import("../components/apps/user-profile/IntroCard.vue")['default']
     'AppsUserProfilePhotosCard': typeof import("../components/apps/user-profile/PhotosCard.vue")['default']
     'AppsUserProfilePostListing': typeof import("../components/apps/user-profile/PostListing.vue")['default']
     'AppsUserProfileBanner': typeof import("../components/apps/user-profile/ProfileBanner.vue")['default']
     'AppsUserProfileBannerOne': typeof import("../components/apps/user-profile/ProfileBannerOne.vue")['default']
-    'AppsUserProfilePostsAddPost': typeof import("../components/apps/user-profile/posts/AddPost.vue")['default']
-    'AppsUserProfilePostsComments': typeof import("../components/apps/user-profile/posts/Comments.vue")['default']
-    'AppsUserProfilePostsPostItem': typeof import("../components/apps/user-profile/posts/PostItem.vue")['default']
     'AppsUserProfileProfileOneIntroCard': typeof import("../components/apps/user-profile/profile-one/IntroCard.vue")['default']
     'AppsUserProfileProfileOneNumberCards': typeof import("../components/apps/user-profile/profile-one/NumberCards.vue")['default']
     'AppsUserProfileProfileOneTeamsCard': typeof import("../components/apps/user-profile/profile-one/TeamsCard.vue")['default']
@@ -88,6 +86,7 @@ interface _GlobalComponents {
     'AuthRegisterForm': typeof import("../components/auth/RegisterForm.vue")['default']
     'AuthResetForm': typeof import("../components/auth/ResetForm.vue")['default']
     'AuthTwoStepForm': typeof import("../components/auth/TwoStepForm.vue")['default']
+    'CommonBaseModal': typeof import("../components/common/BaseModal.vue")['default']
     'CommonErrorToaster': typeof import("../components/common/errorToaster.vue")['default']
     'DashboardsDashboard1CongratulationsCard': typeof import("../components/dashboards/dashboard1/CongratulationsCard.vue")['default']
     'DashboardsDashboard1Customers': typeof import("../components/dashboards/dashboard1/Customers.vue")['default']
@@ -225,6 +224,7 @@ interface _GlobalComponents {
     'FrontpagesContactUsContactForm': typeof import("../components/frontpages/ContactUs/ContactForm.vue")['default']
     'FrontpagesContactUsContactMap': typeof import("../components/frontpages/ContactUs/ContactMap.vue")['default']
     'FrontpagesHomepageClientReviews': typeof import("../components/frontpages/Homepage/ClientReviews.vue")['default']
+    'FrontpagesHomepageClientTabs': typeof import("../components/frontpages/Homepage/ClientTabs.vue")['default']
     'FrontpagesHomepageComponies': typeof import("../components/frontpages/Homepage/Componies.vue")['default']
     'FrontpagesHomepageContactBar': typeof import("../components/frontpages/Homepage/ContactBar.vue")['default']
     'FrontpagesHomepageFAQ': typeof import("../components/frontpages/Homepage/FAQ.vue")['default']
@@ -234,6 +234,7 @@ interface _GlobalComponents {
     'FrontpagesHomepageOurClients': typeof import("../components/frontpages/Homepage/OurClients.vue")['default']
     'FrontpagesHomepageOurTeam': typeof import("../components/frontpages/Homepage/OurTeam.vue")['default']
     'FrontpagesHomepagePackages': typeof import("../components/frontpages/Homepage/Packages.vue")['default']
+    'FrontpagesHomepageProfessionalTabs': typeof import("../components/frontpages/Homepage/ProfessionalTabs.vue")['default']
     'FrontpagesHomepagePurchaseTemplate': typeof import("../components/frontpages/Homepage/PurchaseTemplate.vue")['default']
     'FrontpagesHomepageSecurePayment': typeof import("../components/frontpages/Homepage/SecurePayment.vue")['default']
     'FrontpagesPortfolioGalleryBox': typeof import("../components/frontpages/Portfolio/GalleryBox.vue")['default']
@@ -266,7 +267,6 @@ interface _GlobalComponents {
     'LcFullLogoLight': typeof import("../components/lc/Full/logo/LogoLight.vue")['default']
     'LcFullLogoLightRtl': typeof import("../components/lc/Full/logo/LogoLightRtl.vue")['default']
     'LcFullVerticalHeaderAppsLink': typeof import("../components/lc/Full/vertical-header/AppsLink.vue")['default']
-    'LcFullVerticalHeaderLanguageDD': typeof import("../components/lc/Full/vertical-header/LanguageDD.vue")['default']
     'LcFullVerticalHeaderNavigations': typeof import("../components/lc/Full/vertical-header/Navigations.vue")['default']
     'LcFullVerticalHeaderNotificationDD': typeof import("../components/lc/Full/vertical-header/NotificationDD.vue")['default']
     'LcFullVerticalHeaderProfileDD': typeof import("../components/lc/Full/vertical-header/ProfileDD.vue")['default']
@@ -497,14 +497,12 @@ interface _GlobalComponents {
     'LazyAppsNotesContent': LazyComponent<typeof import("../components/apps/notes/NotesContent.vue")['default']>
     'LazyAppsNotesListing': LazyComponent<typeof import("../components/apps/notes/NotesListing.vue")['default']>
     'LazyAppsTicketsTicketList': LazyComponent<typeof import("../components/apps/tickets/TicketList.vue")['default']>
+    'LazyAppsUserProfileEditUserProfil': LazyComponent<typeof import("../components/apps/user-profile/EditUserProfil.vue")['default']>
     'LazyAppsUserProfileIntroCard': LazyComponent<typeof import("../components/apps/user-profile/IntroCard.vue")['default']>
     'LazyAppsUserProfilePhotosCard': LazyComponent<typeof import("../components/apps/user-profile/PhotosCard.vue")['default']>
     'LazyAppsUserProfilePostListing': LazyComponent<typeof import("../components/apps/user-profile/PostListing.vue")['default']>
     'LazyAppsUserProfileBanner': LazyComponent<typeof import("../components/apps/user-profile/ProfileBanner.vue")['default']>
     'LazyAppsUserProfileBannerOne': LazyComponent<typeof import("../components/apps/user-profile/ProfileBannerOne.vue")['default']>
-    'LazyAppsUserProfilePostsAddPost': LazyComponent<typeof import("../components/apps/user-profile/posts/AddPost.vue")['default']>
-    'LazyAppsUserProfilePostsComments': LazyComponent<typeof import("../components/apps/user-profile/posts/Comments.vue")['default']>
-    'LazyAppsUserProfilePostsPostItem': LazyComponent<typeof import("../components/apps/user-profile/posts/PostItem.vue")['default']>
     'LazyAppsUserProfileProfileOneIntroCard': LazyComponent<typeof import("../components/apps/user-profile/profile-one/IntroCard.vue")['default']>
     'LazyAppsUserProfileProfileOneNumberCards': LazyComponent<typeof import("../components/apps/user-profile/profile-one/NumberCards.vue")['default']>
     'LazyAppsUserProfileProfileOneTeamsCard': LazyComponent<typeof import("../components/apps/user-profile/profile-one/TeamsCard.vue")['default']>
@@ -512,6 +510,7 @@ interface _GlobalComponents {
     'LazyAuthRegisterForm': LazyComponent<typeof import("../components/auth/RegisterForm.vue")['default']>
     'LazyAuthResetForm': LazyComponent<typeof import("../components/auth/ResetForm.vue")['default']>
     'LazyAuthTwoStepForm': LazyComponent<typeof import("../components/auth/TwoStepForm.vue")['default']>
+    'LazyCommonBaseModal': LazyComponent<typeof import("../components/common/BaseModal.vue")['default']>
     'LazyCommonErrorToaster': LazyComponent<typeof import("../components/common/errorToaster.vue")['default']>
     'LazyDashboardsDashboard1CongratulationsCard': LazyComponent<typeof import("../components/dashboards/dashboard1/CongratulationsCard.vue")['default']>
     'LazyDashboardsDashboard1Customers': LazyComponent<typeof import("../components/dashboards/dashboard1/Customers.vue")['default']>
@@ -649,6 +648,7 @@ interface _GlobalComponents {
     'LazyFrontpagesContactUsContactForm': LazyComponent<typeof import("../components/frontpages/ContactUs/ContactForm.vue")['default']>
     'LazyFrontpagesContactUsContactMap': LazyComponent<typeof import("../components/frontpages/ContactUs/ContactMap.vue")['default']>
     'LazyFrontpagesHomepageClientReviews': LazyComponent<typeof import("../components/frontpages/Homepage/ClientReviews.vue")['default']>
+    'LazyFrontpagesHomepageClientTabs': LazyComponent<typeof import("../components/frontpages/Homepage/ClientTabs.vue")['default']>
     'LazyFrontpagesHomepageComponies': LazyComponent<typeof import("../components/frontpages/Homepage/Componies.vue")['default']>
     'LazyFrontpagesHomepageContactBar': LazyComponent<typeof import("../components/frontpages/Homepage/ContactBar.vue")['default']>
     'LazyFrontpagesHomepageFAQ': LazyComponent<typeof import("../components/frontpages/Homepage/FAQ.vue")['default']>
@@ -658,6 +658,7 @@ interface _GlobalComponents {
     'LazyFrontpagesHomepageOurClients': LazyComponent<typeof import("../components/frontpages/Homepage/OurClients.vue")['default']>
     'LazyFrontpagesHomepageOurTeam': LazyComponent<typeof import("../components/frontpages/Homepage/OurTeam.vue")['default']>
     'LazyFrontpagesHomepagePackages': LazyComponent<typeof import("../components/frontpages/Homepage/Packages.vue")['default']>
+    'LazyFrontpagesHomepageProfessionalTabs': LazyComponent<typeof import("../components/frontpages/Homepage/ProfessionalTabs.vue")['default']>
     'LazyFrontpagesHomepagePurchaseTemplate': LazyComponent<typeof import("../components/frontpages/Homepage/PurchaseTemplate.vue")['default']>
     'LazyFrontpagesHomepageSecurePayment': LazyComponent<typeof import("../components/frontpages/Homepage/SecurePayment.vue")['default']>
     'LazyFrontpagesPortfolioGalleryBox': LazyComponent<typeof import("../components/frontpages/Portfolio/GalleryBox.vue")['default']>
@@ -690,7 +691,6 @@ interface _GlobalComponents {
     'LazyLcFullLogoLight': LazyComponent<typeof import("../components/lc/Full/logo/LogoLight.vue")['default']>
     'LazyLcFullLogoLightRtl': LazyComponent<typeof import("../components/lc/Full/logo/LogoLightRtl.vue")['default']>
     'LazyLcFullVerticalHeaderAppsLink': LazyComponent<typeof import("../components/lc/Full/vertical-header/AppsLink.vue")['default']>
-    'LazyLcFullVerticalHeaderLanguageDD': LazyComponent<typeof import("../components/lc/Full/vertical-header/LanguageDD.vue")['default']>
     'LazyLcFullVerticalHeaderNavigations': LazyComponent<typeof import("../components/lc/Full/vertical-header/Navigations.vue")['default']>
     'LazyLcFullVerticalHeaderNotificationDD': LazyComponent<typeof import("../components/lc/Full/vertical-header/NotificationDD.vue")['default']>
     'LazyLcFullVerticalHeaderProfileDD': LazyComponent<typeof import("../components/lc/Full/vertical-header/ProfileDD.vue")['default']>
@@ -927,14 +927,12 @@ export const AppsNotesAddNote: typeof import("../components/apps/notes/AddNote.v
 export const AppsNotesContent: typeof import("../components/apps/notes/NotesContent.vue")['default']
 export const AppsNotesListing: typeof import("../components/apps/notes/NotesListing.vue")['default']
 export const AppsTicketsTicketList: typeof import("../components/apps/tickets/TicketList.vue")['default']
+export const AppsUserProfileEditUserProfil: typeof import("../components/apps/user-profile/EditUserProfil.vue")['default']
 export const AppsUserProfileIntroCard: typeof import("../components/apps/user-profile/IntroCard.vue")['default']
 export const AppsUserProfilePhotosCard: typeof import("../components/apps/user-profile/PhotosCard.vue")['default']
 export const AppsUserProfilePostListing: typeof import("../components/apps/user-profile/PostListing.vue")['default']
 export const AppsUserProfileBanner: typeof import("../components/apps/user-profile/ProfileBanner.vue")['default']
 export const AppsUserProfileBannerOne: typeof import("../components/apps/user-profile/ProfileBannerOne.vue")['default']
-export const AppsUserProfilePostsAddPost: typeof import("../components/apps/user-profile/posts/AddPost.vue")['default']
-export const AppsUserProfilePostsComments: typeof import("../components/apps/user-profile/posts/Comments.vue")['default']
-export const AppsUserProfilePostsPostItem: typeof import("../components/apps/user-profile/posts/PostItem.vue")['default']
 export const AppsUserProfileProfileOneIntroCard: typeof import("../components/apps/user-profile/profile-one/IntroCard.vue")['default']
 export const AppsUserProfileProfileOneNumberCards: typeof import("../components/apps/user-profile/profile-one/NumberCards.vue")['default']
 export const AppsUserProfileProfileOneTeamsCard: typeof import("../components/apps/user-profile/profile-one/TeamsCard.vue")['default']
@@ -942,6 +940,7 @@ export const AuthLoginForm: typeof import("../components/auth/LoginForm.vue")['d
 export const AuthRegisterForm: typeof import("../components/auth/RegisterForm.vue")['default']
 export const AuthResetForm: typeof import("../components/auth/ResetForm.vue")['default']
 export const AuthTwoStepForm: typeof import("../components/auth/TwoStepForm.vue")['default']
+export const CommonBaseModal: typeof import("../components/common/BaseModal.vue")['default']
 export const CommonErrorToaster: typeof import("../components/common/errorToaster.vue")['default']
 export const DashboardsDashboard1CongratulationsCard: typeof import("../components/dashboards/dashboard1/CongratulationsCard.vue")['default']
 export const DashboardsDashboard1Customers: typeof import("../components/dashboards/dashboard1/Customers.vue")['default']
@@ -1079,6 +1078,7 @@ export const FrontpagesBlogDetails: typeof import("../components/frontpages/Blog
 export const FrontpagesContactUsContactForm: typeof import("../components/frontpages/ContactUs/ContactForm.vue")['default']
 export const FrontpagesContactUsContactMap: typeof import("../components/frontpages/ContactUs/ContactMap.vue")['default']
 export const FrontpagesHomepageClientReviews: typeof import("../components/frontpages/Homepage/ClientReviews.vue")['default']
+export const FrontpagesHomepageClientTabs: typeof import("../components/frontpages/Homepage/ClientTabs.vue")['default']
 export const FrontpagesHomepageComponies: typeof import("../components/frontpages/Homepage/Componies.vue")['default']
 export const FrontpagesHomepageContactBar: typeof import("../components/frontpages/Homepage/ContactBar.vue")['default']
 export const FrontpagesHomepageFAQ: typeof import("../components/frontpages/Homepage/FAQ.vue")['default']
@@ -1088,6 +1088,7 @@ export const FrontpagesHomepageMainbanner: typeof import("../components/frontpag
 export const FrontpagesHomepageOurClients: typeof import("../components/frontpages/Homepage/OurClients.vue")['default']
 export const FrontpagesHomepageOurTeam: typeof import("../components/frontpages/Homepage/OurTeam.vue")['default']
 export const FrontpagesHomepagePackages: typeof import("../components/frontpages/Homepage/Packages.vue")['default']
+export const FrontpagesHomepageProfessionalTabs: typeof import("../components/frontpages/Homepage/ProfessionalTabs.vue")['default']
 export const FrontpagesHomepagePurchaseTemplate: typeof import("../components/frontpages/Homepage/PurchaseTemplate.vue")['default']
 export const FrontpagesHomepageSecurePayment: typeof import("../components/frontpages/Homepage/SecurePayment.vue")['default']
 export const FrontpagesPortfolioGalleryBox: typeof import("../components/frontpages/Portfolio/GalleryBox.vue")['default']
@@ -1120,7 +1121,6 @@ export const LcFullLogoIcon: typeof import("../components/lc/Full/logo/LogoIcon.
 export const LcFullLogoLight: typeof import("../components/lc/Full/logo/LogoLight.vue")['default']
 export const LcFullLogoLightRtl: typeof import("../components/lc/Full/logo/LogoLightRtl.vue")['default']
 export const LcFullVerticalHeaderAppsLink: typeof import("../components/lc/Full/vertical-header/AppsLink.vue")['default']
-export const LcFullVerticalHeaderLanguageDD: typeof import("../components/lc/Full/vertical-header/LanguageDD.vue")['default']
 export const LcFullVerticalHeaderNavigations: typeof import("../components/lc/Full/vertical-header/Navigations.vue")['default']
 export const LcFullVerticalHeaderNotificationDD: typeof import("../components/lc/Full/vertical-header/NotificationDD.vue")['default']
 export const LcFullVerticalHeaderProfileDD: typeof import("../components/lc/Full/vertical-header/ProfileDD.vue")['default']
@@ -1351,14 +1351,12 @@ export const LazyAppsNotesAddNote: LazyComponent<typeof import("../components/ap
 export const LazyAppsNotesContent: LazyComponent<typeof import("../components/apps/notes/NotesContent.vue")['default']>
 export const LazyAppsNotesListing: LazyComponent<typeof import("../components/apps/notes/NotesListing.vue")['default']>
 export const LazyAppsTicketsTicketList: LazyComponent<typeof import("../components/apps/tickets/TicketList.vue")['default']>
+export const LazyAppsUserProfileEditUserProfil: LazyComponent<typeof import("../components/apps/user-profile/EditUserProfil.vue")['default']>
 export const LazyAppsUserProfileIntroCard: LazyComponent<typeof import("../components/apps/user-profile/IntroCard.vue")['default']>
 export const LazyAppsUserProfilePhotosCard: LazyComponent<typeof import("../components/apps/user-profile/PhotosCard.vue")['default']>
 export const LazyAppsUserProfilePostListing: LazyComponent<typeof import("../components/apps/user-profile/PostListing.vue")['default']>
 export const LazyAppsUserProfileBanner: LazyComponent<typeof import("../components/apps/user-profile/ProfileBanner.vue")['default']>
 export const LazyAppsUserProfileBannerOne: LazyComponent<typeof import("../components/apps/user-profile/ProfileBannerOne.vue")['default']>
-export const LazyAppsUserProfilePostsAddPost: LazyComponent<typeof import("../components/apps/user-profile/posts/AddPost.vue")['default']>
-export const LazyAppsUserProfilePostsComments: LazyComponent<typeof import("../components/apps/user-profile/posts/Comments.vue")['default']>
-export const LazyAppsUserProfilePostsPostItem: LazyComponent<typeof import("../components/apps/user-profile/posts/PostItem.vue")['default']>
 export const LazyAppsUserProfileProfileOneIntroCard: LazyComponent<typeof import("../components/apps/user-profile/profile-one/IntroCard.vue")['default']>
 export const LazyAppsUserProfileProfileOneNumberCards: LazyComponent<typeof import("../components/apps/user-profile/profile-one/NumberCards.vue")['default']>
 export const LazyAppsUserProfileProfileOneTeamsCard: LazyComponent<typeof import("../components/apps/user-profile/profile-one/TeamsCard.vue")['default']>
@@ -1366,6 +1364,7 @@ export const LazyAuthLoginForm: LazyComponent<typeof import("../components/auth/
 export const LazyAuthRegisterForm: LazyComponent<typeof import("../components/auth/RegisterForm.vue")['default']>
 export const LazyAuthResetForm: LazyComponent<typeof import("../components/auth/ResetForm.vue")['default']>
 export const LazyAuthTwoStepForm: LazyComponent<typeof import("../components/auth/TwoStepForm.vue")['default']>
+export const LazyCommonBaseModal: LazyComponent<typeof import("../components/common/BaseModal.vue")['default']>
 export const LazyCommonErrorToaster: LazyComponent<typeof import("../components/common/errorToaster.vue")['default']>
 export const LazyDashboardsDashboard1CongratulationsCard: LazyComponent<typeof import("../components/dashboards/dashboard1/CongratulationsCard.vue")['default']>
 export const LazyDashboardsDashboard1Customers: LazyComponent<typeof import("../components/dashboards/dashboard1/Customers.vue")['default']>
@@ -1503,6 +1502,7 @@ export const LazyFrontpagesBlogDetails: LazyComponent<typeof import("../componen
 export const LazyFrontpagesContactUsContactForm: LazyComponent<typeof import("../components/frontpages/ContactUs/ContactForm.vue")['default']>
 export const LazyFrontpagesContactUsContactMap: LazyComponent<typeof import("../components/frontpages/ContactUs/ContactMap.vue")['default']>
 export const LazyFrontpagesHomepageClientReviews: LazyComponent<typeof import("../components/frontpages/Homepage/ClientReviews.vue")['default']>
+export const LazyFrontpagesHomepageClientTabs: LazyComponent<typeof import("../components/frontpages/Homepage/ClientTabs.vue")['default']>
 export const LazyFrontpagesHomepageComponies: LazyComponent<typeof import("../components/frontpages/Homepage/Componies.vue")['default']>
 export const LazyFrontpagesHomepageContactBar: LazyComponent<typeof import("../components/frontpages/Homepage/ContactBar.vue")['default']>
 export const LazyFrontpagesHomepageFAQ: LazyComponent<typeof import("../components/frontpages/Homepage/FAQ.vue")['default']>
@@ -1512,6 +1512,7 @@ export const LazyFrontpagesHomepageMainbanner: LazyComponent<typeof import("../c
 export const LazyFrontpagesHomepageOurClients: LazyComponent<typeof import("../components/frontpages/Homepage/OurClients.vue")['default']>
 export const LazyFrontpagesHomepageOurTeam: LazyComponent<typeof import("../components/frontpages/Homepage/OurTeam.vue")['default']>
 export const LazyFrontpagesHomepagePackages: LazyComponent<typeof import("../components/frontpages/Homepage/Packages.vue")['default']>
+export const LazyFrontpagesHomepageProfessionalTabs: LazyComponent<typeof import("../components/frontpages/Homepage/ProfessionalTabs.vue")['default']>
 export const LazyFrontpagesHomepagePurchaseTemplate: LazyComponent<typeof import("../components/frontpages/Homepage/PurchaseTemplate.vue")['default']>
 export const LazyFrontpagesHomepageSecurePayment: LazyComponent<typeof import("../components/frontpages/Homepage/SecurePayment.vue")['default']>
 export const LazyFrontpagesPortfolioGalleryBox: LazyComponent<typeof import("../components/frontpages/Portfolio/GalleryBox.vue")['default']>
@@ -1544,7 +1545,6 @@ export const LazyLcFullLogoIcon: LazyComponent<typeof import("../components/lc/F
 export const LazyLcFullLogoLight: LazyComponent<typeof import("../components/lc/Full/logo/LogoLight.vue")['default']>
 export const LazyLcFullLogoLightRtl: LazyComponent<typeof import("../components/lc/Full/logo/LogoLightRtl.vue")['default']>
 export const LazyLcFullVerticalHeaderAppsLink: LazyComponent<typeof import("../components/lc/Full/vertical-header/AppsLink.vue")['default']>
-export const LazyLcFullVerticalHeaderLanguageDD: LazyComponent<typeof import("../components/lc/Full/vertical-header/LanguageDD.vue")['default']>
 export const LazyLcFullVerticalHeaderNavigations: LazyComponent<typeof import("../components/lc/Full/vertical-header/Navigations.vue")['default']>
 export const LazyLcFullVerticalHeaderNotificationDD: LazyComponent<typeof import("../components/lc/Full/vertical-header/NotificationDD.vue")['default']>
 export const LazyLcFullVerticalHeaderProfileDD: LazyComponent<typeof import("../components/lc/Full/vertical-header/ProfileDD.vue")['default']>

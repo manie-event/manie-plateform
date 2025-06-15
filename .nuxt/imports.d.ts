@@ -29,10 +29,12 @@ export { withCtx, withDirectives, withKeys, withMemo, withModifiers, withScopeId
 export { requestIdleCallback, cancelIdleCallback } from '#app/compat/idle-callback';
 export { setInterval } from '#app/compat/interval';
 export { useAuthentification } from '../composables/UseAuthentification';
+export { useUserProfile } from '../composables/UseUserProfile';
 export { customizer, getPrimary, getSecondary, getLightPrimary, getLightSecondary, getLight100, getLightborder, getTextGrey100, getWarning, getError } from '../utils/UpdateColors';
 export { default as axios } from '../utils/axios';
 export { useErrorToaster } from '../utils/errorToaster';
 export { useCustomizerStore } from '../stores/customizer';
+export { useUserStore } from '../stores/userStore';
 export { defineStore, acceptHMRUpdate, usePinia, storeToRefs } from '../node_modules/@pinia/nuxt/dist/runtime/composables';
 export { useNuxtDevTools } from '../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools';
 export { definePageMeta } from '../node_modules/nuxt/dist/pages/runtime/composables';

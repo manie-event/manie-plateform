@@ -142,11 +142,11 @@ const setHoverState = (key: string, value: boolean) => {
       height="100%"
       elevation="10"
       rounded="md"
-      class="pa-8 mx-auto"
+      class="pa-8 mx-auto mt-6"
     >
-      <h5 class="text-h5">Different Front Pages</h5>
-      <p class="text-subtitle-1 font-weight-medium textSecondary mt-1">Included with the package</p>
-      <div class="v-row mt-3">
+      <!-- <h5 class="text-h5">Different Front Pages</h5>
+      <p class="text-subtitle-1 font-weight-medium textSecondary mt-1">Included with the package</p> -->
+      <div class="v-row my-5 top-7">
         <v-col v-for="demo in FrontPageMenu.slice(0, 4)" :key="demo.img">
           <v-sheet class="text-center position-relative">
             <div class="overflow-hidden rounded-md border">

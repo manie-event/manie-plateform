@@ -1,6 +1,4 @@
 <script setup>
-import Icon from '../Icon.vue';
-
 const props = defineProps({ item: Object, level: Number });
 </script>
 
@@ -21,9 +19,7 @@ const props = defineProps({ item: Object, level: Number });
       <template v-slot:prepend>
         <div class="sublink-dot ml-4"></div>
       </template>
-      <v-list-item-title class="ml-4 text-body-1 text-darkText">{{
-        $t(item.title)
-      }}</v-list-item-title>
+      <v-list-item-title class="ml-4 text-body-1 text-darkText">{{ item.title }}</v-list-item-title>
       <!---If Caption-->
       <v-list-item-subtitle v-if="item.subCaption" class="text-caption mt-n1 hide-menu">
         {{ item.subCaption }}

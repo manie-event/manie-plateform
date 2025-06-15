@@ -26,7 +26,7 @@
             data-aos-duration="1000"
           >
             <v-btn
-              to="/auth/Login"
+              :to="token ? '/dashboards/dashboard1' : '/auth/Login'"
               color="primary"
               rounded="pill"
               class="mt-sm-0 mt-4 lp-btn-shadow m-btn-full btn-custom-lg mb-sm-0 mb-4"
@@ -37,7 +37,7 @@
         </v-col>
       </v-row>
     </v-container>
-    <div class="">
+    <!-- <div class="">
       <div class="d-flex flex-row mt-sm-8 mt-5 overflow-hidden">
         <div class="slider-group">
           <img src="/images/landingpage/slider/slider-group.png" />
@@ -55,6 +55,9 @@
           <img src="/images/landingpage/slider/slider-group.png" />
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
+<script setup lang="ts">
+const token = useCookie('token');
+</script>

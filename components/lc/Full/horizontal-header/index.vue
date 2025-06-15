@@ -1,19 +1,9 @@
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue';
-import { useCustomizerStore } from '@/stores/customizer';
 import { useEcomStore } from '@/stores/apps/eCommerce';
+import { useCustomizerStore } from '@/stores/customizer';
+import { computed, ref, watch } from 'vue';
 // Icon Imports
-import {
-  GridDotsIcon,
-  LanguageIcon,
-  SearchIcon,
-  Menu2Icon,
-  BellRingingIcon,
-  ShoppingCartIcon,
-} from 'vue-tabler-icons';
-import Logo from '../logo/Logo.vue';
 // dropdown imports
-import RightMobileSidebar from '../vertical-header/RightMobileSidebar.vue';
 import { Icon } from '@iconify/vue';
 const customizer = useCustomizerStore();
 const showSearch = ref(false);
@@ -89,9 +79,6 @@ const getCart = computed(() => {
       <!-- ---------------------------------------------- -->
       <!-- translate -->
       <!-- ---------------------------------------------- -->
-      <div class="hidden-sm-and-down me-sm-4 me-4">
-        <LcFullVerticalHeaderLanguageDD />
-      </div>
 
       <!-- ---------------------------------------------- -->
       <!-- ShoppingCart -->
@@ -141,7 +128,6 @@ const getCart = computed(() => {
             <div class="mr-sm-3 mr-2">
               <LcFullVerticalHeaderSearchbar />
             </div>
-            <LcFullVerticalHeaderLanguageDD />
             <v-btn
               icon
               variant="text"

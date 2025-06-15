@@ -33,7 +33,7 @@ const props = defineProps({ item: Object, level: Number });
         </div>
       </template>
       <v-list-item-title class="text-subtitle-1 font-weight-medium" :color="item.BgColor">{{
-        $t(item.title)
+        item.title
       }}</v-list-item-title>
       <!---If Caption-->
       <v-list-item-subtitle v-if="item.subCaption" class="text-caption mt-n1 hide-menu">

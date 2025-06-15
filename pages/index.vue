@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import LpFooter from '@/components/landingpage/layout/Footer.vue';
+import Footer from '@/components/frontpages/layout/Footer.vue';
 import LpHeader from '@/components/landingpage/layout/Header.vue';
-import Purchase from '@/components/landingpage/section/Purchase.vue';
-import Revolution from '@/components/landingpage/section/Revolution.vue';
-import Features from '@/components/landingpage/section/otherFeatures.vue';
-import UserReview from '@/components/landingpage/section/userReview.vue';
 import { onMounted } from 'vue';
+import Homepage from './front-pages/Homepage.vue';
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -28,14 +25,14 @@ definePageMeta({
     </ClientOnly>
     <!----------->
     <!--Content-->
-    <Revolution />
+    <Homepage />
     <!-- <OurProducts /> -->
-    <Features />
+    <!-- <Features />
     <UserReview />
-    <Purchase />
+    <Purchase /> -->
     <!----------->
     <!--Footer-->
-    <LpFooter />
+    <Footer />
     <!----------->
   </div>
 </template>

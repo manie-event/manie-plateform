@@ -4,6 +4,7 @@ import { Icon } from '@iconify/vue';
 import { CircleXIcon, MailIcon } from 'vue-tabler-icons';
 import { useAuthentification } from '../../../../composables/UseAuthentification';
 
+const { user } = useUserStore();
 const { sendLogout } = useAuthentification();
 const router = useRouter();
 
@@ -25,9 +26,11 @@ const callLogOut = () => {
           </v-avatar>
           <div class="ml-md-4 d-md-block d-none">
             <h6 class="text-h6 d-flex align-center text-black font-weight-semibold">
-              Mike Nielsen
+              {{ user.nomComplet }}
             </h6>
-            <span class="text-subtitle-2 font-weight-medium text-grey100">Admin</span>
+            <span class="text-subtitle-2 font-weight-medium text-grey100">{{
+              user.category == 'consumer' ? 'Client' : 'Prestataire'
+            }}</span>
           </div>
         </div>
       </div>

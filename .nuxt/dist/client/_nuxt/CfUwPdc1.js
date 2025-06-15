@@ -1,0 +1,1 @@
+import{x as s,z as r}from"./BR_J5eSC.js";const i=s({id:"Frineds",state:()=>({friends:[]}),getters:{},actions:{async fetchFrineds(){try{const e=await r.get("/api/friends/list");this.friends=e.data.friends}catch(e){alert(e),console.log(e)}}}});export{i as u};

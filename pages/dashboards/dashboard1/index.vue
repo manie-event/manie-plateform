@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import CongratsCard from '@/components/dashboards/dashboard1/CongratulationsCard.vue';
+import Customers from '@/components/dashboards/dashboard1/Customers.vue';
+import LatestDeal from '@/components/dashboards/dashboard1/LatestDeals.vue';
+import LatestReviews from '@/components/dashboards/dashboard1/LatestReviews.vue';
 import Payments from '@/components/dashboards/dashboard1/Payments.vue';
 import Products from '@/components/dashboards/dashboard1/ProductsChart.vue';
-import LatestDeal from '@/components/dashboards/dashboard1/LatestDeals.vue';
-import Customers from '@/components/dashboards/dashboard1/Customers.vue';
 import ProductsTable from '@/components/dashboards/dashboard1/ProductsTable.vue';
 import VisitFromUsa from '@/components/dashboards/dashboard1/VisitFromUsa.vue';
-import LatestReviews from '@/components/dashboards/dashboard1/LatestReviews.vue';
 import Snackbar from '@/components/dashboards/snackbar.vue';
 </script>
 

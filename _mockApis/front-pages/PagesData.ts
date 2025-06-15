@@ -143,6 +143,23 @@ const QA4: faqPageType[] = [
       'Factor in availability for required attendees, and skip checking for conflicts for optional attendees.',
   },
 ];
+const QA5: faqPageType[] = [
+  {
+    question: 'Combine teammate schedules 4',
+    answer:
+      'Factor in availability for required attendees, and skip checking for conflicts for optional attendees.',
+  },
+  {
+    question: 'Factor in outside colleagues',
+    answer:
+      'Factor in availability for required attendees, and skip checking for conflicts for optional attendees.',
+  },
+  {
+    question: 'Round robin pooling',
+    answer:
+      'Factor in availability for required attendees, and skip checking for conflicts for optional attendees.',
+  },
+];
 
 // OurLeaders
 import type { UserReviewTypes } from '@/types/landingpage/LandingpageTypes';

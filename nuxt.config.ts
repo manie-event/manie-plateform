@@ -5,7 +5,7 @@ const { resolve } = createResolver(import.meta.url);
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   // Enable server-side rendering
-  ssr: true,
+  ssr: false,
   runtimeConfig: {
     public: {
       apiUrl: process.env.NUXT_API_URL || 'https://manie-api.onrender.com',
