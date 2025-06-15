@@ -55,7 +55,6 @@
     "pinia": "2.2.2",
     "remixicon": "2.5.0",
     "sass": "1.70.0",
-    "svgmap": "2.10.1",
     "vee-validate": "4.6.7",
     "vite-plugin-vuetify": "2.0.4",
     "vue": "^3.5.7",

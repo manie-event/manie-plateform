@@ -1,1 +1,0 @@
-export { default } from "file:///Users/clementmoreno/Documents/manie-plateform/node_modules/@nuxt/vite-builder/dist/runtime/vite-node.mjs"

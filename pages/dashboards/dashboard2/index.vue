@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import WelcomeCard from '@/components/dashboards/dashboard2/WelcomeCard.vue';
 import TextCards from '@/components/dashboards/dashboard2/TextCards.vue';
 import ProfitExpanse from '@/components/dashboards/dashboard2/ProfitExpanse.vue';

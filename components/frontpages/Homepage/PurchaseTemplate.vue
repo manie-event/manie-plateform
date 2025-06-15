@@ -7,7 +7,7 @@ import LogoIcon from '~/components/lc/Full/logo/LogoIcon.vue';
     <img
       src="/images/front-pages/background/left-widget.png"
       alt="widget"
-      class="left-widget d-xl-block d-none"
+      class="left-widget d-lg-block pr-16"
     />
     <v-container class="max-width-1000">
       <div class="d-flex justify-center">
@@ -18,12 +18,13 @@ import LogoIcon from '~/components/lc/Full/logo/LogoIcon.vue';
         </div>
       </div>
       <h3 class="display-1 font-weight-bold text-center py-6">
-        Focus on what truly matters—creating stunning, functional designs.
+        Gardez votre énérgie pour les choses importantes
       </h3>
       <div class="max-w-600 mx-auto">
         <p class="text-18 text-center">
-          Designed for ease of use and customization, this template help you build professional
-          dashboards faster.
+          Manie vous facilite la création et la gestion de votre évènement en facilitant la mise en
+          relation aux prestataires locaux. Nos outils vous permettent de gérer les invitations, les
+          paiements et la logistique de votre évènement en toute simplicité.
         </p>
       </div>
       <div class="d-flex justify-center">
@@ -36,14 +37,14 @@ import LogoIcon from '~/components/lc/Full/logo/LogoIcon.vue';
           color="white"
           size="large"
           flat
-          >Register</v-btn
+          >Je me lance !</v-btn
         >
       </div>
     </v-container>
     <img
       src="/images/front-pages/background/right-widget.png"
       alt="widget"
-      class="right-widget d-xl-block d-none"
+      class="right-widget d-lg-block"
     />
   </div>
 </template>

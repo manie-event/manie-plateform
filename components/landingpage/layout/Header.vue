@@ -9,6 +9,20 @@ import MobileSidebar from '@/components/landingpage/layout/MobileSidebar.vue';
 import { Menu2Icon } from 'vue-tabler-icons';
 const appsdrawer = ref(false);
 const customizer = useCustomizerStore();
+
+const whiteBgOnScroll = ref(false);
+const handleScroll = () => {
+  whiteBgOnScroll.value = window.scrollY > 80;
+  console.log('Scroll position:', window.scrollY);
+};
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+});
 </script>
 <template>
   <div>
@@ -16,9 +30,12 @@ const customizer = useCustomizerStore();
       <!-- -----------------------------------------------
                             Start Header
                             ----------------------------------------------- -->
-      <v-app-bar height="80" class="lp-header" flat>
+      <v-app-bar height="80" class="lp-header bg-transparent" flat>
         <v-container class="maxWidth py-sm-4 py-0">
-          <v-toolbar class="d-flex align-center bg-surface">
+          <v-toolbar
+            class="d-flex align-center"
+            :class="whiteBgOnScroll ? 'header-scrolled' : 'bg-transparent'"
+          >
             <div>
               <LcFullLogo />
             </div>
@@ -56,3 +73,14 @@ const customizer = useCustomizerStore();
     </v-navigation-drawer>
   </div>
 </template>
+<style lang="scss" scoped>
+.header-scrolled {
+  background-color: #ffffff !important;
+  background-size: 100% 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+</style>

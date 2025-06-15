@@ -1,6 +1,5 @@
 <script>
 import { ref } from 'vue';
-import { InfoCircleIcon, XIcon } from 'vue-tabler-icons';
 export default {
   setup() {
     const showSnackbar = ref(false);

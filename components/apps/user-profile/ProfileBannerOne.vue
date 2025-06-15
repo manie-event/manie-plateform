@@ -1,26 +1,3 @@
-<script setup lang="ts">
-import { ref, shallowRef } from 'vue';
-import {
-  HeartIcon,
-  IdIcon,
-  Layout2Icon,
-  PhotoIcon,
-  PlusIcon,
-  UserCircleIcon,
-  UsersIcon,
-} from 'vue-tabler-icons';
-import profileBg from '/images/backgrounds/profilebg-2.jpg';
-import UserImage from '/images/profile/user6.jpg';
-
-const tab = ref(null);
-const items = shallowRef([
-  { tab: 'My Profile', icon: UserCircleIcon, href: '/apps/userprofile/one' },
-  { tab: 'Teams', icon: UsersIcon, href: '/apps/userprofile/one/teams' },
-  { tab: 'Projects', icon: Layout2Icon, href: '/apps/userprofile/one/projects' },
-  { tab: 'Connection', icon: IdIcon, href: '/apps/userprofile/one/connection' },
-]);
-</script>
-
 <template>
   <img :src="profileBg" alt="profile" class="w-100" />
   <div class="mx-sm-5">
@@ -39,7 +16,7 @@ const items = shallowRef([
               </div>
               <div class="ml-sm-4 text-sm-left text-center">
                 <h5 class="text-h3 font-weight-semibold mb-1 my-sm-0 my-2">
-                  Mike Nielsen
+                  {{ user?.nomComplet ?? 'Définir votre nom complet' }}
                   <v-chip
                     color="primary"
                     class="bg-lightprimary font-weight-semibold ml-2 mt-n1"
@@ -48,15 +25,9 @@ const items = shallowRef([
                     >Admin</v-chip
                   >
                 </h5>
-                <span class="text-h6 font-weight-medium text-grey100"
-                  >Dream big. Think different. Do great!</span
-                >
-                <div
-                  class="text-subtitle-1 font-weight-semibold text-grey200 d-flex align-center mt-1 justify-sm-start justify-center"
-                >
-                  <div class="bg-success pa-1 rounded-circle mr-2"></div>
-                  Active
-                </div>
+                <span class="text-h6 font-weight-medium text-grey100">{{
+                  user?.phraseInspirante ?? 'Aucune phrase inspirante définie'
+                }}</span>
               </div>
             </div>
           </v-col>
@@ -67,7 +38,9 @@ const items = shallowRef([
             class="d-flex align-center justify-center justify-sm-end order-sm-third"
           >
             <div class="">
-              <v-btn color="primary" size="large">Edit Profile</v-btn>
+              <v-btn color="primary" size="large" @click="openEditProfilModal()"
+                >Editez votre profil</v-btn
+              >
             </div>
           </v-col>
         </v-row>
@@ -95,7 +68,40 @@ const items = shallowRef([
       </v-card-item>
     </v-card>
   </div>
+  <Teleport to="body">
+    <EditerUserProfile v-model:openModal="openModal" />
+  </Teleport>
 </template>
+
+<script setup lang="ts">
+import EditerUserProfile from '@/components/apps/user-profile/EditUserProfil.vue';
+import { ref, shallowRef, Teleport } from 'vue';
+import { IdIcon, Layout2Icon, PlusIcon, UserCircleIcon, UsersIcon } from 'vue-tabler-icons';
+import profileBg from '/images/backgrounds/profilebg-2.jpg';
+import UserImage from '/images/profile/user6.jpg';
+
+const tab = ref(null);
+const openModal = ref(false);
+
+const { getUserProfile } = useUserProfile();
+const { user } = storeToRefs(useUserStore());
+
+const items = shallowRef([
+  { tab: 'My Profile', icon: UserCircleIcon, href: '/apps/userprofile/one' },
+  { tab: 'Teams', icon: UsersIcon, href: '/apps/userprofile/one/teams' },
+  { tab: 'Projects', icon: Layout2Icon, href: '/apps/userprofile/one/projects' },
+  { tab: 'Connection', icon: IdIcon, href: '/apps/userprofile/one/connection' },
+]);
+
+const openEditProfilModal = () => {
+  openModal.value = !openModal.value;
+};
+
+onMounted(() => {
+  getUserProfile();
+});
+</script>
+
 <style lang="scss">
 .avatar-border {
   background-image: linear-gradient(rgb(80, 178, 252), rgb(244, 76, 102));

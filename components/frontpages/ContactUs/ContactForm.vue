@@ -1,7 +1,17 @@
 <script setup lang="ts">
+import type { ContactMessage } from '@/models/contact/contactMessage';
 import { ref } from 'vue';
-const select = ref('General Enquiry');
-const items = ref(['General Enquiry', 'option 2', 'option 3', 'option 4']);
+const select = ref();
+const items = ref(['Question générale', 'Demande de rendez-vous', 'option 3', 'option 4']);
+
+const message = ref<ContactMessage>({
+  firstName: '',
+  lastName: '',
+  phoneNumber: '',
+  email: '',
+  subject: 'Question générale',
+  message: '',
+});
 </script>
 <template>
   <div class="pt-3 bg-background pb-14">
@@ -15,12 +25,16 @@ const items = ref(['General Enquiry', 'option 2', 'option 3', 'option 4']);
               src="/images/front-pages/background/contact-icon.png"
               class="position-absolute end-0 top-0 rtlImg"
             />
-            <h4 class="text-18 font-weight-bold mb-4">Reach Out Today</h4>
+            <h4 class="text-18 font-weight-bold mb-4">A votre service</h4>
             <p class="text-16 font-weight-regular position-relative z-1">
-              Have questions or need assistance? We're just a message away.
+              Vous avez des questions ou souhaitez en savoir plus sur nos services ? N'hésitez pas à
+              nous contacter.
             </p>
             <v-divider class="my-10 opacity-20"></v-divider>
-            <h4 class="text-18 font-weight-bold mb-4">Our Location</h4>
+            <h4 class="text-18 font-weight-bold mb-4">
+              Basé à Lyon disponible en <br />
+              Rhône-Alpes
+            </h4>
             <p class="text-16 font-weight-regular">
               Visit us in person or find our contact details to connect with us directly.
             </p>
@@ -31,30 +45,33 @@ const items = ref(['General Enquiry', 'option 2', 'option 3', 'option 4']);
             <v-card-item>
               <v-row>
                 <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium">First Name *</v-label>
+                  <v-label class="mb-2 font-weight-medium">Prénom * </v-label>
                   <v-text-field
                     hide-details
                     variant="outlined"
-                    placeholder="Name"
+                    placeholder="Jean"
                     color="primary"
+                    v-model="message.firstName"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium">Last Name *</v-label>
+                  <v-label class="mb-2 font-weight-medium">Nom *</v-label>
                   <v-text-field
                     hide-details
                     variant="outlined"
-                    placeholder="Last Name"
+                    placeholder="Martin"
                     color="primary"
+                    v-model="message.lastName"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="6">
-                  <v-label class="mb-2 font-weight-medium">Phone Number *</v-label>
+                  <v-label class="mb-2 font-weight-medium">Numéro de téléphone *</v-label>
                   <v-text-field
                     hide-details
                     variant="outlined"
                     placeholder="xxx xxx xxxx"
                     color="primary"
+                    v-model="message.phoneNumber"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="6">
@@ -62,14 +79,14 @@ const items = ref(['General Enquiry', 'option 2', 'option 3', 'option 4']);
                   <v-text-field
                     hide-details
                     variant="outlined"
-                    placeholder="Email address "
+                    placeholder="Votre adresse email"
                     color="primary"
+                    v-model="message.email"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12">
-                  <v-label class="mb-2 font-weight-medium">Enquire related to *</v-label>
+                  <v-label class="mb-2 font-weight-medium">Je vous contacte au sujet de :</v-label>
                   <v-select
-                    v-model="select"
                     :items="items"
                     item-title="state"
                     item-value="abbr"
@@ -78,14 +95,18 @@ const items = ref(['General Enquiry', 'option 2', 'option 3', 'option 4']);
                     single-line
                     variant="outlined"
                     hide-details
+                    v-model="message.subject"
                   ></v-select>
                 </v-col>
                 <v-col cols="12">
                   <v-label class="mb-2 font-weight-medium">Message</v-label>
                   <v-textarea
-                    label="Write your message here..."
+                    placeholder="Bonjour, j'aimerais en savoir plus sur vos services..."
+                    auto-grow
+                    rows="4"
                     variant="outlined"
                     hide-details
+                    v-model="message.message"
                   ></v-textarea>
                 </v-col>
                 <v-col cols="12" class="text-md-end">
@@ -97,7 +118,8 @@ const items = ref(['General Enquiry', 'option 2', 'option 3', 'option 4']);
                     flat
                     href=""
                     target="_blank"
-                    >Send Message</v-btn
+                    @click.prevent="console.log(message)"
+                    >Envoyez votre message</v-btn
                   >
                 </v-col>
               </v-row>

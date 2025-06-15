@@ -1,16 +1,8 @@
 <script setup lang="ts">
-import { ref, watch, onBeforeMount } from 'vue';
-import { useCustomizerStore } from '@/stores/customizer';
 import { useEcomStore } from '@/stores/apps/eCommerce';
+import { useCustomizerStore } from '@/stores/customizer';
+import { onBeforeMount, ref, watch } from 'vue';
 // Icon Imports
-import {
-  GridDotsIcon,
-  LanguageIcon,
-  SearchIcon,
-  Menu2Icon,
-  BellRingingIcon,
-  ShoppingCartIcon,
-} from 'vue-tabler-icons';
 import { Icon } from '@iconify/vue';
 const customizer = useCustomizerStore();
 const showSearch = ref(false);
@@ -97,9 +89,7 @@ function handleScroll() {
     <!-- ---------------------------------------------- -->
     <!-- translate -->
     <!-- ---------------------------------------------- -->
-    <div class="hidden-sm-and-down me-sm-4 me-4">
-      <LcFullVerticalHeaderLanguageDD />
-    </div>
+    <div class="hidden-sm-and-down me-sm-4 me-4"></div>
 
     <!-- ---------------------------------------------- -->
     <!-- ShoppingCart -->
@@ -146,7 +136,6 @@ function handleScroll() {
       </template>
       <v-sheet rounded="lg" elevation="10" class="mt-5 dropdown-box px-4 py-6">
         <div class="d-flex justify-space-between align-center">
-          <LcFullVerticalHeaderLanguageDD />
           <v-btn
             icon
             variant="text"

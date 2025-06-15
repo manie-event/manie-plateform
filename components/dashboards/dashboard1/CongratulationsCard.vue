@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { computed } from 'vue';
-import { getPrimary, getLightborder, getTextGrey100 } from '@/utils/UpdateColors';
+import { getLightborder, getPrimary, getTextGrey100 } from '@/utils/UpdateColors';
 import { Icon } from '@iconify/vue';
+import { computed, ref } from 'vue';
+
+const { user } = storeToRefs(useUserStore());
+
 const select = ref('This Week');
 const items = ref(['March 2023', 'April 2023', 'May 2023']);
 
@@ -114,7 +116,7 @@ const chartOptions = computed(() => {
 <template>
   <v-card elevation="10">
     <v-card-text class="position-relative pb-0 border-bottom">
-      <h5 class="text-h4 mb-1 font-weight-semibold">Congratulations Jonathan</h5>
+      <h5 class="text-h4 mb-1 font-weight-semibold">{{ `Bienvenue ${user.nomComplet}` }}</h5>
       <div class="text-subtitle-1 text-grey100 pb-1 font-weight-medium">
         You have done 38% more sales
       </div>

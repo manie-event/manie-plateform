@@ -7,7 +7,7 @@ const props = defineProps({ item: Object });
     <span class="mini-icon"><DotsIcon size="16" stroke-width="1.5" class="iconClass" /></span>
     <span
       class="mini-text font-weight-semibold pl-2 text-medium-emphasis text-uppercase text-body-2"
-      >{{ $t(props.item.header) }}</span
+      >{{ props.item.header }}</span
     >
   </v-list-subheader>
 </template>
