@@ -1,0 +1,1 @@
+import{x as s,g as r}from"./BR_J5eSC.js";const i=s("userStore",()=>{const e=r({nomComplet:"MORENO Clément",phraseInspirante:void 0,phraseDePresentation:void 0,email:"clementmoreno0803@gmail.com",category:"professional",phone:void 0,adresse:void 0,diplome:void 0,langues:"Français, Anglais"});return{user:e,getUserInfo:()=>e.value,setUser:o=>{e.value=o}}});export{i as u};
