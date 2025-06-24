@@ -21,15 +21,15 @@ export const useAuthentification = () => {
       const { data } = await axios.post(`${config.public.apiUrl}/auth/login`, authentification);
       console.log('Login response:', data); // Pour débugger
 
-      const tokenValue = data?.token?.token || data?.token;
+      const tokenValue = data?.token?.token;
 
       if (tokenValue) {
         const token = useCookie('token', {
           maxAge: 60 * 60 * 24 * 30, // 30 jours
           path: '/',
           sameSite: 'strict',
-          secure: process.env.NODE_ENV === 'production', // Secure uniquement en production
-          httpOnly: false, // False pour pouvoir accéder côté client
+          secure: process.env.NODE_ENV === 'production',
+          httpOnly: false,
         });
 
         token.value = tokenValue;

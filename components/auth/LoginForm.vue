@@ -27,8 +27,13 @@ const emailRules = ref([
 
 const validate = async () => {
   const login = await sendLogin(authentification.value);
-  if (login && login.category) {
-    if (login.category === 'consumer') {
+  console.log('login', login);
+
+  const isConsumer = computed(() =>
+    login.user.category.some((cat: string) => cat.toLowerCase() === 'consumer')
+  );
+
+  if (isConsumer) {
       router.push({ path: '/dashboards/dashboard1' });
     } else {
       router.push({ path: '/dashboards/dashboard2' });
