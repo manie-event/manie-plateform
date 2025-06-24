@@ -34,10 +34,9 @@ const validate = async () => {
   );
 
   if (isConsumer) {
-      router.push({ path: '/dashboards/dashboard1' });
-    } else {
-      router.push({ path: '/dashboards/dashboard2' });
-    }
+    router.push({ path: '/dashboards/dashboard1' });
+  } else {
+    router.push({ path: '/dashboards/dashboard2' });
   }
 };
 </script>
