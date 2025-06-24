@@ -19,35 +19,43 @@ export const useAuthentification = () => {
   const sendLogin = async (authentification: AuthentificationModel) => {
     try {
       const { data } = await axios.post(`${config.public.apiUrl}/auth/login`, authentification);
-      if (data?.token?.token) {
+      console.log('Login response:', data); // Pour débugger
+
+      const tokenValue = data?.token?.token || data?.token;
+
+      if (tokenValue) {
         const token = useCookie('token', {
-          maxAge: 60 * 60 * 24 * 30,
+          maxAge: 60 * 60 * 24 * 30, // 30 jours
           path: '/',
           sameSite: 'strict',
-          secure: true,
+          secure: process.env.NODE_ENV === 'production', // Secure uniquement en production
+          httpOnly: false, // False pour pouvoir accéder côté client
         });
-        token.value = data.token;
+
+        token.value = tokenValue;
+        console.log('Token stored successfully');
         return data;
+      } else {
+        throw new Error('Token non reçu du serveur');
       }
     } catch (error: unknown) {
+      console.error('Login error:', error);
       addError(error as errorModel);
+
+      // Propager l'erreur pour que le composant appelant puisse la gérer
+      throw error;
     }
   };
 
   const checkEmail = async (token: string) => {
     try {
       const { data } = await axios.get(`${config.public.apiUrl}/auth/verify-email/${token}`);
-      console.log('Making request to:', token);
-      console.log('API URL base:', config.public.apiUrl);
       if (data) {
         return data;
       }
     } catch (error: unknown) {
       console.error('Error in checkEmail:', error);
       addError(error as errorModel);
-      console.error('Response status:', error.response?.status);
-      console.error('Response data:', error.response?.data);
-      console.error('Request URL:', error.config?.url);
     }
   };
 

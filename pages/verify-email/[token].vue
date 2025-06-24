@@ -30,14 +30,13 @@ const error = ref('');
 onMounted(async () => {
   try {
     const result = await checkEmail(token);
-    console.log(result, 'result');
 
     if (
       result?.message === 'Email verified' ||
       result?.message?.toLowerCase().includes('verified')
     ) {
       success.value = true;
-      setTimeout(() => router.push('/login'), 3000);
+      setTimeout(() => router.push('/auth/login'), 3000);
     } else {
       throw new Error(result?.message || 'Erreur inconnue');
     }
