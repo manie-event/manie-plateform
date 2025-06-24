@@ -1,1 +1,0 @@
-import{_ as t}from"./y3Mir1Qt.js";import{H as e,d as s,c as a,a as n,b as c,w as _,e as i,i as r}from"./BR_J5eSC.js";const l=e("/images/logos/logo-light.svg"),m={class:"logo"},g=["src"],x=s({__name:"LogoLight",setup(p){return(u,d)=>{const o=t;return n(),a("div",m,[c(o,{to:"/"},{default:_(()=>[i("img",{src:r(l),alt:"home"},null,8,g)]),_:1})])}}});export{x as _};
