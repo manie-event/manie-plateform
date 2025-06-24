@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 /*import tabler icons*/
-import { UserCircleIcon, BellIcon, ArticleIcon, LockIcon } from 'vue-tabler-icons';
+import { ArticleIcon, LockIcon, UserCircleIcon } from 'vue-tabler-icons';
 //components
 import AccountTab from '@/components/pages/account-settings/AccountTab.vue';
-import NotificationTab from '@/components/pages/account-settings/NotificationTab.vue';
 import BillsTab from '@/components/pages/account-settings/BillsTab.vue';
 import SecurityTab from '@/components/pages/account-settings/SecurityTab.vue';
 // common components
@@ -37,9 +36,7 @@ const breadcrumbs = ref([
       <v-card elevation="10" class=" " rounded="md">
         <v-tabs v-model="tab" bg-color="transparent" min-height="70" height="70" color="primary">
           <v-tab value="Account" class=""><UserCircleIcon class="mr-2" size="20" /> Account</v-tab>
-          <v-tab value="Notification" class=""
-            ><BellIcon class="mr-2" size="20" />Notification</v-tab
-          >
+          <!-- <v-tab value="Notification" class=""><BellIcon class="mr-2" size="20" />Prout</v-tab> -->
           <v-tab value="Bills" class=""><ArticleIcon class="mr-2" size="20" />Bills</v-tab>
           <v-tab value="Security" class=""><LockIcon class="mr-2" size="20" />Security</v-tab>
         </v-tabs>
@@ -49,9 +46,9 @@ const breadcrumbs = ref([
             <v-window-item value="Account">
               <AccountTab />
             </v-window-item>
-            <v-window-item value="Notification">
+            <!-- <v-window-item value="Notification">
               <NotificationTab />
-            </v-window-item>
+            </v-window-item> -->
             <v-window-item value="Bills">
               <BillsTab />
             </v-window-item>

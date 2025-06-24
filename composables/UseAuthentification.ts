@@ -37,11 +37,17 @@ export const useAuthentification = () => {
   const checkEmail = async (token: string) => {
     try {
       const { data } = await axios.get(`${config.public.apiUrl}/auth/verify-email/${token}`);
+      console.log('Making request to:', token);
+      console.log('API URL base:', config.public.apiUrl);
       if (data) {
         return data;
       }
     } catch (error: unknown) {
+      console.error('Error in checkEmail:', error);
       addError(error as errorModel);
+      console.error('Response status:', error.response?.status);
+      console.error('Response data:', error.response?.data);
+      console.error('Request URL:', error.config?.url);
     }
   };
 

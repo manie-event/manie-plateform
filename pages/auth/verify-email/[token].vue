@@ -2,17 +2,17 @@
   <h3>Verify Email view</h3>
 </template>
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
 const router = useRouter();
 const token = route.params.token as string;
+console.log('Token from route:', token);
+console.log('Full route params:', route.params);
+console.log('Full route path:', route.path);
+console.log('router:', router);
 const { checkEmail } = useAuthentification();
-
-const loading = ref(true);
-const success = ref(false);
-const error = ref('');
 
 onMounted(async () => {
   await checkEmail(token);

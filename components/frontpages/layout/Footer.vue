@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { FooterMenu1, FooterMenu2, FooterMenu3 } from '@/_mockApis/front-pages/PagesData';
-import { RouterLink } from 'vue-router';
+import { footerContact, footerMedia } from '@/_mockApis/front-pages/PagesData';
 import LogoLight from '~/components/lc/Full/logo/LogoLight.vue';
+import manieFooterDroits from '/images/logos/logo-footer-droits.png';
 </script>
 
 <template>
@@ -10,100 +10,40 @@ import LogoLight from '~/components/lc/Full/logo/LogoLight.vue';
       <div class="space-p-96">
         <v-row>
           <v-col cols="12" lg="3" sm="6">
-            <div class="mb-sm-8 mb-6">
-              <LogoLight />
-            </div>
-            <div class="d-flex flex-column ga-4 mt-lg-n4">
-              <div v-for="item in FooterMenu1" :key="item.menu">
-                <RouterLink
-                  :to="item.link"
-                  target="_blank"
-                  class="text-white text-14 text-grey100 font-weight-regular hover-primary text-decoration-none"
-                >
-                  {{ item.menu }}
-                </RouterLink>
-              </div>
-            </div>
+            <LogoLight />
+            <div class="d-flex flex-column ga-4 mt-lg-n4"></div>
           </v-col>
           <v-col cols="12" lg="3" sm="6">
-            <h5 class="text-17 mb-sm-8 mb-6">Features</h5>
+            <h5 class="text-20 mb-sm-8 mb-6">Mentions légales</h5>
             <div class="d-flex flex-column ga-4">
-              <div v-for="item in FooterMenu2" :key="item.menu">
-                <RouterLink
-                  :to="item.link"
-                  target="_blank"
-                  class="text-white text-14 text-grey100 font-weight-regular hover-primary text-decoration-none"
-                >
-                  {{ item.menu }}
-                </RouterLink>
+              <div v-for="item in footerContact" :key="item.titre">
+                <h4 class="footer-title">
+                  {{ `${item.titre}: ` }}
+                </h4>
+                <h5>{{ item.description }}</h5>
               </div>
             </div>
           </v-col>
           <v-col cols="12" lg="3" sm="6">
-            <h5 class="text-17 mb-sm-8 mb-6">Resources</h5>
+            <h5 class="text-17 mb-sm-8 mb-6">Nous contacter</h5>
             <div class="d-flex flex-column ga-4">
-              <div v-for="item in FooterMenu3" :key="item.menu">
-                <RouterLink
-                  :to="item.link"
-                  target="_blank"
-                  class="text-white text-14 text-grey100 font-weight-regular hover-primary text-decoration-none"
-                >
-                  {{ item.menu }}
-                </RouterLink>
+              <div v-for="item in footerMedia" :key="item.titre">
+                <h4 class="footer-title">
+                  {{ `${item.titre}: ` }}
+                </h4>
+                <h5>{{ item.description }}</h5>
               </div>
             </div>
           </v-col>
           <v-col cols="12" lg="3" sm="6">
-            <h5 class="text-17 mb-sm-8 mb-6">Follow us</h5>
+            <h5 class="text-17 mb-sm-8 mb-6">Suivez-nous</h5>
             <div class="d-flex ga-5 social-icon">
-              <a href="/" target="_blank" class="link-btn">
-                <svg
-                  width="22"
-                  height="22"
-                  viewBox="0 0 22 22"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g clip-path="url(#clip0_21817_22409)">
-                    <path
-                      d="M22 11C22 4.92422 17.0758 0 11 0C4.92422 0 0 4.92422 0 11C0 16.1562 3.55352 20.4875 8.34453 21.6777V14.3602H6.07578V11H8.34453V9.55195C8.34453 5.80938 10.0375 4.07344 13.7156 4.07344C14.4117 4.07344 15.6148 4.21094 16.109 4.34844V7.39062C15.8512 7.36484 15.4 7.34766 14.8371 7.34766C13.0324 7.34766 12.3363 8.03086 12.3363 9.80547V11H15.9285L15.3098 14.3602H12.332V21.9184C17.7805 21.2609 22 16.6246 22 11Z"
-                    />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_21817_22409">
-                      <rect width="22" height="22" fill="white" />
-                    </clipPath>
-                  </defs>
-                </svg>
-                <v-tooltip activator="parent" location="top">Facebook</v-tooltip>
-              </a>
-              <a href="/" target="_blank" class="link-btn">
-                <svg
-                  width="22"
-                  height="22"
-                  viewBox="0 0 22 22"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g clip-path="url(#clip0_21817_22411)">
-                    <path
-                      d="M19.7398 6.51836C19.7527 6.71172 19.7527 6.90938 19.7527 7.10273C19.7527 13.0625 15.2152 19.9332 6.92227 19.9332C4.36563 19.9332 1.99375 19.1941 0 17.9094C0.360937 17.9523 0.713281 17.9652 1.08711 17.9652C3.19687 17.9652 5.13477 17.252 6.68594 16.0402C4.70508 15.9973 3.04219 14.6996 2.4707 12.9121C2.75 12.9551 3.0293 12.9809 3.32148 12.9809C3.72539 12.9809 4.1293 12.925 4.50742 12.8262C2.44063 12.4094 0.89375 10.5918 0.89375 8.40039V8.34453C1.49531 8.67969 2.19141 8.89023 2.93047 8.91602C1.71445 8.1082 0.919531 6.72461 0.919531 5.16055C0.919531 4.32266 1.14297 3.55352 1.53398 2.8832C3.75547 5.62031 7.08984 7.40781 10.8324 7.60117C10.7637 7.26602 10.7207 6.91797 10.7207 6.56992C10.7207 4.08633 12.7316 2.0625 15.2281 2.0625C16.5258 2.0625 17.6988 2.6082 18.5238 3.48477C19.5422 3.29141 20.5219 2.91328 21.3855 2.39766C21.0504 3.44609 20.3371 4.32266 19.4047 4.88125C20.3113 4.78242 21.1922 4.5332 22 4.18516C21.3855 5.07891 20.6164 5.87383 19.7398 6.51836Z"
-                    />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_21817_22411">
-                      <rect width="22" height="22" fill="white" />
-                    </clipPath>
-                  </defs>
-                </svg>
-                <v-tooltip activator="parent" location="top">Twitter</v-tooltip>
-              </a>
-              <a href="/" target="_blank" class="link-btn">
+              <a href="https://www.instagram.com/manie_event/" target="_blank" class="link-btn">
                 <svg
                   width="20"
                   height="22"
                   viewBox="0 0 20 22"
-                  fill="none"
+                  fill="#ffffff"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <g clip-path="url(#clip0_21817_22413)">
@@ -126,24 +66,21 @@ import LogoLight from '~/components/lc/Full/logo/LogoLight.vue';
       <v-divider class="opacity-30"></v-divider>
       <div class="py-sm-10 py-6">
         <div class="d-sm-flex justify-space-between">
-          <div class="d-flex ga-2 justify-sm-start justify-center">
-            <img src="/images/logos/logo-icon.svg" height="24" class="me-1" alt="logo" />
-            <span class="text-white text-15 text-grey100">All rights reserved by Spike.</span>
+          <div class="d-flex ga-2 justify-sm-start justify-center align-center">
+            <img :src="manieFooterDroits" width="60" alt="logo" />
           </div>
-          <p
-            class="text-white text-15 d-flex align-center justify-sm-end justify-center pt-sm-0 pt-2"
+          <span class="text-white text-15 text-grey100 align-center d-flex"
+            >Tous droits réservés à Manie et son équipe.</span
           >
-            <span class="opacity-50">Produced by</span>
-            <a
-              href="https://wrappixel.com/"
-              target="_blank"
-              class="text-white text-decoration-none hover-primary text-15 ms-1"
-            >
-              Wrappixel.</a
-            >
-          </p>
         </div>
       </div>
     </v-container>
   </div>
 </template>
+<style lang="scss" scoped>
+.footer-title {
+  color: #cccc;
+  font-weight: medium;
+  font-size: 0.8rem;
+}
+</style>

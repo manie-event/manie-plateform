@@ -13,7 +13,6 @@ const customizer = useCustomizerStore();
 const whiteBgOnScroll = ref(false);
 const handleScroll = () => {
   whiteBgOnScroll.value = window.scrollY > 80;
-  console.log('Scroll position:', window.scrollY);
 };
 
 onMounted(() => {
