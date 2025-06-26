@@ -1,5 +1,4 @@
 import type { AuthentificationModel } from '~/models/authentification/authentificationModel';
-import type { patchNewPasswordModel } from '~/models/authentification/patchNewPasswordModel';
 import type { errorModel } from '~/models/errorModel';
 import type { RegisterModel } from '../models/authentification/registerModel';
 
@@ -63,11 +62,12 @@ export const useAuthentification = () => {
     }
   };
 
-  const sendNewPassword = async (email: patchNewPasswordModel) => {
+  const sendNewPassword = async (email: string) => {
     try {
       const { data } = await axios.post(`${config.public.apiUrl}/auth/forgot-password`, { email });
       if (data) {
         addSuccess('Un email de réinitialisation de mot de passe a été envoyé.');
+        await router.push('/auth/login');
         return data;
       }
     } catch (error) {

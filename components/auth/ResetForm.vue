@@ -12,7 +12,7 @@ const emailRules = ref([
 ]);
 
 const patchNewPassword = async () => {
-  await sendNewPassword(resetPassword.value);
+  await sendNewPassword(resetPassword.value.email);
 };
 </script>
 <template>
@@ -25,7 +25,7 @@ const patchNewPassword = async () => {
   >
     <v-label class="text-subtitle-1 font-weight-medium pb-2 text-lightText">Email</v-label>
     <VTextField v-model="resetPassword.email" :rules="emailRules" required></VTextField>
-    <v-btn size="large" color="primary" to="/" block submit rounded="pill"
+    <v-btn size="large" color="primary" @click="patchNewPassword" block submit rounded="pill"
       >Réinitialiser mon mot de passe</v-btn
     >
   </v-form>
