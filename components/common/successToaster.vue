@@ -1,19 +1,12 @@
 <template>
-  <TransitionGroup name="fade" tag="div" class="alerts-wrapper">
-    <v-alert
-      v-for="error in errorMessageArray"
-      :key="error.id"
-      class="alert-card"
-      type="error"
-      :text="error.message"
-      dismissible
-    >
+  <TransitionGroup name="fade" tag="div" class="alerts-wrapper" v-if="sucessToaster">
+    <v-alert class="success-card" type="success" :text="sucessToaster" dismissible>
       <div class="progress-bar" />
     </v-alert>
   </TransitionGroup>
 </template>
 <script setup lang="ts">
-const { errorMessageArray } = useToaster();
+const { sucessToaster } = useToaster();
 </script>
 <style>
 .alerts-wrapper {

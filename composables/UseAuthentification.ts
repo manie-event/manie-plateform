@@ -1,16 +1,23 @@
 import type { AuthentificationModel } from '~/models/authentification/authentificationModel';
+import type { patchNewPasswordModel } from '~/models/authentification/patchNewPasswordModel';
 import type { errorModel } from '~/models/errorModel';
 import type { RegisterModel } from '../models/authentification/registerModel';
 
 export const useAuthentification = () => {
   const config = useRuntimeConfig();
   const router = useRouter();
-  const { addError } = useErrorToaster();
+  const { addError, addSuccess } = useToaster();
 
   const sendRegister = async (registerInfo: RegisterModel): Promise<void> => {
     try {
       const { data } = await axios.post(`${config.public.apiUrl}/auth/register`, registerInfo);
-      return data;
+      if (data) {
+        addSuccess(
+          'Inscription réussie, veuillez vérifier votre email pour confirmer votre compte.'
+        );
+        await router.push('/auth/login');
+        return data;
+      }
     } catch (error: unknown) {
       addError(error as errorModel);
     }
@@ -19,7 +26,6 @@ export const useAuthentification = () => {
   const sendLogin = async (authentification: AuthentificationModel) => {
     try {
       const { data } = await axios.post(`${config.public.apiUrl}/auth/login`, authentification);
-      console.log('Login response:', data); // Pour débugger
 
       const tokenValue = data?.token?.token;
 
@@ -33,7 +39,6 @@ export const useAuthentification = () => {
         });
 
         token.value = tokenValue;
-        console.log('Token stored successfully');
         return data;
       } else {
         throw new Error('Token non reçu du serveur');
@@ -41,8 +46,6 @@ export const useAuthentification = () => {
     } catch (error: unknown) {
       console.error('Login error:', error);
       addError(error as errorModel);
-
-      // Propager l'erreur pour que le composant appelant puisse la gérer
       throw error;
     }
   };
@@ -51,10 +54,23 @@ export const useAuthentification = () => {
     try {
       const { data } = await axios.get(`${config.public.apiUrl}/auth/verify-email/${token}`);
       if (data) {
+        addSuccess('Email vérifié avec succès, vous pouvez maintenant vous connecter.');
         return data;
       }
     } catch (error: unknown) {
       console.error('Error in checkEmail:', error);
+      addError(error as errorModel);
+    }
+  };
+
+  const sendNewPassword = async (email: patchNewPasswordModel) => {
+    try {
+      const { data } = await axios.post(`${config.public.apiUrl}/auth/forgot-password`, { email });
+      if (data) {
+        addSuccess('Un email de réinitialisation de mot de passe a été envoyé.');
+        return data;
+      }
+    } catch (error) {
       addError(error as errorModel);
     }
   };
@@ -69,6 +85,7 @@ export const useAuthentification = () => {
         },
       });
       if (data) {
+        addSuccess('Déconnexion réussie.');
         await router.push('/');
       }
     } catch (error: unknown) {
@@ -76,5 +93,5 @@ export const useAuthentification = () => {
     }
   };
 
-  return { sendRegister, sendLogin, sendLogout, checkEmail };
+  return { sendRegister, sendLogin, sendLogout, checkEmail, sendNewPassword };
 };

@@ -32,9 +32,20 @@ const addError = (error: ServerError) => {
   }
 };
 
-export const useErrorToaster = () => {
+const sucessToaster = ref<string | undefined>(undefined);
+
+const addSuccess = (message: string) => {
+  sucessToaster.value = message;
+  setTimeout(() => {
+    sucessToaster.value = undefined;
+  }, 5000);
+};
+
+export const useToaster = () => {
   return {
     errorMessageArray,
+    sucessToaster,
     addError,
+    addSuccess,
   };
 };
