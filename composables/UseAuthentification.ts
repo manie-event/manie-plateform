@@ -1,4 +1,5 @@
 import type { AuthentificationModel } from '~/models/authentification/authentificationModel';
+import type { registerNewPasswordModel } from '~/models/authentification/registerNewPasswordModel';
 import type { errorModel } from '~/models/errorModel';
 import type { RegisterModel } from '../models/authentification/registerModel';
 
@@ -75,6 +76,24 @@ export const useAuthentification = () => {
     }
   };
 
+  const registerNewPassword = async (registerPassword: registerNewPasswordModel) => {
+    try {
+      const { data } = await axios.post(
+        `${config.public.apiUrl}/auth/register-new-password`,
+        registerPassword
+      );
+      if (data) {
+        addSuccess('Mot de passe mis à jour avec succès.');
+        await router.push('/auth/login');
+        return data;
+      }
+    } catch (error: unknown) {
+      console.error('Error in registerNewPassword:', error);
+      addError(error as errorModel);
+      throw error;
+    }
+  };
+
   const sendLogout = async () => {
     try {
       const token = useCookie('token');
@@ -93,5 +112,5 @@ export const useAuthentification = () => {
     }
   };
 
-  return { sendRegister, sendLogin, sendLogout, checkEmail, sendNewPassword };
+  return { sendRegister, sendLogin, sendLogout, checkEmail, sendNewPassword, registerNewPassword };
 };
