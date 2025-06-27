@@ -1,4 +1,3 @@
-import type { TablerIconComponent } from 'vue-tabler-icons';
 interface LeaderType {
   img: string;
   name: string;
@@ -40,8 +39,8 @@ interface PackageType {
 }
 
 interface FooterType {
-  menu: string;
-  link: string;
+  titre: string;
+  description: string;
 }
 
 interface Feature {
@@ -53,11 +52,11 @@ interface Feature {
 }
 
 export type {
-  LeaderType,
-  TemplateType,
-  UserReviews,
-  ThemeFeatures,
-  PackageType,
-  FooterType,
   Feature,
+  FooterType,
+  LeaderType,
+  PackageType,
+  TemplateType,
+  ThemeFeatures,
+  UserReviews,
 };

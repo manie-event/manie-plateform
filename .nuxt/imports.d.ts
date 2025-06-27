@@ -32,7 +32,7 @@ export { useAuthentification } from '../composables/UseAuthentification';
 export { useUserProfile } from '../composables/UseUserProfile';
 export { customizer, getPrimary, getSecondary, getLightPrimary, getLightSecondary, getLight100, getLightborder, getTextGrey100, getWarning, getError } from '../utils/UpdateColors';
 export { default as axios } from '../utils/axios';
-export { useErrorToaster } from '../utils/errorToaster';
+export { useToaster } from '../utils/toaster';
 export { useCustomizerStore } from '../stores/customizer';
 export { useUserStore } from '../stores/userStore';
 export { defineStore, acceptHMRUpdate, usePinia, storeToRefs } from '../node_modules/@pinia/nuxt/dist/runtime/composables';

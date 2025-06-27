@@ -1,1 +1,0 @@
-import{d as n,q as s,bT as r,g as e,o as c,c as u,a as i}from"./BR_J5eSC.js";import{u as m}from"./Dp_hdTzz.js";import"./CjJ6mZRf.js";const h=n({__name:"[token]",setup(p){const t=s();r();const o=t.params.token,{checkEmail:a}=m();return e(!0),e(!1),e(""),c(async()=>{await a(o)}),(f,l)=>(i(),u("h3",null,"Verify Email view"))}});export{h as default};

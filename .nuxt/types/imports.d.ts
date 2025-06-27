@@ -116,7 +116,6 @@ declare global {
   const useCssVars: typeof import('vue')['useCssVars']
   const useCustomizerStore: typeof import('../../stores/customizer')['useCustomizerStore']
   const useError: typeof import('../../node_modules/nuxt/dist/app/composables/error')['useError']
-  const useErrorToaster: typeof import('../../utils/errorToaster')['useErrorToaster']
   const useFetch: typeof import('../../node_modules/nuxt/dist/app/composables/fetch')['useFetch']
   const useHead: typeof import('../../node_modules/nuxt/dist/app/composables/head')['useHead']
   const useHeadSafe: typeof import('../../node_modules/nuxt/dist/app/composables/head')['useHeadSafe']
@@ -178,6 +177,7 @@ declare global {
   const useSlots: typeof import('vue')['useSlots']
   const useState: typeof import('../../node_modules/nuxt/dist/app/composables/state')['useState']
   const useTemplateRef: typeof import('vue')['useTemplateRef']
+  const useToaster: typeof import('../../utils/toaster')['useToaster']
   const useTransitionState: typeof import('vue')['useTransitionState']
   const useUserProfile: typeof import('../../composables/UseUserProfile')['useUserProfile']
   const useUserStore: typeof import('../../stores/userStore')['useUserStore']
@@ -317,7 +317,6 @@ declare module 'vue' {
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
     readonly useCustomizerStore: UnwrapRef<typeof import('../../stores/customizer')['useCustomizerStore']>
     readonly useError: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/error')['useError']>
-    readonly useErrorToaster: UnwrapRef<typeof import('../../utils/errorToaster')['useErrorToaster']>
     readonly useFetch: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/fetch')['useFetch']>
     readonly useHead: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/head')['useHead']>
     readonly useHeadSafe: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/head')['useHeadSafe']>
@@ -379,6 +378,7 @@ declare module 'vue' {
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
     readonly useState: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/state')['useState']>
     readonly useTemplateRef: UnwrapRef<typeof import('vue')['useTemplateRef']>
+    readonly useToaster: UnwrapRef<typeof import('../../utils/toaster')['useToaster']>
     readonly useTransitionState: UnwrapRef<typeof import('vue')['useTransitionState']>
     readonly useUserProfile: UnwrapRef<typeof import('../../composables/UseUserProfile')['useUserProfile']>
     readonly useUserStore: UnwrapRef<typeof import('../../stores/userStore')['useUserStore']>

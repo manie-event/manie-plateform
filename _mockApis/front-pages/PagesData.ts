@@ -515,71 +515,28 @@ const FAQData: TemplateType[] = [
   },
 ];
 
-// Footer Menu Links
-const FooterMenu1: FooterType[] = [
+const footerContact: FooterType[] = [
   {
-    menu: 'Cards',
-    link: '/widgets/cards',
+    titre: 'Nom de l’entreprise',
+    description: 'Manie Event',
   },
   {
-    menu: 'Pricing',
-    link: '/theme-pages/pricing',
+    titre: 'Numéro de siret',
+    description: '84933539300013',
   },
   {
-    menu: 'Account Settings',
-    link: '/theme-pages/account-settings',
+    titre: 'Localisation',
+    description: '69007 Lyon, France',
   },
   {
-    menu: 'FAQ',
-    link: '/theme-pages/faq',
-  },
-  {
-    menu: 'Search Results',
-    link: '/theme-pages/search-results',
+    titre: 'Hébergeur du site',
+    description: 'OVH SAS 2 rue Kellermann - 59100 Roubaix - France',
   },
 ];
-const FooterMenu2: FooterType[] = [
+const footerMedia: FooterType[] = [
   {
-    menu: 'Treeview',
-    link: '/theme-pages/treeview',
-  },
-  {
-    menu: 'Banners',
-    link: '/widgets/banners',
-  },
-  {
-    menu: 'Charts',
-    link: '/widgets/charts',
-  },
-  {
-    menu: 'Gallery Lightbox',
-    link: '/theme-pages/gallery-lightbox',
-  },
-  {
-    menu: 'Social Contacts',
-    link: '/theme-pages/social-media',
-  },
-];
-const FooterMenu3: FooterType[] = [
-  {
-    menu: 'Form Layout',
-    link: '/forms/form-layouts',
-  },
-  {
-    menu: 'Tables',
-    link: '/tables/basic',
-  },
-  {
-    menu: 'Stepper',
-    link: '/forms/form-elements/stepper',
-  },
-  {
-    menu: 'Datatables',
-    link: '/datatables/basic',
-  },
-  {
-    menu: 'Validation',
-    link: '/forms/form-validation',
+    titre: 'Adresse mail',
+    description: 'contact@manie-event.fr',
   },
 ];
 
@@ -610,9 +567,8 @@ export {
   AboutFeatures,
   FAQData,
   Features,
-  FooterMenu1,
-  FooterMenu2,
-  FooterMenu3,
+  footerContact,
+  footerMedia,
   OurLeaders,
   Packages,
   QA1,

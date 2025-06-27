@@ -88,6 +88,7 @@ interface _GlobalComponents {
     'AuthTwoStepForm': typeof import("../components/auth/TwoStepForm.vue")['default']
     'CommonBaseModal': typeof import("../components/common/BaseModal.vue")['default']
     'CommonErrorToaster': typeof import("../components/common/errorToaster.vue")['default']
+    'CommonSuccessToaster': typeof import("../components/common/successToaster.vue")['default']
     'DashboardsDashboard1CongratulationsCard': typeof import("../components/dashboards/dashboard1/CongratulationsCard.vue")['default']
     'DashboardsDashboard1Customers': typeof import("../components/dashboards/dashboard1/Customers.vue")['default']
     'DashboardsDashboard1LatestDeals': typeof import("../components/dashboards/dashboard1/LatestDeals.vue")['default']
@@ -512,6 +513,7 @@ interface _GlobalComponents {
     'LazyAuthTwoStepForm': LazyComponent<typeof import("../components/auth/TwoStepForm.vue")['default']>
     'LazyCommonBaseModal': LazyComponent<typeof import("../components/common/BaseModal.vue")['default']>
     'LazyCommonErrorToaster': LazyComponent<typeof import("../components/common/errorToaster.vue")['default']>
+    'LazyCommonSuccessToaster': LazyComponent<typeof import("../components/common/successToaster.vue")['default']>
     'LazyDashboardsDashboard1CongratulationsCard': LazyComponent<typeof import("../components/dashboards/dashboard1/CongratulationsCard.vue")['default']>
     'LazyDashboardsDashboard1Customers': LazyComponent<typeof import("../components/dashboards/dashboard1/Customers.vue")['default']>
     'LazyDashboardsDashboard1LatestDeals': LazyComponent<typeof import("../components/dashboards/dashboard1/LatestDeals.vue")['default']>
@@ -942,6 +944,7 @@ export const AuthResetForm: typeof import("../components/auth/ResetForm.vue")['d
 export const AuthTwoStepForm: typeof import("../components/auth/TwoStepForm.vue")['default']
 export const CommonBaseModal: typeof import("../components/common/BaseModal.vue")['default']
 export const CommonErrorToaster: typeof import("../components/common/errorToaster.vue")['default']
+export const CommonSuccessToaster: typeof import("../components/common/successToaster.vue")['default']
 export const DashboardsDashboard1CongratulationsCard: typeof import("../components/dashboards/dashboard1/CongratulationsCard.vue")['default']
 export const DashboardsDashboard1Customers: typeof import("../components/dashboards/dashboard1/Customers.vue")['default']
 export const DashboardsDashboard1LatestDeals: typeof import("../components/dashboards/dashboard1/LatestDeals.vue")['default']
@@ -1366,6 +1369,7 @@ export const LazyAuthResetForm: LazyComponent<typeof import("../components/auth/
 export const LazyAuthTwoStepForm: LazyComponent<typeof import("../components/auth/TwoStepForm.vue")['default']>
 export const LazyCommonBaseModal: LazyComponent<typeof import("../components/common/BaseModal.vue")['default']>
 export const LazyCommonErrorToaster: LazyComponent<typeof import("../components/common/errorToaster.vue")['default']>
+export const LazyCommonSuccessToaster: LazyComponent<typeof import("../components/common/successToaster.vue")['default']>
 export const LazyDashboardsDashboard1CongratulationsCard: LazyComponent<typeof import("../components/dashboards/dashboard1/CongratulationsCard.vue")['default']>
 export const LazyDashboardsDashboard1Customers: LazyComponent<typeof import("../components/dashboards/dashboard1/Customers.vue")['default']>
 export const LazyDashboardsDashboard1LatestDeals: LazyComponent<typeof import("../components/dashboards/dashboard1/LatestDeals.vue")['default']>

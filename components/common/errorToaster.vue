@@ -13,7 +13,7 @@
   </TransitionGroup>
 </template>
 <script setup lang="ts">
-const { errorMessageArray } = useErrorToaster();
+const { errorMessageArray } = useToaster();
 </script>
 <style>
 .alerts-wrapper {

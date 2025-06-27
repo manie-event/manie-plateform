@@ -4,7 +4,10 @@
 
     <div v-if="loading">⏳ Vérification en cours...</div>
 
-    <div v-else-if="success" class="text-green-600">✅ Email vérifié avec succès !</div>
+    <div v-else-if="success" class="text-green-600">
+      <p>✅ ✅ Email vérifié avec succès !</p>
+      <p class="mt-2 text-sm">Redirection vers la page de connexion dans 3 secondes...</p>
+    </div>
 
     <div v-else class="text-red-600">
       ❌ Erreur de vérification : {{ error || 'Lien invalide ou expiré.' }}
@@ -27,11 +30,13 @@ const error = ref('');
 onMounted(async () => {
   try {
     const result = await checkEmail(token);
-    console.log(result, 'result');
 
-    if (result?.success) {
+    if (
+      result?.message === 'Email verified' ||
+      result?.message?.toLowerCase().includes('verified')
+    ) {
       success.value = true;
-      setTimeout(() => router.push('/login'), 3000);
+      setTimeout(() => router.push('/auth/login'), 3000);
     } else {
       throw new Error(result?.message || 'Erreur inconnue');
     }

@@ -1,11 +1,22 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
-import logolight from '/images/logos/logo-light.svg';
+import manieFooter from '/images/logos/logo-manie-footer.png';
 </script>
+
 <template>
   <div class="logo">
-    <NuxtLink to="/">
-      <img :src="logolight" alt="home" />
-    </NuxtLink>
+    <img :src="manieFooter" alt="home" />
   </div>
 </template>
+
+<style lang="scss" scoped>
+.logo {
+  width: 250px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+</style>

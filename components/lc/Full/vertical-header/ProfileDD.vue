@@ -1,16 +1,12 @@
 <script setup lang="ts">
 import { profileDD } from '@/_mockApis/headerData';
+import { UserCategory } from '@/models/enums/userCategoryEnums';
 import { Icon } from '@iconify/vue';
 import { CircleXIcon, MailIcon } from 'vue-tabler-icons';
 import { useAuthentification } from '../../../../composables/UseAuthentification';
 
 const { user } = useUserStore();
 const { sendLogout } = useAuthentification();
-const router = useRouter();
-
-const callLogOut = () => {
-  sendLogout();
-};
 </script>
 
 <template>
@@ -29,7 +25,7 @@ const callLogOut = () => {
               {{ user.nomComplet }}
             </h6>
             <span class="text-subtitle-2 font-weight-medium text-grey100">{{
-              user.category == 'consumer' ? 'Client' : 'Prestataire'
+              user.category == 'professional' ? UserCategory.PRESTA : UserCategory.CLIENT
             }}</span>
           </div>
         </div>
@@ -47,15 +43,15 @@ const callLogOut = () => {
             <img src="/images/profile/user6.jpg" width="90" />
           </v-avatar>
           <div class="ml-5">
-            <h6 class="text-h5 mb-n1">Mike Nielsen</h6>
-            <span class="text-subtitle-1 font-weight-regular text-grey100 font-weight-medium"
-              >Admin</span
-            >
+            <h6 class="text-h5 mb-n1">{{ user.nomComplet }}</h6>
+            <span class="text-subtitle-1 font-weight-regular text-grey100 font-weight-medium">{{
+              user.category == 'professional' ? UserCategory.PRESTA : UserCategory.CLIENT
+            }}</span>
             <div class="d-flex align-center mt-1">
               <MailIcon size="18" stroke-width="1.5" class="text-grey100" />
-              <span class="text-subtitle-1 text-grey100 font-weight-medium ml-2"
-                >info@spikeadmin.com</span
-              >
+              <span class="text-subtitle-1 text-grey100 font-weight-medium ml-2">{{
+                troncateText
+              }}</span>
             </div>
           </div>
         </div>
@@ -92,7 +88,7 @@ const callLogOut = () => {
         </v-list>
       </perfect-scrollbar>
       <div class="pb-6 px-8 text-center">
-        <v-btn color="primary" size="large" rounded="pill" block @click="callLogOut"
+        <v-btn color="primary" size="large" rounded="pill" block @click="sendLogout()"
           >Me déconnecter</v-btn
         >
       </div>

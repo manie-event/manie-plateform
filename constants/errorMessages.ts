@@ -10,4 +10,5 @@ export const ERROR_MESSAGES = {
     "Le champ d'adresse e-mail doit être une adresse e-mail valide.",
   'User not found or invalid': 'Utilisateur non trouvé ou invalide.',
   'The email has already been taken': "L'adresse e-mail a déjà été prise.",
+  'Invalid user credentials': 'Identifiants utilisateur invalides, veuillez réessayer.',
 };

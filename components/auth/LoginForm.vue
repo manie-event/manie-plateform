@@ -3,6 +3,7 @@ import { Form } from 'vee-validate';
 import { ref } from 'vue';
 import { useAuthentification } from '../../composables/UseAuthentification';
 import errorToaster from '../common/errorToaster.vue';
+import successToaster from '../common/successToaster.vue';
 
 /*Social icons*/
 // import google from "/images/svgs/google-icon.svg";
@@ -27,12 +28,15 @@ const emailRules = ref([
 
 const validate = async () => {
   const login = await sendLogin(authentification.value);
-  if (login && login.category) {
-    if (login.category === 'consumer') {
-      router.push({ path: '/dashboards/dashboard1' });
-    } else {
-      router.push({ path: '/dashboards/dashboard2' });
-    }
+
+  const isConsumer = computed(() =>
+    login.user.category.some((cat: string) => cat.toLowerCase() === 'consumer')
+  );
+
+  if (isConsumer) {
+    router.push({ path: '/dashboards/dashboard1' });
+  } else {
+    router.push({ path: '/dashboards/dashboard2' });
   }
 };
 </script>
@@ -116,5 +120,6 @@ const validate = async () => {
   </Form>
   <Teleport to="body">
     <errorToaster />
+    <successToaster />
   </Teleport>
 </template>
