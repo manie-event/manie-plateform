@@ -2,7 +2,6 @@
   <v-form
     ref="form"
     @submit="registerNewPass"
-    lazy-validation
     action="/dashboards/analytical"
     class="mt-sm-13 mt-8"
   >
@@ -13,11 +12,7 @@
     <v-label class="text-subtitle-1 font-weight-medium pb-2 text-lightText"
       >Confirmez votre nouveau mot de passe</v-label
     >
-    <VTextField
-      v-model="registerPassword.confirmPassword"
-      :rules="emailRules"
-      required
-    ></VTextField>
+    <VTextField v-model="registerPassword.confirmPassword" required></VTextField>
     <v-btn size="large" color="primary" @click="registerNewPass" block submit rounded="pill"
       >Réinitialiser mon mot de passe</v-btn
     >
