@@ -3,20 +3,23 @@ import { Form } from 'vee-validate';
 import { ref } from 'vue';
 import { useAuthentification } from '../../composables/UseAuthentification';
 import errorToaster from '../common/errorToaster.vue';
-import successToaster from '../common/successToaster.vue';
 
 /*Social icons*/
 // import google from "/images/svgs/google-icon.svg";
 // import facebook from "/images/svgs/icon-facebook.svg";
 
+const { sendLogin } = useAuthentification();
+const userStore = useUserStore();
+const { setUserAccepted } = userStore;
+const { isStoringUserAccepeted } = storeToRefs(userStore);
+
 const router = useRouter();
-const checkbox = ref(false);
+const checkbox = isStoringUserAccepeted;
 const valid = ref(false);
 const authentification = ref({
   password: '',
   email: '',
 });
-const { sendLogin } = useAuthentification();
 const passwordRules = ref([
   (v: string) => !!v || 'Le mot de passe est obligatoire',
   (v: string) => (v && v.length >= 10) || 'Le mot de passe doit faire 10 caractères minimum',
@@ -38,6 +41,10 @@ const validate = async () => {
   } else {
     router.push({ path: '/dashboards/dashboard2' });
   }
+};
+
+const isMemoryUser = () => {
+  setUserAccepted(checkbox.value);
 };
 </script>
 
@@ -86,6 +93,16 @@ const validate = async () => {
       class="pwdInput"
     ></VTextField>
     <div class="d-flex flex-wrap align-center my-3 ml-n2">
+      <v-checkbox
+        v-model="checkbox"
+        :rules="[(v: any) => !!v || 'You must agree to continue!']"
+        required
+        hide-details
+        color="primary"
+        @change="isMemoryUser()"
+      >
+        <template v-slot:label class="">Se souvenir de mes infos</template>
+      </v-checkbox>
       <div class="ml-sm-auto">
         <NuxtLink
           to="/auth/forgot-password"

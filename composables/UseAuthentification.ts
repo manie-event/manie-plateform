@@ -7,6 +7,7 @@ export const useAuthentification = () => {
   const config = useRuntimeConfig();
   const router = useRouter();
   const { addError, addSuccess } = useToaster();
+  const { isStoringUserAccepeted } = storeToRefs(useUserStore());
 
   const sendRegister = async (registerInfo: RegisterModel): Promise<void> => {
     try {
@@ -29,9 +30,11 @@ export const useAuthentification = () => {
 
       const tokenValue = data?.token?.token;
 
-      if (tokenValue) {
+      addSuccess('Connexion réussie.');
+
+      if (tokenValue && isStoringUserAccepeted.value) {
         const token = useCookie('token', {
-          maxAge: 60 * 60 * 24 * 30, // 30 jours
+          maxAge: 60 * 60 * 24 * 30 * 12,
           path: '/',
           sameSite: 'strict',
           secure: process.env.NODE_ENV === 'production',

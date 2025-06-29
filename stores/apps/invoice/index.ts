@@ -51,11 +51,10 @@ export const useInvoicestore = defineStore({
           `/api/data/invoices/invoiceData/${updatedInvoice.id}`,
           updatedInvoice
         );
-        console.log('Response from update:', response); // This will show the updated data
 
         const index = this.invoice.findIndex((inv) => inv.id === updatedInvoice.id);
         if (index !== -1) {
-          this.invoice[index] = response.data; // Update the local store
+          this.invoice[index] = response.data;
         }
         return response.data;
       } catch (error) {
