@@ -8,13 +8,22 @@ declare global {
 }
 
 export default defineNuxtPlugin(() => {
-  console.log(process.client, 'Axeptio plugin loaded');
-
   if (process.client) {
     window.axeptioSettings = {
-      clientId: '686108f9a119f7b9dd0ebf47',
-      cookiesVersion: 'manie-event-fr-EU',
+      clientId: '686126994eb77dfa7b2677d4',
+      cookiesVersion: 'manie-events-fr-EU',
+      googleConsentMode: {
+        default: {
+          analytics_storage: 'denied',
+          ad_storage: 'denied',
+          ad_user_data: 'denied',
+          ad_personalization: 'denied',
+          wait_for_update: 500,
+        },
+      },
     };
+
+    console.log('Axeptio settings définis :', window.axeptioSettings);
 
     // Axeptio callback setup
     if (typeof window._axcb === 'undefined') {
