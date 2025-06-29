@@ -29,7 +29,7 @@ import { ref } from 'vue';
 import type { registerNewPasswordModel } from '~/models/authentification/registerNewPasswordModel';
 
 const route = useRoute();
-const token = route.params.token as string;
+const token = route.query.token as string;
 
 const { registerNewPassword } = useAuthentification();
 const registerPassword = ref<registerNewPasswordModel>({
