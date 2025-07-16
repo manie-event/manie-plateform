@@ -2,7 +2,18 @@ import type { User } from '@/models/user/UserModel';
 import { defineStore } from 'pinia';
 
 export const useUserStore = defineStore('userStore', () => {
-  const user = ref<User>();
+  const user = ref<User>({
+    username: '',
+    name: '',
+    phraseInspirante: '',
+    phraseDePresentation: '',
+    category: '',
+    email: '',
+    phone: '',
+    adresse: '',
+    diplome: '',
+    langues: '',
+  });
   const isStoringUserAccepeted = ref(false);
 
   const getUserInfo = () => {

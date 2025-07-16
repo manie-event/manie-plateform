@@ -1,7 +1,7 @@
 <template>
   <v-card elevation="10" class="roun-">
     <v-card-text class="position-relative pb-0">
-      <h5 class="text-h4 mb-1 font-weight-semibold">{{ `Bienvenue ${user.nomComplet}` }}</h5>
+      <h5 class="text-h4 mb-1 font-weight-semibold">{{ `Bienvenue ${user.username}` }}</h5>
       <div class="text-subtitle-1 text-grey100 pb-1 font-weight-medium">
         You have done 38% more sales
       </div>

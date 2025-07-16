@@ -9,7 +9,6 @@ export const useUserProfile = () => {
   };
 
   const updateProfile = (profileData: User) => {
-    console.log('Updating user profile with data:', profileData);
     setUser(profileData);
   };
 

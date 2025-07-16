@@ -14,12 +14,14 @@ const { setUserAccepted } = userStore;
 const { isStoringUserAccepeted } = storeToRefs(userStore);
 
 const router = useRouter();
+const route = useRoute();
 const checkbox = isStoringUserAccepeted;
 const valid = ref(false);
 const authentification = ref({
-  password: '',
   email: '',
+  password: '',
 });
+
 const passwordRules = ref([
   (v: string) => !!v || 'Le mot de passe est obligatoire',
   (v: string) => (v && v.length >= 10) || 'Le mot de passe doit faire 10 caractères minimum',
@@ -30,22 +32,17 @@ const emailRules = ref([
 ]);
 
 const validate = async () => {
-  const login = await sendLogin(authentification.value);
-
-  const isConsumer = computed(() =>
-    login.user.category.some((cat: string) => cat.toLowerCase() === 'consumer')
-  );
-
-  if (isConsumer) {
-    router.push({ path: '/dashboards/dashboard1' });
-  } else {
-    router.push({ path: '/dashboards/dashboard2' });
-  }
+  await sendLogin(authentification.value);
 };
 
 const isMemoryUser = () => {
   setUserAccepted(checkbox.value);
 };
+onMounted(() => {
+  if (route.query.email && typeof route.query.email === 'string') {
+    authentification.value.email = route.query.email;
+  }
+});
 </script>
 
 <template>
@@ -78,7 +75,6 @@ const isMemoryUser = () => {
       class="mb-8"
       placeholder="info@manie.com"
       required
-      autocomplete="current-email"
       hide-details="auto"
     ></VTextField>
     <v-label class="text-subtitle-1 font-weight-semibold pb-2 text-grey200">Mot de passe</v-label>
@@ -89,7 +85,6 @@ const isMemoryUser = () => {
       hide-details="auto"
       placeholder="**********"
       type="password"
-      autocomplete="current-password"
       class="pwdInput"
     ></VTextField>
     <div class="d-flex flex-wrap align-center my-3 ml-n2">
@@ -128,6 +123,6 @@ const isMemoryUser = () => {
   </Form>
   <Teleport to="body">
     <errorToaster />
-    <successToaster />
+    <CommonSuccessToaster></CommonSuccessToaster>
   </Teleport>
 </template>

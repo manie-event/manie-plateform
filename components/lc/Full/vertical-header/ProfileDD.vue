@@ -5,8 +5,14 @@ import { Icon } from '@iconify/vue';
 import { CircleXIcon, MailIcon } from 'vue-tabler-icons';
 import { useAuthentification } from '../../../../composables/UseAuthentification';
 
-const { user } = useUserStore();
+const { user } = storeToRefs(useUserStore());
 const { sendLogout } = useAuthentification();
+
+const troncateText = computed(() => {
+  return user.value.email.length > 20
+    ? user.value.email.substring(0, 20) + '...'
+    : user.value.email;
+});
 </script>
 
 <template>
@@ -22,7 +28,7 @@ const { sendLogout } = useAuthentification();
           </v-avatar>
           <div class="ml-md-4 d-md-block d-none">
             <h6 class="text-h6 d-flex align-center text-black font-weight-semibold">
-              {{ user.nomComplet }}
+              {{ user.name ? user.name : user.username }}
             </h6>
             <span class="text-subtitle-2 font-weight-medium text-grey100">{{
               user.category == 'professional' ? UserCategory.PRESTA : UserCategory.CLIENT
@@ -43,7 +49,7 @@ const { sendLogout } = useAuthentification();
             <img src="/images/profile/user6.jpg" width="90" />
           </v-avatar>
           <div class="ml-5">
-            <h6 class="text-h5 mb-n1">{{ user.nomComplet }}</h6>
+            <h6 class="text-h5 mb-n1">{{ user.name ? user.name : user.username }}</h6>
             <span class="text-subtitle-1 font-weight-regular text-grey100 font-weight-medium">{{
               user.category == 'professional' ? UserCategory.PRESTA : UserCategory.CLIENT
             }}</span>

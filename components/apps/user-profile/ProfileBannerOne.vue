@@ -16,7 +16,7 @@
               </div>
               <div class="ml-sm-4 text-sm-left text-center">
                 <h5 class="text-h3 font-weight-semibold mb-1 my-sm-0 my-2">
-                  {{ user?.nomComplet ?? 'Définir votre nom complet' }}
+                  {{ user?.name ?? 'Définir votre nom complet' }}
                   <v-chip
                     color="primary"
                     class="bg-lightprimary font-weight-semibold ml-2 mt-n1"

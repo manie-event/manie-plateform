@@ -1,5 +1,3 @@
-import { JumpRopeIcon } from 'vue-tabler-icons';
-
 export interface menu {
   header?: string;
   title?: string;
@@ -641,7 +639,7 @@ const sidebarItem: menu[] = [
       },
       {
         title: 'Boxed Login',
-        to: '/auth/login2',
+        to: '/auth/login',
       },
     ],
   },
@@ -653,7 +651,7 @@ const sidebarItem: menu[] = [
     children: [
       {
         title: 'Side Register',
-        to: '/auth/register2',
+        to: '/auth/register',
       },
       {
         title: 'Boxed Register',
@@ -673,7 +671,7 @@ const sidebarItem: menu[] = [
       },
       {
         title: 'Boxed Forgot Password',
-        to: '/auth/forgot-password2',
+        to: '/auth/forgot-password',
       },
     ],
   },
@@ -689,7 +687,7 @@ const sidebarItem: menu[] = [
       },
       {
         title: 'Boxed Two Steps',
-        to: '/auth/two-step2',
+        to: '/auth/two-step',
       },
     ],
   },

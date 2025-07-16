@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import type { RegisterModel } from '../../models/authentification/registerModel';
 import errorToaster from '../common/errorToaster.vue';
 
 /*Social icons*/
@@ -7,9 +8,11 @@ import errorToaster from '../common/errorToaster.vue';
 // import facebook from "/images/svgs/icon-facebook.svg";
 const { sendRegister } = useAuthentification();
 
-const registerForm = ref({
+const registerForm = ref<RegisterModel>({
   username: '',
   category: 'professional',
+  siret: '',
+  dateOfBirth: '',
   password: '',
   confirmPassword: '',
   email: '',
@@ -28,12 +31,19 @@ const emailRules = ref([
   (v: string) => /.+@.+\..+/.test(v) || "L'e-mail doit être valide",
 ]);
 const nameRules = ref([(v: string) => !!v || 'Votre pseudo est obligatoire']);
+const siretRules = ref([
+  (v: string) => v.length === 14 || 'Le numéro SIRET doit faire 14 caractères',
+  (v: string) => /^\d+$/.test(v) || 'Le numéro SIRET doit contenir uniquement des chiffres',
+]);
 
 const register = async () => {
+  console.log('Registering with form:', registerForm.value);
   await sendRegister(registerForm.value);
   registerForm.value = {
     username: '',
+    siret: '',
     category: 'professional',
+    dateOfBirth: '',
     password: '',
     confirmPassword: '',
     email: '',
@@ -98,6 +108,27 @@ const register = async () => {
       autocomplete="new-email"
       placeholder="info@manie.com"
     ></VTextField>
+    <v-label class="text-subtitle-1 font-weight-medium pb-2">Date d'anniversaire</v-label>
+    <VTextField
+      v-model="registerForm.dateOfBirth"
+      type="date"
+      required
+      autocomplete="new-dateOfBirth"
+      placeholder="08/03/1993"
+    ></VTextField>
+    <div v-if="registerForm.category === 'professional'" class="w-100">
+      <v-label class="text-subtitle-1 font-weight-medium pb-2">Votre numéro SIRET</v-label>
+      <VTextField
+        v-model="registerForm.siret"
+        :rules="siretRules"
+        placeholder="12345678901234"
+        required
+        autocomplete="new-siret"
+        type="text"
+        variant="outlined"
+        color="primary"
+      ></VTextField>
+    </div>
     <v-label class="text-subtitle-1 font-weight-medium pb-2">Mot de passe</v-label>
     <VTextField
       v-model="registerForm.password"

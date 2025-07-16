@@ -1,5 +1,6 @@
 export interface User {
-  nomComplet: string;
+  username: string;
+  name: string;
   phraseInspirante?: string;
   phraseDePresentation?: string;
   category: string;

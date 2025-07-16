@@ -3,7 +3,7 @@
     <template #title>Modifier le profil</template>
 
     <template #content>
-      <v-text-field label="Nom" v-model="profile.nomComplet" />
+      <v-text-field label="Nom" v-model="profile.name" />
       <v-textarea label="Votre inspiration du moment" v-model="profile.phraseInspirante" />
       <v-textarea label="Votre presentation" v-model="profile.phraseDePresentation" />
       <v-text-field label="votre téléphone" v-model="profile.phone" />
@@ -32,10 +32,12 @@ const { updateProfile } = useUserProfile();
 const openModal = defineModel<boolean>('openModal');
 
 const profile = ref<User>({
-  nomComplet: '',
+  username: '',
+  name: '',
   phraseInspirante: '',
   phraseDePresentation: '',
   email: '',
+  category: 'professional',
   phone: '',
   adresse: '',
   diplome: '',

@@ -648,6 +648,7 @@ const _inlineRuntimeConfig = {
     }
   },
   "public": {
+    "tokenSiret": "28321b5b-4965-4ca5-b21b-5b4965bca5f7",
     "apiUrl": "https://manie-api.onrender.com"
   }
 };
