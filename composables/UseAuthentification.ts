@@ -26,7 +26,6 @@ export const useAuthentification = () => {
     }
   };
 
-  // Connexion d'un nouvel utilisateur
   const sendLogin = async (authentification: AuthentificationModel) => {
     try {
       const { data } = await axios.post(`${config.public.apiUrl}/auth/login`, authentification);
@@ -45,7 +44,7 @@ export const useAuthentification = () => {
         });
 
         token.value = tokenValue;
-        if (data.user.category.some((cat: string) => cat.toLowerCase() === 'consumer')) {
+        if (data.user.category === 'consumer') {
           setUser(data.user);
           router.push({ path: '/dashboards/dashboard1' });
         } else {
