@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import JetonImg from '@/public/images/panier/jeton.png';
-import CartEmpty from '../CartEmpty.vue';
 
 const store = useCartStore();
 const { cart, getTotalPrice, getCart } = storeToRefs(store);
 </script>
 <template>
-  <div v-if="cart.quantity > 0">
+  <div>
     <h5 class="text-h5 my-8">Vos nouveaux jetons ({{ cart.quantity }})</h5>
     <v-divider />
     <v-table>
@@ -52,9 +51,9 @@ const { cart, getTotalPrice, getCart } = storeToRefs(store);
       </tbody>
     </v-table>
   </div>
-  <div v-else class="d-flex justify-center">
+  <!-- <div v-else class="d-flex justify-center">
     <CartEmpty />
-  </div>
+  </div> -->
 </template>
 <style>
 .custom-img-box {

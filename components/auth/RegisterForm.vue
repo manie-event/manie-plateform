@@ -37,7 +37,6 @@ const siretRules = ref([
 ]);
 
 const register = async () => {
-  console.log('Registering with form:', registerForm.value);
   await sendRegister(registerForm.value);
   registerForm.value = {
     username: '',

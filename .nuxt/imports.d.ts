@@ -29,6 +29,7 @@ export { withCtx, withDirectives, withKeys, withMemo, withModifiers, withScopeId
 export { requestIdleCallback, cancelIdleCallback } from '#app/compat/idle-callback';
 export { setInterval } from '#app/compat/interval';
 export { useAuthentification } from '../composables/UseAuthentification';
+export { usePaiementJeton } from '../composables/UsePaiementJeton';
 export { useUserProfile } from '../composables/UseUserProfile';
 export { customizer, getPrimary, getSecondary, getLightPrimary, getLightSecondary, getLight100, getLightborder, getTextGrey100, getWarning, getError } from '../utils/UpdateColors';
 export { default as axios } from '../utils/axios';

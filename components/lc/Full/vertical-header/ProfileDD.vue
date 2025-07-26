@@ -5,7 +5,8 @@ import { Icon } from '@iconify/vue';
 import { CircleXIcon, MailIcon } from 'vue-tabler-icons';
 import { useAuthentification } from '../../../../composables/UseAuthentification';
 
-const { user } = storeToRefs(useUserStore());
+const userStore = useUserStore();
+const { user, isProfessionalProfileCreated } = storeToRefs(userStore);
 const { sendLogout } = useAuthentification();
 
 const troncateText = computed(() => {
@@ -24,7 +25,12 @@ const troncateText = computed(() => {
       <div class="text-left px-0 cursor-pointer" variant="text" v-bind="props">
         <div class="d-flex align-center">
           <v-avatar size="50">
-            <img src="/images/profile/user6.jpg" width="50" alt="Mike Nielsen" />
+            <img
+              src="/images/profile/user6.jpg"
+              width="50"
+              alt="Mike Nielsen"
+              :class="{ 'profile-not-defined': !isProfessionalProfileCreated }"
+            />
           </v-avatar>
           <div class="ml-md-4 d-md-block d-none">
             <h6 class="text-h6 d-flex align-center text-black font-weight-semibold">
@@ -40,7 +46,7 @@ const troncateText = computed(() => {
     <v-sheet rounded="lg" width="385" elevation="10" class="mt-5">
       <div class="px-8 pt-6">
         <div class="d-flex align-center justify-space-between">
-          <h6 class="text-h5 font-weight-semibold">User Profile</h6>
+          <h6 class="text-h5 font-weight-semibold">Votre profil</h6>
           <CircleXIcon size="22" class="text-grey100 cursor-pointer opacity-50" />
         </div>
 
@@ -63,13 +69,14 @@ const troncateText = computed(() => {
         </div>
         <v-divider></v-divider>
       </div>
-      <perfect-scrollbar style="height: calc(100vh - 240px); max-height: 240px">
+      <div style="height: 100%; max-height: 240px">
         <v-list class="py-0 theme-list" lines="two">
           <v-list-item
             v-for="item in profileDD"
             :key="item.title"
             class="py-4 px-8 custom-text-primary"
             :to="item.href"
+            :class="{ 'profile-not-defined': !isProfessionalProfileCreated }"
           >
             <template v-slot:prepend>
               <v-avatar size="40" class="rounded-lg" :class="'bg-light' + item.bgcolor">
@@ -92,7 +99,7 @@ const troncateText = computed(() => {
             </p>
           </v-list-item>
         </v-list>
-      </perfect-scrollbar>
+      </div>
       <div class="pb-6 px-8 text-center">
         <v-btn color="primary" size="large" rounded="pill" block @click="sendLogout()"
           >Me déconnecter</v-btn
@@ -101,3 +108,23 @@ const troncateText = computed(() => {
     </v-sheet>
   </v-menu>
 </template>
+<style scoped>
+.profile-not-defined {
+  padding: 2px;
+  border-radius: 50%;
+  border: 2px solid rgba(245, 0, 0, 100);
+  animation: clignottementAvatar 1s infinite;
+}
+
+@keyframes clignottementAvatar {
+  0% {
+    border: 2px solid rgba(245, 0, 0, 100);
+  }
+  50% {
+    border: 2px solid rgba(245, 0, 0, 0);
+  }
+  100% {
+    border: 2px solid rgba(245, 0, 0, 100);
+  }
+}
+</style>

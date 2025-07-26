@@ -1,17 +1,21 @@
 <script setup lang="ts">
-import WelcomeCard from '@/components/dashboards/dashboard2/WelcomeCard.vue';
-import TextCards from '@/components/dashboards/dashboard2/TextCards.vue';
-import ProfitExpanse from '@/components/dashboards/dashboard2/ProfitExpanse.vue';
-import ProductSales from '@/components/dashboards/dashboard2/ProductSales.vue';
-import TraficDistribution from '@/components/dashboards/dashboard2/TrafficDistribution.vue';
-import ProfileCards from '@/components/dashboards/dashboard2/ProfileCards.vue';
+import BaseEmptyState from '@/components/common/BaseEmptyState.vue';
 import FigmaCard from '@/components/dashboards/dashboard2/FigmaCard.vue';
 import PayingTable from '@/components/dashboards/dashboard2/PayingTable.vue';
+import ProductSales from '@/components/dashboards/dashboard2/ProductSales.vue';
+import ProfileCards from '@/components/dashboards/dashboard2/ProfileCards.vue';
+import ProfitExpanse from '@/components/dashboards/dashboard2/ProfitExpanse.vue';
+import TextCards from '@/components/dashboards/dashboard2/TextCards.vue';
+import TraficDistribution from '@/components/dashboards/dashboard2/TrafficDistribution.vue';
 import UpcommingSchedule from '@/components/dashboards/dashboard2/UpcommingSchedule.vue';
+import WelcomeCard from '@/components/dashboards/dashboard2/WelcomeCard.vue';
+import EmptyState from '@/public/images/empty-state/profil-vide.png';
+const userStore = useUserStore();
+const { isProfessionalProfileCreated } = storeToRefs(userStore);
 </script>
 
 <template>
-  <v-row>
+  <v-row v-if="isProfessionalProfileCreated">
     <!---Welcome cards-->
     <v-col cols="12" sm="12" lg="6">
       <WelcomeCard />
@@ -50,6 +54,21 @@ import UpcommingSchedule from '@/components/dashboards/dashboard2/UpcommingSched
     <!---Upcomming schedule-->
     <v-col cols="12" sm="12" lg="4">
       <UpcommingSchedule />
+    </v-col>
+  </v-row>
+  <v-row v-else>
+    <v-col cols="12">
+      <BaseEmptyState>
+        <template #image>
+          <img :src="EmptyState" alt="Empty State" />
+        </template>
+        <template #description>
+          <h2 class="text-h5">Bienvenue sur Manie</h2>
+          <p class="text-subtitle-1">
+            Veuillez compléter votre profil professionnel pour accéder à toutes les fonctionnalités.
+          </p>
+        </template>
+      </BaseEmptyState>
     </v-col>
   </v-row>
 </template>

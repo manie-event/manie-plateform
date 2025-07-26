@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { BasketIcon } from 'vue-tabler-icons';
-import Payment from './steps/Payment.vue';
 import StepFirst from './steps/StepFirst.vue';
-import Thankyou from './steps/Thankyou.vue';
 
 const store = useCartStore();
 const { cart } = storeToRefs(store);
+
+const { createTokenSession } = usePaiementJeton();
 const thankyou = ref(false);
 
 const tab = ref('tab-1');
-function changeTab(e: string) {
-  tab.value = e;
-}
+// function changeTab(e: string) {
+//   tab.value = e;
+// }
 </script>
 <template>
   <v-card variant="outlined" class="bg-surface">
@@ -32,26 +32,6 @@ function changeTab(e: string) {
             > -->
           </div>
         </v-tab>
-
-        <v-tab
-          value="tab-2"
-          rounded="md"
-          class="mb-3 text-left"
-          height="70"
-          :disabled="store.cart.quantity < 1"
-        >
-          <span
-            class="round-40 rounded-circle bg-bglight d-flex justify-center align-center me-3 icon"
-          >
-            <CreditCardIcon stroke-width="1.5" width="20" />
-          </span>
-          <div>
-            <div class="text-h6">Paiement</div>
-            <!-- <span class="text-subtitle-2 textSecondary font-weight-medium d-block">
-              Add & Update Card
-            </span> -->
-          </div>
-        </v-tab>
       </v-tabs>
       <v-window v-model="tab">
         <v-window-item value="tab-1" class="pa-1">
@@ -62,7 +42,7 @@ function changeTab(e: string) {
                 >Retour à l'accueil</v-btn
               >
             </v-col>
-            <v-col cols="12" sm="6" class="text-sm-right text-center">
+            <!-- <v-col cols="12" sm="6" class="text-sm-right text-center">
               <v-btn
                 color="primary"
                 rounded="pill"
@@ -70,38 +50,15 @@ function changeTab(e: string) {
                 v-if="store.cart.quantity >= 1"
                 >Suivant</v-btn
               >
-            </v-col>
-          </v-row>
-        </v-window-item>
-        <!-- <v-window-item value="tab-2" class="pa-1">
-          <StepSecond />
-          <v-row class="mt-3">
-            <v-col cols="6">
-              <v-btn color="primary" rounded="pill" variant="tonal" @click="changeTab('tab-1')"
-                >Back</v-btn
-              >
-            </v-col>
-            <v-col cols="6" class="text-right pb-5">
-              <v-btn color="primary" rounded="pill" @click="changeTab('tab-3')"
-                >Place an Order</v-btn
-              >
-            </v-col>
-          </v-row>
-        </v-window-item> -->
-        <v-window-item value="tab-2" class="pa-1">
-          <Payment />
-          <v-row class="mt-3">
-            <v-col cols="12" sm="6">
-              <v-btn color="primary" variant="tonal" rounded="pill" @click="changeTab('tab-1')"
-                >Back</v-btn
-              >
-            </v-col>
+            </v-col> -->
             <v-col cols="12" sm="6" class="text-sm-right pb-5">
-              <v-btn color="primary" rounded="pill" @click="thankyou = true">Payer</v-btn>
-              <!-- Modal -->
-              <v-dialog v-model="thankyou" max-width="750">
-                <Thankyou />
-              </v-dialog>
+              <v-btn
+                v-if="store.cart.quantity >= 1"
+                color="primary"
+                rounded="pill"
+                @click="createTokenSession(cart.quantity)"
+                >Payer</v-btn
+              >
             </v-col>
           </v-row>
         </v-window-item>

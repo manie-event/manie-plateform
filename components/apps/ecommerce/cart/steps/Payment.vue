@@ -17,7 +17,7 @@ const { cart, getTotalPrice } = storeToRefs(store);
     <v-row class="mt-5">
       <v-col cols="12" lg="7">
         <div class="py-5 px-4 border rounded-md mb-6">
-          <v-radio value="paypal" color="primary" class="label-op-1">
+          <v-radio value="card" color="primary" class="label-op-1">
             <template v-slot:label>
               <div class="d-flex align-center w-100">
                 <div>
@@ -35,6 +35,7 @@ const { cart, getTotalPrice } = storeToRefs(store);
           </v-radio>
         </div>
       </v-col>
+      <!-- <TestStripe></TestStripe> -->
       <OrderSummaryVue />
     </v-row>
   </v-container>

@@ -35,6 +35,7 @@ interface _GlobalComponents {
     'AppsEcommerceCartStepsPayment': typeof import("../components/apps/ecommerce/cart/steps/Payment.vue")['default']
     'AppsEcommerceCartStepsStepFirst': typeof import("../components/apps/ecommerce/cart/steps/StepFirst.vue")['default']
     'AppsEcommerceCartStepsStepSecond': typeof import("../components/apps/ecommerce/cart/steps/StepSecond.vue")['default']
+    'AppsEcommerceCartStepsTestStripe': typeof import("../components/apps/ecommerce/cart/steps/TestStripe.vue")['default']
     'AppsEcommerceCartStepsThankyou': typeof import("../components/apps/ecommerce/cart/steps/Thankyou.vue")['default']
     'AppsEcommerceDetailProductCarousel': typeof import("../components/apps/ecommerce/detail/ProductCarousel.vue")['default']
     'AppsEcommerceDetailProductDescription': typeof import("../components/apps/ecommerce/detail/ProductDescription.vue")['default']
@@ -86,6 +87,7 @@ interface _GlobalComponents {
     'AuthRegisterForm': typeof import("../components/auth/RegisterForm.vue")['default']
     'AuthResetForm': typeof import("../components/auth/ResetForm.vue")['default']
     'AuthTwoStepForm': typeof import("../components/auth/TwoStepForm.vue")['default']
+    'CommonBaseEmptyState': typeof import("../components/common/BaseEmptyState.vue")['default']
     'CommonBaseModal': typeof import("../components/common/BaseModal.vue")['default']
     'CommonErrorToaster': typeof import("../components/common/errorToaster.vue")['default']
     'CommonSuccessToaster': typeof import("../components/common/successToaster.vue")['default']
@@ -436,7 +438,7 @@ interface _GlobalComponents {
     'Html': typeof import("../node_modules/nuxt/dist/head/runtime/components")['Html']
     'Body': typeof import("../node_modules/nuxt/dist/head/runtime/components")['Body']
     'NuxtIsland': typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']
-    'NuxtRouteAnnouncer': IslandComponent<typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']>
+    'NuxtRouteAnnouncer': typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']
       'LazyAppsBlogCardGrid': LazyComponent<typeof import("../components/apps/blog/blogCardGrid.vue")['default']>
     'LazyAppsBlogPosts': LazyComponent<typeof import("../components/apps/blog/blogPosts.vue")['default']>
     'LazyAppsBlogDetailAddCommnet': LazyComponent<typeof import("../components/apps/blog/detail/addCommnet.vue")['default']>
@@ -460,6 +462,7 @@ interface _GlobalComponents {
     'LazyAppsEcommerceCartStepsPayment': LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/Payment.vue")['default']>
     'LazyAppsEcommerceCartStepsStepFirst': LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/StepFirst.vue")['default']>
     'LazyAppsEcommerceCartStepsStepSecond': LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/StepSecond.vue")['default']>
+    'LazyAppsEcommerceCartStepsTestStripe': LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/TestStripe.vue")['default']>
     'LazyAppsEcommerceCartStepsThankyou': LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/Thankyou.vue")['default']>
     'LazyAppsEcommerceDetailProductCarousel': LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductCarousel.vue")['default']>
     'LazyAppsEcommerceDetailProductDescription': LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductDescription.vue")['default']>
@@ -511,6 +514,7 @@ interface _GlobalComponents {
     'LazyAuthRegisterForm': LazyComponent<typeof import("../components/auth/RegisterForm.vue")['default']>
     'LazyAuthResetForm': LazyComponent<typeof import("../components/auth/ResetForm.vue")['default']>
     'LazyAuthTwoStepForm': LazyComponent<typeof import("../components/auth/TwoStepForm.vue")['default']>
+    'LazyCommonBaseEmptyState': LazyComponent<typeof import("../components/common/BaseEmptyState.vue")['default']>
     'LazyCommonBaseModal': LazyComponent<typeof import("../components/common/BaseModal.vue")['default']>
     'LazyCommonErrorToaster': LazyComponent<typeof import("../components/common/errorToaster.vue")['default']>
     'LazyCommonSuccessToaster': LazyComponent<typeof import("../components/common/successToaster.vue")['default']>
@@ -861,7 +865,7 @@ interface _GlobalComponents {
     'LazyHtml': LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['Html']>
     'LazyBody': LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['Body']>
     'LazyNuxtIsland': LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']>
-    'LazyNuxtRouteAnnouncer': LazyComponent<IslandComponent<typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']>>
+    'LazyNuxtRouteAnnouncer': LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']>
 }
 
 declare module 'vue' {
@@ -891,6 +895,7 @@ export const AppsEcommerceCartStepsOrderSummary: typeof import("../components/ap
 export const AppsEcommerceCartStepsPayment: typeof import("../components/apps/ecommerce/cart/steps/Payment.vue")['default']
 export const AppsEcommerceCartStepsStepFirst: typeof import("../components/apps/ecommerce/cart/steps/StepFirst.vue")['default']
 export const AppsEcommerceCartStepsStepSecond: typeof import("../components/apps/ecommerce/cart/steps/StepSecond.vue")['default']
+export const AppsEcommerceCartStepsTestStripe: typeof import("../components/apps/ecommerce/cart/steps/TestStripe.vue")['default']
 export const AppsEcommerceCartStepsThankyou: typeof import("../components/apps/ecommerce/cart/steps/Thankyou.vue")['default']
 export const AppsEcommerceDetailProductCarousel: typeof import("../components/apps/ecommerce/detail/ProductCarousel.vue")['default']
 export const AppsEcommerceDetailProductDescription: typeof import("../components/apps/ecommerce/detail/ProductDescription.vue")['default']
@@ -942,6 +947,7 @@ export const AuthLoginForm: typeof import("../components/auth/LoginForm.vue")['d
 export const AuthRegisterForm: typeof import("../components/auth/RegisterForm.vue")['default']
 export const AuthResetForm: typeof import("../components/auth/ResetForm.vue")['default']
 export const AuthTwoStepForm: typeof import("../components/auth/TwoStepForm.vue")['default']
+export const CommonBaseEmptyState: typeof import("../components/common/BaseEmptyState.vue")['default']
 export const CommonBaseModal: typeof import("../components/common/BaseModal.vue")['default']
 export const CommonErrorToaster: typeof import("../components/common/errorToaster.vue")['default']
 export const CommonSuccessToaster: typeof import("../components/common/successToaster.vue")['default']
@@ -1292,7 +1298,7 @@ export const Head: typeof import("../node_modules/nuxt/dist/head/runtime/compone
 export const Html: typeof import("../node_modules/nuxt/dist/head/runtime/components")['Html']
 export const Body: typeof import("../node_modules/nuxt/dist/head/runtime/components")['Body']
 export const NuxtIsland: typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']
-export const NuxtRouteAnnouncer: IslandComponent<typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']>
+export const NuxtRouteAnnouncer: typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']
 export const LazyAppsBlogCardGrid: LazyComponent<typeof import("../components/apps/blog/blogCardGrid.vue")['default']>
 export const LazyAppsBlogPosts: LazyComponent<typeof import("../components/apps/blog/blogPosts.vue")['default']>
 export const LazyAppsBlogDetailAddCommnet: LazyComponent<typeof import("../components/apps/blog/detail/addCommnet.vue")['default']>
@@ -1316,6 +1322,7 @@ export const LazyAppsEcommerceCartStepsOrderSummary: LazyComponent<typeof import
 export const LazyAppsEcommerceCartStepsPayment: LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/Payment.vue")['default']>
 export const LazyAppsEcommerceCartStepsStepFirst: LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/StepFirst.vue")['default']>
 export const LazyAppsEcommerceCartStepsStepSecond: LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/StepSecond.vue")['default']>
+export const LazyAppsEcommerceCartStepsTestStripe: LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/TestStripe.vue")['default']>
 export const LazyAppsEcommerceCartStepsThankyou: LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/Thankyou.vue")['default']>
 export const LazyAppsEcommerceDetailProductCarousel: LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductCarousel.vue")['default']>
 export const LazyAppsEcommerceDetailProductDescription: LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductDescription.vue")['default']>
@@ -1367,6 +1374,7 @@ export const LazyAuthLoginForm: LazyComponent<typeof import("../components/auth/
 export const LazyAuthRegisterForm: LazyComponent<typeof import("../components/auth/RegisterForm.vue")['default']>
 export const LazyAuthResetForm: LazyComponent<typeof import("../components/auth/ResetForm.vue")['default']>
 export const LazyAuthTwoStepForm: LazyComponent<typeof import("../components/auth/TwoStepForm.vue")['default']>
+export const LazyCommonBaseEmptyState: LazyComponent<typeof import("../components/common/BaseEmptyState.vue")['default']>
 export const LazyCommonBaseModal: LazyComponent<typeof import("../components/common/BaseModal.vue")['default']>
 export const LazyCommonErrorToaster: LazyComponent<typeof import("../components/common/errorToaster.vue")['default']>
 export const LazyCommonSuccessToaster: LazyComponent<typeof import("../components/common/successToaster.vue")['default']>
@@ -1717,6 +1725,6 @@ export const LazyHead: LazyComponent<typeof import("../node_modules/nuxt/dist/he
 export const LazyHtml: LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['Html']>
 export const LazyBody: LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['Body']>
 export const LazyNuxtIsland: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']>
-export const LazyNuxtRouteAnnouncer: LazyComponent<IslandComponent<typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']>>
+export const LazyNuxtRouteAnnouncer: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']>
 
 export const componentNames: string[]

@@ -14,6 +14,8 @@ export const useUserStore = defineStore('userStore', () => {
     diplome: '',
     langues: '',
   });
+  const isProfessionalProfileCreated = ref(false);
+  const isConsumerProfileAccepted = ref(false);
   const isStoringUserAccepeted = ref(false);
 
   const getUserInfo = () => {
@@ -30,6 +32,8 @@ export const useUserStore = defineStore('userStore', () => {
 
   return {
     user,
+    isProfessionalProfileCreated,
+    isConsumerProfileAccepted,
     isStoringUserAccepeted,
     setUserAccepted,
     getUserInfo,

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useCustomizerStore } from '@/stores/customizer';
-import { pl, zhHans } from 'vuetify/locale';
 const customizer = useCustomizerStore();
 const title = ref('Spikeadmin - Nuxt3 Typescript based Admin Dashboard Template');
 useHead({
@@ -16,29 +15,10 @@ useHead({
 <template>
   <!-----RTL LAYOUT------->
   <v-locale-provider v-if="customizer.setRTLLayout" rtl>
-    <v-app
-      :theme="customizer.actTheme"
-      :class="[
-        customizer.actTheme,
-        customizer.mini_sidebar ? 'mini-sidebar' : '',
-        customizer.setHorizontalLayout ? 'horizontalLayout' : 'verticalLayout',
-        customizer.setBorderCard ? 'cardBordered' : '',
-      ]"
-    >
+    <v-app :theme="customizer.actTheme" :class="customizer.actTheme">
       <!---Customizer location left side--->
       <ClientOnly>
-        <v-navigation-drawer
-          app
-          temporary
-          elevation="10"
-          location="left"
-          v-model="customizer.Customizer_drawer"
-          width="320"
-          class="left-customizer"
-        >
-          <LcFullCustomizer />
-        </v-navigation-drawer>
-        <LcFullVerticalSidebar v-if="!customizer.setHorizontalLayout" />
+        <!-- <LcFullVerticalSidebar v-if="!customizer.setHorizontalLayout" /> -->
         <div :class="customizer.boxed ? 'maxWidth' : 'full-header'">
           <LcFullVerticalHeader v-if="!customizer.setHorizontalLayout" />
         </div>
@@ -73,29 +53,11 @@ useHead({
 
   <!-----LTR LAYOUT------->
   <v-locale-provider v-else>
-    <v-app
-      :theme="customizer.actTheme"
-      :class="[
-        customizer.actTheme,
-        customizer.mini_sidebar ? 'mini-sidebar' : '',
-        customizer.setHorizontalLayout ? 'horizontalLayout' : 'verticalLayout',
-        customizer.setBorderCard ? 'cardBordered' : '',
-      ]"
-    >
+    <v-app :theme="customizer.actTheme" :class="customizer.actTheme">
       <!---Customizer location right side--->
       <ClientOnly>
-        <v-navigation-drawer
-          app
-          temporary
-          elevation="10"
-          location="right"
-          v-model="customizer.Customizer_drawer"
-          width="320"
-        >
-          <LcFullCustomizer />
-        </v-navigation-drawer>
-        <LcFullVerticalSidebar v-if="!customizer.setHorizontalLayout" />
-        <div :class="customizer.boxed ? 'maxWidth' : 'full-header'">
+        <!-- <LcFullVerticalSidebar v-if="!customizer.setHorizontalLayout" /> -->
+        <div>
           <LcFullVerticalHeader v-if="!customizer.setHorizontalLayout" />
         </div>
         <div :class="customizer.boxed ? 'maxWidth' : 'full-header'">

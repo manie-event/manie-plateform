@@ -7,8 +7,8 @@ import { onBeforeMount, ref } from 'vue';
 const customizer = useCustomizerStore();
 const cartStore = useCartStore();
 
-const { setJetonAmount } = cartStore;
 const { cart } = storeToRefs(cartStore);
+const { createTokenSession } = usePaiementJeton();
 
 const priority = ref(customizer.setHorizontalLayout ? 0 : 0);
 const jetonAmount = ref(0);
@@ -39,26 +39,8 @@ const handleScroll = () => {
     color="containerBg"
     id="top"
     :class="stickyHeader ? 'sticky' : ''"
+    style="position: relative; top: 10px"
   >
-    <v-btn
-      class="hidden-md-and-down custom-hover-primary"
-      icon
-      variant="text"
-      size="small"
-      @click.stop="customizer.SET_MINI_SIDEBAR(!customizer.mini_sidebar)"
-    >
-      <Icon icon="solar:list-bold-duotone" height="24" width="24" />
-    </v-btn>
-    <v-btn
-      class="hidden-lg-and-up custom-hover-primary"
-      icon
-      variant="text"
-      @click.stop="customizer.SET_SIDEBAR_DRAWER"
-      size="small"
-    >
-      <Icon icon="solar:list-bold-duotone" height="24" width="24" />
-    </v-btn>
-
     <!-- ---------------------------------------------- -->
     <!-- Search part -->
     <!-- ---------------------------------------------- -->
@@ -128,8 +110,7 @@ const handleScroll = () => {
             size="small"
             rounded="pill"
             block
-            to="/apps/ecommerce/checkout"
-            @click="setJetonAmount(jetonAmount)"
+            @click="createTokenSession(jetonAmount)"
           >
             Acheter
           </v-btn>
@@ -140,13 +121,13 @@ const handleScroll = () => {
     <!-- ---------------------------------------------- -->
     <!-- Notification -->
     <!-- ---------------------------------------------- -->
-    <div class="hidden-sm-and-down me-sm-4 me-4">
+    <!-- <div class="hidden-sm-and-down me-sm-4 me-4">
       <LcFullVerticalHeaderNotificationDD />
-    </div>
+    </div> -->
     <!-- ---------------------------------------------- -->
     <!-- User Profile -->
     <!-- ---------------------------------------------- -->
-    <div class="hidden-sm-and-down">
+    <div class="hidden-sm-and-down mx-4">
       <LcFullVerticalHeaderProfileDD />
     </div>
 
@@ -183,3 +164,4 @@ const handleScroll = () => {
     </v-menu>
   </v-app-bar>
 </template>
+<style scoped></style>
