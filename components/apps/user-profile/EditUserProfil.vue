@@ -297,7 +297,6 @@ const onSubmit = handleSubmit(
       faq: mergedFaq.value,
     };
     updateProfessionalProfile(finalValues);
-    console.log('Formulaire valide, données:', finalValues);
     resetForm();
     openModal.value = false;
   },

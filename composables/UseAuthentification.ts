@@ -1,6 +1,5 @@
 import type { AuthentificationModel } from '~/models/authentification/authentificationModel';
 import type { registerNewPasswordModel } from '~/models/authentification/registerNewPasswordModel';
-import { UserCategory } from '~/models/enums/userCategoryEnums';
 import type { errorModel } from '~/models/errorModel';
 import type { RegisterModel } from '../models/authentification/registerModel';
 
@@ -14,48 +13,13 @@ export const useAuthentification = () => {
 
   const sendRegister = async (registerInfo: RegisterModel): Promise<void> => {
     try {
-      if (registerInfo.category === UserCategory.PROFESSIONAL) {
-        const siretResponse = await axios.get(
-          `https://api.insee.fr/api-sirene/3.11/siret/${registerInfo.siret}`,
-          {
-            headers: {
-              accept: 'application/json',
-              'X-INSEE-Api-Key-Integration': config.public.tokenSiret,
-            },
-          }
+      const { data } = await axios.post(`${config.public.apiUrl}/auth/register`, registerInfo);
+      if (data) {
+        addSuccess(
+          'Inscription réussie, veuillez vérifier votre email pour confirmer votre compte.'
         );
-
-        const siretValid = siretResponse.data;
-
-        if (siretValid) {
-          try {
-            const { data } = await axios.post(
-              `${config.public.apiUrl}/auth/register`,
-              registerInfo
-            );
-            if (data) {
-              await router.push({
-                path: '/auth/login',
-                query: { email: registerInfo.email },
-              });
-              addSuccess(
-                'Inscription réussie, veuillez vérifier votre email pour confirmer votre compte.'
-              );
-              return data;
-            }
-          } catch (error: unknown) {
-            addError({ message: 'Veuillez vérifier que le SIRET soit valide.' });
-          }
-        }
-      } else if (registerInfo.category === UserCategory.CLIENT) {
-        const { data } = await axios.post(`${config.public.apiUrl}/auth/register`, registerInfo);
-        if (data) {
-          addSuccess(
-            'Inscription réussie, veuillez vérifier votre email pour confirmer votre compte.'
-          );
-          await router.push('/auth/login');
-          return data;
-        }
+        await router.push('/auth/login');
+        return data;
       }
     } catch (error: unknown) {
       addError({ message: 'Veuillez vérifier que le SIRET soit valide.' });

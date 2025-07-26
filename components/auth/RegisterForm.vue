@@ -11,8 +11,6 @@ const { sendRegister } = useAuthentification();
 const registerForm = ref<RegisterModel>({
   username: '',
   category: 'professional',
-  siret: '',
-  dateOfBirth: '',
   password: '',
   confirmPassword: '',
   email: '',
@@ -40,9 +38,7 @@ const register = async () => {
   await sendRegister(registerForm.value);
   registerForm.value = {
     username: '',
-    siret: '',
     category: 'professional',
-    dateOfBirth: '',
     password: '',
     confirmPassword: '',
     email: '',
@@ -107,27 +103,6 @@ const register = async () => {
       autocomplete="new-email"
       placeholder="info@manie.com"
     ></VTextField>
-    <v-label class="text-subtitle-1 font-weight-medium pb-2">Date d'anniversaire</v-label>
-    <VTextField
-      v-model="registerForm.dateOfBirth"
-      type="date"
-      required
-      autocomplete="new-dateOfBirth"
-      placeholder="08/03/1993"
-    ></VTextField>
-    <div v-if="registerForm.category === 'professional'" class="w-100">
-      <v-label class="text-subtitle-1 font-weight-medium pb-2">Votre numéro SIRET</v-label>
-      <VTextField
-        v-model="registerForm.siret"
-        :rules="siretRules"
-        placeholder="12345678901234"
-        required
-        autocomplete="new-siret"
-        type="text"
-        variant="outlined"
-        color="primary"
-      ></VTextField>
-    </div>
     <v-label class="text-subtitle-1 font-weight-medium pb-2">Mot de passe</v-label>
     <VTextField
       v-model="registerForm.password"
