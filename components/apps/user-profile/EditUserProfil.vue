@@ -17,6 +17,18 @@
           :error-messages="showErrors ? errors.name : undefined"
         />
         <v-text-field
+          class="mt-6"
+          label="Votre Prénom"
+          v-model="profile.firstName"
+          :error-messages="showErrors ? errors.name : undefined"
+        />
+        <v-text-field
+          class="mt-6"
+          label="Votre nom"
+          v-model="profile.lastName"
+          :error-messages="showErrors ? errors.name : undefined"
+        />
+        <v-text-field
           label="Votre Numéro De Siret"
           v-model="profile.siret"
           :error-messages="showErrors ? errors.siret : undefined"
@@ -270,6 +282,8 @@ const {
   validationSchema,
   initialValues: {
     name: '',
+    firstName: '',
+    lastName: '',
     siret: '',
     address: '',
     bio: '',
@@ -319,12 +333,12 @@ const removeFaq = (index: number) => {
 };
 
 const activityItems = ref([
-  { label: 'Locations', value: 'locations' },
-  { label: 'Alimentation et Boissons', value: 'foodBeverage' },
-  { label: 'Audiovisuel', value: 'audioVisual' },
-  { label: 'Artistique', value: 'artistic' },
-  { label: 'Logistique', value: 'logistic' },
-  { label: 'Divertissement', value: 'entertainment' },
-  { label: 'Soins', value: 'care' },
+  { label: 'Locations', value: 'espaces & lieux' },
+  { label: 'Alimentation et Boissons', value: 'food & beverage' },
+  { label: 'Audiovisuel', value: 'audio & visuel' },
+  { label: 'Artistique', value: 'artistique' },
+  { label: 'Logistique', value: 'logistique' },
+  { label: 'Divertissement', value: 'animations' },
+  { label: 'Soins', value: 'soin & bien-être' },
 ]);
 </script>
