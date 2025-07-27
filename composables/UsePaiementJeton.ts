@@ -14,7 +14,7 @@ export const usePaiementJeton = () => {
       const response = await axios.post(
         `https://manie-api.onrender.com/payments/token/${professionalUser.value?.uuid}`,
         {
-          amount,
+          quantity: amount,
           professional_uuid: professionalUser.value?.uuid,
         },
         {
