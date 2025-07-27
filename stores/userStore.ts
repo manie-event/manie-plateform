@@ -1,4 +1,4 @@
-import type { User } from '@/models/user/UserModel';
+import type { ProfessionalProfile, User } from '@/models/user/UserModel';
 import { defineStore } from 'pinia';
 
 export const useUserStore = defineStore('userStore', () => {
@@ -14,6 +14,8 @@ export const useUserStore = defineStore('userStore', () => {
     diplome: '',
     langues: '',
   });
+
+  const professionalUser = ref<ProfessionalProfile>();
   const isProfessionalProfileCreated = ref(false);
   const isConsumerProfileAccepted = ref(false);
   const isStoringUserAccepeted = ref(false);
@@ -25,6 +27,10 @@ export const useUserStore = defineStore('userStore', () => {
   const setUser = (userData: User) => {
     user.value = userData;
   };
+  const setProfessionalUser = (newProfessionalUser: ProfessionalProfile) => {
+    professionalUser.value = newProfessionalUser;
+    isProfessionalProfileCreated.value = true;
+  };
 
   const setUserAccepted = (accepted: boolean) => {
     isStoringUserAccepeted.value = accepted;
@@ -32,11 +38,13 @@ export const useUserStore = defineStore('userStore', () => {
 
   return {
     user,
+    professionalUser,
     isProfessionalProfileCreated,
     isConsumerProfileAccepted,
     isStoringUserAccepeted,
     setUserAccepted,
     getUserInfo,
     setUser,
+    setProfessionalUser,
   };
 });

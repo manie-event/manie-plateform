@@ -16,7 +16,7 @@
               </div>
               <div class="ml-sm-4 text-sm-left text-center">
                 <h5 class="text-h3 font-weight-semibold mb-1 my-sm-0 my-2">
-                  {{ professionalUser?.name ?? 'Définir votre nom complet' }}
+                  {{ user?.name ?? 'Définir votre nom complet' }}
                   <v-chip
                     color="primary"
                     class="bg-lightprimary font-weight-semibold ml-2 mt-n1"
@@ -26,7 +26,7 @@
                   >
                 </h5>
                 <span class="text-h6 font-weight-medium text-grey100">{{
-                  professionalUser?.phraseInspirante ?? 'Aucune phrase inspirante définie'
+                  user?.phraseInspirante ?? 'Aucune phrase inspirante définie'
                 }}</span>
               </div>
             </div>
@@ -83,7 +83,7 @@ import UserImage from '/images/profile/user6.jpg';
 const tab = ref(null);
 const openModal = ref(false);
 
-const { professionalUser } = storeToRefs(useUserStore());
+const { user } = storeToRefs(useUserStore());
 
 const items = shallowRef([
   { tab: 'My Profile', icon: UserCircleIcon, href: '/apps/userprofile/one' },

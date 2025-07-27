@@ -4,7 +4,8 @@ import type { ProfessionalProfile } from '~/models/user/UserModel';
 export const useUserProfile = () => {
   const { addError, addSuccess } = useToaster();
   const token = useCookie('token');
-
+  const userStore = useUserStore();
+  const { setProfessionalUser } = userStore;
   const config = useRuntimeConfig();
 
   const updateProfessionalProfile = async (professionalProfil: ProfessionalProfile) => {
@@ -58,7 +59,25 @@ export const useUserProfile = () => {
     }
   };
 
+  const getUserProfile = async () => {
+    try {
+      const { data } = await axios.get(`${config.public.apiUrl}/professional`, {
+        headers: {
+          Authorization: `Bearer ${token.value}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      if (data) {
+        setProfessionalUser(data);
+        return data;
+      }
+    } catch (error: unknown) {
+      addError({ message: 'Une erreur est survenue lors de la récupération du profil.' });
+    }
+  };
+
   return {
     updateProfessionalProfile,
+    getUserProfile,
   };
 };

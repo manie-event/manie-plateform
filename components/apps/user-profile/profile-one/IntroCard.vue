@@ -4,6 +4,7 @@
       <v-card elevation="10" class="bg-surface">
         <v-card-item>
           <!-- <div class="d-flex"> -->
+          {{ professionalUser }}
           <div>
             <h4 class="text-h5">A mon propos</h4>
             <p class="my-5 text-subtitle-1 lh-md font-weight-medium">
@@ -90,7 +91,12 @@
 <script setup lang="ts">
 import { useUserStore } from '@/stores/userStore';
 import { LanguageIcon, MailIcon, MapPinIcon, PhoneIcon, SchoolIcon } from 'vue-tabler-icons';
-const { user } = storeToRefs(useUserStore());
+const { professionalUser } = storeToRefs(useUserStore());
+const { getUserProfile } = useUserProfile();
+
+onMounted(() => {
+  getUserProfile();
+});
 </script>
 <style lang="scss" scoped>
 v-card-item {
