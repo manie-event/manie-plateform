@@ -1,7 +1,7 @@
+import axios from 'axios';
 import type { ProfessionalProfile } from '~/models/user/UserModel';
 
 export const useUserProfile = () => {
-  const { setUser } = useUserStore();
   const { addError, addSuccess } = useToaster();
 
   const config = useRuntimeConfig();
@@ -13,6 +13,13 @@ export const useUserProfile = () => {
 
   const updateProfessionalProfile = async (professionalProfil: ProfessionalProfile) => {
     try {
+      console.log(
+        config.public.tokenSiret,
+        'Token SIRET:',
+        professionalProfil.siret,
+        'Professional SIRET'
+      );
+
       const siretResponse = await axios.get(
         `https://api.insee.fr/api-sirene/3.11/siret/${professionalProfil.siret}`,
         {
@@ -27,6 +34,8 @@ export const useUserProfile = () => {
 
       if (siretValid) {
         try {
+          console.log('SIRET is valid, proceeding with profile update...');
+
           const { data } = await axios.post(
             `${config.public.apiUrl}/professional/create`,
             professionalProfil
