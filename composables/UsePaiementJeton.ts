@@ -3,6 +3,8 @@ import axios from 'axios';
 
 export const usePaiementJeton = () => {
   const token = useCookie('token');
+  const router = useRouter();
+  const route = useRoute();
   const config = useRuntimeConfig();
   const userStore = useUserStore();
   const { professionalUser } = storeToRefs(userStore);
@@ -11,7 +13,7 @@ export const usePaiementJeton = () => {
   const createTokenSession = async (amount: number) => {
     console.log(amount, 'amount');
     try {
-      const response = await axios.post(
+      const { data } = await axios.post(
         `https://manie-api.onrender.com/payments/token/${professionalUser.value?.uuid}`,
         {
           quantity: amount,
@@ -24,7 +26,9 @@ export const usePaiementJeton = () => {
           },
         }
       );
-      return response;
+      if (data) {
+        router.push(data.url);
+      }
     } catch (error) {
       console.error('Error creating token session:', error);
       throw error;
