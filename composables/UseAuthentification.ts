@@ -9,7 +9,7 @@ export const useAuthentification = () => {
   const { addError, addSuccess } = useToaster();
   const userStore = useUserStore();
   const { isStoringUserAccepeted } = storeToRefs(userStore);
-  const { setProfessionalUser } = userStore;
+  const { setUser } = userStore;
 
   const sendRegister = async (registerInfo: RegisterModel): Promise<void> => {
     try {
@@ -46,10 +46,10 @@ export const useAuthentification = () => {
 
         token.value = tokenValue;
         if (data.user.category === 'consumer') {
-          setProfessionalUser(data.user);
+          setUser(data.user);
           router.push({ path: '/dashboards/dashboard1' });
         } else {
-          setProfessionalUser(data.user);
+          setUser(data.user);
           router.push({ path: '/dashboards/dashboard2' });
         }
       } else {
