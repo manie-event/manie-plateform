@@ -1,3 +1,9 @@
+export interface User {
+  username: string;
+  email: string;
+  category: string;
+}
+
 export interface ProfessionalProfile {
   name: string;
   siret: string;
