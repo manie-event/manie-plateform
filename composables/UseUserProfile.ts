@@ -38,7 +38,7 @@ export const useUserProfile = () => {
             professionalProfil,
             {
               headers: {
-                Authorization: `Bearer  ${token.value}`,
+                Authorization: `Bearer ${token.value}`,
                 'Content-Type': 'application/json',
               },
             }
