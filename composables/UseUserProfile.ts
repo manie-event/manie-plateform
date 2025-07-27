@@ -31,6 +31,7 @@ export const useUserProfile = () => {
       if (siretValid) {
         try {
           console.log('SIRET is valid, proceeding with profile update...');
+          console.log(token.value, 'Token:', token, 'Professional Token');
 
           const { data } = await axios.post(
             `${config.public.apiUrl}/professional/create`,

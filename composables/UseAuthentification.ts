@@ -9,7 +9,7 @@ export const useAuthentification = () => {
   const { addError, addSuccess } = useToaster();
   const userStore = useUserStore();
   const { isStoringUserAccepeted } = storeToRefs(userStore);
-  const { setUser } = userStore;
+  const { setProfessionalUser } = userStore;
 
   const sendRegister = async (registerInfo: RegisterModel): Promise<void> => {
     try {
@@ -26,6 +26,7 @@ export const useAuthentification = () => {
     }
   };
 
+  // Connexion d'un nouvel utilisateur
   const sendLogin = async (authentification: AuthentificationModel) => {
     try {
       const { data } = await axios.post(`${config.public.apiUrl}/auth/login`, authentification);
@@ -45,10 +46,10 @@ export const useAuthentification = () => {
 
         token.value = tokenValue;
         if (data.user.category === 'consumer') {
-          setUser(data.user);
+          setProfessionalUser(data.user);
           router.push({ path: '/dashboards/dashboard1' });
         } else {
-          setUser(data.user);
+          setProfessionalUser(data.user);
           router.push({ path: '/dashboards/dashboard2' });
         }
       } else {
