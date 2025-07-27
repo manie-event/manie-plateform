@@ -48,6 +48,7 @@ export const useUserProfile = () => {
             addSuccess(
               'Inscription réussie, veuillez vérifier votre email pour confirmer votre compte.'
             );
+            getUserProfile();
             return data;
           }
         } catch (error: unknown) {

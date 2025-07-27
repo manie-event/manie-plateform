@@ -5,7 +5,7 @@
         <v-card-item>
           <!-- <div class="d-flex"> -->
           {{ professionalUser }}
-          <div>
+          <!-- <div>
             <h4 class="text-h5">A mon propos</h4>
             <p class="my-5 text-subtitle-1 lh-md font-weight-medium">
               {{ user?.phraseDePresentation ?? 'Aucune phrase de présentation définie' }}
@@ -80,9 +80,9 @@
                   {{ user?.langues ?? 'Définir les langues dans lesquelles vous voulez être' }}
                 </p>
               </div>
-            </div>
-            <!-- </div> -->
-          </div>
+            </div> -->
+          <!-- </div> -->
+          <!-- </div> -->
         </v-card-item>
       </v-card>
     </v-col>
@@ -90,13 +90,7 @@
 </template>
 <script setup lang="ts">
 import { useUserStore } from '@/stores/userStore';
-import { LanguageIcon, MailIcon, MapPinIcon, PhoneIcon, SchoolIcon } from 'vue-tabler-icons';
 const { professionalUser } = storeToRefs(useUserStore());
-const { getUserProfile } = useUserProfile();
-
-onMounted(() => {
-  getUserProfile();
-});
 </script>
 <style lang="scss" scoped>
 v-card-item {
