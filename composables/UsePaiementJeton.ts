@@ -4,18 +4,18 @@ import axios from 'axios';
 export const usePaiementJeton = () => {
   const token = useCookie('token');
   const config = useRuntimeConfig();
+  const userStore = useUserStore();
+  const { professionalUser } = storeToRefs(userStore);
 
   const createTokenSession = async (amount: number) => {
     const stripeToken = await loadStripe(config.public.tokenStripe);
-    console.log(config.public.tokenStripe, 'config.public.tokenStripe Token');
-    console.log(stripeToken, 'Stripe Token');
-    console.log(token.value, 'token.value Token');
 
     try {
       const response = await axios.post(
         `https://manie-api.onrender.com/payments/token/${token.value}`,
         {
           amount,
+          professional_uuid: professionalUser.value?.uuid,
         },
         {
           headers: {

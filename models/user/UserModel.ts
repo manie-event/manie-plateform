@@ -13,6 +13,7 @@ export interface User {
 
 export interface ProfessionalProfile {
   name: string;
+  uuid: string;
   siret: string;
   address: string;
   bio: string;
