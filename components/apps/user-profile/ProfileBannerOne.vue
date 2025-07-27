@@ -83,7 +83,6 @@ import UserImage from '/images/profile/user6.jpg';
 const tab = ref(null);
 const openModal = ref(false);
 
-const { getUserProfile } = useUserProfile();
 const { user } = storeToRefs(useUserStore());
 
 const items = shallowRef([
@@ -96,10 +95,6 @@ const items = shallowRef([
 const openEditProfilModal = () => {
   openModal.value = !openModal.value;
 };
-
-onMounted(() => {
-  getUserProfile();
-});
 </script>
 
 <style lang="scss">

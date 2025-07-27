@@ -88,16 +88,9 @@
   </v-row>
 </template>
 <script setup lang="ts">
-import { useUserProfile } from '@/composables/UseUserProfile';
 import { useUserStore } from '@/stores/userStore';
-import { onMounted } from 'vue';
 import { LanguageIcon, MailIcon, MapPinIcon, PhoneIcon, SchoolIcon } from 'vue-tabler-icons';
-const { getUserProfile } = useUserProfile();
 const { user } = storeToRefs(useUserStore());
-
-onMounted(() => {
-  getUserProfile();
-});
 </script>
 <style lang="scss" scoped>
 v-card-item {

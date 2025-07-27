@@ -18,10 +18,6 @@ export const useUserStore = defineStore('userStore', () => {
   const isConsumerProfileAccepted = ref(false);
   const isStoringUserAccepeted = ref(false);
 
-  const getUserInfo = () => {
-    return user.value;
-  };
-
   const setUser = (userData: User) => {
     user.value = userData;
   };
@@ -36,7 +32,6 @@ export const useUserStore = defineStore('userStore', () => {
     isConsumerProfileAccepted,
     isStoringUserAccepeted,
     setUserAccepted,
-    getUserInfo,
     setUser,
   };
 });

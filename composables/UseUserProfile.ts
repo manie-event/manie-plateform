@@ -3,13 +3,9 @@ import type { ProfessionalProfile } from '~/models/user/UserModel';
 
 export const useUserProfile = () => {
   const { addError, addSuccess } = useToaster();
+  const token = useCookie('token');
 
   const config = useRuntimeConfig();
-
-  const getUserProfile = () => {
-    // This function would typically fetch the user data from an API or store
-    console.log('Fetching user profile data...');
-  };
 
   const updateProfessionalProfile = async (professionalProfil: ProfessionalProfile) => {
     try {
@@ -38,7 +34,13 @@ export const useUserProfile = () => {
 
           const { data } = await axios.post(
             `${config.public.apiUrl}/professional/create`,
-            professionalProfil
+            professionalProfil,
+            {
+              headers: {
+                Authorization: `Bearer  ${token}`,
+                'Content-Type': 'application/json',
+              },
+            }
           );
           if (data) {
             addSuccess(
@@ -56,7 +58,6 @@ export const useUserProfile = () => {
   };
 
   return {
-    getUserProfile,
     updateProfessionalProfile,
   };
 };
