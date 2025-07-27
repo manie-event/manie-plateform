@@ -6,9 +6,9 @@ export const usePaiementJeton = () => {
   const config = useRuntimeConfig();
   const userStore = useUserStore();
   const { professionalUser } = storeToRefs(userStore);
+  loadStripe(config.public.tokenStripe);
 
   const createTokenSession = async (amount: number) => {
-    loadStripe(config.public.tokenStripe);
     console.log(config.public.tokenStripe, 'Stripe Token:');
     console.log(loadStripe(config.public.tokenStripe), 'Stripe Instance:');
 
