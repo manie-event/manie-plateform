@@ -26,8 +26,8 @@ export const usePaiementJeton = () => {
           },
         }
       );
-      if (data) {
-        router.push(data.url);
+      if (data && data.url) {
+        window.location.href = data.url;
       }
     } catch (error) {
       console.error('Error creating token session:', error);
