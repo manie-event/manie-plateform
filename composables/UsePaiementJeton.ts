@@ -8,8 +8,7 @@ export const usePaiementJeton = () => {
   const { professionalUser } = storeToRefs(userStore);
 
   const createTokenSession = async (amount: number) => {
-    const stripeToken = await loadStripe(config.public.tokenStripe);
-
+    loadStripe(config.public.tokenStripe);
     try {
       const response = await axios.post(
         `https://manie-api.onrender.com/payments/token/${token.value}`,
