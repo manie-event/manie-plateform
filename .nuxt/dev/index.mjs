@@ -649,7 +649,7 @@ const _inlineRuntimeConfig = {
   },
   "public": {
     "tokenStripe": "pk_test_51RbHs7PuWr2bjJdwlgZQKR3FedEe5MW5HhxYcXx0EBnCnDuj25Qy2YrOI5KZpqC0vpqjnQH8dlIlh67UZ9RzlBkK00ZrppbebK",
-    "tokenSiret": "0c3a8e3a-851d-3ae0-a4ac-5066b588642e",
+    "tokenSiret": "b01f1360-8ce1-4c3b-b737-1591188a2c50",
     "apiUrl": "https://manie-api.onrender.com"
   }
 };
