@@ -46,7 +46,13 @@ export const usePaiementJeton = () => {
 
       // Appel à votre API pour vérifier le paiement
       const { data } = await axios.get(
-        `${config.public.apiUrl}/payments/session-status/${session_id}`
+        `${config.public.apiUrl}/payments/session-status/${session_id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+            'Content-Type': 'application/json',
+          },
+        }
       );
 
       if (data.success) {
