@@ -8,13 +8,17 @@ export const usePaiementJeton = () => {
   const config = useRuntimeConfig();
   const userStore = useUserStore();
   const { professionalUser } = storeToRefs(userStore);
+  const loading = ref(true);
+  const messageError = ref('');
+  const paymentVerified = ref(false);
+  const paymentData = ref();
   loadStripe(config.public.tokenStripe);
 
   const createTokenSession = async (amount: number) => {
     console.log(amount, 'amount');
     try {
       const { data } = await axios.post(
-        `https://manie-api.onrender.com/payments/token/${professionalUser.value?.uuid}`,
+        `${config.public.apiUrl}/payments/token/${professionalUser.value?.uuid}`,
         {
           quantity: amount,
           professional_uuid: professionalUser.value?.uuid,
@@ -34,7 +38,39 @@ export const usePaiementJeton = () => {
       throw error;
     }
   };
+
+  const verifyPayment = async (session_id: string) => {
+    try {
+      loading.value = true;
+      console.log(session_id, 'session_id');
+
+      // Appel à votre API pour vérifier le paiement
+      const { data } = await axios.get(
+        `${config.public.apiUrl}/payments/session-status/${session_id}`
+      );
+
+      if (data.success) {
+        console.log(data);
+        paymentVerified.value = true;
+        paymentData.value = data.session;
+        console.log(paymentData.value, 'paymentData');
+      } else {
+        messageError.value = data.error || 'Échec de la vérification';
+      }
+    } catch (error) {
+      console.error('Erreur lors de la vérification:', error);
+      messageError.value = 'Erreur de communication avec le serveur';
+    } finally {
+      loading.value = false;
+    }
+  };
+
   return {
     createTokenSession,
+    verifyPayment,
+    loading,
+    messageError,
+    paymentVerified,
+    paymentData,
   };
 };

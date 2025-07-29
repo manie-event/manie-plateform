@@ -56,7 +56,7 @@ useHead({
     <v-app :theme="customizer.actTheme" :class="customizer.actTheme">
       <!---Customizer location right side--->
       <ClientOnly>
-        <!-- <LcFullVerticalSidebar v-if="!customizer.setHorizontalLayout" /> -->
+        <LcFullVerticalSidebar v-if="!customizer.setHorizontalLayout" />
         <div>
           <LcFullVerticalHeader v-if="!customizer.setHorizontalLayout" />
         </div>

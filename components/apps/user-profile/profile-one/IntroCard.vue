@@ -90,7 +90,11 @@
 </template>
 <script setup lang="ts">
 import { useUserStore } from '@/stores/userStore';
-const { professionalUser } = storeToRefs(useUserStore());
+const { professionalUser, getProfessionalUserInfo } = storeToRefs(useUserStore());
+
+onMounted(() => {
+  getProfessionalUserInfo.value;
+});
 </script>
 <style lang="scss" scoped>
 v-card-item {

@@ -20,9 +20,13 @@ export const useUserStore = defineStore('userStore', () => {
   const isConsumerProfileAccepted = ref(false);
   const isStoringUserAccepeted = ref(false);
 
-  const getUserInfo = () => {
+  const getUserInfo = computed(() => {
     return user.value;
-  };
+  });
+
+  const getProfessionalUserInfo = computed(() => {
+    return professionalUser.value;
+  });
 
   const setUser = (userData: User) => {
     user.value = userData;
@@ -42,6 +46,7 @@ export const useUserStore = defineStore('userStore', () => {
     isProfessionalProfileCreated,
     isConsumerProfileAccepted,
     isStoringUserAccepeted,
+    getProfessionalUserInfo,
     setUserAccepted,
     getUserInfo,
     setUser,
