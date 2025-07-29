@@ -6,6 +6,8 @@ import { onBeforeMount, ref } from 'vue';
 
 const customizer = useCustomizerStore();
 const cartStore = useCartStore();
+const userStore = useUserStore();
+const { isProfessionalProfileCreated } = storeToRefs(userStore);
 
 const { cart } = storeToRefs(cartStore);
 const { createTokenSession } = usePaiementJeton();
