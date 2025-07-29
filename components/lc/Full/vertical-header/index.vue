@@ -79,7 +79,7 @@ watch(jetonAmount, (newJetonAmount) => {
     <!-- ShoppingCart -->
     <!-- ---------------------------------------------- -->
     <v-menu :close-on-content-click="false" class="notification_popup">
-      <template v-slot:activator="{ props }" v-if="!isProfessionalProfileCreated">
+      <template v-slot:activator="{ props }" v-if="isProfessionalProfileCreated">
         <v-btn icon flat v-bind="props" size="small" class="custom-hover-primary">
           <div class="position-realtive">
             <Icon icon="solar:cart-3-outline" height="24" width="24" />
