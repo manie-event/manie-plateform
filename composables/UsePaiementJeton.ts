@@ -8,7 +8,7 @@ export const usePaiementJeton = () => {
   const config = useRuntimeConfig();
   const userStore = useUserStore();
   const { professionalUser } = storeToRefs(userStore);
-  const loading = ref(true);
+  const loading = ref(false);
   const messageError = ref('');
   const paymentVerified = ref(false);
   const paymentData = ref();
@@ -40,9 +40,10 @@ export const usePaiementJeton = () => {
   };
 
   const verifyPayment = async (session_id: string) => {
+    console.log(session_id, 'session_id');
+
     try {
       loading.value = true;
-      console.log(session_id, 'session_id');
 
       // Appel à votre API pour vérifier le paiement
       const { data } = await axios.get(

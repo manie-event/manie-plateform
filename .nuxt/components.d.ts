@@ -294,19 +294,6 @@ interface _GlobalComponents {
     'PagesFaqQuestion': typeof import("../components/pages/faq/FaqQuestion.vue")['default']
     'PagesFaqStillHaveQuestions': typeof import("../components/pages/faq/StillHaveQuestions.vue")['default']
     'PagesSearchResultsSearchLinks': typeof import("../components/pages/search-results/SearchLinks.vue")['default']
-    'SchoolPagesAttendenceSheet': typeof import("../components/school-pages/attendence/AttendenceSheet.vue")['default']
-    'SchoolPagesClassesData': typeof import("../components/school-pages/classes/ClassesData.vue")['default']
-    'SchoolPagesClassesDetail': typeof import("../components/school-pages/classes/ClassesDetail.vue")['default']
-    'SchoolPagesExamProgressReport': typeof import("../components/school-pages/exam/ProgressReport.vue")['default']
-    'SchoolPagesExamResultTable': typeof import("../components/school-pages/exam/ResultTable.vue")['default']
-    'SchoolPagesExamScheduleTable': typeof import("../components/school-pages/exam/ScheduleTable.vue")['default']
-    'SchoolPagesExamStudentProfile': typeof import("../components/school-pages/exam/StudentProfile.vue")['default']
-    'SchoolPagesStudentsStudentProfile': typeof import("../components/school-pages/students/StudentProfile.vue")['default']
-    'SchoolPagesStudentsStudentReport': typeof import("../components/school-pages/students/StudentReport.vue")['default']
-    'SchoolPagesStudentsStudentTable': typeof import("../components/school-pages/students/StudentTable.vue")['default']
-    'SchoolPagesTeachersTeacherProfile': typeof import("../components/school-pages/teachers/TeacherProfile.vue")['default']
-    'SchoolPagesTeachersTeacherSkills': typeof import("../components/school-pages/teachers/TeacherSkills.vue")['default']
-    'SchoolPagesTeachersTable': typeof import("../components/school-pages/teachers/TeachersTable.vue")['default']
     'SharedAppBaseCard': typeof import("../components/shared/AppBaseCard.vue")['default']
     'SharedAppEmailCard': typeof import("../components/shared/AppEmailCard.vue")['default']
     'SharedBaseBreadcrumb': typeof import("../components/shared/BaseBreadcrumb.vue")['default']
@@ -721,19 +708,6 @@ interface _GlobalComponents {
     'LazyPagesFaqQuestion': LazyComponent<typeof import("../components/pages/faq/FaqQuestion.vue")['default']>
     'LazyPagesFaqStillHaveQuestions': LazyComponent<typeof import("../components/pages/faq/StillHaveQuestions.vue")['default']>
     'LazyPagesSearchResultsSearchLinks': LazyComponent<typeof import("../components/pages/search-results/SearchLinks.vue")['default']>
-    'LazySchoolPagesAttendenceSheet': LazyComponent<typeof import("../components/school-pages/attendence/AttendenceSheet.vue")['default']>
-    'LazySchoolPagesClassesData': LazyComponent<typeof import("../components/school-pages/classes/ClassesData.vue")['default']>
-    'LazySchoolPagesClassesDetail': LazyComponent<typeof import("../components/school-pages/classes/ClassesDetail.vue")['default']>
-    'LazySchoolPagesExamProgressReport': LazyComponent<typeof import("../components/school-pages/exam/ProgressReport.vue")['default']>
-    'LazySchoolPagesExamResultTable': LazyComponent<typeof import("../components/school-pages/exam/ResultTable.vue")['default']>
-    'LazySchoolPagesExamScheduleTable': LazyComponent<typeof import("../components/school-pages/exam/ScheduleTable.vue")['default']>
-    'LazySchoolPagesExamStudentProfile': LazyComponent<typeof import("../components/school-pages/exam/StudentProfile.vue")['default']>
-    'LazySchoolPagesStudentsStudentProfile': LazyComponent<typeof import("../components/school-pages/students/StudentProfile.vue")['default']>
-    'LazySchoolPagesStudentsStudentReport': LazyComponent<typeof import("../components/school-pages/students/StudentReport.vue")['default']>
-    'LazySchoolPagesStudentsStudentTable': LazyComponent<typeof import("../components/school-pages/students/StudentTable.vue")['default']>
-    'LazySchoolPagesTeachersTeacherProfile': LazyComponent<typeof import("../components/school-pages/teachers/TeacherProfile.vue")['default']>
-    'LazySchoolPagesTeachersTeacherSkills': LazyComponent<typeof import("../components/school-pages/teachers/TeacherSkills.vue")['default']>
-    'LazySchoolPagesTeachersTable': LazyComponent<typeof import("../components/school-pages/teachers/TeachersTable.vue")['default']>
     'LazySharedAppBaseCard': LazyComponent<typeof import("../components/shared/AppBaseCard.vue")['default']>
     'LazySharedAppEmailCard': LazyComponent<typeof import("../components/shared/AppEmailCard.vue")['default']>
     'LazySharedBaseBreadcrumb': LazyComponent<typeof import("../components/shared/BaseBreadcrumb.vue")['default']>
@@ -1154,19 +1128,6 @@ export const PagesAccountSettingsSecurityTab: typeof import("../components/pages
 export const PagesFaqQuestion: typeof import("../components/pages/faq/FaqQuestion.vue")['default']
 export const PagesFaqStillHaveQuestions: typeof import("../components/pages/faq/StillHaveQuestions.vue")['default']
 export const PagesSearchResultsSearchLinks: typeof import("../components/pages/search-results/SearchLinks.vue")['default']
-export const SchoolPagesAttendenceSheet: typeof import("../components/school-pages/attendence/AttendenceSheet.vue")['default']
-export const SchoolPagesClassesData: typeof import("../components/school-pages/classes/ClassesData.vue")['default']
-export const SchoolPagesClassesDetail: typeof import("../components/school-pages/classes/ClassesDetail.vue")['default']
-export const SchoolPagesExamProgressReport: typeof import("../components/school-pages/exam/ProgressReport.vue")['default']
-export const SchoolPagesExamResultTable: typeof import("../components/school-pages/exam/ResultTable.vue")['default']
-export const SchoolPagesExamScheduleTable: typeof import("../components/school-pages/exam/ScheduleTable.vue")['default']
-export const SchoolPagesExamStudentProfile: typeof import("../components/school-pages/exam/StudentProfile.vue")['default']
-export const SchoolPagesStudentsStudentProfile: typeof import("../components/school-pages/students/StudentProfile.vue")['default']
-export const SchoolPagesStudentsStudentReport: typeof import("../components/school-pages/students/StudentReport.vue")['default']
-export const SchoolPagesStudentsStudentTable: typeof import("../components/school-pages/students/StudentTable.vue")['default']
-export const SchoolPagesTeachersTeacherProfile: typeof import("../components/school-pages/teachers/TeacherProfile.vue")['default']
-export const SchoolPagesTeachersTeacherSkills: typeof import("../components/school-pages/teachers/TeacherSkills.vue")['default']
-export const SchoolPagesTeachersTable: typeof import("../components/school-pages/teachers/TeachersTable.vue")['default']
 export const SharedAppBaseCard: typeof import("../components/shared/AppBaseCard.vue")['default']
 export const SharedAppEmailCard: typeof import("../components/shared/AppEmailCard.vue")['default']
 export const SharedBaseBreadcrumb: typeof import("../components/shared/BaseBreadcrumb.vue")['default']
@@ -1581,19 +1542,6 @@ export const LazyPagesAccountSettingsSecurityTab: LazyComponent<typeof import(".
 export const LazyPagesFaqQuestion: LazyComponent<typeof import("../components/pages/faq/FaqQuestion.vue")['default']>
 export const LazyPagesFaqStillHaveQuestions: LazyComponent<typeof import("../components/pages/faq/StillHaveQuestions.vue")['default']>
 export const LazyPagesSearchResultsSearchLinks: LazyComponent<typeof import("../components/pages/search-results/SearchLinks.vue")['default']>
-export const LazySchoolPagesAttendenceSheet: LazyComponent<typeof import("../components/school-pages/attendence/AttendenceSheet.vue")['default']>
-export const LazySchoolPagesClassesData: LazyComponent<typeof import("../components/school-pages/classes/ClassesData.vue")['default']>
-export const LazySchoolPagesClassesDetail: LazyComponent<typeof import("../components/school-pages/classes/ClassesDetail.vue")['default']>
-export const LazySchoolPagesExamProgressReport: LazyComponent<typeof import("../components/school-pages/exam/ProgressReport.vue")['default']>
-export const LazySchoolPagesExamResultTable: LazyComponent<typeof import("../components/school-pages/exam/ResultTable.vue")['default']>
-export const LazySchoolPagesExamScheduleTable: LazyComponent<typeof import("../components/school-pages/exam/ScheduleTable.vue")['default']>
-export const LazySchoolPagesExamStudentProfile: LazyComponent<typeof import("../components/school-pages/exam/StudentProfile.vue")['default']>
-export const LazySchoolPagesStudentsStudentProfile: LazyComponent<typeof import("../components/school-pages/students/StudentProfile.vue")['default']>
-export const LazySchoolPagesStudentsStudentReport: LazyComponent<typeof import("../components/school-pages/students/StudentReport.vue")['default']>
-export const LazySchoolPagesStudentsStudentTable: LazyComponent<typeof import("../components/school-pages/students/StudentTable.vue")['default']>
-export const LazySchoolPagesTeachersTeacherProfile: LazyComponent<typeof import("../components/school-pages/teachers/TeacherProfile.vue")['default']>
-export const LazySchoolPagesTeachersTeacherSkills: LazyComponent<typeof import("../components/school-pages/teachers/TeacherSkills.vue")['default']>
-export const LazySchoolPagesTeachersTable: LazyComponent<typeof import("../components/school-pages/teachers/TeachersTable.vue")['default']>
 export const LazySharedAppBaseCard: LazyComponent<typeof import("../components/shared/AppBaseCard.vue")['default']>
 export const LazySharedAppEmailCard: LazyComponent<typeof import("../components/shared/AppEmailCard.vue")['default']>
 export const LazySharedBaseBreadcrumb: LazyComponent<typeof import("../components/shared/BaseBreadcrumb.vue")['default']>

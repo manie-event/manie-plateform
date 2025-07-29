@@ -87,7 +87,13 @@ const handleScroll = () => {
           ></v-badge>
         </v-btn>
       </template>
-      <v-sheet rounded="lg" width="385" elevation="10" class="mt-5 dropdown-box">
+      <v-sheet
+        rounded="lg"
+        width="385"
+        elevation="10"
+        class="mt-5 dropdown-box"
+        v-if="isProfessionalProfileCreated"
+      >
         <div class="px-8 pb-4 pt-6">
           <div class="d-flex align-center">
             <h6 class="text-h5 font-weight-semibold">Besoin de jeton(s) ?</h6>

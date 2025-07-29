@@ -1,14 +1,8 @@
 <template>
   <div class="success-container">
     <div class="success-card">
-      <!-- Loading state -->
-      <div v-if="loading" class="loading-state">
-        <div class="spinner"></div>
-        <p>Vérification de votre paiement...</p>
-      </div>
-
       <!-- Success state -->
-      <div v-else-if="paymentVerified" class="success-state">
+      <div class="success-state">
         <div class="success-icon">✅</div>
         <h1>Paiement réussi !</h1>
         <p>Merci pour votre achat. Votre commande a été confirmée.</p>
@@ -18,20 +12,8 @@
           <div class="detail-item">
             <span>ID de session :</span>
             <code>{{ sessionId }}</code>
+            <h2>Félicitation paiement effectué</h2>
           </div>
-          <div class="detail-item" v-if="paymentData.amount_total">
-            <span>Montant :</span>
-            <span>{{ formatAmount(paymentData.amount_total, paymentData.currency) }}</span>
-          </div>
-          <div class="detail-item" v-if="paymentData.customer_email">
-            <span>Email :</span>
-            <span>{{ paymentData.customer_email }}</span>
-          </div>
-        </div>
-
-        <div class="actions">
-          <button @click="goToAccount" class="btn btn-primary">Voir ma commande</button>
-          <button @click="goHome" class="btn btn-secondary">Retour à l'accueil</button>
         </div>
       </div>
     </div>
@@ -49,18 +31,6 @@ definePageMeta({
 const route = useRoute();
 const router = useRouter();
 const sessionId = computed(() => route.query.session_id);
-const { verifyPayment, loading, paymentVerified, paymentData, errorMessage } = usePaiementJeton();
-
-// Vérification du paiement au montage du composant
-onMounted(async () => {
-  if (!sessionId.value) {
-    errorMessage.value = 'ID de session manquant';
-    loading.value = false;
-    return;
-  }
-
-  await verifyPayment(sessionId.value);
-});
 
 // Fonctions utilitaires
 const formatAmount = (amount, currency) => {
