@@ -59,7 +59,7 @@ onMounted(async () => {
     return;
   }
 
-  await verifyPayment();
+  await verifyPayment(sessionId.value);
 });
 
 // Fonctions utilitaires
