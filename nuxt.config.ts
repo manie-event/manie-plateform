@@ -1,14 +1,10 @@
-import { createResolver } from '@nuxt/kit';
-
-const { resolve } = createResolver(import.meta.url);
-
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   // Enable server-side rendering
   ssr: false,
   runtimeConfig: {
     public: {
-      tokenStripe: process.env.NUXT_PUBLIC_TOKEN_STRIPE,
+      tokenStripe: process.env.TOKEN_STRIPE,
       tokenSiret: process.env.TOKEN_SIRET,
       apiUrl: process.env.NUXT_API_URL || 'https://manie-api.onrender.com',
     },
@@ -24,7 +20,7 @@ export default defineNuxtConfig({
   },
 
   // Modules
-  modules: ['@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt'],
+  modules: ['@pinia/nuxt'],
 
   // Application metadata
   app: {

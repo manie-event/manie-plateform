@@ -1,52 +1,77 @@
 import type { ProfessionalProfile, User } from '@/models/user/UserModel';
+import { useLocalStorage } from '@vueuse/core';
 import { defineStore } from 'pinia';
+import { computed, ref } from 'vue';
 
-export const useUserStore = defineStore('userStore', {
-  state: () => ({
-    user: {
-      username: '',
-      name: '',
-      phraseInspirante: '',
-      phraseDePresentation: '',
-      category: '',
-      email: '',
-      phone: '',
-      adresse: '',
-      diplome: '',
-      langues: '',
-    } as User,
-    professionalUser: undefined as ProfessionalProfile | undefined,
-    isProfessionalProfileCreated: false,
-    isConsumerProfileAccepted: false,
-    isStoringUserAccepeted: false,
-  }),
-  getters: {
-    getUserInfo: (state) => state.user,
-    getProfessionalUserInfo: (state) => {
-      console.log(state.professionalUser);
-      return state.professionalUser;
-    },
-  },
-  actions: {
-    setUser(userData: User) {
-      this.user = userData;
-    },
-    setProfessionalUser(newProfessionalUser: ProfessionalProfile) {
-      this.professionalUser = newProfessionalUser;
-      this.isProfessionalProfileCreated = true;
-    },
-    setUserAccepted(accepted: boolean) {
-      this.isStoringUserAccepeted = accepted;
-    },
-  },
-  persist: {
-    // Utilise la configuration par défaut (localStorage)
-    pick: [
-      'user',
-      'professionalUser',
-      'isProfessionalProfileCreated',
-      'isConsumerProfileAccepted',
-      'isStoringUserAccepeted',
-    ],
-  },
+export const useUserStore = defineStore('userStore', () => {
+  const user = useLocalStorage<User>('userStore-user', {
+    username: '',
+    name: '',
+    phraseInspirante: '',
+    phraseDePresentation: '',
+    category: '',
+    email: '',
+    phone: '',
+    adresse: '',
+    diplome: '',
+    langues: '',
+  });
+
+  const professionalUser = useLocalStorage<ProfessionalProfile>('userStore-professional', {
+    name: '',
+    uuid: '',
+    userUuid: '',
+    siret: '',
+    address: '',
+    bio: '',
+    mainActivity: '',
+    mainInterlocutor: '',
+    experience: 0,
+    geographicArea: '',
+    faq: {},
+    minimumBenefit: 0,
+    minimumReservationPeriod: 0,
+    deposit: false,
+    depositAmount: 0,
+    billingPeriod: '',
+    links: [],
+  });
+  const isProfessionalProfileCreated = ref(false);
+  const isConsumerProfileAccepted = ref(false);
+  const isStoringUserAccepeted = ref(false);
+
+  const getUserInfo = computed(() => {
+    return user.value;
+  });
+
+  const getProfessionalUserInfo = computed(() => {
+    console.log(professionalUser.value);
+
+    return professionalUser.value;
+  });
+
+  const setUser = (userData: User) => {
+    user.value = userData;
+  };
+  const setProfessionalUser = (newProfessionalUser: ProfessionalProfile) => {
+    professionalUser.value = newProfessionalUser;
+    isProfessionalProfileCreated.value = true;
+  };
+
+  const setUserAccepted = (accepted: boolean) => {
+    isStoringUserAccepeted.value = accepted;
+  };
+
+  return {
+    user,
+    professionalUser,
+    isProfessionalProfileCreated,
+    isConsumerProfileAccepted,
+    isStoringUserAccepeted,
+    getProfessionalUserInfo,
+    setUserAccepted,
+    getUserInfo,
+    setUser,
+    setProfessionalUser,
+  };
 });

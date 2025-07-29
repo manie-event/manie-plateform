@@ -1,19 +1,11 @@
 <script setup lang="ts">
 import JetonImg from '@/public/images/panier/jeton.png';
-import { useCustomizerStore } from '@/stores/customizer';
-import { Icon } from '@iconify/vue';
-import { onBeforeMount, ref } from 'vue';
 
-const customizer = useCustomizerStore();
 const cartStore = useCartStore();
-const userStore = useUserStore();
-const { isProfessionalProfileCreated } = storeToRefs(userStore);
-
 const { cart } = storeToRefs(cartStore);
 const { setJetonAmount } = cartStore;
 const { createTokenSession } = usePaiementJeton();
 
-const priority = ref(customizer.setHorizontalLayout ? 0 : 0);
 const jetonAmount = ref(0);
 const stickyHeader = ref(false);
 
