@@ -287,7 +287,7 @@ const {
     siret: '',
     address: '',
     bio: '',
-    mainActivity: 'Locations',
+    mainActivity: 'Veuillez choisir votre activité',
     mainInterlocutor: '',
     experience: 0,
     geographicArea: '',

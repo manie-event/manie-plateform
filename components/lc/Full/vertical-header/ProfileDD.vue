@@ -6,7 +6,8 @@ import { CircleXIcon, MailIcon } from 'vue-tabler-icons';
 import { useAuthentification } from '../../../../composables/UseAuthentification';
 
 const userStore = useUserStore();
-const { user, isProfessionalProfileCreated } = storeToRefs(userStore);
+const { user, professionalUser, isProfessionalProfileCreated } = storeToRefs(userStore);
+const { getProfessionalUserInfo } = userStore;
 const { sendLogout } = useAuthentification();
 const { initCartQuantity } = storeToRefs(useCartStore());
 
@@ -14,6 +15,20 @@ const troncateText = computed(() => {
   return user.value.email.length > 20
     ? user.value.email.substring(0, 20) + '...'
     : user.value.email;
+});
+
+const getNameDependingOnCategory = computed(() => {
+  if (user.value.category == 'professional' && !user.value.username) {
+    return professionalUser.value?.name;
+  } else if (user.value.category == 'consumer' && !user.value.username) {
+    return user.value.name;
+  } else {
+    return user.value.username;
+  }
+});
+
+onMounted(() => {
+  getProfessionalUserInfo;
 });
 </script>
 
@@ -35,7 +50,7 @@ const troncateText = computed(() => {
           </v-avatar>
           <div class="ml-md-4 d-md-block d-none">
             <h6 class="text-h6 d-flex align-center text-black font-weight-semibold">
-              {{ user.name ? user.name : user.username }}
+              {{ getNameDependingOnCategory }}
             </h6>
             <span class="text-subtitle-2 font-weight-medium text-grey100">{{
               user.category == 'professional' ? UserCategory.PRESTA : UserCategory.CLIENT
