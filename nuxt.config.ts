@@ -24,7 +24,7 @@ export default defineNuxtConfig({
   },
 
   // Modules
-  modules: ['@pinia/nuxt'],
+  modules: ['@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt'],
 
   // Application metadata
   app: {

@@ -1,3 +1,4 @@
+/// <reference types="@pinia-plugin-persistedstate/nuxt" />
 /// <reference types="@pinia/nuxt" />
 /// <reference types="@nuxt/telemetry" />
 /// <reference types="@nuxt/devtools" />

@@ -38,5 +38,6 @@ export { useCartStore } from '../stores/cartStore';
 export { useCustomizerStore } from '../stores/customizer';
 export { useUserStore } from '../stores/userStore';
 export { defineStore, acceptHMRUpdate, usePinia, storeToRefs } from '../node_modules/@pinia/nuxt/dist/runtime/composables';
+export { persistedState } from '../node_modules/@pinia-plugin-persistedstate/nuxt/dist/runtime/storages';
 export { useNuxtDevTools } from '../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools';
 export { definePageMeta } from '../node_modules/nuxt/dist/pages/runtime/composables';
