@@ -10,6 +10,7 @@ const userStore = useUserStore();
 const { isProfessionalProfileCreated } = storeToRefs(userStore);
 
 const { cart } = storeToRefs(cartStore);
+const { setJetonAmount } = cartStore;
 const { createTokenSession } = usePaiementJeton();
 
 const priority = ref(customizer.setHorizontalLayout ? 0 : 0);
@@ -31,6 +32,10 @@ const handleScroll = () => {
     stickyHeader.value = false;
   }
 };
+
+watch(jetonAmount, (newJetonAmount) => {
+  setJetonAmount(newJetonAmount);
+});
 </script>
 
 <template>
@@ -74,7 +79,7 @@ const handleScroll = () => {
     <!-- ShoppingCart -->
     <!-- ---------------------------------------------- -->
     <v-menu :close-on-content-click="false" class="notification_popup">
-      <template v-slot:activator="{ props }">
+      <template v-slot:activator="{ props }" v-if="!isProfessionalProfileCreated">
         <v-btn icon flat v-bind="props" size="small" class="custom-hover-primary">
           <div class="position-realtive">
             <Icon icon="solar:cart-3-outline" height="24" width="24" />
@@ -89,13 +94,7 @@ const handleScroll = () => {
           ></v-badge>
         </v-btn>
       </template>
-      <v-sheet
-        rounded="lg"
-        width="385"
-        elevation="10"
-        class="mt-5 dropdown-box"
-        v-if="isProfessionalProfileCreated"
-      >
+      <v-sheet rounded="lg" width="385" elevation="10" class="mt-5 dropdown-box">
         <div class="px-8 pb-4 pt-6">
           <div class="d-flex align-center">
             <h6 class="text-h5 font-weight-semibold">Besoin de jeton(s) ?</h6>

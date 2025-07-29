@@ -1,5 +1,3 @@
-import type { TablerIconComponent } from 'vue-tabler-icons';
-
 interface notificationType {
   avatar: string;
   title: string;
@@ -13,6 +11,7 @@ interface profileType {
   title: string;
   subtitle: string;
   href: string;
+  requiresProfile: boolean;
 }
 
 interface languageType {
@@ -45,11 +44,11 @@ interface optionIcon {
 }
 
 export type {
-  notificationType,
-  profileType,
-  languageType,
   appsLinkType,
+  languageType,
+  notificationType,
+  optionIcon,
+  profileType,
   quickLinksType,
   searchType,
-  optionIcon,
 };

@@ -8,6 +8,7 @@ import { useAuthentification } from '../../../../composables/UseAuthentification
 const userStore = useUserStore();
 const { user, isProfessionalProfileCreated } = storeToRefs(userStore);
 const { sendLogout } = useAuthentification();
+const { initCartQuantity } = storeToRefs(useCartStore());
 
 const troncateText = computed(() => {
   return user.value.email.length > 20
@@ -28,7 +29,7 @@ const troncateText = computed(() => {
             <img
               src="/images/profile/user6.jpg"
               width="50"
-              alt="Mike Nielsen"
+              alt="profile picture"
               :class="{ 'profile-not-defined': !isProfessionalProfileCreated }"
             />
           </v-avatar>
@@ -76,7 +77,9 @@ const troncateText = computed(() => {
             :key="item.title"
             class="py-4 px-8 custom-text-primary"
             :to="item.href"
-            :class="{ 'profile-not-defined': !isProfessionalProfileCreated }"
+            :class="{
+              'profile-not-defined': !isProfessionalProfileCreated && !item.requiresProfile,
+            }"
           >
             <template v-slot:prepend>
               <v-avatar size="40" class="rounded-lg" :class="'bg-light' + item.bgcolor">
@@ -95,7 +98,7 @@ const troncateText = computed(() => {
               </h6>
             </div>
             <p class="text-subtitle-1 font-weight-regular text-grey100">
-              {{ item.subtitle }}
+              <b>{{ item.requiresProfile ? initCartQuantity : '' }}</b> {{ item.subtitle }}
             </p>
           </v-list-item>
         </v-list>

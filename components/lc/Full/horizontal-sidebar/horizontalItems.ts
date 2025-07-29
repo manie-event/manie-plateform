@@ -407,60 +407,6 @@ const horizontalItems: menu[] = [
           },
         ],
       },
-      {
-        title: 'Teachers',
-        to: '',
-        children: [
-          {
-            title: 'All Teachers',
-            to: '/school-pages/teachers',
-          },
-          {
-            title: 'Teachers Details',
-            to: '/school-pages/teachers/details',
-          },
-        ],
-      },
-      {
-        title: 'Exam',
-        to: '',
-        children: [
-          {
-            title: 'Exam Schedule',
-            to: '/school-pages/exam/schedule',
-          },
-          {
-            title: 'Exam Result',
-            to: '/school-pages/exam/result',
-          },
-          {
-            title: 'Exam Result Details',
-            to: '/school-pages/exam/result-details',
-          },
-        ],
-      },
-      {
-        title: 'Students',
-        to: '',
-        children: [
-          {
-            title: 'All Students',
-            to: '/school-pages/students',
-          },
-          {
-            title: 'Students Details',
-            to: '/school-pages/students/details',
-          },
-        ],
-      },
-      {
-        title: 'Classes',
-        to: '/school-pages/classes',
-      },
-      {
-        title: 'Attendance',
-        to: '/school-pages/attendance',
-      },
     ],
   },
   {

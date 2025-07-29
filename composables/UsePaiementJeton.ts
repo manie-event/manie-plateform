@@ -15,7 +15,6 @@ export const usePaiementJeton = () => {
   loadStripe(config.public.tokenStripe);
 
   const createTokenSession = async (amount: number) => {
-    console.log(amount, 'amount');
     try {
       const { data } = await axios.post(
         `${config.public.apiUrl}/payments/token/${professionalUser.value?.uuid}`,
@@ -39,45 +38,39 @@ export const usePaiementJeton = () => {
     }
   };
 
-  const verifyPayment = async (session_id: string) => {
-    console.log(session_id, 'session_id');
+  // const verifyPayment = async (session_id: string) => {
+  //   console.log(session_id, 'session_id');
 
-    try {
-      loading.value = true;
+  //   try {
+  //     loading.value = true;
 
-      // Appel à votre API pour vérifier le paiement
-      const { data } = await axios.get(
-        `${config.public.apiUrl}/payments/session-status/${session_id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token.value}`,
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+  //     const { data } = await axios.get(
+  //       `${config.public.apiUrl}/payments/session-status/${session_id}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token.value}`,
+  //           'Content-Type': 'application/json',
+  //         },
+  //       }
+  //     );
 
-      if (data.success) {
-        console.log(data);
-        paymentVerified.value = true;
-        paymentData.value = data.session;
-        console.log(paymentData.value, 'paymentData');
-      } else {
-        messageError.value = data.error || 'Échec de la vérification';
-      }
-    } catch (error) {
-      console.error('Erreur lors de la vérification:', error);
-      messageError.value = 'Erreur de communication avec le serveur';
-    } finally {
-      loading.value = false;
-    }
-  };
+  //     if (data.success) {
+  //       console.log(data);
+  //       paymentVerified.value = true;
+  //       paymentData.value = data.session;
+  //       console.log(paymentData.value, 'paymentData');
+  //     } else {
+  //       messageError.value = data.error || 'Échec de la vérification';
+  //     }
+  //   } catch (error) {
+  //     console.error('Erreur lors de la vérification:', error);
+  //     messageError.value = 'Erreur de communication avec le serveur';
+  //   } finally {
+  //     loading.value = false;
+  //   }
+  // };
 
   return {
     createTokenSession,
-    verifyPayment,
-    loading,
-    messageError,
-    paymentVerified,
-    paymentData,
   };
 };

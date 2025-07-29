@@ -15,7 +15,7 @@ const { isProfessionalProfileCreated } = storeToRefs(userStore);
 </script>
 
 <template>
-  <v-row v-if="!isProfessionalProfileCreated">
+  <v-row v-if="isProfessionalProfileCreated">
     <!---Welcome cards-->
     <v-col cols="12" sm="12" lg="6">
       <WelcomeCard />

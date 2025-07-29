@@ -67,6 +67,15 @@ const profileDD: profileType[] = [
     title: 'Mon Profil',
     subtitle: 'Votre page de profil',
     href: '/apps/userprofile/one',
+    requiresProfile: false,
+  },
+  {
+    avatar: 'wallet-2-line-duotone',
+    bgcolor: 'info',
+    title: 'Mon portefeuille de jeton(s)',
+    subtitle: 'jeton(s)',
+    href: '',
+    requiresProfile: true,
   },
   // {
   //   avatar: 'shield-minimalistic-line-duotone',
