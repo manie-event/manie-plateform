@@ -26,7 +26,7 @@ const getNameDependingOnCategory = computed(() => {
 
 const getCategory = computed(() => {
   if (
-    (user.value?.category == 'professional' && !user.value?.username) ||
+    user.value?.category == 'professional' ||
     professionalUser.value?.category == 'professional'
   ) {
     return UserCategory.PRESTA;
