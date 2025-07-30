@@ -3,7 +3,6 @@ import JetonImg from '@/public/images/panier/jeton.png';
 import { Icon } from '@iconify/vue';
 
 const cartStore = useCartStore();
-const { cart } = storeToRefs(cartStore);
 const { setJetonAmount } = cartStore;
 const { createTokenSession } = usePaiementJeton();
 const { isProfessionalProfileCreated } = storeToRefs(useUserStore());
@@ -12,7 +11,7 @@ const jetonAmount = ref(0);
 const stickyHeader = ref(false);
 
 const totalPriceJeton = computed(() => {
-  return `${jetonAmount.value * cart.value.price} €`;
+  return `${jetonAmount.value * 9} €`;
 });
 
 onBeforeMount(() => {

@@ -1,30 +1,25 @@
 import type { BillingInfo } from '@/models/cart/billingInfo';
-import type { CartItem } from '@/models/cart/cartItem';
 import { useLocalStorage } from '@vueuse/core';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 export const useCartStore = defineStore('cartStore', () => {
-  const userTokenBalance = useLocalStorage('jeton-quantity', 0);
-  const cart = ref<CartItem>({
-    price: 9,
-    quantity: 0,
-  });
-  const isPaymentDone = ref(false);
+  const userTokenBalance = useLocalStorage('jeton-balance', 0);
+  const cartQuantity = useLocalStorage<number>('jeton-quantity', 0);
   const addresses = ref<BillingInfo[]>([]);
 
-  const getTotalPrice = computed(() => cart.value.price * cart.value.quantity);
-  const getCart = computed(() => cart.value);
+  const getTotalPrice = computed(() => 9 * cartQuantity.value);
+  const getCart = computed(() => cartQuantity.value);
 
   const setJetonAmount = (newJeton: number) => {
-    cart.value.quantity = newJeton;
-    console.log(cart.value.quantity, 'QUANTITY');
+    cartQuantity.value = newJeton;
+    console.log(cartQuantity.value, 'QUANTITY');
   };
 
   const creditTokensAfterPayment = () => {
-    userTokenBalance.value += cart.value.quantity;
+    userTokenBalance.value += cartQuantity.value;
     console.log(
-      `✅ ${cart.value.quantity} jetons crédités. Nouveau solde: ${userTokenBalance.value}`
+      `✅ ${cartQuantity.value} jetons crédités. Nouveau solde: ${userTokenBalance.value}`
     );
   };
   const setBillingInfo = (billingInfo: BillingInfo) => {
@@ -32,7 +27,6 @@ export const useCartStore = defineStore('cartStore', () => {
   };
 
   return {
-    cart,
     addresses,
     getCart,
     userTokenBalance,
