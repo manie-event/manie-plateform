@@ -5,6 +5,7 @@ const cartStore = useCartStore();
 const { cart } = storeToRefs(cartStore);
 const { setJetonAmount } = cartStore;
 const { createTokenSession } = usePaiementJeton();
+const { isProfessionalProfileCreated } = storeToRefs(useUserStore());
 
 const jetonAmount = ref(0);
 const stickyHeader = ref(false);

@@ -6,9 +6,10 @@ import Homepage from './front-pages/Homepage.vue';
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-
+const { getUserProfileDetails } = useUserProfile();
 onMounted(() => {
   AOS.init();
+  getUserProfileDetails();
 });
 
 /*for Blank Layout*/

@@ -6,17 +6,11 @@ export const useUserProfile = () => {
   const token = useCookie('token');
   const userStore = useUserStore();
   const { setProfessionalUser } = userStore;
+  const { professionalUser } = storeToRefs(userStore);
   const config = useRuntimeConfig();
 
   const updateProfessionalProfile = async (professionalProfil: ProfessionalProfile) => {
     try {
-      console.log(
-        config.public.tokenSiret,
-        'Token SIRET:',
-        professionalProfil.siret,
-        'Professional SIRET'
-      );
-
       const siretResponse = await axios.get(
         `https://api.insee.fr/api-sirene/3.11/siret/${professionalProfil.siret}`,
         {
@@ -31,9 +25,6 @@ export const useUserProfile = () => {
 
       if (siretValid) {
         try {
-          console.log('SIRET is valid, proceeding with profile update...');
-          console.log(token.value, 'Token:', token, 'Professional Token');
-
           const { data } = await axios.post(
             `${config.public.apiUrl}/professional/create`,
             professionalProfil,
@@ -77,8 +68,29 @@ export const useUserProfile = () => {
     }
   };
 
+  const getUserProfileDetails = async () => {
+    try {
+      const { data } = await axios.get(
+        `${config.public.apiUrl}/professional/${professionalUser.value?.uuid}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      if (data) {
+        setProfessionalUser(data);
+        return data;
+      }
+    } catch (error: unknown) {
+      addError({ message: 'Une erreur est survenue lors de la récupération du profil.' });
+    }
+  };
+
   return {
     updateProfessionalProfile,
     getUserProfile,
+    getUserProfileDetails,
   };
 };

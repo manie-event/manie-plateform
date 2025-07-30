@@ -12,18 +12,20 @@ const { sendLogout } = useAuthentification();
 const { initCartQuantity } = storeToRefs(useCartStore());
 
 const troncateText = computed(() => {
-  return user.value.email.length > 20
-    ? user.value.email.substring(0, 20) + '...'
-    : user.value.email;
+  if (user.value?.email && user.value.email.length > 20) {
+    return user.value.email.substring(0, 20) + '...';
+  } else {
+    return user.value?.email;
+  }
 });
 
 const getNameDependingOnCategory = computed(() => {
-  if (user.value.category == 'professional' && !user.value.username) {
+  if (user.value?.category == 'professional' && !user.value?.username) {
     return professionalUser.value?.name;
-  } else if (user.value.category == 'consumer' && !user.value.username) {
-    return user.value.name;
+  } else if (user.value?.category == 'consumer' && !user.value?.username) {
+    return user.value?.name;
   } else {
-    return user.value.username;
+    return user.value?.username;
   }
 });
 

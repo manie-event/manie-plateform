@@ -1,41 +1,31 @@
 import type { ProfessionalProfile, User } from '@/models/user/UserModel';
-import { useLocalStorage } from '@vueuse/core';
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 
 export const useUserStore = defineStore('userStore', () => {
-  const user = useLocalStorage<User>('userStore-user', {
-    username: '',
-    name: '',
-    phraseInspirante: '',
-    phraseDePresentation: '',
-    category: '',
-    email: '',
-    phone: '',
-    adresse: '',
-    diplome: '',
-    langues: '',
-  });
+  const user = ref<User>();
 
-  const professionalUser = useLocalStorage<ProfessionalProfile>('userStore-professional', {
-    name: '',
-    uuid: '',
-    userUuid: '',
-    siret: '',
-    address: '',
-    bio: '',
-    mainActivity: '',
-    mainInterlocutor: '',
-    experience: 0,
-    geographicArea: '',
-    faq: {},
-    minimumBenefit: 0,
-    minimumReservationPeriod: 0,
-    deposit: false,
-    depositAmount: 0,
-    billingPeriod: '',
-    links: [],
-  });
+  const professionalUser = ref<ProfessionalProfile>();
+
+  // const professionalUser = useLocalStorage<ProfessionalProfile>('userStore-professional', {
+  //   name: '',
+  //   uuid: '',
+  //   userUuid: '',
+  //   siret: '',
+  //   address: '',
+  //   bio: '',
+  //   mainActivity: '',
+  //   mainInterlocutor: '',
+  //   experience: 0,
+  //   geographicArea: '',
+  //   faq: {},
+  //   minimumBenefit: 0,
+  //   minimumReservationPeriod: 0,
+  //   deposit: false,
+  //   depositAmount: 0,
+  //   billingPeriod: '',
+  //   links: [],
+  // });
   const isProfessionalProfileCreated = ref(false);
   const isConsumerProfileAccepted = ref(false);
   const isStoringUserAccepeted = ref(false);
@@ -45,8 +35,7 @@ export const useUserStore = defineStore('userStore', () => {
   });
 
   const getProfessionalUserInfo = computed(() => {
-    console.log(professionalUser.value);
-
+    console.log(professionalUser.value, 'getProfessionalUserInfo');
     return professionalUser.value;
   });
 
