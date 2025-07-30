@@ -25,7 +25,7 @@ export const useUserStore = defineStore('userStore', () => {
     billingPeriod: '',
     links: [],
   });
-  const isProfessionalProfileCreated = ref(false);
+  const isProfessionalProfileCreated = useLocalStorage('pp-created', false);
   const isConsumerProfileAccepted = ref(false);
   const isStoringUserAccepeted = ref(false);
 
@@ -34,7 +34,6 @@ export const useUserStore = defineStore('userStore', () => {
   });
 
   const getProfessionalUserInfo = computed(() => {
-    console.log(professionalUser.value, 'getProfessionalUserInfo');
     return professionalUser.value;
   });
 

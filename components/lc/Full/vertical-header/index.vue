@@ -71,11 +71,7 @@ watch(jetonAmount, (newJetonAmount) => {
     <!-- ---------------------------------------------- -->
     <!-- ShoppingCart -->
     <!-- ---------------------------------------------- -->
-    <v-menu
-      :close-on-content-click="false"
-      class="notification_popup"
-      v-if="isProfessionalProfileCreated"
-    >
+    <v-menu :close-on-content-click="false" class="notification_popup">
       <template v-slot:activator="{ props }">
         <v-btn icon flat v-bind="props" size="small" class="custom-hover-primary">
           <div class="position-realtive">

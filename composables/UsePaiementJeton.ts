@@ -15,12 +15,44 @@ export const usePaiementJeton = () => {
   loadStripe(config.public.tokenStripe);
 
   const createTokenSession = async (amount: number) => {
+    const currentProfile = professionalUser.value;
+
+    if (!currentProfile?.uuid) {
+      console.error('❌ No professional profile found');
+      return;
+    }
+
+    console.log('💾 Saving profile before Stripe redirect:', currentProfile);
+
     try {
+      // === SAUVEGARDES MULTIPLES AVANT STRIPE ===
+
+      // 1. SessionStorage (survit aux redirections dans la même session)
+      sessionStorage.setItem('pre-stripe-professional', JSON.stringify(currentProfile));
+      sessionStorage.setItem('stripe-redirect-time', Date.now().toString());
+
+      // 2. LocalStorage backup
+      localStorage.setItem('backup-professional', JSON.stringify(currentProfile));
+      localStorage.setItem('original-professional', JSON.stringify(currentProfile));
+
+      // 3. Cookie sécurisé (survit aux redirections)
+      const backupCookie = useCookie('professional-stripe-backup', {
+        maxAge: 60 * 60 * 2, // 2 heures
+        serialize: JSON.stringify,
+        deserialize: JSON.parse,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+      });
+      backupCookie.value = currentProfile;
+
+      console.log('✅ All backups created successfully');
+
+      // === APPEL API STRIPE ===
       const { data } = await axios.post(
-        `${config.public.apiUrl}/payments/token/${professionalUser.value?.uuid}`,
+        `${config.public.apiUrl}/payments/token/${currentProfile.uuid}`,
         {
           quantity: amount,
-          professional_uuid: professionalUser.value?.uuid,
+          professional_uuid: currentProfile.uuid,
         },
         {
           headers: {
@@ -29,11 +61,24 @@ export const usePaiementJeton = () => {
           },
         }
       );
+
       if (data && data.url) {
+        // === AVANT LA REDIRECTION ===
+
+        // Dernière vérification que les données sont bien sauvées
+        const verification = sessionStorage.getItem('pre-stripe-professional');
+        if (!verification) {
+          console.error('❌ Backup failed, aborting redirect');
+          return;
+        }
+
+        console.log('🔄 Redirecting to Stripe:', data.url);
+
+        // Redirection vers Stripe
         window.location.href = data.url;
       }
     } catch (error) {
-      console.error('Error creating token session:', error);
+      console.error('❌ Error creating token session:', error);
       throw error;
     }
   };
