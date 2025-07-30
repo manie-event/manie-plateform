@@ -81,7 +81,7 @@ export const usePaiementJeton = () => {
             );
 
             // ✅ Supprimer après crédit réussi
-            localStorage.removeItem('purchased-tokens');
+            localStorage.removeItem('jeton-quantity');
           }
           if (restored.uuid) {
             userStore.setProfessionalUser(restored);
