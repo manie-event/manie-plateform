@@ -13,8 +13,8 @@ export interface User {
 
 export interface ProfessionalProfile {
   name: string;
-  uuid: string;
-  userUuid: string;
+  uuid?: string;
+  userUuid?: string;
   siret: string;
   address: string;
   bio: string;

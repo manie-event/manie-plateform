@@ -272,12 +272,8 @@ const validationSchema = yup.object({
 const {
   values: profile,
   errors,
-  meta,
   handleSubmit,
   resetForm,
-  setFieldValue,
-  setValues,
-  validate,
 } = useForm({
   validationSchema,
   initialValues: {
@@ -287,7 +283,7 @@ const {
     siret: '',
     address: '',
     bio: '',
-    mainActivity: 'Veuillez choisir votre activité',
+    mainActivity: '',
     mainInterlocutor: '',
     experience: 0,
     geographicArea: '',
@@ -314,7 +310,6 @@ const onSubmit = handleSubmit(
     resetForm();
     openModal.value = false;
   },
-  // Callback si le formulaire est invalide (optionnel)
   ({ errors, values }) => {
     addError({ message: JSON.stringify(errors) });
   }
