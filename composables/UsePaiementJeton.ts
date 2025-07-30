@@ -19,7 +19,7 @@ export const usePaiementJeton = () => {
 
   const createTokenSession = async (amount: number) => {
     const currentProfile = professionalUser.value;
-    const currentJetonQuantity = cartQuantity.value;
+    const currentJetonQuantity = amount;
 
     if (!currentProfile?.uuid) {
       console.error('❌ No professional profile found');
@@ -53,7 +53,7 @@ export const usePaiementJeton = () => {
     }
   };
 
-  const restoreAfterStripe = () => {
+  const restoreAfterStripe = async () => {
     console.log('🔍 Checking for profile restoration after Stripe...');
 
     // Vérifier si on revient de Stripe
@@ -64,15 +64,24 @@ export const usePaiementJeton = () => {
     if (isStripeReturn) {
       // 4. Essayer localStorage backup
       const localBackup = localStorage.getItem('userStore-professional');
-      const jetonLocalBackup = localStorage.getItem('jeton-quantity');
+      const purchasedTokens = localStorage.getItem('jeton-quantity');
       if (localBackup) {
         try {
           const restored = JSON.parse(localBackup);
-          if (jetonLocalBackup) {
-            const jeton = JSON.parse(jetonLocalBackup);
-            useCartStore().setJetonAmount(jeton);
-            creditTokensAfterPayment();
-            localStorage.removeItem('jeton-quantity');
+          if (purchasedTokens) {
+            const tokensToPurchase = JSON.parse(purchasedTokens);
+            console.log('💰 Créditer', tokensToPurchase, 'jetons achetés');
+
+            // ✅ Créditer directement sans passer par le panier
+            const cartStore = useCartStore();
+            cartStore.userTokenBalance += tokensToPurchase;
+
+            console.log(
+              `✅ ${tokensToPurchase} jetons crédités. Nouveau solde: ${cartStore.userTokenBalance}`
+            );
+
+            // ✅ Supprimer après crédit réussi
+            localStorage.removeItem('purchased-tokens');
           }
           if (restored.uuid) {
             userStore.setProfessionalUser(restored);

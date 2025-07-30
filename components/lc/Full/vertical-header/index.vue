@@ -26,9 +26,9 @@ const handleScroll = () => {
   }
 };
 
-watch(jetonAmount, (newJetonAmount) => {
-  setJetonAmount(newJetonAmount);
-});
+// watch(jetonAmount, (newJetonAmount) => {
+//   setJetonAmount(newJetonAmount);
+// });
 </script>
 
 <template>
