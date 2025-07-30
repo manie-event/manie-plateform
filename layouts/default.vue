@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { useCustomizerStore } from '@/stores/customizer';
 const customizer = useCustomizerStore();
-const title = ref('Spikeadmin - Nuxt3 Typescript based Admin Dashboard Template');
+const { getUserProfileDetails } = useUserProfile();
+
+const title = ref('Manie');
 useHead({
   meta: [{ content: title }],
   titleTemplate: (titleChunk) => {
@@ -9,6 +11,10 @@ useHead({
       ? `${titleChunk} - Nuxt3 Typescript based Admin Dashboard Template`
       : 'Spikeadmin - Nuxt3 Typescript based Admin Dashboard Template';
   },
+});
+
+onMounted(() => {
+  getUserProfileDetails();
 });
 </script>
 
