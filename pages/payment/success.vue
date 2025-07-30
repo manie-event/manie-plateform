@@ -45,6 +45,9 @@ useHead({
   title: 'Paiement réussi - Manie Event',
   meta: [{ name: 'robots', content: 'noindex, nofollow' }],
 });
+onMounted(() => {
+  usePaiementJeton().restoreAfterStripe();
+});
 </script>
 
 <style scoped>

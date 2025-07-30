@@ -35,16 +35,6 @@ export const usePaiementJeton = () => {
       localStorage.setItem('backup-professional', JSON.stringify(currentProfile));
       localStorage.setItem('original-professional', JSON.stringify(currentProfile));
 
-      // 3. Cookie sécurisé (survit aux redirections)
-      const backupCookie = useCookie('professional-stripe-backup', {
-        maxAge: 60 * 60 * 2, // 2 heures
-        serialize: JSON.stringify,
-        deserialize: JSON.parse,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-      });
-      backupCookie.value = currentProfile;
-
       console.log('✅ All backups created successfully');
 
       // === APPEL API STRIPE ===
@@ -83,6 +73,58 @@ export const usePaiementJeton = () => {
     }
   };
 
+  const restoreAfterStripe = () => {
+    console.log('🔍 Checking for profile restoration after Stripe...');
+
+    // Vérifier si on revient de Stripe
+    const urlParams = new URLSearchParams(window.location.search);
+    const isStripeReturn =
+      urlParams.has('session_id') || urlParams.has('payment_intent') || route.query.success;
+
+    if (isStripeReturn) {
+      console.log('✅ Stripe return detected, restoring profile...');
+
+      // 1. Vérifier si le profil actuel est vide
+      if (!professionalUser.value?.uuid) {
+        console.log('⚠️ Current profile is empty, attempting restore...');
+
+        // 2. Essayer sessionStorage en premier
+        const sessionBackup = sessionStorage.getItem('pre-stripe-professional');
+        if (sessionBackup) {
+          try {
+            const restored = JSON.parse(sessionBackup);
+            if (restored.uuid) {
+              console.log('🔄 Restoring from sessionStorage');
+              userStore.setProfessionalUser(restored);
+              return restored;
+            }
+          } catch (e) {
+            console.warn('SessionStorage restore failed:', e);
+          }
+        }
+
+        // 4. Essayer localStorage backup
+        const localBackup = localStorage.getItem('backup-professional');
+        if (localBackup) {
+          try {
+            const restored = JSON.parse(localBackup);
+            if (restored.uuid) {
+              console.log('🔄 Restoring from localStorage backup');
+              userStore.setProfessionalUser(restored);
+              return restored;
+            }
+          } catch (e) {
+            console.warn('LocalStorage restore failed:', e);
+          }
+        }
+
+        console.error('❌ All restore attempts failed');
+      } else {
+        console.log('✅ Profile already present, no restore needed');
+      }
+    }
+  };
+
   // const verifyPayment = async (session_id: string) => {
   //   console.log(session_id, 'session_id');
 
@@ -117,5 +159,6 @@ export const usePaiementJeton = () => {
 
   return {
     createTokenSession,
+    restoreAfterStripe,
   };
 };
