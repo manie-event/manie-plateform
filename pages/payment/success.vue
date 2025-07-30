@@ -31,7 +31,6 @@ definePageMeta({
 const route = useRoute();
 const router = useRouter();
 const sessionId = computed(() => route.query.session_id);
-const { creditTokensAfterPayment } = useCartStore();
 
 // Fonctions utilitaires
 const formatAmount = (amount, currency) => {
@@ -48,7 +47,6 @@ useHead({
 });
 onMounted(() => {
   usePaiementJeton().restoreAfterStripe();
-  creditTokensAfterPayment();
 });
 </script>
 

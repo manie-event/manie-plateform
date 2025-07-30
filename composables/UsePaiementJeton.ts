@@ -9,7 +9,8 @@ export const usePaiementJeton = () => {
   const userStore = useUserStore();
   const { professionalUser } = storeToRefs(userStore);
   const cartStore = useCartStore();
-  const { cartQuantity, userTokenBalance } = storeToRefs(cartStore);
+  const { cartQuantity } = storeToRefs(cartStore);
+  const { creditTokensAfterPayment } = cartStore;
   const loading = ref(false);
   const messageError = ref('');
   const paymentVerified = ref(false);
@@ -19,22 +20,15 @@ export const usePaiementJeton = () => {
   const createTokenSession = async (amount: number) => {
     const currentProfile = professionalUser.value;
     const currentJetonQuantity = cartQuantity.value;
-    const currentTokenBalance = userTokenBalance.value;
 
     if (!currentProfile?.uuid) {
       console.error('❌ No professional profile found');
       return;
     }
 
-    console.log('💾 Saving profile before Stripe redirect:', currentProfile);
-
     try {
-      // === SAUVEGARDES MULTIPLES AVANT STRIPE ===
-
-      // 1. SessionStorage (survit aux redirections dans la même session)
-      sessionStorage.setItem('pre-stripe-professional', JSON.stringify(currentProfile));
+      localStorage.setItem('userStore-professional', JSON.stringify(currentProfile));
       localStorage.setItem('jeton-quantity', JSON.stringify(currentJetonQuantity));
-      localStorage.setItem('jeton-balance', JSON.stringify(currentTokenBalance));
       // === APPEL API STRIPE ===
       const { data } = await axios.post(
         `${config.public.apiUrl}/payments/token/${currentProfile.uuid}`,
@@ -51,14 +45,6 @@ export const usePaiementJeton = () => {
       );
 
       if (data && data.url) {
-        // === AVANT LA REDIRECTION ===
-
-        // Dernière vérification que les données sont bien sauvées
-        const verification = sessionStorage.getItem('pre-stripe-professional');
-        if (!verification) {
-          return;
-        }
-
         // Redirection vers Stripe
         window.location.href = data.url;
       }
@@ -76,49 +62,30 @@ export const usePaiementJeton = () => {
       urlParams.has('session_id') || urlParams.has('payment_intent') || route.query.success;
 
     if (isStripeReturn) {
-      // 1. Vérifier si le profil actuel est vide
-      if (!professionalUser.value?.uuid) {
-        const sessionBackup = sessionStorage.getItem('pre-stripe-professional');
-        if (sessionBackup) {
-          try {
-            const restoredProfessional = JSON.parse(sessionBackup);
-            if (restoredProfessional.uuid) {
-              console.log('🔄 Restoring from sessionStorage');
-              userStore.setProfessionalUser(restoredProfessional);
-              return restoredProfessional;
-            }
-          } catch (e) {
-            console.warn('SessionStorage restore failed:', e);
+      // 4. Essayer localStorage backup
+      const localBackup = localStorage.getItem('userStore-professional');
+      const jetonLocalBackup = localStorage.getItem('jeton-quantity');
+      if (localBackup) {
+        try {
+          const restored = JSON.parse(localBackup);
+          if (jetonLocalBackup) {
+            const jeton = JSON.parse(jetonLocalBackup);
+            useCartStore().setJetonAmount(jeton);
+            creditTokensAfterPayment();
+            localStorage.removeItem('jeton-quantity');
           }
-        }
-
-        // 4. Essayer localStorage backup
-        const localBackup = localStorage.getItem('userStore-professional');
-        const jetonLocalBackup = localStorage.getItem('jeton-quantity');
-        const jetonBalanceBackup = localStorage.getItem('jeton-balance');
-        if (localBackup) {
-          try {
-            const restored = JSON.parse(localBackup);
-            if (jetonLocalBackup) {
-              const jeton = JSON.parse(jetonLocalBackup);
-              console.log(jeton, 'JETON');
-
-              useCartStore().setJetonAmount(jeton);
-            }
-            if (restored.uuid) {
-              console.log('🔄 Restoring from localStorage backup');
-              userStore.setProfessionalUser(restored);
-              return restored;
-            }
-          } catch (e) {
-            console.warn('LocalStorage restore failed:', e);
+          if (restored.uuid) {
+            userStore.setProfessionalUser(restored);
+            return restored;
           }
+        } catch (e) {
+          console.warn('LocalStorage restore failed:', e);
         }
-
-        console.error('❌ All restore attempts failed');
-      } else {
-        console.log('✅ Profile already present, no restore needed');
       }
+
+      console.error('❌ All restore attempts failed');
+    } else {
+      console.log('✅ Profile already present, no restore needed');
     }
   };
 
