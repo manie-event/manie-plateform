@@ -7,7 +7,7 @@ export const usePaiementJeton = () => {
   const route = useRoute();
   const config = useRuntimeConfig();
   const userStore = useUserStore();
-  const { professionalUser } = storeToRefs(userStore);
+  const { professionalUser, isProfessionalProfileCreated } = storeToRefs(userStore);
   const loading = ref(false);
   const messageError = ref('');
   const paymentVerified = ref(false);
@@ -16,6 +16,7 @@ export const usePaiementJeton = () => {
 
   const createTokenSession = async (amount: number) => {
     const currentProfile = professionalUser.value;
+    const currentPPTogle = isProfessionalProfileCreated.value;
 
     if (!currentProfile?.uuid) {
       console.error('❌ No professional profile found');
@@ -29,13 +30,6 @@ export const usePaiementJeton = () => {
 
       // 1. SessionStorage (survit aux redirections dans la même session)
       sessionStorage.setItem('pre-stripe-professional', JSON.stringify(currentProfile));
-      sessionStorage.setItem('stripe-redirect-time', Date.now().toString());
-
-      // 2. LocalStorage backup
-      localStorage.setItem('backup-professional', JSON.stringify(currentProfile));
-      localStorage.setItem('original-professional', JSON.stringify(currentProfile));
-
-      console.log('✅ All backups created successfully');
 
       // === APPEL API STRIPE ===
       const { data } = await axios.post(
@@ -58,17 +52,13 @@ export const usePaiementJeton = () => {
         // Dernière vérification que les données sont bien sauvées
         const verification = sessionStorage.getItem('pre-stripe-professional');
         if (!verification) {
-          console.error('❌ Backup failed, aborting redirect');
           return;
         }
-
-        console.log('🔄 Redirecting to Stripe:', data.url);
 
         // Redirection vers Stripe
         window.location.href = data.url;
       }
     } catch (error) {
-      console.error('❌ Error creating token session:', error);
       throw error;
     }
   };
@@ -82,21 +72,16 @@ export const usePaiementJeton = () => {
       urlParams.has('session_id') || urlParams.has('payment_intent') || route.query.success;
 
     if (isStripeReturn) {
-      console.log('✅ Stripe return detected, restoring profile...');
-
       // 1. Vérifier si le profil actuel est vide
       if (!professionalUser.value?.uuid) {
-        console.log('⚠️ Current profile is empty, attempting restore...');
-
-        // 2. Essayer sessionStorage en premier
         const sessionBackup = sessionStorage.getItem('pre-stripe-professional');
         if (sessionBackup) {
           try {
-            const restored = JSON.parse(sessionBackup);
-            if (restored.uuid) {
+            const restoredProfessional = JSON.parse(sessionBackup);
+            if (restoredProfessional.uuid) {
               console.log('🔄 Restoring from sessionStorage');
-              userStore.setProfessionalUser(restored);
-              return restored;
+              userStore.setProfessionalUser(restoredProfessional);
+              return restoredProfessional;
             }
           } catch (e) {
             console.warn('SessionStorage restore failed:', e);
@@ -104,7 +89,7 @@ export const usePaiementJeton = () => {
         }
 
         // 4. Essayer localStorage backup
-        const localBackup = localStorage.getItem('backup-professional');
+        const localBackup = localStorage.getItem('userStore-professional');
         if (localBackup) {
           try {
             const restored = JSON.parse(localBackup);

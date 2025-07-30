@@ -14,6 +14,7 @@ export const useUserStore = defineStore('userStore', () => {
     address: '',
     bio: '',
     mainActivity: '',
+    category: 'professional',
     mainInterlocutor: '',
     experience: 0,
     geographicArea: '',
