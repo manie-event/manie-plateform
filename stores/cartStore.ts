@@ -22,12 +22,10 @@ export const useCartStore = defineStore('cartStore', () => {
   };
 
   const creditTokensAfterPayment = () => {
-    if (isPaymentDone.value) {
-      userTokenBalance.value += cart.value.quantity;
-      console.log(
-        `✅ ${cart.value.quantity} jetons crédités. Nouveau solde: ${userTokenBalance.value}`
-      );
-    }
+    userTokenBalance.value += cart.value.quantity;
+    console.log(
+      `✅ ${cart.value.quantity} jetons crédités. Nouveau solde: ${userTokenBalance.value}`
+    );
   };
   const setBillingInfo = (billingInfo: BillingInfo) => {
     addresses.value.push(billingInfo);

@@ -96,6 +96,8 @@ export const usePaiementJeton = () => {
             const restored = JSON.parse(localBackup);
             if (jetonLocalBackup) {
               const jeton = JSON.parse(jetonLocalBackup);
+              console.log(jeton, 'JETON');
+
               useCartStore().setJetonAmount(jeton);
             }
             if (restored.uuid) {
