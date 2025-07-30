@@ -55,7 +55,7 @@ onMounted(() => {
               {{ getNameDependingOnCategory }}
             </h6>
             <span class="text-subtitle-2 font-weight-medium text-grey100">{{
-              user.category == 'professional' ? UserCategory.PRESTA : UserCategory.CLIENT
+              user?.category == 'professional' ? UserCategory.PRESTA : UserCategory.CLIENT
             }}</span>
           </div>
         </div>
@@ -73,9 +73,9 @@ onMounted(() => {
             <img src="/images/profile/user6.jpg" width="90" />
           </v-avatar>
           <div class="ml-5">
-            <h6 class="text-h5 mb-n1">{{ user.name ? user.name : user.username }}</h6>
+            <h6 class="text-h5 mb-n1">{{ user?.name ? user?.name : user?.username }}</h6>
             <span class="text-subtitle-1 font-weight-regular text-grey100 font-weight-medium">{{
-              user.category == 'professional' ? UserCategory.PRESTA : UserCategory.CLIENT
+              user?.category == 'professional' ? UserCategory.PRESTA : UserCategory.CLIENT
             }}</span>
             <div class="d-flex align-center mt-1">
               <MailIcon size="18" stroke-width="1.5" class="text-grey100" />

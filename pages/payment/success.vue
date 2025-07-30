@@ -40,28 +40,10 @@ const formatAmount = (amount, currency) => {
   }).format(amount / 100); // Stripe utilise les centimes
 };
 
-const goToAccount = () => {
-  router.push('/account/orders');
-};
-
-const goHome = () => {
-  router.push('/');
-};
-
 // SEO
 useHead({
   title: 'Paiement réussi - Manie Event',
   meta: [{ name: 'robots', content: 'noindex, nofollow' }],
-});
-
-onMounted(async () => {
-  const token = useCookie('token');
-  console.log('Token après redirection Stripe:', token.value);
-
-  if (token.value) {
-    // Recharger les infos utilisateur
-    await checkAuthFromCookie();
-  }
 });
 </script>
 

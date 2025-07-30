@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import JetonImg from '@/public/images/panier/jeton.png';
+import { Icon } from '@iconify/vue';
 
 const cartStore = useCartStore();
 const { cart } = storeToRefs(cartStore);
@@ -34,7 +35,6 @@ watch(jetonAmount, (newJetonAmount) => {
 <template>
   <v-app-bar
     elevation="0"
-    :priority="priority"
     height="75"
     color="containerBg"
     id="top"
@@ -71,8 +71,12 @@ watch(jetonAmount, (newJetonAmount) => {
     <!-- ---------------------------------------------- -->
     <!-- ShoppingCart -->
     <!-- ---------------------------------------------- -->
-    <v-menu :close-on-content-click="false" class="notification_popup">
-      <template v-slot:activator="{ props }" v-if="isProfessionalProfileCreated">
+    <v-menu
+      :close-on-content-click="false"
+      class="notification_popup"
+      v-if="isProfessionalProfileCreated"
+    >
+      <template v-slot:activator="{ props }">
         <v-btn icon flat v-bind="props" size="small" class="custom-hover-primary">
           <div class="position-realtive">
             <Icon icon="solar:cart-3-outline" height="24" width="24" />

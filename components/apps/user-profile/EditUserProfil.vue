@@ -138,7 +138,7 @@
             <v-text-field
               v-model="link.value"
               label="Renseignez le lien vers le réseau social ou le site web"
-              type="text"
+              type="url"
               variant="outlined"
               placeholder="https://www.example.com/mon-reseau-social"
             >
@@ -228,7 +228,6 @@ const mergedFaq = computed(() => {
   return faqArray.value.reduce(
     (acc, faq) => {
       if (faq.question && faq.reponse) {
-        // Éviter les entrées vides
         acc[faq.question] = faq.reponse;
       }
       return acc;
@@ -283,7 +282,7 @@ const {
     siret: '',
     address: '',
     bio: '',
-    mainActivity: '',
+    mainActivity: 'Veuillez choisir votre activité',
     mainInterlocutor: '',
     experience: 0,
     geographicArea: '',
@@ -300,7 +299,6 @@ const {
 });
 
 const onSubmit = handleSubmit(
-  // Callback si le formulaire est valide
   (values) => {
     const finalValues = {
       ...values,
@@ -310,6 +308,7 @@ const onSubmit = handleSubmit(
     resetForm();
     openModal.value = false;
   },
+  // Callback si le formulaire est invalide (optionnel)
   ({ errors, values }) => {
     addError({ message: JSON.stringify(errors) });
   }
@@ -328,12 +327,20 @@ const removeFaq = (index: number) => {
 };
 
 const activityItems = ref([
-  { label: 'Locations', value: 'espaces & lieux' },
-  { label: 'Alimentation et Boissons', value: 'food & beverage' },
-  { label: 'Audiovisuel', value: 'audio & visuel' },
-  { label: 'Artistique', value: 'artistique' },
+  { label: 'Locations', value: 'lieux' },
+  { label: 'Alimentation', value: 'food' },
   { label: 'Logistique', value: 'logistique' },
-  { label: 'Divertissement', value: 'animations' },
-  { label: 'Soins', value: 'soin & bien-être' },
+  { label: 'Animation', value: 'animation' },
+  { label: 'Boisson', value: 'boisson' },
+  { label: 'Musique', value: 'musique' },
+  { label: 'Loueur', value: 'loueur' },
+  { label: 'Service', value: 'service' },
+  { label: 'Audiovisuel', value: 'audiovisuel' },
+  { label: 'Beauté', value: 'beauté' },
+  { label: 'Transport', value: 'transport' },
+  { label: 'Esthétique', value: 'esthétique' },
+  { label: 'Humain', value: 'humain' },
+  { label: 'Look', value: 'look' },
+  { label: 'Décoration', value: 'décoration' },
 ]);
 </script>

@@ -69,6 +69,10 @@ export const useUserProfile = () => {
   };
 
   const getUserProfileDetails = async () => {
+    console.log(
+      professionalUser.value?.uuid,
+      'professionalUser.value?.uuid in getUserProfileDetails'
+    );
     try {
       const { data } = await axios.get(
         `${config.public.apiUrl}/professional/${professionalUser.value?.uuid}`,
