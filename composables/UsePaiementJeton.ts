@@ -90,9 +90,14 @@ export const usePaiementJeton = () => {
 
         // 4. Essayer localStorage backup
         const localBackup = localStorage.getItem('userStore-professional');
+        const jetonLocalBackup = localStorage.getItem('jeton-quantity');
         if (localBackup) {
           try {
             const restored = JSON.parse(localBackup);
+            if (jetonLocalBackup) {
+              const jeton = JSON.parse(jetonLocalBackup);
+              useCartStore().setJetonAmount(jeton);
+            }
             if (restored.uuid) {
               console.log('🔄 Restoring from localStorage backup');
               userStore.setProfessionalUser(restored);

@@ -9,7 +9,7 @@ const userStore = useUserStore();
 const { user, professionalUser, isProfessionalProfileCreated } = storeToRefs(userStore);
 const { getProfessionalUserInfo } = userStore;
 const { sendLogout } = useAuthentification();
-const { initCartQuantity } = storeToRefs(useCartStore());
+const { userTokenBalance } = storeToRefs(useCartStore());
 
 const getNameDependingOnCategory = computed(() => {
   if (
@@ -113,7 +113,7 @@ onMounted(() => {
               </h6>
             </div>
             <p class="text-subtitle-1 font-weight-regular text-grey100">
-              <b>{{ item.requiresProfile ? initCartQuantity : '' }}</b> {{ item.subtitle }}
+              <b>{{ item.requiresProfile ? userTokenBalance : '' }}</b> {{ item.subtitle }}
             </p>
           </v-list-item>
         </v-list>
