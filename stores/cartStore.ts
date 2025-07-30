@@ -27,6 +27,7 @@ export const useCartStore = defineStore('cartStore', () => {
   };
 
   return {
+    cartQuantity,
     addresses,
     getCart,
     userTokenBalance,

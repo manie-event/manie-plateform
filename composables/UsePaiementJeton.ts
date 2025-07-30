@@ -8,6 +8,8 @@ export const usePaiementJeton = () => {
   const config = useRuntimeConfig();
   const userStore = useUserStore();
   const { professionalUser } = storeToRefs(userStore);
+  const cartStore = useCartStore();
+  const { cartQuantity, userTokenBalance } = storeToRefs(cartStore);
   const loading = ref(false);
   const messageError = ref('');
   const paymentVerified = ref(false);
@@ -16,7 +18,8 @@ export const usePaiementJeton = () => {
 
   const createTokenSession = async (amount: number) => {
     const currentProfile = professionalUser.value;
-    console.log(currentProfile, 'currentProfile');
+    const currentJetonQuantity = cartQuantity.value;
+    const currentTokenBalance = userTokenBalance.value;
 
     if (!currentProfile?.uuid) {
       console.error('❌ No professional profile found');
@@ -30,7 +33,8 @@ export const usePaiementJeton = () => {
 
       // 1. SessionStorage (survit aux redirections dans la même session)
       sessionStorage.setItem('pre-stripe-professional', JSON.stringify(currentProfile));
-
+      localStorage.setItem('jeton-quantity', JSON.stringify(currentJetonQuantity));
+      localStorage.setItem('jeton-balance', JSON.stringify(currentTokenBalance));
       // === APPEL API STRIPE ===
       const { data } = await axios.post(
         `${config.public.apiUrl}/payments/token/${currentProfile.uuid}`,
@@ -91,6 +95,7 @@ export const usePaiementJeton = () => {
         // 4. Essayer localStorage backup
         const localBackup = localStorage.getItem('userStore-professional');
         const jetonLocalBackup = localStorage.getItem('jeton-quantity');
+        const jetonBalanceBackup = localStorage.getItem('jeton-balance');
         if (localBackup) {
           try {
             const restored = JSON.parse(localBackup);
