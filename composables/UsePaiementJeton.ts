@@ -16,6 +16,7 @@ export const usePaiementJeton = () => {
 
   const createTokenSession = async (amount: number) => {
     const currentProfile = professionalUser.value;
+    console.log(currentProfile, 'currentProfile');
 
     if (!currentProfile?.uuid) {
       console.error('❌ No professional profile found');
@@ -88,7 +89,7 @@ export const usePaiementJeton = () => {
         }
 
         // 4. Essayer localStorage backup
-        const localBackup = localStorage.getItem('pre-stripe-professional');
+        const localBackup = localStorage.getItem('userStore-professional');
         if (localBackup) {
           try {
             const restored = JSON.parse(localBackup);

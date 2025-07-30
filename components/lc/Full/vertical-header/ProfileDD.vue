@@ -14,7 +14,7 @@ const { initCartQuantity } = storeToRefs(useCartStore());
 const getNameDependingOnCategory = computed(() => {
   if (
     (user.value?.category == 'professional' && !user.value?.username) ||
-    professionalUser.value.category == 'professional'
+    professionalUser.value?.category == 'professional'
   ) {
     return professionalUser.value?.name;
   } else if (user.value?.category == 'consumer' && !user.value?.username) {
@@ -27,7 +27,7 @@ const getNameDependingOnCategory = computed(() => {
 const getCategory = computed(() => {
   if (
     (user.value?.category == 'professional' && !user.value?.username) ||
-    professionalUser.value.category == 'professional'
+    professionalUser.value?.category == 'professional'
   ) {
     return UserCategory.PRESTA;
   } else {
