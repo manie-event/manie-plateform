@@ -6,26 +6,7 @@ import { computed, ref } from 'vue';
 export const useUserStore = defineStore('userStore', () => {
   const user = ref<User>();
 
-  const professionalUser = useLocalStorage<ProfessionalProfile>('userStore-professional', {
-    name: '',
-    uuid: '',
-    userUuid: '',
-    siret: '',
-    address: '',
-    bio: '',
-    mainActivity: '',
-    category: 'professional',
-    mainInterlocutor: '',
-    experience: 0,
-    geographicArea: '',
-    faq: {},
-    minimumBenefit: 0,
-    minimumReservationPeriod: 0,
-    deposit: false,
-    depositAmount: 0,
-    billingPeriod: '',
-    links: [],
-  });
+  const professionalUser = ref<ProfessionalProfile>();
   const isProfessionalProfileCreated = useLocalStorage('pp-created', false);
   const isConsumerProfileAccepted = ref(false);
   const isStoringUserAccepeted = ref(false);

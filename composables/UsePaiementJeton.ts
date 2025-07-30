@@ -7,7 +7,7 @@ export const usePaiementJeton = () => {
   const route = useRoute();
   const config = useRuntimeConfig();
   const userStore = useUserStore();
-  const { professionalUser, isProfessionalProfileCreated } = storeToRefs(userStore);
+  const { professionalUser } = storeToRefs(userStore);
   const loading = ref(false);
   const messageError = ref('');
   const paymentVerified = ref(false);
@@ -16,7 +16,6 @@ export const usePaiementJeton = () => {
 
   const createTokenSession = async (amount: number) => {
     const currentProfile = professionalUser.value;
-    const currentPPTogle = isProfessionalProfileCreated.value;
 
     if (!currentProfile?.uuid) {
       console.error('❌ No professional profile found');
@@ -89,7 +88,7 @@ export const usePaiementJeton = () => {
         }
 
         // 4. Essayer localStorage backup
-        const localBackup = localStorage.getItem('userStore-professional');
+        const localBackup = localStorage.getItem('pre-stripe-professional');
         if (localBackup) {
           try {
             const restored = JSON.parse(localBackup);
