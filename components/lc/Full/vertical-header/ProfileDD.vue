@@ -2,7 +2,7 @@
 import { profileDD } from '@/_mockApis/headerData';
 import { UserCategory } from '@/models/enums/userCategoryEnums';
 import { Icon } from '@iconify/vue';
-import { CircleXIcon, MailIcon } from 'vue-tabler-icons';
+import { CircleXIcon } from 'vue-tabler-icons';
 import { useAuthentification } from '../../../../composables/UseAuthentification';
 
 const userStore = useUserStore();
@@ -11,21 +11,27 @@ const { getProfessionalUserInfo } = userStore;
 const { sendLogout } = useAuthentification();
 const { initCartQuantity } = storeToRefs(useCartStore());
 
-const troncateText = computed(() => {
-  if (user.value?.email && user.value.email.length > 20) {
-    return user.value.email.substring(0, 20) + '...';
-  } else {
-    return user.value?.email;
-  }
-});
-
 const getNameDependingOnCategory = computed(() => {
-  if (user.value?.category == 'professional' && !user.value?.username) {
+  if (
+    (user.value?.category == 'professional' && !user.value?.username) ||
+    professionalUser.value.category == 'professional'
+  ) {
     return professionalUser.value?.name;
   } else if (user.value?.category == 'consumer' && !user.value?.username) {
     return user.value?.name;
   } else {
     return user.value?.username;
+  }
+});
+
+const getCategory = computed(() => {
+  if (
+    (user.value?.category == 'professional' && !user.value?.username) ||
+    professionalUser.value.category == 'professional'
+  ) {
+    return UserCategory.PRESTA;
+  } else {
+    return UserCategory.CLIENT;
   }
 });
 
@@ -54,9 +60,7 @@ onMounted(() => {
             <h6 class="text-h6 d-flex align-center text-black font-weight-semibold">
               {{ getNameDependingOnCategory }}
             </h6>
-            <span class="text-subtitle-2 font-weight-medium text-grey100">{{
-              user?.category == 'professional' ? UserCategory.PRESTA : UserCategory.CLIENT
-            }}</span>
+            <span class="text-subtitle-2 font-weight-medium text-grey100">{{ getCategory }}</span>
           </div>
         </div>
       </div>
@@ -73,16 +77,10 @@ onMounted(() => {
             <img src="/images/profile/user6.jpg" width="90" />
           </v-avatar>
           <div class="ml-5">
-            <h6 class="text-h5 mb-n1">{{ user?.name ? user?.name : user?.username }}</h6>
+            <h6 class="text-h5 mb-n1">{{ getNameDependingOnCategory }}</h6>
             <span class="text-subtitle-1 font-weight-regular text-grey100 font-weight-medium">{{
-              user?.category == 'professional' ? UserCategory.PRESTA : UserCategory.CLIENT
+              getCategory
             }}</span>
-            <div class="d-flex align-center mt-1">
-              <MailIcon size="18" stroke-width="1.5" class="text-grey100" />
-              <span class="text-subtitle-1 text-grey100 font-weight-medium ml-2">{{
-                troncateText
-              }}</span>
-            </div>
           </div>
         </div>
         <v-divider></v-divider>

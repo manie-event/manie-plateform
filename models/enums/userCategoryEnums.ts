@@ -1,5 +1,5 @@
 export enum UserCategory {
-  PROFESSIONAL = 'professional',
+  PROFESSIONAL = 'professionel',
   PRESTA = 'prestataire',
   CLIENT = 'client',
 }

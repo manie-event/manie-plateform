@@ -42,7 +42,10 @@ export const useUserStore = defineStore('userStore', () => {
     user.value = userData;
   };
   const setProfessionalUser = (newProfessionalUser: ProfessionalProfile) => {
-    professionalUser.value = newProfessionalUser;
+    professionalUser.value = {
+      ...newProfessionalUser,
+      category: 'professional',
+    };
     isProfessionalProfileCreated.value = true;
   };
 
