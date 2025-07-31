@@ -75,12 +75,10 @@ export const usePaiementJeton = () => {
             // ✅ Créditer directement sans passer par le panier
             const cartStore = useCartStore();
             cartStore.userTokenBalance += tokensToPurchase;
-            if (professionalUser.value.uuid) {
-              console.log(cartStore.userTokenBalance, 'cartStore.userTokenBalance');
-              console.log(professionalUser.value.uuid, 'professionalUser.value.uuid');
+            console.log(cartStore.userTokenBalance, 'cartStore.userTokenBalance');
+            console.log(professionalUser.value.uuid, 'professionalUser.value.uuid');
 
-              createJeton(cartStore.userTokenBalance, professionalUser.value.uuid);
-            }
+            createJeton(cartStore.userTokenBalance, professionalUser.value.uuid ?? '');
 
             // ✅ Supprimer après crédit réussi
             localStorage.removeItem('jeton-quantity');
