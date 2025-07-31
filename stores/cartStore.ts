@@ -11,13 +11,8 @@ export const useCartStore = defineStore('cartStore', () => {
   const getTotalPrice = computed(() => 9 * cartQuantity.value);
   const getCart = computed(() => cartQuantity.value);
 
-  const setJetonAmount = (newJeton: number) => {
-    cartQuantity.value = newJeton;
-    console.log(cartQuantity.value, 'QUANTITY');
-  };
-
-  const creditTokensAfterPayment = () => {
-    userTokenBalance.value += cartQuantity.value;
+  const creditTokensAfterPayment = (newQuantity: number) => {
+    userTokenBalance.value = userTokenBalance.value + newQuantity;
     console.log(
       `✅ ${cartQuantity.value} jetons crédités. Nouveau solde: ${userTokenBalance.value}`
     );
@@ -32,7 +27,6 @@ export const useCartStore = defineStore('cartStore', () => {
     getCart,
     userTokenBalance,
     getTotalPrice,
-    setJetonAmount,
     setBillingInfo,
     creditTokensAfterPayment,
   };

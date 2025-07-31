@@ -10,6 +10,7 @@ export const usePaiementJeton = () => {
   const { professionalUser } = storeToRefs(userStore);
   const cartStore = useCartStore();
   const { userTokenBalance } = storeToRefs(cartStore);
+  const { creditTokensAfterPayment } = cartStore;
   loadStripe(config.public.tokenStripe);
 
   const createTokenSession = async (amount: number) => {
@@ -60,15 +61,10 @@ export const usePaiementJeton = () => {
           const restored = JSON.parse(localBackup);
           if (purchasedTokens) {
             const tokensToPurchase = JSON.parse(purchasedTokens);
-            console.log('💰 Créditer', tokensToPurchase, 'jetons achetés');
 
-            userTokenBalance.value += tokensToPurchase;
-            console.log(cartStore.userTokenBalance, 'cartStore.userTokenBalance');
-            console.log(professionalUser.value.uuid, 'professionalUser.value.uuid');
+            creditTokensAfterPayment(tokensToPurchase);
             if (restored.uuid) {
               userStore.setProfessionalUser(restored);
-              console.log(userTokenBalance.value, 'userTokenBalance.value');
-              console.log(restored.uuid, 'restored.uuid');
 
               await createJeton(tokensToPurchase, restored.uuid);
 
@@ -82,13 +78,11 @@ export const usePaiementJeton = () => {
 
       console.error('❌ All restore attempts failed');
     } else {
-      console.log('✅ Profile already present, no restore needed');
+      console.log('✅ Profile déjà présent, aucun besoin restock ');
     }
   };
 
   const createJeton = async (quantity: number, professionnalUuid: string) => {
-    console.log(token.value, 'TOKEN VALUE');
-
     try {
       const { data } = await axios.post(
         `${config.public.apiUrl}/credit/create`,

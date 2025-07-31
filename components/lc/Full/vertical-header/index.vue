@@ -3,7 +3,7 @@ import JetonImg from '@/public/images/panier/jeton.png';
 import { Icon } from '@iconify/vue';
 
 const cartStore = useCartStore();
-const { setJetonAmount } = cartStore;
+// const { setJetonAmount } = cartStore;
 const { createTokenSession } = usePaiementJeton();
 const { isProfessionalProfileCreated } = storeToRefs(useUserStore());
 
@@ -26,9 +26,9 @@ const handleScroll = () => {
   }
 };
 
-watch(jetonAmount, (newJetonAmount) => {
-  setJetonAmount(newJetonAmount);
-});
+// watch(jetonAmount, (newJetonAmount) => {
+//   setJetonAmount(newJetonAmount);
+// });
 </script>
 
 <template>
