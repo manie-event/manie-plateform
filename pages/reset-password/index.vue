@@ -8,17 +8,28 @@
     <label class="text-subtitle-1 font-weight-medium pb-2 text-lightText"
       >Votre nouveau mot de passe</label
     >
-    <Field name="password" v-model="registerPassword.password" type="password" required />
+    <Field name="password" v-slot="{ field, errors }">
+      <input
+        v-bind="field"
+        type="password"
+        class="form-input w-full px-3 py-2 border rounded"
+        placeholder="Votre nouveau mot de passe"
+      />
+      <span v-if="errors.length" class="text-red-500 text-sm">{{ errors[0] }}</span>
+    </Field>
 
     <label class="text-subtitle-1 font-weight-medium pb-2 text-lightText"
       >Confirmez votre nouveau mot de passe</label
     >
-    <Field
-      name="confirmPassword"
-      v-model="registerPassword.confirmPassword"
-      type="password"
-      required
-    />
+    <Field name="confirmPassword" v-slot="{ field, errors }">
+      <input
+        v-bind="field"
+        type="password"
+        class="form-input w-full px-3 py-2 border rounded"
+        placeholder="Confirmez votre nouveau mot de passe"
+      />
+      <span v-if="errors.length" class="text-red-500 text-sm">{{ errors[0] }}</span>
+    </Field>
     <ErrorMessage name="confirmPassword" />
 
     <button type="submit" size="large" color="primary" block rounded="pill">
