@@ -39,7 +39,7 @@
 </template>
 <script setup lang="ts">
 import { useAuthentification } from '@/composables/UseAuthentification';
-import { useForm } from 'vee-validate';
+import { Field, useForm } from 'vee-validate';
 import * as yup from 'yup';
 
 const route = useRoute();

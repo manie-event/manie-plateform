@@ -11,40 +11,22 @@ export const useUserProfile = () => {
 
   const updateProfessionalProfile = async (professionalProfil: ProfessionalProfile) => {
     try {
-      const siretResponse = await axios.get(
-        `https://api.insee.fr/api-sirene/3.11/siret/${professionalProfil.siret}`,
+      const { data } = await axios.post(
+        `${config.public.apiUrl}/professional/create`,
+        professionalProfil,
         {
           headers: {
-            accept: 'application/json',
-            'X-INSEE-Api-Key-Integration': config.public.tokenSiret,
+            Authorization: `Bearer ${token.value}`,
+            'Content-Type': 'application/json',
           },
         }
       );
-
-      const siretValid = siretResponse.data;
-
-      if (siretValid) {
-        try {
-          const { data } = await axios.post(
-            `${config.public.apiUrl}/professional/create`,
-            professionalProfil,
-            {
-              headers: {
-                Authorization: `Bearer ${token.value}`,
-                'Content-Type': 'application/json',
-              },
-            }
-          );
-          if (data) {
-            addSuccess(
-              'Inscription réussie, veuillez vérifier votre email pour confirmer votre compte.'
-            );
-            getUserProfile();
-            return data;
-          }
-        } catch (error: unknown) {
-          addError({ message: 'Veuillez vérifier que le SIRET soit valide.' });
-        }
+      if (data) {
+        addSuccess(
+          'Inscription réussie, veuillez vérifier votre email pour confirmer votre compte.'
+        );
+        getUserProfile();
+        return data;
       }
     } catch (error: unknown) {
       addError({ message: 'Une erreur est survenue lors de la mise à jour du profil.' });

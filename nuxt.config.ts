@@ -5,7 +5,6 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       tokenStripe: process.env.TOKEN_STRIPE,
-      tokenSiret: process.env.TOKEN_SIRET,
       apiUrl: process.env.NUXT_API_URL || 'https://manie-api.onrender.com',
     },
   },
@@ -16,7 +15,7 @@ export default defineNuxtConfig({
 
   // Vuetify build configuration
   build: {
-    transpile: ['vuetify'],
+    transpile: ['vuetify', 'vee-validate'],
   },
 
   // Modules
