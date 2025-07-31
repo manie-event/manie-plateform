@@ -40,7 +40,6 @@ export const usePaiementJeton = () => {
       );
 
       if (data && data.url) {
-        // Redirection vers Stripe
         window.location.href = data.url;
       }
     } catch (error) {
@@ -49,15 +48,11 @@ export const usePaiementJeton = () => {
   };
 
   const restoreAfterStripe = async () => {
-    console.log('🔍 Checking for profile restoration after Stripe...');
-
-    // Vérifier si on revient de Stripe
     const urlParams = new URLSearchParams(window.location.search);
     const isStripeReturn =
       urlParams.has('session_id') || urlParams.has('payment_intent') || route.query.success;
 
     if (isStripeReturn) {
-      // 4. Essayer localStorage backup
       const localBackup = localStorage.getItem('userStore-professional');
       const purchasedTokens = localStorage.getItem('jeton-quantity');
       if (localBackup) {
@@ -67,18 +62,18 @@ export const usePaiementJeton = () => {
             const tokensToPurchase = JSON.parse(purchasedTokens);
             console.log('💰 Créditer', tokensToPurchase, 'jetons achetés');
 
-            // ✅ Créditer directement sans passer par le panier
             userTokenBalance.value += tokensToPurchase;
             console.log(cartStore.userTokenBalance, 'cartStore.userTokenBalance');
             console.log(professionalUser.value.uuid, 'professionalUser.value.uuid');
-          }
-          if (restored.uuid) {
-            userStore.setProfessionalUser(restored);
-            await nextTick();
+            if (restored.uuid) {
+              userStore.setProfessionalUser(restored);
+              console.log(userTokenBalance.value, 'userTokenBalance.value');
+              console.log(restored.uuid, 'restored.uuid');
 
-            await createJeton(userTokenBalance.value, restored.uuid);
+              await createJeton(tokensToPurchase, restored.uuid);
 
-            return restored;
+              return restored;
+            }
           }
         } catch (e) {
           console.warn('LocalStorage restore failed:', e);
@@ -109,8 +104,6 @@ export const usePaiementJeton = () => {
         }
       );
       if (data) {
-        localStorage.removeItem('jeton-quantity');
-        localStorage.removeItem('jeton-balance');
         return data;
       }
     } catch (error) {
