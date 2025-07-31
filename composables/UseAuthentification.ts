@@ -4,6 +4,7 @@ import type { errorModel } from '~/models/errorModel';
 import type { RegisterModel } from '../models/authentification/registerModel';
 
 export const useAuthentification = () => {
+  const token = useCookie('token');
   const config = useRuntimeConfig();
   const router = useRouter();
   const { addError, addSuccess } = useToaster();
@@ -91,8 +92,14 @@ export const useAuthentification = () => {
   const registerNewPassword = async (registerPassword: registerNewPasswordModel) => {
     try {
       const { data } = await axios.post(
-        `${config.public.apiUrl}/auth/register-new-password`,
-        registerPassword
+        `${config.public.apiUrl}/auth/reset-password`,
+        registerPassword,
+        {
+          headers: {
+            Authorization: `Bearer  ${token.value}`,
+            'Content-Type': 'application/json',
+          },
+        }
       );
       if (data) {
         addSuccess('Mot de passe mis à jour avec succès.');
@@ -108,10 +115,9 @@ export const useAuthentification = () => {
 
   const sendLogout = async () => {
     try {
-      const token = useCookie('token');
       const { data } = await axios.post(`${config.public.apiUrl}/auth/logout`, null, {
         headers: {
-          Authorization: `Bearer  ${token}`,
+          Authorization: `Bearer  ${token.value}`,
           'Content-Type': 'application/json',
         },
       });
