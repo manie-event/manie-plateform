@@ -77,15 +77,11 @@ export const usePaiementJeton = () => {
             cartStore.userTokenBalance += tokensToPurchase;
             console.log(cartStore.userTokenBalance, 'cartStore.userTokenBalance');
             console.log(professionalUser.value.uuid, 'professionalUser.value.uuid');
-
-            createJeton(cartStore.userTokenBalance, professionalUser.value.uuid ?? '');
-
-            // ✅ Supprimer après crédit réussi
-            localStorage.removeItem('jeton-quantity');
-            localStorage.removeItem('jeton-balance');
           }
           if (restored.uuid) {
             userStore.setProfessionalUser(restored);
+            createJeton(cartStore.userTokenBalance, restored.uuid);
+
             return restored;
           }
         } catch (e) {
@@ -115,6 +111,8 @@ export const usePaiementJeton = () => {
         }
       );
       if (data) {
+        localStorage.removeItem('jeton-quantity');
+        localStorage.removeItem('jeton-balance');
         return data;
       }
     } catch (error) {
