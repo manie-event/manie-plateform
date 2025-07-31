@@ -104,6 +104,8 @@ export const usePaiementJeton = () => {
         }
       );
       if (data) {
+        localStorage.removeItem('jeton-balance');
+        localStorage.removeItem('jeton-quantity');
         return data;
       }
     } catch (error) {
