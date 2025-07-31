@@ -1,5 +1,5 @@
 <template>
-  <form
+  <Form
     ref="form"
     @submit.prevent="onSubmit()"
     action="/dashboards/analytical"
@@ -8,17 +8,23 @@
     <label class="text-subtitle-1 font-weight-medium pb-2 text-lightText"
       >Votre nouveau mot de passe</label
     >
-    <Field v-model="registerPassword.password" required></Field>
+    <Field name="password" v-model="registerPassword.password" type="password" required />
+
     <label class="text-subtitle-1 font-weight-medium pb-2 text-lightText"
       >Confirmez votre nouveau mot de passe</label
     >
-    <Field v-model="registerPassword.confirmPassword" required></Field>
+    <Field
+      name="confirmPassword"
+      v-model="registerPassword.confirmPassword"
+      type="password"
+      required
+    />
     <ErrorMessage name="confirmPassword" />
 
-    <button size="large" color="primary" block submit rounded="pill">
+    <button type="submit" size="large" color="primary" block rounded="pill">
       Réinitialiser mon mot de passe
     </button>
-  </form>
+  </Form>
 </template>
 <script setup lang="ts">
 import { useAuthentification } from '@/composables/UseAuthentification';
