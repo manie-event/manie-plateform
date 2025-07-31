@@ -76,7 +76,7 @@ export const usePaiementJeton = () => {
             userStore.setProfessionalUser(restored);
             await nextTick();
 
-            createJeton(userTokenBalance.value, restored.uuid);
+            await createJeton(userTokenBalance.value, restored.uuid);
 
             return restored;
           }
