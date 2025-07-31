@@ -75,13 +75,16 @@ export const usePaiementJeton = () => {
             // ✅ Créditer directement sans passer par le panier
             const cartStore = useCartStore();
             cartStore.userTokenBalance += tokensToPurchase;
+            if (professionalUser.value.uuid) {
+              console.log(cartStore.userTokenBalance, 'cartStore.userTokenBalance');
+              console.log(professionalUser.value.uuid, 'professionalUser.value.uuid');
 
-            console.log(
-              `✅ ${tokensToPurchase} jetons crédités. Nouveau solde: ${cartStore.userTokenBalance}`
-            );
+              createJeton(cartStore.userTokenBalance, professionalUser.value.uuid);
+            }
 
             // ✅ Supprimer après crédit réussi
             localStorage.removeItem('jeton-quantity');
+            localStorage.removeItem('jeton-balance');
           }
           if (restored.uuid) {
             userStore.setProfessionalUser(restored);
@@ -95,6 +98,29 @@ export const usePaiementJeton = () => {
       console.error('❌ All restore attempts failed');
     } else {
       console.log('✅ Profile already present, no restore needed');
+    }
+  };
+
+  const createJeton = async (quantity: number, professionnalUuid: string) => {
+    try {
+      const { data } = await axios.post(
+        `${config.public.apiUrl}/credit/create`,
+        {
+          quantity: quantity,
+          professionalUuid: professionnalUuid,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      if (data) {
+        return data;
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
