@@ -74,6 +74,8 @@ export const usePaiementJeton = () => {
           }
           if (restored.uuid) {
             userStore.setProfessionalUser(restored);
+            await nextTick();
+
             createJeton(userTokenBalance.value, restored.uuid);
 
             return restored;
@@ -90,6 +92,8 @@ export const usePaiementJeton = () => {
   };
 
   const createJeton = async (quantity: number, professionnalUuid: string) => {
+    console.log(token.value, 'TOKEN VALUE');
+
     try {
       const { data } = await axios.post(
         `${config.public.apiUrl}/credit/create`,
