@@ -9,12 +9,7 @@ export const usePaiementJeton = () => {
   const userStore = useUserStore();
   const { professionalUser } = storeToRefs(userStore);
   const cartStore = useCartStore();
-  const { cartQuantity } = storeToRefs(cartStore);
-  const { creditTokensAfterPayment } = cartStore;
-  const loading = ref(false);
-  const messageError = ref('');
-  const paymentVerified = ref(false);
-  const paymentData = ref();
+  const { userTokenBalance } = storeToRefs(cartStore);
   loadStripe(config.public.tokenStripe);
 
   const createTokenSession = async (amount: number) => {
@@ -73,14 +68,13 @@ export const usePaiementJeton = () => {
             console.log('💰 Créditer', tokensToPurchase, 'jetons achetés');
 
             // ✅ Créditer directement sans passer par le panier
-            const cartStore = useCartStore();
-            cartStore.userTokenBalance += tokensToPurchase;
+            userTokenBalance.value += tokensToPurchase;
             console.log(cartStore.userTokenBalance, 'cartStore.userTokenBalance');
             console.log(professionalUser.value.uuid, 'professionalUser.value.uuid');
           }
           if (restored.uuid) {
             userStore.setProfessionalUser(restored);
-            createJeton(cartStore.userTokenBalance, restored.uuid);
+            createJeton(userTokenBalance.value, restored.uuid);
 
             return restored;
           }
