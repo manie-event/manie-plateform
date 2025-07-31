@@ -1,9 +1,10 @@
 import type { BillingInfo } from '@/models/cart/billingInfo';
+import { useLocalStorage } from '@vueuse/core';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 export const useCartStore = defineStore('cartStore', () => {
-  const userTokenBalance = ref<number>(0);
+  const userTokenBalance = useLocalStorage<number>('jeton-balance', 0);
   const cartQuantity = ref<number>(0);
   const addresses = ref<BillingInfo[]>([]);
 
