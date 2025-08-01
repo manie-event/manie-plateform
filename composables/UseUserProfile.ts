@@ -8,6 +8,7 @@ export const useUserProfile = () => {
   const { setProfessionalUser } = userStore;
   const { professionalUser } = storeToRefs(userStore);
   const config = useRuntimeConfig();
+  const professionalUuid = localStorage.getItem('professional-uuid');
 
   const updateProfessionalProfile = async (professionalProfil: ProfessionalProfile) => {
     try {
@@ -51,20 +52,14 @@ export const useUserProfile = () => {
   };
 
   const getUserProfileDetails = async () => {
-    console.log(
-      professionalUser.value?.uuid,
-      'professionalUser.value?.uuid in getUserProfileDetails'
-    );
+    console.log(professionalUuid, 'professionalUser.value?.uuid in getUserProfileDetails');
     try {
-      const { data } = await axios.get(
-        `${config.public.apiUrl}/professional/${professionalUser.value?.uuid}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token.value}`,
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const { data } = await axios.get(`${config.public.apiUrl}/professional/${professionalUuid}`, {
+        headers: {
+          Authorization: `Bearer ${token.value}`,
+          'Content-Type': 'application/json',
+        },
+      });
       if (data) {
         console.log(data, 'data in getUserProfileDetails');
 

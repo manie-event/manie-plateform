@@ -19,8 +19,9 @@ export const useUserStore = defineStore('userStore', () => {
       ...newProfessionalUser,
       category: 'professional',
     };
-    console.log(professionalUser.value, 'professionalUser.value in setProfessionalUser');
-    localStorage.setItem('professional-uuid', JSON.stringify(professionalUser.value.uuid));
+
+    const cleanUuid = professionalUser.value.uuid?.replace(/[""]/g, '');
+    localStorage.setItem('professional-uuid', cleanUuid || '');
     isProfessionalProfileCreated.value = true;
   };
 

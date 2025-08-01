@@ -17,6 +17,10 @@ export const usePaiementJeton = () => {
   const createTokenSession = async (amount: number) => {
     const currentProfile = professionalUser.value;
     const currentJetonQuantity = amount;
+    const professionalUuid = localStorage.setItem(
+      'professional-uuid',
+      JSON.stringify(currentProfile?.uuid)
+    );
 
     if (!currentProfile?.uuid) {
       console.error('❌ No professional profile found');
@@ -27,10 +31,10 @@ export const usePaiementJeton = () => {
       localStorage.setItem('jeton-quantity', JSON.stringify(currentJetonQuantity));
       // === APPEL API STRIPE ===
       const { data } = await axios.post(
-        `${config.public.apiUrl}/payments/token/${currentProfile.uuid}`,
+        `${config.public.apiUrl}/payments/token/${professionalUuid}`,
         {
           quantity: amount,
-          professional_uuid: currentProfile.uuid,
+          professional_uuid: professionalUuid,
         },
         {
           headers: {
