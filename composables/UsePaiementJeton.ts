@@ -16,12 +16,8 @@ export const usePaiementJeton = () => {
 
   const createTokenSession = async (amount: number) => {
     const currentProfile = professionalUser.value;
-    console.log(
-      currentProfile?.uuid?.replace(/[""]/g, ''),
-      'currentProfile.uuid in createTokenSession'
-    );
-
     const currentJetonQuantity = amount;
+
     localStorage.setItem('professional-uuid', currentProfile?.uuid?.replace(/[""]/g, '') || '');
 
     if (!currentProfile?.uuid) {
