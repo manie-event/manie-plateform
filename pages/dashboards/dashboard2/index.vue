@@ -11,7 +11,14 @@ import UpcommingSchedule from '@/components/dashboards/dashboard2/UpcommingSched
 import WelcomeCard from '@/components/dashboards/dashboard2/WelcomeCard.vue';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
 const userStore = useUserStore();
-const { isProfessionalProfileCreated, user } = storeToRefs(userStore);
+const { isProfessionalProfileCreated } = storeToRefs(userStore);
+const { getUserProfileDetails } = useUserProfile();
+
+onMounted(() => {
+  if (isProfessionalProfileCreated.value) {
+    getUserProfileDetails();
+  }
+});
 </script>
 
 <template>

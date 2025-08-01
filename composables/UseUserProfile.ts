@@ -66,6 +66,8 @@ export const useUserProfile = () => {
         }
       );
       if (data) {
+        console.log(data, 'data in getUserProfileDetails');
+
         setProfessionalUser(data);
         return data;
       }

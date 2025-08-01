@@ -37,10 +37,20 @@
             sm="3"
             class="d-flex align-center justify-center justify-sm-end order-sm-third"
           >
-            <div class="">
-              <v-btn color="primary" size="large" @click="openEditProfilModal()"
-                >Editez votre profil</v-btn
-              >
+            <div class="d-flex flex-column justify-center align-center gap-4">
+              <div>
+                <v-btn color="primary" size="large" class="w-100" @click="openEditProfilModal()"
+                  >Editez votre profil</v-btn
+                >
+              </div>
+              <div v-if="isProfessionalProfileCreated">
+                <v-btn
+                  class="profile-banner-redirection-bouton"
+                  size="large"
+                  to="/dashboards/dashboard2"
+                  >Revenir à mon dashboard</v-btn
+                >
+              </div>
             </div>
           </v-col>
         </v-row>
@@ -83,7 +93,7 @@ import UserImage from '/images/profile/user6.jpg';
 const tab = ref(null);
 const openModal = ref(false);
 
-const { user } = storeToRefs(useUserStore());
+const { user, isProfessionalProfileCreated } = storeToRefs(useUserStore());
 
 const items = shallowRef([
   { tab: 'My Profile', icon: UserCircleIcon, href: '/apps/userprofile/one' },
@@ -145,6 +155,11 @@ const openEditProfilModal = () => {
       }
     }
   }
+}
+
+.profile-banner-redirection-bouton {
+  background: rgb(59, 182, 150);
+  color: white;
 }
 
 .plus {

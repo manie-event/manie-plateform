@@ -35,8 +35,12 @@ const getCategory = computed(() => {
   }
 });
 
+const { getUserProfileDetails } = useUserProfile();
+
 onMounted(() => {
-  getProfessionalUserInfo;
+  if (isProfessionalProfileCreated.value) {
+    getUserProfileDetails();
+  }
 });
 </script>
 
