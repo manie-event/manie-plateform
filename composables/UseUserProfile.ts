@@ -6,7 +6,6 @@ export const useUserProfile = () => {
   const token = useCookie('token');
   const userStore = useUserStore();
   const { setProfessionalUser } = userStore;
-  const { professionalUser } = storeToRefs(userStore);
   const config = useRuntimeConfig();
   const professionalUuid = localStorage.getItem('professional-uuid');
 

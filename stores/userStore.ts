@@ -17,11 +17,12 @@ export const useUserStore = defineStore('userStore', () => {
   const setProfessionalUser = (newProfessionalUser: ProfessionalProfile) => {
     professionalUser.value = {
       ...newProfessionalUser,
+      uuid: newProfessionalUser.uuid?.replace(/[""]/g, '') || '',
       category: 'professional',
     };
+    console.log(professionalUser.value.uuid, 'professionalUser.value in setProfessionalUser');
 
-    const cleanUuid = professionalUser.value.uuid?.replace(/[""]/g, '');
-    localStorage.setItem('professional-uuid', cleanUuid || '');
+    localStorage.setItem('professional-uuid', professionalUser.value.uuid || '');
     isProfessionalProfileCreated.value = true;
   };
 
