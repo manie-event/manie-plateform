@@ -7,7 +7,6 @@ import { useAuthentification } from '../../../../composables/UseAuthentification
 
 const userStore = useUserStore();
 const { user, professionalUser, isProfessionalProfileCreated } = storeToRefs(userStore);
-const { getProfessionalUserInfo } = userStore;
 const { sendLogout } = useAuthentification();
 const { userTokenBalance } = storeToRefs(useCartStore());
 

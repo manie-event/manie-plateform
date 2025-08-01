@@ -2,11 +2,7 @@
 import JetonImg from '@/public/images/panier/jeton.png';
 import { Icon } from '@iconify/vue';
 
-const cartStore = useCartStore();
-// const { setJetonAmount } = cartStore;
 const { createTokenSession } = usePaiementJeton();
-const { isProfessionalProfileCreated } = storeToRefs(useUserStore());
-
 const jetonAmount = ref(0);
 const stickyHeader = ref(false);
 

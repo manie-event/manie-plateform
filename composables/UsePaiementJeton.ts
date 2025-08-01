@@ -1,5 +1,6 @@
 import { loadStripe } from '@stripe/stripe-js';
 import axios from 'axios';
+import type { ProfessionalProfile } from '../models/user/UserModel';
 
 export const usePaiementJeton = () => {
   const token = useCookie('token');
@@ -23,7 +24,6 @@ export const usePaiementJeton = () => {
     }
 
     try {
-      localStorage.setItem('userStore-professional', JSON.stringify(currentProfile));
       localStorage.setItem('jeton-quantity', JSON.stringify(currentJetonQuantity));
       // === APPEL API STRIPE ===
       const { data } = await axios.post(
@@ -42,43 +42,10 @@ export const usePaiementJeton = () => {
 
       if (data && data.url) {
         window.location.href = data.url;
+        return data;
       }
     } catch (error) {
       throw error;
-    }
-  };
-
-  const restoreAfterStripe = async () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const isStripeReturn =
-      urlParams.has('session_id') || urlParams.has('payment_intent') || route.query.success;
-
-    if (isStripeReturn) {
-      const localBackup = localStorage.getItem('userStore-professional');
-      const purchasedTokens = localStorage.getItem('jeton-quantity');
-      if (localBackup) {
-        try {
-          const restored = JSON.parse(localBackup);
-          if (purchasedTokens) {
-            const tokensToPurchase = JSON.parse(purchasedTokens);
-
-            creditTokensAfterPayment(tokensToPurchase);
-            if (restored.uuid) {
-              userStore.setProfessionalUser(restored);
-
-              await createJeton(tokensToPurchase, restored.uuid);
-
-              return restored;
-            }
-          }
-        } catch (e) {
-          console.warn('LocalStorage restore failed:', e);
-        }
-      }
-
-      console.error('❌ All restore attempts failed');
-    } else {
-      console.log('✅ Profile déjà présent, aucun besoin restock ');
     }
   };
 
@@ -98,7 +65,6 @@ export const usePaiementJeton = () => {
         }
       );
       if (data) {
-        localStorage.removeItem('jeton-balance');
         localStorage.removeItem('jeton-quantity');
         return data;
       }
@@ -107,38 +73,62 @@ export const usePaiementJeton = () => {
     }
   };
 
-  // const verifyPayment = async (session_id: string) => {
-  //   console.log(session_id, 'session_id');
+  const restoreAfterStripe = async (ProfessionalProfile: ProfessionalProfile) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const isStripeReturn =
+      urlParams.has('session_id') || urlParams.has('payment_intent') || route.query.success;
 
-  //   try {
-  //     loading.value = true;
+    if (isStripeReturn) {
+      const purchasedTokens = localStorage.getItem('jeton-quantity');
+      try {
+        if (purchasedTokens) {
+          const tokensToPurchase = JSON.parse(purchasedTokens);
 
-  //     const { data } = await axios.get(
-  //       `${config.public.apiUrl}/payments/session-status/${session_id}`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token.value}`,
-  //           'Content-Type': 'application/json',
-  //         },
-  //       }
-  //     );
+          creditTokensAfterPayment(tokensToPurchase);
+          if (ProfessionalProfile.uuid) {
+            await createJeton(tokensToPurchase, ProfessionalProfile.uuid);
+          }
+        }
+      } catch (e) {
+        console.warn('LocalStorage restore failed:', e);
+      }
+      console.error('❌ All restore attempts failed');
+    } else {
+      console.log('✅ Profile déjà présent, aucun besoin restock ');
+    }
 
-  //     if (data.success) {
-  //       console.log(data);
-  //       paymentVerified.value = true;
-  //       paymentData.value = data.session;
-  //       console.log(paymentData.value, 'paymentData');
-  //     } else {
-  //       messageError.value = data.error || 'Échec de la vérification';
-  //     }
-  //   } catch (error) {
-  //     console.error('Erreur lors de la vérification:', error);
-  //     messageError.value = 'Erreur de communication avec le serveur';
-  //   } finally {
-  //     loading.value = false;
-  //   }
-  // };
+    // const verifyPayment = async (session_id: string) => {
+    //   console.log(session_id, 'session_id');
 
+    //   try {
+    //     loading.value = true;
+
+    //     const { data } = await axios.get(
+    //       `${config.public.apiUrl}/payments/session-status/${session_id}`,
+    //       {
+    //         headers: {
+    //           Authorization: `Bearer ${token.value}`,
+    //           'Content-Type': 'application/json',
+    //         },
+    //       }
+    //     );
+
+    //     if (data.success) {
+    //       console.log(data);
+    //       paymentVerified.value = true;
+    //       paymentData.value = data.session;
+    //       console.log(paymentData.value, 'paymentData');
+    //     } else {
+    //       messageError.value = data.error || 'Échec de la vérification';
+    //     }
+    //   } catch (error) {
+    //     console.error('Erreur lors de la vérification:', error);
+    //     messageError.value = 'Erreur de communication avec le serveur';
+    //   } finally {
+    //     loading.value = false;
+    //   }
+    // };
+  };
   return {
     createTokenSession,
     restoreAfterStripe,

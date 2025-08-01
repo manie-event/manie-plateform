@@ -7,26 +7,6 @@ export const useUserStore = defineStore('userStore', () => {
   const user = ref<User>();
 
   const professionalUser = ref<ProfessionalProfile>();
-  // const professionalUser = useLocalStorage<ProfessionalProfile>('userStore-professional', {
-  //   name: '',
-  //   uuid: '',
-  //   userUuid: '',
-  //   siret: '',
-  //   address: '',
-  //   bio: '',
-  //   mainActivity: '',
-  //   mainInterlocutor: '',
-  //   experience: 0,
-  //   category: '',
-  //   geographicArea: '',
-  //   faq: {},
-  //   minimumBenefit: 0,
-  //   minimumReservationPeriod: 0,
-  //   deposit: false,
-  //   depositAmount: 0,
-  //   billingPeriod: '',
-  //   links: [],
-  // });
   const isProfessionalProfileCreated = useLocalStorage('pp-created', false);
   const isConsumerProfileAccepted = ref(false);
   const isStoringUserAccepeted = ref(false);
@@ -40,7 +20,7 @@ export const useUserStore = defineStore('userStore', () => {
       category: 'professional',
     };
     console.log(professionalUser.value, 'professionalUser.value in setProfessionalUser');
-
+    localStorage.setItem('professional-uuid', JSON.stringify(professionalUser.value.uuid));
     isProfessionalProfileCreated.value = true;
   };
 

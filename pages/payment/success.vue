@@ -1,3 +1,4 @@
+import { ProfessionalProfile } from '../../models/user/UserModel';
 <template>
   <div class="success-container">
     <div class="success-card">
@@ -31,6 +32,8 @@ definePageMeta({
 const route = useRoute();
 const router = useRouter();
 const sessionId = computed(() => route.query.session_id);
+const userStore = useUserStore();
+const { ProfessionalProfile } = storeToRefs(userStore);
 
 // Fonctions utilitaires
 const formatAmount = (amount, currency) => {
@@ -45,8 +48,11 @@ useHead({
   title: 'Paiement réussi - Manie Event',
   meta: [{ name: 'robots', content: 'noindex, nofollow' }],
 });
-onMounted(() => {
-  usePaiementJeton().restoreAfterStripe();
+onMounted(async () => {
+  await useUserProfile().getUserProfileDetails();
+  if (ProfessionalProfile.value) {
+    await usePaiementJeton().restoreAfterStripe(ProfessionalProfile.value?.uuid);
+  }
 });
 </script>
 

@@ -4,7 +4,9 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 export const useCartStore = defineStore('cartStore', () => {
-  const userTokenBalance = useLocalStorage<number>('jeton-balance', 0);
+  const userTokenBalance = ref<number>(0);
+
+  // const userTokenBalance = useLocalStorage<number>('jeton-balance', 0);
   const cartQuantity = useLocalStorage<number>('jeton-quantity', 0);
   const addresses = ref<BillingInfo[]>([]);
 
