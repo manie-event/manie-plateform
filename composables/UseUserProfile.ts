@@ -49,18 +49,38 @@ export const useUserProfile = () => {
     }
   };
 
+  const debugAuth = async () => {
+    console.log('=== DEBUG AUTH ===');
+    console.log('1. Token from cookie:', token.value);
+    console.log('2. Token length:', token.value?.length);
+    console.log('3. Professional UUID:', localStorage.getItem('professional-uuid'));
+
+    // Test direct avec curl ou Postman
+    console.log('4. Test this curl command:');
+    console.log(
+      `curl -H "Authorization: Bearer ${token.value}" ${config.public.apiUrl}/professional/${localStorage.getItem('professional-uuid')}`
+    );
+
+    // Test de la validité du token
+    if (token.value) {
+      try {
+        const payload = JSON.parse(atob(token.value.split('.')[1]));
+        console.log('5. Token payload:', payload);
+        console.log('6. Token expires:', new Date(payload.exp * 1000));
+      } catch (e) {
+        console.log('5. Error parsing token:', e);
+      }
+    }
+  };
+
   const getUserProfileDetails = async () => {
     const professionalUuid = localStorage.getItem('professional-uuid');
-    console.log(professionalUuid, 'professionalUuid in getUserProfileDetails');
-    console.log(token.value, 'token.value in getUserProfileDetails');
 
     try {
-      const { data } = await axios.get(`${config.public.apiUrl}/professional/${professionalUuid}`, {
-        headers: {
-          Authorization: `Bearer ${token.value}`,
-          'Content-Type': 'application/json',
-        },
-      });
+      console.log('Token from cookie:', token.value);
+      console.log('Professional UUID:', professionalUuid);
+
+      const { data } = await axios.get(`${config.public.apiUrl}/professional/${professionalUuid}`);
       if (data) {
         console.log(data, 'data in getUserProfileDetails');
 
@@ -76,5 +96,6 @@ export const useUserProfile = () => {
     updateProfessionalProfile,
     getUserProfile,
     getUserProfileDetails,
+    debugAuth,
   };
 };

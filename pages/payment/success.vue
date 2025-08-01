@@ -34,6 +34,7 @@ const router = useRouter();
 const sessionId = computed(() => route.query.session_id);
 const userStore = useUserStore();
 const { ProfessionalProfile } = storeToRefs(userStore);
+const { debugAuth, getUserProfileDetails } = useUserProfile();
 
 // Fonctions utilitaires
 const formatAmount = (amount, currency) => {
@@ -49,7 +50,8 @@ useHead({
   meta: [{ name: 'robots', content: 'noindex, nofollow' }],
 });
 onMounted(async () => {
-  await useUserProfile().getUserProfileDetails();
+  await debugAuth();
+  await getUserProfileDetails();
   if (ProfessionalProfile.value) {
     await usePaiementJeton().restoreAfterStripe(ProfessionalProfile.value?.uuid);
   }
