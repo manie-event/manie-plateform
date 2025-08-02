@@ -47,7 +47,7 @@
                 <v-btn
                   class="profile-banner-redirection-bouton"
                   size="large"
-                  to="/dashboards/dashboard2"
+                  @click="useKeywords().getKeywords('food')"
                   >Revenir à mon dashboard</v-btn
                 >
               </div>

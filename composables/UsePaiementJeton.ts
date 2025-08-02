@@ -4,13 +4,11 @@ import type { ProfessionalProfile } from '../models/user/UserModel';
 
 export const usePaiementJeton = () => {
   const token = useCookie('token');
-  const router = useRouter();
   const route = useRoute();
   const config = useRuntimeConfig();
   const userStore = useUserStore();
   const { professionalUser } = storeToRefs(userStore);
   const cartStore = useCartStore();
-  const { userTokenBalance } = storeToRefs(cartStore);
   const { creditTokensAfterPayment } = cartStore;
   loadStripe(config.public.tokenStripe);
 
@@ -19,7 +17,7 @@ export const usePaiementJeton = () => {
     const currentJetonQuantity = amount;
 
     localStorage.setItem('professional-uuid', currentProfile?.uuid?.replace(/[""]/g, '') || '');
-
+    localStorage.setItem('token-session', token.value || '');
     if (!currentProfile?.uuid) {
       console.error('❌ No professional profile found');
       return;
@@ -46,7 +44,13 @@ export const usePaiementJeton = () => {
         window.location.href = data.url;
         return data;
       }
-    } catch (error) {
+    } catch (error: any) {
+      console.log('=== ERROR DETAILS ===');
+      console.log('Error message:', error.message);
+      console.log('Error status:', error.response?.status);
+      console.log('Error headers:', error.response?.headers);
+      console.log('Error data:', error.response?.data);
+      console.log('Request that failed:', error.config);
       throw error;
     }
   };

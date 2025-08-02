@@ -80,7 +80,12 @@ export const useUserProfile = () => {
       console.log('Token from cookie:', token.value);
       console.log('Professional UUID:', professionalUuid);
 
-      const { data } = await axios.get(`${config.public.apiUrl}/professional/${professionalUuid}`);
+      const { data } = await axios.get(`${config.public.apiUrl}/professional/${professionalUuid}`, {
+        headers: {
+          Authorization: `Bearer ${token.value}`,
+          'Content-Type': 'application/json',
+        },
+      });
       if (data) {
         console.log(data, 'data in getUserProfileDetails');
 
