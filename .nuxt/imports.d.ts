@@ -186,6 +186,7 @@ export {
 export { isVue2, isVue3 } from 'vue-demi';
 export { onBeforeRouteLeave, onBeforeRouteUpdate, useLink } from 'vue-router';
 export { useAuthentification } from '../composables/UseAuthentification';
+export { useProfessionalService } from '../composables/UseKeywords';
 export { usePaiementJeton } from '../composables/UsePaiementJeton';
 export { useProfessionalService as useKeywords } from '../composables/UseProfessionalService';
 export { useUserProfile } from '../composables/UseUserProfile';
