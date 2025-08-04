@@ -1,8 +1,13 @@
 <script setup lang="ts">
+import errorToaster from '@/components/common/errorToaster.vue';
 import type { ContactMessage } from '@/models/contact/contactMessage';
 import { ref } from 'vue';
+import { useContactService } from '~/services/useContactService';
+
 const select = ref();
 const items = ref(['Question générale', 'Demande de rendez-vous', 'option 3', 'option 4']);
+
+const { sendContactForm } = useContactService();
 
 const message = ref<ContactMessage>({
   firstName: '',
@@ -118,7 +123,7 @@ const message = ref<ContactMessage>({
                     flat
                     href=""
                     target="_blank"
-                    @click.prevent="console.log(message)"
+                    @click="sendContactForm(message)"
                     >Envoyez votre message</v-btn
                   >
                 </v-col>
@@ -128,5 +133,9 @@ const message = ref<ContactMessage>({
         </v-col>
       </v-row>
     </v-container>
+    <Teleport to="body">
+      <errorToaster />
+      <CommonSuccessToaster></CommonSuccessToaster>
+    </Teleport>
   </div>
 </template>

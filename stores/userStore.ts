@@ -2,6 +2,8 @@ import type { ProfessionalProfile, User } from '@/models/user/UserModel';
 import { useLocalStorage } from '@vueuse/core';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
+import type { Keywords } from '~/models/professionalServices/Keywords';
+import type { Services } from '~/models/professionalServices/Services';
 
 export const useUserStore = defineStore('userStore', () => {
   const user = ref<User>();
@@ -10,6 +12,8 @@ export const useUserStore = defineStore('userStore', () => {
   const isProfessionalProfileCreated = useLocalStorage('pp-created', false);
   const isConsumerProfileAccepted = ref(false);
   const isStoringUserAccepeted = ref(false);
+  const professionnalServices = ref<Services[]>([]);
+  const keywords = ref<Keywords[]>([]);
 
   const setUser = (userData: User) => {
     user.value = userData;
@@ -30,14 +34,26 @@ export const useUserStore = defineStore('userStore', () => {
     isStoringUserAccepeted.value = accepted;
   };
 
+  const setProfessionalServices = (services: Services[]) => {
+    professionnalServices.value = services;
+  };
+
+  const setKeywords = (newKeywords: Keywords[]) => {
+    keywords.value.push(...newKeywords);
+  };
+
   return {
     user,
+    keywords,
     professionalUser,
     isProfessionalProfileCreated,
+    professionnalServices,
     isConsumerProfileAccepted,
     isStoringUserAccepeted,
     setUserAccepted,
     setUser,
     setProfessionalUser,
+    setProfessionalServices,
+    setKeywords,
   };
 });

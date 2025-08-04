@@ -89,6 +89,9 @@ export const useAuthentification = () => {
     }
   };
 
+  // Création d'évènement client
+  // Faut proposer au client des services pro qu'on a uniquement en BDD
+
   const registerNewPassword = async (registerPassword: registerNewPasswordModel) => {
     try {
       const { data } = await axios.post(

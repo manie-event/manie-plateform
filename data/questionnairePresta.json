@@ -1,0 +1,654 @@
+[
+  {
+    "sector": "food",
+    "general": {
+      "questions": [
+        {
+          "id": "food-general-1",
+          "question": "Vous êtes ?",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "services": "VOTRE OFFRE",
+    "servicesSection": {
+      "questions": [
+        {
+          "id": "food-keywords-1",
+          "question": "Quel type de cuisine proposez-vous ?  ",
+          "category": "cuisines",
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "food-keywords-1",
+          "question": "Quel(s) format(s) de prestations assurez-vous ? ",
+          "category": "format",
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "food-keywords-2",
+          "question": "Propositions sucrées : ",
+          "category": "sucré",
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "food-keywords-3",
+          "question": "Propositions salées : ",
+          "category": "salé",
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "food-keywords-4",
+          "question": "Vos options : ",
+          "category": "régimes",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "habitudes": "VOS HABITUDES ",
+    "habitudesSection": {
+      "questions": [
+        {
+          "id": "food-keywords-1",
+          "question": "Quelles sont vos habitudes en matière d'éco-responsabilité ?  ",
+          "category": "écoresp-food",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    }
+  },
+  {
+    "sector": "lieux",
+    "general": {
+      "questions": [
+        {
+          "id": "lieux-general-1",
+          "question": "vous proposez ?",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "services": "VOTRE OFFRE",
+    "servicesSection": {
+      "questions": [
+        {
+          "id": "food-keywords-1",
+          "question": "Dans quel environement ? ",
+          "category": "environnement",
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "food-keywords-2",
+          "question": "Mon lieu est accessible : ",
+          "category": "accessibilité",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "food-keywords-3",
+          "question": "Quelles prestations sont imposées à vos clients ? ",
+          "category": "prestations imposées",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "food-keywords-4",
+          "question": "Vous proposez une privatisation : ",
+          "category": "privatisation",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "food-keywords-4",
+          "question": "Quel(s) espaces peuvent-ils y trouver ? ",
+          "category": "espaces",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "food-keywords-4",
+          "question": "Quels équipements sont à leur disposition ? ",
+          "category": "équipements",
+
+          "type": "checkbox",
+          "required": true
+        },
+
+        {
+          "id": "food-keywords-4",
+          "question": "Quels options proposez-vous ? ",
+          "category": "options",
+
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "habitudes": "VOS HABITUDES ",
+    "habitudesSection": {}
+  },
+  {
+    "sector": "boisson",
+    "general": {
+      "questions": [
+        {
+          "id": "boisson-general-1",
+          "question": "Vous êtes ?",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "services": "VOTRE OFFRE",
+    "servicesSection": {
+      "questions": [
+        {
+          "id": "food-keywords-1",
+          "question": "Quelle boisson proposez-vous ? ",
+          "category": "type",
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "food-keywords-2",
+          "question": "Quel matériel proposez-vous ? ",
+          "category": "matériel",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "food-keywords-3",
+          "question": "Quels options proposez-vous ? ",
+          "category": "options",
+
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "habitudes": "VOS HABITUDES ",
+    "habitudesSection": {}
+  },
+  {
+    "sector": "service",
+    "general": {
+      "questions": [
+        {
+          "id": "service-general-1",
+          "question": "Vous êtes ?",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "services": "VOTRE OFFRE",
+    "servicesSection": {
+      "questions": [
+        {
+          "id": "service-keywords-1",
+          "question": "Quelle(s) préstation(s) proposez-vous ? ",
+          "category": "serveur",
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "service-keywords-1",
+          "question": "Quel(s) matériel(s) fournissez-vous sur une prestation ? ",
+          "category": "matériel serveur",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "habitudes": "VOS HABITUDES ",
+    "habitudesSection": {
+      "questions": [
+        {
+          "id": "food-keywords-1",
+          "question": "Quelles sont vos habitudes en matière d'éco-responsabilité ?  ",
+          "category": "écoresp-food",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    }
+  },
+  {
+    "sector": "musique",
+    "general": {
+      "questions": [
+        {
+          "id": "musique-general-1",
+          "question": "Vous êtes ?",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "services": "VOTRE OFFRE",
+    "servicesSection": {
+      "questions": [
+        {
+          "id": "musique-keywords-1",
+          "question": "Quelle service proposez-vous ? ",
+          "category": "type",
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "musique-keywords-2",
+          "question": "Quel matériel proposez-vous ? ",
+          "category": "matériel",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "musique-keywords-3",
+          "question": "Quels options proposez-vous ? ",
+          "category": "options",
+
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "habitudes": "VOS HABITUDES ",
+    "habitudesSection": {
+      "questions": [
+        {
+          "id": "food-keywords-1",
+          "question": "Quelles sont vos habitudes en matière d'éco-responsabilité ?  ",
+          "category": "écoresp-food",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    }
+  },
+  {
+    "sector": "service",
+    "general": {
+      "questions": [
+        {
+          "id": "service-general-1",
+          "question": "Vous êtes ?",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "services": "VOTRE OFFRE",
+    "servicesSection": {
+      "questions": [
+        {
+          "id": "food-keywords-1",
+          "question": "Quelle boisson proposez-vous ? ",
+          "category": "type",
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "food-keywords-2",
+          "question": "Quel matériel proposez-vous ? ",
+          "category": "matériel",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "food-keywords-3",
+          "question": "Quels options proposez-vous ? ",
+          "category": "options",
+
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "habitudes": "VOS HABITUDES ",
+    "habitudesSection": {
+      "questions": [
+        {
+          "id": "food-keywords-1",
+          "question": "Quelles sont vos habitudes en matière d'éco-responsabilité ?  ",
+          "category": "écoresp-food",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    }
+  },
+  {
+    "sector": "boisson",
+    "general": {
+      "questions": [
+        {
+          "id": "boisson-general-1",
+          "question": "Vous êtes ?",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "services": "VOTRE OFFRE",
+    "servicesSection": {
+      "questions": [
+        {
+          "id": "food-keywords-1",
+          "question": "Quelle boisson proposez-vous ? ",
+          "category": "type",
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "food-keywords-2",
+          "question": "Quel matériel proposez-vous ? ",
+          "category": "matériel",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "food-keywords-3",
+          "question": "Quels options proposez-vous ? ",
+          "category": "options",
+
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "habitudes": "VOS HABITUDES ",
+    "habitudesSection": {
+      "questions": [
+        {
+          "id": "food-keywords-1",
+          "question": "Quelles sont vos habitudes en matière d'éco-responsabilité ?  ",
+          "category": "écoresp-food",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    }
+  },
+  {
+    "sector": "boisson",
+    "general": {
+      "questions": [
+        {
+          "id": "boisson-general-1",
+          "question": "Vous êtes ?",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "services": "VOTRE OFFRE",
+    "servicesSection": {
+      "questions": [
+        {
+          "id": "food-keywords-1",
+          "question": "Quelle boisson proposez-vous ? ",
+          "category": "type",
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "food-keywords-2",
+          "question": "Quel matériel proposez-vous ? ",
+          "category": "matériel",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "food-keywords-3",
+          "question": "Quels options proposez-vous ? ",
+          "category": "options",
+
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "habitudes": "VOS HABITUDES ",
+    "habitudesSection": {
+      "questions": [
+        {
+          "id": "food-keywords-1",
+          "question": "Quelles sont vos habitudes en matière d'éco-responsabilité ?  ",
+          "category": "écoresp-food",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    }
+  },
+  {
+    "sector": "boisson",
+    "general": {
+      "questions": [
+        {
+          "id": "boisson-general-1",
+          "question": "Vous êtes ?",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "services": "VOTRE OFFRE",
+    "servicesSection": {
+      "questions": [
+        {
+          "id": "food-keywords-1",
+          "question": "Quelle boisson proposez-vous ? ",
+          "category": "type",
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "food-keywords-2",
+          "question": "Quel matériel proposez-vous ? ",
+          "category": "matériel",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "food-keywords-3",
+          "question": "Quels options proposez-vous ? ",
+          "category": "options",
+
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "habitudes": "VOS HABITUDES ",
+    "habitudesSection": {
+      "questions": [
+        {
+          "id": "food-keywords-1",
+          "question": "Quelles sont vos habitudes en matière d'éco-responsabilité ?  ",
+          "category": "écoresp-food",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    }
+  },
+  {
+    "sector": "boisson",
+    "general": {
+      "questions": [
+        {
+          "id": "boisson-general-1",
+          "question": "Vous êtes ?",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "services": "VOTRE OFFRE",
+    "servicesSection": {
+      "questions": [
+        {
+          "id": "food-keywords-1",
+          "question": "Quelle boisson proposez-vous ? ",
+          "category": "type",
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "food-keywords-2",
+          "question": "Quel matériel proposez-vous ? ",
+          "category": "matériel",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "food-keywords-3",
+          "question": "Quels options proposez-vous ? ",
+          "category": "options",
+
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "habitudes": "VOS HABITUDES ",
+    "habitudesSection": {
+      "questions": [
+        {
+          "id": "food-keywords-1",
+          "question": "Quelles sont vos habitudes en matière d'éco-responsabilité ?  ",
+          "category": "écoresp-food",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    }
+  },
+  {
+    "sector": "boisson",
+    "general": {
+      "questions": [
+        {
+          "id": "boisson-general-1",
+          "question": "Vous êtes ?",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "services": "VOTRE OFFRE",
+    "servicesSection": {
+      "questions": [
+        {
+          "id": "food-keywords-1",
+          "question": "Quelle boisson proposez-vous ? ",
+          "category": "type",
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "food-keywords-2",
+          "question": "Quel matériel proposez-vous ? ",
+          "category": "matériel",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "food-keywords-3",
+          "question": "Quels options proposez-vous ? ",
+          "category": "options",
+
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "habitudes": "VOS HABITUDES ",
+    "habitudesSection": {
+      "questions": [
+        {
+          "id": "food-keywords-1",
+          "question": "Quelles sont vos habitudes en matière d'éco-responsabilité ?  ",
+          "category": "écoresp-food",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    }
+  },
+  {
+    "sector": "boisson",
+    "general": {
+      "questions": [
+        {
+          "id": "boisson-general-1",
+          "question": "Vous êtes ?",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "services": "VOTRE OFFRE",
+    "servicesSection": {
+      "questions": [
+        {
+          "id": "food-keywords-1",
+          "question": "Quelle boisson proposez-vous ? ",
+          "category": "type",
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "food-keywords-2",
+          "question": "Quel matériel proposez-vous ? ",
+          "category": "matériel",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "food-keywords-3",
+          "question": "Quels options proposez-vous ? ",
+          "category": "options",
+
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "habitudes": "VOS HABITUDES ",
+    "habitudesSection": {
+      "questions": [
+        {
+          "id": "food-keywords-1",
+          "question": "Quelles sont vos habitudes en matière d'éco-responsabilité ?  ",
+          "category": "écoresp-food",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    }
+  }
+]
