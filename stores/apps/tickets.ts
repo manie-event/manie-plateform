@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia';
 // project imports
 import axios from '@/utils/axios';
-import { map } from 'lodash';
 
 interface TicketType {
   Id?: number | any;
@@ -33,10 +32,8 @@ export const useTicketstore = defineStore({
       try {
         const data = await axios.get('/api/data/tickets/TicketData');
         this.ticket = data.data;
-        console.log(data);
       } catch (error) {
         alert(error);
-        console.log(error);
       }
     },
 

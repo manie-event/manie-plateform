@@ -64,24 +64,33 @@ const profileDD: profileType[] = [
   {
     avatar: 'wallet-2-line-duotone',
     bgcolor: 'info',
-    title: 'My Profile',
-    subtitle: 'Account settings',
+    title: 'Mon Profil',
+    subtitle: 'Votre page de profil',
     href: '/apps/userprofile/one',
+    requiresProfile: false,
   },
   {
-    avatar: 'shield-minimalistic-line-duotone',
-    bgcolor: 'success',
-    title: 'My Notes',
-    subtitle: 'My Daily Notes',
-    href: '/apps/notes',
+    avatar: 'wallet-2-line-duotone',
+    bgcolor: 'info',
+    title: 'Mon portefeuille de jeton(s)',
+    subtitle: 'jeton(s)',
+    href: '',
+    requiresProfile: true,
   },
-  {
-    avatar: 'card-2-line-duotone',
-    bgcolor: 'error',
-    title: 'My Tasks',
-    subtitle: 'To-do and Daily tasks',
-    href: '/apps/kanban',
-  },
+  // {
+  //   avatar: 'shield-minimalistic-line-duotone',
+  //   bgcolor: 'success',
+  //   title: 'My Notes',
+  //   subtitle: 'My Daily Notes',
+  //   href: '/apps/notes',
+  // },
+  // {
+  //   avatar: 'card-2-line-duotone',
+  //   bgcolor: 'error',
+  //   title: 'My Tasks',
+  //   subtitle: 'To-do and Daily tasks',
+  //   href: '/apps/kanban',
+  // },
 ];
 
 //

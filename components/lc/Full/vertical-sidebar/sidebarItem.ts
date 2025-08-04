@@ -1,5 +1,3 @@
-import { JumpRopeIcon } from 'vue-tabler-icons';
-
 export interface menu {
   header?: string;
   title?: string;
@@ -277,72 +275,6 @@ const sidebarItem: menu[] = [
         to: '/widgets/charts',
       },
     ],
-  },
-
-  { header: 'School Pages' },
-  {
-    title: 'Teachers',
-    icon: 'square-academic-cap-linear',
-    to: '',
-    BgColor: 'success',
-    children: [
-      {
-        title: 'All Teachers',
-        to: '/school-pages/teachers',
-      },
-      {
-        title: 'Teachers Details',
-        to: '/school-pages/teachers/details',
-      },
-    ],
-  },
-  {
-    title: 'Exam',
-    icon: 'notebook-minimalistic-outline',
-    to: '',
-    BgColor: 'warning',
-    children: [
-      {
-        title: 'Exam Schedule',
-        to: '/school-pages/exam/schedule',
-      },
-      {
-        title: 'Exam Result',
-        to: '/school-pages/exam/result',
-      },
-      {
-        title: 'Exam Result Details',
-        to: '/school-pages/exam/result-details',
-      },
-    ],
-  },
-  {
-    title: 'Students',
-    icon: 'case-broken',
-    to: '',
-    BgColor: 'error',
-    children: [
-      {
-        title: 'All Students',
-        to: '/school-pages/students',
-      },
-      {
-        title: 'Students Details',
-        to: '/school-pages/students/details',
-      },
-    ],
-  },
-  {
-    title: 'Classes',
-    icon: 'smart-home-broken',
-    BgColor: 'indigo',
-    to: '/school-pages/classes',
-  },
-  {
-    title: 'Attendance',
-    icon: 'diploma-linear',
-    BgColor: 'info',
-    to: '/school-pages/attendance',
   },
   { header: 'UI' },
   {
@@ -641,7 +573,7 @@ const sidebarItem: menu[] = [
       },
       {
         title: 'Boxed Login',
-        to: '/auth/login2',
+        to: '/auth/login',
       },
     ],
   },
@@ -653,7 +585,7 @@ const sidebarItem: menu[] = [
     children: [
       {
         title: 'Side Register',
-        to: '/auth/register2',
+        to: '/auth/register',
       },
       {
         title: 'Boxed Register',
@@ -673,7 +605,7 @@ const sidebarItem: menu[] = [
       },
       {
         title: 'Boxed Forgot Password',
-        to: '/auth/forgot-password2',
+        to: '/auth/forgot-password',
       },
     ],
   },
@@ -689,7 +621,7 @@ const sidebarItem: menu[] = [
       },
       {
         title: 'Boxed Two Steps',
-        to: '/auth/two-step2',
+        to: '/auth/two-step',
       },
     ],
   },

@@ -4,9 +4,13 @@ import type { errorModel } from '~/models/errorModel';
 import type { RegisterModel } from '../models/authentification/registerModel';
 
 export const useAuthentification = () => {
+  const token = useCookie('token');
   const config = useRuntimeConfig();
   const router = useRouter();
   const { addError, addSuccess } = useToaster();
+  const userStore = useUserStore();
+  const { isStoringUserAccepeted } = storeToRefs(userStore);
+  const { setUser } = userStore;
 
   const sendRegister = async (registerInfo: RegisterModel): Promise<void> => {
     try {
@@ -19,19 +23,22 @@ export const useAuthentification = () => {
         return data;
       }
     } catch (error: unknown) {
-      addError(error as errorModel);
+      addError({ message: 'Veuillez vérifier que le SIRET soit valide.' });
     }
   };
 
+  // Connexion d'un nouvel utilisateur
   const sendLogin = async (authentification: AuthentificationModel) => {
     try {
       const { data } = await axios.post(`${config.public.apiUrl}/auth/login`, authentification);
 
       const tokenValue = data?.token?.token;
 
-      if (tokenValue) {
+      addSuccess('Connexion réussie.');
+
+      if (tokenValue && isStoringUserAccepeted.value) {
         const token = useCookie('token', {
-          maxAge: 60 * 60 * 24 * 30, // 30 jours
+          maxAge: 60 * 60 * 24 * 30 * 12,
           path: '/',
           sameSite: 'strict',
           secure: process.env.NODE_ENV === 'production',
@@ -39,7 +46,13 @@ export const useAuthentification = () => {
         });
 
         token.value = tokenValue;
-        return data;
+        if (data.user.category === 'consumer') {
+          setUser(data.user);
+          router.push({ path: '/dashboards/dashboard1' });
+        } else {
+          setUser(data.user);
+          router.push({ path: '/dashboards/dashboard2' });
+        }
       } else {
         throw new Error('Token non reçu du serveur');
       }
@@ -79,8 +92,14 @@ export const useAuthentification = () => {
   const registerNewPassword = async (registerPassword: registerNewPasswordModel) => {
     try {
       const { data } = await axios.post(
-        `${config.public.apiUrl}/auth/register-new-password`,
-        registerPassword
+        `${config.public.apiUrl}/auth/reset-password`,
+        registerPassword,
+        {
+          headers: {
+            Authorization: `Bearer  ${token.value}`,
+            'Content-Type': 'application/json',
+          },
+        }
       );
       if (data) {
         addSuccess('Mot de passe mis à jour avec succès.');
@@ -96,10 +115,9 @@ export const useAuthentification = () => {
 
   const sendLogout = async () => {
     try {
-      const token = useCookie('token');
       const { data } = await axios.post(`${config.public.apiUrl}/auth/logout`, null, {
         headers: {
-          Authorization: `Bearer  ${token}`,
+          Authorization: `Bearer  ${token.value}`,
           'Content-Type': 'application/json',
         },
       });

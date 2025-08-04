@@ -11,4 +11,6 @@ export const ERROR_MESSAGES = {
   'User not found or invalid': 'Utilisateur non trouvé ou invalide.',
   'The email has already been taken': "L'adresse e-mail a déjà été prise.",
   'Invalid user credentials': 'Identifiants utilisateur invalides, veuillez réessayer.',
+  'insert into "users" ("category", "created_at", "email", "password", "updated_at", "username", "uuid") values ($1, $2, $3, $4, $5, $6, $7) returning "id" - duplicate key value violates unique constraint "users_email_unique"':
+    "L'adresse e-mail est déjà utilisée, veuillez en choisir une autre.",
 };

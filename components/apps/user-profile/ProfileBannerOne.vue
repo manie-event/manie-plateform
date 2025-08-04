@@ -16,7 +16,7 @@
               </div>
               <div class="ml-sm-4 text-sm-left text-center">
                 <h5 class="text-h3 font-weight-semibold mb-1 my-sm-0 my-2">
-                  {{ user?.nomComplet ?? 'Définir votre nom complet' }}
+                  {{ user?.name ?? 'Définir votre nom complet' }}
                   <v-chip
                     color="primary"
                     class="bg-lightprimary font-weight-semibold ml-2 mt-n1"
@@ -37,10 +37,20 @@
             sm="3"
             class="d-flex align-center justify-center justify-sm-end order-sm-third"
           >
-            <div class="">
-              <v-btn color="primary" size="large" @click="openEditProfilModal()"
-                >Editez votre profil</v-btn
-              >
+            <div class="d-flex flex-column justify-center align-center gap-4">
+              <div>
+                <v-btn color="primary" size="large" class="w-100" @click="openEditProfilModal()"
+                  >Editez votre profil</v-btn
+                >
+              </div>
+              <div v-if="isProfessionalProfileCreated">
+                <v-btn
+                  class="profile-banner-redirection-bouton"
+                  size="large"
+                  @click="useKeywords().getKeywords('food')"
+                  >Revenir à mon dashboard</v-btn
+                >
+              </div>
             </div>
           </v-col>
         </v-row>
@@ -83,8 +93,7 @@ import UserImage from '/images/profile/user6.jpg';
 const tab = ref(null);
 const openModal = ref(false);
 
-const { getUserProfile } = useUserProfile();
-const { user } = storeToRefs(useUserStore());
+const { user, isProfessionalProfileCreated } = storeToRefs(useUserStore());
 
 const items = shallowRef([
   { tab: 'My Profile', icon: UserCircleIcon, href: '/apps/userprofile/one' },
@@ -96,10 +105,6 @@ const items = shallowRef([
 const openEditProfilModal = () => {
   openModal.value = !openModal.value;
 };
-
-onMounted(() => {
-  getUserProfile();
-});
 </script>
 
 <style lang="scss">
@@ -150,6 +155,11 @@ onMounted(() => {
       }
     }
   }
+}
+
+.profile-banner-redirection-bouton {
+  background: rgb(59, 182, 150);
+  color: white;
 }
 
 .plus {

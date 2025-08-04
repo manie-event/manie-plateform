@@ -1,17 +1,12 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useEcomStore } from '@/stores/apps/eCommerce';
-import CartEmpty from '../CartEmpty.vue';
-import OrderSummaryVue from './OrderSummary.vue';
+import JetonImg from '@/public/images/panier/jeton.png';
 
-const store = useEcomStore();
-const getCart = computed(() => {
-  return store.cart;
-});
+const store = useCartStore();
+const { cart, getTotalPrice, getCart } = storeToRefs(store);
 </script>
 <template>
-  <div v-if="getCart.length > 0">
-    <h5 class="text-h5 my-8">Cart Item ({{ getCart.length }})</h5>
+  <div>
+    <h5 class="text-h5 my-8">Vos nouveaux jetons ({{ cart.quantity }})</h5>
     <v-divider />
     <v-table>
       <thead>
@@ -24,49 +19,41 @@ const getCart = computed(() => {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in getCart" :key="item.name">
+        <tr>
           <td>
             <div class="d-flex align-center my-3 gap-2">
-              <img alt="product" class="rounded-md custom-img-box" :src="item.image" />
+              <img alt="product" class="rounded-md" :src="JetonImg" width="36" />
               <div class="ma-2">
-                <h6 class="text-h6">{{ item.name }}</h6>
-                <span class="text-subtitle-2">size: 8 | Color: Dark Red</span>
+                <h6 class="text-h6">{{ cart.name }}</h6>
               </div>
             </div>
           </td>
           <td>
-            <h4 class="text-h5">${{ item.salePrice }}</h4>
-            <p class="text-decoration-line-through text-medium-emphasis">${{ item.offerPrice }}</p>
+            <h4 class="text-h5">{{ cart.price }} €</h4>
           </td>
           <td>
             <v-btn-toggle variant="outlined" divided color="success">
-              <v-btn size="x-small" @click="store.decrementQty(item.id)" :disabled="item.qty < 2">
+              <v-btn size="x-small" @click="cart.quantity--" :disabled="cart.quantity < 2">
                 <MinusIcon size="18" />
               </v-btn>
 
               <v-btn size="x-small" class="text-subtitle-1">
-                {{ item.qty }}
+                {{ cart.quantity }}
               </v-btn>
 
-              <v-btn size="x-small" @click="store.incrementQty(item.id)">
+              <v-btn size="x-small" @click="cart.quantity++">
                 <PlusIcon size="18" />
               </v-btn>
             </v-btn-toggle>
           </td>
-          <td class="text-h5">${{ item.salePrice * item.qty }}</td>
-          <td class="text-right">
-            <v-btn small icon flat elevation="0"
-              ><TrashIcon size="18" class="text-error" @click="store.deleteCart(item.id)"
-            /></v-btn>
-          </td>
+          <td class="text-h5">{{ getTotalPrice }} €</td>
         </tr>
       </tbody>
     </v-table>
-    <OrderSummaryVue />
   </div>
-  <div v-else class="d-flex justify-center">
+  <!-- <div v-else class="d-flex justify-center">
     <CartEmpty />
-  </div>
+  </div> -->
 </template>
 <style>
 .custom-img-box {

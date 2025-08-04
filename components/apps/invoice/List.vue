@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, watch } from 'vue';
 import { useInvoicestore } from '@/stores/apps/invoice';
 import { Icon } from '@iconify/vue';
+import { computed, onMounted, ref, watch } from 'vue';
 
 const store = useInvoicestore();
 
@@ -13,7 +13,6 @@ onMounted(async () => {
 });
 
 const getInvoice = computed(() => store.invoice);
-console.log('list', getInvoice);
 let FinalInvoice = ref([...getInvoice.value]);
 
 const searchValue = ref('');

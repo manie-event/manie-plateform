@@ -8,10 +8,7 @@ import imageEmpty from '/images/products/empty-shopping-cart.svg';
   <v-row class="justify-center">
     <v-col class="text-center" lg="6">
       <v-img :src="imageEmpty" alt="cover" width="300px" class="mx-auto mt-5 mb-5" />
-      <h5 class="text-h5">Cart is Empty</h5>
-      <v-btn class="mt-3" to="/apps/ecommerce/productsone" rounded="pill" color="primary"
-        >Go Back to Shopping</v-btn
-      >
+      <h5 class="text-h5">Vous n'avez pas d'achat en cours</h5>
     </v-col>
   </v-row>
 </template>

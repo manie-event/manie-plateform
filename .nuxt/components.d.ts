@@ -35,6 +35,7 @@ interface _GlobalComponents {
     'AppsEcommerceCartStepsPayment': typeof import("../components/apps/ecommerce/cart/steps/Payment.vue")['default']
     'AppsEcommerceCartStepsStepFirst': typeof import("../components/apps/ecommerce/cart/steps/StepFirst.vue")['default']
     'AppsEcommerceCartStepsStepSecond': typeof import("../components/apps/ecommerce/cart/steps/StepSecond.vue")['default']
+    'AppsEcommerceCartStepsTestStripe': typeof import("../components/apps/ecommerce/cart/steps/TestStripe.vue")['default']
     'AppsEcommerceCartStepsThankyou': typeof import("../components/apps/ecommerce/cart/steps/Thankyou.vue")['default']
     'AppsEcommerceDetailProductCarousel': typeof import("../components/apps/ecommerce/detail/ProductCarousel.vue")['default']
     'AppsEcommerceDetailProductDescription': typeof import("../components/apps/ecommerce/detail/ProductDescription.vue")['default']
@@ -86,6 +87,7 @@ interface _GlobalComponents {
     'AuthRegisterForm': typeof import("../components/auth/RegisterForm.vue")['default']
     'AuthResetForm': typeof import("../components/auth/ResetForm.vue")['default']
     'AuthTwoStepForm': typeof import("../components/auth/TwoStepForm.vue")['default']
+    'CommonBaseEmptyState': typeof import("../components/common/BaseEmptyState.vue")['default']
     'CommonBaseModal': typeof import("../components/common/BaseModal.vue")['default']
     'CommonErrorToaster': typeof import("../components/common/errorToaster.vue")['default']
     'CommonSuccessToaster': typeof import("../components/common/successToaster.vue")['default']
@@ -292,19 +294,6 @@ interface _GlobalComponents {
     'PagesFaqQuestion': typeof import("../components/pages/faq/FaqQuestion.vue")['default']
     'PagesFaqStillHaveQuestions': typeof import("../components/pages/faq/StillHaveQuestions.vue")['default']
     'PagesSearchResultsSearchLinks': typeof import("../components/pages/search-results/SearchLinks.vue")['default']
-    'SchoolPagesAttendenceSheet': typeof import("../components/school-pages/attendence/AttendenceSheet.vue")['default']
-    'SchoolPagesClassesData': typeof import("../components/school-pages/classes/ClassesData.vue")['default']
-    'SchoolPagesClassesDetail': typeof import("../components/school-pages/classes/ClassesDetail.vue")['default']
-    'SchoolPagesExamProgressReport': typeof import("../components/school-pages/exam/ProgressReport.vue")['default']
-    'SchoolPagesExamResultTable': typeof import("../components/school-pages/exam/ResultTable.vue")['default']
-    'SchoolPagesExamScheduleTable': typeof import("../components/school-pages/exam/ScheduleTable.vue")['default']
-    'SchoolPagesExamStudentProfile': typeof import("../components/school-pages/exam/StudentProfile.vue")['default']
-    'SchoolPagesStudentsStudentProfile': typeof import("../components/school-pages/students/StudentProfile.vue")['default']
-    'SchoolPagesStudentsStudentReport': typeof import("../components/school-pages/students/StudentReport.vue")['default']
-    'SchoolPagesStudentsStudentTable': typeof import("../components/school-pages/students/StudentTable.vue")['default']
-    'SchoolPagesTeachersTeacherProfile': typeof import("../components/school-pages/teachers/TeacherProfile.vue")['default']
-    'SchoolPagesTeachersTeacherSkills': typeof import("../components/school-pages/teachers/TeacherSkills.vue")['default']
-    'SchoolPagesTeachersTable': typeof import("../components/school-pages/teachers/TeachersTable.vue")['default']
     'SharedAppBaseCard': typeof import("../components/shared/AppBaseCard.vue")['default']
     'SharedAppEmailCard': typeof import("../components/shared/AppEmailCard.vue")['default']
     'SharedBaseBreadcrumb': typeof import("../components/shared/BaseBreadcrumb.vue")['default']
@@ -436,7 +425,7 @@ interface _GlobalComponents {
     'Html': typeof import("../node_modules/nuxt/dist/head/runtime/components")['Html']
     'Body': typeof import("../node_modules/nuxt/dist/head/runtime/components")['Body']
     'NuxtIsland': typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']
-    'NuxtRouteAnnouncer': IslandComponent<typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']>
+    'NuxtRouteAnnouncer': typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']
       'LazyAppsBlogCardGrid': LazyComponent<typeof import("../components/apps/blog/blogCardGrid.vue")['default']>
     'LazyAppsBlogPosts': LazyComponent<typeof import("../components/apps/blog/blogPosts.vue")['default']>
     'LazyAppsBlogDetailAddCommnet': LazyComponent<typeof import("../components/apps/blog/detail/addCommnet.vue")['default']>
@@ -460,6 +449,7 @@ interface _GlobalComponents {
     'LazyAppsEcommerceCartStepsPayment': LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/Payment.vue")['default']>
     'LazyAppsEcommerceCartStepsStepFirst': LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/StepFirst.vue")['default']>
     'LazyAppsEcommerceCartStepsStepSecond': LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/StepSecond.vue")['default']>
+    'LazyAppsEcommerceCartStepsTestStripe': LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/TestStripe.vue")['default']>
     'LazyAppsEcommerceCartStepsThankyou': LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/Thankyou.vue")['default']>
     'LazyAppsEcommerceDetailProductCarousel': LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductCarousel.vue")['default']>
     'LazyAppsEcommerceDetailProductDescription': LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductDescription.vue")['default']>
@@ -511,6 +501,7 @@ interface _GlobalComponents {
     'LazyAuthRegisterForm': LazyComponent<typeof import("../components/auth/RegisterForm.vue")['default']>
     'LazyAuthResetForm': LazyComponent<typeof import("../components/auth/ResetForm.vue")['default']>
     'LazyAuthTwoStepForm': LazyComponent<typeof import("../components/auth/TwoStepForm.vue")['default']>
+    'LazyCommonBaseEmptyState': LazyComponent<typeof import("../components/common/BaseEmptyState.vue")['default']>
     'LazyCommonBaseModal': LazyComponent<typeof import("../components/common/BaseModal.vue")['default']>
     'LazyCommonErrorToaster': LazyComponent<typeof import("../components/common/errorToaster.vue")['default']>
     'LazyCommonSuccessToaster': LazyComponent<typeof import("../components/common/successToaster.vue")['default']>
@@ -717,19 +708,6 @@ interface _GlobalComponents {
     'LazyPagesFaqQuestion': LazyComponent<typeof import("../components/pages/faq/FaqQuestion.vue")['default']>
     'LazyPagesFaqStillHaveQuestions': LazyComponent<typeof import("../components/pages/faq/StillHaveQuestions.vue")['default']>
     'LazyPagesSearchResultsSearchLinks': LazyComponent<typeof import("../components/pages/search-results/SearchLinks.vue")['default']>
-    'LazySchoolPagesAttendenceSheet': LazyComponent<typeof import("../components/school-pages/attendence/AttendenceSheet.vue")['default']>
-    'LazySchoolPagesClassesData': LazyComponent<typeof import("../components/school-pages/classes/ClassesData.vue")['default']>
-    'LazySchoolPagesClassesDetail': LazyComponent<typeof import("../components/school-pages/classes/ClassesDetail.vue")['default']>
-    'LazySchoolPagesExamProgressReport': LazyComponent<typeof import("../components/school-pages/exam/ProgressReport.vue")['default']>
-    'LazySchoolPagesExamResultTable': LazyComponent<typeof import("../components/school-pages/exam/ResultTable.vue")['default']>
-    'LazySchoolPagesExamScheduleTable': LazyComponent<typeof import("../components/school-pages/exam/ScheduleTable.vue")['default']>
-    'LazySchoolPagesExamStudentProfile': LazyComponent<typeof import("../components/school-pages/exam/StudentProfile.vue")['default']>
-    'LazySchoolPagesStudentsStudentProfile': LazyComponent<typeof import("../components/school-pages/students/StudentProfile.vue")['default']>
-    'LazySchoolPagesStudentsStudentReport': LazyComponent<typeof import("../components/school-pages/students/StudentReport.vue")['default']>
-    'LazySchoolPagesStudentsStudentTable': LazyComponent<typeof import("../components/school-pages/students/StudentTable.vue")['default']>
-    'LazySchoolPagesTeachersTeacherProfile': LazyComponent<typeof import("../components/school-pages/teachers/TeacherProfile.vue")['default']>
-    'LazySchoolPagesTeachersTeacherSkills': LazyComponent<typeof import("../components/school-pages/teachers/TeacherSkills.vue")['default']>
-    'LazySchoolPagesTeachersTable': LazyComponent<typeof import("../components/school-pages/teachers/TeachersTable.vue")['default']>
     'LazySharedAppBaseCard': LazyComponent<typeof import("../components/shared/AppBaseCard.vue")['default']>
     'LazySharedAppEmailCard': LazyComponent<typeof import("../components/shared/AppEmailCard.vue")['default']>
     'LazySharedBaseBreadcrumb': LazyComponent<typeof import("../components/shared/BaseBreadcrumb.vue")['default']>
@@ -861,7 +839,7 @@ interface _GlobalComponents {
     'LazyHtml': LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['Html']>
     'LazyBody': LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['Body']>
     'LazyNuxtIsland': LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']>
-    'LazyNuxtRouteAnnouncer': LazyComponent<IslandComponent<typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']>>
+    'LazyNuxtRouteAnnouncer': LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']>
 }
 
 declare module 'vue' {
@@ -891,6 +869,7 @@ export const AppsEcommerceCartStepsOrderSummary: typeof import("../components/ap
 export const AppsEcommerceCartStepsPayment: typeof import("../components/apps/ecommerce/cart/steps/Payment.vue")['default']
 export const AppsEcommerceCartStepsStepFirst: typeof import("../components/apps/ecommerce/cart/steps/StepFirst.vue")['default']
 export const AppsEcommerceCartStepsStepSecond: typeof import("../components/apps/ecommerce/cart/steps/StepSecond.vue")['default']
+export const AppsEcommerceCartStepsTestStripe: typeof import("../components/apps/ecommerce/cart/steps/TestStripe.vue")['default']
 export const AppsEcommerceCartStepsThankyou: typeof import("../components/apps/ecommerce/cart/steps/Thankyou.vue")['default']
 export const AppsEcommerceDetailProductCarousel: typeof import("../components/apps/ecommerce/detail/ProductCarousel.vue")['default']
 export const AppsEcommerceDetailProductDescription: typeof import("../components/apps/ecommerce/detail/ProductDescription.vue")['default']
@@ -942,6 +921,7 @@ export const AuthLoginForm: typeof import("../components/auth/LoginForm.vue")['d
 export const AuthRegisterForm: typeof import("../components/auth/RegisterForm.vue")['default']
 export const AuthResetForm: typeof import("../components/auth/ResetForm.vue")['default']
 export const AuthTwoStepForm: typeof import("../components/auth/TwoStepForm.vue")['default']
+export const CommonBaseEmptyState: typeof import("../components/common/BaseEmptyState.vue")['default']
 export const CommonBaseModal: typeof import("../components/common/BaseModal.vue")['default']
 export const CommonErrorToaster: typeof import("../components/common/errorToaster.vue")['default']
 export const CommonSuccessToaster: typeof import("../components/common/successToaster.vue")['default']
@@ -1148,19 +1128,6 @@ export const PagesAccountSettingsSecurityTab: typeof import("../components/pages
 export const PagesFaqQuestion: typeof import("../components/pages/faq/FaqQuestion.vue")['default']
 export const PagesFaqStillHaveQuestions: typeof import("../components/pages/faq/StillHaveQuestions.vue")['default']
 export const PagesSearchResultsSearchLinks: typeof import("../components/pages/search-results/SearchLinks.vue")['default']
-export const SchoolPagesAttendenceSheet: typeof import("../components/school-pages/attendence/AttendenceSheet.vue")['default']
-export const SchoolPagesClassesData: typeof import("../components/school-pages/classes/ClassesData.vue")['default']
-export const SchoolPagesClassesDetail: typeof import("../components/school-pages/classes/ClassesDetail.vue")['default']
-export const SchoolPagesExamProgressReport: typeof import("../components/school-pages/exam/ProgressReport.vue")['default']
-export const SchoolPagesExamResultTable: typeof import("../components/school-pages/exam/ResultTable.vue")['default']
-export const SchoolPagesExamScheduleTable: typeof import("../components/school-pages/exam/ScheduleTable.vue")['default']
-export const SchoolPagesExamStudentProfile: typeof import("../components/school-pages/exam/StudentProfile.vue")['default']
-export const SchoolPagesStudentsStudentProfile: typeof import("../components/school-pages/students/StudentProfile.vue")['default']
-export const SchoolPagesStudentsStudentReport: typeof import("../components/school-pages/students/StudentReport.vue")['default']
-export const SchoolPagesStudentsStudentTable: typeof import("../components/school-pages/students/StudentTable.vue")['default']
-export const SchoolPagesTeachersTeacherProfile: typeof import("../components/school-pages/teachers/TeacherProfile.vue")['default']
-export const SchoolPagesTeachersTeacherSkills: typeof import("../components/school-pages/teachers/TeacherSkills.vue")['default']
-export const SchoolPagesTeachersTable: typeof import("../components/school-pages/teachers/TeachersTable.vue")['default']
 export const SharedAppBaseCard: typeof import("../components/shared/AppBaseCard.vue")['default']
 export const SharedAppEmailCard: typeof import("../components/shared/AppEmailCard.vue")['default']
 export const SharedBaseBreadcrumb: typeof import("../components/shared/BaseBreadcrumb.vue")['default']
@@ -1292,7 +1259,7 @@ export const Head: typeof import("../node_modules/nuxt/dist/head/runtime/compone
 export const Html: typeof import("../node_modules/nuxt/dist/head/runtime/components")['Html']
 export const Body: typeof import("../node_modules/nuxt/dist/head/runtime/components")['Body']
 export const NuxtIsland: typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']
-export const NuxtRouteAnnouncer: IslandComponent<typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']>
+export const NuxtRouteAnnouncer: typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']
 export const LazyAppsBlogCardGrid: LazyComponent<typeof import("../components/apps/blog/blogCardGrid.vue")['default']>
 export const LazyAppsBlogPosts: LazyComponent<typeof import("../components/apps/blog/blogPosts.vue")['default']>
 export const LazyAppsBlogDetailAddCommnet: LazyComponent<typeof import("../components/apps/blog/detail/addCommnet.vue")['default']>
@@ -1316,6 +1283,7 @@ export const LazyAppsEcommerceCartStepsOrderSummary: LazyComponent<typeof import
 export const LazyAppsEcommerceCartStepsPayment: LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/Payment.vue")['default']>
 export const LazyAppsEcommerceCartStepsStepFirst: LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/StepFirst.vue")['default']>
 export const LazyAppsEcommerceCartStepsStepSecond: LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/StepSecond.vue")['default']>
+export const LazyAppsEcommerceCartStepsTestStripe: LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/TestStripe.vue")['default']>
 export const LazyAppsEcommerceCartStepsThankyou: LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/Thankyou.vue")['default']>
 export const LazyAppsEcommerceDetailProductCarousel: LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductCarousel.vue")['default']>
 export const LazyAppsEcommerceDetailProductDescription: LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductDescription.vue")['default']>
@@ -1367,6 +1335,7 @@ export const LazyAuthLoginForm: LazyComponent<typeof import("../components/auth/
 export const LazyAuthRegisterForm: LazyComponent<typeof import("../components/auth/RegisterForm.vue")['default']>
 export const LazyAuthResetForm: LazyComponent<typeof import("../components/auth/ResetForm.vue")['default']>
 export const LazyAuthTwoStepForm: LazyComponent<typeof import("../components/auth/TwoStepForm.vue")['default']>
+export const LazyCommonBaseEmptyState: LazyComponent<typeof import("../components/common/BaseEmptyState.vue")['default']>
 export const LazyCommonBaseModal: LazyComponent<typeof import("../components/common/BaseModal.vue")['default']>
 export const LazyCommonErrorToaster: LazyComponent<typeof import("../components/common/errorToaster.vue")['default']>
 export const LazyCommonSuccessToaster: LazyComponent<typeof import("../components/common/successToaster.vue")['default']>
@@ -1573,19 +1542,6 @@ export const LazyPagesAccountSettingsSecurityTab: LazyComponent<typeof import(".
 export const LazyPagesFaqQuestion: LazyComponent<typeof import("../components/pages/faq/FaqQuestion.vue")['default']>
 export const LazyPagesFaqStillHaveQuestions: LazyComponent<typeof import("../components/pages/faq/StillHaveQuestions.vue")['default']>
 export const LazyPagesSearchResultsSearchLinks: LazyComponent<typeof import("../components/pages/search-results/SearchLinks.vue")['default']>
-export const LazySchoolPagesAttendenceSheet: LazyComponent<typeof import("../components/school-pages/attendence/AttendenceSheet.vue")['default']>
-export const LazySchoolPagesClassesData: LazyComponent<typeof import("../components/school-pages/classes/ClassesData.vue")['default']>
-export const LazySchoolPagesClassesDetail: LazyComponent<typeof import("../components/school-pages/classes/ClassesDetail.vue")['default']>
-export const LazySchoolPagesExamProgressReport: LazyComponent<typeof import("../components/school-pages/exam/ProgressReport.vue")['default']>
-export const LazySchoolPagesExamResultTable: LazyComponent<typeof import("../components/school-pages/exam/ResultTable.vue")['default']>
-export const LazySchoolPagesExamScheduleTable: LazyComponent<typeof import("../components/school-pages/exam/ScheduleTable.vue")['default']>
-export const LazySchoolPagesExamStudentProfile: LazyComponent<typeof import("../components/school-pages/exam/StudentProfile.vue")['default']>
-export const LazySchoolPagesStudentsStudentProfile: LazyComponent<typeof import("../components/school-pages/students/StudentProfile.vue")['default']>
-export const LazySchoolPagesStudentsStudentReport: LazyComponent<typeof import("../components/school-pages/students/StudentReport.vue")['default']>
-export const LazySchoolPagesStudentsStudentTable: LazyComponent<typeof import("../components/school-pages/students/StudentTable.vue")['default']>
-export const LazySchoolPagesTeachersTeacherProfile: LazyComponent<typeof import("../components/school-pages/teachers/TeacherProfile.vue")['default']>
-export const LazySchoolPagesTeachersTeacherSkills: LazyComponent<typeof import("../components/school-pages/teachers/TeacherSkills.vue")['default']>
-export const LazySchoolPagesTeachersTable: LazyComponent<typeof import("../components/school-pages/teachers/TeachersTable.vue")['default']>
 export const LazySharedAppBaseCard: LazyComponent<typeof import("../components/shared/AppBaseCard.vue")['default']>
 export const LazySharedAppEmailCard: LazyComponent<typeof import("../components/shared/AppEmailCard.vue")['default']>
 export const LazySharedBaseBreadcrumb: LazyComponent<typeof import("../components/shared/BaseBreadcrumb.vue")['default']>
@@ -1717,6 +1673,6 @@ export const LazyHead: LazyComponent<typeof import("../node_modules/nuxt/dist/he
 export const LazyHtml: LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['Html']>
 export const LazyBody: LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['Body']>
 export const LazyNuxtIsland: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']>
-export const LazyNuxtRouteAnnouncer: LazyComponent<IslandComponent<typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']>>
+export const LazyNuxtRouteAnnouncer: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']>
 
 export const componentNames: string[]

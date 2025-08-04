@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
 import { Form } from 'vee-validate';
+import { computed, ref } from 'vue';
+import type { BillingInfo } from '../../../../../models/cart/billingInfo';
 
 const props = defineProps({
   dialog: Boolean,
@@ -15,11 +16,17 @@ const value = computed({
     emit('update:dialog', value);
   },
 });
-const name = ref('');
+const billingInfo = ref<BillingInfo>({
+  codePostal: '',
+  ville: '',
+  adresse: '',
+  pays: '',
+  nom: '',
+  prenom: '',
+});
 const inline = ref('home');
-const isdefault = ref(false);
 const rules: any = ref({
-  name: (value: string) => value.length > 2 || 'More than two letters required',
+  name: (value: string) => value.length > 2 || 'Veuillez renseigner plus de 2 caractères',
 });
 </script>
 
@@ -28,10 +35,7 @@ const rules: any = ref({
     <v-card>
       <v-card-text>
         <div class="d-flex justify-space-between">
-          <h3 class="text-h3">Add Billing Address</h3>
-          <v-btn icon @click="$emit('handledialog')" size="small" rounded="pill"
-            ><XIcon size="16"
-          /></v-btn>
+          <h3 class="text-h3">Ajouter votre adresse de facturation</h3>
         </div>
       </v-card-text>
       <v-divider></v-divider>
@@ -39,97 +43,80 @@ const rules: any = ref({
         <Form class="py-3">
           <v-row>
             <v-col cols="12" lg="6">
-              <v-text-field
-                v-model="name"
-                :rules="[rules.required, rules.name]"
-                label="First Name"
-                variant="outlined"
-                hide-details="auto"
-                :color="name.length > 2 ? 'success' : 'primary'"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" lg="6">
               <v-radio-group v-model="inline" inline hide-details="auto">
-                <v-radio label="Home" value="home" color="primary"></v-radio>
-                <v-radio label="Office" value="office" color="secondary"></v-radio>
+                <v-radio label="Domicile" value="home" color="primary"></v-radio>
+                <v-radio label="Travail" value="office" color="secondary"></v-radio>
               </v-radio-group>
             </v-col>
-            <v-col cols="12" lg="12">
-              <v-text-field
-                v-model="name"
-                :rules="[rules.required, rules.name]"
-                label="Building No"
-                hide-details="auto"
-                variant="outlined"
-                :color="name.length > 2 ? 'success' : 'primary'"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" lg="12">
-              <v-text-field
-                v-model="name"
-                :rules="[rules.required, rules.name]"
-                label="Street"
-                variant="outlined"
-                hide-details="auto"
-                :color="name.length > 2 ? 'success' : 'primary'"
-              ></v-text-field>
+            <v-col cols="12" lg="6">
+              <div class="d-flex justify-space-between w-100 ga-4">
+                <v-text-field
+                  v-model="billingInfo.nom"
+                  :rules="[rules.required, rules.name]"
+                  label="Nom"
+                  variant="outlined"
+                  hide-details="auto"
+                  :color="billingInfo.nom.length > 2 ? 'success' : 'primary'"
+                ></v-text-field>
+                <v-text-field
+                  v-model="billingInfo.prenom"
+                  :rules="[rules.required, rules.name]"
+                  label="Prénom"
+                  hide-details="auto"
+                  variant="outlined"
+                  :color="billingInfo.prenom.length > 2 ? 'success' : 'primary'"
+                ></v-text-field>
+              </div>
             </v-col>
             <v-col cols="12" lg="6">
               <v-text-field
-                v-model="name"
+                v-model="billingInfo.adresse"
                 :rules="[rules.required, rules.name]"
-                label="City"
+                label="Adresse"
                 variant="outlined"
                 hide-details="auto"
-                :color="name.length > 2 ? 'success' : 'primary'"
+                :color="billingInfo.adresse.length > 2 ? 'success' : 'primary'"
               ></v-text-field>
             </v-col>
             <v-col cols="12" lg="6">
-              <v-text-field
-                v-model="name"
-                :rules="[rules.required, rules.name]"
-                label="State"
-                variant="outlined"
-                hide-details="auto"
-                :color="name.length > 2 ? 'success' : 'primary'"
-              ></v-text-field>
+              <div class="d-flex justify-space-between w-100 ga-4">
+                <v-text-field
+                  v-model="billingInfo.codePostal"
+                  :rules="[rules.required, rules.name]"
+                  label="Code Postal"
+                  variant="outlined"
+                  hide-details="auto"
+                  :color="billingInfo.codePostal.length > 2 ? 'success' : 'primary'"
+                ></v-text-field>
+                <v-text-field
+                  v-model="billingInfo.ville"
+                  :rules="[rules.required, rules.name]"
+                  label="Ville"
+                  variant="outlined"
+                  hide-details="auto"
+                  :color="billingInfo.ville.length > 2 ? 'success' : 'primary'"
+                ></v-text-field>
+              </div>
             </v-col>
             <v-col cols="12" lg="6">
               <v-text-field
-                v-model="name"
+                v-model="billingInfo.pays"
                 :rules="[rules.required, rules.name]"
                 label="Country"
                 variant="outlined"
                 hide-details="auto"
-                :color="name.length > 2 ? 'success' : 'primary'"
+                :color="billingInfo.pays.length > 2 ? 'success' : 'primary'"
               ></v-text-field>
-            </v-col>
-            <v-col cols="12" lg="6">
-              <v-text-field
-                v-model="name"
-                :rules="[rules.required, rules.name]"
-                label="Area code"
-                variant="outlined"
-                hide-details="auto"
-                :color="name.length > 2 ? 'success' : 'primary'"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" lg="12">
-              <v-text-field
-                v-model="name"
-                :rules="[rules.required, rules.name]"
-                label="Contact"
-                variant="outlined"
-                hide-details="auto"
-                :color="name.length > 2 ? 'success' : 'primary'"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" lg="12">
-              <v-switch v-model="isdefault" label="Default"></v-switch>
             </v-col>
             <v-col cols="12" lg="12" class="text-right">
-              <v-btn color="error" type="submit" class="px-3 rounded-pill mr-2">Cancel</v-btn>
-              <v-btn color="primary" type="submit" class="px-3 rounded-pill">Submit</v-btn>
+              <v-btn color="error" type="submit" class="px-3 rounded-pill mr-2">Annuler</v-btn>
+              <v-btn
+                color="primary"
+                type="submit"
+                class="px-3 rounded-pill"
+                @click="setBillingInfo(billingInfo)"
+                >Ajouter à mes adresses</v-btn
+              >
             </v-col>
           </v-row>
         </Form>

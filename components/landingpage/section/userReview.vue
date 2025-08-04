@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
-import { userReview } from '@/_mockApis/landingpage/lpPage';
 import { testimonialSettings } from '@/_mockApis/landingpage/curoselData';
-import { ArrowRightIcon, ArrowLeftIcon } from 'vue-tabler-icons';
+import { userReview } from '@/_mockApis/landingpage/lpPage';
+import { ref } from 'vue';
+import { ArrowLeftIcon, ArrowRightIcon } from 'vue-tabler-icons';
+import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel';
 const rating = ref(5);
 </script>
 <template>

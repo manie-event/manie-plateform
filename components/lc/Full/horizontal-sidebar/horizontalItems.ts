@@ -358,7 +358,7 @@ const horizontalItems: menu[] = [
               },
               {
                 title: 'Boxed Login',
-                to: '/auth/login2',
+                to: '/auth/login',
               },
             ],
           },
@@ -369,7 +369,7 @@ const horizontalItems: menu[] = [
             children: [
               {
                 title: 'Side Register',
-                to: '/auth/register2',
+                to: '/auth/register',
               },
               {
                 title: 'Boxed Register',
@@ -387,7 +387,7 @@ const horizontalItems: menu[] = [
               },
               {
                 title: 'Boxed Forgot Password',
-                to: '/auth/forgot-password2',
+                to: '/auth/forgot-password',
               },
             ],
           },
@@ -401,65 +401,11 @@ const horizontalItems: menu[] = [
               },
               {
                 title: 'Boxed Two Steps',
-                to: '/auth/two-step2',
+                to: '/auth/two-step',
               },
             ],
           },
         ],
-      },
-      {
-        title: 'Teachers',
-        to: '',
-        children: [
-          {
-            title: 'All Teachers',
-            to: '/school-pages/teachers',
-          },
-          {
-            title: 'Teachers Details',
-            to: '/school-pages/teachers/details',
-          },
-        ],
-      },
-      {
-        title: 'Exam',
-        to: '',
-        children: [
-          {
-            title: 'Exam Schedule',
-            to: '/school-pages/exam/schedule',
-          },
-          {
-            title: 'Exam Result',
-            to: '/school-pages/exam/result',
-          },
-          {
-            title: 'Exam Result Details',
-            to: '/school-pages/exam/result-details',
-          },
-        ],
-      },
-      {
-        title: 'Students',
-        to: '',
-        children: [
-          {
-            title: 'All Students',
-            to: '/school-pages/students',
-          },
-          {
-            title: 'Students Details',
-            to: '/school-pages/students/details',
-          },
-        ],
-      },
-      {
-        title: 'Classes',
-        to: '/school-pages/classes',
-      },
-      {
-        title: 'Attendance',
-        to: '/school-pages/attendance',
       },
     ],
   },

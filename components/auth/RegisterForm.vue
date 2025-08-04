@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import type { RegisterModel } from '../../models/authentification/registerModel';
 import errorToaster from '../common/errorToaster.vue';
 
 /*Social icons*/
@@ -7,7 +8,7 @@ import errorToaster from '../common/errorToaster.vue';
 // import facebook from "/images/svgs/icon-facebook.svg";
 const { sendRegister } = useAuthentification();
 
-const registerForm = ref({
+const registerForm = ref<RegisterModel>({
   username: '',
   category: 'professional',
   password: '',
@@ -28,6 +29,10 @@ const emailRules = ref([
   (v: string) => /.+@.+\..+/.test(v) || "L'e-mail doit être valide",
 ]);
 const nameRules = ref([(v: string) => !!v || 'Votre pseudo est obligatoire']);
+const siretRules = ref([
+  (v: string) => v.length === 14 || 'Le numéro SIRET doit faire 14 caractères',
+  (v: string) => /^\d+$/.test(v) || 'Le numéro SIRET doit contenir uniquement des chiffres',
+]);
 
 const register = async () => {
   await sendRegister(registerForm.value);

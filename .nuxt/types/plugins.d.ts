@@ -21,6 +21,8 @@ type NuxtAppInjections =
   InjectionType<typeof import("../../node_modules/@nuxt/devtools/dist/runtime/plugins/devtools.client.js")> &
   InjectionType<typeof import("../../node_modules/nuxt/dist/app/plugins/dev-server-logs.js")> &
   InjectionType<typeof import("../../node_modules/nuxt/dist/app/plugins/check-if-layout-used.js")> &
+  InjectionType<typeof import("../../plugins/axeptio.client")> &
+  InjectionType<typeof import("../../plugins/store-hydration.client")> &
   InjectionType<typeof import("../../plugins/vue-apex-charts.client")> &
   InjectionType<typeof import("../../plugins/vuetify")>
 
