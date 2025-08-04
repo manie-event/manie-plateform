@@ -9,7 +9,6 @@
       :key="service.id"
       variant="outlined"
       :color="service.isSelected ? 'primary' : undefined"
-      @click="selectService(service)"
     >
       {{ service.name }}
     </v-chip>
@@ -39,7 +38,8 @@
 </template>
 <script setup lang="ts">
 import questionnairePresta from '@/data/questionnairePresta.json';
-import type { Keywords } from '~/models/professionalServices/Keywords';
+import type { Keywords } from '~/models/professionalService/Keywords';
+
 const props = defineProps<{
   sector: string;
 }>();
@@ -47,9 +47,15 @@ const props = defineProps<{
 const userStore = useUserStore();
 const { professionnalServices, keywords } = storeToRefs(userStore);
 
-const sectorFiltered = computed(() =>
-  questionnairePresta.find((prestataire) => prestataire.sector === props.sector)
-);
+const sectorFiltered = computed(() => {
+  console.log('Filtering sector:', props.sector);
+  console.log(
+    questionnairePresta.find((prestataire) => prestataire.sector),
+    'Filtered sector data'
+  );
+
+  return questionnairePresta.find((prestataire) => prestataire.sector === props.sector);
+});
 
 const keywordsByCategory = computed(() => {
   if (!keywords.value?.length || !sectorFiltered.value?.servicesSection?.questions?.length) {
@@ -65,12 +71,6 @@ const keywordsByCategory = computed(() => {
 
   return grouped;
 });
-
-const selectService = (service) => {
-  service.isSelected = !service.isSelected;
-
-  // userStore.setProfessionalServices(professionnalServices.value);
-};
 </script>
 <style lang="scss" scoped>
 .service-chip {

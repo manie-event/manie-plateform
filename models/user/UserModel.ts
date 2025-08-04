@@ -29,7 +29,7 @@ export interface ProfessionalProfile {
   deposit: boolean;
   depositAmount?: number;
   billingPeriod: string;
-  links?: { type: string; value: string }[];
+  links?: [{ type: string; value: string }];
 }
 
 export interface Faq {

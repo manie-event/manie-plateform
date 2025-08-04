@@ -1,7 +1,8 @@
-import { keyWordsDtoToKeywords } from '~/mappers/professionalKeywordsMapper';
-import type { Keywords, KeywordsDto } from '~/models/professionalServices/Keywords';
-import type { Sectors } from '~/models/professionalServices/Sectors';
-import type { Services } from '~/models/professionalServices/Services';
+import { keyWordsDtoToKeywords } from '~/mappers/profesionnalKeywordsMapper';
+import type { KeywordsDto } from '~/models/dto/KeywordsDto';
+import type { Keywords } from '~/models/professionalService/Keywords';
+import type { Sectors } from '~/models/professionalService/Sectors';
+import type { Services } from '~/models/professionalService/Services';
 
 export const useProfessionalService = () => {
   const config = useRuntimeConfig();
@@ -29,6 +30,8 @@ export const useProfessionalService = () => {
   };
 
   const getServices = async (sectorUuid: string) => {
+    console.log('Fetching services for sector UUID:', sectorUuid);
+
     try {
       const { data } = await axios.get(`${config.public.apiUrl}/service`, {
         params: { q: sectorUuid, limit: 100 },
@@ -61,7 +64,7 @@ export const useProfessionalService = () => {
           'Content-Type': 'application/json',
         },
       });
-
+      console.log('Keywords data:', data);
       const keyWordFilter = data.data
         .filter((keyword: Keywords) => keyword.sector.toLowerCase() == query.toLowerCase())
         .slice(0, 100)
@@ -70,7 +73,7 @@ export const useProfessionalService = () => {
       setKeywords(keyWordFilter);
 
       loading.value = false;
-      return keyWordFilter;
+      // return keyWordFilter;
     } catch (error: unknown) {
       console.error('Error fetching keywords:', error);
     }

@@ -18,13 +18,13 @@
 </template>
 <script setup lang="ts">
 import questionnairePresta from '@/data/questionnairePresta.json';
-import type { Keywords } from '~/models/professionalServices/Keywords';
+import type { Keywords } from '~/models/professionalService/Keywords';
 const props = defineProps<{
   sector: string;
 }>();
 
 const userStore = useUserStore();
-const { professionnalServices, keywords } = storeToRefs(userStore);
+const { keywords } = storeToRefs(userStore);
 
 const sectorFiltered = computed(() =>
   questionnairePresta.find((prestataire) => prestataire.sector === props.sector)

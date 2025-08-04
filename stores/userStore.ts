@@ -26,7 +26,6 @@ export const useUserStore = defineStore('userStore', () => {
       uuid: newProfessionalUser.uuid?.replace(/[""]/g, '') || '',
       category: 'professional',
     };
-    console.log(professionalUser.value.uuid, 'professionalUser.value in setProfessionalUser');
 
     localStorage.setItem('professional-uuid', professionalUser.value.uuid || '');
     isProfessionalProfileCreated.value = true;
@@ -60,6 +59,8 @@ export const useUserStore = defineStore('userStore', () => {
     professionnalServices,
     isConsumerProfileAccepted,
     isStoringUserAccepeted,
+    professionnalServices,
+    keywords,
     setUserAccepted,
     setUser,
     setProfessionalUser,
