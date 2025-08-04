@@ -47,7 +47,7 @@
                 <v-btn
                   class="profile-banner-redirection-bouton"
                   size="large"
-                  @click="useKeywords().getKeywords('food')"
+                  @click="getKeywords('food')"
                   >Revenir à mon dashboard</v-btn
                 >
               </div>
@@ -94,6 +94,7 @@ const tab = ref(null);
 const openModal = ref(false);
 
 const { user, isProfessionalProfileCreated } = storeToRefs(useUserStore());
+const { getKeywords } = useProfessionalService();
 
 const items = shallowRef([
   { tab: 'My Profile', icon: UserCircleIcon, href: '/apps/userprofile/one' },

@@ -294,6 +294,8 @@ interface _GlobalComponents {
     'PagesFaqQuestion': typeof import("../components/pages/faq/FaqQuestion.vue")['default']
     'PagesFaqStillHaveQuestions': typeof import("../components/pages/faq/StillHaveQuestions.vue")['default']
     'PagesSearchResultsSearchLinks': typeof import("../components/pages/search-results/SearchLinks.vue")['default']
+    'QuestionnaireEcoResponsabilitePresta': typeof import("../components/questionnaire/EcoResponsabilitePresta.vue")['default']
+    'QuestionnaireServicesPrestataire': typeof import("../components/questionnaire/ServicesPrestataire.vue")['default']
     'SharedAppBaseCard': typeof import("../components/shared/AppBaseCard.vue")['default']
     'SharedAppEmailCard': typeof import("../components/shared/AppEmailCard.vue")['default']
     'SharedBaseBreadcrumb': typeof import("../components/shared/BaseBreadcrumb.vue")['default']
@@ -708,6 +710,8 @@ interface _GlobalComponents {
     'LazyPagesFaqQuestion': LazyComponent<typeof import("../components/pages/faq/FaqQuestion.vue")['default']>
     'LazyPagesFaqStillHaveQuestions': LazyComponent<typeof import("../components/pages/faq/StillHaveQuestions.vue")['default']>
     'LazyPagesSearchResultsSearchLinks': LazyComponent<typeof import("../components/pages/search-results/SearchLinks.vue")['default']>
+    'LazyQuestionnaireEcoResponsabilitePresta': LazyComponent<typeof import("../components/questionnaire/EcoResponsabilitePresta.vue")['default']>
+    'LazyQuestionnaireServicesPrestataire': LazyComponent<typeof import("../components/questionnaire/ServicesPrestataire.vue")['default']>
     'LazySharedAppBaseCard': LazyComponent<typeof import("../components/shared/AppBaseCard.vue")['default']>
     'LazySharedAppEmailCard': LazyComponent<typeof import("../components/shared/AppEmailCard.vue")['default']>
     'LazySharedBaseBreadcrumb': LazyComponent<typeof import("../components/shared/BaseBreadcrumb.vue")['default']>
@@ -1128,6 +1132,8 @@ export const PagesAccountSettingsSecurityTab: typeof import("../components/pages
 export const PagesFaqQuestion: typeof import("../components/pages/faq/FaqQuestion.vue")['default']
 export const PagesFaqStillHaveQuestions: typeof import("../components/pages/faq/StillHaveQuestions.vue")['default']
 export const PagesSearchResultsSearchLinks: typeof import("../components/pages/search-results/SearchLinks.vue")['default']
+export const QuestionnaireEcoResponsabilitePresta: typeof import("../components/questionnaire/EcoResponsabilitePresta.vue")['default']
+export const QuestionnaireServicesPrestataire: typeof import("../components/questionnaire/ServicesPrestataire.vue")['default']
 export const SharedAppBaseCard: typeof import("../components/shared/AppBaseCard.vue")['default']
 export const SharedAppEmailCard: typeof import("../components/shared/AppEmailCard.vue")['default']
 export const SharedBaseBreadcrumb: typeof import("../components/shared/BaseBreadcrumb.vue")['default']
@@ -1542,6 +1548,8 @@ export const LazyPagesAccountSettingsSecurityTab: LazyComponent<typeof import(".
 export const LazyPagesFaqQuestion: LazyComponent<typeof import("../components/pages/faq/FaqQuestion.vue")['default']>
 export const LazyPagesFaqStillHaveQuestions: LazyComponent<typeof import("../components/pages/faq/StillHaveQuestions.vue")['default']>
 export const LazyPagesSearchResultsSearchLinks: LazyComponent<typeof import("../components/pages/search-results/SearchLinks.vue")['default']>
+export const LazyQuestionnaireEcoResponsabilitePresta: LazyComponent<typeof import("../components/questionnaire/EcoResponsabilitePresta.vue")['default']>
+export const LazyQuestionnaireServicesPrestataire: LazyComponent<typeof import("../components/questionnaire/ServicesPrestataire.vue")['default']>
 export const LazySharedAppBaseCard: LazyComponent<typeof import("../components/shared/AppBaseCard.vue")['default']>
 export const LazySharedAppEmailCard: LazyComponent<typeof import("../components/shared/AppEmailCard.vue")['default']>
 export const LazySharedBaseBreadcrumb: LazyComponent<typeof import("../components/shared/BaseBreadcrumb.vue")['default']>
