@@ -21,7 +21,7 @@ export interface ProfessionalProfile {
   mainActivity: string;
   mainInterlocutor: string;
   experience: number;
-  category: string;
+  category?: string;
   geographicArea: string;
   faq: Faq;
   minimumBenefit: number;

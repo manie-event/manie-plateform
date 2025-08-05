@@ -122,6 +122,7 @@ declare global {
   const useHeadSafe: (typeof import('../../node_modules/nuxt/dist/app/composables/head'))['useHeadSafe'];
   const useHydration: (typeof import('../../node_modules/nuxt/dist/app/composables/hydrate'))['useHydration'];
   const useId: (typeof import('vue'))['useId'];
+  const useKeywords: (typeof import('../../composables/UseKeywords'))['useKeywords'];
   const useLazyAsyncData: (typeof import('../../node_modules/nuxt/dist/app/composables/asyncData'))['useLazyAsyncData'];
   const useLazyFetch: (typeof import('../../node_modules/nuxt/dist/app/composables/fetch'))['useLazyFetch'];
   const useLink: (typeof import('../../node_modules/vue-router'))['useLink'];
@@ -133,7 +134,6 @@ declare global {
   const usePaiementJeton: (typeof import('../../composables/UsePaiementJeton'))['usePaiementJeton'];
   const usePinia: (typeof import('../../node_modules/@pinia/nuxt/dist/runtime/composables'))['usePinia'];
   const usePreviewMode: (typeof import('../../node_modules/nuxt/dist/app/composables/preview'))['usePreviewMode'];
-  const useProfessionalService: (typeof import('../../composables/UseKeywords'))['useProfessionalService'];
   const useRequestEvent: (typeof import('../../node_modules/nuxt/dist/app/composables/ssr'))['useRequestEvent'];
   const useRequestFetch: (typeof import('../../node_modules/nuxt/dist/app/composables/ssr'))['useRequestFetch'];
   const useRequestHeader: (typeof import('../../node_modules/nuxt/dist/app/composables/ssr'))['useRequestHeader'];
@@ -465,6 +465,9 @@ declare module 'vue' {
       (typeof import('../../node_modules/nuxt/dist/app/composables/hydrate'))['useHydration']
     >;
     readonly useId: UnwrapRef<(typeof import('vue'))['useId']>;
+    readonly useKeywords: UnwrapRef<
+      (typeof import('../../composables/UseKeywords'))['useKeywords']
+    >;
     readonly useLazyAsyncData: UnwrapRef<
       (typeof import('../../node_modules/nuxt/dist/app/composables/asyncData'))['useLazyAsyncData']
     >;
@@ -493,9 +496,6 @@ declare module 'vue' {
     >;
     readonly usePreviewMode: UnwrapRef<
       (typeof import('../../node_modules/nuxt/dist/app/composables/preview'))['usePreviewMode']
-    >;
-    readonly useProfessionalService: UnwrapRef<
-      (typeof import('../../composables/UseKeywords'))['useProfessionalService']
     >;
     readonly useRequestEvent: UnwrapRef<
       (typeof import('../../node_modules/nuxt/dist/app/composables/ssr'))['useRequestEvent']

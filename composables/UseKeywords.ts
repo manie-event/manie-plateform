@@ -4,13 +4,14 @@ import type { Keywords } from '~/models/professionalService/Keywords';
 import type { Sectors } from '~/models/professionalService/Sectors';
 import type { Services } from '~/models/professionalService/Services';
 
-export const useProfessionalService = () => {
+export const useKeywords = () => {
   const config = useRuntimeConfig();
   const { setProfessionalServices, setKeywords } = useUserStore();
   const loading = ref(false);
 
   const getSectors = async (sector: string) => {
     try {
+      loading.value = true;
       const { data } = await axios.get(`${config.public.apiUrl}/sector`, {
         headers: {
           Authorization: `Bearer ${useCookie('token').value}`,
@@ -23,6 +24,7 @@ export const useProfessionalService = () => {
         );
         getServices(sectorFiltered[0].uuid);
         getKeywords(sectorFiltered[0].name);
+        loading.value = false;
       }
     } catch (error: unknown) {
       throw new Error('No data received from API');
@@ -30,8 +32,6 @@ export const useProfessionalService = () => {
   };
 
   const getServices = async (sectorUuid: string) => {
-    console.log('Fetching services for sector UUID:', sectorUuid);
-
     try {
       const { data } = await axios.get(`${config.public.apiUrl}/service`, {
         params: { q: sectorUuid, limit: 100 },
@@ -79,6 +79,7 @@ export const useProfessionalService = () => {
     }
   };
   return {
+    loading,
     getKeywords,
     getSectors,
   };

@@ -28,7 +28,11 @@
         v-for="serviceKeyword in keywordsByCategory[service.category]"
         :key="serviceKeyword.id"
         variant="outlined"
-        :color="serviceKeyword.isSelected ? 'primary' : undefined"
+        :class="{ 'v-chip--selected': serviceKeyword.isSelected }"
+        :style="{
+          backgroundColor: serviceKeyword.isSelected ? 'red' : 'transparent',
+          color: serviceKeyword.isSelected ? 'white' : 'inherit',
+        }"
         @click="selectService(serviceKeyword)"
       >
         {{ serviceKeyword.value }}
@@ -46,16 +50,11 @@ const props = defineProps<{
 
 const userStore = useUserStore();
 const { professionnalServices, keywords } = storeToRefs(userStore);
+const keywordsArray: string[] = [];
 
-const sectorFiltered = computed(() => {
-  console.log('Filtering sector:', props.sector);
-  console.log(
-    questionnairePresta.find((prestataire) => prestataire.sector),
-    'Filtered sector data'
-  );
-
-  return questionnairePresta.find((prestataire) => prestataire.sector === props.sector);
-});
+const sectorFiltered = computed(() =>
+  questionnairePresta.find((prestataire) => prestataire.sector === props.sector)
+);
 
 const keywordsByCategory = computed(() => {
   if (!keywords.value?.length || !sectorFiltered.value?.servicesSection?.questions?.length) {
@@ -71,6 +70,19 @@ const keywordsByCategory = computed(() => {
 
   return grouped;
 });
+
+const selectService = (serviceKeyword: Keywords) => {
+  const index = keywordsArray.indexOf(serviceKeyword.uuid);
+  if (index > -1) {
+    keywordsArray.splice(index, 1);
+    serviceKeyword.isSelected = false;
+  } else {
+    keywordsArray.push(serviceKeyword.uuid);
+
+    serviceKeyword.isSelected = true;
+  }
+  return keywordsArray;
+};
 </script>
 <style lang="scss" scoped>
 .service-chip {

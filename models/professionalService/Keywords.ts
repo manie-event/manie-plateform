@@ -4,4 +4,5 @@ export interface Keywords {
   sector: string;
   category: string;
   value: string;
+  isSelected: boolean;
 }
