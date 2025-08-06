@@ -5,4 +5,5 @@ export interface Services {
   sectorUuid: string;
   createdAt: string;
   updatedAt: string;
+  isSelected: boolean;
 }

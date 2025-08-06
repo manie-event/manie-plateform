@@ -13,8 +13,7 @@ export const useUserStore = defineStore('userStore', () => {
   const isConsumerProfileAccepted = ref(false);
   const isStoringUserAccepeted = ref(false);
   const professionnalServices = ref<Services[]>([]);
-  const keywords = ref<Keywords[]>([]);
-  const professionnalServices = ref<Services[]>([]);
+  const professionalServiceUuid = ref<Services>();
   const keywords = ref<Keywords[]>([]);
 
   const setUser = (userData: User) => {
@@ -43,12 +42,8 @@ export const useUserStore = defineStore('userStore', () => {
     keywords.value.push(...newKeywords);
   };
 
-  const setProfessionalServices = (services: Services[]) => {
-    professionnalServices.value = services;
-  };
-
-  const setKeywords = (newKeywords: Keywords[]) => {
-    keywords.value.push(...newKeywords);
+  const setServiceUuid = (serviceUuid: Services) => {
+    professionalServiceUuid.value = serviceUuid;
   };
 
   return {
@@ -59,12 +54,12 @@ export const useUserStore = defineStore('userStore', () => {
     professionnalServices,
     isConsumerProfileAccepted,
     isStoringUserAccepeted,
-    professionnalServices,
-    keywords,
+    professionalServiceUuid,
     setUserAccepted,
     setUser,
     setProfessionalUser,
     setProfessionalServices,
     setKeywords,
+    setServiceUuid,
   };
 });

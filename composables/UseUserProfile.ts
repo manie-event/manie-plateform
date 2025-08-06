@@ -9,7 +9,7 @@ export const useUserProfile = () => {
   const { setProfessionalUser } = userStore;
   const config = useRuntimeConfig();
 
-  const updateProfessionalProfile = async (professionalProfil: ProfessionalProfile) => {
+  const createProfessionalProfile = async (professionalProfil: ProfessionalProfile) => {
     try {
       const { data } = await axios.post(
         `${config.public.apiUrl}/professional/create`,
@@ -75,7 +75,7 @@ export const useUserProfile = () => {
   };
 
   return {
-    updateProfessionalProfile,
+    updateProfessionalProfile: createProfessionalProfile,
     getUserProfile,
     getUserProfileDetails,
   };

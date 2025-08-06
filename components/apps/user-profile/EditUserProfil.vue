@@ -226,24 +226,15 @@
                 Supprimer
               </v-btn>
             </div>
-            <v-btn
-              @click="faqArray.push({ question: '', reponse: '' })"
-              color="primary"
-              prepend-icon="mdi-plus"
-            >
+            <v-btn @click="faqArray.push()" color="primary" prepend-icon="mdi-plus">
               Ajouter une question fréquente et sa réponse
             </v-btn>
           </div>
         </div>
         <services-prestataire
-          v-if="currentPage === 2"
           class="mt-6"
           :sector="profile.mainActivity"
-        />
-        <eco-responsabilite-presta
-          v-if="currentPage === 3"
-          class="mt-6"
-          :sector="profile.mainActivity"
+          :current-page="currentPage"
         />
           <div class="my-8">
             <div v-for="(faq, index) in faqArray" :key="index">
@@ -279,57 +270,9 @@
           </div>
         </div>
         <services-prestataire
-          v-if="currentPage === 2"
           class="mt-6"
           :sector="profile.mainActivity"
-        />
-        <eco-responsabilite-presta
-          v-if="currentPage === 3"
-          class="mt-6"
-          :sector="profile.mainActivity"
-        />
-          <div class="my-8">
-            <div v-for="(faq, index) in faqArray" :key="index">
-              <v-text-field
-                v-model="faq.question"
-                label="Renseignez une question fréquente auquelle vous répondez souvent"
-                item-title="label"
-                item-value="value"
-              >
-              </v-text-field>
-              <v-text-field
-                v-model="faq.reponse"
-                label="Renseignez la réponse à la question"
-                type="text"
-                variant="outlined"
-                placeholder="https://www.example.com/mon-reseau-social"
-              >
-              </v-text-field>
-              <v-btn
-                @click="removeFaq(index)"
-                :disabled="faqArray.length === 0"
-                color="error"
-                prepend-icon="mdi-delete"
-                size="small"
-                class="my-2"
-              >
-                Supprimer
-              </v-btn>
-            </div>
-            <v-btn @click="faqArray.push()" color="primary" prepend-icon="mdi-plus">
-              Ajouter une question fréquente et sa réponse
-            </v-btn>
-          </div>
-        </div>
-        <services-prestataire
-          v-if="currentPage === 2 && loading === false"
-          class="mt-6"
-          :sector="profile.mainActivity"
-        />
-        <eco-responsabilite-presta
-          v-if="currentPage === 3"
-          class="mt-6"
-          :sector="profile.mainActivity"
+          :current-page="currentPage"
         />
       </v-form>
     </template>
@@ -342,7 +285,7 @@
       </div>
       <div v-if="currentPage === 2">
         <v-btn @click="currentPage--">Retour</v-btn>
-        <v-btn color="primary" @click="currentPage++">Suivant</v-btn>
+        <v-btn color="primary" @click="currentPage++">Vers la suite du questionnaire</v-btn>
       </div>
       <div v-if="currentPage === 3">
         <v-btn @click="currentPage--">Retour</v-btn>
@@ -359,7 +302,6 @@ import { useForm } from 'vee-validate';
 import { ref, Teleport } from 'vue';
 import * as yup from 'yup';
 import errorToaster from '~/components/common/errorToaster.vue';
-import EcoResponsabilitePresta from '~/components/questionnaires/EcoResponsabilitePresta.vue';
 import { useKeywords } from '~/composables/UseKeywords';
 import type { Faq, ProfessionalProfile } from '~/models/user/UserModel';
 
@@ -374,7 +316,6 @@ const openModal = defineModel<boolean>('openModal');
 const faqArray = ref<Faq[]>([]);
 const showErrors = ref(false);
 const { addError, addSuccess } = useToaster();
-const currentPage = ref(1);
 const currentPage = ref(1);
 
 const mergedFaq = computed(() => {
@@ -487,19 +428,23 @@ const activityItems = ref([
   { label: 'Transport (véhicule motorisé ou vert, collectif ou individuel)', value: 'transport' },
 ]);
 
-const setSector = (values: ProfessionalProfile) => {
+const setSector = async (values: ProfessionalProfile) => {
   const finalValues = {
     ...values,
     faq: mergedFaq.value,
   };
 
-  updateProfessionalProfile(finalValues);
+  try {
+    const response = await updateProfessionalProfile(finalValues);
 
-  if (professionalUser.value !== undefined && professionalUser.value?.mainActivity) {
-    getSectors(profile.mainActivity);
-    currentPage.value = 2;
-  } else {
-    addError({ message: 'Aucun secteur trouvé pour cette activité.' });
+    if (response.message === 'Professional created') {
+      getSectors(profile.mainActivity);
+      currentPage.value = 2;
+    } else {
+      addError({ message: 'La mise à jour du profil a échoué.' });
+    }
+  } catch (error) {
+    addError({ message: 'Erreur lors de la mise à jour du profil.' });
   }
 };
 resetForm();
