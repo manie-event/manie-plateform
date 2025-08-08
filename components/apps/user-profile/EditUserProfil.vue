@@ -184,7 +184,7 @@
               />
               <v-btn
                 @click="removeLink(index)"
-                :disabled="profile.links.length === 0"
+                :disabled="profile.links.length <= 0"
                 color="error"
                 prepend-icon="mdi-delete"
                 size="small"
@@ -226,12 +226,13 @@
                 Supprimer
               </v-btn>
             </div>
-            <v-btn @click="faqArray.push()" color="primary" prepend-icon="mdi-plus">
+            <v-btn @click="addFaq" color="primary">
               Ajouter une question fréquente et sa réponse
             </v-btn>
           </div>
         </div>
         <services-prestataire
+          v-if="currentPage === 2"
           class="mt-6"
           :sector="profile.mainActivity"
           :current-page="currentPage"
@@ -303,20 +304,20 @@ import { ref, Teleport } from 'vue';
 import * as yup from 'yup';
 import errorToaster from '~/components/common/errorToaster.vue';
 import { useKeywords } from '~/composables/UseKeywords';
-import type { Faq, ProfessionalProfile } from '~/models/user/UserModel';
+import { ACTIVITY_ITEMS } from '~/constants/activitySector';
+import type { Faq, Link, ProfessionalProfile } from '~/models/user/UserModel';
 
 const userStore = useUserStore();
 const { updateProfessionalProfile } = useUserProfile();
-const { professionalUser } = storeToRefs(userStore);
 const { getSectors } = useKeywords();
 const { isProfessionalProfileCreated } = storeToRefs(userStore);
-const { loading } = useKeywords();
 const openModal = defineModel<boolean>('openModal');
 
 const faqArray = ref<Faq[]>([]);
 const showErrors = ref(false);
 const { addError, addSuccess } = useToaster();
 const currentPage = ref(1);
+const activityItems = ref(ACTIVITY_ITEMS);
 
 const mergedFaq = computed(() => {
   return faqArray.value.reduce(
@@ -384,7 +385,7 @@ const {
     deposit: false,
     depositAmount: 0,
     billingPeriod: 'beforeEvent',
-    links: [] as Array<{ type: string; value: string }>,
+    links: [] as Link[] as [{ type: string; value: string }],
   },
   validateOnMount: false,
   keepValuesOnUnmount: true,
@@ -404,29 +405,18 @@ const removeLink = (index: number) => {
   }
 };
 
+const addFaq = () => {
+  faqArray.value.push({
+    question: '',
+    reponse: '',
+  });
+};
+
 const removeFaq = (index: number) => {
   if (faqArray.value.length >= 0) {
     faqArray.value.splice(index, 1);
   }
 };
-
-const activityItems = ref([
-  { label: 'Animation (jeux, performeurs, art, bien-être)', value: 'animation' },
-  { label: 'Beauté (coiffure, maquillage)', value: 'beauté' },
-  { label: 'Boisson (mixologue, bar mobile, fournisseur...)', value: 'boisson' },
-  { label: 'Décoration (graphiste, designer, fleuriste, cadeaux...)', value: 'décoration' },
-  { label: 'Esthétique (soin, sour/cils, manucure, pedicure)', value: 'esthétique' },
-  { label: 'Humain (coordinateur.trice, officant.e)', value: 'humain' },
-  { label: 'Lieux (espace de réception, restaurant, bar...)', value: 'lieux' },
-  { label: 'Logistique (livraison, sécurité, ménage...)', value: 'logistique' },
-  { label: 'Look (boutique classique & seconde main)', value: 'look' },
-  { label: 'Loueur (mobilier, décoration, structure, scéno...)', value: 'loueur' },
-  { label: 'Musique (dj, musique live)', value: 'musique' },
-  { label: 'Photo & Vidéo (photographe, vidéaste)', value: 'audiovisuel' },
-  { label: 'Restauration (traiteur, chef.fe, food-truck...)', value: 'food' },
-  { label: "Service (serveur.se, maître d'hotel, hôtesse)", value: 'service' },
-  { label: 'Transport (véhicule motorisé ou vert, collectif ou individuel)', value: 'transport' },
-]);
 
 const setSector = async (values: ProfessionalProfile) => {
   const finalValues = {

@@ -1,6 +1,7 @@
 import { keyWordsDtoToKeywords } from '~/mappers/profesionnalKeywordsMapper';
 import type { KeywordsDto } from '~/models/dto/KeywordsDto';
 import type { Keywords } from '~/models/professionalService/Keywords';
+import type { ProfessionalServiceUuid } from '~/models/professionalService/professionalServiceUuid';
 import type { Sectors } from '~/models/professionalService/Sectors';
 import type { Services } from '~/models/professionalService/Services';
 
@@ -8,13 +9,14 @@ export const useKeywords = () => {
   const config = useRuntimeConfig();
   const { setProfessionalServices, setKeywords } = useUserStore();
   const loading = ref(false);
+  const token = useCookie('token');
 
   const getSectors = async (sector: string) => {
     try {
       loading.value = true;
       const { data } = await axios.get(`${config.public.apiUrl}/sector`, {
         headers: {
-          Authorization: `Bearer ${useCookie('token').value}`,
+          Authorization: `Bearer ${token.value}`,
           'Content-Type': 'application/json',
         },
       });
@@ -36,7 +38,7 @@ export const useKeywords = () => {
       const { data } = await axios.get(`${config.public.apiUrl}/service`, {
         params: { q: sectorUuid, limit: 100 },
         headers: {
-          Authorization: `Bearer ${useCookie('token').value}`,
+          Authorization: `Bearer ${token.value}`,
           'Content-Type': 'application/json',
         },
       });
@@ -60,7 +62,7 @@ export const useKeywords = () => {
       const { data } = await axios.get(`${config.public.apiUrl}/keyword`, {
         params: { q: query, limit: 1000 },
         headers: {
-          Authorization: `Bearer ${useCookie('token').value}`,
+          Authorization: `Bearer ${token.value}`,
           'Content-Type': 'application/json',
         },
       });
@@ -76,6 +78,26 @@ export const useKeywords = () => {
       // return keyWordFilter;
     } catch (error: unknown) {
       console.error('Error fetching keywords:', error);
+    }
+  };
+
+  const sendProfessionalServices = async (services: ProfessionalServiceUuid) => {
+    try {
+      const response = await axios.post(
+        `${config.public.apiUrl}/professional-service/create`,
+        services,
+        {
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      if (response.data) {
+        setProfessionalServices(response.data);
+      }
+    } catch (error: unknown) {
+      console.error('Error sending professional services:', error);
     }
   };
   return {

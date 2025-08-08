@@ -29,9 +29,14 @@ export interface ProfessionalProfile {
   deposit: boolean;
   depositAmount?: number;
   billingPeriod: string;
-  links?: [{ type: string; value: string }];
+  links?: Link[];
 }
 
 export interface Faq {
   [key: string]: string;
+}
+
+export interface Link {
+  type: string;
+  value: string;
 }

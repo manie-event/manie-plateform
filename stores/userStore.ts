@@ -36,6 +36,7 @@ export const useUserStore = defineStore('userStore', () => {
 
   const setProfessionalServices = (services: Services[]) => {
     professionnalServices.value = services;
+    console.log('setProfessionalServices:', professionnalServices.value);
   };
 
   const setKeywords = (newKeywords: Keywords[]) => {
