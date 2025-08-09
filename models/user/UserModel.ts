@@ -19,9 +19,11 @@ export interface ProfessionalProfile {
   address: string;
   bio: string;
   mainActivity: string;
+  secondActivity?: string;
+  thirdActivity?: string;
   mainInterlocutor: string;
   experience: number;
-  category: string;
+  category?: string;
   geographicArea: string;
   faq: Faq;
   minimumBenefit: number;
@@ -29,9 +31,14 @@ export interface ProfessionalProfile {
   deposit: boolean;
   depositAmount?: number;
   billingPeriod: string;
-  links?: { type: string; value: string }[];
+  links?: Link[];
 }
 
 export interface Faq {
   [key: string]: string;
+}
+
+export interface Link {
+  type: string;
+  value: string;
 }

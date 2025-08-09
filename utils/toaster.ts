@@ -5,6 +5,8 @@ const errorMessageArray = ref<errorDetail[]>([]);
 
 const addError = (error: ServerError) => {
   if ('errors' in error && Array.isArray(error.errors)) {
+    console.log('Error received:', error);
+
     error.errors.forEach((err: errorDetail) => {
       const parsedError = {
         id: Date.now() + Math.random(),

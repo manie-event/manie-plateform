@@ -94,7 +94,7 @@ const tab = ref(null);
 const openModal = ref(false);
 
 const { user, isProfessionalProfileCreated } = storeToRefs(useUserStore());
-const { getKeywords } = useProfessionalService();
+const { getKeywords } = useKeywords();
 
 const items = shallowRef([
   { tab: 'My Profile', icon: UserCircleIcon, href: '/apps/userprofile/one' },

@@ -2,8 +2,8 @@ import type { ProfessionalProfile, User } from '@/models/user/UserModel';
 import { useLocalStorage } from '@vueuse/core';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import type { Keywords } from '~/models/professionalServices/Keywords';
-import type { Services } from '~/models/professionalServices/Services';
+import type { Keywords } from '~/models/professionalService/Keywords';
+import type { Services } from '~/models/professionalService/Services';
 
 export const useUserStore = defineStore('userStore', () => {
   const user = ref<User>();
@@ -24,7 +24,6 @@ export const useUserStore = defineStore('userStore', () => {
       uuid: newProfessionalUser.uuid?.replace(/[""]/g, '') || '',
       category: 'professional',
     };
-    console.log(professionalUser.value.uuid, 'professionalUser.value in setProfessionalUser');
 
     localStorage.setItem('professional-uuid', professionalUser.value.uuid || '');
     isProfessionalProfileCreated.value = true;
@@ -44,12 +43,12 @@ export const useUserStore = defineStore('userStore', () => {
 
   return {
     user,
-    keywords,
     professionalUser,
     isProfessionalProfileCreated,
-    professionnalServices,
     isConsumerProfileAccepted,
     isStoringUserAccepeted,
+    professionnalServices,
+    keywords,
     setUserAccepted,
     setUser,
     setProfessionalUser,
