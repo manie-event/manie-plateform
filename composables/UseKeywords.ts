@@ -85,7 +85,6 @@ export const useKeywords = () => {
       setKeywords(keyWordFilter);
 
       loading.value = false;
-      // return keyWordFilter;
     } catch (error: unknown) {
       console.error('Error fetching keywords:', error);
     }

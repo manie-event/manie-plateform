@@ -20,6 +20,7 @@ export interface ProfessionalProfile {
   bio: string;
   mainActivity: string;
   secondActivity?: string;
+  thirdActivity?: string;
   mainInterlocutor: string;
   experience: number;
   category?: string;

@@ -190,7 +190,7 @@
     <!-- Bouton d'ajout -->
     <div class="mt-6 text-center d-flex justify-space-between">
       <v-btn
-        v-if="questionnaires.length < 2"
+        v-if="questionnaires.length < 3"
         @click="addNewQuestionnaire"
         color="primary"
         variant="outlined"
@@ -209,55 +209,35 @@
 
 <script setup lang="ts">
 import questionnairePresta from '@/data/questionnairePresta.json';
-import { computed, nextTick, onMounted, ref, watch } from 'vue';
+import { nextTick, onMounted, ref, watch } from 'vue';
 import { useKeywords } from '~/composables/UseKeywords';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { Keywords } from '~/models/professionalService/Keywords';
 import type { ProfessionalServiceUuid } from '~/models/professionalService/professionalServiceUuid';
+import type { QuestionnaireItem } from '~/models/professionalService/QuestionnairePresta';
 import type { Services } from '~/models/professionalService/Services';
+import type { ProfessionalProfile } from '~/models/user/UserModel';
 
-// Props
 const props = defineProps<{
   sector: string;
 }>();
 
 const currentPage = defineModel<number>('pageActuelle');
 
-// Composables
 const userStore = useUserStore();
 const { professionnalServices, keywords, professionalUser } = storeToRefs(userStore);
 const { getSectors, loading, sendProfessionalServices } = useKeywords();
 const { addSuccess, addError } = useToaster();
 const { patchUserProfileDetails } = useUserProfile();
 
-// Types
-interface QuestionnaireItem {
-  id: string;
-  sector: string;
-  questionnaireData: any;
-  services: Services[];
-  keywordsByCategory: Record<string, Keywords[]>;
-  selectedServiceUuid: string | null;
-  selectedKeywords: Set<string>;
-}
-
-// État
 const questionnaires = ref<QuestionnaireItem[]>([]);
 const activityItems = ref(ACTIVITY_ITEMS);
-
-// Tableau qui se met à jour automatiquement
 const payloadArray = ref<ProfessionalServiceUuid[]>([]);
-
-// Computed
-const hasAnySelection = computed(() => {
-  return questionnaires.value.some((q) => q.selectedServiceUuid || q.selectedKeywords.size > 0);
-});
 
 const goPreviousPage = () => {
   currentPage.value = currentPage.value - 1;
 };
 
-// Fonctions utilitaires
 const generateId = () => Math.random().toString(36).substr(2, 9);
 
 const getServiceName = (uuid: string, services: Services[]) => {
@@ -272,9 +252,7 @@ const getKeywordName = (uuid: string, keywordsByCategory: Record<string, Keyword
   return 'Mot-clé inconnu';
 };
 
-// Fonctions utilitaires pour le payload
 const getServiceNameFromUuid = (uuid: string): string => {
-  // Chercher dans tous les questionnaires
   for (const questionnaire of questionnaires.value) {
     const service = questionnaire.services.find((s) => s.uuid === uuid);
     if (service) return service.name;
@@ -292,10 +270,9 @@ const getKeywordNamesFromUuids = (uuids: string[]): string[] => {
       }
     }
   }
-  return [...new Set(names)]; // Supprimer les doublons
+  return [...new Set(names)];
 };
 
-// Calculer les mots-clés par catégorie
 const calculateKeywordsByCategory = (
   questionnaireData: any,
   sector: string
@@ -305,7 +282,6 @@ const calculateKeywordsByCategory = (
   const grouped: Record<string, Keywords[]> = {};
   const categories: string[] = [];
 
-  // Récupérer toutes les catégories
   if (questionnaireData.servicesSection) {
     categories.push(
       ...(questionnaireData.servicesSection.questions?.map((q: any) => q.category) || [])
@@ -317,7 +293,6 @@ const calculateKeywordsByCategory = (
     );
   }
 
-  // Filtrer les mots-clés pour chaque catégorie
   categories.forEach((category) => {
     grouped[category] = keywords.value.filter(
       (keyword: Keywords) =>
@@ -329,7 +304,6 @@ const calculateKeywordsByCategory = (
   return grouped;
 };
 
-// Créer un nouveau questionnaire
 const createQuestionnaire = (sector: string): QuestionnaireItem => {
   const questionnaireData = questionnairePresta.find(
     (q) => q.sector.toLowerCase() === sector.toLowerCase()
@@ -346,52 +320,39 @@ const createQuestionnaire = (sector: string): QuestionnaireItem => {
   };
 };
 
-// Sélectionner un service
 const selectService = (service: Services, questionnaire: QuestionnaireItem) => {
-  // Un seul service par questionnaire
   if (questionnaire.selectedServiceUuid === service.uuid) {
     questionnaire.selectedServiceUuid = null;
   } else {
     questionnaire.selectedServiceUuid = service.uuid;
   }
-
-  // Mettre à jour le payload automatiquement
   updatePayloadArray();
 };
 
-// Sélectionner/désélectionner un mot-clé
 const selectKeyword = (keyword: Keywords, questionnaire: QuestionnaireItem) => {
   if (questionnaire.selectedKeywords.has(keyword.uuid)) {
     questionnaire.selectedKeywords.delete(keyword.uuid);
   } else {
     questionnaire.selectedKeywords.add(keyword.uuid);
   }
-
-  // Mettre à jour le payload automatiquement
   updatePayloadArray();
 };
 
-// Mettre à jour le secteur d'un questionnaire
 const updateQuestionnaireSector = async (questionnaire: QuestionnaireItem, newSector: string) => {
   if (!newSector) return;
 
-  // Marquer le questionnaire comme en cours de chargement
   questionnaire.questionnaireData = null;
   questionnaire.services = [];
   questionnaire.keywordsByCategory = {};
   questionnaire.selectedServiceUuid = null;
   questionnaire.selectedKeywords.clear();
 
-  // Charger les données pour le nouveau secteur
   await getSectors(newSector);
 
-  // Attendre que les données du store soient réellement mises à jour
-  // On utilise un watcher temporaire au lieu de nextTick()
   const stopWatching = watch(
     [professionnalServices, keywords],
     ([newServices, newKeywords]) => {
       if (newServices?.length && newKeywords?.length) {
-        // Maintenant les données sont vraiment à jour !
         const questionnaireData = questionnairePresta.find(
           (q) => q.sector.toLowerCase() === newSector.toLowerCase()
         );
@@ -403,8 +364,6 @@ const updateQuestionnaireSector = async (questionnaire: QuestionnaireItem, newSe
           questionnaireData,
           newSector
         );
-
-        // Arrêter le watcher
         stopWatching();
       }
     },
@@ -412,7 +371,6 @@ const updateQuestionnaireSector = async (questionnaire: QuestionnaireItem, newSe
   );
 };
 
-// Ajouter un nouveau questionnaire
 const addNewQuestionnaire = () => {
   const newQuestionnaire: QuestionnaireItem = {
     id: generateId(),
@@ -427,7 +385,6 @@ const addNewQuestionnaire = () => {
   questionnaires.value.push(newQuestionnaire);
 };
 
-// Mettre à jour automatiquement le tableau de payload
 const updatePayloadArray = () => {
   payloadArray.value = [];
 
@@ -442,7 +399,6 @@ const updatePayloadArray = () => {
   });
 };
 
-// Soumettre tous les questionnaires avec Promise.all()
 const submitAllQuestionnaires = async () => {
   if (payloadArray.value.length === 0) {
     addError({ message: 'Aucun service sélectionné' });
@@ -450,7 +406,6 @@ const submitAllQuestionnaires = async () => {
   }
 
   try {
-    // Envoyer tous les services en parallèle avec Promise.all()
     const promises = payloadArray.value.map((serviceData: ProfessionalServiceUuid) =>
       sendProfessionalServices(serviceData)
     );
@@ -458,33 +413,24 @@ const submitAllQuestionnaires = async () => {
     if (payloadArray.value.length === 2) {
       await patchUserProfileDetails({
         ...professionalUser.value,
-        secondActivity: questionnairePresta[1].sector,
-      });
+        secondActivity: questionnairePresta[1].sector ?? '',
+        thirdActivity: questionnairePresta[2].sector ?? '',
+      } as ProfessionalProfile);
     }
     addSuccess({ message: `${payloadArray.value.length} service(s) créé(s) avec succès !` });
-
-    // Optionnel : vider les sélections après envoi
-    // resetAllSelections();
   } catch (error) {
     console.error("Erreur lors de l'envoi:", error);
     addError({ message: "Erreur lors de l'envoi des services" });
   }
 };
 
-// Initialisation
 onMounted(async () => {
-  // Charger immédiatement les données du secteur de la page 1
   if (props.sector && props.sector !== 'Veuillez choisir votre activité') {
     console.log('Chargement initial des données pour le secteur:', props.sector);
 
     try {
-      // Forcer le chargement des données
       await getSectors(props.sector);
-
-      // Créer le premier questionnaire après le chargement
-      await nextTick(); // Attendre que le DOM soit mis à jour
-
-      // Utiliser un watcher temporaire pour attendre les données
+      await nextTick();
       const stopWatching = watch(
         [professionnalServices, keywords],
         ([newServices, newKeywords]) => {
@@ -503,12 +449,10 @@ onMounted(async () => {
   }
 });
 
-// Watcher de secours pour créer le premier questionnaire si les données arrivent plus tard
 watch(
   [professionnalServices, keywords],
   () => {
     if (professionnalServices.value?.length && keywords.value?.length && props.sector) {
-      // Créer le premier questionnaire seulement s'il n'existe pas
       if (questionnaires.value.length === 0) {
         console.log('Watcher de secours - création du questionnaire');
         const firstQuestionnaire = createQuestionnaire(props.sector);

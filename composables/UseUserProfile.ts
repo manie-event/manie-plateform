@@ -29,8 +29,6 @@ export const useUserProfile = () => {
         return data;
       }
     } catch (error: unknown) {
-      // console.log('Error updating professional profile:', error.response.data.errors);
-
       addError(error.response.data as errorModel);
     }
   };

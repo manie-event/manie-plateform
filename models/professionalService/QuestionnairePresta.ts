@@ -1,4 +1,7 @@
-export interface QuestionnairePresta {
+import type { Keywords } from './Keywords';
+import type { Services } from './Services';
+
+export interface SectorFormDefinition {
   sector: string;
   general: {
     questions: QuestionGeneral[];
@@ -16,4 +19,14 @@ export interface QuestionGeneral {
   question: string;
   type: string;
   required: boolean;
+}
+
+export interface QuestionnaireItem {
+  id: string;
+  sector: string;
+  questionnaireData: any;
+  services: Services[];
+  keywordsByCategory: Record<string, Keywords[]>;
+  selectedServiceUuid: string | null;
+  selectedKeywords: Set<string>;
 }
