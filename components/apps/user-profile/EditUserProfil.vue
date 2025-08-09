@@ -6,7 +6,7 @@
 
     <template #content>
       <v-form class="px-4">
-        <div v-if="currentPage === 1">
+        <div v-show="currentPage === 1">
           <v-divider class="mt-6"
             ><p class="mt-6"></p>
             A propos de votre entreprise</v-divider
@@ -235,63 +235,13 @@
           v-if="currentPage === 2"
           class="mt-6"
           :sector="profile.mainActivity"
-          :current-page="currentPage"
+          v-model:pageActuelle="currentPage"
         />
-          <div class="my-8">
-            <div v-for="(faq, index) in faqArray" :key="index">
-              <v-text-field
-                v-model="faq.question"
-                label="Renseignez une question fréquente auquelle vous répondez souvent"
-                item-title="label"
-                item-value="value"
-              >
-              </v-text-field>
-              <v-text-field
-                v-model="faq.reponse"
-                label="Renseignez la réponse à la question"
-                type="text"
-                variant="outlined"
-                placeholder="https://www.example.com/mon-reseau-social"
-              >
-              </v-text-field>
-              <v-btn
-                @click="removeFaq(index)"
-                :disabled="faqArray.length === 0"
-                color="error"
-                prepend-icon="mdi-delete"
-                size="small"
-                class="my-2"
-              >
-                Supprimer
-              </v-btn>
-            </div>
-            <v-btn @click="faqArray.push()" color="primary" prepend-icon="mdi-plus">
-              Ajouter une question fréquente et sa réponse
-            </v-btn>
-          </div>
+        <div v-if="currentPage === 1" class="d-flex justify-space-between">
+          <v-btn @click="openModal = false">Annuler</v-btn>
+          <v-btn color="primary" @click="setSector(profile)">Vers le questionnaire détaillé</v-btn>
         </div>
-        <services-prestataire
-          class="mt-6"
-          :sector="profile.mainActivity"
-          :current-page="currentPage"
-        />
       </v-form>
-    </template>
-
-    <template #actions>
-      <v-spacer />
-      <div v-if="currentPage === 1">
-        <v-btn @click="openModal = false">Annuler</v-btn>
-        <v-btn color="primary" @click="setSector(profile)">Vers le questionnaire détaillé</v-btn>
-      </div>
-      <div v-if="currentPage === 2">
-        <v-btn @click="currentPage--">Retour</v-btn>
-        <v-btn color="primary" @click="currentPage++">Vers la suite du questionnaire</v-btn>
-      </div>
-      <div v-if="currentPage === 3">
-        <v-btn @click="currentPage--">Retour</v-btn>
-        <v-btn color="primary" @click="onSubmit()">Valider</v-btn>
-      </div>
     </template>
   </BaseModal>
   <Teleport to="body"> <error-toaster></error-toaster> </Teleport>

@@ -117,7 +117,30 @@
           </div>
         </div>
 
-        <!-- Résumé des sélections -->
+        <!-- Tableau de payload en temps réel -->
+        <div v-if="payloadArray.length > 0" class="mt-6">
+          <v-card variant="outlined" color="success">
+            <v-card-title class="text-h6 d-flex align-center">
+              <v-icon class="mr-2">mdi-check-circle</v-icon>
+              Services prêts à être envoyés ({{ payloadArray.length }})
+            </v-card-title>
+            <v-card-text>
+              <div
+                v-for="(payload, index) in payloadArray"
+                :key="index"
+                class="mb-3 pa-3 bg-grey-lighten-5 rounded"
+              >
+                <div class="text-subtitle-2 mb-2">Questionnaire {{ index + 1 }}</div>
+                <div class="text-body-2">
+                  <strong>Service:</strong> {{ getServiceNameFromUuid(payload.serviceUuid) }}<br />
+                  <strong>Professional UUID:</strong> {{ payload.professionalUuid }}<br />
+                  <strong>Mots-clés ({{ payload.keywordsUuid.length }}):</strong>
+                  {{ getKeywordNamesFromUuids([payload.keywordsUuid]).join(', ') }}
+                </div>
+              </div>
+            </v-card-text>
+          </v-card>
+        </div>
         <div
           v-if="questionnaire.selectedServiceUuid || questionnaire.selectedKeywords.size > 0"
           class="mt-6"
@@ -165,7 +188,7 @@
     </div>
 
     <!-- Bouton d'ajout -->
-    <div class="mt-6 text-center">
+    <div class="mt-6 text-center d-flex justify-space-between">
       <v-btn
         @click="addNewQuestionnaire"
         color="primary"
@@ -176,43 +199,12 @@
       </v-btn>
     </div>
 
-    <!-- Actions finales -->
-    <div class="mt-8 text-center">
-      <v-btn
-        @click="generatePayloadPreview"
-        color="info"
-        variant="outlined"
-        class="ma-2"
-        :disabled="!hasAnySelection"
+    <div>
+      <v-btn @click="goPreviousPage()">Retour</v-btn>
+      <v-btn color="primary" @click="submitAllQuestionnaires()"
+        >Vers la suite du questionnaire</v-btn
       >
-        Aperçu des données
-      </v-btn>
-      <v-btn
-        @click="submitAllQuestionnaires"
-        color="success"
-        :disabled="!hasAnySelection || loading"
-        :loading="loading"
-        class="ma-2"
-      >
-        Envoyer les services
-      </v-btn>
     </div>
-
-    <!-- Dialog de prévisualisation -->
-    <v-dialog v-model="previewDialog" max-width="600px">
-      <v-card>
-        <v-card-title>Aperçu des données à envoyer</v-card-title>
-        <v-card-text>
-          <pre class="bg-grey-lighten-4 pa-4 rounded">{{
-            JSON.stringify(generatedPayload, null, 2)
-          }}</pre>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn @click="previewDialog = false">Fermer</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </div>
 </template>
 
@@ -222,18 +214,20 @@ import { computed, nextTick, onMounted, ref, watch } from 'vue';
 import { useKeywords } from '~/composables/UseKeywords';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { Keywords } from '~/models/professionalService/Keywords';
+import type { ProfessionalServiceUuid } from '~/models/professionalService/professionalServiceUuid';
 import type { Services } from '~/models/professionalService/Services';
 
 // Props
 const props = defineProps<{
   sector: string;
-  currentPage: number;
 }>();
+
+const currentPage = defineModel<number>('pageActuelle');
 
 // Composables
 const userStore = useUserStore();
 const { professionnalServices, keywords, professionalUser } = storeToRefs(userStore);
-const { getSectors, loading } = useKeywords();
+const { getSectors, loading, sendProfessionalServices } = useKeywords();
 const { addSuccess, addError } = useToaster();
 
 // Types
@@ -247,22 +241,22 @@ interface QuestionnaireItem {
   selectedKeywords: Set<string>;
 }
 
-interface ProfessionalServicePayload {
-  serviceUuid: string;
-  professionalUuid: string;
-  keywordsUuid: string[];
-}
-
 // État
 const questionnaires = ref<QuestionnaireItem[]>([]);
 const activityItems = ref(ACTIVITY_ITEMS);
 const previewDialog = ref(false);
-const generatedPayload = ref<ProfessionalServicePayload[]>([]);
+
+// Tableau qui se met à jour automatiquement
+const payloadArray = ref<ProfessionalServiceUuid[]>([]);
 
 // Computed
 const hasAnySelection = computed(() => {
   return questionnaires.value.some((q) => q.selectedServiceUuid || q.selectedKeywords.size > 0);
 });
+
+const goPreviousPage = () => {
+  currentPage.value = currentPage.value - 1;
+};
 
 // Fonctions utilitaires
 const generateId = () => Math.random().toString(36).substr(2, 9);
@@ -277,6 +271,29 @@ const getKeywordName = (uuid: string, keywordsByCategory: Record<string, Keyword
     if (keyword) return keyword.value;
   }
   return 'Mot-clé inconnu';
+};
+
+// Fonctions utilitaires pour le payload
+const getServiceNameFromUuid = (uuid: string): string => {
+  // Chercher dans tous les questionnaires
+  for (const questionnaire of questionnaires.value) {
+    const service = questionnaire.services.find((s) => s.uuid === uuid);
+    if (service) return service.name;
+  }
+  return 'Service inconnu';
+};
+
+const getKeywordNamesFromUuids = (uuids: string[]): string[] => {
+  const names: string[] = [];
+  for (const questionnaire of questionnaires.value) {
+    for (const uuid of uuids) {
+      const name = getKeywordName(uuid, questionnaire.keywordsByCategory);
+      if (name !== 'Mot-clé inconnu') {
+        names.push(name);
+      }
+    }
+  }
+  return [...new Set(names)]; // Supprimer les doublons
 };
 
 // Calculer les mots-clés par catégorie
@@ -338,6 +355,9 @@ const selectService = (service: Services, questionnaire: QuestionnaireItem) => {
   } else {
     questionnaire.selectedServiceUuid = service.uuid;
   }
+
+  // Mettre à jour le payload automatiquement
+  updatePayloadArray();
 };
 
 // Sélectionner/désélectionner un mot-clé
@@ -347,31 +367,50 @@ const selectKeyword = (keyword: Keywords, questionnaire: QuestionnaireItem) => {
   } else {
     questionnaire.selectedKeywords.add(keyword.uuid);
   }
+
+  // Mettre à jour le payload automatiquement
+  updatePayloadArray();
 };
 
 // Mettre à jour le secteur d'un questionnaire
 const updateQuestionnaireSector = async (questionnaire: QuestionnaireItem, newSector: string) => {
   if (!newSector) return;
 
+  // Marquer le questionnaire comme en cours de chargement
+  questionnaire.questionnaireData = null;
+  questionnaire.services = [];
+  questionnaire.keywordsByCategory = {};
+  questionnaire.selectedServiceUuid = null;
+  questionnaire.selectedKeywords.clear();
+
   // Charger les données pour le nouveau secteur
   await getSectors(newSector);
 
-  // Attendre que les données soient mises à jour
-  await nextTick();
+  // Attendre que les données du store soient réellement mises à jour
+  // On utilise un watcher temporaire au lieu de nextTick()
+  const stopWatching = watch(
+    [professionnalServices, keywords],
+    ([newServices, newKeywords]) => {
+      if (newServices?.length && newKeywords?.length) {
+        // Maintenant les données sont vraiment à jour !
+        const questionnaireData = questionnairePresta.find(
+          (q) => q.sector.toLowerCase() === newSector.toLowerCase()
+        );
 
-  // Mettre à jour le questionnaire
-  const questionnaireData = questionnairePresta.find(
-    (q) => q.sector.toLowerCase() === newSector.toLowerCase()
+        questionnaire.sector = newSector;
+        questionnaire.questionnaireData = questionnaireData;
+        questionnaire.services = [...newServices]; // Maintenant les services sont corrects
+        questionnaire.keywordsByCategory = calculateKeywordsByCategory(
+          questionnaireData,
+          newSector
+        );
+
+        // Arrêter le watcher
+        stopWatching();
+      }
+    },
+    { immediate: true }
   );
-
-  questionnaire.sector = newSector;
-  questionnaire.questionnaireData = questionnaireData;
-  questionnaire.services = [...(professionnalServices.value || [])];
-  questionnaire.keywordsByCategory = calculateKeywordsByCategory(questionnaireData, newSector);
-
-  // Réinitialiser les sélections
-  questionnaire.selectedServiceUuid = null;
-  questionnaire.selectedKeywords.clear();
 };
 
 // Ajouter un nouveau questionnaire
@@ -389,49 +428,41 @@ const addNewQuestionnaire = () => {
   questionnaires.value.push(newQuestionnaire);
 };
 
-// Générer le payload pour l'API
-const generatePayload = (): ProfessionalServicePayload[] => {
-  const payload: ProfessionalServicePayload[] = [];
+// Mettre à jour automatiquement le tableau de payload
+const updatePayloadArray = () => {
+  payloadArray.value = [];
 
   questionnaires.value.forEach((questionnaire) => {
     if (questionnaire.selectedServiceUuid && professionalUser.value?.uuid) {
-      payload.push({
+      payloadArray.value.push({
         serviceUuid: questionnaire.selectedServiceUuid,
         professionalUuid: professionalUser.value.uuid,
         keywordsUuid: Array.from(questionnaire.selectedKeywords),
       });
     }
   });
-
-  return payload;
 };
 
-// Prévisualiser le payload
-const generatePayloadPreview = () => {
-  generatedPayload.value = generatePayload();
-  previewDialog.value = true;
-};
-
-// Soumettre tous les questionnaires
+// Soumettre tous les questionnaires avec Promise.all()
 const submitAllQuestionnaires = async () => {
-  const payload = generatePayload();
-
-  if (payload.length === 0) {
+  if (payloadArray.value.length === 0) {
     addError({ message: 'Aucun service sélectionné' });
     return;
   }
 
   try {
-    // Envoyer chaque service séparément
-    for (const serviceData of payload) {
-      // Utiliser la fonction du composable useKeywords
-      await $fetch('/api/professional-service/create', {
-        method: 'POST',
-        body: serviceData,
-      });
-    }
+    // Envoyer tous les services en parallèle avec Promise.all()
+    const promises = payloadArray.value.map((serviceData: ProfessionalServiceUuid) =>
+      sendProfessionalServices(serviceData)
+    );
 
-    addSuccess('service(s) créé(s) avec succès !');
+    // Attendre que tous les appels soient terminés
+    await Promise.all(promises);
+
+    addSuccess({ message: `${payloadArray.value.length} service(s) créé(s) avec succès !` });
+
+    // Optionnel : vider les sélections après envoi
+    // resetAllSelections();
   } catch (error) {
     console.error("Erreur lors de l'envoi:", error);
     addError({ message: "Erreur lors de l'envoi des services" });
@@ -439,19 +470,46 @@ const submitAllQuestionnaires = async () => {
 };
 
 // Initialisation
-onMounted(() => {
-  // Le premier questionnaire est créé automatiquement quand les données arrivent
+onMounted(async () => {
+  // Charger immédiatement les données du secteur de la page 1
+  if (props.sector && props.sector !== 'Veuillez choisir votre activité') {
+    console.log('Chargement initial des données pour le secteur:', props.sector);
+
+    try {
+      // Forcer le chargement des données
+      await getSectors(props.sector);
+
+      // Créer le premier questionnaire après le chargement
+      await nextTick(); // Attendre que le DOM soit mis à jour
+
+      // Utiliser un watcher temporaire pour attendre les données
+      const stopWatching = watch(
+        [professionnalServices, keywords],
+        ([newServices, newKeywords]) => {
+          if (newServices?.length && newKeywords?.length && questionnaires.value.length === 0) {
+            console.log('Données chargées, création du premier questionnaire');
+            const firstQuestionnaire = createQuestionnaire(props.sector);
+            questionnaires.value.push(firstQuestionnaire);
+            stopWatching();
+          }
+        },
+        { immediate: true }
+      );
+    } catch (error) {
+      console.error('Erreur lors du chargement initial:', error);
+    }
+  }
 });
 
-// Watcher pour créer le premier questionnaire quand les données arrivent
+// Watcher de secours pour créer le premier questionnaire si les données arrivent plus tard
 watch(
   [professionnalServices, keywords],
   () => {
     if (professionnalServices.value?.length && keywords.value?.length && props.sector) {
       // Créer le premier questionnaire seulement s'il n'existe pas
       if (questionnaires.value.length === 0) {
+        console.log('Watcher de secours - création du questionnaire');
         const firstQuestionnaire = createQuestionnaire(props.sector);
-        console.log(firstQuestionnaire, 'firstQuestionnaire');
         questionnaires.value.push(firstQuestionnaire);
       }
     }

@@ -10,10 +10,10 @@ export const useUserStore = defineStore('userStore', () => {
 
   const professionalUser = ref<ProfessionalProfile>();
   const isProfessionalProfileCreated = useLocalStorage('pp-created', false);
+  const professionalServiceUuid = ref<Services>();
   const isConsumerProfileAccepted = ref(false);
   const isStoringUserAccepeted = ref(false);
   const professionnalServices = ref<Services[]>([]);
-  const professionalServiceUuid = ref<Services>();
   const keywords = ref<Keywords[]>([]);
 
   const setUser = (userData: User) => {
@@ -36,15 +36,10 @@ export const useUserStore = defineStore('userStore', () => {
 
   const setProfessionalServices = (services: Services[]) => {
     professionnalServices.value = services;
-    console.log('setProfessionalServices:', professionnalServices.value);
   };
 
   const setKeywords = (newKeywords: Keywords[]) => {
     keywords.value.push(...newKeywords);
-  };
-
-  const setServiceUuid = (serviceUuid: Services) => {
-    professionalServiceUuid.value = serviceUuid;
   };
 
   return {
@@ -61,6 +56,5 @@ export const useUserStore = defineStore('userStore', () => {
     setProfessionalUser,
     setProfessionalServices,
     setKeywords,
-    setServiceUuid,
   };
 });

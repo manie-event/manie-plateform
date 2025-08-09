@@ -4,10 +4,13 @@ import type { Keywords } from '~/models/professionalService/Keywords';
 import type { ProfessionalServiceUuid } from '~/models/professionalService/professionalServiceUuid';
 import type { Sectors } from '~/models/professionalService/Sectors';
 import type { Services } from '~/models/professionalService/Services';
+// Correct the import path if the file is named differently or located elsewhere
+// Or update the path to the correct location where ProfessionalServicePayload is defined
 
 export const useKeywords = () => {
   const config = useRuntimeConfig();
   const { setProfessionalServices, setKeywords } = useUserStore();
+  const { professionnalServices, keywords } = storeToRefs(useUserStore());
   const loading = ref(false);
   const token = useCookie('token');
 
@@ -24,9 +27,16 @@ export const useKeywords = () => {
         const sectorFiltered = data.data.filter(
           (sectorItem: Sectors) => sectorItem.name.toLowerCase() === sector.toLowerCase()
         );
-        getServices(sectorFiltered[0].uuid);
-        getKeywords(sectorFiltered[0].name);
+        await Promise.all([
+          getServices(sectorFiltered[0].uuid),
+          getKeywords(sectorFiltered[0].name),
+        ]);
         loading.value = false;
+
+        return {
+          services: professionnalServices.value,
+          keywords: keywords.value,
+        };
       }
     } catch (error: unknown) {
       throw new Error('No data received from API');
@@ -104,5 +114,6 @@ export const useKeywords = () => {
     loading,
     getKeywords,
     getSectors,
+    sendProfessionalServices,
   };
 };
