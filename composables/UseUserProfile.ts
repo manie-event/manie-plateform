@@ -9,6 +9,8 @@ export const useUserProfile = () => {
   const { setProfessionalUser } = userStore;
   const config = useRuntimeConfig();
 
+  const professionalUuid = localStorage.getItem('professional-uuid');
+
   const createProfessionalProfile = async (professionalProfil: ProfessionalProfile) => {
     try {
       const { data } = await axios.post(
@@ -55,8 +57,6 @@ export const useUserProfile = () => {
   };
 
   const getUserProfileDetails = async () => {
-    const professionalUuid = localStorage.getItem('professional-uuid');
-
     try {
       const { data } = await axios.get(`${config.public.apiUrl}/professional/${professionalUuid}`, {
         headers: {
@@ -74,9 +74,34 @@ export const useUserProfile = () => {
     }
   };
 
+  const patchUserProfileDetails = async (newProfile: ProfessionalProfile) => {
+    try {
+      const { data } = await axios.patch(
+        `${config.public.apiUrl}/professional/${professionalUuid}`,
+        {
+          newProfile,
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      if (data) {
+        console.log('data', data);
+
+        setProfessionalUser(data);
+
+        return data;
+      }
+    } catch (error: unknown) {
+      addError({ message: 'Une erreur est survenue lors de la récupération du profil.' });
+    }
+  };
+
   return {
     updateProfessionalProfile: createProfessionalProfile,
     getUserProfile,
     getUserProfileDetails,
+    patchUserProfileDetails,
   };
 };

@@ -56,76 +56,24 @@
           <v-divider class="border-opacity-50 mb-6"
             ><p class="mb-6">A propos de votre activité</p></v-divider
           >
-
-          <v-text-field
+          <v-select
             label="Votre secteur géographique ?"
             v-model="profile.geographicArea"
+            :items="geographicActivity"
+            item-title="label"
+            item-value="value"
             :error-messages="showErrors ? errors.geographicArea : undefined"
           />
           <v-text-field
-            label="Votre secteur géographique ?"
-            v-model="profile.geographicArea"
-            :error-messages="showErrors ? errors.geographicArea : undefined"
-          />
-
-          <v-number-input
-            label="Votre tarif minimum ?"
-            variant="solo"
-            :min="0"
-            v-model="profile.minimumBenefit"
-            :error-messages="showErrors ? errors.minimumBenefit : undefined"
+            v-model="profile.certification"
+            label="Labels & Certifications"
+            variant="outlined"
+            placeholder="exemple: Label AB (Bio)"
           />
           <v-number-input
             variant="solo"
             :min="0"
-            label="Votre délai de réservation minimum (en jours) ?"
-            v-model="profile.minimumReservationPeriod"
-            :error-messages="showErrors ? errors.minimumReservationPeriod : undefined"
-          />
-          <v-checkbox
-            label="Doit-on vous faire un accompte avant prestation"
-            v-model="profile.deposit"
-            :error-messages="showErrors ? errors.deposit : undefined"
-          />
-          <v-number-input
-            v-if="profile.deposit"
-            variant="solo"
-            :min="0"
-            :max="100"
-            :step="5"
-            label="Quel est le montant de dépôt (en pourcentage)?"
-            v-model="profile.depositAmount"
-            :error-messages="showErrors ? errors.depositAmount : undefined"
-          />
-          <div class="d-flex gap-2 flex-column justify-start align-items-start">
-            <v-label class="text-subtitle-1 font-weight-medium"
-              >Vous souhaitez être payer avant l'évènement ?</v-label
-            >
-            <div class="d-flex align-center gap-2">
-              <v-label class="text-subtitle-1 font-weight-medium">Avant la prestation</v-label>
-              <v-switch
-                v-model="profile.billingPeriod"
-                false-value="beforeEvent"
-                true-value="afterEvent"
-                :color="profile.billingPeriod === 'beforeEvent' ? 'success' : 'primary'"
-                hide-details
-                :error-messages="showErrors ? errors.billingPeriod : undefined"
-                >{{ profile.billingPeriod }}</v-switch
-              >
-              <v-label class="text-subtitle-1 font-weight-medium">Après la prestation</v-label>
-            </div>
-          </div>
-          <v-number-input
-            label="Votre tarif minimum ?"
-            variant="solo"
-            :min="0"
-            v-model="profile.minimumBenefit"
-            :error-messages="showErrors ? errors.minimumBenefit : undefined"
-          />
-          <v-number-input
-            variant="solo"
-            :min="0"
-            label="Votre délai de réservation minimum (en jours) ?"
+            label="Votre délai de réservation minimum (en semaine) ?"
             v-model="profile.minimumReservationPeriod"
             :error-messages="showErrors ? errors.minimumReservationPeriod : undefined"
           />
@@ -255,6 +203,7 @@ import * as yup from 'yup';
 import errorToaster from '~/components/common/errorToaster.vue';
 import { useKeywords } from '~/composables/UseKeywords';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
+import { GEOGRAPHIC_ACTIVITY } from '~/constants/geographicActivity';
 import type { Faq, Link, ProfessionalProfile } from '~/models/user/UserModel';
 
 const userStore = useUserStore();
@@ -268,6 +217,7 @@ const showErrors = ref(false);
 const { addError, addSuccess } = useToaster();
 const currentPage = ref(1);
 const activityItems = ref(ACTIVITY_ITEMS);
+const geographicActivity = ref(GEOGRAPHIC_ACTIVITY);
 
 const mergedFaq = computed(() => {
   return faqArray.value.reduce(
@@ -289,14 +239,14 @@ const validationSchema = yup.object({
     .length(14, 'Le SIRET doit contenir 14 caractères'),
   address: yup.string().required("L'adresse est requise"),
   bio: yup.string().required('La bio est requise'),
-  mainActivity: yup.string().required('Activité requise'), // Correction ici
+  mainActivity: yup.string().required('Activité requise'),
   mainInterlocutor: yup.string().required("L'interlocuteur principal est requis"),
   experience: yup
     .number()
     .min(0, "L'expérience doit être positive")
     .required("L'expérience est requise"),
   geographicArea: yup.string().required('La zone géographique est requise'),
-  minimumBenefit: yup.number().min(0, 'Le bénéfice minimum doit être positif'),
+  certification: yup.string(),
   minimumReservationPeriod: yup.number().min(0, 'La période de réservation doit être positive'),
   deposit: yup.boolean(),
   depositAmount: yup.number().min(0, "Le montant de l'acompte doit être positif"),
@@ -328,10 +278,10 @@ const {
     mainActivity: 'Veuillez choisir votre activité',
     mainInterlocutor: '',
     experience: 0,
-    geographicArea: '',
+    geographicArea: geographicActivity.value[0]?.label ?? '',
     faq: {},
-    minimumBenefit: 0,
     minimumReservationPeriod: 0,
+    certification: '',
     deposit: false,
     depositAmount: 0,
     billingPeriod: 'beforeEvent',
@@ -372,6 +322,7 @@ const setSector = async (values: ProfessionalProfile) => {
   const finalValues = {
     ...values,
     faq: mergedFaq.value,
+    minimumReservationPeriod: values.minimumReservationPeriod * 7,
   };
 
   try {

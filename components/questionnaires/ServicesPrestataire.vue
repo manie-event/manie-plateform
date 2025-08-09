@@ -190,6 +190,7 @@
     <!-- Bouton d'ajout -->
     <div class="mt-6 text-center d-flex justify-space-between">
       <v-btn
+        v-if="questionnaires.length < 2"
         @click="addNewQuestionnaire"
         color="primary"
         variant="outlined"
@@ -201,9 +202,7 @@
 
     <div>
       <v-btn @click="goPreviousPage()">Retour</v-btn>
-      <v-btn color="primary" @click="submitAllQuestionnaires()"
-        >Vers la suite du questionnaire</v-btn
-      >
+      <v-btn color="primary" @click="submitAllQuestionnaires()">Valider ma selection</v-btn>
     </div>
   </div>
 </template>
@@ -229,6 +228,7 @@ const userStore = useUserStore();
 const { professionnalServices, keywords, professionalUser } = storeToRefs(userStore);
 const { getSectors, loading, sendProfessionalServices } = useKeywords();
 const { addSuccess, addError } = useToaster();
+const { patchUserProfileDetails } = useUserProfile();
 
 // Types
 interface QuestionnaireItem {
@@ -244,7 +244,6 @@ interface QuestionnaireItem {
 // État
 const questionnaires = ref<QuestionnaireItem[]>([]);
 const activityItems = ref(ACTIVITY_ITEMS);
-const previewDialog = ref(false);
 
 // Tableau qui se met à jour automatiquement
 const payloadArray = ref<ProfessionalServiceUuid[]>([]);
@@ -455,10 +454,13 @@ const submitAllQuestionnaires = async () => {
     const promises = payloadArray.value.map((serviceData: ProfessionalServiceUuid) =>
       sendProfessionalServices(serviceData)
     );
-
-    // Attendre que tous les appels soient terminés
     await Promise.all(promises);
-
+    if (payloadArray.value.length === 2) {
+      await patchUserProfileDetails({
+        ...professionalUser.value,
+        secondActivity: questionnairePresta[1].sector,
+      });
+    }
     addSuccess({ message: `${payloadArray.value.length} service(s) créé(s) avec succès !` });
 
     // Optionnel : vider les sélections après envoi
