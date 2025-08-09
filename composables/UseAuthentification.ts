@@ -89,9 +89,6 @@ export const useAuthentification = () => {
     }
   };
 
-  // Création d'évènement client
-  // Faut proposer au client des services pro qu'on a uniquement en BDD
-
   const registerNewPassword = async (registerPassword: registerNewPasswordModel) => {
     try {
       const { data } = await axios.post(
@@ -118,12 +115,17 @@ export const useAuthentification = () => {
 
   const sendLogout = async () => {
     try {
-      const { data } = await axios.post(`${config.public.apiUrl}/auth/logout`, null, {
-        headers: {
-          Authorization: `Bearer  ${token.value}`,
-          'Content-Type': 'application/json',
-        },
-      });
+      const { data } = await axios.post(
+        `${config.public.apiUrl}/auth/logout`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
       if (data) {
         addSuccess('Déconnexion réussie.');
         await router.push('/');
