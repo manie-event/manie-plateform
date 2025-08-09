@@ -10,7 +10,6 @@ export const useUserStore = defineStore('userStore', () => {
 
   const professionalUser = ref<ProfessionalProfile>();
   const isProfessionalProfileCreated = useLocalStorage('pp-created', false);
-  const professionalServiceUuid = ref<Services>();
   const isConsumerProfileAccepted = ref(false);
   const isStoringUserAccepeted = ref(false);
   const professionnalServices = ref<Services[]>([]);
@@ -44,13 +43,12 @@ export const useUserStore = defineStore('userStore', () => {
 
   return {
     user,
-    keywords,
     professionalUser,
     isProfessionalProfileCreated,
-    professionnalServices,
     isConsumerProfileAccepted,
     isStoringUserAccepeted,
-    professionalServiceUuid,
+    professionnalServices,
+    keywords,
     setUserAccepted,
     setUser,
     setProfessionalUser,

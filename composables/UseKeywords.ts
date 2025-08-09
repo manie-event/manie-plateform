@@ -4,8 +4,6 @@ import type { Keywords } from '~/models/professionalService/Keywords';
 import type { ProfessionalServiceUuid } from '~/models/professionalService/professionalServiceUuid';
 import type { Sectors } from '~/models/professionalService/Sectors';
 import type { Services } from '~/models/professionalService/Services';
-// Correct the import path if the file is named differently or located elsewhere
-// Or update the path to the correct location where ProfessionalServicePayload is defined
 
 export const useKeywords = () => {
   const config = useRuntimeConfig();

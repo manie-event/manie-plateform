@@ -196,7 +196,7 @@
         variant="outlined"
         prepend-icon="mdi-plus"
       >
-        Ajouter une activité secondaire
+        Ajouter une nouvelle activité
       </v-btn>
     </div>
 
@@ -410,7 +410,7 @@ const submitAllQuestionnaires = async () => {
       sendProfessionalServices(serviceData)
     );
     await Promise.all(promises);
-    if (payloadArray.value.length === 2) {
+    if (payloadArray.value.length >= 2) {
       await patchUserProfileDetails({
         ...professionalUser.value,
         secondActivity: questionnairePresta[1].sector ?? '',

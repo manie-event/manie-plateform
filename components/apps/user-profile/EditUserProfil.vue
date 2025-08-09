@@ -112,7 +112,6 @@
           </div>
 
           <v-divider class="mb-6"> <p class="mb-6">A propos de votre communication</p></v-divider>
-          <v-divider class="mb-6"> <p class="mb-6">A propos de votre communication</p></v-divider>
 
           <div class="mt-4">
             <div v-for="(link, index) in profile.links" :key="index">
@@ -141,7 +140,7 @@
                 Supprimer
               </v-btn>
             </div>
-            <v-btn @click="addLink" color="primary" prepend-icon="mdi-plus">
+            <v-btn @click="addLink" color="primary">
               Ajouter un lien vers un réseau social ou un site web
             </v-btn>
           </div>
@@ -196,11 +195,11 @@
 </template>
 <script setup lang="ts">
 import BaseModal from '@/components/common/BaseModal.vue';
-import ServicesPrestataire from '@/components/questionnaire/ServicesPrestataire.vue';
 import { useForm } from 'vee-validate';
 import { ref, Teleport } from 'vue';
 import * as yup from 'yup';
 import errorToaster from '~/components/common/errorToaster.vue';
+import ServicesPrestataire from '~/components/questionnaires/ServicesPrestataire.vue';
 import { useKeywords } from '~/composables/UseKeywords';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import { GEOGRAPHIC_ACTIVITY } from '~/constants/geographicActivity';
