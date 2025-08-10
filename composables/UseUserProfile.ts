@@ -6,7 +6,7 @@ export const useUserProfile = () => {
   const { addError, addSuccess } = useToaster();
   const token = useCookie('token');
   const userStore = useUserStore();
-  const { setProfessionalUser } = userStore;
+  const { setProfessionalUser, sendNewPhotoOnProfile } = userStore;
   const config = useRuntimeConfig();
 
   const professionalUuid = localStorage.getItem('professional-uuid');
@@ -114,10 +114,9 @@ export const useUserProfile = () => {
         }
       );
 
-      // Supposons que le back renvoie la nouvelle URL de l'image
-      // if (data?.imageUrl) {
-      //   profileBg.value = data.imageUrl;
-      // }
+      if (data?.imageUrl) {
+        sendNewPhotoOnProfile(data.imageUrl);
+      }
       console.log('ici', data.imageUrl);
 
       return data;

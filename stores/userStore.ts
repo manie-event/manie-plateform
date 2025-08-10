@@ -14,6 +14,7 @@ export const useUserStore = defineStore('userStore', () => {
   const isStoringUserAccepeted = ref(false);
   const professionnalServices = ref<Services[]>([]);
   const keywords = ref<Keywords[]>([]);
+  const bgPicture = ref('/images/backgrounds/profilebg-2.jpg');
 
   const setUser = (userData: User) => {
     user.value = userData;
@@ -41,8 +42,13 @@ export const useUserStore = defineStore('userStore', () => {
     keywords.value.push(...newKeywords);
   };
 
+  const sendNewPhotoOnProfile = (newPicture: string) => {
+    bgPicture.value = newPicture;
+  };
+
   return {
     user,
+    bgPicture,
     professionalUser,
     isProfessionalProfileCreated,
     isConsumerProfileAccepted,
@@ -54,5 +60,6 @@ export const useUserStore = defineStore('userStore', () => {
     setProfessionalUser,
     setProfessionalServices,
     setKeywords,
+    sendNewPhotoOnProfile,
   };
 });
