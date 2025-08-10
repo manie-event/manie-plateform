@@ -1,7 +1,7 @@
 <template>
   <div class="position-relative">
-    <img :src="profileBg" alt="profile" class="w-100" />
-    <button @click="triggerFileInput" class="profile-banner__change-image">+</button>
+    <img :src="bgPicture" alt="profile" class="w-100" />
+    <button @click="triggerClickFileInput" class="profile-banner__change-image">+</button>
     <input
       type="file"
       ref="fileInput"
@@ -100,16 +100,17 @@ import { IdIcon, Layout2Icon, PlusIcon, UserCircleIcon, UsersIcon } from 'vue-ta
 import { useUserProfile } from '../../../composables/UseUserProfile';
 import UserImage from '/images/profile/user6.jpg';
 
+const { bgPicture } = storeToRefs(useUserStore());
+
 const tab = ref(null);
 const openModal = ref(false);
-const profileBg = ref('/images/backgrounds/profilebg-2.jpg');
 const fileInput = ref(null);
 
 const { user, isProfessionalProfileCreated } = storeToRefs(useUserStore());
 const { getKeywords } = useKeywords();
 const { changeBannerPicture } = useUserProfile();
 
-const triggerFileInput = () => fileInput.value?.click();
+const triggerClickFileInput = () => fileInput.value?.click();
 const changeBannerPhoto = async (e: Event) => {
   const input = e.target as HTMLInputElement;
   if (!input.files?.length) return;
