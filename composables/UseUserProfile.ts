@@ -29,6 +29,8 @@ export const useUserProfile = () => {
         return data;
       }
     } catch (error: unknown) {
+      // console.log('Error updating professional profile:', error.response.data.errors);
+
       addError(error.response.data as errorModel);
     }
   };
@@ -48,8 +50,6 @@ export const useUserProfile = () => {
         return data;
       }
     } catch (error: unknown) {
-      console.log('Error fetching user profile:', error);
-
       addError({ message: 'Une erreur est survenue lors de la récupération du profil.' });
     }
   };
@@ -96,10 +96,42 @@ export const useUserProfile = () => {
     }
   };
 
+  const changeBannerPicture = async (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    console.log('URL finale:', `${config.public.apiUrl}/professional/${professionalUuid}/picture`);
+
+    try {
+      const { data } = await axios.patch(
+        `${config.public.apiUrl}/professional/${professionalUuid}/picture`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+
+      // Supposons que le back renvoie la nouvelle URL de l'image
+      // if (data?.imageUrl) {
+      //   profileBg.value = data.imageUrl;
+      // }
+      console.log('ici', data.imageUrl);
+
+      return data;
+    } catch (error) {
+      console.error(error);
+      alert('Une erreur est survenue lors de la mise à jour du profil');
+    }
+  };
+
   return {
-    updateProfessionalProfile: createProfessionalProfile,
+    createProfessionalProfile,
     getUserProfile,
     getUserProfileDetails,
     patchUserProfileDetails,
+    changeBannerPicture,
   };
 };
