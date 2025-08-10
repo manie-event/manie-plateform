@@ -1,0 +1,15 @@
+export const GEOGRAPHIC_ACTIVITY = [
+  { label: 'Auvergne Rhône-Alpes', value: 'rhoneAlpes' },
+  { label: 'Ain', value: 'ain' },
+  { label: 'Allier', value: 'allier' },
+  { label: 'Ardèche', value: 'ardeche' },
+  { label: 'Cantal', value: 'cantal' },
+  { label: 'Drôme', value: 'drome' },
+  { label: 'Haute-Savoie', value: 'hauteSavoie' },
+  { label: 'Haute Loire', value: 'hauteLoire' },
+  { label: 'Isère', value: 'isere' },
+  { label: 'Loire', value: 'loire' },
+  { label: 'Puy De Dôme', value: 'puyDeDome' },
+  { label: 'Rhône', value: 'rhone' },
+  { label: 'Savoie', value: 'savoie' },
+];

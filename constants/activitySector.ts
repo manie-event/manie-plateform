@@ -1,0 +1,17 @@
+export const ACTIVITY_ITEMS = [
+  { label: 'Animation (jeux, performeurs, art, bien-être)', value: 'animation' },
+  { label: 'Beauté (coiffure, maquillage)', value: 'beauté' },
+  { label: 'Boisson (mixologue, bar mobile, fournisseur...)', value: 'boisson' },
+  { label: 'Décoration (graphiste, designer, fleuriste, cadeaux...)', value: 'décoration' },
+  { label: 'Esthétique (soin, sour/cils, manucure, pedicure)', value: 'esthétique' },
+  { label: 'Humain (coordinateur.trice, officiant.e)', value: 'humain' },
+  { label: 'Lieux (espace de réception, restaurant, bar...)', value: 'lieux' },
+  { label: 'Logistique (livraison, sécurité, ménage...)', value: 'logistique' },
+  { label: 'Look (boutique classique & seconde main)', value: 'look' },
+  { label: 'Loueur (mobilier, décoration, structure, scéno...)', value: 'loueur' },
+  { label: 'Musique (dj, musique live)', value: 'musique' },
+  { label: 'Photo & Vidéo (photographe, vidéaste)', value: 'audiovisuel' },
+  { label: 'Restauration (traiteur, chef.fe, food-truck...)', value: 'food' },
+  { label: "Service (serveur.se, maître d'hotel, hôtesse)", value: 'service' },
+  { label: 'Transport (véhicule motorisé ou vert, collectif ou individuel)', value: 'transport' },
+];

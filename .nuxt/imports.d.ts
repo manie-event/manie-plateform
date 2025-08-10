@@ -31,6 +31,7 @@ export { setInterval } from '#app/compat/interval';
 export { useAuthentification } from '../composables/UseAuthentification';
 export { useKeywords } from '../composables/UseKeywords';
 export { usePaiementJeton } from '../composables/UsePaiementJeton';
+export { useProfessionalService } from '../composables/UseProfessionalService';
 export { useUserProfile } from '../composables/UseUserProfile';
 export { customizer, getPrimary, getSecondary, getLightPrimary, getLightSecondary, getLight100, getLightborder, getTextGrey100, getWarning, getError } from '../utils/UpdateColors';
 export { default as axios } from '../utils/axios';
