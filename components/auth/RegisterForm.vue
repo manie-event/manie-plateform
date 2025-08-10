@@ -6,8 +6,8 @@ import errorToaster from '../common/errorToaster.vue';
 /*Social icons*/
 // import google from "/images/svgs/google-icon.svg";
 // import facebook from "/images/svgs/icon-facebook.svg";
+import JuridiqueCharteBonneConduite from '@/components/juridique/CharteBonneConduite.vue';
 const { sendRegister } = useAuthentification();
-
 const registerForm = ref<RegisterModel>({
   username: '',
   category: 'professional',
@@ -16,6 +16,8 @@ const registerForm = ref<RegisterModel>({
   email: '',
 });
 const valid = ref(true);
+const isCharteBonneConduite = ref(false);
+const openModalCharte = ref(false);
 const passwordRules = ref([
   (v: string) => !!v || 'Le mot de passe est obligatoire',
   (v: string) => (v && v.length >= 10) || 'Le mot de passe doit faire 10 caractères minimum',
@@ -128,6 +130,24 @@ const register = async () => {
     <v-btn size="large" class="mt-2" color="primary" block submit rounded="pill" @click="register"
       >Je créer mon compte</v-btn
     >
+    <div v-if="registerForm.category === 'professional'">
+      <div class="d-flex gap-4 mt-3">
+        <p style="font-size: small">
+          Je certifie avoir lu et accepté la charte de bonne conduite de MANIE. Je m’engage à
+          respecter les valeurs et engagements qui y figurent.
+          <span @click="openModalCharte = true" style="opacity: 0.5; cursor: pointer"
+            >En savoir plus ici</span
+          >
+        </p>
+        <v-checkbox v-model="isCharteBonneConduite"></v-checkbox>
+      </div>
+      <div v-if="openModalCharte">
+        <JuridiqueCharteBonneConduite
+          v-model:openModal="openModalCharte"
+          @isCharteBonneConduite="isCharteBonneConduite = $event"
+        />
+      </div>
+    </div>
   </v-form>
   <Teleport to="body">
     <errorToaster />

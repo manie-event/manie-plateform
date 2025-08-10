@@ -208,7 +208,7 @@
 </template>
 
 <script setup lang="ts">
-import questionnairePresta from '@/data/questionnairePresta.json';
+import questionnairePresta from '@/data/questionnaire-presta.json';
 import { nextTick, onMounted, ref, watch } from 'vue';
 import { useKeywords } from '~/composables/UseKeywords';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';

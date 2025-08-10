@@ -484,59 +484,47 @@ const Packages: PackageType[] = [
 
 const FAQData: TemplateType[] = [
   {
-    title: 'What is included with my purchase?',
+    title: 'Charte de bonne conduite',
     subtitle:
       'Tailor the dashboard to your exact needs. Customize layouts, color schemes, and widgets effortlessly for a personalized user experience.',
-  },
-  {
-    title: 'Are there any recurring fees?',
-    subtitle:
-      ' Unlock the true potential of your data with our advanced analytics tools. Gain valuable insights and make data-driven decisions with ease.',
-  },
-  {
-    title: 'Can I use the template on multiple projects?',
-    subtitle:
-      'Visualize complex data sets beautifully with our interactive graphs and charts. Quickly grasp trends and patterns for smarter analysis.',
-  },
-  {
-    title: 'Can I customize the admin dashboard template to match my brand?',
-    subtitle:
-      'Visualize complex data sets beautifully with our interactive graphs and charts. Quickly grasp trends and patterns for smarter analysis.',
-  },
-  {
-    title: 'Are there any restrictions on using the template?',
-    subtitle:
-      'Visualize complex data sets beautifully with our interactive graphs and charts. Quickly grasp trends and patterns for smarter analysis.',
-  },
-  {
-    title: 'How can I get support after purchase?',
-    subtitle:
-      'Visualize complex data sets beautifully with our interactive graphs and charts. Quickly grasp trends and patterns for smarter analysis.',
   },
 ];
 
 const footerContact: FooterType[] = [
   {
-    titre: 'Nom de l’entreprise',
+    titre: "Conditions Générales d'utilisation",
+    titre: "Conditions Générales d'utilisation",
     description: 'Manie Event',
+    link: '/juridique/cgu',
   },
   {
-    titre: 'Numéro de siret',
+    titre: 'Conditions Générales de Ventes',
+    titre: 'Conditions Générales de Ventes',
     description: '84933539300013',
+    link: '/juridique/cgv',
   },
   {
-    titre: 'Localisation',
+    titre: 'Mentions légales',
     description: '69007 Lyon, France',
+    link: '/juridique/mentions-legales',
   },
   {
-    titre: 'Hébergeur du site',
-    description: 'OVH SAS 2 rue Kellermann - 59100 Roubaix - France',
+    titre: 'Politique de confidentialité',
+    description: '69007 Lyon, France',
+    link: '/juridique/politique-de-confidentialite',
+  },
+  {
+    titre: 'Cookies',
+    description: '69007 Lyon, France',
+    link: '/juridique/cookies',
   },
 ];
+
 const footerMedia: FooterType[] = [
   {
     titre: 'Adresse mail',
     description: 'contact@manie-event.fr',
+    link: '/front-pages/Contact-us.vue',
   },
 ];
 

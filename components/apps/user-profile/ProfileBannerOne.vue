@@ -1,5 +1,15 @@
 <template>
-  <img :src="profileBg" alt="profile" class="w-100" />
+  <div class="position-relative">
+    <img :src="bgPicture" alt="profile" class="w-100" />
+    <button @click="triggerClickFileInput" class="profile-banner__change-image">+</button>
+    <input
+      type="file"
+      ref="fileInput"
+      @change="changeBannerPhoto"
+      accept="image/*"
+      style="display: none"
+    />
+  </div>
   <div class="mx-sm-5">
     <v-card elevation="10" class="overflow-hidden mt-sm-n13 mt-n5">
       <v-card-item class="pb-0">
@@ -87,14 +97,27 @@
 import EditerUserProfile from '@/components/apps/user-profile/EditUserProfil.vue';
 import { ref, shallowRef, Teleport } from 'vue';
 import { IdIcon, Layout2Icon, PlusIcon, UserCircleIcon, UsersIcon } from 'vue-tabler-icons';
-import profileBg from '/images/backgrounds/profilebg-2.jpg';
+import { useUserProfile } from '../../../composables/UseUserProfile';
 import UserImage from '/images/profile/user6.jpg';
+
+const { bgPicture } = storeToRefs(useUserStore());
 
 const tab = ref(null);
 const openModal = ref(false);
+const fileInput = ref(null);
 
 const { user, isProfessionalProfileCreated } = storeToRefs(useUserStore());
 const { getKeywords } = useKeywords();
+const { changeBannerPicture } = useUserProfile();
+
+const triggerClickFileInput = () => fileInput.value?.click();
+const changeBannerPhoto = async (e: Event) => {
+  const input = e.target as HTMLInputElement;
+  if (!input.files?.length) return;
+
+  const picture = input.files[0];
+  await changeBannerPicture(picture);
+};
 
 const items = shallowRef([
   { tab: 'My Profile', icon: UserCircleIcon, href: '/apps/userprofile/one' },
@@ -108,7 +131,33 @@ const openEditProfilModal = () => {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.profile-banner {
+  &__change-image {
+    position: absolute;
+    display: flex;
+    height: 50px;
+    width: 50px;
+    top: 10px;
+    left: 10px;
+    /* background: white; */
+    padding: 0.5rem;
+    border-radius: 5px;
+    font-weight: 900;
+    font-size: 1rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid white;
+    color: white;
+    transition: all 0.4s ease-in-out;
+    &:hover {
+      background: white;
+      color: black;
+      transition: all 0.4s ease-in-out;
+    }
+  }
+}
+
 .avatar-border {
   background-image: linear-gradient(rgb(80, 178, 252), rgb(244, 76, 102));
   border-radius: 50%;
