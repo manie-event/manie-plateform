@@ -35,6 +35,7 @@ export { useProfessionalService } from '../composables/UseProfessionalService';
 export { useUserProfile } from '../composables/UseUserProfile';
 export { customizer, getPrimary, getSecondary, getLightPrimary, getLightSecondary, getLight100, getLightborder, getTextGrey100, getWarning, getError } from '../utils/UpdateColors';
 export { default as axios } from '../utils/axios';
+export { linkify } from '../utils/text-utils';
 export { useToaster } from '../utils/toaster';
 export { useCartStore } from '../stores/cartStore';
 export { useCustomizerStore } from '../stores/customizer';

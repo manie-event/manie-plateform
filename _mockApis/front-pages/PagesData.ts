@@ -517,22 +517,32 @@ const FAQData: TemplateType[] = [
 
 const footerContact: FooterType[] = [
   {
-    titre: 'Nom de l’entreprise',
+    titre: "Conditions Générales d'utilisation",
     description: 'Manie Event',
+    lien: '/juridique/cgu',
   },
   {
-    titre: 'Numéro de siret',
+    titre: 'Conditions Générales de Ventes',
     description: '84933539300013',
+    lien: '/juridique/cgv',
   },
   {
-    titre: 'Localisation',
+    titre: 'Mentions légales',
     description: '69007 Lyon, France',
+    lien: '/juridique/mentions-legales',
   },
   {
-    titre: 'Hébergeur du site',
-    description: 'OVH SAS 2 rue Kellermann - 59100 Roubaix - France',
+    titre: 'Politique de confidentialité',
+    description: '69007 Lyon, France',
+    lien: '/juridique/politique-de-confidentialite',
+  },
+  {
+    titre: 'Cookies',
+    description: '69007 Lyon, France',
+    lien: '/juridique/cookies',
   },
 ];
+
 const footerMedia: FooterType[] = [
   {
     titre: 'Adresse mail',

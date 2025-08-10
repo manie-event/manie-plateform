@@ -1,48 +1,54 @@
 [
   {
-    "title": "1. Objet",
-    "description": "Les présentes CGV régissent la vente de prestations de services proposées sur la plateforme MANIE aux clients et prestataires inscrits."
-  },
-  {
-    "title": "2. Services proposés",
-    "description": "Clients : Accompagnement à la définition de projet, mise en relation avec des prestataires, accès à des outils de gestion événementielle, accompagnement personnalisé (suivi, conseils et inspirations). \nPrestataires : Mise en relation avec des clients qualifiés, développement du portefeuille client, accompagnement, accès à une communauté professionnelle et développement du réseau."
-  },
-  {
-    "title": "3. Modalités de commande",
-    "description": "Les commandes de services se font exclusivement via la plateforme MANIE pour l’ensemble des fonctionnalités proposées par MANIE. Les commandes de jeton se font via la plateforme de paiement STRIPE.  \nUne confirmation est envoyée par email dès validation."
-  },
-  {
-    "title": "4. Tarification",
-    "description": "",
-    "children": [
+    "sectionTitle": "Conditions Générales de Vente",
+    "sectionDescription": "Documents légal de ventes de services et produits",
+    "sections": [
       {
-        "title": "4.1 Pour les clients",
-        "description": "L’accès à la plateforme MANIE est gratuit pour les Clients souhaitant construire leur projet, le publier sur la plateforme et être mis en relation avec des prestataires. \nToutefois, des formules d’accompagnement personnalisées peuvent être proposées tels que : \n- l’accès à des outils de gestion de projet premium \n- le suivi et l’accompagnement personnalisé \n- la gestion complète de leur évènement (event planner)\n- la sélection d’un prestataire de dernière minute \n\nLes tarifs des formules payantes sont clairement indiqués sur la plateforme au moment de la souscription. \nIls sont exprimés en euros TTC et peuvent varier en fonction du niveau d’accompagnement choisi. \nUn devis récapitulatif peut être fourni à la demande du client. \n\nLe paiement de la formule sélectionnée s’effectue par virement bancaire à l’issue de l’événement, sauf indication contraire mentionnée au moment de la commande.\nDans certains cas, un acompte pourra être demandé pour confirmer l’engagement, notamment dans le cadre de formules sur mesure ou avec un accompagnement personnalisé.\n\nConformément à la loi, le client dispose d’un délai légal de 14 jours à compter de la commande pour exercer son droit de rétractation, sauf si la prestation a déjà commencé ou si le client a donné son accord écrit pour renoncer expressément à ce droit."
+        "title": "1. Objet",
+        "description": "Les présentes CGV régissent la vente de prestations de services proposées sur la plateforme MANIE aux clients et prestataires inscrits."
       },
       {
-        "title": "4.2 Pour les prestataires",
-        "description": "Les prestataires inscrits sur la plateforme MANIE ont le choix entre deux formules de collaboration :\n\na) Une commission sur devis validé\nDans cette formule, MANIE est rémunérée par une commission calculée sur le montant total TTC du devis accepté par le client. Le pourcentage de la commission est précisé dans le contrat de partenariat signé entre MANIE et le prestataire. Cette commission est facturée une fois la prestation validée par le client.\nLes prestataires ayant opté pour cette formule peuvent se désinscrire et quitter la plateforme à tout moment, sans pénalité, sauf si un engagement contractuel est en cours pour un événement.\n\nb) Un abonnement annuel\nLe Prestataire peut également opter pour une formule sans commission, via le paiement d’un abonnement annuel fixe. Le montant de cet abonnement est précisé au moment de la souscription et peut faire l’objet d’une révision annuelle. L'abonnement permet un accès illimité aux fonctionnalités de la plateforme et aux projets pertinents, sans frais supplémentaires liés aux devis validés. Il est indiqué comme avantageux dans le cas d’un nombre importants d'évènements signés  par le prestataire sur l’année. \n\nLe choix de la formule est effectué au moment de la signature du contrat de partenariat et peut être modifié à l’échéance annuelle, sur demande du prestataire, avec un préavis minimum de 30 jours avant la date de renouvellement."
+        "title": "2. Services proposés",
+        "description": "Clients : Accompagnement à la définition de projet, mise en relation avec des prestataires, accès à des outils de gestion événementielle, accompagnement personnalisé (suivi, conseils et inspirations).\nPrestataires : Mise en relation avec des clients qualifiés, développement du portefeuille client, accompagnement, accès à une communauté professionnelle et développement du réseau."
+      },
+      {
+        "title": "3. Modalités de commande",
+        "description": "Les commandes de services se font exclusivement via la plateforme MANIE pour l’ensemble des fonctionnalités proposées par MANIE. Les commandes de jeton se font via la plateforme de paiement STRIPE.\nUne confirmation est envoyée par email dès validation."
+      },
+      {
+        "title": "4. Tarification",
+        "description": "",
+        "children": [
+          {
+            "title": "4.1 Pour les clients",
+            "description": "L’accès à la plateforme MANIE est gratuit pour les Clients souhaitant construire leur projet, le publier sur la plateforme et être mis en relation avec des prestataires.\nToutefois, des formules d’accompagnement personnalisées peuvent être proposées tels que :\n- l’accès à des outils de gestion de projet premium\n- le suivi et l’accompagnement personnalisé\n- la gestion complète de leur évènement (event planner)\n- la sélection d’un prestataire de dernière minute\n\nLes tarifs des formules payantes sont clairement indiqués sur la plateforme au moment de la souscription.\nIls sont exprimés en euros TTC et peuvent varier en fonction du niveau d’accompagnement choisi.\nUn devis récapitulatif peut être fourni à la demande du client.\n\nLe paiement de la formule sélectionnée s’effectue par virement bancaire à l’issue de l’événement, sauf indication contraire mentionnée au moment de la commande.\nDans certains cas, un acompte pourra être demandé pour confirmer l’engagement, notamment dans le cadre de formules sur mesure ou avec un accompagnement personnalisé.\n\nConformément à la loi, le client dispose d’un délai légal de 14 jours à compter de la commande pour exercer son droit de rétractation, sauf si la prestation a déjà commencé ou si le client a donné son accord écrit pour renoncer expressément à ce droit."
+          },
+          {
+            "title": "4.2 Pour les prestataires",
+            "description": "Les prestataires inscrits sur la plateforme MANIE ont le choix entre deux formules de collaboration :\n\na) Une commission sur devis validé\nDans cette formule, MANIE est rémunérée par une commission calculée sur le montant total TTC du devis accepté par le client. Le pourcentage de la commission est précisé dans le contrat de partenariat signé entre MANIE et le prestataire. Cette commission est facturée une fois la prestation validée par le client.\nLes prestataires ayant opté pour cette formule peuvent se désinscrire et quitter la plateforme à tout moment, sans pénalité, sauf si un engagement contractuel est en cours pour un événement.\n\nb) Un abonnement annuel\nLe Prestataire peut également opter pour une formule sans commission, via le paiement d’un abonnement annuel fixe. Le montant de cet abonnement est précisé au moment de la souscription et peut faire l’objet d’une révision annuelle. L'abonnement permet un accès illimité aux fonctionnalités de la plateforme et aux projets pertinents, sans frais supplémentaires liés aux devis validés. Il est indiqué comme avantageux dans le cas d’un nombre importants d'évènements signés par le prestataire sur l’année.\n\nLe choix de la formule est effectué au moment de la signature du contrat de partenariat et peut être modifié à l’échéance annuelle, sur demande du prestataire, avec un préavis minimum de 30 jours avant la date de renouvellement."
+          }
+        ]
+      },
+      {
+        "title": "5. Paiement",
+        "description": "L’achat de jeton prestataire s’effectue via la solution sécurisée Stripe intégrée à la plateforme.\nLa commission sur devis est réglée par le prestataire par virement bancaire.\nToute formule payante (et/ou acompte) sera réglée par le client par virement bancaire."
+      },
+      {
+        "title": "7. Responsabilités et garanties",
+        "description": "Pour les clients : MANIE s’engage à proposer des prestataires locaux, responsables et de qualité.\nEn cas de désistement d’un prestataire jusqu’à un mois avant l’événement, un remplacement équivalent (à 5% prêt du coût total) sera proposé.\nPour les prestataires : MANIE garantit l’apport de clients qualifiés, cohérents avec leur positionnement, ainsi qu’un gain de temps dans leur prospection.\nMANIE agit en tant qu’intermédiaire et ne peut être tenue responsable de la mauvaise exécution des prestations fournies directement par les prestataires. Toutefois, MANIE s'engage à intervenir en cas de litige pour proposer une solution équitable à l’amiable.\nSi plusieurs clients se voyaient insatisfaits d’un prestataire pour des raisons et arguments fondés, MANIE se verrait alors exclure ce prestataire de la plateforme."
+      },
+      {
+        "title": "8. Résiliation",
+        "description": "Les utilisateurs peuvent résilier leur compte à tout moment depuis leur espace personnel si aucun événement est en cours et qu'il est engagé auprès d'aucun autre utilisateur que lui-même et que cet utilisateur a réglé l’ensemble des sommes dues à la plateforme.\nEn cas de non-respect des CGU-CGV ou de la charte mise en place par MANIE, ce dernier se réserve le droit de suspendre ou supprimer un compte sans préavis."
+      },
+      {
+        "title": "9. Loi applicable et litiges",
+        "description": "Les présentes CGV sont régies par le droit français. Tout litige sera porté devant les tribunaux compétents du ressort de LYON, après tentative de résolution amiable."
+      },
+      {
+        "title": "10. Contact",
+        "description": "Pour toute question relative aux conditions générales de vente :\n📧 contact@manie-event.fr"
       }
     ]
-  },
-  {
-    "title": "5. Paiement",
-    "description": "L’achat de jeton prestataire s’effectue via la solution sécurisée Stripe intégrée à la plateforme. \nLa commission sur devis est réglée par le prestataire par virement bancaire. \nToute formule payante (et/ou acompte) sera réglée par le client par virement bancaire."
-  },
-  {
-    "title": "7. Responsabilités et garanties",
-    "description": "Pour les clients : MANIE s’engage à proposer des prestataires locaux, responsables et de qualité. \nEn cas de désistement d’un prestataire jusqu’à un mois avant l’événement, un remplacement équivalent (à 5% prêt du coût total) sera proposé.\nPour les prestataires : MANIE garantit l’apport de clients qualifiés, cohérents avec leur positionnement, ainsi qu’un gain de temps dans leur prospection.\nMANIE agit en tant qu’intermédiaire et ne peut être tenue responsable de la mauvaise exécution des prestations fournies directement par les prestataires. Toutefois, MANIE s'engage à intervenir en cas de litige pour proposer une solution équitable à l’amiable. \nSi plusieurs clients se voyaient insatisfaits d’un prestataire pour des raisons et arguments fondés, MANIE se verrait alors exclure ce prestataire de la plateforme."
-  },
-  {
-    "title": "8. Résiliation",
-    "description": "Les utilisateurs peuvent résilier leur compte à tout moment depuis leur espace personnel si aucun événement est en cours et qu'il est engagé auprès d'aucun autre utilisateur que lui-même et que cet utilisateur a régler l’ensemble des sommes dûes à la plateforme. \nEn cas de non-respect des CGU-CGV ou de la charte mise en place par MANIE, ce dernier se réserve le droit de suspendre ou supprimer un compte sans préavis."
-  },
-  {
-    "title": "9. Loi applicable et litiges",
-    "description": "Les présentes CGV sont régies par le droit français. Tout litige sera porté devant les tribunaux compétents du ressort de LYON, après tentative de résolution amiable."
-  },
-  {
-    "title": "10. Contact",
-    "description": "Pour toute question relative aux conditions générales de vente :\n 📧 contact@manie-event.fr"
   }
 ]
