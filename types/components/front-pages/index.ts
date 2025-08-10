@@ -41,7 +41,7 @@ interface PackageType {
 interface FooterType {
   titre: string;
   description: string;
-  link: string;
+  link?: string;
 }
 
 interface Feature {

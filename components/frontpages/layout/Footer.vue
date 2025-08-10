@@ -18,7 +18,7 @@ import manieFooterDroits from '/images/logos/logo-footer-droits.png';
             <div class="d-flex flex-column ga-4">
               <div v-for="item in footerContact" :key="item.titre">
                 <h4 class="footer-title">
-                  {{ `${item.titre}: ` }}
+                  <a :href="item.lien"> {{ `${item.titre}: ` }}</a>
                 </h4>
                 <h5>{{ item.description }}</h5>
               </div>
@@ -78,6 +78,13 @@ import manieFooterDroits from '/images/logos/logo-footer-droits.png';
   </div>
 </template>
 <style lang="scss" scoped>
+a {
+  text-decoration: none;
+  color: white;
+  &:hover {
+    cursor: pointer;
+  }
+}
 .footer-title {
   color: #cccc;
   font-weight: medium;
