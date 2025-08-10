@@ -1,12 +1,13 @@
 <template>
   <div class="position-relative">
     <img :src="profileBg" alt="profile" class="w-100" />
+    <button @click="triggerFileInput" class="profile-banner__change-image">+</button>
     <input
       type="file"
       ref="fileInput"
       @change="changeBannerPhoto"
       accept="image/*"
-      class="profile-banner__change-image"
+      style="display: none"
     />
   </div>
   <div class="mx-sm-5">
@@ -108,6 +109,7 @@ const { user, isProfessionalProfileCreated } = storeToRefs(useUserStore());
 const { getKeywords } = useKeywords();
 const { changeBannerPicture } = useUserProfile();
 
+const triggerFileInput = () => fileInput.value?.click();
 const changeBannerPhoto = async (e: Event) => {
   const input = e.target as HTMLInputElement;
   if (!input.files?.length) return;
@@ -128,7 +130,33 @@ const openEditProfilModal = () => {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.profile-banner {
+  &__change-image {
+    position: absolute;
+    display: flex;
+    height: 50px;
+    width: 50px;
+    top: 10px;
+    left: 10px;
+    /* background: white; */
+    padding: 0.5rem;
+    border-radius: 5px;
+    font-weight: 900;
+    font-size: 1rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid white;
+    color: white;
+    transition: all 0.4s ease-in-out;
+    &:hover {
+      background: white;
+      color: black;
+      transition: all 0.4s ease-in-out;
+    }
+  }
+}
+
 .avatar-border {
   background-image: linear-gradient(rgb(80, 178, 252), rgb(244, 76, 102));
   border-radius: 50%;
