@@ -97,7 +97,7 @@ export const useUserProfile = () => {
   };
 
   return {
-    updateProfessionalProfile: createProfessionalProfile,
+    createProfessionalProfile,
     getUserProfile,
     getUserProfileDetails,
     patchUserProfileDetails,
