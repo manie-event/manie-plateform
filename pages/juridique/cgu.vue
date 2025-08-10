@@ -19,5 +19,5 @@
   </v-expansion-panels>
 </template>
 <script setup lang="ts">
-import conditions from '@/data/cgv.json';
+import conditions from '@/data/cgu.json';
 </script>

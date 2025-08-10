@@ -9,6 +9,7 @@ import TextCards from '@/components/dashboards/dashboard2/TextCards.vue';
 import TraficDistribution from '@/components/dashboards/dashboard2/TrafficDistribution.vue';
 import UpcommingSchedule from '@/components/dashboards/dashboard2/UpcommingSchedule.vue';
 import WelcomeCard from '@/components/dashboards/dashboard2/WelcomeCard.vue';
+import Footer from '@/components/frontpages/layout/Footer.vue';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
 const userStore = useUserStore();
 const { isProfessionalProfileCreated } = storeToRefs(userStore);
@@ -78,4 +79,5 @@ onMounted(() => {
       </BaseEmptyState>
     </v-col>
   </v-row>
+  <Footer />
 </template>
