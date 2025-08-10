@@ -484,34 +484,9 @@ const Packages: PackageType[] = [
 
 const FAQData: TemplateType[] = [
   {
-    title: 'What is included with my purchase?',
+    title: 'Charte de bonne conduite',
     subtitle:
       'Tailor the dashboard to your exact needs. Customize layouts, color schemes, and widgets effortlessly for a personalized user experience.',
-  },
-  {
-    title: 'Are there any recurring fees?',
-    subtitle:
-      ' Unlock the true potential of your data with our advanced analytics tools. Gain valuable insights and make data-driven decisions with ease.',
-  },
-  {
-    title: 'Can I use the template on multiple projects?',
-    subtitle:
-      'Visualize complex data sets beautifully with our interactive graphs and charts. Quickly grasp trends and patterns for smarter analysis.',
-  },
-  {
-    title: 'Can I customize the admin dashboard template to match my brand?',
-    subtitle:
-      'Visualize complex data sets beautifully with our interactive graphs and charts. Quickly grasp trends and patterns for smarter analysis.',
-  },
-  {
-    title: 'Are there any restrictions on using the template?',
-    subtitle:
-      'Visualize complex data sets beautifully with our interactive graphs and charts. Quickly grasp trends and patterns for smarter analysis.',
-  },
-  {
-    title: 'How can I get support after purchase?',
-    subtitle:
-      'Visualize complex data sets beautifully with our interactive graphs and charts. Quickly grasp trends and patterns for smarter analysis.',
   },
 ];
 
@@ -519,24 +494,14 @@ const footerContact: FooterType[] = [
   {
     titre: 'Nom de l’entreprise',
     description: 'Manie Event',
-  },
-  {
-    titre: 'Numéro de siret',
-    description: '84933539300013',
-  },
-  {
-    titre: 'Localisation',
-    description: '69007 Lyon, France',
-  },
-  {
-    titre: 'Hébergeur du site',
-    description: 'OVH SAS 2 rue Kellermann - 59100 Roubaix - France',
+    link: '/juridique/charteBonneConduite',
   },
 ];
 const footerMedia: FooterType[] = [
   {
     titre: 'Adresse mail',
     description: 'contact@manie-event.fr',
+    link: '/front-pages/Contact-us.vue',
   },
 ];
 

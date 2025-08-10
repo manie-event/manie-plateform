@@ -246,6 +246,7 @@ interface _GlobalComponents {
     'FrontpagesLayoutFooter': typeof import("../components/frontpages/layout/Footer.vue")['default']
     'FrontpagesLayoutHeader': typeof import("../components/frontpages/layout/Header.vue")['default']
     'FrontpagesLayoutNavigation': typeof import("../components/frontpages/layout/Navigation.vue")['default']
+    'JuridiqueCharteBonneConduite': typeof import("../components/juridique/CharteBonneConduite.vue")['default']
     'LandingpageLayoutFooter': typeof import("../components/landingpage/layout/Footer.vue")['default']
     'LandingpageLayoutHeader': typeof import("../components/landingpage/layout/Header.vue")['default']
     'LandingpageLayoutMobileSidebar': typeof import("../components/landingpage/layout/MobileSidebar.vue")['default']
@@ -661,6 +662,7 @@ interface _GlobalComponents {
     'LazyFrontpagesLayoutFooter': LazyComponent<typeof import("../components/frontpages/layout/Footer.vue")['default']>
     'LazyFrontpagesLayoutHeader': LazyComponent<typeof import("../components/frontpages/layout/Header.vue")['default']>
     'LazyFrontpagesLayoutNavigation': LazyComponent<typeof import("../components/frontpages/layout/Navigation.vue")['default']>
+    'LazyJuridiqueCharteBonneConduite': LazyComponent<typeof import("../components/juridique/CharteBonneConduite.vue")['default']>
     'LazyLandingpageLayoutFooter': LazyComponent<typeof import("../components/landingpage/layout/Footer.vue")['default']>
     'LazyLandingpageLayoutHeader': LazyComponent<typeof import("../components/landingpage/layout/Header.vue")['default']>
     'LazyLandingpageLayoutMobileSidebar': LazyComponent<typeof import("../components/landingpage/layout/MobileSidebar.vue")['default']>
@@ -1082,6 +1084,7 @@ export const FrontpagesLayoutAnnounceBar: typeof import("../components/frontpage
 export const FrontpagesLayoutFooter: typeof import("../components/frontpages/layout/Footer.vue")['default']
 export const FrontpagesLayoutHeader: typeof import("../components/frontpages/layout/Header.vue")['default']
 export const FrontpagesLayoutNavigation: typeof import("../components/frontpages/layout/Navigation.vue")['default']
+export const JuridiqueCharteBonneConduite: typeof import("../components/juridique/CharteBonneConduite.vue")['default']
 export const LandingpageLayoutFooter: typeof import("../components/landingpage/layout/Footer.vue")['default']
 export const LandingpageLayoutHeader: typeof import("../components/landingpage/layout/Header.vue")['default']
 export const LandingpageLayoutMobileSidebar: typeof import("../components/landingpage/layout/MobileSidebar.vue")['default']
@@ -1497,6 +1500,7 @@ export const LazyFrontpagesLayoutAnnounceBar: LazyComponent<typeof import("../co
 export const LazyFrontpagesLayoutFooter: LazyComponent<typeof import("../components/frontpages/layout/Footer.vue")['default']>
 export const LazyFrontpagesLayoutHeader: LazyComponent<typeof import("../components/frontpages/layout/Header.vue")['default']>
 export const LazyFrontpagesLayoutNavigation: LazyComponent<typeof import("../components/frontpages/layout/Navigation.vue")['default']>
+export const LazyJuridiqueCharteBonneConduite: LazyComponent<typeof import("../components/juridique/CharteBonneConduite.vue")['default']>
 export const LazyLandingpageLayoutFooter: LazyComponent<typeof import("../components/landingpage/layout/Footer.vue")['default']>
 export const LazyLandingpageLayoutHeader: LazyComponent<typeof import("../components/landingpage/layout/Header.vue")['default']>
 export const LazyLandingpageLayoutMobileSidebar: LazyComponent<typeof import("../components/landingpage/layout/MobileSidebar.vue")['default']>
