@@ -113,7 +113,7 @@ const changeBannerPhoto = async (e: Event) => {
   if (!input.files?.length) return;
 
   const picture = input.files[0];
-  await changeBannerPicture(picture);
+  // await changeBannerPicture(picture);
 };
 
 const items = shallowRef([
