@@ -493,12 +493,10 @@ const FAQData: TemplateType[] = [
 const footerContact: FooterType[] = [
   {
     titre: "Conditions Générales d'utilisation",
-    titre: "Conditions Générales d'utilisation",
     description: 'Manie Event',
     link: '/juridique/cgu',
   },
   {
-    titre: 'Conditions Générales de Ventes',
     titre: 'Conditions Générales de Ventes',
     description: '84933539300013',
     link: '/juridique/cgv',

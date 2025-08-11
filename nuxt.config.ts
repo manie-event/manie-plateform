@@ -1,12 +1,17 @@
+import { fileURLToPath } from 'url';
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  // Enable server-side rendering
   ssr: false,
   runtimeConfig: {
     public: {
       tokenStripe: process.env.TOKEN_STRIPE,
       apiUrl: process.env.NUXT_API_URL || 'https://manie-api.onrender.com',
     },
+  },
+  alias: {
+    '@': fileURLToPath(new URL('./', import.meta.url)), // racine projet
+    '@components': fileURLToPath(new URL('./components', import.meta.url)), // exemple
   },
   // TypeScript configuration
   typescript: {

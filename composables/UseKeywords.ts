@@ -1,9 +1,9 @@
+import type { Keywords } from '@/models/professionalService/Keywords';
+import type { Sectors } from '@/models/professionalService/Sectors';
+import type { Services } from '@/models/professionalService/Services';
+import type { ProfessionalServiceUuid } from '@/models/professionalService/professionalServiceUuid';
 import { keyWordsDtoToKeywords } from '~/mappers/profesionnalKeywordsMapper';
 import type { KeywordsDto } from '~/models/dto/KeywordsDto';
-import type { Keywords } from '~/models/professionalService/Keywords';
-import type { ProfessionalServiceUuid } from '~/models/professionalService/professionalServiceUuid';
-import type { Sectors } from '~/models/professionalService/Sectors';
-import type { Services } from '~/models/professionalService/Services';
 
 export const useKeywords = () => {
   const config = useRuntimeConfig();

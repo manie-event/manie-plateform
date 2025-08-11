@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import CongratsCard from '@/components/dashboards/dashboard1/CongratulationsCard.vue';
 import Customers from '@/components/dashboards/dashboard1/Customers.vue';
 import LatestDeal from '@/components/dashboards/dashboard1/LatestDeals.vue';
 import LatestReviews from '@/components/dashboards/dashboard1/LatestReviews.vue';
@@ -16,9 +15,6 @@ import Snackbar from '@/components/dashboards/snackbar.vue';
   <!-- Loader -->
   <v-row>
     <!-- Congratulation Card -->
-    <v-col cols="12" sm="12" lg="6">
-      <CongratsCard />
-    </v-col>
     <v-col cols="12" sm="12" md="12" lg="6">
       <v-row>
         <!-- Payment Card  -->
