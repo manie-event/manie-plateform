@@ -403,6 +403,10 @@ function getDynamicOptions(field: FieldSchema): OptionItem[] | undefined {
   return field.options;
 }
 
+function getSkipField(section: SectionSchema): FieldSchema | undefined {
+  return (section.fields || []).find((f) => f.skipSection);
+}
+
 /***** Helpers *****/
 const fieldErrors = reactive<Record<string, string | undefined>>({});
 
