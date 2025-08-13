@@ -192,7 +192,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed, watch, onMounted } from 'vue';
+import { ref, reactive, computed, onMounted } from 'vue';
 
 // v-model:open-modal (parent uses v-model:open-modal)
 const isOpen = defineModel<boolean>('openModal', { default: false });
@@ -292,38 +292,6 @@ onMounted(() => {
   initializeDefaults();
 });
 
-watch(
-  () => props.sections,
-  () => initializeDefaults(),
-  { deep: true, immediate: true }
-);
-
-watch(
-  formState,
-  (val) => {
-    // Enforce max constraint for multi checkbox
-    for (const [key, value] of Object.entries(val)) {
-      if (Array.isArray(value)) {
-        const field = fieldsById.value.get(key);
-        if (field && field.type === 'checkbox' && field.multiple && typeof field.max === 'number') {
-          if (value.length > field.max) {
-            val[key] = value.slice(-field.max);
-          }
-        }
-      }
-    }
-    emit('update:modelValue', { ...val });
-  },
-  { deep: true }
-);
-
-watch(
-  () => props.modelValue,
-  (v) => {
-    if (v) Object.assign(formState, v);
-  },
-  { deep: true }
-);
 
 /***** Pagination *****/
 function chunkArray<T>(arr: T[], size: number): T[][] {
