@@ -231,15 +231,33 @@ interface SectionSchema {
   fields: FieldSchema[];
 }
 
+// Event payload & mappings
+type ServiceSelection = { serviceUuid: string; keywordsUuid: string[] };
+interface EventCreatePayload {
+  organisatorUuid: string;
+  date: [string, string];
+  budget: number;
+  location: string;
+  name: string;
+  people: string;
+  services: ServiceSelection[];
+}
+
+type KeywordMap = Record<string, Record<string, string>>; // sectionId -> (value -> keywordUuid)
+type ServiceMap = Record<string, string>; // sectionId -> serviceUuid
+
 /***** Props & Emits *****/
 const props = defineProps<{
   sections: SectionSchema[];
   modelValue?: Record<string, any>;
+  organisatorUuid: string;
+  keywordUuidBySectionId: KeywordMap;
+  serviceUuidBySectionId?: ServiceMap;
 }>();
 
 const emit = defineEmits<{
   (e: 'update:modelValue', payload: Record<string, any>): void;
-  (e: 'submit', payload: Record<string, any>): void;
+  (e: 'submit', payload: EventCreatePayload): void;
 }>();
 
 /***** State *****/
@@ -403,6 +421,81 @@ function getDynamicOptions(field: FieldSchema): OptionItem[] | undefined {
   return field.options;
 }
 
+// Map answers -> services selections
+function isUuid(v: string): boolean {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(v);
+}
+
+function buildSelectedServices(
+  answers: Record<string, any>,
+  sections: SectionSchema[],
+  keywordUuidBySectionId: KeywordMap,
+  serviceUuidBySectionId?: ServiceMap
+): ServiceSelection[] {
+  const result: ServiceSelection[] = [];
+  for (const section of sections) {
+    const serviceUuid = serviceUuidBySectionId?.[section.id] ?? section.id;
+    const selectedValues: string[] = [];
+
+    for (const field of section.fields) {
+      const val = answers[field.id];
+      if (field.type === 'checkbox' && field.multiple && Array.isArray(val)) {
+        selectedValues.push(...val.map(String));
+      } else if ((field.type === 'radio' || field.type === 'select') && val !== undefined && val !== null && val !== '') {
+        selectedValues.push(String(val));
+      }
+    }
+
+    const sectionMap = keywordUuidBySectionId[section.id] || {};
+    const keywordsUuid = Array.from(
+      new Set(
+        selectedValues
+          .map((v) => sectionMap[v] ?? (isUuid(v) ? v : undefined))
+          .filter((v): v is string => !!v)
+      )
+    );
+
+    if (keywordsUuid.length > 0) result.push({ serviceUuid, keywordsUuid });
+  }
+  return result;
+}
+
+function humanizeEventName(value?: string, fallback = 'Événement'): string {
+  if (!value) return fallback;
+  return value.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+function computeDateRange(answers: Record<string, any>): [string, string] {
+  if (answers.date_status === 'arretee') {
+    const start = String(answers.date_debut || '');
+    const end = String(answers.date_fin || answers.date_debut || '');
+    return [start, end];
+  }
+  return ['', ''];
+}
+
+function buildEventPayload(
+  answers: Record<string, any>,
+  organisatorUuid: string,
+  services: ServiceSelection[]
+): EventCreatePayload {
+  const peopleNum = Number(answers.nb_personnes || 0);
+  const budget =
+    answers.budget_type === 'par_personne'
+      ? Number(answers.budgetParPersonne || 0) * peopleNum
+      : Number(answers.budget || 0);
+
+  return {
+    organisatorUuid,
+    date: computeDateRange(answers),
+    budget,
+    location: String(answers.localisation || ''),
+    name: answers.theme ? String(answers.theme) : humanizeEventName(answers.evenement),
+    people: String(answers.nb_personnes ?? ''),
+    services,
+  };
+}
+
 function getSkipField(section: SectionSchema): FieldSchema | undefined {
   return (section.fields || []).find((f) => f.skipSection);
 }
@@ -460,6 +553,13 @@ function prevPage() {
 
 function submit() {
   if (!validateCurrentPage()) return;
-  emit('submit', { ...formState });
+  const services = buildSelectedServices(
+    formState,
+    props.sections,
+    props.keywordUuidBySectionId,
+    props.serviceUuidBySectionId
+  );
+  const payload = buildEventPayload(formState, props.organisatorUuid, services);
+  emit('submit', payload);
 }
 </script>
