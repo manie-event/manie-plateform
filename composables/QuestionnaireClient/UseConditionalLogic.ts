@@ -25,12 +25,41 @@ export function useConditionalLogic(formState: FormState) {
   };
 
   /**
+   * Résout l'identifiant du champ contrôleur d'une section
+   */
+  const resolveControllerFieldId = (section: SectionSchema): string => {
+    const explicit = section.fields.find((f) => f.visibleSection)?.id;
+    if (explicit) return explicit;
+
+    // Chercher un champ checkbox non-multiple référencé par showIf
+    const referencedIds = new Set<string>();
+    for (const field of section.fields) {
+      const cond = field.conditional;
+      if (!cond?.showIf) continue;
+      const controls = Array.isArray(cond.showIf) ? cond.showIf : [cond.showIf];
+      controls.forEach((cid) => referencedIds.add(cid));
+    }
+
+    const referencedCheckbox = section.fields.find(
+      (f) => f.type === 'checkbox' && !f.multiple && referencedIds.has(f.id)
+    )?.id;
+    if (referencedCheckbox) return referencedCheckbox;
+
+    // Heuristique: *_deja_trouve
+    const dejaTrouve = section.fields.find(
+      (f) => f.type === 'checkbox' && !f.multiple && /deja|trouve/i.test(f.id)
+    )?.id;
+    if (dejaTrouve) return dejaTrouve;
+
+    // Fallback: contrôleur virtuel
+    return `__section_${section.id}_toggle`;
+  };
+
+  /**
    * Détermine si une section est ignorée (skip toggle activé)
    */
   const isSectionSkipped = (section: SectionSchema): boolean => {
-    const skipField = section.fields.find((f) => f.visibleSection);
-    const toggleFieldId = skipField ? skipField.id : `__section_${section.id}_toggle`;
-
+    const toggleFieldId = resolveControllerFieldId(section);
     const isSkipped = !!formState[toggleFieldId];
     console.log(`Section ${section.id} ignorée:`, isSkipped);
     return isSkipped;
@@ -50,17 +79,6 @@ export function useConditionalLogic(formState: FormState) {
     if (!cond) {
       console.log(`Champ ${field.id} visible: pas de condition`);
       return true;
-    }
-
-    // Si dependsOn est présent et values est un mapping (options dynamiques),
-    // rendre visible si la source a une valeur (même si la valeur ne matche pas encore un mapping)
-    if (cond.dependsOn && cond.values && typeof cond.values === 'object' && !Array.isArray(cond.values)) {
-      const controlVal = getControlValue(cond.dependsOn);
-      const visible = Array.isArray(controlVal) ? controlVal.length > 0 : !!controlVal;
-      console.log(`Visibility via dependsOn pour ${field.id}: ${visible}`, { controlVal });
-      if (!cond.showIf && !cond.hideIf) {
-        return visible;
-      }
     }
 
     console.log(`Évaluation des conditions pour ${field.id}:`, cond);

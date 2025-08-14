@@ -73,9 +73,11 @@ export function useDynamicForm(props: UseDynamicFormProps) {
       return field;
     }
 
+    // Utiliser le premier checkbox non-multiple comme source de label si présent
+    const controlling = section.fields.find((f) => f.type === 'checkbox' && !f.multiple);
     const virtualField: FieldSchema = {
       id: `__section_${section.id}_toggle`,
-      label: 'Masquer cette section',
+      label: controlling?.label || 'Masquer cette section',
       type: 'checkbox',
       multiple: false,
     };
