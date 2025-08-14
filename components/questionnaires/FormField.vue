@@ -1,21 +1,25 @@
 <template>
   <!-- Radio buttons -->
-  <v-radio-group
-    v-if="field.type === 'radio'"
-    :label="field.label"
-    :model-value="modelValue"
-    @update:model-value="$emit('update:modelValue', $event)"
-    :error="!!error"
-    :error-messages="error ? [error] : []"
-    density="comfortable"
-  >
-    <v-radio
-      v-for="opt in options || []"
-      :key="String(opt.value)"
-      :label="opt.label"
-      :value="opt.value"
-    />
-  </v-radio-group>
+  <div v-if="field.type === 'radio'">
+    <div class="mb-1 text-subtitle-2">{{ field.label }}</div>
+    <v-chip-group
+      :model-value="modelValue"
+      @update:model-value="$emit('update:modelValue', $event)"
+      mandatory
+    >
+      <v-chip
+        v-for="opt in options || []"
+        :key="String(opt.value)"
+        :value="opt.value"
+        filter
+        variant="outlined"
+        class="ma-1"
+      >
+        {{ opt.label }}
+      </v-chip>
+    </v-chip-group>
+    <div v-if="error" class="text-error text-caption mt-1">{{ error }}</div>
+  </div>
 
   <!-- Checkbox multiple -->
   <div v-else-if="field.type === 'checkbox' && field.multiple">
