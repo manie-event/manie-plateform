@@ -267,7 +267,7 @@ const props = defineProps<{
   sections: SectionSchema[];
   modelValue?: Record<string, any>;
   organisatorUuid: string;
-  keywordUuidBySectionId: KeywordMap;
+  keywordUuidBySectionId?: KeywordMap;
   serviceUuidBySectionId?: ServiceMap;
 }>();
 
@@ -557,8 +557,8 @@ function submit() {
   const services = buildSelectedServices(
     formState,
     props.sections,
-    props.keywordUuidBySectionId,
-    props.serviceUuidBySectionId
+    props.keywordUuidBySectionId || {},
+    props.serviceUuidBySectionId || {}
   );
   const payload = buildEventPayload(formState, props.organisatorUuid, services);
   emit('submit', payload);
