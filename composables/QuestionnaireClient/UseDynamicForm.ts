@@ -26,7 +26,7 @@ export function useDynamicForm(props: UseDynamicFormProps) {
   const { loadSectorData, buildServiceSelections } = useServiceMapping();
   const { fieldErrors, pageErrors, validatePage, clearFieldError, clearPageErrors } =
     useFormValidation();
-  const { isFieldVisible, getDynamicOptions, isSectionSkipped } = useConditionalLogic(formState);
+  const { isFieldVisible, getDynamicOptions, isSectionSkipped, resolveControllerFieldId } = useConditionalLogic(formState);
   const {
     currentPageIndex,
     pages,
@@ -44,6 +44,10 @@ export function useDynamicForm(props: UseDynamicFormProps) {
   const shouldShowSectionController = (section: SectionSchema): boolean => {
     // Si un champ de contrôle explicite existe
     if (section.fields.some((f) => f.visibleSection)) return true;
+
+    // Si un contrôleur implicite est résolu (via showIf/deja_trouve), on affiche
+    const resolvedId = resolveControllerFieldId(section);
+    if (!resolvedId.startsWith('__section_')) return true;
 
     // Sinon, n'afficher que pour les sections "secteurs" connues
     const sectorIds = new Set([
@@ -75,9 +79,11 @@ export function useDynamicForm(props: UseDynamicFormProps) {
 
     // Utiliser le premier checkbox non-multiple comme source de label si présent
     const controlling = section.fields.find((f) => f.type === 'checkbox' && !f.multiple);
+    const resolvedId = resolveControllerFieldId(section);
+    const resolvedLabel = section.fields.find((f) => f.id === resolvedId)?.label;
     const virtualField: FieldSchema = {
       id: `__section_${section.id}_toggle`,
-      label: controlling?.label || 'Masquer cette section',
+      label: resolvedLabel || controlling?.label || 'Masquer cette section',
       type: 'checkbox',
       multiple: false,
     };

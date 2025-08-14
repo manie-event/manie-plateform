@@ -172,5 +172,6 @@ export function useConditionalLogic(formState: FormState) {
     getDynamicOptions,
     isSectionSkipped,
     getControlValue,
+    resolveControllerFieldId,
   };
 }
