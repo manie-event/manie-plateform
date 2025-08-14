@@ -11,6 +11,24 @@ export const useServiceMapping = () => {
   const sectorDataCache = reactive<Record<string, SectorData>>({});
   const loadedSectors = reactive(new Set<string>());
 
+  const sectorIdToApiName = (sectorId: string): string => {
+    const aliases: Record<string, string> = {
+      lieux: 'lieu',
+      // add more aliases here if API names differ from section ids
+    };
+    return aliases[sectorId] ?? sectorId;
+  };
+
+  const normalizeSectorDataShape = (data: any): SectorData => {
+    const services = Array.isArray(data?.services)
+      ? data.services.map((s: any) => ({ uuid: String(s.uuid), name: String(s.name) }))
+      : [];
+    const keywords = Array.isArray(data?.keywords)
+      ? data.keywords.map((k: any) => ({ uuid: String(k.uuid), name: String(k.name ?? k.value) }))
+      : [];
+    return { services, keywords };
+  };
+
   /**
    * Charge les données d'un secteur depuis l'API
    */
@@ -21,21 +39,23 @@ export const useServiceMapping = () => {
     }
 
     try {
-      console.log(`Chargement du secteur: ${sectorId}`);
-      loadedSectors.add(sectorId);
-      console.log(sectorId, 'sectorId');
-      console.log(getSectorsApi, 'WTF IS THAT');
+      const apiSector = sectorIdToApiName(sectorId);
+      console.log(`Chargement du secteur: ${sectorId} (api: ${apiSector})`);
 
-      const data = await getSectorsApi(sectorId);
+      const raw = await getSectorsApi(apiSector);
+      console.log(raw, 'DATA ?');
 
-      if (data?.services && data?.keywords) {
+      const data = normalizeSectorDataShape(raw);
+
+      if (data.services.length > 0 && data.keywords.length > 0) {
         sectorDataCache[sectorId] = data;
+        loadedSectors.add(sectorId);
         console.log(`✅ Secteur ${sectorId} chargé:`, {
           services: data.services.length,
           keywords: data.keywords.length,
         });
       } else {
-        console.warn(`⚠️ Données incomplètes pour le secteur ${sectorId}:`, data);
+        console.warn(`⚠️ Données incomplètes pour le secteur ${sectorId}:`, raw);
       }
     } catch (error) {
       loadedSectors.delete(sectorId);
