@@ -1,0 +1,2081 @@
+{
+  "sections": [
+    {
+      "id": "general",
+      "title": "GENERAL",
+      "fields": [
+        {
+          "id": "client_type",
+          "label": "Vous êtes ?",
+          "type": "radio",
+          "required": true,
+          "options": [
+            { "value": "particulier", "label": "Un particulier" },
+            { "value": "professionnel", "label": "Un professionnel" }
+          ]
+        },
+        {
+          "id": "evenement",
+          "label": "Qu'est-ce qu'on fête ?",
+          "type": "select",
+          "required": true,
+          "category": "ÉVÉNEMENT",
+          "conditional": {
+            "dependsOn": "client_type",
+            "values": {
+              "particulier": [
+                { "value": "mariage", "label": "Mariage", "group": "Amour" },
+                { "value": "pacs", "label": "PACS", "group": "Amour" },
+                { "value": "demande", "label": "Demande", "group": "Amour" },
+                {
+                  "value": "fiancailles",
+                  "label": "Fiançailles",
+                  "group": "Amour"
+                },
+                {
+                  "value": "renouvellement_voeux",
+                  "label": "Renouvellement de voeux",
+                  "group": "Amour"
+                },
+                { "value": "evg", "label": "EVG", "group": "Voyage" },
+                { "value": "evjf", "label": "EVJF", "group": "Voyage" },
+                {
+                  "value": "weekend_groupe",
+                  "label": "Week-end en groupe",
+                  "group": "Voyage"
+                },
+                {
+                  "value": "baby_shower",
+                  "label": "Baby shower",
+                  "group": "Vie"
+                },
+                {
+                  "value": "gender_reveal",
+                  "label": "Gender reveal",
+                  "group": "Vie"
+                },
+                {
+                  "value": "enterrement",
+                  "label": "Enterrement",
+                  "group": "Vie"
+                },
+                {
+                  "value": "anniversaire",
+                  "label": "Anniversaire",
+                  "group": "Proches"
+                },
+                {
+                  "value": "cocktail",
+                  "label": "Cocktail",
+                  "group": "Proches"
+                },
+                { "value": "fetes", "label": "Fêtes", "group": "Proches" },
+                { "value": "bapteme", "label": "Baptême", "group": "Religion" },
+                {
+                  "value": "communion",
+                  "label": "Communion",
+                  "group": "Religion"
+                },
+                {
+                  "value": "confirmation",
+                  "label": "Confirmation",
+                  "group": "Religion"
+                },
+                {
+                  "value": "bar_mitzvah",
+                  "label": "Bar-mitzvah",
+                  "group": "Religion"
+                },
+                { "value": "aid", "label": "Aïd", "group": "Religion" },
+                {
+                  "value": "pot_depart",
+                  "label": "Pot de départ",
+                  "group": "Carrière"
+                },
+                {
+                  "value": "fin_these",
+                  "label": "Fin de thèse",
+                  "group": "Carrière"
+                },
+                { "value": "diplome", "label": "Diplôme", "group": "Carrière" }
+              ],
+              "professionnel": [
+                {
+                  "value": "cocktail_anniversaire",
+                  "label": "Cocktail anniversaire",
+                  "group": "Cocktail"
+                },
+                {
+                  "value": "lancement",
+                  "label": "Lancement",
+                  "group": "Cocktail"
+                },
+                {
+                  "value": "partenaire",
+                  "label": "Partenaire",
+                  "group": "Cocktail"
+                },
+                {
+                  "value": "inauguration",
+                  "label": "Inauguration",
+                  "group": "Cocktail"
+                },
+                { "value": "gala", "label": "Gala", "group": "Soirée" },
+                {
+                  "value": "remise_prix",
+                  "label": "Remise de prix",
+                  "group": "Soirée"
+                },
+                {
+                  "value": "fin_annee",
+                  "label": "Fin d'année",
+                  "group": "Soirée"
+                },
+                { "value": "voeux", "label": "Voeux", "group": "Soirée" },
+                {
+                  "value": "ag",
+                  "label": "Assemblée générale",
+                  "group": "Soirée"
+                },
+                {
+                  "value": "conference",
+                  "label": "Conférence (TedX)",
+                  "group": "Soirée"
+                },
+                {
+                  "value": "seminaire",
+                  "label": "Séminaire",
+                  "group": "Cohésion"
+                },
+                {
+                  "value": "teambuilding",
+                  "label": "Teambuilding",
+                  "group": "Cohésion"
+                },
+                {
+                  "value": "porte_ouverte",
+                  "label": "Journée porte ouverte",
+                  "group": "Réseau"
+                },
+                {
+                  "value": "journee_etude",
+                  "label": "Journée d'étude",
+                  "group": "Réseau"
+                },
+                {
+                  "value": "repas_affaire",
+                  "label": "Repas d'affaire",
+                  "group": "Business"
+                },
+                {
+                  "value": "reunion_pleniere",
+                  "label": "Réunion plénière",
+                  "group": "Business"
+                },
+                { "value": "codir", "label": "Codir", "group": "Business" },
+                {
+                  "value": "remise_diplome",
+                  "label": "Remise de diplôme",
+                  "group": "Scolaire"
+                },
+                {
+                  "value": "integration",
+                  "label": "Soirée d'intégration",
+                  "group": "Scolaire"
+                },
+                {
+                  "value": "fin_annee_scolaire",
+                  "label": "Soirée de fin d'année",
+                  "group": "Scolaire"
+                },
+                {
+                  "value": "pot_arrivee",
+                  "label": "Pot d'arrivée",
+                  "group": "Carrière"
+                },
+                {
+                  "value": "pot_depart_pro",
+                  "label": "Pot de départ",
+                  "group": "Carrière"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "date_status",
+          "label": "Votre date",
+          "type": "radio",
+          "required": true,
+          "options": [
+            { "value": "arretee", "label": "Ma date est arrêtée" },
+            { "value": "flexible", "label": "Je suis flexible" }
+          ]
+        },
+        {
+          "id": "periode",
+          "label": "Période",
+          "type": "checkbox",
+          "multiple": true,
+          "conditional": {
+            "showIf": "date_status",
+            "values": ["flexible"]
+          },
+          "options": [
+            { "value": "semaine", "label": "En semaine" },
+            { "value": "weekend", "label": "En week-end" }
+          ]
+        },
+        {
+          "id": "date_debut",
+          "label": "Date de début",
+          "type": "date",
+          "required": false,
+          "conditional": {
+            "showIf": "date_status",
+            "values": ["arretee"]
+          }
+        },
+        {
+          "id": "date_fin",
+          "label": "Date de fin",
+          "type": "date",
+          "required": false,
+          "conditional": {
+            "showIf": "date_status",
+            "values": ["arretee"]
+          }
+        },
+        {
+          "id": "localisation",
+          "label": "Où ça ?",
+          "type": "select",
+          "required": true,
+          "category": "LOCALISATION",
+          "options": [
+            { "value": "auvergne-rhone-alpes", "label": "Auvergne-Rhône-Alpes" },
+            { "value": "rhone", "label": "Rhône" },
+            { "value": "savoie", "label": "Savoie" },
+            { "value": "haute_savoie", "label": "Haute-Savoie" },
+            { "value": "allier", "label": "Allier" },
+            { "value": "puy_de_dome", "label": "Puy-de-Dôme" },
+            { "value": "cantal", "label": "Cantal" },
+            { "value": "haute_loire", "label": "Haute-Loire" },
+            { "value": "loire", "label": "Loire" },
+            { "value": "ardeche", "label": "Ardèche" },
+            { "value": "drome", "label": "Drôme" },
+            { "value": "isere", "label": "Isère" },
+            { "value": "ain", "label": "Ain" }
+          ]
+        },
+        {
+          "id": "contexte_famille",
+          "label": "En famille, entre amis / collègues / mélangés",
+          "type": "radio",
+          "options": [
+            { "value": "famille", "label": "En famille" },
+            { "value": "amis", "label": "Entre amis" },
+            { "value": "collegues", "label": "Entre collègues" },
+            { "value": "melange", "label": "Mélangés" }
+          ]
+        },
+        {
+          "id": "duree",
+          "label": "Durée de l'événement",
+          "type": "radio",
+          "options": [
+            { "value": "repas", "label": "Le temps d'un repas" },
+            { "value": "journee", "label": "Une journée" },
+            { "value": "sejour", "label": "Un séjour (min 1 nuit)" }
+          ]
+        },
+        {
+          "id": "organisation",
+          "label": "Organisation",
+          "type": "radio",
+          "options": [
+            { "value": "pour_vous", "label": "Vous l'organisez pour vous" },
+            { "value": "pour_autre", "label": "Pour quelqu'un d'autre" },
+            { "value": "surprise", "label": "C'est une surprise" }
+          ]
+        },
+        {
+          "id": "theme",
+          "label": "Si vous avez déjà défini un thème, lequel est-il ?",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "nb_personnes",
+          "label": "Combien de personnes seront présentes ?",
+          "type": "number",
+          "step": 5,
+          "required": true
+        },
+        {
+          "id": "budget_type",
+          "label": "Type de budget",
+          "type": "radio",
+          "options": [
+            { "value": "global", "label": "Budget global" },
+            { "value": "par_personne", "label": "Par personne" }
+          ]
+        },
+        {
+          "id": "budget",
+          "label": "Quel est votre budget ?",
+          "type": "number",
+          "required": true,
+          "conditional": {
+            "showIf": "budget_type",
+            "values": ["global"]
+          },
+          "step": 10
+        },
+        {
+          "id": "budgetParPersonne",
+          "label": "Quel est votre budget ?",
+          "type": "number",
+          "required": true,
+          "conditional": {
+            "showIf": "budget_type",
+            "values": ["par_personne"]
+          },
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "lieux",
+      "title": "LIEU - On fait ça où ?",
+      "fields": [
+        {
+          "id": "lieu_deja_trouve",
+          "label": "Je recherche un lieu parfait pour mon évênement",
+          "type": "checkbox",
+          "visibleSection": false
+        },
+        {
+          "id": "privatisation",
+          "label": "Vous acceptez une privatisation",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "PRIVATISATION",
+          "conditional": {
+            "showIf": ["lieu_deja_trouve"]
+          },
+          "options": [
+            { "value": "totale", "label": "Totale" },
+            { "value": "partielle", "label": "Partielle" },
+            { "value": "partagee", "label": "Partagée" }
+          ]
+        },
+        {
+          "id": "couchages",
+          "label": "Nécessitez-vous des couchages ?",
+          "type": "select",
+          "conditional": {
+            "showIf": ["lieu_deja_trouve"],
+            "values": ["sejour"]
+          },
+          "options": [
+            { "value": "0-10", "label": "0 à 10 couchages" },
+            { "value": "11-20", "label": "11 à 20 couchages" },
+            { "value": "21-30", "label": "21 à 30 couchages" },
+            { "value": "31-40", "label": "31 à 40 couchages" },
+            { "value": "41-50", "label": "41 à 50 couchages" },
+            { "value": "50+", "label": "Plus de 50 couchages" }
+          ]
+        },
+        {
+          "id": "type_lieux",
+          "label": "Dans quels genres de lieux ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "LIEUX",
+          "conditional": {
+            "showIf": ["lieu_deja_trouve"]
+          },
+          "options": [
+            { "value": "salle_reception", "label": "Salle de réception" },
+            { "value": "domaine", "label": "Domaine" },
+            { "value": "chateau", "label": "Château" },
+            { "value": "villa", "label": "Villa" },
+            { "value": "appartement", "label": "Appartement" },
+            { "value": "ecolodge", "label": "Écolodge" },
+            { "value": "gite", "label": "Gîte" },
+            { "value": "maison_hote", "label": "Maison d'hôte" },
+            { "value": "tiers_lieu", "label": "Tiers-lieu" },
+            { "value": "rooftop", "label": "Rooftop" },
+            { "value": "bateau", "label": "Bateau" },
+            { "value": "peniche", "label": "Péniche" },
+            { "value": "galerie_art", "label": "Galerie d'art" },
+            { "value": "bar", "label": "Bar" },
+            { "value": "restaurant", "label": "Restaurant" },
+            { "value": "camping", "label": "Camping" },
+            { "value": "plage", "label": "Plage" },
+            { "value": "hotel", "label": "Hôtel" },
+            { "value": "parc_jardin", "label": "Parc/jardin" },
+            { "value": "terrain_sportif", "label": "Terrain sportif" },
+            { "value": "stade", "label": "Stade" },
+            { "value": "gymnase", "label": "Gymnase" }
+          ]
+        },
+        {
+          "id": "environnement",
+          "label": "Dans quel cadre ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "ENVIRONNEMENT",
+          "conditional": {
+            "showIf": ["lieu_deja_trouve"]
+          },
+          "options": [
+            { "value": "champetre", "label": "Champêtre" },
+            { "value": "montagneux", "label": "Montagneux" },
+            { "value": "bord_eau", "label": "Bord de l'eau" },
+            { "value": "viticole", "label": "Viticole" },
+            { "value": "urbain", "label": "Urbain" },
+            { "value": "isole", "label": "Isolé" },
+            { "value": "avec_vue", "label": "Avec vue" }
+          ]
+        },
+        {
+          "id": "accessibilite",
+          "label": "Vous avez besoin d'un lieu accessible aux",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "ACCESSIBILITÉ",
+          "conditional": {
+            "showIf": ["lieu_deja_trouve"]
+          },
+          "options": [
+            { "value": "enfants", "label": "Enfants (moins de 12 ans)" },
+            {
+              "value": "personnes_agees",
+              "label": "Personnes âgées (plus de 70 ans)"
+            },
+            { "value": "animaux", "label": "Animaux" }
+          ]
+        },
+        {
+          "id": "impose",
+          "label": "Acceptez-vous que le lieu vous impose",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "IMPOSÉ",
+          "conditional": {
+            "showIf": ["lieu_deja_trouve"]
+          },
+          "options": [
+            { "value": "traiteur", "label": "Le traiteur" },
+            { "value": "boissons", "label": "Les boissons" },
+            { "value": "dj", "label": "Le DJ" }
+          ]
+        },
+        {
+          "id": "espaces",
+          "label": "Quels sont selon vous les espaces prioritaires ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "ESPACES",
+          "conditional": {
+            "showIf": ["lieu_deja_trouve"]
+          },
+          "options": [
+            { "value": "jardin_privatif", "label": "Jardin privatif" },
+            { "value": "exterieur_cloture", "label": "Extérieur clôturé" },
+            {
+              "value": "exterieur_non_cloture",
+              "label": "Extérieur non clôturé"
+            },
+            { "value": "espace_reception", "label": "Espace de réception" },
+            { "value": "scene", "label": "Scène" },
+            { "value": "terrasse_exterieure", "label": "Terrasse extérieure" },
+            {
+              "value": "espace_exterieur_abrite",
+              "label": "Espace extérieur abrité"
+            },
+            { "value": "cours_exterieur", "label": "Cours extérieur" },
+            {
+              "value": "parking_prive_couvert",
+              "label": "Parking privé couvert"
+            },
+            {
+              "value": "parking_prive_non_couvert",
+              "label": "Parking privé non couvert"
+            },
+            { "value": "verriere", "label": "Verrière" },
+            { "value": "jardin_hiver", "label": "Jardin d'hiver" },
+            { "value": "cave_amenagee", "label": "Cave aménagée" },
+            { "value": "bar_prive", "label": "Bar privé" },
+            { "value": "stockage", "label": "Stockage" },
+            { "value": "lieu_culte", "label": "Lieu de culte" },
+            { "value": "vestiaire", "label": "Vestiaire" },
+            { "value": "wc", "label": "WC" },
+            { "value": "douche", "label": "Douche" },
+            { "value": "espace_photo", "label": "Espace photo" },
+            { "value": "espace_ceremonie", "label": "Espace cérémonie" },
+            { "value": "espace_enfant", "label": "Espace enfant" },
+            { "value": "espace_traiteur", "label": "Espace traiteur" },
+            { "value": "point_eau_naturel", "label": "Point d'eau naturel" },
+            { "value": "piscine_exterieure", "label": "Piscine extérieure" },
+            { "value": "piscine_interieure", "label": "Piscine intérieure" },
+            { "value": "sauna", "label": "Sauna" },
+            { "value": "hammam", "label": "Hammam" },
+            { "value": "terrain_petanque", "label": "Terrain de pétanque" },
+            { "value": "terrain_sportif_espace", "label": "Terrain sportif" },
+            { "value": "salle_sport", "label": "Salle de sport" }
+          ]
+        },
+        {
+          "id": "equipements",
+          "label": "Des équipements essentiels à avoir sur votre lieu ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "ÉQUIPEMENTS",
+          "conditional": {
+            "showIf": ["lieu_deja_trouve"]
+          },
+          "options": [
+            { "value": "ventilateur", "label": "Ventilateur" },
+            { "value": "brumisateur", "label": "Brumisateur" },
+            { "value": "chauffage", "label": "Chauffage" },
+            { "value": "climatisation", "label": "Climatisation" },
+            { "value": "jacuzzi", "label": "Jacuzzi" },
+            { "value": "equipement_piscine", "label": "Équipement piscine" },
+            { "value": "barbecue", "label": "Barbecue" },
+            { "value": "brasero", "label": "Brasero" },
+            { "value": "plancha", "label": "Plancha" },
+            { "value": "vaisselle", "label": "Vaisselle" },
+            { "value": "mobilier_interieur", "label": "Mobilier intérieur" },
+            { "value": "mobilier_exterieur", "label": "Mobilier extérieur" },
+            {
+              "value": "abri_mobile_exterieur",
+              "label": "Abri mobile extérieur"
+            },
+            { "value": "chambre_froide", "label": "Chambre froide" },
+            { "value": "refrigerateur", "label": "Réfrigérateur" },
+            { "value": "congelateur", "label": "Congélateur" },
+            { "value": "four", "label": "Four" },
+            { "value": "etuve", "label": "Étuve" },
+            {
+              "value": "plan_travail_traiteur",
+              "label": "Plan de travail traiteur"
+            },
+            { "value": "echelle_traiteur", "label": "Échelle traiteur" },
+            { "value": "draps", "label": "Draps" },
+            { "value": "serviettes", "label": "Serviettes" },
+            { "value": "sono", "label": "Sono" },
+            { "value": "micro", "label": "Micro" },
+            { "value": "pupitre", "label": "Pupitre" },
+            { "value": "ecran", "label": "Écran" },
+            { "value": "videoprojecteur", "label": "Vidéoprojecteur" },
+            { "value": "lumieres", "label": "Lumières" },
+            { "value": "materiel_menager", "label": "Matériel ménager" }
+          ]
+        },
+        {
+          "id": "options_lieu",
+          "label": "Par quelle(s) options pourriez-vous être intéressé(e) ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "OPTIONS",
+          "conditional": {
+            "showIf": ["lieu_deja_trouve"]
+          },
+          "options": [
+            { "value": "menage", "label": "Ménage" },
+            { "value": "accueil", "label": "Accueil" },
+            { "value": "coordination", "label": "Coordination" },
+            { "value": "decoration", "label": "Décoration" },
+            { "value": "animation", "label": "Animation" },
+            { "value": "transport", "label": "Transport" },
+            { "value": "couchage", "label": "Couchage" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "food",
+      "title": "FOOD - On mange quoi ?",
+      "fields": [
+        {
+          "id": "food_deja_trouve",
+          "label": "J'ai déjà trouvé ma solution pour le repas",
+          "type": "checkbox",
+          "visibleSection": false
+        },
+        {
+          "id": "cuisines",
+          "label": "Quelles cuisines vous inspirent ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "CUISINES",
+          "conditional": {
+            "showIf": ["food_deja_trouve"]
+          },
+          "options": [
+            { "value": "vegetale", "label": "Végétale" },
+            { "value": "viandarde", "label": "Viandarde" },
+            { "value": "regionale", "label": "Régionale" },
+            {
+              "value": "francaise_traditionnelle",
+              "label": "Française traditionnelle"
+            },
+            { "value": "francaise_moderne", "label": "Française moderne" },
+            { "value": "mediterraneenne", "label": "Méditerranéenne" },
+            { "value": "asiatique", "label": "Asiatique" },
+            { "value": "latino", "label": "Latino" },
+            { "value": "orientale", "label": "Orientale" },
+            { "value": "africaine", "label": "Africaine" },
+            { "value": "fusion", "label": "Fusion" }
+          ]
+        },
+        {
+          "id": "format_repas",
+          "label": "Quel format de repas ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "FORMAT",
+          "conditional": {
+            "showIf": ["food_deja_trouve"]
+          },
+          "options": [
+            { "value": "petit_dejeuner", "label": "Petit déjeuner" },
+            { "value": "gouter", "label": "Goûter" },
+            { "value": "collation", "label": "Collation" },
+            { "value": "brunch", "label": "Brunch" },
+            { "value": "cocktail_aperitif", "label": "Cocktail apéritif" },
+            {
+              "value": "cocktail_dejeunatoire",
+              "label": "Cocktail déjeunatoire"
+            },
+            { "value": "cocktail_dinatoire", "label": "Cocktail dînatoire" },
+            { "value": "dejeuner_assiette", "label": "Déjeuner à l'assiette" },
+            { "value": "diner_assiette", "label": "Dîner à l'assiette" },
+            {
+              "value": "plats_partager",
+              "label": "Plats à partager sur table"
+            },
+            { "value": "buffet", "label": "Buffet" },
+            {
+              "value": "animations_show_cooking",
+              "label": "Animations ou show-cooking"
+            },
+            { "value": "degustation", "label": "Dégustation" }
+          ]
+        },
+        {
+          "id": "plats_sales",
+          "label": "Quels plats salés vous inspirent ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "SALÉS",
+          "conditional": {
+            "showIf": ["food_deja_trouve"]
+          },
+          "options": [
+            { "value": "pieces_cocktail", "label": "Pièces cocktail" },
+            { "value": "planches", "label": "Planches" },
+            { "value": "tapas", "label": "Tapas" },
+            { "value": "mezze", "label": "Mezze" },
+            { "value": "antipasti", "label": "Antipasti" },
+            { "value": "plat_marche", "label": "Plat du marché/de saison" },
+            { "value": "salades_composees", "label": "Salades composées" },
+            { "value": "plat_chaud_cuisine", "label": "Plat chaud cuisiné" },
+            { "value": "mets_haut_gamme", "label": "Mets haut de gamme" },
+            { "value": "animation_unite", "label": "Animation unité" },
+            { "value": "animation_xxl", "label": "Animation XXL" },
+            { "value": "brasero", "label": "Brasero" },
+            { "value": "barbecue", "label": "Barbecue" },
+            { "value": "rotisserie", "label": "Rôtisserie" },
+            { "value": "broche", "label": "Broche" },
+            { "value": "mechoui", "label": "Méchoui" },
+            { "value": "grazing_sale", "label": "Grazing salé" },
+            { "value": "grazing_mixte", "label": "Grazing mixte" }
+          ]
+        },
+        {
+          "id": "plats_sucres",
+          "label": "Quels plats sucrés vous inspirent ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "SUCRÉS",
+          "conditional": {
+            "showIf": ["food_deja_trouve"]
+          },
+          "options": [
+            { "value": "mignardise", "label": "Mignardise" },
+            { "value": "entremet", "label": "Entremet" },
+            { "value": "gateau", "label": "Gâteau" },
+            { "value": "wedding_cake", "label": "Wedding cake/Layer cake" },
+            { "value": "number_cake", "label": "Number cake" },
+            { "value": "piece_montee", "label": "Pièce montée" },
+            { "value": "glaces", "label": "Glaces" },
+            {
+              "value": "plateau_fruits",
+              "label": "Plateau ou panier de fruits"
+            },
+            { "value": "crepes", "label": "Crêpes" },
+            { "value": "gaufres", "label": "Gaufres" },
+            { "value": "churros", "label": "Churros" },
+            { "value": "smoothie", "label": "Smoothie" },
+            { "value": "jus_presse", "label": "Jus pressé" },
+            { "value": "milkshake", "label": "Milkshake" },
+            { "value": "grazing_sucree", "label": "Grazing sucrée" }
+          ]
+        },
+        {
+          "id": "regimes_speciaux",
+          "label": "Quels régimes spéciaux souhaitez-vous prendre en compte ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "RÉGIMES",
+          "conditional": {
+            "showIf": ["food_deja_trouve"]
+          },
+          "options": [
+            { "value": "vegetarien", "label": "Végétarien" },
+            { "value": "vegan", "label": "Végan" },
+            { "value": "allergies", "label": "Allergies" },
+            { "value": "intolerances", "label": "Intolérances" },
+            { "value": "hallal", "label": "Hallal" },
+            { "value": "casher", "label": "Casher" }
+          ]
+        },
+        {
+          "id": "materiel_culinaire",
+          "label": "Souhaitez-vous louer du matériel culinaire ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "CULINAIRE",
+          "conditional": {
+            "showIf": ["food_deja_trouve"]
+          },
+          "options": [
+            { "value": "rechaud", "label": "Réchaud", "co": false },
+            { "value": "bain_marie", "label": "Bain-marie", "co": false },
+            { "value": "etuve", "label": "Étuve", "co": false },
+            { "value": "frigo", "label": "Frigo" },
+            { "value": "chambre_froide", "label": "Chambre froide" },
+            { "value": "machine_glacon", "label": "Machine à glaçon" },
+            { "value": "hot_dog", "label": "Hot-dog" },
+            { "value": "kebab", "label": "Kebab" },
+            { "value": "barbe_papa", "label": "Barbe à papa" },
+            { "value": "pop_corn", "label": "Pop-corn" },
+            { "value": "granite", "label": "Granité" },
+            { "value": "glace_italienne", "label": "Glace italienne" },
+            { "value": "crepiere", "label": "Crêpière" },
+            { "value": "gaufrier", "label": "Gaufrier" },
+            { "value": "friteuse", "label": "Friteuse" },
+            { "value": "fontaine_chocolat", "label": "Fontaine chocolat" },
+            { "value": "percolateur", "label": "Percolateur" },
+            { "value": "brasero", "label": "Brasero" },
+            { "value": "barbecue", "label": "Barbecue" }
+          ]
+        },
+        {
+          "id": "materiel_table",
+          "label": "Souhaitez-vous louer du matériel de table ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "TABLE",
+          "conditional": {
+            "showIf": ["food_deja_trouve"]
+          },
+          "options": [
+            { "value": "vaisselle", "label": "Vaisselle" },
+            { "value": "verrerie", "label": "Verrerie" },
+            { "value": "bonbonne", "label": "Bonbonne" },
+            { "value": "nappe", "label": "Nappe" },
+            { "value": "serviette", "label": "Serviette" },
+            { "value": "centre_table", "label": "Centre de table" },
+            { "value": "housse_chaise", "label": "Housse de chaise" },
+            { "value": "table", "label": "Table" },
+            { "value": "table_basse", "label": "Table basse" },
+            { "value": "mange_debout", "label": "Mange-debout" },
+            { "value": "chaise", "label": "Chaise" },
+            { "value": "chaise_haute", "label": "Chaise haute" },
+            { "value": "banc", "label": "Banc" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "boisson",
+      "title": "BOISSON - Qu'est-ce qu'on boit ?",
+      "fields": [
+        {
+          "id": "boisson_deja_trouve",
+          "label": "J'ai déjà trouvé ma solution pour le repas",
+          "type": "checkbox",
+          "visibleSection": false
+        },
+        {
+          "id": "types_boissons",
+          "label": "Quelles boissons imaginez-vous ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "BOISSONS",
+          "conditional": {
+            "showIf": ["boisson_deja_trouve"]
+          },
+          "options": [
+            { "value": "biere", "label": "Bière" },
+            { "value": "vin_rouge", "label": "Vin rouge" },
+            { "value": "vin_blanc", "label": "Vin blanc" },
+            { "value": "vin_petillant", "label": "Vin pétillant" },
+            {
+              "value": "spiritueux_alcoolises",
+              "label": "Spiritueux alcoolisés"
+            },
+            {
+              "value": "spiritueux_sans_alcool",
+              "label": "Spiritueux sans alcool"
+            },
+            { "value": "cocktail", "label": "Cocktail" },
+            { "value": "mocktail", "label": "Mocktail" },
+            { "value": "sodas_artisanaux", "label": "Sodas artisanaux" },
+            { "value": "jus", "label": "Jus" }
+          ]
+        },
+        {
+          "id": "materiel_boisson",
+          "label": "De quel matériel avez-vous besoin ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "MATÉRIEL",
+          "conditional": {
+            "showIf": ["boisson_deja_trouve"]
+          },
+          "options": [
+            { "value": "fut", "label": "Fût" },
+            { "value": "tireuse", "label": "Tireuse" },
+            { "value": "bar_mobile", "label": "Bar mobile" },
+            { "value": "mobilier", "label": "Mobilier" },
+            {
+              "value": "petit_materiel",
+              "label": "Petit matériel (sous-verre, paille, ecocups...)"
+            }
+          ]
+        },
+        {
+          "id": "options_boisson",
+          "label": "Quelle(s) options vous intéressent ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "OPTIONS",
+          "conditional": {
+            "showIf": ["boisson_deja_trouve"]
+          },
+          "options": [
+            { "value": "service", "label": "Service" },
+            { "value": "reprise", "label": "Reprise" },
+            { "value": "livraison", "label": "Livraison" },
+            { "value": "installation", "label": "Installation" },
+            { "value": "consigne", "label": "Consigne" }
+          ]
+        },
+        {
+          "id": "type_service",
+          "label": "Pour quel service souhaitez-vous engager un serveur ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "SERVEUR",
+          "conditional": {
+            "showIf": ["options_boisson", "boisson_deja_trouve"],
+            "values": ["service"]
+          },
+          "options": [
+            { "value": "service_table", "label": "Service à table" },
+            { "value": "passage_plateau", "label": "Passage plateau" },
+            {
+              "value": "ouverture_bouteilles",
+              "label": "Ouverture des bouteilles"
+            },
+            { "value": "service_boissons", "label": "Service des boissons" },
+            { "value": "refill", "label": "Refill" },
+            { "value": "debarrasse", "label": "Débarrasse" },
+            { "value": "plonge", "label": "Plonge" },
+            {
+              "value": "branchement_futs",
+              "label": "Branchement et gestion des fûts"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "musique",
+      "title": "MUSIQUE - Et pour l'ambiance ?",
+      "fields": [
+        {
+          "id": "musique_deja_trouve",
+          "label": "J'ai déjà trouvé ma solution pour le repas",
+          "type": "checkbox",
+          "visibleSection": false
+        },
+        {
+          "id": "but_musique",
+          "label": "Dans quel but souhaitez-vous mettre en musique votre événement ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "BUT",
+          "conditional": {
+            "showIf": ["musique_deja_trouve"]
+          },
+          "options": [
+            {
+              "value": "accompagnement_cocktail",
+              "label": "En accompagnement d'un cocktail"
+            },
+            {
+              "value": "accompagnement_repas",
+              "label": "En accompagnement d'un repas"
+            },
+            {
+              "value": "accompagnement_ceremonie",
+              "label": "En accompagnement d'une cérémonie"
+            },
+            { "value": "pour_danser", "label": "Pour danser" }
+          ]
+        },
+        {
+          "id": "genre_musique",
+          "label": "Quel genre de musique souhaitez-vous écouter ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "MUSIQUE",
+          "conditional": {
+            "showIf": ["musique_deja_trouve"]
+          },
+          "options": [
+            { "value": "soul", "label": "Soul" },
+            { "value": "jazz", "label": "Jazz" },
+            { "value": "gospel", "label": "Gospel" },
+            { "value": "disco", "label": "Disco" },
+            { "value": "funk", "label": "Funk" },
+            { "value": "rnb", "label": "R&B" },
+            { "value": "house", "label": "House" },
+            { "value": "edm", "label": "EDM" },
+            { "value": "electro", "label": "Electro" },
+            { "value": "francaise", "label": "Française" },
+            { "value": "rock", "label": "Rock" },
+            { "value": "rap", "label": "Rap" },
+            { "value": "blues", "label": "Blues" },
+            { "value": "pop", "label": "Pop" },
+            { "value": "folk", "label": "Folk" },
+            { "value": "country", "label": "Country" },
+            { "value": "latino", "label": "Latino" },
+            { "value": "indisoul", "label": "Indisoul" },
+            { "value": "rai", "label": "Raï" },
+            { "value": "techno", "label": "Techno" },
+            { "value": "trance", "label": "Trance" },
+            { "value": "dubstep", "label": "Dubstep" },
+            { "value": "drum_bass", "label": "Drum&Bass" }
+          ]
+        },
+        {
+          "id": "mood_musique",
+          "label": "Quel mood vous parle quand vous pensez \"musique\" ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "MOOD",
+          "conditional": {
+            "showIf": ["musique_deja_trouve"]
+          },
+          "options": [
+            { "value": "joie", "label": "Joie" },
+            { "value": "danse", "label": "Danse" },
+            { "value": "soleil", "label": "Soleil" },
+            { "value": "energie", "label": "Énergie" },
+            { "value": "couleur", "label": "Couleur" },
+            { "value": "emotion", "label": "Émotion" },
+            { "value": "douceur", "label": "Douceur" },
+            { "value": "simplicite", "label": "Simplicité" },
+            { "value": "sobriete", "label": "Sobriété" },
+            { "value": "epure", "label": "Épuré" },
+            { "value": "dark", "label": "Dark" },
+            { "value": "melancolique", "label": "Mélancolique" }
+          ]
+        },
+        {
+          "id": "exigences_techniques",
+          "label": "Des exigences techniques ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "TECHNIQUES",
+          "conditional": {
+            "showIf": ["musique_deja_trouve"]
+          },
+          "options": [
+            { "value": "sono", "label": "Sono" },
+            { "value": "lumieres", "label": "Lumières" },
+            { "value": "micro", "label": "Micro" },
+            { "value": "vinyle", "label": "Vinyle" },
+            { "value": "platines_numeriques", "label": "Platines numériques" },
+            {
+              "value": "materiel_scenographique",
+              "label": "Matériel scénographique"
+            }
+          ]
+        },
+        {
+          "id": "proposition_musique",
+          "label": "Vous souhaitez une proposition",
+          "type": "radio",
+          "category": "PROPOSITION",
+          "conditional": {
+            "showIf": ["musique_deja_trouve"]
+          },
+          "options": [
+            {
+              "value": "confiance_totale",
+              "label": "100% basée sur une confiance totale"
+            },
+            { "value": "personnalisee", "label": "Personnalisée" },
+            {
+              "value": "mix",
+              "label": "Un mix des deux (quelques chansons qui ont du sens)"
+            }
+          ]
+        },
+        {
+          "id": "materiel_musical",
+          "label": "Vous souhaitez louer du matériel musical ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "MATERIEL MUSICAL",
+          "conditional": {
+            "showIf": ["musique_deja_trouve"]
+          },
+          "options": [
+            { "value": "sono", "label": "Sono" },
+            { "value": "table_mixage", "label": "Table de mixage" },
+            { "value": "micro", "label": "Micro" },
+            { "value": "videoprojecteur", "label": "Vidéoprojecteur" },
+            { "value": "ecran_projection", "label": "Écran de projection" },
+            { "value": "ecran_led", "label": "Écran LED" },
+            { "value": "moniteur", "label": "Moniteur" },
+            { "value": "camera", "label": "Caméra" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "animation",
+      "title": "ANIMATION - Comment on anime tout ce petit monde ?",
+      "fields": [
+        {
+          "id": "animation_deja_trouve",
+          "label": "J'ai déjà trouvé ma solution pour le repas",
+          "type": "checkbox",
+          "visibleSection": false
+        },
+        {
+          "id": "jeux",
+          "label": "Vous avez pensé aux jeux ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "JEUX",
+          "conditional": {
+            "showIf": ["animation_deja_trouve"]
+          },
+          "options": [
+            { "value": "jeu_bois", "label": "Jeu en bois" },
+            { "value": "animation_enfant", "label": "Animation enfant" },
+            { "value": "animation_adulte", "label": "Animation adulte" },
+            { "value": "structure_gonflable", "label": "Structure gonflable" },
+            { "value": "chasse_tresor", "label": "Chasse au trésor" },
+            { "value": "escape_game", "label": "Escape game" },
+            { "value": "olympiades", "label": "Olympiades" },
+            { "value": "jeux_musicaux", "label": "Jeux musicaux" },
+            { "value": "jeux_culinaires", "label": "Jeux culinaires" },
+            { "value": "close_up", "label": "Close-up" },
+            { "value": "ambulante", "label": "Ambulante" },
+            { "value": "spectacle", "label": "Spectacle" },
+            { "value": "illusionniste", "label": "Illusionniste" },
+            { "value": "mentaliste", "label": "Mentaliste" },
+            { "value": "hypnose", "label": "Hypnose" },
+            { "value": "theatre", "label": "Théâtre" },
+            { "value": "impro", "label": "Impro" },
+            { "value": "comedien_infiltre", "label": "Comédien infiltré" }
+          ]
+        },
+        {
+          "id": "art_visuel",
+          "label": "Et des animations d'art visuel ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "ART VISUEL",
+          "conditional": {
+            "showIf": ["animation_deja_trouve"]
+          },
+          "options": [
+            { "value": "croquis", "label": "Croquis" },
+            { "value": "peinture", "label": "Peinture" },
+            { "value": "aquarelle", "label": "Aquarelle" },
+            { "value": "caricature", "label": "Caricature" },
+            { "value": "realiste", "label": "Réaliste" },
+            { "value": "dessin_numerique", "label": "Dessin numérique" },
+            { "value": "gravure", "label": "Gravure" },
+            { "value": "serigraphie", "label": "Sérigraphie" },
+            { "value": "calligraphie", "label": "Calligraphie" },
+            { "value": "graffiti", "label": "Graffiti" },
+            { "value": "light_painting", "label": "Light-painting" },
+            { "value": "body_painting", "label": "Body-painting" },
+            { "value": "mapping", "label": "Mapping" },
+            { "value": "motion_design", "label": "Motion design" },
+            { "value": "fresque", "label": "Fresque" },
+            { "value": "tatouage", "label": "Tatouage" },
+            { "value": "tatoo_ephemere", "label": "Tatouage éphémère" },
+            { "value": "maquillage", "label": "Maquillage" },
+            { "value": "bar_paillettes", "label": "Bar à paillettes" }
+          ]
+        },
+        {
+          "id": "performers",
+          "label": "Ou peut-être des performers ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "PERFORMERS",
+          "conditional": {
+            "showIf": ["animation_deja_trouve"]
+          },
+          "options": [
+            { "value": "feu_artifice", "label": "Feu d'artifice" },
+            { "value": "flamme", "label": "Flamme" },
+            { "value": "etincelle", "label": "Étincelle" },
+            { "value": "fumee_coloree", "label": "Fumée colorée" },
+            { "value": "drones_lumineux", "label": "Drones lumineux" },
+            { "value": "danse_typique", "label": "Danse typique" },
+            { "value": "danse_aerienne", "label": "Danse aérienne" },
+            { "value": "danse_lumineuse", "label": "Danse lumineuse" },
+            { "value": "acrobatie", "label": "Acrobatie" },
+            { "value": "cracheur_feu", "label": "Cracheur de feu" },
+            { "value": "jongleur", "label": "Jongleur" },
+            { "value": "echassier", "label": "Échassier" }
+          ]
+        },
+        {
+          "id": "bien_etre",
+          "label": "La nouveauté ? Des animations bien-être !",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "BIEN-ÊTRE",
+          "conditional": {
+            "showIf": ["animation_deja_trouve"]
+          },
+          "options": [
+            { "value": "sport", "label": "Sport" },
+            { "value": "yoga", "label": "Yoga" },
+            { "value": "sophrologie", "label": "Sophrologie" },
+            { "value": "meditation", "label": "Méditation" },
+            { "value": "relaxation", "label": "Relaxation" },
+            { "value": "massage", "label": "Massage" },
+            { "value": "reflexologie", "label": "Réflexologie" },
+            { "value": "sonotherapie", "label": "Sonothérapie" },
+            { "value": "soin_corps", "label": "Soin du corps" },
+            { "value": "soin_visage", "label": "Soin du visage" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "audiovisuel",
+      "title": "AUDIOVISUEL - Est-ce qu'on immortalise cet événement ?",
+      "fields": [
+        {
+          "id": "audiovisuel_deja_trouve",
+          "label": "J'ai déjà trouvé ma solution pour le repas",
+          "type": "checkbox",
+          "visibleSection": false
+        },
+        {
+          "id": "shoot",
+          "label": "Qu'est-ce qu'on shoot ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "SHOOT",
+          "conditional": {
+            "showIf": ["audiovisuel_deja_trouve"]
+          },
+          "options": [
+            { "value": "shooting_studio", "label": "Shooting studio" },
+            {
+              "value": "shooting_lifestyle",
+              "label": "Shooting lifestyle (pas de pose, naturel)"
+            },
+            { "value": "shooting_corporate", "label": "Shooting corporate" },
+            { "value": "photo_groupe", "label": "Photo de groupe" },
+            { "value": "shooting_marque", "label": "Shooting de marque" },
+            { "value": "seance_couple", "label": "Séance photo couple" },
+            { "value": "demande_mariage", "label": "Demande en mariage" },
+            { "value": "preparatifs", "label": "Préparatifs" },
+            { "value": "mariage_civil", "label": "Mariage civil" },
+            { "value": "mariage_religieux", "label": "Mariage religieux" },
+            { "value": "ceremonie_laique", "label": "Cérémonie laïque" },
+            { "value": "aperitif_cocktail", "label": "Apéritif/Cocktail" },
+            { "value": "vin_honneur", "label": "Vin d'honneur" },
+            { "value": "soiree", "label": "Soirée" }
+          ]
+        },
+        {
+          "id": "cadre_shoot",
+          "label": "Dans quel cadre ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "CADRE",
+          "conditional": {
+            "showIf": ["audiovisuel_deja_trouve"]
+          },
+          "options": [
+            { "value": "foret", "label": "Forêt" },
+            { "value": "montagne", "label": "Montagne" },
+            { "value": "plage", "label": "Plage" },
+            { "value": "champ", "label": "Champ" },
+            { "value": "jardin", "label": "Jardin" },
+            { "value": "architecture", "label": "Architecture" },
+            { "value": "gare", "label": "Gare" },
+            { "value": "cafe", "label": "Café" },
+            { "value": "maison", "label": "Maison" },
+            { "value": "studio", "label": "Studio" }
+          ]
+        },
+        {
+          "id": "technologie_photo",
+          "label": "Des préférences en termes de technologie ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "TECHNOLOGIE",
+          "conditional": {
+            "showIf": ["audiovisuel_deja_trouve"]
+          },
+          "options": [
+            { "value": "argentique", "label": "Argentique" },
+            { "value": "numerique", "label": "Numérique" },
+            { "value": "drone", "label": "Drone" }
+          ]
+        },
+        {
+          "id": "genre_photo",
+          "label": "Quel genre de photo-vidéo vous aimez ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "GENRE",
+          "conditional": {
+            "showIf": ["audiovisuel_deja_trouve"]
+          },
+          "options": [
+            { "value": "authentique", "label": "Authentique" },
+            { "value": "minimaliste", "label": "Minimaliste" },
+            { "value": "retro", "label": "Rétro" },
+            { "value": "noir_blanc", "label": "N&B" },
+            { "value": "original", "label": "Original" },
+            { "value": "pop", "label": "Pop" }
+          ]
+        },
+        {
+          "id": "materiel_audiovisuel",
+          "label": "Vous souhaitez louer du matériel d'animation audiovisuel ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "ANIMATION AUDIOVISUEL",
+          "conditional": {
+            "showIf": ["audiovisuel_deja_trouve"]
+          },
+          "options": [
+            { "value": "photo_booth", "label": "Photo booth" },
+            { "value": "video_booth", "label": "Video booth" },
+            { "value": "photomaton", "label": "Photomaton" },
+            { "value": "livre_or_audio", "label": "Livre d'or audio" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "décoration",
+      "title": "DÉCORATION - Quelle ambiance visuelle ?",
+      "fields": [
+        {
+          "id": "decoration_deja_trouve",
+          "label": "J'ai déjà trouvé ma solution pour le repas",
+          "type": "checkbox",
+          "visibleSection": false
+        },
+        {
+          "id": "ambiance_deco",
+          "label": "Qu'est-ce que vous imaginez comme ambiance ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "AMBIANCE",
+          "conditional": {
+            "showIf": ["decoration_deja_trouve"]
+          },
+          "options": [
+            { "value": "classique", "label": "Classique" },
+            { "value": "minimaliste", "label": "Minimaliste" },
+            { "value": "vintage", "label": "Vintage" },
+            { "value": "nature", "label": "Nature" },
+            { "value": "colore", "label": "Coloré" },
+            { "value": "monochrome", "label": "Monochrome" },
+            { "value": "exotique", "label": "Exotique" },
+            { "value": "chaleureux", "label": "Chaleureux" },
+            { "value": "immersif", "label": "Immersif" },
+            { "value": "enfant", "label": "Enfant" }
+          ]
+        },
+        {
+          "id": "besoins_deco",
+          "label": "Pour cela, de quoi avez-vous besoin ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "BESOINS",
+          "conditional": {
+            "showIf": ["decoration_deja_trouve"]
+          },
+          "options": [
+            { "value": "identite_visuelle", "label": "Identité visuelle" },
+            { "value": "logo", "label": "Logo" },
+            { "value": "moodboard", "label": "Moodboard" },
+            { "value": "scenographie", "label": "Scénographie" },
+            { "value": "signaletique", "label": "Signalétique" },
+            { "value": "papeterie", "label": "Papeterie" },
+            { "value": "impression_papier", "label": "Impression papier" }
+          ]
+        },
+        {
+          "id": "procedes_deco",
+          "label": "Quels procédés vous parlent ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "PROCÉDÉS",
+          "conditional": {
+            "showIf": ["decoration_deja_trouve"]
+          },
+          "options": [
+            { "value": "gravure", "label": "Gravure" },
+            { "value": "serigraphie", "label": "Sérigraphie" },
+            { "value": "broderie", "label": "Broderie" },
+            { "value": "etiquetage", "label": "Étiquetage" },
+            { "value": "impression", "label": "Impression" }
+          ]
+        },
+        {
+          "id": "vegetaux",
+          "label": "Souhaitez-vous intégrer des végétaux ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "VÉGÉTAUX",
+          "conditional": {
+            "showIf": ["decoration_deja_trouve"]
+          },
+          "options": [
+            { "value": "design_floral", "label": "Design floral" },
+            { "value": "fleurs_brutes", "label": "Fleurs brutes" },
+            { "value": "composition", "label": "Composition" },
+            { "value": "arche", "label": "Arche" },
+            { "value": "boutonnieres", "label": "Boutonnières" },
+            { "value": "bouquet", "label": "Bouquet" },
+            { "value": "petales", "label": "Pétales" },
+            { "value": "plante_pot", "label": "Plante en pot" },
+            { "value": "mur_vegetal", "label": "Mur végétal" },
+            { "value": "structure_feuillue", "label": "Structure feuillue" },
+            { "value": "fleur_fraiche", "label": "Fleur fraîche" },
+            { "value": "fleur_sechee", "label": "Fleur séchée" },
+            { "value": "fleur_papier", "label": "Fleur papier" },
+            { "value": "fleur_soie", "label": "Fleur soie" },
+            { "value": "arbre", "label": "Arbre" }
+          ]
+        },
+        {
+          "id": "materiel_decoratif",
+          "label": "De quel matériel décoratif avez-vous besoin ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "MATÉRIEL DÉCORATIF",
+          "conditional": {
+            "showIf": ["decoration_deja_trouve"]
+          },
+          "options": [
+            { "value": "objets_deco", "label": "Objets déco" },
+            { "value": "vaisselle_deco", "label": "Vaisselle" },
+            { "value": "mobilier_deco", "label": "Mobilier" },
+            { "value": "linge", "label": "Linge" },
+            { "value": "projecteur", "label": "Projecteur" },
+            {
+              "value": "chiffre_lettre_lumineux",
+              "label": "Chiffre/lettre lumineux"
+            },
+            { "value": "lumieres_indirectes", "label": "Lumières indirectes" },
+            { "value": "neon", "label": "Néon" },
+            {
+              "value": "guirlandes_lumineuses",
+              "label": "Guirlandes lumineuses"
+            },
+            { "value": "ciel_etoile", "label": "Ciel étoilé" },
+            { "value": "jeux_lumiere", "label": "Jeux de lumière" },
+            { "value": "machine_fumee", "label": "Machine à fumée" },
+            { "value": "machine_bulles", "label": "Machine à bulles" },
+            { "value": "machine_etincelles", "label": "Machine à étincelles" },
+            { "value": "fauteuil", "label": "Fauteuil" },
+            { "value": "canape", "label": "Canapé" },
+            { "value": "pouf", "label": "Pouf" },
+            { "value": "vase", "label": "Vase" },
+            { "value": "jarre", "label": "Jarre" },
+            { "value": "guirlandes", "label": "Guirlandes" },
+            { "value": "structure_arche", "label": "Structure arche" },
+            { "value": "fleurs_sechees", "label": "Fleurs séchées" },
+            { "value": "comptoir", "label": "Comptoir" }
+          ]
+        },
+        {
+          "id": "cadeau_personnalise",
+          "label": "Vos invités repartiront-ils avec un cadeau personnalisé ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "CADEAU",
+          "conditional": {
+            "showIf": ["decoration_deja_trouve"]
+          },
+          "options": [
+            { "value": "drage", "label": "Dragé" },
+            { "value": "biscuit", "label": "Biscuit" },
+            { "value": "sucette", "label": "Sucette" },
+            { "value": "the", "label": "Thé" },
+            { "value": "miel", "label": "Miel" },
+            { "value": "confiture", "label": "Confiture" },
+            { "value": "caramel", "label": "Caramel" },
+            { "value": "pate_tartiner", "label": "Pâte à tartiner" },
+            { "value": "huile_olive", "label": "Huile d'olive" },
+            { "value": "liqueur", "label": "Liqueur" },
+            { "value": "mini_plante", "label": "Mini plante" },
+            { "value": "graine", "label": "Graine" },
+            { "value": "savon", "label": "Savon" },
+            { "value": "creme", "label": "Crème" },
+            { "value": "paille", "label": "Paille" },
+            { "value": "sel", "label": "Sel" },
+            { "value": "epices", "label": "Épices" },
+            { "value": "tatouage", "label": "Tatouage" },
+            { "value": "marque_page", "label": "Marque page" },
+            { "value": "gobelets", "label": "Gobelets" },
+            { "value": "tote_bag", "label": "Tote bag" },
+            { "value": "mini_jeu", "label": "Mini jeu" },
+            { "value": "bijou", "label": "Bijou" },
+            { "value": "sticker", "label": "Sticker" },
+            { "value": "ticket_gratter", "label": "Ticket à gratter" },
+            { "value": "porte_cle", "label": "Porte-clé" },
+            { "value": "bouchon", "label": "Bouchon" },
+            { "value": "eventail", "label": "Éventail" },
+            { "value": "magnet", "label": "Magnet" }
+          ]
+        },
+        {
+          "id": "type_decorateur",
+          "label": "Vous souhaitez",
+          "type": "radio",
+          "conditional": {
+            "showIf": ["decoration_deja_trouve"]
+          },
+          "options": [
+            {
+              "value": "faire_appel",
+              "label": "Faire appel à un graphiste/décorateur/designer"
+            },
+            {
+              "value": "vous_occuper",
+              "label": "Vous occuper de la déco à 100%"
+            }
+          ]
+        },
+        {
+          "id": "options_decorateur",
+          "label": "Êtes-vous intéressé(e) par les options suivantes ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "OPTIONS",
+          "conditional": {
+            "showIf": ["type_decorateur", "decoration_deja_trouve"],
+            "values": ["faire_appel"]
+          },
+          "options": [
+            { "value": "livraison", "label": "Livraison" },
+            { "value": "coordination", "label": "Coordination" },
+            { "value": "installation", "label": "Installation" },
+            { "value": "demontage", "label": "Démontage" },
+            { "value": "nettoyage", "label": "Nettoyage" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "transport",
+      "title": "TRANSPORT - Comment se rendre à votre événement ?",
+      "fields": [
+        {
+          "id": "transport_deja_trouve",
+          "label": "J'ai déjà trouvé ma solution pour le repas",
+          "type": "checkbox",
+          "visibleSection": false
+        },
+        {
+          "id": "moyens_transport",
+          "label": "Les moyens de transport imaginables sont",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "TRANSPORT",
+
+          "conditional": {
+            "showIf": ["transport_deja_trouve"]
+          },
+          "options": [
+            { "value": "voiture", "label": "Voiture" },
+            { "value": "pick_up", "label": "Pick-up" },
+            { "value": "van", "label": "Van" },
+            { "value": "minibus", "label": "Minibus" },
+            { "value": "autocar", "label": "Autocar" },
+            { "value": "scooter", "label": "Scooter" },
+            { "value": "moto", "label": "Moto" },
+            { "value": "sidecar", "label": "Sidecar" },
+            { "value": "voiturette", "label": "Voiturette" },
+            { "value": "cheval_trait", "label": "Cheval de trait" },
+            { "value": "cheval_parade", "label": "Cheval de parade" },
+            { "value": "poney", "label": "Poney" },
+            { "value": "speedbike", "label": "Speedbike" },
+            { "value": "velo_electrique", "label": "Vélo électrique" },
+            { "value": "tandem", "label": "Tandem" },
+            { "value": "quad", "label": "Quad" },
+            { "value": "tricycle", "label": "Tricycle" },
+            { "value": "bateau", "label": "Bateau" },
+            { "value": "peniche", "label": "Péniche" },
+            { "value": "zodiaque", "label": "Zodiaque" },
+            { "value": "avion", "label": "Avion" },
+            { "value": "helicoptere", "label": "Hélicoptère" }
+          ]
+        },
+        {
+          "id": "lexique_transport",
+          "label": "Cochez le lexique qui vous inspire",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "LEXIQUE",
+          "conditional": {
+            "showIf": ["transport_deja_trouve"]
+          },
+          "options": [
+            { "value": "monture", "label": "Monture" },
+            { "value": "caleche", "label": "Calèche" },
+            { "value": "classique", "label": "Classique" },
+            { "value": "moderne", "label": "Moderne" },
+            { "value": "vintage", "label": "Vintage" },
+            { "value": "collection", "label": "Collection" },
+            { "value": "sportif", "label": "Sportif" },
+            { "value": "electrique", "label": "Électrique" },
+            { "value": "decapotable", "label": "Décapotable" },
+            { "value": "citadine", "label": "Citadine" },
+            { "value": "berline", "label": "Berline" },
+            { "value": "suv", "label": "SUV" },
+            { "value": "4x4", "label": "4x4" },
+            { "value": "francais", "label": "Français" },
+            { "value": "limousine", "label": "Limousine" },
+            { "value": "vespa", "label": "Vespa" },
+            { "value": "champetre", "label": "Champêtre" },
+            { "value": "nature", "label": "Nature" }
+          ]
+        },
+        {
+          "id": "couleur_transport",
+          "label": "De quelle(s) couleur ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "COULEUR",
+          "conditional": {
+            "showIf": ["transport_deja_trouve"]
+          },
+          "options": [
+            { "value": "blanc", "label": "Blanc" },
+            { "value": "noir", "label": "Noir" },
+            { "value": "gris", "label": "Gris" },
+            { "value": "beige", "label": "Beige" },
+            { "value": "marron", "label": "Marron" },
+            { "value": "rouge", "label": "Rouge" },
+            { "value": "vert", "label": "Vert" },
+            { "value": "jaune", "label": "Jaune" },
+            { "value": "violet", "label": "Violet" },
+            { "value": "rose", "label": "Rose" },
+            { "value": "orange", "label": "Orange" },
+            { "value": "bleu", "label": "Bleu" }
+          ]
+        },
+        {
+          "id": "trajet",
+          "label": "Pour quel trajet ?",
+          "type": "radio",
+          "category": "TRAJET",
+          "conditional": {
+            "showIf": ["transport_deja_trouve"]
+          },
+          "options": [
+            {
+              "value": "aucun",
+              "label": "Aucun (ça servira juste de déco/présentation)"
+            },
+            {
+              "value": "petit",
+              "label": "Petit (une entrée dans les lieux pour un effet wahou)"
+            },
+            {
+              "value": "moyen",
+              "label": "Moyen (d'un point A à un point B, simple et efficace)"
+            },
+            {
+              "value": "illimite",
+              "label": "Illimité (balade, rallye, cortège...)"
+            }
+          ]
+        },
+        {
+          "id": "chauffeur",
+          "label": "Souhaitez-vous",
+          "type": "radio",
+          "category": "CHAUFFEUR",
+          "conditional": {
+            "showIf": ["transport_deja_trouve"]
+          },
+          "options": [
+            {
+              "value": "avec_chauffeur",
+              "label": "Un chauffeur, le but est de me faire conduire (pro)"
+            },
+            {
+              "value": "conduire",
+              "label": "Conduire, je veux être maître de mon véhicule (perso)"
+            },
+            { "value": "peu_importe", "label": "Peu importe !" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "humain",
+      "title": "HUMAIN - Qui gère votre événement le jour J ?",
+      "fields": [
+        {
+          "id": "humain_deja_trouve",
+          "label": "J'ai déjà trouvé ma solution pour le repas",
+          "type": "checkbox",
+          "visibleSection": false
+        },
+        {
+          "id": "gestion_evenement",
+          "label": "Gestion de l'événement",
+          "type": "radio",
+          "conditional": {
+            "showIf": "gestion_evenement"
+          },
+          "options": [
+            {
+              "value": "personnes_missionnees",
+              "label": "Des personnes qui ont été missionnées et/ou vous"
+            },
+            {
+              "value": "besoin_aide",
+              "label": "J'ai besoin d'aide (officiant/coordinateur)"
+            }
+          ]
+        },
+        {
+          "id": "fonction",
+          "label": "Sur quelle(s) fonction ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "FONCTION",
+          "conditional": {
+            "showIf": "gestion_evenement",
+            "values": ["besoin_aide"]
+          },
+          "options": [
+            {
+              "value": "coordinateur",
+              "label": "Coordinateur de jour-J (drive des différents temps, prestataires, planning, changements last minute...)"
+            },
+            {
+              "value": "officiant",
+              "label": "Officiant de cérémonie (drive la structure, les temps et animations d'une cérémonie)"
+            }
+          ]
+        },
+        {
+          "id": "qualites_coordinateur",
+          "label": "Quelles sont les 3 qualités que vous souhaiteriez qu'il/elle ait ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "QUALITÉS",
+          "max": 3,
+          "conditional": {
+            "showIf": "fonction",
+            "values": ["coordinateur"]
+          },
+          "options": [
+            { "value": "organise", "label": "Organisé" },
+            { "value": "reactif", "label": "Réactif" },
+            { "value": "communiquant", "label": "Communiquant" },
+            { "value": "sens_prio", "label": "Sens des priorités" },
+            { "value": "sens_detail", "label": "Sens du détail" },
+            { "value": "leadership", "label": "Leadership" },
+            { "value": "flexible", "label": "Flexible" },
+            { "value": "discret", "label": "Discret" },
+            { "value": "passionne", "label": "Passionné" }
+          ]
+        },
+        {
+          "id": "type_ceremonie",
+          "label": "Pour quel genre de cérémonie ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "CÉRÉMONIE",
+          "conditional": {
+            "showIf": "fonction",
+            "values": ["officiant"]
+          },
+          "options": [
+            { "value": "pro", "label": "Pro" },
+            { "value": "scolaire", "label": "Scolaire" },
+            { "value": "institutionnelle", "label": "Institutionnelle" },
+            { "value": "laique", "label": "Laïque" },
+            { "value": "spirituelle", "label": "Spirituelle" },
+            { "value": "religieuse", "label": "Religieuse" }
+          ]
+        },
+        {
+          "id": "ton_ceremonie",
+          "label": "Quel ton souhaiteriez-vous donner à votre cérémonie ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "TON",
+          "conditional": {
+            "showIf": "fonction",
+            "values": ["officiant"]
+          },
+          "options": [
+            { "value": "humoristique", "label": "Humoristique" },
+            { "value": "emouvant", "label": "Émouvant" },
+            { "value": "solennel", "label": "Solennel" },
+            { "value": "poetique", "label": "Poétique" },
+            { "value": "inspirant", "label": "Inspirant" },
+            { "value": "intime", "label": "Intime" },
+            { "value": "engage", "label": "Engagé" },
+            { "value": "joyeux", "label": "Joyeux" },
+            { "value": "profond", "label": "Profond" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "logistique",
+      "title": "LOGISTIQUE - Et pour la logistique ?",
+      "fields": [
+        {
+          "id": "logistique_deja_trouve",
+          "label": "J'ai déjà trouvé ma solution pour le repas",
+          "type": "checkbox",
+          "visibleSection": false
+        },
+        {
+          "id": "materiel_logistique",
+          "label": "Avez-vous besoin de louer du matériel supplémentaire ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "MATERIEL",
+          "conditional": {
+            "showIf": ["logistique_deja_trouve"]
+          },
+          "options": [
+            { "value": "utilitaire", "label": "Utilitaire" },
+            { "value": "camion", "label": "Camion" },
+            { "value": "camion_refrigere", "label": "Camion réfrigéré" },
+            { "value": "parasol", "label": "Parasol" },
+            { "value": "barnum", "label": "Barnum" },
+            { "value": "tonnelle", "label": "Tonnelle" },
+            { "value": "pergola", "label": "Pergola" },
+            { "value": "hebergement_mobile", "label": "Hébergement mobile" },
+            { "value": "dome", "label": "Dôme" },
+            { "value": "tente_reception", "label": "Tente de réception" },
+            { "value": "plancher", "label": "Plancher" },
+            { "value": "scene", "label": "Scène" },
+            { "value": "espace_gonflable", "label": "Espace gonflable" },
+            {
+              "value": "climatisation_mobile",
+              "label": "Climatisation mobile"
+            },
+            { "value": "chauffage_mobile", "label": "Chauffage mobile" },
+            { "value": "chauffe_terrasse", "label": "Chauffe-terrasse" },
+            { "value": "brumisateur", "label": "Brumisateur" },
+            { "value": "sanitaires", "label": "Sanitaires" },
+            { "value": "groupe_electrogene", "label": "Groupe électrogène" }
+          ]
+        },
+        {
+          "id": "service_logistique",
+          "label": "De quel service supplémentaire pourriez-vous avoir besoin ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "SERVICE",
+          "conditional": {
+            "showIf": ["logistique_deja_trouve"]
+          },
+          "options": [
+            { "value": "transport", "label": "Transport" },
+            { "value": "livraison", "label": "Livraison" },
+            { "value": "securite", "label": "Sécurité" },
+            { "value": "menage", "label": "Ménage" },
+            { "value": "montage_demontage", "label": "Montage-démontage" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "look",
+      "title": "LOOK - Avez-vous déjà trouvé votre tenue ?",
+      "fields": [
+        {
+          "id": "look_deja_trouve",
+          "label": "J'ai déjà trouvé ma solution pour le repas",
+          "type": "checkbox",
+          "visibleSection": false
+        },
+        {
+          "id": "besoins_tenue",
+          "label": "Faites-nous part de vos besoins !",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "BESOINS",
+          "conditional": {
+            "showIf": ["look_deja_trouve"]
+          },
+          "options": [
+            { "value": "robe_mariee", "label": "Robe de mariée" },
+            { "value": "robe_cocktail", "label": "Robe de cocktail" },
+            { "value": "tailleur", "label": "Tailleur" },
+            { "value": "combinaison", "label": "Combinaison" },
+            { "value": "ensemble", "label": "Ensemble" },
+            { "value": "costume_classique", "label": "Costume classique" },
+            { "value": "smoking", "label": "Smoking" },
+            { "value": "chemises", "label": "Chemises" },
+            { "value": "chaussures_homme", "label": "Chaussures homme" },
+            { "value": "chaussures_femme", "label": "Chaussures femme" },
+            {
+              "value": "bijoux",
+              "label": "Bijoux (collier, boucles, bracelets)"
+            },
+            { "value": "alliances", "label": "Alliances" },
+            { "value": "maroquinerie", "label": "Maroquinerie" },
+            { "value": "sac", "label": "Sac" },
+            { "value": "pochette", "label": "Pochette" },
+            { "value": "broche", "label": "Broche" },
+            { "value": "chapeau", "label": "Chapeau" },
+            { "value": "gants", "label": "Gants" },
+            { "value": "voile", "label": "Voile" },
+            { "value": "cravate", "label": "Cravate" },
+            { "value": "noeud_pap", "label": "Nœud papillon" },
+            { "value": "boutonniere", "label": "Boutonnière" },
+            { "value": "tissu_mouchoir", "label": "Tissu/mouchoir" }
+          ]
+        },
+        {
+          "id": "consommation_tenue",
+          "label": "Souhaitez-vous",
+          "type": "radio",
+          "category": "CONSO",
+          "conditional": {
+            "showIf": ["look_deja_trouve"]
+          },
+          "options": [
+            { "value": "acheter", "label": "Acheter votre tenue (achat)" },
+            { "value": "louer", "label": "Louer votre tenue (location)" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "beauté",
+      "title": "BEAUTÉ - Avez-vous besoin de soins beauté ?",
+      "fields": [
+        {
+          "id": "beaute_deja_trouve",
+          "label": "J'ai déjà trouvé ma solution pour le repas",
+          "type": "checkbox",
+          "visibleSection": false
+        },
+        {
+          "id": "services_beaute",
+          "label": "Services beauté",
+          "type": "checkbox",
+          "multiple": true,
+          "conditional": {
+            "showIf": ["beaute_deja_trouve"]
+          },
+          "options": [
+            { "value": "coiffure", "label": "Coiffure" },
+            { "value": "maquillage", "label": "Maquillage" }
+          ]
+        },
+        {
+          "id": "invite",
+          "label": "Pour qui ?",
+          "type": "radio",
+          "category": "INVITÉ",
+          "conditional": {
+            "showIf": ["services_beaute", "beaute_deja_trouve"],
+            "values": ["coiffure", "maquillage"]
+          },
+          "options": [
+            { "value": "unique", "label": "Une personne" },
+            { "value": "plusieurs", "label": "Plusieurs personnes" }
+          ]
+        },
+        {
+          "id": "envies_coiffure",
+          "label": "Comment définir vos envies de coiffure ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "COIFFURE",
+          "conditional": {
+            "showIf": ["services_beaute", "beaute_deja_trouve"],
+            "values": ["coiffure"]
+          },
+          "options": [
+            { "value": "naturel", "label": "Naturel" },
+            { "value": "glamour", "label": "Glamour" },
+            { "value": "retro_chic", "label": "Rétro chic" },
+            { "value": "gothique", "label": "Gothique" },
+            { "value": "paillette", "label": "Paillette" }
+          ]
+        },
+        {
+          "id": "prestation_coiffure",
+          "label": "Comment imaginez-vous la prestation ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "PRESTATION",
+          "conditional": {
+            "showIf": ["services_beaute", "beaute_deja_trouve"],
+            "values": ["coiffure"]
+          },
+          "options": [
+            { "value": "brushing", "label": "Brushing" },
+            { "value": "wavy", "label": "Wavy" },
+            { "value": "lissage", "label": "Lissage" },
+            { "value": "chignon", "label": "Chignon" },
+            { "value": "tresse", "label": "Tresse" },
+            { "value": "coupe_jour_j", "label": "Coupe jour-J" },
+            { "value": "coloration", "label": "Coloration" },
+            { "value": "balayage", "label": "Balayage" }
+          ]
+        },
+        {
+          "id": "envies_maquillage",
+          "label": "Comment définir vos envies de maquillage ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "MAQUILLAGE",
+          "conditional": {
+            "showIf": ["services_beaute", "beaute_deja_trouve"],
+            "values": ["maquillage"]
+          },
+          "options": [
+            { "value": "nude", "label": "Nude" },
+            { "value": "soiree", "label": "Soirée" },
+            { "value": "contouring", "label": "Contouring" },
+            { "value": "monochromatique", "label": "Monochromatique" },
+            { "value": "colore", "label": "Coloré" }
+          ]
+        },
+        {
+          "id": "options_beaute",
+          "label": "Quelles options ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "OPTIONS",
+          "conditional": {
+            "showIf": ["services_beaute", "beaute_deja_trouve"],
+            "values": ["coiffure", "maquillage"]
+          },
+          "options": [
+            { "value": "produits_naturels", "label": "Produits naturels" },
+            { "value": "anti_allergeniques", "label": "Anti-allergéniques" },
+            { "value": "haut_gamme", "label": "Haut de gamme" },
+            { "value": "peaux_matures", "label": "Peaux matures" },
+            { "value": "peaux_foncees", "label": "Peaux foncées" },
+            { "value": "fleurs", "label": "Fleurs" },
+            { "value": "broches", "label": "Broches" },
+            { "value": "cheveux_frises", "label": "Cheveux frisés" },
+            { "value": "afro", "label": "Afro" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "esthétique",
+      "title": "ESTHÉTIQUE - Avez-vous besoin d'une prestation esthétique ?",
+      "fields": [
+        {
+          "id": "esthetique_deja_trouve",
+          "label": "J'ai déjà trouvé ma solution pour le repas",
+          "type": "checkbox",
+          "visibleSection": false
+        },
+        {
+          "id": "prestations_esthetique",
+          "label": "De quelles prestations avez-vous besoin ?",
+          "type": "checkbox",
+          "multiple": true,
+          "category": "BESOINS",
+          "conditional": {
+            "showIf": ["esthetique_deja_trouve"]
+          },
+          "options": [
+            { "value": "soin_visage", "label": "Soin du visage" },
+            {
+              "value": "maquillage_permanent",
+              "label": "Maquillage permanent"
+            },
+            { "value": "rehaussement", "label": "Rehaussement" },
+            { "value": "extension", "label": "Extension" },
+            { "value": "teinture", "label": "Teinture" },
+            { "value": "brow_lift", "label": "Brow lift" },
+            { "value": "tatouage", "label": "Tatouage" },
+            { "value": "manucure", "label": "Manucure" },
+            { "value": "pedicure", "label": "Pédicure" },
+            { "value": "semi_permanent", "label": "Semi permanent" },
+            { "value": "gel", "label": "Gel" },
+            { "value": "verni", "label": "Vernis" },
+            { "value": "capsule", "label": "Capsule" },
+            { "value": "nail_art", "label": "Nail art" },
+            { "value": "spa", "label": "Spa" },
+            { "value": "epilation", "label": "Épilation" },
+            { "value": "massage", "label": "Massage" },
+            { "value": "reflexologie", "label": "Réflexologie" }
+          ]
+        },
+        {
+          "id": "emplacement_esthetique",
+          "label": "Souhaitez-vous",
+          "type": "radio",
+          "category": "EMPLACEMENT",
+          "conditional": {
+            "showIf": ["esthetique_deja_trouve"]
+          },
+          "options": [
+            { "value": "institut", "label": "Vous rendre dans un institut" },
+            {
+              "value": "domicile",
+              "label": "Que le professionnel se déplace à domicile ou sur le lieu de l'événement"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

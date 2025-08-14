@@ -347,6 +347,7 @@ const updateQuestionnaireSector = async (questionnaire: QuestionnaireItem, newSe
   questionnaire.keywordsByCategory = {};
   questionnaire.selectedServiceUuid = null;
   questionnaire.selectedKeywords.clear();
+  console.log('ICI');
 
   await getSectors(newSector);
 
@@ -427,8 +428,6 @@ const submitAllQuestionnaires = async () => {
 
 onMounted(async () => {
   if (props.sector && props.sector !== 'Veuillez choisir votre activité') {
-    console.log('Chargement initial des données pour le secteur:', props.sector);
-
     try {
       await getSectors(props.sector);
       await nextTick();
@@ -436,7 +435,6 @@ onMounted(async () => {
         [professionnalServices, keywords],
         ([newServices, newKeywords]) => {
           if (newServices?.length && newKeywords?.length && questionnaires.value.length === 0) {
-            console.log('Données chargées, création du premier questionnaire');
             const firstQuestionnaire = createQuestionnaire(props.sector);
             questionnaires.value.push(firstQuestionnaire);
             stopWatching();
