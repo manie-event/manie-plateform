@@ -21,15 +21,17 @@
 
                 <v-row class="mt-2" dense>
                   <!-- Contrôleur de section (switch) -->
-                  <v-col cols="12">
-                    <SectionController
-                      :section="section"
-                      :field="getVisibleField(section)"
-                      :model-value="getSectionControllerValue(section)"
-                      :error="fieldErrors[getVisibleField(section)?.id || '']"
-                      @update:model-value="(v) => handleSectionControllerChange(section, !!v)"
-                    />
-                  </v-col>
+                  <template v-if="shouldShowSectionController(section)">
+                    <v-col cols="12">
+                      <SectionController
+                        :section="section"
+                        :field="getVisibleField(section)"
+                        :model-value="getSectionControllerValue(section)"
+                        :error="fieldErrors[getVisibleField(section)?.id || '']"
+                        @update:model-value="(v) => handleSectionControllerChange(section, !!v)"
+                      />
+                    </v-col>
+                  </template>
 
                   <!-- Champs principaux -->
                   <template v-for="field in section.fields" :key="field.id">

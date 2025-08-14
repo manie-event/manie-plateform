@@ -52,6 +52,17 @@ export function useConditionalLogic(formState: FormState) {
       return true;
     }
 
+    // Si dependsOn est présent et values est un mapping (options dynamiques),
+    // rendre visible si la source a une valeur (même si la valeur ne matche pas encore un mapping)
+    if (cond.dependsOn && cond.values && typeof cond.values === 'object' && !Array.isArray(cond.values)) {
+      const controlVal = getControlValue(cond.dependsOn);
+      const visible = Array.isArray(controlVal) ? controlVal.length > 0 : !!controlVal;
+      console.log(`Visibility via dependsOn pour ${field.id}: ${visible}`, { controlVal });
+      if (!cond.showIf && !cond.hideIf) {
+        return visible;
+      }
+    }
+
     console.log(`Évaluation des conditions pour ${field.id}:`, cond);
 
     // Logique hideIf - masquer si les conditions sont remplies

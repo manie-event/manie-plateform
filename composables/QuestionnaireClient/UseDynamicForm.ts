@@ -39,6 +39,31 @@ export function useDynamicForm(props: UseDynamicFormProps) {
   } = useFormNavigation(props.sections);
 
   /**
+   * Détermine si une section doit afficher un contrôleur (switch)
+   */
+  const shouldShowSectionController = (section: SectionSchema): boolean => {
+    // Si un champ de contrôle explicite existe
+    if (section.fields.some((f) => f.visibleSection)) return true;
+
+    // Sinon, n'afficher que pour les sections "secteurs" connues
+    const sectorIds = new Set([
+      'lieu',
+      'food',
+      'boisson',
+      'musique',
+      'animation',
+      'audiovisuel',
+      'decoration',
+      'transport',
+      'look',
+      'beaute',
+      'esthetique',
+    ]);
+
+    return sectorIds.has(section.id);
+  };
+
+  /**
    * Trouve le champ de contrôle d'une section (champ avec visibleSection: true)
    */
   const getVisibleField = (section: SectionSchema): FieldSchema => {
@@ -50,7 +75,7 @@ export function useDynamicForm(props: UseDynamicFormProps) {
 
     const virtualField: FieldSchema = {
       id: `__section_${section.id}_toggle`,
-      label: section.title,
+      label: 'Masquer cette section',
       type: 'checkbox',
       multiple: false,
     };
@@ -77,7 +102,6 @@ export function useDynamicForm(props: UseDynamicFormProps) {
     getSectorsApi: Function
   ): Promise<void> => {
     const field = getVisibleField(section);
-
 
 
     console.log(`🔄 Mise à jour du contrôleur:`, {
@@ -247,6 +271,7 @@ export function useDynamicForm(props: UseDynamicFormProps) {
     isSectionSkipped,
 
     // Contrôleurs de section
+    shouldShowSectionController,
     getVisibleField,
     getSectionControllerValue,
     setSectionControllerValue,
