@@ -212,6 +212,8 @@ const { getSectors } = useKeywords();
 const loadedSectors = ref<Set<string>>(new Set());
 const currentPageIndex = ref(0);
 const pageErrors = ref<string[]>([]);
+// Cache local des données secteur par section (services/keywords)
+const sectorDataBySectionId = reactive<Record<string, { services: any[]; keywords: any[] }>>({});
 
 /***** Types *****/
 interface OptionItem {
@@ -421,7 +423,13 @@ async function onSectionControllerChanged(section: SectionSchema, field: FieldSc
   if (loadedSectors.value.has(sector)) return;
   loadedSectors.value.add(sector);
   try {
-    await getSectors(sector);
+    const data = await getSectors(sector);
+    if (data && data.services && data.keywords) {
+      sectorDataBySectionId[section.id] = {
+        services: data.services,
+        keywords: data.keywords,
+      };
+    }
   } catch (e) {
     loadedSectors.value.delete(sector);
     console.error(e);
@@ -435,6 +443,80 @@ function onMultiCheckboxChange(field: FieldSchema, nextValue: any[]) {
   if (typeof field.max === 'number' && Array.isArray(nextValue) && nextValue.length > field.max) {
     formState[field.id] = nextValue.slice(-field.max);
   }
+}
+
+/***** Build selections from local sector data *****/
+function normalizeText(s?: string): string {
+  return (s || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '')
+    .trim();
+}
+
+function gatherSelectedTokens(section: SectionSchema): Set<string> {
+  const out = new Set<string>();
+  for (const field of section.fields) {
+    const val = formState[field.id];
+    if (val == null || val === '') continue;
+    const opts = field.options || [];
+    if (field.type === 'checkbox' && field.multiple && Array.isArray(val)) {
+      for (const v of val) {
+        const opt = opts.find(o => String(o.value) === String(v));
+        out.add(normalizeText(String(v)));
+        if (opt?.label) out.add(normalizeText(String(opt.label)));
+      }
+    } else if (field.type === 'radio' || field.type === 'select') {
+      const opt = opts.find(o => String(o.value) === String(val));
+      out.add(normalizeText(String(val)));
+      if (opt?.label) out.add(normalizeText(String(opt.label)));
+    }
+  }
+  return out;
+}
+
+function buildSelectionsFromSectorData(): ServiceSelection[] {
+  const selections: ServiceSelection[] = [];
+  for (const section of props.sections || []) {
+    const sectorData = sectorDataBySectionId[section.id];
+    if (!sectorData) continue; // secteur non chargé
+
+    const tokens = gatherSelectedTokens(section);
+    if (tokens.size === 0) continue;
+
+    const serviceNameToUuid = new Map<string, string>();
+    (sectorData.services || []).forEach(s => serviceNameToUuid.set(normalizeText(String(s.name)), String(s.uuid)));
+
+    const keywordNameToUuid = new Map<string, string>();
+    (sectorData.keywords || []).forEach(k => keywordNameToUuid.set(normalizeText(String((k as any).name)), String((k as any).uuid)));
+
+    // Keywords sélectionnés par intersection nom
+    const keywordsUuid = Array.from(new Set(
+      Array.from(tokens)
+        .map(t => keywordNameToUuid.get(t))
+        .filter((u): u is string => !!u)
+    ));
+
+    // Services sélectionnés par intersection nom
+    let serviceUuids = Array.from(new Set(
+      Array.from(tokens)
+        .map(t => serviceNameToUuid.get(t))
+        .filter((u): u is string => !!u)
+    ));
+
+    // Si aucun service matché mais un seul service dans le secteur, l'utiliser par défaut
+    if (serviceUuids.length === 0 && (sectorData.services || []).length === 1) {
+      serviceUuids = [String(sectorData.services[0].uuid)];
+    }
+
+    if (keywordsUuid.length > 0 && serviceUuids.length > 0) {
+      serviceUuids.forEach(serviceUuid => {
+        selections.push({ serviceUuid, keywordsUuid });
+      });
+    }
+  }
+  return selections;
 }
 
 /***** Event payload build (services) *****/
@@ -554,12 +636,16 @@ function prevPage() {
 
 function submit() {
   if (!validateCurrentPage()) return;
-  const services = buildSelectedServices(
-    formState,
-    props.sections,
-    props.keywordUuidBySectionId || {},
-    props.serviceUuidBySectionId || {}
-  );
+  // Priorité: si des données secteur locales existent, utilise-les
+  const localSelections = buildSelectionsFromSectorData();
+  const services = localSelections.length
+    ? localSelections
+    : buildSelectedServices(
+        formState,
+        props.sections,
+        props.keywordUuidBySectionId || {},
+        props.serviceUuidBySectionId || {}
+      );
   const payload = buildEventPayload(formState, props.organisatorUuid, services);
   emit('submit', payload);
 }
