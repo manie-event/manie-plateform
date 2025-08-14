@@ -18,30 +18,31 @@
 
                 <v-row class="mt-2" dense>
                   <!-- Skip toggle if present -->
-                  <template v-if="getSkipField(section)">
+                  <template v-if="getVisibleField(section)">
                     <v-col cols="12">
-                      <template v-if="getSkipField(section)?.type === 'checkbox' && !getSkipField(section)?.multiple">
-                        <v-checkbox
-                          :label="getSkipField(section)?.label"
-                          :model-value="!!formState[getSkipField(section)?.id]"
+                      <template v-if="getVisibleField(section)?.type === 'checkbox' && !getVisibleField(section)?.multiple">
+                        <v-switch
+                          :label="getVisibleField(section)?.label"
+                          :model-value="!!formState[getVisibleField(section)?.id]"
                           @update:model-value="v => {
-                            const sf = getSkipField(section);
+                            const sf = getVisibleField(section);
                             if (sf) {
                               formState[sf.id] = v;
                               fieldErrors[sf.id] = undefined;
+                              onSectionControllerChanged(section, sf, v);
                             }
                           }"
-                          :error="!!fieldErrors[getSkipField(section)?.id || '']"
-                          :error-messages="fieldErrors[getSkipField(section)?.id || ''] ? [fieldErrors[getSkipField(section)?.id || '']] : []"
+                          :error="!!fieldErrors[getVisibleField(section)?.id || '' ]"
+                          :error-messages="fieldErrors[getVisibleField(section)?.id || ''] ? [fieldErrors[getVisibleField(section)?.id || '']] : []"
                           density="comfortable"
                         />
                       </template>
                       <template v-else>
                         <v-text-field
-                          :label="getSkipField(section)?.label"
-                          v-model="formState[getSkipField(section)?.id]"
+                          :label="getVisibleField(section)?.label"
+                          v-model="formState[getVisibleField(section)?.id]"
                           @update:model-value="() => {
-                            const sf = getSkipField(section);
+                            const sf = getVisibleField(section);
                             if (sf) fieldErrors[sf.id] = undefined;
                           }"
                         />
@@ -75,17 +76,27 @@
                         <!-- CHECKBOX MULTI -->
                         <template v-else-if="field.type === 'checkbox' && field.multiple">
                           <div class="mb-1 text-subtitle-2">{{ field.label }}</div>
-                          <div class="d-flex flex-column">
-                            <v-checkbox
+
+                          <v-chip-group
+                            v-model="formState[field.id]"
+                            multiple
+                            filter
+                            @update:model-value="() => {
+                              onMultiCheckboxChange(field, formState[field.id] || []);
+                              fieldErrors[field.id] = undefined;
+                            }"
+                          >
+                            <v-chip
                               v-for="opt in (getDynamicOptions(field) || [])"
                               :key="String(opt.value)"
-                              :label="opt.label"
                               :value="opt.value"
-                              v-model="formState[field.id]"
-                              @update:model-value="() => { onMultiCheckboxChange(field, formState[field.id] || []); fieldErrors[field.id] = undefined; }"
-                              density="comfortable"
-                            />
-                          </div>
+                              variant="outlined"
+                              class="ma-1"
+                            >
+                              {{ opt.label }}
+                            </v-chip>
+                          </v-chip-group>
+
                           <div v-if="fieldErrors[field.id]" class="text-error text-caption">{{ fieldErrors[field.id] }}</div>
                         </template>
 
@@ -193,9 +204,14 @@
 
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted } from 'vue';
+import { useKeywords } from '@/composables/UseKeywords';
 
 // v-model:open-modal (parent uses v-model:open-modal)
 const isOpen = defineModel<boolean>('openModal', { default: false });
+const { getSectors } = useKeywords();
+const loadedSectors = ref<Set<string>>(new Set());
+const currentPageIndex = ref(0);
+const pageErrors = ref<string[]>([]);
 
 /***** Types *****/
 interface OptionItem {
@@ -220,7 +236,7 @@ interface FieldSchema {
   multiple?: boolean;
   category?: string;
   step?: number;
-  skipSection?: boolean;
+  visibleSection?: boolean;
   max?: number;
   conditional?: ConditionalConfig;
 }
@@ -292,7 +308,6 @@ onMounted(() => {
   initializeDefaults();
 });
 
-
 /***** Pagination *****/
 function chunkArray<T>(arr: T[], size: number): T[][] {
   const chunks: T[][] = [];
@@ -307,7 +322,6 @@ const pages = computed(() => {
   return [{ sections: [first] }, ...paired.map((pair) => ({ sections: pair }))];
 });
 
-const currentPageIndex = ref(0);
 const paginationModel = computed({
   get: () => currentPageIndex.value + 1,
   set: (v: number) => (currentPageIndex.value = v - 1),
@@ -333,14 +347,14 @@ function includesAny(source: any[] | undefined, values: any[] | undefined): bool
 }
 
 function isSectionSkipped(section: SectionSchema): boolean {
-  const skipField = section.fields.find((f) => f.skipSection);
+  const skipField = section.fields.find((f) => f.visibleSection);
   if (!skipField) return false;
   const val = formState[skipField.id];
   return !!val;
 }
 
 function isFieldVisible(field: FieldSchema, section: SectionSchema): boolean {
-  if (!field.skipSection && isSectionSkipped(section)) return false;
+  if (!field.visibleSection && isSectionSkipped(section)) return false;
   const cond = field.conditional;
   if (!cond) return true;
 
@@ -389,7 +403,41 @@ function getDynamicOptions(field: FieldSchema): OptionItem[] | undefined {
   return field.options;
 }
 
-// Map answers -> services selections
+// Lazy sector loading on controller interaction
+function getVisibleField(section: SectionSchema): FieldSchema | undefined {
+  return (section.fields || []).find((f) => f.visibleSection);
+}
+
+function isMeaningfulSelection(field: FieldSchema, val: any) {
+  if (field.type === 'checkbox' && field.multiple) return Array.isArray(val) && val.length > 0;
+  if (field.type === 'checkbox' && !field.multiple) return !!val;
+  if (field.type === 'radio' || field.type === 'select') return val !== undefined && val !== '';
+  return !!val;
+}
+
+async function onSectionControllerChanged(section: SectionSchema, field: FieldSchema, value: any) {
+  if (!isMeaningfulSelection(field, value)) return;
+  const sector = section.id;
+  if (loadedSectors.value.has(sector)) return;
+  loadedSectors.value.add(sector);
+  try {
+    await getSectors(sector);
+  } catch (e) {
+    loadedSectors.value.delete(sector);
+    console.error(e);
+  }
+}
+
+/***** Helpers *****/
+const fieldErrors = reactive<Record<string, string | undefined>>({});
+
+function onMultiCheckboxChange(field: FieldSchema, nextValue: any[]) {
+  if (typeof field.max === 'number' && Array.isArray(nextValue) && nextValue.length > field.max) {
+    formState[field.id] = nextValue.slice(-field.max);
+  }
+}
+
+/***** Event payload build (services) *****/
 function isUuid(v: string): boolean {
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(v);
 }
@@ -464,22 +512,7 @@ function buildEventPayload(
   };
 }
 
-function getSkipField(section: SectionSchema): FieldSchema | undefined {
-  return (section.fields || []).find((f) => f.skipSection);
-}
-
-/***** Helpers *****/
-const fieldErrors = reactive<Record<string, string | undefined>>({});
-
-function onMultiCheckboxChange(field: FieldSchema, nextValue: any[]) {
-  if (typeof field.max === 'number' && Array.isArray(nextValue) && nextValue.length > field.max) {
-    formState[field.id] = nextValue.slice(-field.max);
-  }
-}
-
 /***** Navigation *****/
-const pageErrors = ref<string[]>([]);
-
 function isValueEmpty(field: FieldSchema, value: any): boolean {
   if (value === null || value === undefined) return true;
   if (field.type === 'text' && value === '') return true;
@@ -493,7 +526,7 @@ function validateCurrentPage(): boolean {
   const errs: string[] = [];
   p?.sections.forEach((section) => {
     section.fields.forEach((field) => {
-      if (field.skipSection) return;
+      if (field.visibleSection) return;
       if (!isFieldVisible(field, section)) return;
       if (field.required) {
         const val = formState[field.id];
