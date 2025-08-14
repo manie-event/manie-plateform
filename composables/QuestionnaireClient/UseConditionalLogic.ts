@@ -29,9 +29,9 @@ export function useConditionalLogic(formState: FormState) {
    */
   const isSectionSkipped = (section: SectionSchema): boolean => {
     const skipField = section.fields.find((f) => f.visibleSection);
-    if (!skipField) return false;
+    const toggleFieldId = skipField ? skipField.id : `__section_${section.id}_toggle`;
 
-    const isSkipped = !!formState[skipField.id];
+    const isSkipped = !!formState[toggleFieldId];
     console.log(`Section ${section.id} ignorée:`, isSkipped);
     return isSkipped;
   };

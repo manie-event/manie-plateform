@@ -41,10 +41,21 @@ export function useDynamicForm(props: UseDynamicFormProps) {
   /**
    * Trouve le champ de contrôle d'une section (champ avec visibleSection: true)
    */
-  const getVisibleField = (section: SectionSchema): FieldSchema | undefined => {
+  const getVisibleField = (section: SectionSchema): FieldSchema => {
     const field = section.fields.find((f) => f.visibleSection);
-    console.log(`Champ de contrôle pour ${section.id}:`, field?.id);
-    return field;
+    if (field) {
+      console.log(`Champ de contrôle pour ${section.id}:`, field.id);
+      return field;
+    }
+
+    const virtualField: FieldSchema = {
+      id: `__section_${section.id}_toggle`,
+      label: section.title,
+      type: 'checkbox',
+      multiple: false,
+    };
+    console.log(`Champ de contrôle virtuel pour ${section.id}:`, virtualField.id);
+    return virtualField;
   };
 
   /**
@@ -52,7 +63,7 @@ export function useDynamicForm(props: UseDynamicFormProps) {
    */
   const getSectionControllerValue = (section: SectionSchema): boolean => {
     const field = getVisibleField(section);
-    const value = !!(field && formState[field.id]);
+    const value = !!formState[field.id];
     console.log(`Valeur du contrôleur ${section.id}:`, value);
     return value;
   };
@@ -67,10 +78,7 @@ export function useDynamicForm(props: UseDynamicFormProps) {
   ): Promise<void> => {
     const field = getVisibleField(section);
 
-    if (!field) {
-      console.warn(`❌ Aucun champ de contrôle trouvé pour la section: ${section.id}`);
-      return;
-    }
+
 
     console.log(`🔄 Mise à jour du contrôleur:`, {
       section: section.id,
