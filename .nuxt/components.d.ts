@@ -91,8 +91,10 @@ interface _GlobalComponents {
     'CommonBaseModal': typeof import("../components/common/BaseModal.vue")['default']
     'CommonErrorToaster': typeof import("../components/common/errorToaster.vue")['default']
     'CommonSuccessToaster': typeof import("../components/common/successToaster.vue")['default']
-    'DashboardsDashboard1CongratulationsCard': typeof import("../components/dashboards/dashboard1/CongratulationsCard.vue")['default']
+    'DashboardsDashboard1ClientQ': typeof import("../components/dashboards/dashboard1/ClientQ.vue")['default']
+    'DashboardsDashboard1ClientQuestionnaire': typeof import("../components/dashboards/dashboard1/ClientQuestionnaire.vue")['default']
     'DashboardsDashboard1Customers': typeof import("../components/dashboards/dashboard1/Customers.vue")['default']
+    'DashboardsDashboard1Events': typeof import("../components/dashboards/dashboard1/Events.vue")['default']
     'DashboardsDashboard1LatestDeals': typeof import("../components/dashboards/dashboard1/LatestDeals.vue")['default']
     'DashboardsDashboard1LatestReviews': typeof import("../components/dashboards/dashboard1/LatestReviews.vue")['default']
     'DashboardsDashboard1Payments': typeof import("../components/dashboards/dashboard1/Payments.vue")['default']
@@ -295,7 +297,11 @@ interface _GlobalComponents {
     'PagesFaqQuestion': typeof import("../components/pages/faq/FaqQuestion.vue")['default']
     'PagesFaqStillHaveQuestions': typeof import("../components/pages/faq/StillHaveQuestions.vue")['default']
     'PagesSearchResultsSearchLinks': typeof import("../components/pages/search-results/SearchLinks.vue")['default']
+    'QuestionnairesDynamicFormDialog': typeof import("../components/questionnaires/DynamicFormDialog.vue")['default']
+    'QuestionnairesFormField': typeof import("../components/questionnaires/FormField.vue")['default']
+    'QuestionnairesSectionController': typeof import("../components/questionnaires/SectionController.vue")['default']
     'QuestionnairesServicesPrestataire': typeof import("../components/questionnaires/ServicesPrestataire.vue")['default']
+    'QuestionnairesValidationError': typeof import("../components/questionnaires/ValidationError.vue")['default']
     'SharedAppBaseCard': typeof import("../components/shared/AppBaseCard.vue")['default']
     'SharedAppEmailCard': typeof import("../components/shared/AppEmailCard.vue")['default']
     'SharedBaseBreadcrumb': typeof import("../components/shared/BaseBreadcrumb.vue")['default']
@@ -507,8 +513,10 @@ interface _GlobalComponents {
     'LazyCommonBaseModal': LazyComponent<typeof import("../components/common/BaseModal.vue")['default']>
     'LazyCommonErrorToaster': LazyComponent<typeof import("../components/common/errorToaster.vue")['default']>
     'LazyCommonSuccessToaster': LazyComponent<typeof import("../components/common/successToaster.vue")['default']>
-    'LazyDashboardsDashboard1CongratulationsCard': LazyComponent<typeof import("../components/dashboards/dashboard1/CongratulationsCard.vue")['default']>
+    'LazyDashboardsDashboard1ClientQ': LazyComponent<typeof import("../components/dashboards/dashboard1/ClientQ.vue")['default']>
+    'LazyDashboardsDashboard1ClientQuestionnaire': LazyComponent<typeof import("../components/dashboards/dashboard1/ClientQuestionnaire.vue")['default']>
     'LazyDashboardsDashboard1Customers': LazyComponent<typeof import("../components/dashboards/dashboard1/Customers.vue")['default']>
+    'LazyDashboardsDashboard1Events': LazyComponent<typeof import("../components/dashboards/dashboard1/Events.vue")['default']>
     'LazyDashboardsDashboard1LatestDeals': LazyComponent<typeof import("../components/dashboards/dashboard1/LatestDeals.vue")['default']>
     'LazyDashboardsDashboard1LatestReviews': LazyComponent<typeof import("../components/dashboards/dashboard1/LatestReviews.vue")['default']>
     'LazyDashboardsDashboard1Payments': LazyComponent<typeof import("../components/dashboards/dashboard1/Payments.vue")['default']>
@@ -711,7 +719,11 @@ interface _GlobalComponents {
     'LazyPagesFaqQuestion': LazyComponent<typeof import("../components/pages/faq/FaqQuestion.vue")['default']>
     'LazyPagesFaqStillHaveQuestions': LazyComponent<typeof import("../components/pages/faq/StillHaveQuestions.vue")['default']>
     'LazyPagesSearchResultsSearchLinks': LazyComponent<typeof import("../components/pages/search-results/SearchLinks.vue")['default']>
+    'LazyQuestionnairesDynamicFormDialog': LazyComponent<typeof import("../components/questionnaires/DynamicFormDialog.vue")['default']>
+    'LazyQuestionnairesFormField': LazyComponent<typeof import("../components/questionnaires/FormField.vue")['default']>
+    'LazyQuestionnairesSectionController': LazyComponent<typeof import("../components/questionnaires/SectionController.vue")['default']>
     'LazyQuestionnairesServicesPrestataire': LazyComponent<typeof import("../components/questionnaires/ServicesPrestataire.vue")['default']>
+    'LazyQuestionnairesValidationError': LazyComponent<typeof import("../components/questionnaires/ValidationError.vue")['default']>
     'LazySharedAppBaseCard': LazyComponent<typeof import("../components/shared/AppBaseCard.vue")['default']>
     'LazySharedAppEmailCard': LazyComponent<typeof import("../components/shared/AppEmailCard.vue")['default']>
     'LazySharedBaseBreadcrumb': LazyComponent<typeof import("../components/shared/BaseBreadcrumb.vue")['default']>
@@ -929,8 +941,10 @@ export const CommonBaseEmptyState: typeof import("../components/common/BaseEmpty
 export const CommonBaseModal: typeof import("../components/common/BaseModal.vue")['default']
 export const CommonErrorToaster: typeof import("../components/common/errorToaster.vue")['default']
 export const CommonSuccessToaster: typeof import("../components/common/successToaster.vue")['default']
-export const DashboardsDashboard1CongratulationsCard: typeof import("../components/dashboards/dashboard1/CongratulationsCard.vue")['default']
+export const DashboardsDashboard1ClientQ: typeof import("../components/dashboards/dashboard1/ClientQ.vue")['default']
+export const DashboardsDashboard1ClientQuestionnaire: typeof import("../components/dashboards/dashboard1/ClientQuestionnaire.vue")['default']
 export const DashboardsDashboard1Customers: typeof import("../components/dashboards/dashboard1/Customers.vue")['default']
+export const DashboardsDashboard1Events: typeof import("../components/dashboards/dashboard1/Events.vue")['default']
 export const DashboardsDashboard1LatestDeals: typeof import("../components/dashboards/dashboard1/LatestDeals.vue")['default']
 export const DashboardsDashboard1LatestReviews: typeof import("../components/dashboards/dashboard1/LatestReviews.vue")['default']
 export const DashboardsDashboard1Payments: typeof import("../components/dashboards/dashboard1/Payments.vue")['default']
@@ -1133,7 +1147,11 @@ export const PagesAccountSettingsSecurityTab: typeof import("../components/pages
 export const PagesFaqQuestion: typeof import("../components/pages/faq/FaqQuestion.vue")['default']
 export const PagesFaqStillHaveQuestions: typeof import("../components/pages/faq/StillHaveQuestions.vue")['default']
 export const PagesSearchResultsSearchLinks: typeof import("../components/pages/search-results/SearchLinks.vue")['default']
+export const QuestionnairesDynamicFormDialog: typeof import("../components/questionnaires/DynamicFormDialog.vue")['default']
+export const QuestionnairesFormField: typeof import("../components/questionnaires/FormField.vue")['default']
+export const QuestionnairesSectionController: typeof import("../components/questionnaires/SectionController.vue")['default']
 export const QuestionnairesServicesPrestataire: typeof import("../components/questionnaires/ServicesPrestataire.vue")['default']
+export const QuestionnairesValidationError: typeof import("../components/questionnaires/ValidationError.vue")['default']
 export const SharedAppBaseCard: typeof import("../components/shared/AppBaseCard.vue")['default']
 export const SharedAppEmailCard: typeof import("../components/shared/AppEmailCard.vue")['default']
 export const SharedBaseBreadcrumb: typeof import("../components/shared/BaseBreadcrumb.vue")['default']
@@ -1345,8 +1363,10 @@ export const LazyCommonBaseEmptyState: LazyComponent<typeof import("../component
 export const LazyCommonBaseModal: LazyComponent<typeof import("../components/common/BaseModal.vue")['default']>
 export const LazyCommonErrorToaster: LazyComponent<typeof import("../components/common/errorToaster.vue")['default']>
 export const LazyCommonSuccessToaster: LazyComponent<typeof import("../components/common/successToaster.vue")['default']>
-export const LazyDashboardsDashboard1CongratulationsCard: LazyComponent<typeof import("../components/dashboards/dashboard1/CongratulationsCard.vue")['default']>
+export const LazyDashboardsDashboard1ClientQ: LazyComponent<typeof import("../components/dashboards/dashboard1/ClientQ.vue")['default']>
+export const LazyDashboardsDashboard1ClientQuestionnaire: LazyComponent<typeof import("../components/dashboards/dashboard1/ClientQuestionnaire.vue")['default']>
 export const LazyDashboardsDashboard1Customers: LazyComponent<typeof import("../components/dashboards/dashboard1/Customers.vue")['default']>
+export const LazyDashboardsDashboard1Events: LazyComponent<typeof import("../components/dashboards/dashboard1/Events.vue")['default']>
 export const LazyDashboardsDashboard1LatestDeals: LazyComponent<typeof import("../components/dashboards/dashboard1/LatestDeals.vue")['default']>
 export const LazyDashboardsDashboard1LatestReviews: LazyComponent<typeof import("../components/dashboards/dashboard1/LatestReviews.vue")['default']>
 export const LazyDashboardsDashboard1Payments: LazyComponent<typeof import("../components/dashboards/dashboard1/Payments.vue")['default']>
@@ -1549,7 +1569,11 @@ export const LazyPagesAccountSettingsSecurityTab: LazyComponent<typeof import(".
 export const LazyPagesFaqQuestion: LazyComponent<typeof import("../components/pages/faq/FaqQuestion.vue")['default']>
 export const LazyPagesFaqStillHaveQuestions: LazyComponent<typeof import("../components/pages/faq/StillHaveQuestions.vue")['default']>
 export const LazyPagesSearchResultsSearchLinks: LazyComponent<typeof import("../components/pages/search-results/SearchLinks.vue")['default']>
+export const LazyQuestionnairesDynamicFormDialog: LazyComponent<typeof import("../components/questionnaires/DynamicFormDialog.vue")['default']>
+export const LazyQuestionnairesFormField: LazyComponent<typeof import("../components/questionnaires/FormField.vue")['default']>
+export const LazyQuestionnairesSectionController: LazyComponent<typeof import("../components/questionnaires/SectionController.vue")['default']>
 export const LazyQuestionnairesServicesPrestataire: LazyComponent<typeof import("../components/questionnaires/ServicesPrestataire.vue")['default']>
+export const LazyQuestionnairesValidationError: LazyComponent<typeof import("../components/questionnaires/ValidationError.vue")['default']>
 export const LazySharedAppBaseCard: LazyComponent<typeof import("../components/shared/AppBaseCard.vue")['default']>
 export const LazySharedAppEmailCard: LazyComponent<typeof import("../components/shared/AppEmailCard.vue")['default']>
 export const LazySharedBaseBreadcrumb: LazyComponent<typeof import("../components/shared/BaseBreadcrumb.vue")['default']>

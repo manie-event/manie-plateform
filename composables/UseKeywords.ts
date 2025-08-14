@@ -25,6 +25,7 @@ export const useKeywords = () => {
         const sectorFiltered = data.data.filter(
           (sectorItem: Sectors) => sectorItem.name.toLowerCase() === sector.toLowerCase()
         );
+
         await Promise.all([
           getServices(sectorFiltered[0].uuid),
           getKeywords(sectorFiltered[0].name),
@@ -65,6 +66,8 @@ export const useKeywords = () => {
   };
 
   const getKeywords = async (query: string) => {
+    console.log(query, 'query');
+
     loading.value = true;
     try {
       const { data } = await axios.get(`${config.public.apiUrl}/keyword`, {
@@ -74,7 +77,6 @@ export const useKeywords = () => {
           'Content-Type': 'application/json',
         },
       });
-      console.log('Keywords data:', data);
       const keyWordFilter = data.data
         .filter((keyword: Keywords) => keyword.sector.toLowerCase() == query.toLowerCase())
         .slice(0, 100)

@@ -7,6 +7,7 @@ import Products from '@/components/dashboards/dashboard1/ProductsChart.vue';
 import ProductsTable from '@/components/dashboards/dashboard1/ProductsTable.vue';
 import VisitFromUsa from '@/components/dashboards/dashboard1/VisitFromUsa.vue';
 import Snackbar from '@/components/dashboards/snackbar.vue';
+import Events from '~/components/dashboards/dashboard1/Events.vue';
 </script>
 
 <template>
@@ -17,6 +18,9 @@ import Snackbar from '@/components/dashboards/snackbar.vue';
     <!-- Congratulation Card -->
     <v-col cols="12" sm="12" md="12" lg="6">
       <v-row>
+        <v-col cols="12" sm="6">
+          <Events />
+        </v-col>
         <!-- Payment Card  -->
         <v-col cols="12" sm="6">
           <Payments />
