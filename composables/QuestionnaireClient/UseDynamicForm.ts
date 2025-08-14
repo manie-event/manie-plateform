@@ -26,7 +26,7 @@ export function useDynamicForm(props: UseDynamicFormProps) {
   const { loadSectorData, buildServiceSelections } = useServiceMapping();
   const { fieldErrors, pageErrors, validatePage, clearFieldError, clearPageErrors } =
     useFormValidation();
-  const { isFieldVisible, getDynamicOptions, isSectionSkipped, resolveControllerFieldId } = useConditionalLogic(formState);
+  const { isFieldVisible, getDynamicOptions } = useConditionalLogic(formState);
   const {
     currentPageIndex,
     pages,
@@ -42,48 +42,22 @@ export function useDynamicForm(props: UseDynamicFormProps) {
    * Détermine si une section doit afficher un contrôleur (switch)
    */
   const shouldShowSectionController = (section: SectionSchema): boolean => {
-    // Si un champ de contrôle explicite existe
-    if (section.fields.some((f) => f.visibleSection)) return true;
+    // Pas de switch sur la première page
+    if (currentPageIndex.value === 0) return false;
 
-    // Si un contrôleur implicite est résolu (via showIf/deja_trouve), on affiche
-    const resolvedId = resolveControllerFieldId(section);
-    if (!resolvedId.startsWith('__section_')) return true;
-
-    // Sinon, n'afficher que pour les sections "secteurs" connues
-    const sectorIds = new Set([
-      'lieu',
-      'food',
-      'boisson',
-      'musique',
-      'animation',
-      'audiovisuel',
-      'decoration',
-      'transport',
-      'look',
-      'beaute',
-      'esthetique',
-    ]);
-
-    return sectorIds.has(section.id);
+    // Afficher un switch si la section contient un checkbox non-multiple (ancien contrôleur)
+    return section.fields.some((f) => f.type === 'checkbox' && !f.multiple);
   };
 
   /**
-   * Trouve le champ de contrôle d'une section (champ avec visibleSection: true)
+   * Trouve le champ de contrôle d'une section ou crée un virtuel
    */
   const getVisibleField = (section: SectionSchema): FieldSchema => {
-    const field = section.fields.find((f) => f.visibleSection);
-    if (field) {
-      console.log(`Champ de contrôle pour ${section.id}:`, field.id);
-      return field;
-    }
-
-    // Utiliser le premier checkbox non-multiple comme source de label si présent
+    // Prendre le premier checkbox non-multiple comme source de label
     const controlling = section.fields.find((f) => f.type === 'checkbox' && !f.multiple);
-    const resolvedId = resolveControllerFieldId(section);
-    const resolvedLabel = section.fields.find((f) => f.id === resolvedId)?.label;
     const virtualField: FieldSchema = {
       id: `__section_${section.id}_toggle`,
-      label: resolvedLabel || controlling?.label || 'Masquer cette section',
+      label: controlling?.label || 'Activer cette section',
       type: 'checkbox',
       multiple: false,
     };
@@ -92,17 +66,16 @@ export function useDynamicForm(props: UseDynamicFormProps) {
   };
 
   /**
-   * Récupère la valeur du contrôleur de section (switch)
+   * Valeur du switch
    */
   const getSectionControllerValue = (section: SectionSchema): boolean => {
     const field = getVisibleField(section);
     const value = !!formState[field.id];
-    console.log(`Valeur du contrôleur ${section.id}:`, value);
     return value;
   };
 
   /**
-   * Met à jour la valeur du contrôleur de section et charge les données si nécessaire
+   * Au toggle: on met à jour, on charge le secteur, et on force la visibilité des keywords
    */
   const setSectionControllerValue = async (
     section: SectionSchema,
@@ -111,28 +84,22 @@ export function useDynamicForm(props: UseDynamicFormProps) {
   ): Promise<void> => {
     const field = getVisibleField(section);
 
-
-    console.log(`🔄 Mise à jour du contrôleur:`, {
-      section: section.id,
-      field: field.id,
-      oldValue: formState[field.id],
-      newValue: value,
-    });
-
-    // Mettre à jour la valeur
     formState[field.id] = value;
     clearFieldError(field.id);
 
-    // Charger les données du secteur si le switch est activé
     if (value && field.type === 'checkbox' && !field.multiple) {
       try {
-        console.log(`📡 Chargement du secteur: ${section.id}`);
         await loadSectorData(section.id, getSectorsApi);
-        console.log(`✅ Secteur ${section.id} chargé avec succès`);
       } catch (error) {
-        console.error(`❌ Erreur lors du chargement du secteur ${section.id}:`, error);
-        // Optionnel: remettre le switch à false en cas d'erreur
-        // formState[field.id] = false;
+        // Ignorer
+      }
+
+      // Forcer la visibilité des keywords: activer le contrôleur "*_deja_trouve" s'il existe
+      const dejaTrouve = section.fields.find(
+        (f) => f.type === 'checkbox' && !f.multiple && /deja|trouve/i.test(f.id)
+      );
+      if (dejaTrouve) {
+        formState[dejaTrouve.id] = true;
       }
     }
   };
@@ -142,7 +109,6 @@ export function useDynamicForm(props: UseDynamicFormProps) {
    */
   const onMultiCheckboxChange = (field: FieldSchema, nextValue: any[]): void => {
     if (typeof field.max === 'number' && Array.isArray(nextValue) && nextValue.length > field.max) {
-      console.log(`Limitation à ${field.max} éléments pour ${field.id}`);
       formState[field.id] = nextValue.slice(-field.max);
     }
     clearFieldError(field.id);
@@ -153,12 +119,9 @@ export function useDynamicForm(props: UseDynamicFormProps) {
    */
   const nextPage = (): void => {
     const isValid = validatePage(currentPageSections.value, formState, isFieldVisible);
-
     if (!isValid) {
-      console.log('❌ Validation échouée, impossible de passer à la page suivante');
       return;
     }
-
     clearPageErrors();
     navigateNext();
   };
@@ -172,8 +135,6 @@ export function useDynamicForm(props: UseDynamicFormProps) {
    * Construction du payload final pour l'événement
    */
   const buildEventPayload = (services: ServiceSelection[]): EventCreatePayload => {
-    console.log("🏗️ Construction du payload d'événement...");
-
     const peopleNum = Number(formState.nb_personnes || 0);
     const budget =
       formState.budget_type === 'par_personne'
@@ -190,7 +151,6 @@ export function useDynamicForm(props: UseDynamicFormProps) {
       services,
     };
 
-    console.log('📦 Payload final:', payload);
     return payload;
   };
 
@@ -198,30 +158,16 @@ export function useDynamicForm(props: UseDynamicFormProps) {
    * Soumission du formulaire
    */
   const submitForm = async (getSectorsApi: Function): Promise<EventCreatePayload | null> => {
-    console.log('🚀 Soumission du formulaire...');
-
-    // Validation finale
     const isValid = validatePage(currentPageSections.value, formState, isFieldVisible);
     if (!isValid) {
-      console.log('❌ Validation finale échouée');
       return null;
     }
 
     try {
-      // Construction des services
       const services = buildServiceSelections(props.sections, formState);
-
-      if (services.length === 0) {
-        console.warn('⚠️ Aucun service sélectionné');
-      }
-
-      // Construction du payload final
       const payload = buildEventPayload(services);
-
-      console.log('✅ Formulaire soumis avec succès');
       return payload;
     } catch (error) {
-      console.error('❌ Erreur lors de la soumission:', error);
       return null;
     }
   };
@@ -230,23 +176,18 @@ export function useDynamicForm(props: UseDynamicFormProps) {
    * Initialisation des valeurs par défaut
    */
   const initializeDefaults = (): void => {
-    console.log('🔧 Initialisation des valeurs par défaut...');
-
     props.sections?.forEach((section) => {
       section.fields.forEach((field) => {
         if (field.type === 'checkbox' && field.multiple) {
           if (!Array.isArray(formState[field.id])) {
             formState[field.id] = [];
-            console.log(`Initialisation ${field.id} = []`);
           }
         } else if (field.type === 'checkbox' && !field.multiple) {
           if (typeof formState[field.id] !== 'boolean') {
             formState[field.id] = false;
-            console.log(`Initialisation ${field.id} = false`);
           }
         } else if (formState[field.id] === undefined) {
           formState[field.id] = undefined;
-          console.log(`Initialisation ${field.id} = undefined`);
         }
       });
     });
@@ -276,7 +217,6 @@ export function useDynamicForm(props: UseDynamicFormProps) {
     // Logique métier
     isFieldVisible,
     getDynamicOptions,
-    isSectionSkipped,
 
     // Contrôleurs de section
     shouldShowSectionController,

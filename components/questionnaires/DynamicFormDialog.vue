@@ -34,8 +34,8 @@
                   </template>
 
                   <!-- Champs principaux -->
-                  <template v-for="field in section.fields" :key="field.id">
-                    <template v-if="!field.visibleSection && isFieldVisible(field, section)">
+                                    <template v-for="field in section.fields" :key="field.id">
+                    <template v-if="isFieldVisible(field, section) && !(currentPageIndex > 0 && field.type === 'checkbox' && !field.multiple)">
                       <v-col cols="12" md="6">
                         <FormField
                           :field="field"
