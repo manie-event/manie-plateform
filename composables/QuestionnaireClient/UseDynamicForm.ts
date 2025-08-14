@@ -75,7 +75,7 @@ export function useDynamicForm(props: UseDynamicFormProps) {
   };
 
   /**
-   * Au toggle: on met à jour, on charge le secteur, et on force la visibilité des keywords
+   * Au toggle: on met à jour, on charge le secteur, et on force/retire la visibilité des keywords
    */
   const setSectionControllerValue = async (
     section: SectionSchema,
@@ -87,19 +87,24 @@ export function useDynamicForm(props: UseDynamicFormProps) {
     formState[field.id] = value;
     clearFieldError(field.id);
 
+    // Contrôleur interne (ex: *_deja_trouve) qui pilote showIf des keywords
+    const dejaTrouve = section.fields.find(
+      (f) => f.type === 'checkbox' && !f.multiple && /deja|trouve/i.test(f.id)
+    );
+
     if (value && field.type === 'checkbox' && !field.multiple) {
       try {
         await loadSectorData(section.id, getSectorsApi);
       } catch (error) {
         // Ignorer
       }
-
-      // Forcer la visibilité des keywords: activer le contrôleur "*_deja_trouve" s'il existe
-      const dejaTrouve = section.fields.find(
-        (f) => f.type === 'checkbox' && !f.multiple && /deja|trouve/i.test(f.id)
-      );
       if (dejaTrouve) {
         formState[dejaTrouve.id] = true;
+      }
+    } else if (!value) {
+      // Masquer les keywords en désactivant le contrôleur interne
+      if (dejaTrouve) {
+        formState[dejaTrouve.id] = false;
       }
     }
   };
