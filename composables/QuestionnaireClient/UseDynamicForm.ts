@@ -75,6 +75,23 @@ export function useDynamicForm(props: UseDynamicFormProps) {
   };
 
   /**
+   * Réinitialise toutes les valeurs de la section (sauf le switch virtuel)
+   */
+  const resetSectionValues = (section: SectionSchema): void => {
+    section.fields.forEach((f) => {
+      if (f.id === `__section_${section.id}_toggle`) return;
+      if (f.type === 'checkbox' && f.multiple) {
+        formState[f.id] = [];
+      } else if (f.type === 'checkbox' && !f.multiple) {
+        formState[f.id] = false;
+      } else {
+        formState[f.id] = undefined;
+      }
+      clearFieldError(f.id);
+    });
+  };
+
+  /**
    * Au toggle: on met à jour, on charge le secteur, et on force/retire la visibilité des keywords
    */
   const setSectionControllerValue = async (
@@ -102,6 +119,11 @@ export function useDynamicForm(props: UseDynamicFormProps) {
     // Miroir: le contrôleur interne suit l'état du switch (ON/OFF)
     if (dejaTrouve) {
       formState[dejaTrouve.id] = value;
+    }
+
+    // Si OFF: nettoyer les saisies de la section
+    if (!value) {
+      resetSectionValues(section);
     }
   };
 
@@ -160,15 +182,22 @@ export function useDynamicForm(props: UseDynamicFormProps) {
    */
   const submitForm = async (getSectorsApi: Function): Promise<EventCreatePayload | null> => {
     const isValid = validatePage(currentPageSections.value, formState, isFieldVisible);
+    console.log('VALIDATEPAGE?', isValid);
     if (!isValid) {
+      console.log('notValid ?');
       return null;
     }
 
     try {
       const services = buildServiceSelections(props.sections, formState);
+      console.log('SERVICES ?', services);
+
       const payload = buildEventPayload(services);
+      console.log('PAYLOAD ?', payload);
+
       return payload;
     } catch (error) {
+      console.error('submitForm error', error);
       return null;
     }
   };
