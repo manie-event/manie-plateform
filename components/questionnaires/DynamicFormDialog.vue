@@ -21,21 +21,26 @@
 
                 <v-row class="mt-2" dense>
                   <!-- Contrôleur de section (switch) -->
-                  <template v-if="getVisibleField(section)">
+                  <template v-if="shouldShowSectionController(section)">
                     <v-col cols="12">
                       <SectionController
                         :section="section"
-                        :field="getVisibleField(section)!"
+                        :field="getVisibleField(section)"
                         :model-value="getSectionControllerValue(section)"
                         :error="fieldErrors[getVisibleField(section)?.id || '']"
-                        @update:model-value="(v) => handleSectionControllerChange(section, !!v)"
+                        @update:modelValue="(v) => handleSectionControllerChange(section, !!v)"
                       />
                     </v-col>
                   </template>
 
                   <!-- Champs principaux -->
                   <template v-for="field in section.fields" :key="field.id">
-                    <template v-if="!field.visibleSection && isFieldVisible(field, section)">
+                    <template
+                      v-if="
+                        isFieldVisible(field, section) &&
+                        !(currentPageIndex > 0 && field.type === 'checkbox' && !field.multiple)
+                      "
+                    >
                       <v-col cols="12" md="6">
                         <FormField
                           :field="field"
@@ -135,6 +140,7 @@ const {
   // Contrôleurs
   getVisibleField,
   getSectionControllerValue,
+  shouldShowSectionController,
 
   // Validation
   clearFieldError,

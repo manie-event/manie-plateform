@@ -33,7 +33,6 @@ export function useFormNavigation(sections: SectionSchema[]) {
   const paginationModel = computed({
     get: (): number => currentPageIndex.value + 1,
     set: (value: number): void => {
-      console.log(`Navigation vers la page ${value}`);
       currentPageIndex.value = value - 1;
     },
   });
@@ -67,7 +66,6 @@ export function useFormNavigation(sections: SectionSchema[]) {
    */
   const nextPage = (): void => {
     if (currentPageIndex.value < pages.value.length - 1) {
-      console.log(`Page suivante: ${currentPageIndex.value + 1} -> ${currentPageIndex.value + 2}`);
       currentPageIndex.value += 1;
     }
   };
@@ -77,7 +75,6 @@ export function useFormNavigation(sections: SectionSchema[]) {
    */
   const prevPage = (): void => {
     if (currentPageIndex.value > 0) {
-      console.log(`Page précédente: ${currentPageIndex.value + 1} -> ${currentPageIndex.value}`);
       currentPageIndex.value -= 1;
     }
   };

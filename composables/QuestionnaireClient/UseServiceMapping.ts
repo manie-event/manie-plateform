@@ -16,24 +16,18 @@ export const useServiceMapping = () => {
    */
   const loadSectorData = async (sectorId: string, getSectorsApi: Function): Promise<void> => {
     if (loadedSectors.has(sectorId)) {
-      console.log(`Secteur ${sectorId} déjà chargé`);
       return;
     }
 
     try {
-      console.log(`Chargement du secteur: ${sectorId}`);
-      loadedSectors.add(sectorId);
-      console.log(sectorId, 'sectorId');
-      console.log(getSectorsApi, 'WTF IS THAT');
-
       const data = await getSectorsApi(sectorId);
+      console.log(data, 'DATA ?');
 
       if (data?.services && data?.keywords) {
+        loadedSectors.add(sectorId);
+        console.log(sectorId, 'sectorId ?');
+
         sectorDataCache[sectorId] = data;
-        console.log(`✅ Secteur ${sectorId} chargé:`, {
-          services: data.services.length,
-          keywords: data.keywords.length,
-        });
       } else {
         console.warn(`⚠️ Données incomplètes pour le secteur ${sectorId}:`, data);
       }
@@ -50,15 +44,11 @@ export const useServiceMapping = () => {
   const collectSelectedTokens = (section: SectionSchema, formAnswers: FormState): Set<string> => {
     const tokens = new Set<string>();
 
-    console.log(`Collecte des tokens pour la section ${section.id}:`, formAnswers);
-
     for (const field of section.fields) {
       if (field.visibleSection) continue; // Skip les champs de contrôle de section
 
       const value = formAnswers[field.id];
       if (!value) continue;
-
-      console.log(`Traitement du champ ${field.id}:`, { type: field.type, value });
 
       if (field.type === 'checkbox' && field.multiple && Array.isArray(value)) {
         value.forEach((v) => addTokenWithLabel(tokens, v, field.options));
@@ -67,7 +57,6 @@ export const useServiceMapping = () => {
       }
     }
 
-    console.log(`Tokens collectés pour ${section.id}:`, Array.from(tokens));
     return tokens;
   };
 
@@ -78,23 +67,26 @@ export const useServiceMapping = () => {
     tokens: Set<string>,
     sectorData: SectorData
   ): { serviceUuids: string[]; keywordUuids: string[] } => {
-    console.log('Mapping des tokens:', Array.from(tokens));
-    console.log('Données secteur disponibles:', sectorData);
-
     // Créer des maps de recherche
     const serviceMap = new Map<string, string>();
     const keywordMap = new Map<string, string>();
+    console.log(tokens, 'TOKENS ?');
 
     sectorData.services.forEach((service) => {
       const normalizedName = normalizeText(service.name);
-      serviceMap.set(normalizedName, service.uuid);
-      console.log(`Service mappé: "${service.name}" -> "${normalizedName}" -> ${service.uuid}`);
+      console.log(normalizedName, 'normalizedName ?');
+
+      const testService = serviceMap.set(normalizedName, service.uuid);
+      console.log(testService, 'testService ?');
     });
 
+    // je ne passe pas dans ce code
     sectorData.keywords.forEach((keyword) => {
-      const normalizedName = normalizeText(keyword.name);
-      keywordMap.set(normalizedName, keyword.uuid);
-      console.log(`Keyword mappé: "${keyword.name}" -> "${normalizedName}" -> ${keyword.uuid}`);
+      const normalizedName = normalizeText(keyword.value);
+      console.log(normalizedName, 'normalizedName Keyword ?');
+
+      const testKeywords = keywordMap.set(normalizedName, keyword.uuid);
+      console.log(testKeywords, 'testKeywords ?');
     });
 
     // Mapper les tokens
@@ -107,16 +99,10 @@ export const useServiceMapping = () => {
 
       if (serviceUuid) {
         serviceUuids.push(serviceUuid);
-        console.log(`✅ Token "${token}" -> Service UUID: ${serviceUuid}`);
       }
 
       if (keywordUuid) {
         keywordUuids.push(keywordUuid);
-        console.log(`✅ Token "${token}" -> Keyword UUID: ${keywordUuid}`);
-      }
-
-      if (!serviceUuid && !keywordUuid) {
-        console.log(`❌ Token "${token}" non mappé`);
       }
     });
 
@@ -127,13 +113,7 @@ export const useServiceMapping = () => {
     // Si aucun service trouvé mais un seul service disponible, l'utiliser
     if (uniqueServiceUuids.length === 0 && sectorData.services.length === 1) {
       uniqueServiceUuids.push(sectorData.services[0].uuid);
-      console.log(`🔄 Utilisation du service unique par défaut: ${sectorData.services[0].uuid}`);
     }
-
-    console.log('Résultat du mapping:', {
-      serviceUuids: uniqueServiceUuids,
-      keywordUuids: uniqueKeywordUuids,
-    });
 
     return {
       serviceUuids: uniqueServiceUuids,
@@ -148,51 +128,44 @@ export const useServiceMapping = () => {
     sections: SectionSchema[],
     formAnswers: FormState
   ): ServiceSelection[] => {
-    console.log('🏗️ Construction des sélections de services...');
-    console.log(
-      'Sections à traiter:',
-      sections.map((s) => s.id)
-    );
-    console.log('Réponses du formulaire:', formAnswers);
-
     const selections: ServiceSelection[] = [];
 
     for (const section of sections) {
-      console.log(`\n--- Traitement de la section: ${section.id} ---`);
-
       const sectorData = sectorDataCache[section.id];
+
+      console.log(sectorData, 'sectorData ?');
+      console.log(sections, 'SECTIONS ?');
+      console.log(formAnswers, 'FORMANSWERS ? ');
+
       if (!sectorData) {
         console.warn(`⚠️ Données secteur manquantes pour ${section.id}`);
-        console.log('Cache disponible:', Object.keys(sectorDataCache));
         continue;
       }
 
       // Collecter tous les tokens sélectionnés dans cette section
       const selectedTokens = collectSelectedTokens(section, formAnswers);
       if (selectedTokens.size === 0) {
-        console.log(`Aucun token sélectionné pour la section ${section.id}`);
+        console.log(selectedTokens.size, 'selectedTokens ?');
+
         continue;
       }
 
       // Mapper les tokens aux UUIDs
       const { serviceUuids, keywordUuids } = mapTokensToUuids(selectedTokens, sectorData);
+      console.log(keywordUuids.length, 'keywordUuids.length ?');
+      console.log(serviceUuids.length, 'serviceUuids.length ?');
 
       // Créer les sélections de services
       if (keywordUuids.length > 0 && serviceUuids.length > 0) {
         serviceUuids.forEach((serviceUuid) => {
           const selection = { serviceUuid, keywordsUuid: keywordUuids };
+          console.log(selection, 'selection ?');
+
           selections.push(selection);
-          console.log(`✅ Sélection créée:`, selection);
-        });
-      } else {
-        console.warn(`❌ Impossible de créer une sélection pour ${section.id}:`, {
-          serviceUuids: serviceUuids.length,
-          keywordUuids: keywordUuids.length,
         });
       }
     }
 
-    console.log('\n🎯 Sélections finales:', selections);
     return selections;
   };
 

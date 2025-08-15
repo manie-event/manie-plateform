@@ -356,6 +356,39 @@
           "visibleSection": false
         },
         {
+          "id": "type_lieux",
+          "label": "Dans quels genres de lieux ?",
+          "type": "radio",
+          "category": "LIEUX",
+          "conditional": {
+            "showIf": ["lieu_deja_trouve"]
+          },
+          "options": [
+            { "value": "salle", "label": "Salle de réception" },
+            { "value": "domaine", "label": "Domaine" },
+            { "value": "château", "label": "Château" },
+            { "value": "villa", "label": "Villa" },
+            { "value": "appartement", "label": "Appartement" },
+            { "value": "écolodge", "label": "Écolodge" },
+            { "value": "gîte", "label": "Gîte" },
+            { "value": "maison d’hôte", "label": "Maison d'hôte" },
+            { "value": "tiers-lieu", "label": "Tiers-lieu" },
+            { "value": "rooftop", "label": "Rooftop" },
+            { "value": "bateau", "label": "Bateau" },
+            { "value": "péniche", "label": "Péniche" },
+            { "value": "galerie", "label": "Galerie d'art" },
+            { "value": "bar", "label": "Bar" },
+            { "value": "restaurant", "label": "Restaurant" },
+            { "value": "camping", "label": "Camping" },
+            { "value": "plage", "label": "Plage" },
+            { "value": "hôtel", "label": "Hôtel" },
+            { "value": "parc/jardin", "label": "Parc/jardin" },
+            { "value": "terrain sportif", "label": "Terrain sportif" },
+            { "value": "stade", "label": "Stade" },
+            { "value": "gymnase", "label": "Gymnase" }
+          ]
+        },
+        {
           "id": "privatisation",
           "label": "Vous acceptez une privatisation",
           "type": "checkbox",
@@ -385,40 +418,6 @@
             { "value": "31-40", "label": "31 à 40 couchages" },
             { "value": "41-50", "label": "41 à 50 couchages" },
             { "value": "50+", "label": "Plus de 50 couchages" }
-          ]
-        },
-        {
-          "id": "type_lieux",
-          "label": "Dans quels genres de lieux ?",
-          "type": "checkbox",
-          "multiple": true,
-          "category": "LIEUX",
-          "conditional": {
-            "showIf": ["lieu_deja_trouve"]
-          },
-          "options": [
-            { "value": "salle_reception", "label": "Salle de réception" },
-            { "value": "domaine", "label": "Domaine" },
-            { "value": "chateau", "label": "Château" },
-            { "value": "villa", "label": "Villa" },
-            { "value": "appartement", "label": "Appartement" },
-            { "value": "ecolodge", "label": "Écolodge" },
-            { "value": "gite", "label": "Gîte" },
-            { "value": "maison_hote", "label": "Maison d'hôte" },
-            { "value": "tiers_lieu", "label": "Tiers-lieu" },
-            { "value": "rooftop", "label": "Rooftop" },
-            { "value": "bateau", "label": "Bateau" },
-            { "value": "peniche", "label": "Péniche" },
-            { "value": "galerie_art", "label": "Galerie d'art" },
-            { "value": "bar", "label": "Bar" },
-            { "value": "restaurant", "label": "Restaurant" },
-            { "value": "camping", "label": "Camping" },
-            { "value": "plage", "label": "Plage" },
-            { "value": "hotel", "label": "Hôtel" },
-            { "value": "parc_jardin", "label": "Parc/jardin" },
-            { "value": "terrain_sportif", "label": "Terrain sportif" },
-            { "value": "stade", "label": "Stade" },
-            { "value": "gymnase", "label": "Gymnase" }
           ]
         },
         {
@@ -605,6 +604,26 @@
           "label": "J'ai déjà trouvé ma solution pour le repas",
           "type": "checkbox",
           "visibleSection": false
+        },
+        {
+          "id": "type_cuisines",
+          "label": "Quel type de prestation ?",
+          "type": "radio",
+          "category": "CUISINES_TYPE",
+          "conditional": {
+            "showIf": ["food_deja_trouve"]
+          },
+          "options": [
+            { "value": "restaurateur", "label": "Restaurateur" },
+            { "value": "food-truck", "label": "Food-truck" },
+            { "value": "traiteur", "label": "Traiteur" },
+            {
+              "value": "pâtissier",
+              "label": "Pâtissier"
+            },
+            { "value": "chef privé", "label": "Chef privé" },
+            { "value": "boulanger", "label": "Boulanger" }
+          ]
         },
         {
           "id": "cuisines",
@@ -811,6 +830,29 @@
           "label": "J'ai déjà trouvé ma solution pour le repas",
           "type": "checkbox",
           "visibleSection": false
+        },
+        {
+          "id": "presta_boisson",
+          "label": "Quel type de prestation ?",
+          "type": "checkbox",
+          "multiple": false,
+          "category": "BOISSONS_TYPE",
+          "conditional": {
+            "showIf": ["food_deja_trouve"]
+          },
+          "options": [
+            { "value": "mixologue", "label": "Mixologue" },
+            { "value": "fournisseur", "label": "Fournisseur" },
+            { "value": "brasseur", "label": "Brasseur" },
+            {
+              "value": "vigneron",
+              "label": "Vigneron"
+            },
+            {
+              "value": "serveur / limonadier / maître d’hôtel",
+              "label": "Serveur / Limonadier / Maître d’hôtel"
+            }
+          ]
         },
         {
           "id": "types_boissons",
@@ -2017,7 +2059,7 @@
       ]
     },
     {
-      "id": "esthétique",
+      "id": "esthtique",
       "title": "ESTHÉTIQUE - Avez-vous besoin d'une prestation esthétique ?",
       "fields": [
         {

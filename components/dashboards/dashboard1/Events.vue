@@ -24,7 +24,9 @@ const sections = ClientQuestionnaire.sections;
 console.log(sections);
 
 const answers = ref<Record<string, any>>({});
-function onSubmit(payload: Record<string, any>) {}
+function onSubmit(payload: Record<string, any>) {
+  console.log(payload, 'C FINI BAAATARD ? ');
+}
 </script>
 <style lang="scss" scoped>
 .events {
