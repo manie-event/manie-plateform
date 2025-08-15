@@ -58,7 +58,7 @@ export interface EventCreatePayload {
 
 export interface SectorData {
   services: Array<{ uuid: string; name: string }>;
-  keywords: Array<{ uuid: string; name: string }>;
+  keywords: Array<{ uuid: string; value: string }>;
 }
 
 export interface FormState {

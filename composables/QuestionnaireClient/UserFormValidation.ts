@@ -19,8 +19,6 @@ export function useFormValidation() {
     formState: FormState,
     isFieldVisible: (field: FieldSchema, section: SectionSchema) => boolean
   ): boolean => {
-    console.log('🔍 Validation de la page...');
-
     const errors: string[] = [];
 
     // Réinitialiser les erreurs
@@ -28,9 +26,7 @@ export function useFormValidation() {
       fieldErrors[key] = undefined;
     });
 
-    sections.forEach((section) => {
-      console.log(`Validation de la section: ${section.id}`);
-
+    const test = sections.forEach((section) => {
       section.fields.forEach((field) => {
         // Skip les champs de contrôle de section et les champs non visibles
         if (field.visibleSection || !isFieldVisible(field, section)) {
@@ -39,13 +35,11 @@ export function useFormValidation() {
 
         if (field.required) {
           const value = formState[field.id];
-          console.log(`Validation du champ requis ${field.id}:`, value);
 
           if (isValueEmpty(field, value)) {
             const errorMessage = 'Champ requis';
             fieldErrors[field.id] = errorMessage;
             errors.push(field.label);
-            console.log(`❌ Erreur sur ${field.id}: ${errorMessage}`);
           } else {
             console.log(`✅ Champ ${field.id} valide`);
           }
@@ -53,12 +47,9 @@ export function useFormValidation() {
       });
     });
 
-    pageErrors.value = errors;
+    console.log(test, 'SU PUTA MADRE ?');
 
-    console.log('Résultat de la validation:', {
-      isValid: errors.length === 0,
-      errors: errors.length,
-    });
+    pageErrors.value = errors;
 
     return errors.length === 0;
   };
@@ -67,7 +58,6 @@ export function useFormValidation() {
    * Efface l'erreur d'un champ spécifique
    */
   const clearFieldError = (fieldId: string): void => {
-    console.log(`Effacement de l'erreur pour le champ: ${fieldId}`);
     fieldErrors[fieldId] = undefined;
   };
 
@@ -75,7 +65,6 @@ export function useFormValidation() {
    * Efface toutes les erreurs de page
    */
   const clearPageErrors = (): void => {
-    console.log('Effacement de toutes les erreurs de page');
     pageErrors.value = [];
   };
 
