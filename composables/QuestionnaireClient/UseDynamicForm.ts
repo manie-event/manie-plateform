@@ -98,14 +98,10 @@ export function useDynamicForm(props: UseDynamicFormProps) {
       } catch (error) {
         // Ignorer
       }
-      if (dejaTrouve) {
-        formState[dejaTrouve.id] = true;
-      }
-    } else if (!value) {
-      // Masquer les keywords en désactivant le contrôleur interne
-      if (dejaTrouve) {
-        formState[dejaTrouve.id] = false;
-      }
+    }
+    // Miroir: le contrôleur interne suit l'état du switch (ON/OFF)
+    if (dejaTrouve) {
+      formState[dejaTrouve.id] = value;
     }
   };
 

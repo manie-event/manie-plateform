@@ -28,7 +28,7 @@
                         :field="getVisibleField(section)"
                         :model-value="getSectionControllerValue(section)"
                         :error="fieldErrors[getVisibleField(section)?.id || '']"
-                        @update:model-value="(v) => handleSectionControllerChange(section, !!v)"
+                        @update:modelValue="(v) => handleSectionControllerChange(section, !!v)"
                       />
                     </v-col>
                   </template>
