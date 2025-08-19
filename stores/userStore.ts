@@ -16,6 +16,8 @@ export const useUserStore = defineStore('userStore', () => {
   const keywords = ref<Keywords[]>([]);
   const bgPicture = ref('/images/backgrounds/profilebg-2.jpg');
 
+  const isProfessional = computed(() => user.value?.category === 'professional');
+
   const setUser = (userData: User) => {
     user.value = userData;
   };
@@ -55,6 +57,7 @@ export const useUserStore = defineStore('userStore', () => {
     isStoringUserAccepeted,
     professionnalServices,
     keywords,
+    isProfessional,
     setUserAccepted,
     setUser,
     setProfessionalUser,

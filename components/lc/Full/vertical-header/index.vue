@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import JetonImg from '@/public/images/panier/jeton.png';
 import { Icon } from '@iconify/vue';
+import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 
 const { createTokenSession } = usePaiementJeton();
 const jetonAmount = ref(0);
@@ -8,10 +9,6 @@ const stickyHeader = ref(false);
 
 const totalPriceJeton = computed(() => {
   return `${jetonAmount.value * 9} €`;
-});
-
-onBeforeMount(() => {
-  window.addEventListener('scroll', handleScroll);
 });
 
 const handleScroll = () => {
@@ -22,6 +19,9 @@ const handleScroll = () => {
   }
 };
 
+onBeforeMount(() => {
+  window.addEventListener('scroll', handleScroll);
+});
 // watch(jetonAmount, (newJetonAmount) => {
 //   setJetonAmount(newJetonAmount);
 // });

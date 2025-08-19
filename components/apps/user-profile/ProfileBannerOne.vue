@@ -97,7 +97,7 @@
 import EditerUserProfile from '@/components/apps/user-profile/EditUserProfil.vue';
 import { ref, shallowRef, Teleport } from 'vue';
 import { IdIcon, Layout2Icon, PlusIcon, UserCircleIcon, UsersIcon } from 'vue-tabler-icons';
-import { useUserProfile } from '../../../composables/UseUserProfile';
+import { useUserProfile } from '../../../composables/professional-user/UseUserProfile';
 import UserImage from '/images/profile/user6.jpg';
 
 const { bgPicture } = storeToRefs(useUserStore());

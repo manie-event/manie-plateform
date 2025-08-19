@@ -11,6 +11,7 @@ import UpcommingSchedule from '@/components/dashboards/dashboard2/UpcommingSched
 import WelcomeCard from '@/components/dashboards/dashboard2/WelcomeCard.vue';
 import Footer from '@/components/frontpages/layout/Footer.vue';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
+import { useUserProfile } from '~/composables/professional-user/UseUserProfile';
 const userStore = useUserStore();
 const { isProfessionalProfileCreated } = storeToRefs(userStore);
 const { getUserProfileDetails } = useUserProfile();

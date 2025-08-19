@@ -1,14 +1,7 @@
 export interface User {
   username: string;
   email: string;
-  name?: string;
-  phraseInspirante?: string;
-  phraseDePresentation?: string;
   category: string;
-  phone?: string;
-  adresse?: string;
-  diplome?: string;
-  langues?: string;
 }
 
 export interface ProfessionalProfile {

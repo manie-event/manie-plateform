@@ -3,31 +3,28 @@ import { profileDD } from '@/_mockApis/headerData';
 import { UserCategory } from '@/models/enums/userCategoryEnums';
 import { Icon } from '@iconify/vue';
 import { CircleXIcon } from 'vue-tabler-icons';
+import { useUserProfile } from '~/composables/professional-user/UseUserProfile';
 import { useAuthentification } from '../../../../composables/UseAuthentification';
 
 const userStore = useUserStore();
-const { user, professionalUser, isProfessionalProfileCreated } = storeToRefs(userStore);
+const { user, professionalUser, isProfessionalProfileCreated, isProfessional } =
+  storeToRefs(userStore);
 const { sendLogout } = useAuthentification();
 const { userTokenBalance } = storeToRefs(useCartStore());
 
 const getNameDependingOnCategory = computed(() => {
   if (
-    (user.value?.category == 'professional' && !user.value?.username) ||
+    (isProfessional && !user.value?.username) ||
     professionalUser.value?.category == 'professional'
   ) {
     return professionalUser.value?.name;
-  } else if (user.value?.category == 'consumer' && !user.value?.username) {
-    return user.value?.name;
   } else {
     return user.value?.username;
   }
 });
 
 const getCategory = computed(() => {
-  if (
-    user.value?.category == 'professional' ||
-    professionalUser.value?.category == 'professional'
-  ) {
+  if (isProfessional || professionalUser.value?.category == 'professional') {
     return UserCategory.PRESTA;
   } else {
     return UserCategory.CLIENT;
