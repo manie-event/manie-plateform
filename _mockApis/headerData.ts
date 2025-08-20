@@ -60,7 +60,7 @@ const notifications: notificationType[] = [
 // Profile
 //
 
-const profileDD: profileType[] = [
+const professionalProfile: profileType[] = [
   {
     avatar: 'wallet-2-line-duotone',
     bgcolor: 'info',
@@ -77,20 +77,17 @@ const profileDD: profileType[] = [
     href: '',
     requiresProfile: true,
   },
-  // {
-  //   avatar: 'shield-minimalistic-line-duotone',
-  //   bgcolor: 'success',
-  //   title: 'My Notes',
-  //   subtitle: 'My Daily Notes',
-  //   href: '/apps/notes',
-  // },
-  // {
-  //   avatar: 'card-2-line-duotone',
-  //   bgcolor: 'error',
-  //   title: 'My Tasks',
-  //   subtitle: 'To-do and Daily tasks',
-  //   href: '/apps/kanban',
-  // },
+];
+
+const clientProfile: profileType[] = [
+  {
+    avatar: 'wallet-2-line-duotone',
+    bgcolor: 'info',
+    title: 'Mon Profil',
+    subtitle: 'Votre page de profil',
+    href: '/apps/userprofile/two',
+    requiresProfile: false,
+  },
 ];
 
 //
@@ -254,4 +251,12 @@ const optionIconData: optionIcon[] = [
   },
 ];
 
-export { appsLink, notifications, optionIconData, profileDD, quickLink, searchSugg };
+export {
+  appsLink,
+  clientProfile,
+  notifications,
+  optionIconData,
+  professionalProfile,
+  quickLink,
+  searchSugg,
+};

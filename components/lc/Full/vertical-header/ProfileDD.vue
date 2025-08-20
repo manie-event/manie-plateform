@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { profileDD } from '@/_mockApis/headerData';
+import { clientProfile, professionalProfile } from '@/_mockApis/headerData';
 import { UserCategory } from '@/models/enums/userCategoryEnums';
 import { Icon } from '@iconify/vue';
 import { CircleXIcon } from 'vue-tabler-icons';
-import { useUserProfile } from '~/composables/professional-user/UseUserProfile';
+import { useProfessionalProfile } from '~/composables/professional-user/UseUserProfile';
 import { useAuthentification } from '../../../../composables/UseAuthentification';
 
 const userStore = useUserStore();
@@ -31,11 +31,11 @@ const getCategory = computed(() => {
   }
 });
 
-const { getUserProfileDetails } = useUserProfile();
+const { getProfessionalProfileDetails } = useProfessionalProfile();
 
 onMounted(() => {
   if (isProfessionalProfileCreated.value) {
-    getUserProfileDetails();
+    getProfessionalProfileDetails();
   }
 });
 </script>
@@ -86,9 +86,40 @@ onMounted(() => {
         <v-divider></v-divider>
       </div>
       <div style="height: 100%; max-height: 240px">
-        <v-list class="py-0 theme-list" lines="two">
+        <v-list class="py-0 theme-list" lines="two" v-if="isProfessional">
           <v-list-item
-            v-for="item in profileDD"
+            v-for="item in professionalProfile"
+            :key="item.title"
+            class="py-4 px-8 custom-text-primary"
+            :to="item.href"
+            :class="{
+              'profile-not-defined': !isProfessionalProfileCreated && !item.requiresProfile,
+            }"
+          >
+            <template v-slot:prepend>
+              <v-avatar size="40" class="rounded-lg" :class="'bg-light' + item.bgcolor">
+                <!-- <component :is="item.avatar" stroke-width="2" size="25" :class="'text-' + item.bgcolor" /> -->
+                <Icon
+                  :icon="'solar:' + item.avatar"
+                  width="25"
+                  height="25"
+                  :class="'text-' + item.bgcolor"
+                />
+              </v-avatar>
+            </template>
+            <div>
+              <h6 class="text-h6 font-weight-medium mb-1 custom-title">
+                {{ item.title }}
+              </h6>
+            </div>
+            <p class="text-subtitle-1 font-weight-regular text-grey100">
+              <b>{{ item.requiresProfile ? userTokenBalance : '' }}</b> {{ item.subtitle }}
+            </p>
+          </v-list-item>
+        </v-list>
+        <v-list class="py-0 theme-list" lines="two" v-else>
+          <v-list-item
+            v-for="item in clientProfile"
             :key="item.title"
             class="py-4 px-8 custom-text-primary"
             :to="item.href"

@@ -94,10 +94,10 @@
 </template>
 
 <script setup lang="ts">
-import EditerUserProfile from '@/components/apps/user-profile/EditUserProfil.vue';
 import { ref, shallowRef, Teleport } from 'vue';
 import { IdIcon, Layout2Icon, PlusIcon, UserCircleIcon, UsersIcon } from 'vue-tabler-icons';
-import { useUserProfile } from '../../../composables/professional-user/UseUserProfile';
+import EditerUserProfile from '~/components/apps/user-profile/EditClientProfil.vue';
+import { useProfessionalProfile } from '../../../composables/professional-user/UseUserProfile';
 import UserImage from '/images/profile/user6.jpg';
 
 const { bgPicture } = storeToRefs(useUserStore());
@@ -108,7 +108,7 @@ const fileInput = ref(null);
 
 const { user, isProfessionalProfileCreated } = storeToRefs(useUserStore());
 const { getKeywords } = useKeywords();
-const { changeBannerPicture } = useUserProfile();
+const { changeProfessionalBannerPicture } = useProfessionalProfile();
 
 const triggerClickFileInput = () => fileInput.value?.click();
 const changeBannerPhoto = async (e: Event) => {
@@ -116,7 +116,7 @@ const changeBannerPhoto = async (e: Event) => {
   if (!input.files?.length) return;
 
   const picture = input.files[0];
-  await changeBannerPicture(picture);
+  await changeProfessionalBannerPicture(picture);
 };
 
 const items = shallowRef([

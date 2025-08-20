@@ -200,14 +200,14 @@ import { ref, Teleport } from 'vue';
 import * as yup from 'yup';
 import errorToaster from '~/components/common/errorToaster.vue';
 import ServicesPrestataire from '~/components/questionnaires/ServicesPrestataire.vue';
-import { useUserProfile } from '~/composables/professional-user/UseUserProfile';
+import { useProfessionalProfile } from '~/composables/professional-user/UseUserProfile';
 import { useKeywords } from '~/composables/UseKeywords';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import { GEOGRAPHIC_ACTIVITY } from '~/constants/geographicActivity';
 import type { Faq, Link, ProfessionalProfile } from '~/models/user/UserModel';
 
 const userStore = useUserStore();
-const { createProfessionalProfile } = useUserProfile();
+const { createProfessionalProfile } = useProfessionalProfile();
 const { getSectors } = useKeywords();
 const { isProfessionalProfileCreated } = storeToRefs(userStore);
 const openModal = defineModel<boolean>('openModal');

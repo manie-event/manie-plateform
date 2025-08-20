@@ -1,7 +1,8 @@
 import { keyWordsDtoToKeywords } from '~/mappers/professionalKeywordsMapper';
-import type { Keywords, KeywordsDto } from '~/models/professionalServices/Keywords';
-import type { Sectors } from '~/models/professionalServices/Sectors';
-import type { Services } from '~/models/professionalServices/Services';
+import type { KeywordsDto } from '~/models/dto/KeywordsDto';
+import type { Keywords } from '~/models/professionalService/Keywords';
+import type { Sectors } from '~/models/professionalService/Sectors';
+import type { Services } from '~/models/professionalService/Services';
 
 export const useProfessionalService = () => {
   const config = useRuntimeConfig();

@@ -9,15 +9,12 @@ import VisitFromUsa from '@/components/dashboards/dashboard-client/VisitFromUsa.
 import Snackbar from '@/components/dashboards/snackbar.vue';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
 import BaseEmptyState from '~/components/common/BaseEmptyState.vue';
-import { useUserProfile } from '~/composables/professional-user/UseUserProfile';
 
 const userStore = useUserStore();
 const { isProfessionalProfileCreated } = storeToRefs(userStore);
-const { getUserProfileDetails } = useUserProfile();
 
 onMounted(() => {
   if (isProfessionalProfileCreated.value) {
-    getUserProfileDetails();
   }
 });
 </script>

@@ -4,6 +4,7 @@ import { Icon } from '@iconify/vue';
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 
 const { createTokenSession } = usePaiementJeton();
+const { isProfessional } = storeToRefs(useUserStore());
 const jetonAmount = ref(0);
 const stickyHeader = ref(false);
 
@@ -39,9 +40,9 @@ onBeforeMount(() => {
     <!-- ---------------------------------------------- -->
     <!-- Search part -->
     <!-- ---------------------------------------------- -->
-    <div class="hidden-md-and-up me-md-4 me-0">
+    <!-- <div class="hidden-md-and-up me-md-4 me-0">
       <LcFullVerticalHeaderSearchbar />
-    </div>
+    </div> -->
 
     <!---/Search part -->
     <v-spacer class="hidden-sm-and-down" />
@@ -66,7 +67,7 @@ onBeforeMount(() => {
     <!-- ---------------------------------------------- -->
     <!-- ShoppingCart -->
     <!-- ---------------------------------------------- -->
-    <v-menu :close-on-content-click="false" class="notification_popup">
+    <v-menu :close-on-content-click="false" class="notification_popup" v-if="isProfessional">
       <template v-slot:activator="{ props }">
         <v-btn icon flat v-bind="props" size="small" class="custom-hover-primary">
           <div class="position-realtive">

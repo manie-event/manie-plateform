@@ -74,7 +74,8 @@ interface _GlobalComponents {
     'AppsNotesContent': typeof import("../components/apps/notes/NotesContent.vue")['default']
     'AppsNotesListing': typeof import("../components/apps/notes/NotesListing.vue")['default']
     'AppsTicketsTicketList': typeof import("../components/apps/tickets/TicketList.vue")['default']
-    'AppsUserProfileEditUserProfil': typeof import("../components/apps/user-profile/EditUserProfil.vue")['default']
+    'AppsUserProfileEditClientProfil': typeof import("../components/apps/user-profile/EditClientProfil.vue")['default']
+    'AppsUserProfileEditProfessionalProfil': typeof import("../components/apps/user-profile/EditProfessionalProfil.vue")['default']
     'AppsUserProfileIntroCard': typeof import("../components/apps/user-profile/IntroCard.vue")['default']
     'AppsUserProfilePhotosCard': typeof import("../components/apps/user-profile/PhotosCard.vue")['default']
     'AppsUserProfilePostListing': typeof import("../components/apps/user-profile/PostListing.vue")['default']
@@ -490,7 +491,8 @@ interface _GlobalComponents {
     'LazyAppsNotesContent': LazyComponent<typeof import("../components/apps/notes/NotesContent.vue")['default']>
     'LazyAppsNotesListing': LazyComponent<typeof import("../components/apps/notes/NotesListing.vue")['default']>
     'LazyAppsTicketsTicketList': LazyComponent<typeof import("../components/apps/tickets/TicketList.vue")['default']>
-    'LazyAppsUserProfileEditUserProfil': LazyComponent<typeof import("../components/apps/user-profile/EditUserProfil.vue")['default']>
+    'LazyAppsUserProfileEditClientProfil': LazyComponent<typeof import("../components/apps/user-profile/EditClientProfil.vue")['default']>
+    'LazyAppsUserProfileEditProfessionalProfil': LazyComponent<typeof import("../components/apps/user-profile/EditProfessionalProfil.vue")['default']>
     'LazyAppsUserProfileIntroCard': LazyComponent<typeof import("../components/apps/user-profile/IntroCard.vue")['default']>
     'LazyAppsUserProfilePhotosCard': LazyComponent<typeof import("../components/apps/user-profile/PhotosCard.vue")['default']>
     'LazyAppsUserProfilePostListing': LazyComponent<typeof import("../components/apps/user-profile/PostListing.vue")['default']>
@@ -912,7 +914,8 @@ export const AppsNotesAddNote: typeof import("../components/apps/notes/AddNote.v
 export const AppsNotesContent: typeof import("../components/apps/notes/NotesContent.vue")['default']
 export const AppsNotesListing: typeof import("../components/apps/notes/NotesListing.vue")['default']
 export const AppsTicketsTicketList: typeof import("../components/apps/tickets/TicketList.vue")['default']
-export const AppsUserProfileEditUserProfil: typeof import("../components/apps/user-profile/EditUserProfil.vue")['default']
+export const AppsUserProfileEditClientProfil: typeof import("../components/apps/user-profile/EditClientProfil.vue")['default']
+export const AppsUserProfileEditProfessionalProfil: typeof import("../components/apps/user-profile/EditProfessionalProfil.vue")['default']
 export const AppsUserProfileIntroCard: typeof import("../components/apps/user-profile/IntroCard.vue")['default']
 export const AppsUserProfilePhotosCard: typeof import("../components/apps/user-profile/PhotosCard.vue")['default']
 export const AppsUserProfilePostListing: typeof import("../components/apps/user-profile/PostListing.vue")['default']
@@ -1328,7 +1331,8 @@ export const LazyAppsNotesAddNote: LazyComponent<typeof import("../components/ap
 export const LazyAppsNotesContent: LazyComponent<typeof import("../components/apps/notes/NotesContent.vue")['default']>
 export const LazyAppsNotesListing: LazyComponent<typeof import("../components/apps/notes/NotesListing.vue")['default']>
 export const LazyAppsTicketsTicketList: LazyComponent<typeof import("../components/apps/tickets/TicketList.vue")['default']>
-export const LazyAppsUserProfileEditUserProfil: LazyComponent<typeof import("../components/apps/user-profile/EditUserProfil.vue")['default']>
+export const LazyAppsUserProfileEditClientProfil: LazyComponent<typeof import("../components/apps/user-profile/EditClientProfil.vue")['default']>
+export const LazyAppsUserProfileEditProfessionalProfil: LazyComponent<typeof import("../components/apps/user-profile/EditProfessionalProfil.vue")['default']>
 export const LazyAppsUserProfileIntroCard: LazyComponent<typeof import("../components/apps/user-profile/IntroCard.vue")['default']>
 export const LazyAppsUserProfilePhotosCard: LazyComponent<typeof import("../components/apps/user-profile/PhotosCard.vue")['default']>
 export const LazyAppsUserProfilePostListing: LazyComponent<typeof import("../components/apps/user-profile/PostListing.vue")['default']>

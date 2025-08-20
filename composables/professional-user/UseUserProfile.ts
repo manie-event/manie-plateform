@@ -2,7 +2,7 @@ import axios from 'axios';
 import type { errorModel } from '~/models/errorModel';
 import type { ProfessionalProfile } from '~/models/user/UserModel';
 
-export const useUserProfile = () => {
+export const useProfessionalProfile = () => {
   const { addError, addSuccess } = useToaster();
   const token = useCookie('token');
   const userStore = useUserStore();
@@ -25,7 +25,7 @@ export const useUserProfile = () => {
       );
       if (data) {
         addSuccess('Modification du profil professionnel réussie !');
-        getUserProfile();
+        getProfessionalProfile();
         return data;
       }
     } catch (error: unknown) {
@@ -35,7 +35,7 @@ export const useUserProfile = () => {
     }
   };
 
-  const getUserProfile = async () => {
+  const getProfessionalProfile = async () => {
     try {
       const { data } = await axios.get(`${config.public.apiUrl}/professional`, {
         headers: {
@@ -54,7 +54,7 @@ export const useUserProfile = () => {
     }
   };
 
-  const getUserProfileDetails = async () => {
+  const getProfessionalProfileDetails = async () => {
     try {
       const { data } = await axios.get(`${config.public.apiUrl}/professional/${professionalUuid}`, {
         headers: {
@@ -72,7 +72,7 @@ export const useUserProfile = () => {
     }
   };
 
-  const patchUserProfileDetails = async (newProfile: ProfessionalProfile) => {
+  const patchProfessionnalProfileDetails = async (newProfile: ProfessionalProfile) => {
     try {
       const { data } = await axios.patch(
         `${config.public.apiUrl}/professional/${professionalUuid}`,
@@ -96,7 +96,7 @@ export const useUserProfile = () => {
     }
   };
 
-  const changeBannerPicture = async (file: File) => {
+  const changeProfessionalBannerPicture = async (file: File) => {
     const formData = new FormData();
     formData.append('file', file);
 
@@ -128,9 +128,9 @@ export const useUserProfile = () => {
 
   return {
     createProfessionalProfile,
-    getUserProfile,
-    getUserProfileDetails,
-    patchUserProfileDetails,
-    changeBannerPicture,
+    getProfessionalProfile,
+    getProfessionalProfileDetails,
+    patchProfessionnalProfileDetails,
+    changeProfessionalBannerPicture,
   };
 };

@@ -20,6 +20,7 @@ export const useUserStore = defineStore('userStore', () => {
 
   const setUser = (userData: User) => {
     user.value = userData;
+    localStorage.setItem('user-uuid', userData.uuid || '');
   };
   const setProfessionalUser = (newProfessionalUser: ProfessionalProfile) => {
     professionalUser.value = {
