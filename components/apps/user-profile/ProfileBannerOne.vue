@@ -97,7 +97,8 @@
 import { ref, shallowRef, Teleport } from 'vue';
 import { IdIcon, Layout2Icon, PlusIcon, UserCircleIcon, UsersIcon } from 'vue-tabler-icons';
 import EditerUserProfile from '~/components/apps/user-profile/EditClientProfil.vue';
-import { useProfessionalProfile } from '../../../composables/professional-user/UseUserProfile';
+import { useKeywords } from '~/composables/professional-user/UseKeywords';
+import { useProfessionalProfile } from '../../../composables/professional-user/UseProfessionalProfile';
 import UserImage from '/images/profile/user6.jpg';
 
 const { bgPicture } = storeToRefs(useUserStore());
