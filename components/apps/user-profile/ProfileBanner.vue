@@ -2,6 +2,7 @@
 import profileBg from '@/public/images/backgrounds/profilebg.jpg';
 import { ref, shallowRef } from 'vue';
 import { HeartIcon, PhotoIcon, UserCircleIcon, UsersIcon } from 'vue-tabler-icons';
+import EditClientProfil from './EditClientProfil.vue';
 import UserImage from '/images/profile/user6.jpg';
 
 const tab = ref(null);
@@ -100,6 +101,9 @@ const openEditProfilModal = () => {
       </v-row>
     </div>
   </v-card>
+  <Teleport to="body">
+    <EditClientProfil v-model:openModal="openModal" />
+  </Teleport>
 </template>
 <style lang="scss">
 .avatar-border {

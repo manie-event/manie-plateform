@@ -53,7 +53,7 @@
                   >Editez votre profil</v-btn
                 >
               </div>
-              <div v-if="isProfessionalProfileCreated">
+              <div v-if="isProfileCreated">
                 <v-btn
                   class="profile-banner-redirection-bouton"
                   size="large"
@@ -107,7 +107,7 @@ const tab = ref(null);
 const openModal = ref(false);
 const fileInput = ref(null);
 
-const { user, isProfessionalProfileCreated } = storeToRefs(useUserStore());
+const { user, isProfileCreated } = storeToRefs(useUserStore());
 const { getKeywords } = useKeywords();
 const { changeProfessionalBannerPicture } = useProfessionalProfile();
 

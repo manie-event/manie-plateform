@@ -1,11 +1,10 @@
 <template>
   <BaseModal v-model="openModal" fullscreen transition="dialog-bottom-transition">
     <template #title>{{
-      !isProfessionalProfileCreated ? 'Renseignez votre profil' : 'Modifier votre profil'
+      !isProfileCreated ? 'Renseignez votre profil' : 'Modifier votre profil'
     }}</template>
 
     <template #content>
-      <!-- Utilisez handleSubmit pour déclencher la validation -->
       <v-form class="px-4">
         <v-divider class="mt-6">
           <p class="mt-6"></p>
@@ -106,7 +105,7 @@ import { useClientProfil } from '~/composables/client-user/UseClientProfil';
 import type { ClientModel } from '~/models/user/ClientModel';
 
 const userStore = useUserStore();
-const { isProfessionalProfileCreated } = storeToRefs(userStore);
+const { isProfileCreated } = storeToRefs(userStore);
 const { patchClientProfil } = useClientProfil();
 const openModal = defineModel<boolean>('openModal');
 const showErrors = ref(false);

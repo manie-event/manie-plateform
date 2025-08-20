@@ -1,7 +1,7 @@
 <template>
   <BaseModal v-model="openModal" fullscreen transition="dialog-bottom-transition">
     <template #title>{{
-      !isProfessionalProfileCreated ? 'Renseignez votre profil' : 'Modifier votre profil'
+      !isProfileCreated ? 'Renseignez votre profil' : 'Modifier votre profil'
     }}</template>
 
     <template #content>
@@ -209,7 +209,7 @@ import type { Faq, Link, ProfessionalProfile } from '~/models/user/UserModel';
 const userStore = useUserStore();
 const { createProfessionalProfile } = useProfessionalProfile();
 const { getSectors } = useKeywords();
-const { isProfessionalProfileCreated } = storeToRefs(userStore);
+const { isProfileCreated } = storeToRefs(userStore);
 const openModal = defineModel<boolean>('openModal');
 
 const faqArray = ref<Faq[]>([]);

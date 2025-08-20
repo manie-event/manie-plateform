@@ -9,13 +9,13 @@ import VisitFromUsa from '@/components/dashboards/dashboard-client/VisitFromUsa.
 import Snackbar from '@/components/dashboards/snackbar.vue';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
 import BaseEmptyState from '~/components/common/BaseEmptyState.vue';
+import { useClientProfil } from '../../../composables/client-user/UseClientProfil';
 
 const userStore = useUserStore();
-const { isProfessionalProfileCreated } = storeToRefs(userStore);
-
+const { isProfileCreated } = storeToRefs(userStore);
+const { getClientProfil } = useClientProfil();
 onMounted(() => {
-  if (isProfessionalProfileCreated.value) {
-  }
+  getClientProfil();
 });
 </script>
 
@@ -23,7 +23,7 @@ onMounted(() => {
   <!-- Loader -->
   <Snackbar />
   <!-- Loader -->
-  <v-row v-if="isProfessionalProfileCreated">
+  <v-row v-if="isProfileCreated">
     <!-- Congratulation Card -->
     <v-col cols="12" sm="12" md="12" lg="6">
       <v-row>

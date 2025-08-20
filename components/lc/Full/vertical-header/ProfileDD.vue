@@ -7,8 +7,7 @@ import { useProfessionalProfile } from '~/composables/professional-user/UseProfe
 import { useAuthentification } from '../../../../composables/UseAuthentification';
 
 const userStore = useUserStore();
-const { user, professionalUser, isProfessionalProfileCreated, isProfessional } =
-  storeToRefs(userStore);
+const { user, professionalUser, isProfileCreated, isProfessional } = storeToRefs(userStore);
 const { sendLogout } = useAuthentification();
 const { userTokenBalance } = storeToRefs(useCartStore());
 
@@ -24,7 +23,8 @@ const getNameDependingOnCategory = computed(() => {
 });
 
 const getCategory = computed(() => {
-  if (isProfessional || professionalUser.value?.category == 'professional') {
+  if (isProfessional.value || professionalUser.value?.category == 'professional') {
+    console.log(isProfessional.value, 'PROFILEDD');
     return UserCategory.PRESTA;
   } else {
     return UserCategory.CLIENT;
@@ -34,7 +34,7 @@ const getCategory = computed(() => {
 const { getProfessionalProfileDetails } = useProfessionalProfile();
 
 onMounted(() => {
-  if (isProfessionalProfileCreated.value) {
+  if (isProfileCreated.value) {
     getProfessionalProfileDetails();
   }
 });
@@ -53,7 +53,7 @@ onMounted(() => {
               src="/images/profile/user6.jpg"
               width="50"
               alt="profile picture"
-              :class="{ 'profile-not-defined': !isProfessionalProfileCreated }"
+              :class="{ 'profile-not-defined': !isProfileCreated }"
             />
           </v-avatar>
           <div class="ml-md-4 d-md-block d-none">
@@ -93,7 +93,7 @@ onMounted(() => {
             class="py-4 px-8 custom-text-primary"
             :to="item.href"
             :class="{
-              'profile-not-defined': !isProfessionalProfileCreated && !item.requiresProfile,
+              'profile-not-defined': !isProfileCreated && !item.requiresProfile,
             }"
           >
             <template v-slot:prepend>
@@ -124,7 +124,7 @@ onMounted(() => {
             class="py-4 px-8 custom-text-primary"
             :to="item.href"
             :class="{
-              'profile-not-defined': !isProfessionalProfileCreated && !item.requiresProfile,
+              'profile-not-defined': !isProfileCreated && !item.requiresProfile,
             }"
           >
             <template v-slot:prepend>

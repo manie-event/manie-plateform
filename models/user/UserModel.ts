@@ -8,6 +8,26 @@ export interface User {
   updatedAt: string;
 }
 
+export interface clientProfile {
+  address: string;
+  birthDate: string;
+  businessLeader?: string;
+  businessName?: string;
+  businessSiret?: string;
+  city: string;
+  country: string;
+  createdAt: string;
+  email: string;
+  id: number;
+  isBusiness: boolean;
+  phoneNumber: string;
+  updatedAt: string;
+  userUuid: string;
+  username: string;
+  uuid: string;
+  zipCode: string;
+}
+
 export interface ProfessionalProfile {
   name: string;
   uuid?: string;
