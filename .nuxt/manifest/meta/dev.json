@@ -4,3 +4,5 @@
   "matcher": { "static": {}, "wildcard": {}, "dynamic": {} },
   "prerendered": []
 }
+
+{"id":"dev","timestamp":1755728506305,"matcher":{"static":{},"wildcard":{},"dynamic":{}},"prerendered":[]}
