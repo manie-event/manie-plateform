@@ -108,7 +108,7 @@
 </template>
 
 <script setup lang="ts">
-import type { FieldSchema, OptionItem } from '@/types/form.types';
+import type { FieldSchema, OptionItem } from '~/models/questionnaire/QuestionnaireClientModel';
 
 defineProps<{
   field: FieldSchema;

@@ -210,8 +210,8 @@
 <script setup lang="ts">
 import questionnairePresta from '@/data/questionnaire-presta.json';
 import { nextTick, onMounted, ref, watch } from 'vue';
-import { useKeywords } from '~/composables/professional-user/UseKeywords';
-import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
+import { useKeywords } from '~/composables/ProfessionalUser/UseKeywords';
+import { useProfessionalProfile } from '~/composables/ProfessionalUser/UseProfessionalProfile';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { Keywords } from '~/models/professionalService/Keywords';
 import type { ProfessionalServiceUuid } from '~/models/professionalService/professionalServiceUuid';

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import JetonImg from '@/public/images/panier/jeton.png';
 import { Icon } from '@iconify/vue';
-import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
+import { usePaiementJeton } from '~/composables/ProfessionalUser/UsePaiementJeton';
 
 const { createTokenSession } = usePaiementJeton();
 const { isProfessional } = storeToRefs(useUserStore());

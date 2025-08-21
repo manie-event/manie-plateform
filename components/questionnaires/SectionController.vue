@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import type { FieldSchema } from '@/models/questionnaire/QuestionnaireClient';
+import type { FieldSchema } from '~/models/questionnaire/QuestionnaireClientModel';
 
 defineProps<{
   section: any;

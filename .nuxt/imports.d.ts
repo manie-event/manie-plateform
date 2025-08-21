@@ -37,6 +37,7 @@ export { useToaster } from '../utils/toaster';
 export { useCartStore } from '../stores/cartStore';
 export { useCatalogStore } from '../stores/catalogue';
 export { useCustomizerStore } from '../stores/customizer';
+export { useEventStore } from '../stores/eventStore';
 export { useUserStore } from '../stores/userStore';
 export { defineStore, acceptHMRUpdate, usePinia, storeToRefs } from '../node_modules/@pinia/nuxt/dist/runtime/composables';
 export { useNuxtDevTools } from '../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools';

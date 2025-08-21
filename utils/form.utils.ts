@@ -2,7 +2,7 @@ import type {
   FieldSchema,
   FormState,
   OptionItem,
-} from '@/models/questionnaire/QuestionnaireClient';
+} from '~/models/questionnaire/QuestionnaireClientModel';
 
 /**
  * Normalise un texte pour la recherche et comparaison

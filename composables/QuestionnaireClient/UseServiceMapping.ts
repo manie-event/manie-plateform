@@ -1,11 +1,11 @@
+import { addTokenWithLabel, normalizeText } from '@/utils/form.utils';
+import { reactive } from 'vue';
 import type {
   FormState,
   SectionSchema,
   SectorData,
   ServiceSelection,
-} from '@/models/questionnaire/QuestionnaireClient';
-import { addTokenWithLabel, normalizeText } from '@/utils/form.utils';
-import { reactive } from 'vue';
+} from '~/models/questionnaire/QuestionnaireClientModel';
 
 export const useServiceMapping = () => {
   const sectorDataCache = reactive<Record<string, SectorData>>({});

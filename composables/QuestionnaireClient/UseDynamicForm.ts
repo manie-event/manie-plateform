@@ -6,7 +6,7 @@ import type {
   FormState,
   SectionSchema,
   ServiceSelection,
-} from '~/models/questionnaire/QuestionnaireClient';
+} from '~/models/questionnaire/QuestionnaireClientModel';
 import { useConditionalLogic } from './UseConditionalLogic';
 import { useFormNavigation } from './UseFormNavigation';
 import { useServiceMapping } from './UseServiceMapping';

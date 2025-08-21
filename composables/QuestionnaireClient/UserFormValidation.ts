@@ -1,11 +1,11 @@
+import { isValueEmpty } from '@/utils/form.utils';
+import { reactive, ref } from 'vue';
 import type {
   FieldErrors,
   FieldSchema,
   FormState,
   SectionSchema,
-} from '@/models/questionnaire/QuestionnaireClient';
-import { isValueEmpty } from '@/utils/form.utils';
-import { reactive, ref } from 'vue';
+} from '~/models/questionnaire/QuestionnaireClientModel';
 
 export function useFormValidation() {
   const fieldErrors = reactive<FieldErrors>({});

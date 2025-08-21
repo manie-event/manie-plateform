@@ -3,7 +3,7 @@ import type {
   FormState,
   OptionItem,
   SectionSchema,
-} from '@/models/questionnaire/QuestionnaireClient';
+} from '~/models/questionnaire/QuestionnaireClientModel';
 
 export function useConditionalLogic(formState: FormState) {
   /**

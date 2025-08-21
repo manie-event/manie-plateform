@@ -3,7 +3,7 @@ import { clientProfile, professionalProfile } from '@/_mockApis/headerData';
 import { UserCategory } from '@/models/enums/userCategoryEnums';
 import { Icon } from '@iconify/vue';
 import { CircleXIcon } from 'vue-tabler-icons';
-import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
+import { useProfessionalProfile } from '~/composables/ProfessionalUser/UseProfessionalProfile';
 import { useAuthentification } from '../../../../composables/UseAuthentification';
 
 const userStore = useUserStore();

@@ -94,12 +94,12 @@ import FormField from '@/components/questionnaires/FormField.vue';
 import SectionController from '@/components/questionnaires/SectionController.vue';
 import ValidationErrors from '@/components/questionnaires/ValidationError.vue';
 import { useDynamicFormWithEmits } from '@/composables/QuestionnaireClient/UseDynamicFormWithEmits';
-import { useKeywords } from '@/composables/professional-user/UseKeywords';
+import { useKeywords } from '~/composables/ProfessionalUser/UseKeywords';
 import type {
   EventCreatePayload,
   FieldSchema,
   SectionSchema,
-} from '@/models/questionnaire/QuestionnaireClient';
+} from '~/models/questionnaire/QuestionnaireClientModel';
 
 /***** Props & Emits *****/
 const props = defineProps<{

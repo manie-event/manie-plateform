@@ -1,6 +1,6 @@
 import { chunkArray } from '@/utils/form.utils';
 import { computed, ref } from 'vue';
-import type { PageInfo, SectionSchema } from '~/models/questionnaire/QuestionnaireClient';
+import type { PageInfo, SectionSchema } from '~/models/questionnaire/QuestionnaireClientModel';
 
 export function useFormNavigation(sections: SectionSchema[]) {
   const currentPageIndex = ref(0);

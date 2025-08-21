@@ -17,14 +17,46 @@
 import ClientQuestionnaire from '@/data/questionnaire-client.json';
 import { ref } from 'vue';
 import DynamicFormDialog from '~/components/questionnaires/DynamicFormDialog.vue';
-const openModal = ref(false);
+import { useEventService } from '~/services/UseEventService';
 
-// Source des sections (depuis votre module)
+const eventService = useEventService();
+
+const organisatorUuid = localStorage.getItem('client-uuid');
 const sections = ClientQuestionnaire.sections;
-console.log(sections);
-
+const openModal = ref(false);
 const answers = ref<Record<string, any>>({});
-function onSubmit(payload: Record<string, any>) {}
+const { createEventService } = eventService;
+
+const onSubmit = (payload: Record<string, any>) => {
+  const formatDateRange = (dates: string[] | string): string => {
+    // Si c'est déjà une string (format range), on la retourne
+    if (typeof dates === 'string') {
+      console.log('ici');
+
+      return dates;
+    }
+
+    // Si c'est un tableau de dates
+    if (Array.isArray(dates)) {
+      if (dates.length === 1) {
+        console.log('dates.length === 1');
+
+        // Un seul jour : [2025-08-30,2025-08-30]
+        return `[${dates[0]},${dates[0]}]`;
+      } else if (dates.length >= 2) {
+        console.log('dates.length === 2');
+        // Plusieurs jours : [premiere_date,derniere_date]
+        return `[${dates[0]},${dates[dates.length - 1]}]`;
+      }
+    }
+  };
+
+  const newEvent = {
+    ...payload,
+    organisatorUuid: organisatorUuid,
+  };
+  createEventService(newEvent);
+};
 </script>
 <style lang="scss" scoped>
 .events {

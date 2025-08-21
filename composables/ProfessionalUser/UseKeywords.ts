@@ -1,8 +1,8 @@
+import { keyWordsDtoToKeywords } from '@/mappers/professionalKeywordsMapper';
 import type { Keywords } from '@/models/professionalService/Keywords';
 import type { Sectors } from '@/models/professionalService/Sectors';
 import type { Services } from '@/models/professionalService/Services';
 import type { ProfessionalServiceUuid } from '@/models/professionalService/professionalServiceUuid';
-import { keyWordsDtoToKeywords } from '~/mappers/profesionnalKeywordsMapper';
 import type { KeywordsDto } from '~/models/dto/KeywordsDto';
 
 export const useKeywords = () => {

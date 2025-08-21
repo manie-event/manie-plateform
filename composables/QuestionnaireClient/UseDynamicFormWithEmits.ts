@@ -1,4 +1,7 @@
-import type { EventCreatePayload, SectionSchema } from '@/models/questionnaire/QuestionnaireClient';
+import type {
+  EventCreatePayload,
+  SectionSchema,
+} from '~/models/questionnaire/QuestionnaireClientModel';
 import { useDynamicForm } from './UseDynamicForm';
 
 interface UseDynamicFormWithEmitsProps {
