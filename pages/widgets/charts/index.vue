@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 /*Call Components*/
-import ProfitExpanse from '@/components/dashboards/dashboard2/ProfitExpanse.vue';
+import Customers from '@/components/dashboards/dashboard-client/Customers.vue';
+import Payments from '@/components/dashboards/dashboard-client/Payments.vue';
+import Products from '@/components/dashboards/dashboard-client/ProductsChart.vue';
 import ProductSales from '@/components/dashboards/dashboard2/ProductSales.vue';
+import ProfitExpanse from '@/components/dashboards/dashboard2/ProfitExpanse.vue';
 import NetSells from '@/components/widgets/charts/NetSells.vue';
-import Payments from '@/components/dashboards/dashboard1/Payments.vue';
-import Products from '@/components/dashboards/dashboard1/ProductsChart.vue';
-import TraficDistribution from '@/components/widgets/charts/TraficDistributionChart.vue';
-import Customers from '@/components/dashboards/dashboard1/Customers.vue';
 import Payingchart from '@/components/widgets/charts/PayingChart.vue';
+import TraficDistribution from '@/components/widgets/charts/TraficDistributionChart.vue';
 // common components
 import BaseBreadcrumb from '@/components/shared/BaseBreadcrumb.vue';
 // theme breadcrumb

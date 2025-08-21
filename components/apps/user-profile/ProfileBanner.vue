@@ -1,16 +1,23 @@
 <script setup lang="ts">
+import profileBg from '@/public/images/backgrounds/profilebg.jpg';
 import { ref, shallowRef } from 'vue';
 import { HeartIcon, PhotoIcon, UserCircleIcon, UsersIcon } from 'vue-tabler-icons';
-import profileBg from '/images/backgrounds/profilebg.jpg';
+import EditClientProfil from './EditClientProfil.vue';
 import UserImage from '/images/profile/user6.jpg';
 
 const tab = ref(null);
+const openModal = ref(false);
+
 const items = shallowRef([
   { tab: 'Profile', icon: UserCircleIcon, href: '/apps/userprofile/two' },
   { tab: 'Followers', icon: HeartIcon, href: '/apps/userprofile/two/followers' },
   { tab: 'Friends', icon: UsersIcon, href: '/apps/userprofile/two/friends' },
   { tab: 'Gallery', icon: PhotoIcon, href: '/apps/userprofile/two/gallery' },
 ]);
+
+const openEditProfilModal = () => {
+  openModal.value = !openModal.value;
+};
 </script>
 
 <template>
@@ -72,7 +79,9 @@ const items = shallowRef([
                 ><BrandYoutubeIcon size="16"
               /></v-btn>
             </div>
-            <v-btn color="primary" class="px-6 mt-sm-0 mt-4" size="large">Add to Story</v-btn>
+            <v-btn color="primary" size="large" class="w-100" @click="openEditProfilModal()"
+              >Editez votre profil</v-btn
+            >
           </div>
         </v-col>
         <v-col md="12" class="order-sm-last">
@@ -92,6 +101,9 @@ const items = shallowRef([
       </v-row>
     </div>
   </v-card>
+  <Teleport to="body">
+    <EditClientProfil v-model:openModal="openModal" />
+  </Teleport>
 </template>
 <style lang="scss">
 .avatar-border {

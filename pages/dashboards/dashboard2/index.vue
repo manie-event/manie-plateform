@@ -11,19 +11,20 @@ import UpcommingSchedule from '@/components/dashboards/dashboard2/UpcommingSched
 import WelcomeCard from '@/components/dashboards/dashboard2/WelcomeCard.vue';
 import Footer from '@/components/frontpages/layout/Footer.vue';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
+import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 const userStore = useUserStore();
-const { isProfessionalProfileCreated } = storeToRefs(userStore);
-const { getUserProfileDetails } = useUserProfile();
+const { isProfileCreated } = storeToRefs(userStore);
+const { getProfessionalProfileDetails } = useProfessionalProfile();
 
 onMounted(() => {
-  if (isProfessionalProfileCreated.value) {
-    getUserProfileDetails();
+  if (isProfileCreated.value) {
+    getProfessionalProfileDetails();
   }
 });
 </script>
 
 <template>
-  <v-row v-if="isProfessionalProfileCreated">
+  <v-row v-if="isProfileCreated">
     <!---Welcome cards-->
     <v-col cols="12" sm="12" lg="6">
       <WelcomeCard />

@@ -26,7 +26,7 @@ const horizontalItems: menu[] = [
     children: [
       {
         title: 'Dashboard',
-        to: '/dashboards/dashboard1',
+        to: '/dashboards/dashboard-client',
       },
       {
         title: 'Dashboard 2',
@@ -356,10 +356,10 @@ const horizontalItems: menu[] = [
                 title: 'Side Login',
                 to: '/auth/login',
               },
-              {
-                title: 'Boxed Login',
-                to: '/auth/login',
-              },
+              // {
+              //   title: 'Boxed Login',
+              //   to: '/auth/register',
+              // },
             ],
           },
           {
@@ -371,10 +371,10 @@ const horizontalItems: menu[] = [
                 title: 'Side Register',
                 to: '/auth/register',
               },
-              {
-                title: 'Boxed Register',
-                to: '/auth/register',
-              },
+              // {
+              //   title: 'Boxed Register',
+              //   to: '/auth/register',
+              // },
             ],
           },
           {
@@ -385,10 +385,10 @@ const horizontalItems: menu[] = [
                 title: 'Side Forgot Password',
                 to: '/auth/forgot-password',
               },
-              {
-                title: 'Boxed Forgot Password',
-                to: '/auth/forgot-password',
-              },
+              // {
+              //   title: 'Boxed Forgot Password',
+              //   to: '/auth/forgot-password',
+              // },
             ],
           },
           {
@@ -399,10 +399,10 @@ const horizontalItems: menu[] = [
                 title: 'Side Two Steps',
                 to: '/auth/two-step',
               },
-              {
-                title: 'Boxed Two Steps',
-                to: '/auth/two-step',
-              },
+              // {
+              //   title: 'Boxed Two Steps',
+              //   to: '/auth/two-step',
+              // },
             ],
           },
         ],

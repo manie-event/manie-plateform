@@ -21,7 +21,7 @@ const sidebarItem: menu[] = [
     title: 'Dashboard',
     icon: 'screencast-2-linear',
     BgColor: 'primary',
-    to: '/dashboards/dashboard1',
+    to: '/dashboards/dashboard-client',
   },
   {
     title: 'Dashboard 2',
@@ -571,10 +571,10 @@ const sidebarItem: menu[] = [
         title: 'Side Login',
         to: '/auth/login',
       },
-      {
-        title: 'Boxed Login',
-        to: '/auth/login',
-      },
+      // {
+      //   title: 'Boxed Login',
+      //   to: '/auth/register',
+      // },
     ],
   },
   {
@@ -587,10 +587,10 @@ const sidebarItem: menu[] = [
         title: 'Side Register',
         to: '/auth/register',
       },
-      {
-        title: 'Boxed Register',
-        to: '/auth/register',
-      },
+      // {
+      //   title: 'Boxed Register',
+      //   to: '/auth/register',
+      // },
     ],
   },
   {
@@ -603,10 +603,10 @@ const sidebarItem: menu[] = [
         title: 'Side Forgot Password',
         to: '/auth/forgot-password',
       },
-      {
-        title: 'Boxed Forgot Password',
-        to: '/auth/forgot-password',
-      },
+      // {
+      //   title: 'Boxed Forgot Password',
+      //   to: '/auth/forgot-password',
+      // },
     ],
   },
   {
@@ -619,10 +619,10 @@ const sidebarItem: menu[] = [
         title: 'Side Two Steps',
         to: '/auth/two-step',
       },
-      {
-        title: 'Boxed Two Steps',
-        to: '/auth/two-step',
-      },
+      // {
+      //   title: 'Boxed Two Steps',
+      //   to: '/auth/two-step',
+      // },
     ],
   },
 
@@ -659,26 +659,26 @@ const sidebarItem: menu[] = [
     BgColor: 'secondary',
     to: '#',
     children: [
-      {
-        title: 'Level 1',
-        to: '/auth/404',
-      },
+      // {
+      //   title: 'Level 1',
+      //   to: '/auth/404',
+      // },
       {
         title: 'Level 1',
         to: '/auth/404',
         children: [
-          {
-            title: 'Level 2',
-            to: '/auth/404',
-          },
+          // {
+          //   title: 'Level 2',
+          //   to: '/auth/404',
+          // },
           {
             title: 'Level 2',
             to: '/auth/404',
             children: [
-              {
-                title: 'Level 3',
-                to: '/auth/404',
-              },
+              // {
+              //   title: 'Level 3',
+              //   to: '/auth/404',
+              // },
               {
                 title: 'Level 3',
                 to: '/auth/404',

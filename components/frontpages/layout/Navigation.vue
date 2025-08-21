@@ -23,7 +23,7 @@ const navigation = ref([
   },
   {
     menu: 'Dashboard',
-    href: '/dashboards/dashboard1',
+    href: '/dashboards/dashboard-client',
     badge: false,
   },
   {

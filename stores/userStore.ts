@@ -1,4 +1,4 @@
-import type { ProfessionalProfile, User } from '@/models/user/UserModel';
+import type { ProfessionalProfile, User, clientProfile } from '@/models/user/UserModel';
 import { useLocalStorage } from '@vueuse/core';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
@@ -6,19 +6,35 @@ import type { Keywords } from '~/models/professionalService/Keywords';
 import type { Services } from '~/models/professionalService/Services';
 
 export const useUserStore = defineStore('userStore', () => {
+  // refs
   const user = ref<User>();
 
+  //client Ref
+  const clientProfile = ref<clientProfile>();
+
+  //professional Ref
   const professionalUser = ref<ProfessionalProfile>();
-  const isProfessionalProfileCreated = useLocalStorage('pp-created', false);
-  const isConsumerProfileAccepted = ref(false);
+  const isProfileCreated = useLocalStorage('pp-created', false);
   const isStoringUserAccepeted = ref(false);
   const professionnalServices = ref<Services[]>([]);
   const keywords = ref<Keywords[]>([]);
   const bgPicture = ref('/images/backgrounds/profilebg-2.jpg');
 
+  // getters
+  const isProfessional = computed(() => user.value?.category === 'professional');
+
+  // setters
   const setUser = (userData: User) => {
     user.value = userData;
+    console.log(user.value, 'USERVALUE');
   };
+
+  // client setters
+  const setClientProfile = (newProfile: clientProfile) => {
+    clientProfile.value = newProfile;
+  };
+
+  // professional setters
   const setProfessionalUser = (newProfessionalUser: ProfessionalProfile) => {
     professionalUser.value = {
       ...newProfessionalUser,
@@ -27,7 +43,7 @@ export const useUserStore = defineStore('userStore', () => {
     };
 
     localStorage.setItem('professional-uuid', professionalUser.value.uuid || '');
-    isProfessionalProfileCreated.value = true;
+    isProfileCreated.value = true;
   };
 
   const setUserAccepted = (accepted: boolean) => {
@@ -50,15 +66,16 @@ export const useUserStore = defineStore('userStore', () => {
     user,
     bgPicture,
     professionalUser,
-    isProfessionalProfileCreated,
-    isConsumerProfileAccepted,
+    isProfileCreated,
     isStoringUserAccepeted,
     professionnalServices,
     keywords,
+    isProfessional,
     setUserAccepted,
     setUser,
     setProfessionalUser,
     setProfessionalServices,
+    setClientProfile,
     setKeywords,
     sendNewPhotoOnProfile,
   };

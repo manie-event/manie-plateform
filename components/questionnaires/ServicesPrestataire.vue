@@ -210,7 +210,8 @@
 <script setup lang="ts">
 import questionnairePresta from '@/data/questionnaire-presta.json';
 import { nextTick, onMounted, ref, watch } from 'vue';
-import { useKeywords } from '~/composables/UseKeywords';
+import { useKeywords } from '~/composables/professional-user/UseKeywords';
+import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { Keywords } from '~/models/professionalService/Keywords';
 import type { ProfessionalServiceUuid } from '~/models/professionalService/professionalServiceUuid';
@@ -228,7 +229,7 @@ const userStore = useUserStore();
 const { professionnalServices, keywords, professionalUser } = storeToRefs(userStore);
 const { getSectors, loading, sendProfessionalServices } = useKeywords();
 const { addSuccess, addError } = useToaster();
-const { patchUserProfileDetails } = useUserProfile();
+const { patchProfessionnalProfileDetails } = useProfessionalProfile();
 
 const questionnaires = ref<QuestionnaireItem[]>([]);
 const activityItems = ref(ACTIVITY_ITEMS);
@@ -411,7 +412,7 @@ const submitAllQuestionnaires = async () => {
     );
     await Promise.all(promises);
     if (payloadArray.value.length >= 2) {
-      await patchUserProfileDetails({
+      await patchProfessionnalProfileDetails({
         ...professionalUser.value,
         secondActivity: questionnairePresta[1].sector ?? '',
         thirdActivity: questionnairePresta[2].sector ?? '',

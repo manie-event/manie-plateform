@@ -1,44 +1,41 @@
 <script setup lang="ts">
-import { profileDD } from '@/_mockApis/headerData';
+import { clientProfile, professionalProfile } from '@/_mockApis/headerData';
 import { UserCategory } from '@/models/enums/userCategoryEnums';
 import { Icon } from '@iconify/vue';
 import { CircleXIcon } from 'vue-tabler-icons';
+import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { useAuthentification } from '../../../../composables/UseAuthentification';
 
 const userStore = useUserStore();
-const { user, professionalUser, isProfessionalProfileCreated } = storeToRefs(userStore);
+const { user, professionalUser, isProfileCreated, isProfessional } = storeToRefs(userStore);
 const { sendLogout } = useAuthentification();
 const { userTokenBalance } = storeToRefs(useCartStore());
 
 const getNameDependingOnCategory = computed(() => {
   if (
-    (user.value?.category == 'professional' && !user.value?.username) ||
+    (isProfessional && !user.value?.username) ||
     professionalUser.value?.category == 'professional'
   ) {
     return professionalUser.value?.name;
-  } else if (user.value?.category == 'consumer' && !user.value?.username) {
-    return user.value?.name;
   } else {
     return user.value?.username;
   }
 });
 
 const getCategory = computed(() => {
-  if (
-    user.value?.category == 'professional' ||
-    professionalUser.value?.category == 'professional'
-  ) {
+  if (isProfessional.value || professionalUser.value?.category == 'professional') {
+    console.log(isProfessional.value, 'PROFILEDD');
     return UserCategory.PRESTA;
   } else {
     return UserCategory.CLIENT;
   }
 });
 
-const { getUserProfileDetails } = useUserProfile();
+const { getProfessionalProfileDetails } = useProfessionalProfile();
 
 onMounted(() => {
-  if (isProfessionalProfileCreated.value) {
-    getUserProfileDetails();
+  if (isProfileCreated.value) {
+    getProfessionalProfileDetails();
   }
 });
 </script>
@@ -56,7 +53,7 @@ onMounted(() => {
               src="/images/profile/user6.jpg"
               width="50"
               alt="profile picture"
-              :class="{ 'profile-not-defined': !isProfessionalProfileCreated }"
+              :class="{ 'profile-not-defined': !isProfileCreated }"
             />
           </v-avatar>
           <div class="ml-md-4 d-md-block d-none">
@@ -89,14 +86,45 @@ onMounted(() => {
         <v-divider></v-divider>
       </div>
       <div style="height: 100%; max-height: 240px">
-        <v-list class="py-0 theme-list" lines="two">
+        <v-list class="py-0 theme-list" lines="two" v-if="isProfessional">
           <v-list-item
-            v-for="item in profileDD"
+            v-for="item in professionalProfile"
             :key="item.title"
             class="py-4 px-8 custom-text-primary"
             :to="item.href"
             :class="{
-              'profile-not-defined': !isProfessionalProfileCreated && !item.requiresProfile,
+              'profile-not-defined': !isProfileCreated && !item.requiresProfile,
+            }"
+          >
+            <template v-slot:prepend>
+              <v-avatar size="40" class="rounded-lg" :class="'bg-light' + item.bgcolor">
+                <!-- <component :is="item.avatar" stroke-width="2" size="25" :class="'text-' + item.bgcolor" /> -->
+                <Icon
+                  :icon="'solar:' + item.avatar"
+                  width="25"
+                  height="25"
+                  :class="'text-' + item.bgcolor"
+                />
+              </v-avatar>
+            </template>
+            <div>
+              <h6 class="text-h6 font-weight-medium mb-1 custom-title">
+                {{ item.title }}
+              </h6>
+            </div>
+            <p class="text-subtitle-1 font-weight-regular text-grey100">
+              <b>{{ item.requiresProfile ? userTokenBalance : '' }}</b> {{ item.subtitle }}
+            </p>
+          </v-list-item>
+        </v-list>
+        <v-list class="py-0 theme-list" lines="two" v-else>
+          <v-list-item
+            v-for="item in clientProfile"
+            :key="item.title"
+            class="py-4 px-8 custom-text-primary"
+            :to="item.href"
+            :class="{
+              'profile-not-defined': !isProfileCreated && !item.requiresProfile,
             }"
           >
             <template v-slot:prepend>

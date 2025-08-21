@@ -53,7 +53,7 @@
                   >Editez votre profil</v-btn
                 >
               </div>
-              <div v-if="isProfessionalProfileCreated">
+              <div v-if="isProfileCreated">
                 <v-btn
                   class="profile-banner-redirection-bouton"
                   size="large"
@@ -94,10 +94,11 @@
 </template>
 
 <script setup lang="ts">
-import EditerUserProfile from '@/components/apps/user-profile/EditUserProfil.vue';
 import { ref, shallowRef, Teleport } from 'vue';
 import { IdIcon, Layout2Icon, PlusIcon, UserCircleIcon, UsersIcon } from 'vue-tabler-icons';
-import { useUserProfile } from '../../../composables/UseUserProfile';
+import EditerUserProfile from '~/components/apps/user-profile/EditClientProfil.vue';
+import { useKeywords } from '~/composables/professional-user/UseKeywords';
+import { useProfessionalProfile } from '../../../composables/professional-user/UseProfessionalProfile';
 import UserImage from '/images/profile/user6.jpg';
 
 const { bgPicture } = storeToRefs(useUserStore());
@@ -106,9 +107,9 @@ const tab = ref(null);
 const openModal = ref(false);
 const fileInput = ref(null);
 
-const { user, isProfessionalProfileCreated } = storeToRefs(useUserStore());
+const { user, isProfileCreated } = storeToRefs(useUserStore());
 const { getKeywords } = useKeywords();
-const { changeBannerPicture } = useUserProfile();
+const { changeProfessionalBannerPicture } = useProfessionalProfile();
 
 const triggerClickFileInput = () => fileInput.value?.click();
 const changeBannerPhoto = async (e: Event) => {
@@ -116,7 +117,7 @@ const changeBannerPhoto = async (e: Event) => {
   if (!input.files?.length) return;
 
   const picture = input.files[0];
-  await changeBannerPicture(picture);
+  await changeProfessionalBannerPicture(picture);
 };
 
 const items = shallowRef([

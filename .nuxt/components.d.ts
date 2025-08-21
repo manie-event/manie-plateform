@@ -74,7 +74,8 @@ interface _GlobalComponents {
     'AppsNotesContent': typeof import("../components/apps/notes/NotesContent.vue")['default']
     'AppsNotesListing': typeof import("../components/apps/notes/NotesListing.vue")['default']
     'AppsTicketsTicketList': typeof import("../components/apps/tickets/TicketList.vue")['default']
-    'AppsUserProfileEditUserProfil': typeof import("../components/apps/user-profile/EditUserProfil.vue")['default']
+    'AppsUserProfileEditClientProfil': typeof import("../components/apps/user-profile/EditClientProfil.vue")['default']
+    'AppsUserProfileEditProfessionalProfil': typeof import("../components/apps/user-profile/EditProfessionalProfil.vue")['default']
     'AppsUserProfileIntroCard': typeof import("../components/apps/user-profile/IntroCard.vue")['default']
     'AppsUserProfilePhotosCard': typeof import("../components/apps/user-profile/PhotosCard.vue")['default']
     'AppsUserProfilePostListing': typeof import("../components/apps/user-profile/PostListing.vue")['default']
@@ -91,14 +92,14 @@ interface _GlobalComponents {
     'CommonBaseModal': typeof import("../components/common/BaseModal.vue")['default']
     'CommonErrorToaster': typeof import("../components/common/errorToaster.vue")['default']
     'CommonSuccessToaster': typeof import("../components/common/successToaster.vue")['default']
-    'DashboardsDashboard1CongratulationsCard': typeof import("../components/dashboards/dashboard1/CongratulationsCard.vue")['default']
-    'DashboardsDashboard1Customers': typeof import("../components/dashboards/dashboard1/Customers.vue")['default']
-    'DashboardsDashboard1LatestDeals': typeof import("../components/dashboards/dashboard1/LatestDeals.vue")['default']
-    'DashboardsDashboard1LatestReviews': typeof import("../components/dashboards/dashboard1/LatestReviews.vue")['default']
-    'DashboardsDashboard1Payments': typeof import("../components/dashboards/dashboard1/Payments.vue")['default']
-    'DashboardsDashboard1ProductsChart': typeof import("../components/dashboards/dashboard1/ProductsChart.vue")['default']
-    'DashboardsDashboard1ProductsTable': typeof import("../components/dashboards/dashboard1/ProductsTable.vue")['default']
-    'DashboardsDashboard1VisitFromUsa': typeof import("../components/dashboards/dashboard1/VisitFromUsa.vue")['default']
+    'DashboardsDashboardClientCongratulationsCard': typeof import("../components/dashboards/dashboard-client/CongratulationsCard.vue")['default']
+    'DashboardsDashboardClientCustomers': typeof import("../components/dashboards/dashboard-client/Customers.vue")['default']
+    'DashboardsDashboardClientLatestDeals': typeof import("../components/dashboards/dashboard-client/LatestDeals.vue")['default']
+    'DashboardsDashboardClientLatestReviews': typeof import("../components/dashboards/dashboard-client/LatestReviews.vue")['default']
+    'DashboardsDashboardClientPayments': typeof import("../components/dashboards/dashboard-client/Payments.vue")['default']
+    'DashboardsDashboardClientProductsChart': typeof import("../components/dashboards/dashboard-client/ProductsChart.vue")['default']
+    'DashboardsDashboardClientProductsTable': typeof import("../components/dashboards/dashboard-client/ProductsTable.vue")['default']
+    'DashboardsDashboardClientVisitFromUsa': typeof import("../components/dashboards/dashboard-client/VisitFromUsa.vue")['default']
     'DashboardsDashboard2FigmaCard': typeof import("../components/dashboards/dashboard2/FigmaCard.vue")['default']
     'DashboardsDashboard2PayingTable': typeof import("../components/dashboards/dashboard2/PayingTable.vue")['default']
     'DashboardsDashboard2ProductSales': typeof import("../components/dashboards/dashboard2/ProductSales.vue")['default']
@@ -490,7 +491,8 @@ interface _GlobalComponents {
     'LazyAppsNotesContent': LazyComponent<typeof import("../components/apps/notes/NotesContent.vue")['default']>
     'LazyAppsNotesListing': LazyComponent<typeof import("../components/apps/notes/NotesListing.vue")['default']>
     'LazyAppsTicketsTicketList': LazyComponent<typeof import("../components/apps/tickets/TicketList.vue")['default']>
-    'LazyAppsUserProfileEditUserProfil': LazyComponent<typeof import("../components/apps/user-profile/EditUserProfil.vue")['default']>
+    'LazyAppsUserProfileEditClientProfil': LazyComponent<typeof import("../components/apps/user-profile/EditClientProfil.vue")['default']>
+    'LazyAppsUserProfileEditProfessionalProfil': LazyComponent<typeof import("../components/apps/user-profile/EditProfessionalProfil.vue")['default']>
     'LazyAppsUserProfileIntroCard': LazyComponent<typeof import("../components/apps/user-profile/IntroCard.vue")['default']>
     'LazyAppsUserProfilePhotosCard': LazyComponent<typeof import("../components/apps/user-profile/PhotosCard.vue")['default']>
     'LazyAppsUserProfilePostListing': LazyComponent<typeof import("../components/apps/user-profile/PostListing.vue")['default']>
@@ -507,14 +509,14 @@ interface _GlobalComponents {
     'LazyCommonBaseModal': LazyComponent<typeof import("../components/common/BaseModal.vue")['default']>
     'LazyCommonErrorToaster': LazyComponent<typeof import("../components/common/errorToaster.vue")['default']>
     'LazyCommonSuccessToaster': LazyComponent<typeof import("../components/common/successToaster.vue")['default']>
-    'LazyDashboardsDashboard1CongratulationsCard': LazyComponent<typeof import("../components/dashboards/dashboard1/CongratulationsCard.vue")['default']>
-    'LazyDashboardsDashboard1Customers': LazyComponent<typeof import("../components/dashboards/dashboard1/Customers.vue")['default']>
-    'LazyDashboardsDashboard1LatestDeals': LazyComponent<typeof import("../components/dashboards/dashboard1/LatestDeals.vue")['default']>
-    'LazyDashboardsDashboard1LatestReviews': LazyComponent<typeof import("../components/dashboards/dashboard1/LatestReviews.vue")['default']>
-    'LazyDashboardsDashboard1Payments': LazyComponent<typeof import("../components/dashboards/dashboard1/Payments.vue")['default']>
-    'LazyDashboardsDashboard1ProductsChart': LazyComponent<typeof import("../components/dashboards/dashboard1/ProductsChart.vue")['default']>
-    'LazyDashboardsDashboard1ProductsTable': LazyComponent<typeof import("../components/dashboards/dashboard1/ProductsTable.vue")['default']>
-    'LazyDashboardsDashboard1VisitFromUsa': LazyComponent<typeof import("../components/dashboards/dashboard1/VisitFromUsa.vue")['default']>
+    'LazyDashboardsDashboardClientCongratulationsCard': LazyComponent<typeof import("../components/dashboards/dashboard-client/CongratulationsCard.vue")['default']>
+    'LazyDashboardsDashboardClientCustomers': LazyComponent<typeof import("../components/dashboards/dashboard-client/Customers.vue")['default']>
+    'LazyDashboardsDashboardClientLatestDeals': LazyComponent<typeof import("../components/dashboards/dashboard-client/LatestDeals.vue")['default']>
+    'LazyDashboardsDashboardClientLatestReviews': LazyComponent<typeof import("../components/dashboards/dashboard-client/LatestReviews.vue")['default']>
+    'LazyDashboardsDashboardClientPayments': LazyComponent<typeof import("../components/dashboards/dashboard-client/Payments.vue")['default']>
+    'LazyDashboardsDashboardClientProductsChart': LazyComponent<typeof import("../components/dashboards/dashboard-client/ProductsChart.vue")['default']>
+    'LazyDashboardsDashboardClientProductsTable': LazyComponent<typeof import("../components/dashboards/dashboard-client/ProductsTable.vue")['default']>
+    'LazyDashboardsDashboardClientVisitFromUsa': LazyComponent<typeof import("../components/dashboards/dashboard-client/VisitFromUsa.vue")['default']>
     'LazyDashboardsDashboard2FigmaCard': LazyComponent<typeof import("../components/dashboards/dashboard2/FigmaCard.vue")['default']>
     'LazyDashboardsDashboard2PayingTable': LazyComponent<typeof import("../components/dashboards/dashboard2/PayingTable.vue")['default']>
     'LazyDashboardsDashboard2ProductSales': LazyComponent<typeof import("../components/dashboards/dashboard2/ProductSales.vue")['default']>
@@ -912,7 +914,8 @@ export const AppsNotesAddNote: typeof import("../components/apps/notes/AddNote.v
 export const AppsNotesContent: typeof import("../components/apps/notes/NotesContent.vue")['default']
 export const AppsNotesListing: typeof import("../components/apps/notes/NotesListing.vue")['default']
 export const AppsTicketsTicketList: typeof import("../components/apps/tickets/TicketList.vue")['default']
-export const AppsUserProfileEditUserProfil: typeof import("../components/apps/user-profile/EditUserProfil.vue")['default']
+export const AppsUserProfileEditClientProfil: typeof import("../components/apps/user-profile/EditClientProfil.vue")['default']
+export const AppsUserProfileEditProfessionalProfil: typeof import("../components/apps/user-profile/EditProfessionalProfil.vue")['default']
 export const AppsUserProfileIntroCard: typeof import("../components/apps/user-profile/IntroCard.vue")['default']
 export const AppsUserProfilePhotosCard: typeof import("../components/apps/user-profile/PhotosCard.vue")['default']
 export const AppsUserProfilePostListing: typeof import("../components/apps/user-profile/PostListing.vue")['default']
@@ -929,14 +932,14 @@ export const CommonBaseEmptyState: typeof import("../components/common/BaseEmpty
 export const CommonBaseModal: typeof import("../components/common/BaseModal.vue")['default']
 export const CommonErrorToaster: typeof import("../components/common/errorToaster.vue")['default']
 export const CommonSuccessToaster: typeof import("../components/common/successToaster.vue")['default']
-export const DashboardsDashboard1CongratulationsCard: typeof import("../components/dashboards/dashboard1/CongratulationsCard.vue")['default']
-export const DashboardsDashboard1Customers: typeof import("../components/dashboards/dashboard1/Customers.vue")['default']
-export const DashboardsDashboard1LatestDeals: typeof import("../components/dashboards/dashboard1/LatestDeals.vue")['default']
-export const DashboardsDashboard1LatestReviews: typeof import("../components/dashboards/dashboard1/LatestReviews.vue")['default']
-export const DashboardsDashboard1Payments: typeof import("../components/dashboards/dashboard1/Payments.vue")['default']
-export const DashboardsDashboard1ProductsChart: typeof import("../components/dashboards/dashboard1/ProductsChart.vue")['default']
-export const DashboardsDashboard1ProductsTable: typeof import("../components/dashboards/dashboard1/ProductsTable.vue")['default']
-export const DashboardsDashboard1VisitFromUsa: typeof import("../components/dashboards/dashboard1/VisitFromUsa.vue")['default']
+export const DashboardsDashboardClientCongratulationsCard: typeof import("../components/dashboards/dashboard-client/CongratulationsCard.vue")['default']
+export const DashboardsDashboardClientCustomers: typeof import("../components/dashboards/dashboard-client/Customers.vue")['default']
+export const DashboardsDashboardClientLatestDeals: typeof import("../components/dashboards/dashboard-client/LatestDeals.vue")['default']
+export const DashboardsDashboardClientLatestReviews: typeof import("../components/dashboards/dashboard-client/LatestReviews.vue")['default']
+export const DashboardsDashboardClientPayments: typeof import("../components/dashboards/dashboard-client/Payments.vue")['default']
+export const DashboardsDashboardClientProductsChart: typeof import("../components/dashboards/dashboard-client/ProductsChart.vue")['default']
+export const DashboardsDashboardClientProductsTable: typeof import("../components/dashboards/dashboard-client/ProductsTable.vue")['default']
+export const DashboardsDashboardClientVisitFromUsa: typeof import("../components/dashboards/dashboard-client/VisitFromUsa.vue")['default']
 export const DashboardsDashboard2FigmaCard: typeof import("../components/dashboards/dashboard2/FigmaCard.vue")['default']
 export const DashboardsDashboard2PayingTable: typeof import("../components/dashboards/dashboard2/PayingTable.vue")['default']
 export const DashboardsDashboard2ProductSales: typeof import("../components/dashboards/dashboard2/ProductSales.vue")['default']
@@ -1328,7 +1331,8 @@ export const LazyAppsNotesAddNote: LazyComponent<typeof import("../components/ap
 export const LazyAppsNotesContent: LazyComponent<typeof import("../components/apps/notes/NotesContent.vue")['default']>
 export const LazyAppsNotesListing: LazyComponent<typeof import("../components/apps/notes/NotesListing.vue")['default']>
 export const LazyAppsTicketsTicketList: LazyComponent<typeof import("../components/apps/tickets/TicketList.vue")['default']>
-export const LazyAppsUserProfileEditUserProfil: LazyComponent<typeof import("../components/apps/user-profile/EditUserProfil.vue")['default']>
+export const LazyAppsUserProfileEditClientProfil: LazyComponent<typeof import("../components/apps/user-profile/EditClientProfil.vue")['default']>
+export const LazyAppsUserProfileEditProfessionalProfil: LazyComponent<typeof import("../components/apps/user-profile/EditProfessionalProfil.vue")['default']>
 export const LazyAppsUserProfileIntroCard: LazyComponent<typeof import("../components/apps/user-profile/IntroCard.vue")['default']>
 export const LazyAppsUserProfilePhotosCard: LazyComponent<typeof import("../components/apps/user-profile/PhotosCard.vue")['default']>
 export const LazyAppsUserProfilePostListing: LazyComponent<typeof import("../components/apps/user-profile/PostListing.vue")['default']>
@@ -1345,14 +1349,14 @@ export const LazyCommonBaseEmptyState: LazyComponent<typeof import("../component
 export const LazyCommonBaseModal: LazyComponent<typeof import("../components/common/BaseModal.vue")['default']>
 export const LazyCommonErrorToaster: LazyComponent<typeof import("../components/common/errorToaster.vue")['default']>
 export const LazyCommonSuccessToaster: LazyComponent<typeof import("../components/common/successToaster.vue")['default']>
-export const LazyDashboardsDashboard1CongratulationsCard: LazyComponent<typeof import("../components/dashboards/dashboard1/CongratulationsCard.vue")['default']>
-export const LazyDashboardsDashboard1Customers: LazyComponent<typeof import("../components/dashboards/dashboard1/Customers.vue")['default']>
-export const LazyDashboardsDashboard1LatestDeals: LazyComponent<typeof import("../components/dashboards/dashboard1/LatestDeals.vue")['default']>
-export const LazyDashboardsDashboard1LatestReviews: LazyComponent<typeof import("../components/dashboards/dashboard1/LatestReviews.vue")['default']>
-export const LazyDashboardsDashboard1Payments: LazyComponent<typeof import("../components/dashboards/dashboard1/Payments.vue")['default']>
-export const LazyDashboardsDashboard1ProductsChart: LazyComponent<typeof import("../components/dashboards/dashboard1/ProductsChart.vue")['default']>
-export const LazyDashboardsDashboard1ProductsTable: LazyComponent<typeof import("../components/dashboards/dashboard1/ProductsTable.vue")['default']>
-export const LazyDashboardsDashboard1VisitFromUsa: LazyComponent<typeof import("../components/dashboards/dashboard1/VisitFromUsa.vue")['default']>
+export const LazyDashboardsDashboardClientCongratulationsCard: LazyComponent<typeof import("../components/dashboards/dashboard-client/CongratulationsCard.vue")['default']>
+export const LazyDashboardsDashboardClientCustomers: LazyComponent<typeof import("../components/dashboards/dashboard-client/Customers.vue")['default']>
+export const LazyDashboardsDashboardClientLatestDeals: LazyComponent<typeof import("../components/dashboards/dashboard-client/LatestDeals.vue")['default']>
+export const LazyDashboardsDashboardClientLatestReviews: LazyComponent<typeof import("../components/dashboards/dashboard-client/LatestReviews.vue")['default']>
+export const LazyDashboardsDashboardClientPayments: LazyComponent<typeof import("../components/dashboards/dashboard-client/Payments.vue")['default']>
+export const LazyDashboardsDashboardClientProductsChart: LazyComponent<typeof import("../components/dashboards/dashboard-client/ProductsChart.vue")['default']>
+export const LazyDashboardsDashboardClientProductsTable: LazyComponent<typeof import("../components/dashboards/dashboard-client/ProductsTable.vue")['default']>
+export const LazyDashboardsDashboardClientVisitFromUsa: LazyComponent<typeof import("../components/dashboards/dashboard-client/VisitFromUsa.vue")['default']>
 export const LazyDashboardsDashboard2FigmaCard: LazyComponent<typeof import("../components/dashboards/dashboard2/FigmaCard.vue")['default']>
 export const LazyDashboardsDashboard2PayingTable: LazyComponent<typeof import("../components/dashboards/dashboard2/PayingTable.vue")['default']>
 export const LazyDashboardsDashboard2ProductSales: LazyComponent<typeof import("../components/dashboards/dashboard2/ProductSales.vue")['default']>

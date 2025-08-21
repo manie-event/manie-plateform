@@ -1,17 +1,15 @@
 <script setup lang="ts">
 import JetonImg from '@/public/images/panier/jeton.png';
 import { Icon } from '@iconify/vue';
+import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 
 const { createTokenSession } = usePaiementJeton();
+const { isProfessional } = storeToRefs(useUserStore());
 const jetonAmount = ref(0);
 const stickyHeader = ref(false);
 
 const totalPriceJeton = computed(() => {
   return `${jetonAmount.value * 9} €`;
-});
-
-onBeforeMount(() => {
-  window.addEventListener('scroll', handleScroll);
 });
 
 const handleScroll = () => {
@@ -22,6 +20,9 @@ const handleScroll = () => {
   }
 };
 
+onBeforeMount(() => {
+  window.addEventListener('scroll', handleScroll);
+});
 // watch(jetonAmount, (newJetonAmount) => {
 //   setJetonAmount(newJetonAmount);
 // });
@@ -39,9 +40,9 @@ const handleScroll = () => {
     <!-- ---------------------------------------------- -->
     <!-- Search part -->
     <!-- ---------------------------------------------- -->
-    <div class="hidden-md-and-up me-md-4 me-0">
+    <!-- <div class="hidden-md-and-up me-md-4 me-0">
       <LcFullVerticalHeaderSearchbar />
-    </div>
+    </div> -->
 
     <!---/Search part -->
     <v-spacer class="hidden-sm-and-down" />
@@ -66,7 +67,7 @@ const handleScroll = () => {
     <!-- ---------------------------------------------- -->
     <!-- ShoppingCart -->
     <!-- ---------------------------------------------- -->
-    <v-menu :close-on-content-click="false" class="notification_popup">
+    <v-menu :close-on-content-click="false" class="notification_popup" v-if="isProfessional">
       <template v-slot:activator="{ props }">
         <v-btn icon flat v-bind="props" size="small" class="custom-hover-primary">
           <div class="position-realtive">

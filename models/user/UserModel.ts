@@ -1,14 +1,54 @@
 export interface User {
   username: string;
   email: string;
-  name?: string;
-  phraseInspirante?: string;
-  phraseDePresentation?: string;
   category: string;
-  phone?: string;
-  adresse?: string;
-  diplome?: string;
-  langues?: string;
+  uuid: string;
+  isVerified: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface clientProfile {
+  address: string;
+  birthDate: string;
+  businessLeader?: string;
+  businessName?: string;
+  businessSiret?: string;
+  city: string;
+  country: string;
+  createdAt: string;
+  email: string;
+  id: number;
+  isBusiness: boolean;
+  phoneNumber: string;
+  updatedAt: string;
+  userUuid: string;
+  username: string;
+  uuid: string;
+  zipCode: string;
+}
+
+export interface ProfessionalProfile {
+  name: string;
+  uuid?: string;
+  userUuid?: string;
+  siret: string;
+  address: string;
+  bio: string;
+  mainActivity: string;
+  secondActivity?: string;
+  thirdActivity?: string;
+  mainInterlocutor: string;
+  experience: number;
+  category?: string;
+  geographicArea: string;
+  faq: Faq;
+  minimumBenefit: number;
+  minimumReservationPeriod: number;
+  deposit: boolean;
+  depositAmount?: number;
+  billingPeriod: string;
+  links?: Link[];
 }
 
 export interface ProfessionalProfile {

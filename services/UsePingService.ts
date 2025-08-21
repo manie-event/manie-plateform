@@ -4,6 +4,7 @@ export const usePingService = () => {
   const ping = async () => {
     try {
       const { data } = await axios.get(`${config.public.apiUrl}/ping`);
+      console.log(data, 'data ping');
 
       if (!data || data.status !== 200) {
         throw new Error('Ping failed');
