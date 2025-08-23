@@ -89,14 +89,14 @@
     </v-card>
   </div>
   <Teleport to="body">
-    <EditerUserProfile v-model:openModal="openModal" />
+    <EditerProfessionalProfile v-model:openModal="openModal" />
   </Teleport>
 </template>
 
 <script setup lang="ts">
+import EditerProfessionalProfile from '@/components/apps/user-profile/EditProfessionalProfil.vue';
 import { ref, shallowRef, Teleport } from 'vue';
 import { IdIcon, Layout2Icon, PlusIcon, UserCircleIcon, UsersIcon } from 'vue-tabler-icons';
-import EditerUserProfile from '~/components/apps/user-profile/EditClientProfil.vue';
 import { useKeywords } from '~/composables/professional-user/UseKeywords';
 import { useProfessionalProfile } from '../../../composables/professional-user/UseProfessionalProfile';
 import UserImage from '/images/profile/user6.jpg';
