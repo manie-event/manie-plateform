@@ -8,7 +8,6 @@ const select = ref();
 const items = ref(['Question générale', 'Demande de rendez-vous', 'option 3', 'option 4']);
 
 const { sendContactForm } = useContactService();
-
 const message = ref<ContactMessage>({
   firstName: '',
   lastName: '',
