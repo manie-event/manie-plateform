@@ -1,4 +1,3 @@
-import type { AxiosError } from 'axios';
 import type { EventCreatePayload } from '~/models/questionnaire/QuestionnaireClientModel';
 
 export const useEventService = () => {
@@ -25,11 +24,7 @@ export const useEventService = () => {
         );
         return data;
       }
-    } catch (error: AxiosError) {
-      console.error('Erreur complète:', error);
-      console.error('Response data:', error.response?.data);
-      console.error('Status:', error.response?.status);
-      console.error('Headers:', error.response?.headers);
+    } catch (error: unknown) {
       addError({ message: "Une erreur est survenue lors de l'envoi du message." });
     }
   };

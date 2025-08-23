@@ -1,1 +1,0 @@
-import{N as o,d as e,c as s,b as t,f as n,m as a,y as c}from"./BGVbXBYx.js";const _=o("/images/logos/logo-manie-footer.png"),r={class:"logo"},m=["src"],i=e({__name:"LogoLight",setup(p){return(l,d)=>(t(),s("div",r,[n("img",{src:a(_),alt:"home"},null,8,m)]))}}),f=c(i,[["__scopeId","data-v-55088076"]]);export{f as _};

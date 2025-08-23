@@ -15,12 +15,12 @@ import { useFormValidation } from './UserFormValidation';
 interface UseDynamicFormProps {
   sections: SectionSchema[];
   modelValue?: Record<string, any>;
-  organisatorUuid: string;
 }
 
 export function useDynamicForm(props: UseDynamicFormProps) {
   // État réactif du formulaire
   const formState = reactive<FormState>({ ...(props.modelValue || {}) });
+  const organisatorUuid = localStorage.getItem('client-uuid')!;
 
   // Composables spécialisés
   const { loadSectorData, buildServiceSelections } = useServiceMapping();
@@ -161,7 +161,7 @@ export function useDynamicForm(props: UseDynamicFormProps) {
         : Number(formState.budget || 0);
 
     const payload: EventCreatePayload = {
-      organisatorUuid: props.organisatorUuid,
+      organisatorUuid: organisatorUuid,
       date: computeDateRange(formState),
       budget,
       location: String(formState.localisation || ''),

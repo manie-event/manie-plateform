@@ -105,7 +105,6 @@ import type {
 const props = defineProps<{
   sections: SectionSchema[];
   modelValue?: Record<string, any>;
-  organisatorUuid: string;
 }>();
 
 const emit = defineEmits<{

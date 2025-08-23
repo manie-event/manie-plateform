@@ -7,7 +7,6 @@ import { useDynamicForm } from './UseDynamicForm';
 interface UseDynamicFormWithEmitsProps {
   sections: SectionSchema[];
   modelValue?: Record<string, any>;
-  organisatorUuid: string;
 }
 
 interface FormEmits {

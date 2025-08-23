@@ -43,7 +43,6 @@ export interface ProfessionalProfile {
   category?: string;
   geographicArea: string;
   faq: Faq;
-  minimumBenefit: number;
   minimumReservationPeriod: number;
   deposit: boolean;
   depositAmount?: number;
@@ -66,7 +65,6 @@ export interface ProfessionalProfile {
   category?: string;
   geographicArea: string;
   faq: Faq;
-  minimumBenefit: number;
   minimumReservationPeriod: number;
   deposit: boolean;
   depositAmount?: number;
