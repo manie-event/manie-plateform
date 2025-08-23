@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import errorToaster from '@/components/common/errorToaster.vue';
 import type { ContactMessage } from '@/models/contact/contactMessage';
-import { useContactService } from '@/services/UseContactService.ts';
 import { ref } from 'vue';
+import { useContactService } from '~/services/UseContactService';
 
 const select = ref();
 const items = ref(['Question générale', 'Demande de rendez-vous', 'option 3', 'option 4']);
