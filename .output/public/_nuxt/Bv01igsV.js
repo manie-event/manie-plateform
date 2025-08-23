@@ -1,1 +1,0 @@
-import{x as e,c,a as n}from"./RV8HHTPq.js";const r={};function a(t,o){return n(),c("h2",null,"Une erreur s'est produite ou vous avez fait le choix d'annuler la transaction")}const l=e(r,[["render",a]]);export{l as default};

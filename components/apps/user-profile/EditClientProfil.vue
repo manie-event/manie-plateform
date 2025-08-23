@@ -101,7 +101,7 @@ import { useForm } from 'vee-validate';
 import { ref, Teleport } from 'vue';
 import * as yup from 'yup';
 import errorToaster from '~/components/common/errorToaster.vue';
-import { useClientProfil } from '~/composables/client-user/UseClientProfil';
+import { useClientProfil } from '~/composables/ClientUser/UseClientProfil';
 import type { ClientModel } from '~/models/user/ClientModel';
 
 const userStore = useUserStore();

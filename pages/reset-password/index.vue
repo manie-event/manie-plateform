@@ -81,7 +81,6 @@ const {
 
 // Soumission simplifiée
 const onSubmit = handleSubmit(async (values) => {
-  console.log('✅ Formulaire valide:', values);
   await registerNewPassword(values);
   // Appel API
 });
