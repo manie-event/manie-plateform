@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import errorToaster from '@/components/common/errorToaster.vue';
 import type { ContactMessage } from '@/models/contact/contactMessage';
-import { useContactService } from '@/services/UseContactService';
+import { useContactService } from '@/services/UseContactService.ts';
 import { ref } from 'vue';
 
 const select = ref();
