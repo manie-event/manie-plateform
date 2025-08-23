@@ -832,7 +832,7 @@
           "visibleSection": false
         },
         {
-          "id": "presta_boisson",
+          "id": "type_boisson",
           "label": "Quel type de prestation ?",
           "type": "checkbox",
           "multiple": false,
@@ -847,10 +847,6 @@
             {
               "value": "vigneron",
               "label": "Vigneron"
-            },
-            {
-              "value": "serveur / limonadier / maître d’hôtel",
-              "label": "Serveur / Limonadier / Maître d’hôtel"
             }
           ]
         },
@@ -953,10 +949,33 @@
       "title": "MUSIQUE - Et pour l'ambiance ?",
       "fields": [
         {
-          "id": "musique_deja_trouve",
+          "id": "musique_pas_trouve",
           "label": "J'ai déjà trouvé ma solution pour le repas",
           "type": "checkbox",
           "visibleSection": false
+        },
+        {
+          "id": "type_musique",
+          "label": "Quel type de prestation ?",
+          "type": "checkbox",
+          "multiple": false,
+          "category": "MUSIQUE_TYPE",
+          "conditional": {
+            "showIf": ["musique_pas_trouve"]
+          },
+          "options": [
+            { "value": "dj", "label": "Dj" },
+            { "value": "chanteur", "label": "Chanteur" },
+            { "value": "musicien", "label": "Musicien" },
+            {
+              "value": "duo",
+              "label": "Duo"
+            },
+            {
+              "value": "groupe",
+              "label": "Groupe"
+            }
+          ]
         },
         {
           "id": "but_musique",
@@ -1110,10 +1129,29 @@
       "title": "ANIMATION - Comment on anime tout ce petit monde ?",
       "fields": [
         {
-          "id": "animation_deja_trouve",
+          "id": "animation_pas_trouve",
           "label": "J'ai déjà trouvé ma solution pour le repas",
           "type": "checkbox",
           "visibleSection": false
+        },
+        {
+          "id": "type_animation",
+          "label": "Quel type de prestation ?",
+          "type": "checkbox",
+          "multiple": false,
+          "category": "ANIMATION_TYPE",
+          "conditional": {
+            "showIf": ["animation_pas_trouve"]
+          },
+          "options": [
+            { "value": "jeux", "label": "Jeux" },
+            { "value": "art visuel", "label": "Art visuel" },
+            { "value": "bien-être", "label": "Bien-être" },
+            {
+              "value": "performer",
+              "label": "Performer"
+            }
+          ]
         },
         {
           "id": "jeux",
@@ -1122,7 +1160,7 @@
           "multiple": true,
           "category": "JEUX",
           "conditional": {
-            "showIf": ["animation_deja_trouve"]
+            "showIf": ["animation_pas_trouve"]
           },
           "options": [
             { "value": "jeu_bois", "label": "Jeu en bois" },
@@ -1152,7 +1190,7 @@
           "multiple": true,
           "category": "ART VISUEL",
           "conditional": {
-            "showIf": ["animation_deja_trouve"]
+            "showIf": ["animation_pas_trouve"]
           },
           "options": [
             { "value": "croquis", "label": "Croquis" },
@@ -1183,7 +1221,7 @@
           "multiple": true,
           "category": "PERFORMERS",
           "conditional": {
-            "showIf": ["animation_deja_trouve"]
+            "showIf": ["animation_pas_trouve"]
           },
           "options": [
             { "value": "feu_artifice", "label": "Feu d'artifice" },
@@ -1207,7 +1245,7 @@
           "multiple": true,
           "category": "BIEN-ÊTRE",
           "conditional": {
-            "showIf": ["animation_deja_trouve"]
+            "showIf": ["animation_pas_trouve"]
           },
           "options": [
             { "value": "sport", "label": "Sport" },
@@ -1229,10 +1267,25 @@
       "title": "AUDIOVISUEL - Est-ce qu'on immortalise cet événement ?",
       "fields": [
         {
-          "id": "audiovisuel_deja_trouve",
+          "id": "audiovisuel_pas_trouve",
           "label": "J'ai déjà trouvé ma solution pour le repas",
           "type": "checkbox",
           "visibleSection": false
+        },
+        {
+          "id": "type_audiovisuel",
+          "label": "Quel type de prestation ?",
+          "type": "checkbox",
+          "multiple": false,
+          "category": "AUDIOVISUEL_TYPE",
+          "conditional": {
+            "showIf": ["audiovisuel_pas_trouve"]
+          },
+          "options": [
+            { "value": "photographe", "label": "Photographe" },
+            { "value": "vidéaste", "label": "Vidéaste" },
+            { "value": "duo", "label": "Duo" }
+          ]
         },
         {
           "id": "shoot",
@@ -1241,7 +1294,7 @@
           "multiple": true,
           "category": "SHOOT",
           "conditional": {
-            "showIf": ["audiovisuel_deja_trouve"]
+            "showIf": ["audiovisuel_pas_trouve"]
           },
           "options": [
             { "value": "shooting_studio", "label": "Shooting studio" },
@@ -1270,7 +1323,7 @@
           "multiple": true,
           "category": "CADRE",
           "conditional": {
-            "showIf": ["audiovisuel_deja_trouve"]
+            "showIf": ["audiovisuel_pas_trouve"]
           },
           "options": [
             { "value": "foret", "label": "Forêt" },
@@ -1292,7 +1345,7 @@
           "multiple": true,
           "category": "TECHNOLOGIE",
           "conditional": {
-            "showIf": ["audiovisuel_deja_trouve"]
+            "showIf": ["audiovisuel_pas_trouve"]
           },
           "options": [
             { "value": "argentique", "label": "Argentique" },
@@ -1307,7 +1360,7 @@
           "multiple": true,
           "category": "GENRE",
           "conditional": {
-            "showIf": ["audiovisuel_deja_trouve"]
+            "showIf": ["audiovisuel_pas_trouve"]
           },
           "options": [
             { "value": "authentique", "label": "Authentique" },
@@ -1325,7 +1378,7 @@
           "multiple": true,
           "category": "ANIMATION AUDIOVISUEL",
           "conditional": {
-            "showIf": ["audiovisuel_deja_trouve"]
+            "showIf": ["audiovisuel_pas_trouve"]
           },
           "options": [
             { "value": "photo_booth", "label": "Photo booth" },
@@ -1341,10 +1394,27 @@
       "title": "DÉCORATION - Quelle ambiance visuelle ?",
       "fields": [
         {
-          "id": "decoration_deja_trouve",
+          "id": "decoration_pas_trouve",
           "label": "J'ai déjà trouvé ma solution pour le repas",
           "type": "checkbox",
           "visibleSection": false
+        },
+        {
+          "id": "type_decoration",
+          "label": "Quel type de prestation ?",
+          "type": "checkbox",
+          "multiple": false,
+          "category": "AUDIOVISUEL_TYPE",
+          "conditional": {
+            "showIf": ["decoration_pas_trouve"]
+          },
+          "options": [
+            { "value": "graphiste", "label": "Graphiste" },
+            { "value": "décorateur", "label": "Décorateur" },
+            { "value": "fleuriste", "label": "Fleuriste" },
+            { "value": "paysagiste", "label": "Paysagiste" },
+            { "value": "cadeau invité", "label": "Cadeau invité" }
+          ]
         },
         {
           "id": "ambiance_deco",
@@ -1353,7 +1423,7 @@
           "multiple": true,
           "category": "AMBIANCE",
           "conditional": {
-            "showIf": ["decoration_deja_trouve"]
+            "showIf": ["decoration_pas_trouve"]
           },
           "options": [
             { "value": "classique", "label": "Classique" },
@@ -1375,7 +1445,7 @@
           "multiple": true,
           "category": "BESOINS",
           "conditional": {
-            "showIf": ["decoration_deja_trouve"]
+            "showIf": ["decoration_pas_trouve"]
           },
           "options": [
             { "value": "identite_visuelle", "label": "Identité visuelle" },
@@ -1394,7 +1464,7 @@
           "multiple": true,
           "category": "PROCÉDÉS",
           "conditional": {
-            "showIf": ["decoration_deja_trouve"]
+            "showIf": ["decoration_pas_trouve"]
           },
           "options": [
             { "value": "gravure", "label": "Gravure" },
@@ -1411,7 +1481,7 @@
           "multiple": true,
           "category": "VÉGÉTAUX",
           "conditional": {
-            "showIf": ["decoration_deja_trouve"]
+            "showIf": ["decoration_pas_trouve"]
           },
           "options": [
             { "value": "design_floral", "label": "Design floral" },
@@ -1438,7 +1508,7 @@
           "multiple": true,
           "category": "MATÉRIEL DÉCORATIF",
           "conditional": {
-            "showIf": ["decoration_deja_trouve"]
+            "showIf": ["decoration_pas_trouve"]
           },
           "options": [
             { "value": "objets_deco", "label": "Objets déco" },
@@ -1479,7 +1549,7 @@
           "multiple": true,
           "category": "CADEAU",
           "conditional": {
-            "showIf": ["decoration_deja_trouve"]
+            "showIf": ["decoration_pas_trouve"]
           },
           "options": [
             { "value": "drage", "label": "Dragé" },
@@ -1518,7 +1588,7 @@
           "label": "Vous souhaitez",
           "type": "radio",
           "conditional": {
-            "showIf": ["decoration_deja_trouve"]
+            "showIf": ["decoration_pas_trouve"]
           },
           "options": [
             {
@@ -1538,7 +1608,7 @@
           "multiple": true,
           "category": "OPTIONS",
           "conditional": {
-            "showIf": ["type_decorateur", "decoration_deja_trouve"],
+            "showIf": ["type_decorateur", "decoration_pas_trouve"],
             "values": ["faire_appel"]
           },
           "options": [
@@ -1556,10 +1626,27 @@
       "title": "TRANSPORT - Comment se rendre à votre événement ?",
       "fields": [
         {
-          "id": "transport_deja_trouve",
+          "id": "transport_pas_trouve",
           "label": "J'ai déjà trouvé ma solution pour le repas",
           "type": "checkbox",
           "visibleSection": false
+        },
+        {
+          "id": "type_transport",
+          "label": "Quel type de prestation ?",
+          "type": "checkbox",
+          "multiple": false,
+          "category": "TRANSPORT_TYPE",
+          "conditional": {
+            "showIf": ["transport_pas_trouve"]
+          },
+          "options": [
+            { "value": "véhicule", "label": "Véhicule" },
+            { "value": "chauffeur", "label": "Chauffeur" },
+            { "value": "taxi", "label": "Taxi" },
+            { "value": "chevaux", "label": "Chevaux" },
+            { "value": "cadeau invité", "label": "Cadeau invité" }
+          ]
         },
         {
           "id": "moyens_transport",
@@ -1569,7 +1656,7 @@
           "category": "TRANSPORT",
 
           "conditional": {
-            "showIf": ["transport_deja_trouve"]
+            "showIf": ["transport_pas_trouve"]
           },
           "options": [
             { "value": "voiture", "label": "Voiture" },
@@ -1603,7 +1690,7 @@
           "multiple": true,
           "category": "LEXIQUE",
           "conditional": {
-            "showIf": ["transport_deja_trouve"]
+            "showIf": ["transport_pas_trouve"]
           },
           "options": [
             { "value": "monture", "label": "Monture" },
@@ -1633,7 +1720,7 @@
           "multiple": true,
           "category": "COULEUR",
           "conditional": {
-            "showIf": ["transport_deja_trouve"]
+            "showIf": ["transport_pas_trouve"]
           },
           "options": [
             { "value": "blanc", "label": "Blanc" },
@@ -1656,7 +1743,7 @@
           "type": "radio",
           "category": "TRAJET",
           "conditional": {
-            "showIf": ["transport_deja_trouve"]
+            "showIf": ["transport_pas_trouve"]
           },
           "options": [
             {
@@ -1683,7 +1770,7 @@
           "type": "radio",
           "category": "CHAUFFEUR",
           "conditional": {
-            "showIf": ["transport_deja_trouve"]
+            "showIf": ["transport_pas_trouve"]
           },
           "options": [
             {
@@ -1704,10 +1791,21 @@
       "title": "HUMAIN - Qui gère votre événement le jour J ?",
       "fields": [
         {
-          "id": "humain_deja_trouve",
+          "id": "humain_pas_trouve",
           "label": "J'ai déjà trouvé ma solution pour le repas",
           "type": "checkbox",
           "visibleSection": false
+        },
+        {
+          "id": "type_humain",
+          "label": "Quel type de prestation ?",
+          "type": "checkbox",
+          "multiple": false,
+          "category": "HUMAIN_TYPE",
+          "conditional": {
+            "showIf": ["humain_pas_trouve"]
+          },
+          "options": [{ "value": "coordination / officiant", "label": "Coordination / officiant" }]
         },
         {
           "id": "gestion_evenement",
@@ -1819,10 +1917,25 @@
       "title": "LOGISTIQUE - Et pour la logistique ?",
       "fields": [
         {
-          "id": "logistique_deja_trouve",
+          "id": "logistique_pas_trouve",
           "label": "J'ai déjà trouvé ma solution pour le repas",
           "type": "checkbox",
           "visibleSection": false
+        },
+        {
+          "id": "type_logistique",
+          "label": "Quel type de prestation ?",
+          "type": "checkbox",
+          "multiple": false,
+          "category": "LOGISTIQUE_TYPE",
+          "conditional": {
+            "showIf": ["logistique_pas_trouve"]
+          },
+          "options": [
+            { "value": "livreur ", "label": "Livreur" },
+            { "value": "agent de sécurité ", "label": "Agent de sécurité" },
+            { "value": "nettoyage ", "label": "Nettoyage" }
+          ]
         },
         {
           "id": "materiel_logistique",
@@ -1831,7 +1944,7 @@
           "multiple": true,
           "category": "MATERIEL",
           "conditional": {
-            "showIf": ["logistique_deja_trouve"]
+            "showIf": ["logistique_pas_trouve"]
           },
           "options": [
             { "value": "utilitaire", "label": "Utilitaire" },
@@ -1865,7 +1978,7 @@
           "multiple": true,
           "category": "SERVICE",
           "conditional": {
-            "showIf": ["logistique_deja_trouve"]
+            "showIf": ["logistique_pas_trouve"]
           },
           "options": [
             { "value": "transport", "label": "Transport" },
@@ -1882,10 +1995,24 @@
       "title": "LOOK - Avez-vous déjà trouvé votre tenue ?",
       "fields": [
         {
-          "id": "look_deja_trouve",
+          "id": "look_pas_trouve",
           "label": "J'ai déjà trouvé ma solution pour le repas",
           "type": "checkbox",
           "visibleSection": false
+        },
+        {
+          "id": "type_look",
+          "label": "Quel type de prestation ?",
+          "type": "checkbox",
+          "multiple": false,
+          "category": "LOOK_TYPE",
+          "conditional": {
+            "showIf": ["look_pas_trouve"]
+          },
+          "options": [
+            { "value": "magasin tenue ", "label": "Magasin tenue" },
+            { "value": "loueur tenue ", "label": "Loueur tenue" }
+          ]
         },
         {
           "id": "besoins_tenue",
@@ -1894,7 +2021,7 @@
           "multiple": true,
           "category": "BESOINS",
           "conditional": {
-            "showIf": ["look_deja_trouve"]
+            "showIf": ["look_pas_trouve"]
           },
           "options": [
             { "value": "robe_mariee", "label": "Robe de mariée" },
@@ -1931,7 +2058,7 @@
           "type": "radio",
           "category": "CONSO",
           "conditional": {
-            "showIf": ["look_deja_trouve"]
+            "showIf": ["look_pas_trouve"]
           },
           "options": [
             { "value": "acheter", "label": "Acheter votre tenue (achat)" },
@@ -1945,7 +2072,7 @@
       "title": "BEAUTÉ - Avez-vous besoin de soins beauté ?",
       "fields": [
         {
-          "id": "beaute_deja_trouve",
+          "id": "beaute_pas_trouve",
           "label": "J'ai déjà trouvé ma solution pour le repas",
           "type": "checkbox",
           "visibleSection": false
@@ -1956,7 +2083,7 @@
           "type": "checkbox",
           "multiple": true,
           "conditional": {
-            "showIf": ["beaute_deja_trouve"]
+            "showIf": ["beaute_pas_trouve"]
           },
           "options": [
             { "value": "coiffure", "label": "Coiffure" },
@@ -1969,7 +2096,7 @@
           "type": "radio",
           "category": "INVITÉ",
           "conditional": {
-            "showIf": ["services_beaute", "beaute_deja_trouve"],
+            "showIf": ["services_beaute", "beaute_pas_trouve"],
             "values": ["coiffure", "maquillage"]
           },
           "options": [
@@ -1984,7 +2111,7 @@
           "multiple": true,
           "category": "COIFFURE",
           "conditional": {
-            "showIf": ["services_beaute", "beaute_deja_trouve"],
+            "showIf": ["services_beaute", "beaute_pas_trouve"],
             "values": ["coiffure"]
           },
           "options": [
@@ -2002,7 +2129,7 @@
           "multiple": true,
           "category": "PRESTATION",
           "conditional": {
-            "showIf": ["services_beaute", "beaute_deja_trouve"],
+            "showIf": ["services_beaute", "beaute_pas_trouve"],
             "values": ["coiffure"]
           },
           "options": [
@@ -2023,7 +2150,7 @@
           "multiple": true,
           "category": "MAQUILLAGE",
           "conditional": {
-            "showIf": ["services_beaute", "beaute_deja_trouve"],
+            "showIf": ["services_beaute", "beaute_pas_trouve"],
             "values": ["maquillage"]
           },
           "options": [
@@ -2041,7 +2168,7 @@
           "multiple": true,
           "category": "OPTIONS",
           "conditional": {
-            "showIf": ["services_beaute", "beaute_deja_trouve"],
+            "showIf": ["services_beaute", "beaute_pas_trouve"],
             "values": ["coiffure", "maquillage"]
           },
           "options": [
@@ -2067,6 +2194,22 @@
           "label": "J'ai déjà trouvé ma solution pour le repas",
           "type": "checkbox",
           "visibleSection": false
+        },
+        {
+          "id": "type_esthetique",
+          "label": "Quel type de prestation ?",
+          "type": "checkbox",
+          "multiple": false,
+          "category": "ESTHETIQUE_TYPE",
+          "conditional": {
+            "showIf": ["esthetique_pas_trouve"]
+          },
+          "options": [
+            { "value": "soin", "label": "Soin" },
+            { "value": "cils", "label": "Cils" },
+            { "value": "sourcils", "label": "Sourcils" },
+            { "value": "ongles", "label": "Ongles" }
+          ]
         },
         {
           "id": "prestations_esthetique",
