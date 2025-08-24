@@ -91,6 +91,8 @@ interface _GlobalComponents {
     'AuthTwoStepForm': typeof import("../components/auth/TwoStepForm.vue")['default']
     'CommonBaseEmptyState': typeof import("../components/common/BaseEmptyState.vue")['default']
     'CommonBaseModal': typeof import("../components/common/BaseModal.vue")['default']
+    'CommonBaseSidePicture': typeof import("../components/common/BaseSidePicture.vue")['default']
+    'CommonLoader': typeof import("../components/common/Loader.vue")['default']
     'CommonErrorToaster': typeof import("../components/common/errorToaster.vue")['default']
     'CommonSuccessToaster': typeof import("../components/common/successToaster.vue")['default']
     'DashboardsDashboardClientCongratulationsCard': typeof import("../components/dashboards/dashboard-client/CongratulationsCard.vue")['default']
@@ -266,12 +268,6 @@ interface _GlobalComponents {
     'LcFullHorizontalSidebarNavItem': typeof import("../components/lc/Full/horizontal-sidebar/NavItem/Index.vue")['default']
     'LcFullHorizontalSidebarHorizontalItems': typeof import("../components/lc/Full/horizontal-sidebar/horizontalItems")['default']
     'LcFullHorizontalSidebar': typeof import("../components/lc/Full/horizontal-sidebar/index.vue")['default']
-    'LcFullLogo': typeof import("../components/lc/Full/logo/Logo.vue")['default']
-    'LcFullLogoDark': typeof import("../components/lc/Full/logo/LogoDark.vue")['default']
-    'LcFullLogoDarkRtl': typeof import("../components/lc/Full/logo/LogoDarkRtl.vue")['default']
-    'LcFullLogoIcon': typeof import("../components/lc/Full/logo/LogoIcon.vue")['default']
-    'LcFullLogoLight': typeof import("../components/lc/Full/logo/LogoLight.vue")['default']
-    'LcFullLogoLightRtl': typeof import("../components/lc/Full/logo/LogoLightRtl.vue")['default']
     'LcFullVerticalHeaderAppsLink': typeof import("../components/lc/Full/vertical-header/AppsLink.vue")['default']
     'LcFullVerticalHeaderNavigations': typeof import("../components/lc/Full/vertical-header/Navigations.vue")['default']
     'LcFullVerticalHeaderNotificationDD': typeof import("../components/lc/Full/vertical-header/NotificationDD.vue")['default']
@@ -509,6 +505,8 @@ interface _GlobalComponents {
     'LazyAuthTwoStepForm': LazyComponent<typeof import("../components/auth/TwoStepForm.vue")['default']>
     'LazyCommonBaseEmptyState': LazyComponent<typeof import("../components/common/BaseEmptyState.vue")['default']>
     'LazyCommonBaseModal': LazyComponent<typeof import("../components/common/BaseModal.vue")['default']>
+    'LazyCommonBaseSidePicture': LazyComponent<typeof import("../components/common/BaseSidePicture.vue")['default']>
+    'LazyCommonLoader': LazyComponent<typeof import("../components/common/Loader.vue")['default']>
     'LazyCommonErrorToaster': LazyComponent<typeof import("../components/common/errorToaster.vue")['default']>
     'LazyCommonSuccessToaster': LazyComponent<typeof import("../components/common/successToaster.vue")['default']>
     'LazyDashboardsDashboardClientCongratulationsCard': LazyComponent<typeof import("../components/dashboards/dashboard-client/CongratulationsCard.vue")['default']>
@@ -684,12 +682,6 @@ interface _GlobalComponents {
     'LazyLcFullHorizontalSidebarNavItem': LazyComponent<typeof import("../components/lc/Full/horizontal-sidebar/NavItem/Index.vue")['default']>
     'LazyLcFullHorizontalSidebarHorizontalItems': LazyComponent<typeof import("../components/lc/Full/horizontal-sidebar/horizontalItems")['default']>
     'LazyLcFullHorizontalSidebar': LazyComponent<typeof import("../components/lc/Full/horizontal-sidebar/index.vue")['default']>
-    'LazyLcFullLogo': LazyComponent<typeof import("../components/lc/Full/logo/Logo.vue")['default']>
-    'LazyLcFullLogoDark': LazyComponent<typeof import("../components/lc/Full/logo/LogoDark.vue")['default']>
-    'LazyLcFullLogoDarkRtl': LazyComponent<typeof import("../components/lc/Full/logo/LogoDarkRtl.vue")['default']>
-    'LazyLcFullLogoIcon': LazyComponent<typeof import("../components/lc/Full/logo/LogoIcon.vue")['default']>
-    'LazyLcFullLogoLight': LazyComponent<typeof import("../components/lc/Full/logo/LogoLight.vue")['default']>
-    'LazyLcFullLogoLightRtl': LazyComponent<typeof import("../components/lc/Full/logo/LogoLightRtl.vue")['default']>
     'LazyLcFullVerticalHeaderAppsLink': LazyComponent<typeof import("../components/lc/Full/vertical-header/AppsLink.vue")['default']>
     'LazyLcFullVerticalHeaderNavigations': LazyComponent<typeof import("../components/lc/Full/vertical-header/Navigations.vue")['default']>
     'LazyLcFullVerticalHeaderNotificationDD': LazyComponent<typeof import("../components/lc/Full/vertical-header/NotificationDD.vue")['default']>
@@ -933,6 +925,8 @@ export const AuthResetForm: typeof import("../components/auth/ResetForm.vue")['d
 export const AuthTwoStepForm: typeof import("../components/auth/TwoStepForm.vue")['default']
 export const CommonBaseEmptyState: typeof import("../components/common/BaseEmptyState.vue")['default']
 export const CommonBaseModal: typeof import("../components/common/BaseModal.vue")['default']
+export const CommonBaseSidePicture: typeof import("../components/common/BaseSidePicture.vue")['default']
+export const CommonLoader: typeof import("../components/common/Loader.vue")['default']
 export const CommonErrorToaster: typeof import("../components/common/errorToaster.vue")['default']
 export const CommonSuccessToaster: typeof import("../components/common/successToaster.vue")['default']
 export const DashboardsDashboardClientCongratulationsCard: typeof import("../components/dashboards/dashboard-client/CongratulationsCard.vue")['default']
@@ -1108,12 +1102,6 @@ export const LcFullHorizontalSidebarNavCollapse: typeof import("../components/lc
 export const LcFullHorizontalSidebarNavItem: typeof import("../components/lc/Full/horizontal-sidebar/NavItem/Index.vue")['default']
 export const LcFullHorizontalSidebarHorizontalItems: typeof import("../components/lc/Full/horizontal-sidebar/horizontalItems")['default']
 export const LcFullHorizontalSidebar: typeof import("../components/lc/Full/horizontal-sidebar/index.vue")['default']
-export const LcFullLogo: typeof import("../components/lc/Full/logo/Logo.vue")['default']
-export const LcFullLogoDark: typeof import("../components/lc/Full/logo/LogoDark.vue")['default']
-export const LcFullLogoDarkRtl: typeof import("../components/lc/Full/logo/LogoDarkRtl.vue")['default']
-export const LcFullLogoIcon: typeof import("../components/lc/Full/logo/LogoIcon.vue")['default']
-export const LcFullLogoLight: typeof import("../components/lc/Full/logo/LogoLight.vue")['default']
-export const LcFullLogoLightRtl: typeof import("../components/lc/Full/logo/LogoLightRtl.vue")['default']
 export const LcFullVerticalHeaderAppsLink: typeof import("../components/lc/Full/vertical-header/AppsLink.vue")['default']
 export const LcFullVerticalHeaderNavigations: typeof import("../components/lc/Full/vertical-header/Navigations.vue")['default']
 export const LcFullVerticalHeaderNotificationDD: typeof import("../components/lc/Full/vertical-header/NotificationDD.vue")['default']
@@ -1351,6 +1339,8 @@ export const LazyAuthResetForm: LazyComponent<typeof import("../components/auth/
 export const LazyAuthTwoStepForm: LazyComponent<typeof import("../components/auth/TwoStepForm.vue")['default']>
 export const LazyCommonBaseEmptyState: LazyComponent<typeof import("../components/common/BaseEmptyState.vue")['default']>
 export const LazyCommonBaseModal: LazyComponent<typeof import("../components/common/BaseModal.vue")['default']>
+export const LazyCommonBaseSidePicture: LazyComponent<typeof import("../components/common/BaseSidePicture.vue")['default']>
+export const LazyCommonLoader: LazyComponent<typeof import("../components/common/Loader.vue")['default']>
 export const LazyCommonErrorToaster: LazyComponent<typeof import("../components/common/errorToaster.vue")['default']>
 export const LazyCommonSuccessToaster: LazyComponent<typeof import("../components/common/successToaster.vue")['default']>
 export const LazyDashboardsDashboardClientCongratulationsCard: LazyComponent<typeof import("../components/dashboards/dashboard-client/CongratulationsCard.vue")['default']>
@@ -1526,12 +1516,6 @@ export const LazyLcFullHorizontalSidebarNavCollapse: LazyComponent<typeof import
 export const LazyLcFullHorizontalSidebarNavItem: LazyComponent<typeof import("../components/lc/Full/horizontal-sidebar/NavItem/Index.vue")['default']>
 export const LazyLcFullHorizontalSidebarHorizontalItems: LazyComponent<typeof import("../components/lc/Full/horizontal-sidebar/horizontalItems")['default']>
 export const LazyLcFullHorizontalSidebar: LazyComponent<typeof import("../components/lc/Full/horizontal-sidebar/index.vue")['default']>
-export const LazyLcFullLogo: LazyComponent<typeof import("../components/lc/Full/logo/Logo.vue")['default']>
-export const LazyLcFullLogoDark: LazyComponent<typeof import("../components/lc/Full/logo/LogoDark.vue")['default']>
-export const LazyLcFullLogoDarkRtl: LazyComponent<typeof import("../components/lc/Full/logo/LogoDarkRtl.vue")['default']>
-export const LazyLcFullLogoIcon: LazyComponent<typeof import("../components/lc/Full/logo/LogoIcon.vue")['default']>
-export const LazyLcFullLogoLight: LazyComponent<typeof import("../components/lc/Full/logo/LogoLight.vue")['default']>
-export const LazyLcFullLogoLightRtl: LazyComponent<typeof import("../components/lc/Full/logo/LogoLightRtl.vue")['default']>
 export const LazyLcFullVerticalHeaderAppsLink: LazyComponent<typeof import("../components/lc/Full/vertical-header/AppsLink.vue")['default']>
 export const LazyLcFullVerticalHeaderNavigations: LazyComponent<typeof import("../components/lc/Full/vertical-header/Navigations.vue")['default']>
 export const LazyLcFullVerticalHeaderNotificationDD: LazyComponent<typeof import("../components/lc/Full/vertical-header/NotificationDD.vue")['default']>

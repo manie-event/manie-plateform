@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { footerContact, footerMedia } from '@/_mockApis/front-pages/PagesData';
-import LogoLight from '~/components/lc/Full/logo/LogoLight.vue';
+import LogoLight from '@/public/images/logos/logo-manie-footer.png';
 import manieFooterDroits from '/images/logos/logo-footer-droits.png';
 </script>
 

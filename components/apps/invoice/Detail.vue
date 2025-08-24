@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useRouter, useRoute } from 'vue-router';
-import { computed, onMounted, ref } from 'vue';
+import Logo from '@/public/images/logos/logo-manie-bleu-ciel.svg';
 import { useInvoicestore } from '@/stores/apps/invoice';
 import type { InvoiceType } from '@/types/apps/InvoiceTypes';
-import Logo from '~/components/lc/Full/logo/Logo.vue';
+import { computed, onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
 
 const route = useRoute();
 const store = useInvoicestore();
