@@ -1,0 +1,64 @@
+{
+  "departements": [
+    {
+      "code": "01",
+      "titre": "L'Ain",
+      "description": "une belle diversité de paysages entre Bresse, Dombes et Pays de Gex ainsi qu'une proximité avec Genève, très pratique pour les événements transfrontaliers. Sa gastronomie est reconnue grâce à sa volaille et à ses nombreux fromages (bleu, comté, morbier, tomme)."
+    },
+    {
+      "code": "03",
+      "titre": "L'Allier",
+      "description": "le pays des Bourbons est riche en patrimoine historique (Château des Ducs de Bourbon) et est réputé pour ses stations thermales (Vichy) et ses paysages vallonnés, idéals pour des événements en pleine nature."
+    },
+    {
+      "code": "07",
+      "titre": "L'Ardèche",
+      "description": "terres de caractère avec ses gorges, grottes et villages de pierre, c'est une destination privilégiée pour les cérémonies bohèmes et champêtres en tout genre. L'éco-tourisme et le slow-event en nature y sont bien instaurés !"
+    },
+    {
+      "code": "15",
+      "titre": "Cantal",
+      "description": "ses paysages volcaniques spectaculaires et ses grands espaces font de ce département un lieu à l'atmosphère intimiste pour des événements chaleureux. Petit clin d'oeil à sa diversité de fromages AOP (Cantal, Salers, Bleu d'Auvergne)."
+    },
+    {
+      "code": "26",
+      "titre": "Drôme",
+      "description": "influence provençale avec ses champs de lavande, son climat ensoleillé et ses vignobles, idéal pour les réceptions en plein air."
+    },
+    {
+      "code": "38",
+      "titre": "Isère",
+      "description": "entre Grenoble, les Alpes et la Chartreuse, elle offre une belle diversité de paysages. Cette destination est prisée pour tout type d'événements liés au sport de montagne du fait de sa nature omniprésente."
+    },
+    {
+      "code": "42",
+      "titre": "Loire",
+      "description": "patrimoine industriel et culturel autour de Saint-Etienne, campagne vallonnée idéale pour des événements bucoliques et une gastronomie locale connue pour son fromage (fourme de Montbrison) et sa charcuterie."
+    },
+    {
+      "code": "43",
+      "titre": "Haute-Loire",
+      "description": "un environnement champêtre et une ambiance authentique grâce à ses gorges, volcans et rivières. Idéale pour les retraites bien-être et les évènements nature en petit comités."
+    },
+    {
+      "code": "63",
+      "titre": "Puy-De-Dôme",
+      "description": "sa chaine des Puys classée à l'UNESCO offre un cadre naturel exceptionnel. La ville de Clermont-Ferrand contribue au dynamisme de ce département prisé pour ses événements sportifs en nature."
+    },
+    {
+      "code": "69",
+      "titre": "Rhône",
+      "description": "Lyon, capitale gastronomique et culturelle de la région Auvergne Rhône-Alpes, permet un accès facile depuis toute la France et l'étranger et invite à tous types d'événements. Les vignobles du Beaujolais entre Lyon et le sud de la Bourgogne sont idéal pour des événements œnologiques, des mariages champêtres ou des séjours immersifs au cœur des vignes."
+    },
+    {
+      "code": "73",
+      "titre": "Savoie",
+      "description": "sa montagne et ses stations de ski prestigieuses (Courchevel, Méribel, Val Thorens) en font une destination idéale pour des événements hivernaux ou montagnards. Entre lac et montagnes, ses événements sont dépaysants."
+    },
+    {
+      "code": "74",
+      "titre": "Haute-Savoie",
+      "description": "Annecy et son lac offre un cadre idyllique de pleine nature et en font une destination très prisée. Stations de ski, villages de charme et bords de lac aux eaux turquoises, il y en a pour tous les goûts et tous les événements et ce durant toute l'année. Sa proximité avec la Suisse et l'Italie en font également un attrait international."
+    }
+  ]
+}

@@ -133,10 +133,12 @@
 
 #app.lp-wraper {
   padding: 0;
+  position: relative;
 }
 
 .lp-wraper {
   overflow: hidden;
+  position: relative;
   margin-top: 50px;
 
   .maxWidth {

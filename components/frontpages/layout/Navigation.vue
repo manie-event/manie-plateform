@@ -47,7 +47,7 @@ const isActive = (href: string) => route.path === href;
     class="d-flex flex-lg-row flex-column align-lg-center justify-space-between w-100 ga-lg-6 ga-4 pa-lg-0 pa-6"
   >
     <div class="d-lg-none d-block mb-4">
-      <img :src="Logo" style="width: 50px" />
+      <img :src="Logo" alt="" style="width: 50px" />
     </div>
 
     <div v-for="(item, i) in navigation" :key="i">

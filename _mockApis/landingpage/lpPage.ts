@@ -348,23 +348,29 @@ const appsMegamenu: AppsMegaMenuTypes[] = [
 const FrontPageMenu: DemosMegaMenuTypes[] = [
   {
     img: frnt1,
-    name: 'Notre histoire',
-    link: '/front-pages/homepage',
-  },
-  {
-    img: frnt2,
-    name: 'Nos valeurs',
+    name: 'Notre Constat',
     link: '/front-pages/about-us',
   },
   {
+    img: frnt2,
+    name: 'Notre Histoire',
+    link: '/front-pages/Notre-histoire',
+  },
+
+  {
     img: frnt3,
-    name: 'Nos engagements',
-    link: '/front-pages/contact-us',
+    name: 'Nos Engagements',
+    link: '/front-pages/Nos-engagements',
   },
   {
     img: frnt4,
-    name: 'L’équipe',
-    link: '/front-pages/portfolio',
+    name: 'Notre terrain De Jeu',
+    link: '/front-pages/Notre-zone-de-jeu',
+  },
+  {
+    img: frnt4,
+    name: 'Pourquoi Manie',
+    link: '/front-pages/Pourquoi-manie',
   },
 ];
 

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import Footer from '@/components/frontpages/layout/Footer.vue';
-import LpHeader from '@/components/landingpage/layout/Header.vue';
 import { onMounted } from 'vue';
 import Homepage from './front-pages/Homepage.vue';
 
@@ -24,9 +23,6 @@ definePageMeta({
 <template>
   <div class="lp-wraper">
     <!--Header-->
-    <ClientOnly>
-      <LpHeader />
-    </ClientOnly>
     <!----------->
     <!--Content-->
     <Homepage />
