@@ -26,7 +26,7 @@
               </div>
               <div class="ml-sm-4 text-sm-left text-center">
                 <h5 class="text-h3 font-weight-semibold mb-1 my-sm-0 my-2">
-                  {{ user?.name ?? 'Définir votre nom complet' }}
+                  {{ user?.username ?? 'Définir votre nom complet' }}
                   <v-chip
                     color="primary"
                     class="bg-lightprimary font-weight-semibold ml-2 mt-n1"
@@ -36,7 +36,7 @@
                   >
                 </h5>
                 <span class="text-h6 font-weight-medium text-grey100">{{
-                  user?.phraseInspirante ?? 'Aucune phrase inspirante définie'
+                  user?.category ?? 'Aucune phrase inspirante définie'
                 }}</span>
               </div>
             </div>
@@ -54,12 +54,11 @@
                 >
               </div>
               <div v-if="isProfileCreated">
-                <v-btn
-                  class="profile-banner-redirection-bouton"
-                  size="large"
-                  @click="getKeywords('food')"
-                  >Revenir à mon dashboard</v-btn
-                >
+                <NuxtLink :to="`/dashboards/dashboard2`" class="w-100">
+                  <v-btn color="success" size="large" class="w-100">
+                    Revenir à votre dashboard
+                  </v-btn>
+                </NuxtLink>
               </div>
             </div>
           </v-col>
@@ -90,11 +89,13 @@
   </div>
   <Teleport to="body">
     <EditerProfessionalProfile v-model:openModal="openModal" />
+    <ModalRedirection :redirection="'dashboard2'" v-model="isProfilUpdate" />
   </Teleport>
 </template>
 
 <script setup lang="ts">
 import EditerProfessionalProfile from '@/components/apps/user-profile/EditProfessionalProfil.vue';
+import ModalRedirection from '@/components/apps/user-profile/ModalRedirection.vue';
 import { ref, shallowRef, Teleport } from 'vue';
 import { IdIcon, Layout2Icon, PlusIcon, UserCircleIcon, UsersIcon } from 'vue-tabler-icons';
 import { useKeywords } from '~/composables/professional-user/UseKeywords';
@@ -107,7 +108,7 @@ const tab = ref(null);
 const openModal = ref(false);
 const fileInput = ref(null);
 
-const { user, isProfileCreated } = storeToRefs(useUserStore());
+const { user, isProfileCreated, isProfilUpdate } = storeToRefs(useUserStore());
 const { getKeywords } = useKeywords();
 const { changeProfessionalBannerPicture } = useProfessionalProfile();
 

@@ -45,12 +45,12 @@ export const useAuthentification = () => {
           httpOnly: false,
         });
 
+        setUser(data.user);
+
         token.value = tokenValue;
         if (!isProfessional.value) {
-          setUser(data.user);
           router.push({ path: '/dashboards/dashboard-client' });
         } else {
-          setUser(data.user);
           router.push({ path: '/dashboards/dashboard2' });
         }
       } else {

@@ -173,12 +173,9 @@ const {
 
 // Fonction de soumission corrigée
 const onSubmit = async (profile: ClientModel) => {
-  console.log('ICI');
   try {
     isSubmitting.value = true;
     showErrors.value = true;
-
-    console.log('Submitting profile:', profile);
 
     // Appel de votre fonction de patch
     await patchClientProfil(profile);

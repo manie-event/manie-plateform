@@ -1,25 +1,3 @@
-<script setup lang="ts">
-import profileBg from '@/public/images/backgrounds/profilebg.jpg';
-import { ref, shallowRef } from 'vue';
-import { HeartIcon, PhotoIcon, UserCircleIcon, UsersIcon } from 'vue-tabler-icons';
-import EditClientProfil from './EditClientProfil.vue';
-import UserImage from '/images/profile/user6.jpg';
-
-const tab = ref(null);
-const openModal = ref(false);
-
-const items = shallowRef([
-  { tab: 'Profile', icon: UserCircleIcon, href: '/apps/userprofile/two' },
-  { tab: 'Followers', icon: HeartIcon, href: '/apps/userprofile/two/followers' },
-  { tab: 'Friends', icon: UsersIcon, href: '/apps/userprofile/two/friends' },
-  { tab: 'Gallery', icon: PhotoIcon, href: '/apps/userprofile/two/gallery' },
-]);
-
-const openEditProfilModal = () => {
-  openModal.value = !openModal.value;
-};
-</script>
-
 <template>
   <v-card elevation="10" class="overflow-hidden">
     <img :src="profileBg" alt="profile" class="w-100" />
@@ -103,8 +81,33 @@ const openEditProfilModal = () => {
   </v-card>
   <Teleport to="body">
     <EditClientProfil v-model:openModal="openModal" />
+    <ModalRedirection :redirection="'dashboard-client'" v-model="isProfilUpdate" />
   </Teleport>
 </template>
+<script setup lang="ts">
+import profileBg from '@/public/images/backgrounds/profilebg.jpg';
+import { ref, shallowRef } from 'vue';
+import { HeartIcon, PhotoIcon, UserCircleIcon, UsersIcon } from 'vue-tabler-icons';
+import EditClientProfil from './EditClientProfil.vue';
+import ModalRedirection from './ModalRedirection.vue';
+import UserImage from '/images/profile/user6.jpg';
+
+const tab = ref(null);
+const openModal = ref(false);
+
+const items = shallowRef([
+  { tab: 'Profile', icon: UserCircleIcon, href: '/apps/userprofile/two' },
+  { tab: 'Followers', icon: HeartIcon, href: '/apps/userprofile/two/followers' },
+  { tab: 'Friends', icon: UsersIcon, href: '/apps/userprofile/two/friends' },
+  { tab: 'Gallery', icon: PhotoIcon, href: '/apps/userprofile/two/gallery' },
+]);
+
+const { isProfilUpdate } = storeToRefs(useUserStore());
+const openEditProfilModal = () => {
+  openModal.value = !openModal.value;
+};
+</script>
+
 <style lang="scss">
 .avatar-border {
   background-image: linear-gradient(rgb(80, 178, 252), rgb(244, 76, 102));

@@ -13,7 +13,7 @@ const { userTokenBalance } = storeToRefs(useCartStore());
 
 const getNameDependingOnCategory = computed(() => {
   if (
-    (isProfessional && !user.value?.username) ||
+    (isProfessional.value && !user.value?.username) ||
     professionalUser.value?.category == 'professional'
   ) {
     return professionalUser.value?.name;
@@ -23,8 +23,7 @@ const getNameDependingOnCategory = computed(() => {
 });
 
 const getCategory = computed(() => {
-  if (isProfessional.value || professionalUser.value?.category == 'professional') {
-    console.log(isProfessional.value, 'PROFILEDD');
+  if (isProfessional.value) {
     return UserCategory.PRESTA;
   } else {
     return UserCategory.CLIENT;
@@ -115,6 +114,7 @@ onMounted(() => {
             <p class="text-subtitle-1 font-weight-regular text-grey100">
               <b>{{ item.requiresProfile ? userTokenBalance : '' }}</b> {{ item.subtitle }}
             </p>
+            <p>{{ item.title }}</p>
           </v-list-item>
         </v-list>
         <v-list class="py-0 theme-list" lines="two" v-else>
