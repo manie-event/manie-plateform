@@ -67,7 +67,7 @@ onMounted(() => {
   </v-row>
   <v-row v-else>
     <v-col cols="12">
-      <BaseEmptyState>
+      <BaseEmptyState style="position: relative; height: 80vh">
         <template #image>
           <img :src="EmptyState" alt="Empty State" />
         </template>

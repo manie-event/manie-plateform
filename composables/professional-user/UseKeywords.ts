@@ -7,8 +7,9 @@ import type { KeywordsDto } from '~/models/dto/KeywordsDto';
 
 export const useKeywords = () => {
   const config = useRuntimeConfig();
-  const { setProfessionalServices, setKeywords } = useUserStore();
-  const { professionnalServices, keywords } = storeToRefs(useUserStore());
+  const userStore = useUserStore();
+  const { setProfessionalServices, setKeywords, setUpdateProfile } = userStore;
+  const { professionnalServices, keywords } = storeToRefs(userStore);
   const loading = ref(false);
   const token = useCookie('token');
 
@@ -74,7 +75,6 @@ export const useKeywords = () => {
           'Content-Type': 'application/json',
         },
       });
-      console.log('Keywords data:', data);
       const keyWordFilter = data.data
         .filter((keyword: Keywords) => keyword.sector.toLowerCase() == query.toLowerCase())
         .slice(0, 100)
@@ -102,6 +102,7 @@ export const useKeywords = () => {
       );
       if (response.data) {
         setProfessionalServices(response.data);
+        setUpdateProfile(true);
       }
     } catch (error: unknown) {
       console.error('Error sending professional services:', error);

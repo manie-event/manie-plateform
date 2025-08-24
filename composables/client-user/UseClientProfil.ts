@@ -5,7 +5,7 @@ export const useClientProfil = () => {
   const { addError, addSuccess } = useToaster();
   const token = useCookie('token');
   const userStore = useUserStore();
-  const { setClientProfile } = userStore;
+  const { setClientProfile, setUpdateProfile } = userStore;
   const config = useRuntimeConfig();
   const clientUuid = localStorage.getItem('client-uuid');
 
@@ -35,8 +35,7 @@ export const useClientProfil = () => {
       }
     );
     if (data) {
-      console.log(data, 'Client Data');
-
+      setUpdateProfile(true);
       return data;
     }
   };

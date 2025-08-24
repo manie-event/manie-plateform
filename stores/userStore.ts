@@ -8,6 +8,7 @@ import type { Services } from '~/models/professionalService/Services';
 export const useUserStore = defineStore('userStore', () => {
   // refs
   const user = ref<User>();
+  const isProfilUpdate = ref(false);
 
   //client Ref
   const clientProfile = ref<clientProfile>();
@@ -21,12 +22,18 @@ export const useUserStore = defineStore('userStore', () => {
   const bgPicture = ref('/images/backgrounds/profilebg-2.jpg');
 
   // getters
-  const isProfessional = computed(() => user.value?.category === 'professional');
+  const isProfessional = computed(
+    () =>
+      user.value?.category === 'professional' || professionalUser.value?.category === 'professional'
+  );
 
   // setters
   const setUser = (userData: User) => {
     user.value = userData;
-    console.log(user.value, 'USERVALUE');
+  };
+
+  const setUpdateProfile = (newStatus: boolean) => {
+    isProfilUpdate.value = newStatus;
   };
 
   // client setters
@@ -69,6 +76,7 @@ export const useUserStore = defineStore('userStore', () => {
     isProfileCreated,
     isStoringUserAccepeted,
     professionnalServices,
+    isProfilUpdate,
     keywords,
     isProfessional,
     setUserAccepted,
@@ -78,5 +86,6 @@ export const useUserStore = defineStore('userStore', () => {
     setClientProfile,
     setKeywords,
     sendNewPhotoOnProfile,
+    setUpdateProfile,
   };
 });

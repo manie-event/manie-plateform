@@ -77,6 +77,7 @@ interface _GlobalComponents {
     'AppsUserProfileEditClientProfil': typeof import("../components/apps/user-profile/EditClientProfil.vue")['default']
     'AppsUserProfileEditProfessionalProfil': typeof import("../components/apps/user-profile/EditProfessionalProfil.vue")['default']
     'AppsUserProfileIntroCard': typeof import("../components/apps/user-profile/IntroCard.vue")['default']
+    'AppsUserProfileModalRedirection': typeof import("../components/apps/user-profile/ModalRedirection.vue")['default']
     'AppsUserProfilePhotosCard': typeof import("../components/apps/user-profile/PhotosCard.vue")['default']
     'AppsUserProfilePostListing': typeof import("../components/apps/user-profile/PostListing.vue")['default']
     'AppsUserProfileBanner': typeof import("../components/apps/user-profile/ProfileBanner.vue")['default']
@@ -494,6 +495,7 @@ interface _GlobalComponents {
     'LazyAppsUserProfileEditClientProfil': LazyComponent<typeof import("../components/apps/user-profile/EditClientProfil.vue")['default']>
     'LazyAppsUserProfileEditProfessionalProfil': LazyComponent<typeof import("../components/apps/user-profile/EditProfessionalProfil.vue")['default']>
     'LazyAppsUserProfileIntroCard': LazyComponent<typeof import("../components/apps/user-profile/IntroCard.vue")['default']>
+    'LazyAppsUserProfileModalRedirection': LazyComponent<typeof import("../components/apps/user-profile/ModalRedirection.vue")['default']>
     'LazyAppsUserProfilePhotosCard': LazyComponent<typeof import("../components/apps/user-profile/PhotosCard.vue")['default']>
     'LazyAppsUserProfilePostListing': LazyComponent<typeof import("../components/apps/user-profile/PostListing.vue")['default']>
     'LazyAppsUserProfileBanner': LazyComponent<typeof import("../components/apps/user-profile/ProfileBanner.vue")['default']>
@@ -917,6 +919,7 @@ export const AppsTicketsTicketList: typeof import("../components/apps/tickets/Ti
 export const AppsUserProfileEditClientProfil: typeof import("../components/apps/user-profile/EditClientProfil.vue")['default']
 export const AppsUserProfileEditProfessionalProfil: typeof import("../components/apps/user-profile/EditProfessionalProfil.vue")['default']
 export const AppsUserProfileIntroCard: typeof import("../components/apps/user-profile/IntroCard.vue")['default']
+export const AppsUserProfileModalRedirection: typeof import("../components/apps/user-profile/ModalRedirection.vue")['default']
 export const AppsUserProfilePhotosCard: typeof import("../components/apps/user-profile/PhotosCard.vue")['default']
 export const AppsUserProfilePostListing: typeof import("../components/apps/user-profile/PostListing.vue")['default']
 export const AppsUserProfileBanner: typeof import("../components/apps/user-profile/ProfileBanner.vue")['default']
@@ -1334,6 +1337,7 @@ export const LazyAppsTicketsTicketList: LazyComponent<typeof import("../componen
 export const LazyAppsUserProfileEditClientProfil: LazyComponent<typeof import("../components/apps/user-profile/EditClientProfil.vue")['default']>
 export const LazyAppsUserProfileEditProfessionalProfil: LazyComponent<typeof import("../components/apps/user-profile/EditProfessionalProfil.vue")['default']>
 export const LazyAppsUserProfileIntroCard: LazyComponent<typeof import("../components/apps/user-profile/IntroCard.vue")['default']>
+export const LazyAppsUserProfileModalRedirection: LazyComponent<typeof import("../components/apps/user-profile/ModalRedirection.vue")['default']>
 export const LazyAppsUserProfilePhotosCard: LazyComponent<typeof import("../components/apps/user-profile/PhotosCard.vue")['default']>
 export const LazyAppsUserProfilePostListing: LazyComponent<typeof import("../components/apps/user-profile/PostListing.vue")['default']>
 export const LazyAppsUserProfileBanner: LazyComponent<typeof import("../components/apps/user-profile/ProfileBanner.vue")['default']>
