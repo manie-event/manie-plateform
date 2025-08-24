@@ -53,7 +53,7 @@ const { checkEmail } = useAuthentification();
 const loading = ref(true);
 const success = ref(false);
 const error = ref('');
-const counter = ref(3);
+const counter = ref(10);
 let interval: number;
 
 onMounted(async () => {
@@ -65,7 +65,7 @@ onMounted(async () => {
       result?.message?.toLowerCase().includes('verified')
     ) {
       success.value = true;
-      setTimeout(() => router.push('/auth/login'), 3000);
+      setTimeout(() => router.push('/auth/login'), 10000);
     } else {
       throw new Error(result?.message || 'Erreur inconnue');
     }

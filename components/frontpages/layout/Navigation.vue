@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import Logo from '@/public/images/logos/logo-manie-bleu-ciel.svg';
 import { ref } from 'vue';
 import { RouterLink, useRoute } from 'vue-router';
-import Logo from '~/components/lc/Full/logo/Logo.vue';
 
 const route = useRoute(); // Get current route
 
@@ -47,7 +47,7 @@ const isActive = (href: string) => route.path === href;
     class="d-flex flex-lg-row flex-column align-lg-center justify-space-between w-100 ga-lg-6 ga-4 pa-lg-0 pa-6"
   >
     <div class="d-lg-none d-block mb-4">
-      <Logo />
+      <img :src="Logo" style="width: 50px" />
     </div>
 
     <div v-for="(item, i) in navigation" :key="i">
