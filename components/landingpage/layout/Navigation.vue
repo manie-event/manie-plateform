@@ -164,7 +164,7 @@ const setHoverState = (key: string, value: boolean) => {
                   contained
                 >
                   <v-btn color="primary" size="small" rounded="pill" flat :href="demo.link"
-                    >Live Preview</v-btn
+                    >En savoir +</v-btn
                   >
                 </v-overlay>
               </v-card>
