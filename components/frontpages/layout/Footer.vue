@@ -10,7 +10,7 @@ import manieFooterDroits from '/images/logos/logo-footer-droits.png';
       <div class="space-p-96">
         <v-row>
           <v-col cols="12" lg="3" sm="6">
-            <LogoLight />
+            <img :src="LogoLight" alt="Logo" class="logo-manie" />
             <div class="d-flex flex-column ga-4 mt-lg-n4"></div>
           </v-col>
           <v-col cols="12" lg="3" sm="6">
@@ -89,5 +89,8 @@ a {
   color: #cccc;
   font-weight: medium;
   font-size: 0.8rem;
+}
+.logo-manie {
+  width: 15rem;
 }
 </style>

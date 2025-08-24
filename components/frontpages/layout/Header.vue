@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { onBeforeMount, ref, watch } from 'vue';
+import Logo from '@/public/images/logos/logo-manie-bleu-ciel.svg';
 import { useCustomizerStore } from '@/stores/customizer';
-import Logo from '~/components/lc/Full/logo/Logo.vue';
+import { onBeforeMount, ref } from 'vue';
 import Navigations from './Navigation.vue';
 /*Mobile Sidebar*/
-import MobileSidebar from '@/components/landingpage/layout/MobileSidebar.vue';
 /*import tabler icons*/
 import { Menu2Icon } from 'vue-tabler-icons';
 const appsdrawer = ref(false);
@@ -39,7 +38,7 @@ function handleScroll() {
             <!-- Logo -->
 
             <div>
-              <Logo />
+              <img :src="Logo" alt="" />
             </div>
 
             <!-- Desktop view Navigation -->
