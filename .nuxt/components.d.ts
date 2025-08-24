@@ -268,9 +268,6 @@ interface _GlobalComponents {
     'LcFullHorizontalSidebarNavItem': typeof import("../components/lc/Full/horizontal-sidebar/NavItem/Index.vue")['default']
     'LcFullHorizontalSidebarHorizontalItems': typeof import("../components/lc/Full/horizontal-sidebar/horizontalItems")['default']
     'LcFullHorizontalSidebar': typeof import("../components/lc/Full/horizontal-sidebar/index.vue")['default']
-    'LcFullLogo': typeof import("../components/lc/Full/logo/Logo.vue")['default']
-    'LcFullLogoDark': typeof import("../components/lc/Full/logo/LogoDark.vue")['default']
-    'LcFullLogoLight': typeof import("../components/lc/Full/logo/LogoLight.vue")['default']
     'LcFullVerticalHeaderAppsLink': typeof import("../components/lc/Full/vertical-header/AppsLink.vue")['default']
     'LcFullVerticalHeaderNavigations': typeof import("../components/lc/Full/vertical-header/Navigations.vue")['default']
     'LcFullVerticalHeaderNotificationDD': typeof import("../components/lc/Full/vertical-header/NotificationDD.vue")['default']
@@ -685,9 +682,6 @@ interface _GlobalComponents {
     'LazyLcFullHorizontalSidebarNavItem': LazyComponent<typeof import("../components/lc/Full/horizontal-sidebar/NavItem/Index.vue")['default']>
     'LazyLcFullHorizontalSidebarHorizontalItems': LazyComponent<typeof import("../components/lc/Full/horizontal-sidebar/horizontalItems")['default']>
     'LazyLcFullHorizontalSidebar': LazyComponent<typeof import("../components/lc/Full/horizontal-sidebar/index.vue")['default']>
-    'LazyLcFullLogo': LazyComponent<typeof import("../components/lc/Full/logo/Logo.vue")['default']>
-    'LazyLcFullLogoDark': LazyComponent<typeof import("../components/lc/Full/logo/LogoDark.vue")['default']>
-    'LazyLcFullLogoLight': LazyComponent<typeof import("../components/lc/Full/logo/LogoLight.vue")['default']>
     'LazyLcFullVerticalHeaderAppsLink': LazyComponent<typeof import("../components/lc/Full/vertical-header/AppsLink.vue")['default']>
     'LazyLcFullVerticalHeaderNavigations': LazyComponent<typeof import("../components/lc/Full/vertical-header/Navigations.vue")['default']>
     'LazyLcFullVerticalHeaderNotificationDD': LazyComponent<typeof import("../components/lc/Full/vertical-header/NotificationDD.vue")['default']>
@@ -1108,9 +1102,6 @@ export const LcFullHorizontalSidebarNavCollapse: typeof import("../components/lc
 export const LcFullHorizontalSidebarNavItem: typeof import("../components/lc/Full/horizontal-sidebar/NavItem/Index.vue")['default']
 export const LcFullHorizontalSidebarHorizontalItems: typeof import("../components/lc/Full/horizontal-sidebar/horizontalItems")['default']
 export const LcFullHorizontalSidebar: typeof import("../components/lc/Full/horizontal-sidebar/index.vue")['default']
-export const LcFullLogo: typeof import("../components/lc/Full/logo/Logo.vue")['default']
-export const LcFullLogoDark: typeof import("../components/lc/Full/logo/LogoDark.vue")['default']
-export const LcFullLogoLight: typeof import("../components/lc/Full/logo/LogoLight.vue")['default']
 export const LcFullVerticalHeaderAppsLink: typeof import("../components/lc/Full/vertical-header/AppsLink.vue")['default']
 export const LcFullVerticalHeaderNavigations: typeof import("../components/lc/Full/vertical-header/Navigations.vue")['default']
 export const LcFullVerticalHeaderNotificationDD: typeof import("../components/lc/Full/vertical-header/NotificationDD.vue")['default']
@@ -1525,9 +1516,6 @@ export const LazyLcFullHorizontalSidebarNavCollapse: LazyComponent<typeof import
 export const LazyLcFullHorizontalSidebarNavItem: LazyComponent<typeof import("../components/lc/Full/horizontal-sidebar/NavItem/Index.vue")['default']>
 export const LazyLcFullHorizontalSidebarHorizontalItems: LazyComponent<typeof import("../components/lc/Full/horizontal-sidebar/horizontalItems")['default']>
 export const LazyLcFullHorizontalSidebar: LazyComponent<typeof import("../components/lc/Full/horizontal-sidebar/index.vue")['default']>
-export const LazyLcFullLogo: LazyComponent<typeof import("../components/lc/Full/logo/Logo.vue")['default']>
-export const LazyLcFullLogoDark: LazyComponent<typeof import("../components/lc/Full/logo/LogoDark.vue")['default']>
-export const LazyLcFullLogoLight: LazyComponent<typeof import("../components/lc/Full/logo/LogoLight.vue")['default']>
 export const LazyLcFullVerticalHeaderAppsLink: LazyComponent<typeof import("../components/lc/Full/vertical-header/AppsLink.vue")['default']>
 export const LazyLcFullVerticalHeaderNavigations: LazyComponent<typeof import("../components/lc/Full/vertical-header/Navigations.vue")['default']>
 export const LazyLcFullVerticalHeaderNotificationDD: LazyComponent<typeof import("../components/lc/Full/vertical-header/NotificationDD.vue")['default']>
