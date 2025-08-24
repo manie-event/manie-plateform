@@ -13,6 +13,7 @@ const customizer = useCustomizerStore();
 const whiteBgOnScroll = ref(false);
 const handleScroll = () => {
   whiteBgOnScroll.value = window.scrollY > 80;
+  console.log(whiteBgOnScroll.value);
 };
 
 onMounted(() => {
@@ -29,11 +30,11 @@ onUnmounted(() => {
       <!-- -----------------------------------------------
                             Start Header
                             ----------------------------------------------- -->
-      <v-app-bar height="80" class="lp-header bg-transparent" flat>
+      <v-app-bar height="80" class="lp-header original-position position-relative" flat>
         <v-container class="maxWidth py-sm-4 py-0">
           <v-toolbar
             class="d-flex align-center"
-            :class="whiteBgOnScroll ? 'header-scrolled' : 'bg-transparent'"
+            :class="whiteBgOnScroll ? 'header-scrolled' : 'original-position'"
           >
             <div>
               <LcFullLogo />
@@ -73,6 +74,13 @@ onUnmounted(() => {
   </div>
 </template>
 <style lang="scss" scoped>
+.original-position {
+  position: relative;
+  margin: 10px 0;
+  background: transparent;
+  width: 100vw;
+  z-index: 1000;
+}
 .header-scrolled {
   background-color: #ffffff !important;
   background-size: 100% 100%;
