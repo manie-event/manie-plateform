@@ -91,6 +91,8 @@ interface _GlobalComponents {
     'AuthTwoStepForm': typeof import("../components/auth/TwoStepForm.vue")['default']
     'CommonBaseEmptyState': typeof import("../components/common/BaseEmptyState.vue")['default']
     'CommonBaseModal': typeof import("../components/common/BaseModal.vue")['default']
+    'CommonBaseSidePicture': typeof import("../components/common/BaseSidePicture.vue")['default']
+    'CommonLoader': typeof import("../components/common/Loader.vue")['default']
     'CommonErrorToaster': typeof import("../components/common/errorToaster.vue")['default']
     'CommonSuccessToaster': typeof import("../components/common/successToaster.vue")['default']
     'DashboardsDashboardClientCongratulationsCard': typeof import("../components/dashboards/dashboard-client/CongratulationsCard.vue")['default']
@@ -509,6 +511,8 @@ interface _GlobalComponents {
     'LazyAuthTwoStepForm': LazyComponent<typeof import("../components/auth/TwoStepForm.vue")['default']>
     'LazyCommonBaseEmptyState': LazyComponent<typeof import("../components/common/BaseEmptyState.vue")['default']>
     'LazyCommonBaseModal': LazyComponent<typeof import("../components/common/BaseModal.vue")['default']>
+    'LazyCommonBaseSidePicture': LazyComponent<typeof import("../components/common/BaseSidePicture.vue")['default']>
+    'LazyCommonLoader': LazyComponent<typeof import("../components/common/Loader.vue")['default']>
     'LazyCommonErrorToaster': LazyComponent<typeof import("../components/common/errorToaster.vue")['default']>
     'LazyCommonSuccessToaster': LazyComponent<typeof import("../components/common/successToaster.vue")['default']>
     'LazyDashboardsDashboardClientCongratulationsCard': LazyComponent<typeof import("../components/dashboards/dashboard-client/CongratulationsCard.vue")['default']>
@@ -933,6 +937,8 @@ export const AuthResetForm: typeof import("../components/auth/ResetForm.vue")['d
 export const AuthTwoStepForm: typeof import("../components/auth/TwoStepForm.vue")['default']
 export const CommonBaseEmptyState: typeof import("../components/common/BaseEmptyState.vue")['default']
 export const CommonBaseModal: typeof import("../components/common/BaseModal.vue")['default']
+export const CommonBaseSidePicture: typeof import("../components/common/BaseSidePicture.vue")['default']
+export const CommonLoader: typeof import("../components/common/Loader.vue")['default']
 export const CommonErrorToaster: typeof import("../components/common/errorToaster.vue")['default']
 export const CommonSuccessToaster: typeof import("../components/common/successToaster.vue")['default']
 export const DashboardsDashboardClientCongratulationsCard: typeof import("../components/dashboards/dashboard-client/CongratulationsCard.vue")['default']
@@ -1351,6 +1357,8 @@ export const LazyAuthResetForm: LazyComponent<typeof import("../components/auth/
 export const LazyAuthTwoStepForm: LazyComponent<typeof import("../components/auth/TwoStepForm.vue")['default']>
 export const LazyCommonBaseEmptyState: LazyComponent<typeof import("../components/common/BaseEmptyState.vue")['default']>
 export const LazyCommonBaseModal: LazyComponent<typeof import("../components/common/BaseModal.vue")['default']>
+export const LazyCommonBaseSidePicture: LazyComponent<typeof import("../components/common/BaseSidePicture.vue")['default']>
+export const LazyCommonLoader: LazyComponent<typeof import("../components/common/Loader.vue")['default']>
 export const LazyCommonErrorToaster: LazyComponent<typeof import("../components/common/errorToaster.vue")['default']>
 export const LazyCommonSuccessToaster: LazyComponent<typeof import("../components/common/successToaster.vue")['default']>
 export const LazyDashboardsDashboardClientCongratulationsCard: LazyComponent<typeof import("../components/dashboards/dashboard-client/CongratulationsCard.vue")['default']>
