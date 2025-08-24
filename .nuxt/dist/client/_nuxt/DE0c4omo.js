@@ -1,0 +1,1 @@
+import{E as e,a as s}from"./tuwxSyZN.js";const t=e({id:"followers",state:()=>({followers:[]}),getters:{},actions:{async fetchFollowers(){try{const o=await s.get("/api/followers/list");this.followers=o.data.followers}catch(o){alert(o),console.log(o)}}}});export{t as u};

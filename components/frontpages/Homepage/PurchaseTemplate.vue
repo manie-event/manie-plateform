@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import LogoIcon from '~/components/lc/Full/logo/LogoIcon.vue';
-</script>
-
 <template>
   <div class="bg-primary space-p-96 template position-relative overflow-hidden">
     <img
@@ -10,13 +6,6 @@ import LogoIcon from '~/components/lc/Full/logo/LogoIcon.vue';
       class="left-widget d-lg-block pr-16"
     />
     <v-container class="max-width-1000">
-      <div class="d-flex justify-center">
-        <div
-          class="round-56 d-flex justify-center align-center rounded-lg bg-surface elevation-4 lh-normal"
-        >
-          <LogoIcon />
-        </div>
-      </div>
       <h3 class="display-1 font-weight-bold text-center py-6">
         Gardez votre énérgie pour les choses importantes
       </h3>
