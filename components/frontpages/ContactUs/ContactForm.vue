@@ -4,6 +4,8 @@ import type { ContactMessage } from '@/models/contact/contactMessage';
 import { Icon } from '@iconify/vue';
 import { ref } from 'vue';
 
+const { sendContactForm } = useContactService();
+
 const select = ref();
 const items = ref(['Question générale', 'Demande de rendez-vous', 'option 3', 'option 4']);
 
@@ -134,6 +136,7 @@ const message = ref<ContactMessage>({
                     flat
                     href=""
                     target="_blank"
+                    @click="sendContactForm(message)"
                     >Envoyez votre message</v-btn
                   >
                 </v-col>
