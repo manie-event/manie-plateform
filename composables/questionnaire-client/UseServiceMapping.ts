@@ -1,4 +1,4 @@
-import { addTokenWithLabel, normalizeText } from '@/utils/form.utils';
+import { addTokenWithLabel, normalizeText } from '@/utils/form-utils';
 import { reactive } from 'vue';
 import type {
   FormState,

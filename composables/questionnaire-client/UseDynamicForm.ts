@@ -1,4 +1,8 @@
-import { computeDateRange, humanizeEventName } from '@/utils/form.utils';
+import { useConditionalLogic } from '@/composables/questionnaire-client/UseConditionalLogic';
+import { useFormNavigation } from '@/composables/questionnaire-client/UseFormNavigation';
+import { useFormValidation } from '@/composables/questionnaire-client/UseFormValidation';
+import { useServiceMapping } from '@/composables/questionnaire-client/UseServiceMapping';
+import { computeDateRange, humanizeEventName } from '@/utils/form-utils';
 import { onMounted, reactive } from 'vue';
 import type {
   EventCreatePayload,
@@ -7,10 +11,6 @@ import type {
   SectionSchema,
   ServiceSelection,
 } from '~/models/questionnaire/QuestionnaireClientModel';
-import { useConditionalLogic } from './UseConditionalLogic';
-import { useFormNavigation } from './UseFormNavigation';
-import { useServiceMapping } from './UseServiceMapping';
-import { useFormValidation } from './UserFormValidation';
 
 interface UseDynamicFormProps {
   sections: SectionSchema[];

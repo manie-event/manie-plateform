@@ -7,10 +7,10 @@ import Products from '@/components/dashboards/dashboard-client/ProductsChart.vue
 import ProductsTable from '@/components/dashboards/dashboard-client/ProductsTable.vue';
 import VisitFromUsa from '@/components/dashboards/dashboard-client/VisitFromUsa.vue';
 import Snackbar from '@/components/dashboards/snackbar.vue';
+import { useClientProfil } from '@/composables/client-user/UseClientProfil';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
 import BaseEmptyState from '~/components/common/BaseEmptyState.vue';
 import Events from '~/components/dashboards/dashboard-client/Events.vue';
-import { useClientProfil } from '../../../composables/ClientUser/UseClientProfil';
 
 const userStore = useUserStore();
 const { isProfileCreated } = storeToRefs(userStore);

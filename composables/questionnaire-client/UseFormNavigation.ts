@@ -1,4 +1,4 @@
-import { chunkArray } from '@/utils/form.utils';
+import { chunkArray } from '@/utils/form-utils';
 import { computed, ref } from 'vue';
 import type { PageInfo, SectionSchema } from '~/models/questionnaire/QuestionnaireClientModel';
 
