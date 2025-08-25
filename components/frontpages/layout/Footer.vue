@@ -12,16 +12,24 @@ import manieFooterDroits from '/images/logos/logo-footer-droits.png';
         <v-row>
           <v-col cols="12" lg="3" sm="6">
             <img :src="LogoLight" alt="Logo" class="logo-manie" />
-            <div class="d-flex flex-column ga-4 mt-lg-n4"></div>
           </v-col>
           <v-col cols="12" lg="3" sm="6">
-            <h5 class="text-20 mb-sm-8 mb-6">Mentions légales</h5>
-            <div class="d-flex flex-column ga-4">
-              <div v-for="item in footerContact" :key="item.titre">
-                <h4 class="footer-title">
-                  <a :href="item.link"> {{ `${item.titre}: ` }}</a>
-                </h4>
-                <h5>{{ item.description }}</h5>
+            <div class="footer__double-category">
+              <h5 class="text-20">Mentions légales</h5>
+              <div class="d-flex flex-column ga-4">
+                <div v-for="item in footerContact" :key="item.titre">
+                  <h4 class="footer-title">
+                    <a :href="item.link"> {{ `${item.titre}: ` }}</a>
+                  </h4>
+                  <h5>{{ item.description }}</h5>
+                </div>
+              </div>
+              <div>
+                <h5 class="text-17 mb-sm-8">Notre FAQ</h5>
+                <NuxtLink to="/front-pages/Faq-client"><p>FAQ spécial client</p></NuxtLink>
+                <NuxtLink to="/front-pages/Faq-prestataire"
+                  ><p>FAQ spécial Prestataire</p></NuxtLink
+                >
               </div>
             </div>
           </v-col>
@@ -36,6 +44,7 @@ import manieFooterDroits from '/images/logos/logo-footer-droits.png';
               </div>
             </div>
           </v-col>
+
           <v-col cols="12" lg="3" sm="6">
             <h5 class="text-17 mb-sm-8 mb-6">Suivez-nous</h5>
             <div class="contact-form__contact">
@@ -84,6 +93,12 @@ a {
     cursor: pointer;
   }
 }
+.footer__double-category {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
 .footer-title {
   color: #cccc;
   font-weight: medium;

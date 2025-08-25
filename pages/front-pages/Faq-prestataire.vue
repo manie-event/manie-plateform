@@ -1,11 +1,11 @@
 <template>
-  <div class="notre-zone-de-jeu__container">
+  <div class="faq-prestataire__container">
     <base-side-picture>
       <template #bg-image>
         <img
-          :src="notreTerrainDeJeu"
+          :src="SidePicture"
           alt=""
-          class="notre-zone-de-jeu__bg-image"
+          class="faq-prestataire__bg-image"
           style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px"
         />
       </template>
@@ -13,23 +13,15 @@
         <img :src="LogoManie" alt="" class="manie-logo" />
       </template>
     </base-side-picture>
-    <div class="notre-zone-de-jeu__descriptif">
-      <h1>Notre Terrain De Jeu</h1>
-      <h4>
-        Nous mettons à l’honneur notre belle région Auvergne Rhône-Alpes et les prestataires qui y
-        sont installés ! Un mariage au cœur des montagnes ou au bord d’un lac, un séjour en famille
-        dans un domaine viticole, une fête champêtre en pleine nature ou une soirée en ville : tout
-        est possible !
-      </h4>
+    <div class="faq-prestataire__descriptif">
+      <h1>FAQ Prestataire</h1>
 
-      <div class="notre-zone-de-jeu__sous-titre">
+      <div class="faq-prestataire__sous-titre">
         <v-expansion-panels>
-          <v-expansion-panel
-            v-for="(panel, index) in notreTerrain.departements"
-            :key="index"
-            :title="`${panel.titre} - ${panel.code}`"
-            :text="panel.description"
-          >
+          <v-expansion-panel v-for="(panel, index) in FaqPresta" :key="index" :title="panel.titre">
+            <v-expansion-panel-text>
+              <div v-html="panel.description"></div>
+            </v-expansion-panel-text>
           </v-expansion-panel>
         </v-expansion-panels>
       </div>
@@ -38,16 +30,16 @@
 </template>
 <script setup lang="ts">
 import BaseSidePicture from '@/components/common/BaseSidePicture.vue';
-import notreTerrain from '@/data/terrain-de-jeu.json';
+import FaqPresta from '@/data/faq-prestataire.json';
 import LogoManie from '@/public/images/logos/logo-manie-creme.svg';
-import notreTerrainDeJeu from '@/public/images/side-picture/katsiaryna-endruszkiewicz-BteCp6aq4GI-unsplash.jpg';
+import SidePicture from '@/public/images/side-picture/vince-fleming-j3lf-Jn6deo-unsplash.jpg';
 
 definePageMeta({
   layout: 'blank',
 });
 </script>
 <style lang="scss" scoped>
-.notre-zone-de-jeu {
+.faq-prestataire {
   &__container {
     display: flex;
     align-items: center;
