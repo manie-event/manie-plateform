@@ -1,11 +1,11 @@
 <template>
-  <div class="notre-histoire__container">
+  <div class="constat__container">
     <base-side-picture>
       <template #bg-image>
         <img
           :src="notreConstat"
           alt=""
-          class="notre-histoire__bg-image"
+          class="constat__bg-image"
           style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px"
         />
       </template>
@@ -13,7 +13,7 @@
         <img :src="LogoManie" alt="" class="manie-logo" />
       </template>
     </base-side-picture>
-    <div class="notre-histoire__descriptif">
+    <div class="constat__descriptif">
       <h1>Notre Constat</h1>
       <h4>
         Le constat est simple : organiser un événement demande du temps, de l’énergie et une bonne
@@ -65,7 +65,7 @@ definePageMeta({
 });
 </script>
 <style lang="scss" scoped>
-.notre-histoire {
+.constat {
   &__container {
     display: flex;
     align-items: center;

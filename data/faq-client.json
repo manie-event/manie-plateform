@@ -1,0 +1,46 @@
+[
+  {
+    "titre": "Qu'est-ce que Manie ?",
+    "description": "Manie est une plateforme qui vous aide à organiser vos événements en vous mettant en relation avec des prestataires adaptés à votre projet, basés en Auvergne-Rhône-Alpes et soigneusement sélectionnés sur des critères précis."
+  },
+  {
+    "titre": "A qui s'adresse Manie ?",
+    "description": "Manie s'adresse à tous les organisateurs d'événements, professionnels ou particuliers. Particuliers : Amour (mariage, PACS, demande, fiançailles, renouvellement de voeux), Voyage (EVG, EVJF, week-end en groupe famille ou amis), Vie (baby shower, gender reveal, enterrement), Proches (anniversaire, cocktail, soirées), Religion (baptême, communion, confirmation, bar-mitzvah, Aid…), Carrière (pot de départ, fin de thèse, diplôme). Professionnel : Cocktail (anniversaire, lancement, partenaire, inauguration…), Soirée (gala, remise de prix, fin d'année, voeux, assemblée générale, conférence tedX), Cohésion (Séminaire, teambuilding), Réseau (journée porte ouverte ou d'étude), Business (Repas d'affaire, réunion plénière, codir), Scolaire (remise de prix/diplôme, soirée d'intégration, de fin d'année)."
+  },
+  {
+    "titre": "Est-ce que le service est payant ?",
+    "description": "L'accès à la plateforme est gratuit avec la formule \"Jeu d'enfant\". Des options d'accompagnement personnalisé sont proposées selon vos besoins."
+  },
+  {
+    "titre": "Comment créer un événement sur la plateforme ?",
+    "description": "Il vous suffit de créer un compte, répondre à un questionnaire intégré qui permet de vous inspirer, de définir vos besoins, vos envies et votre budget. Un espace personnel vous est ensuite dédié pour suivre l'avancement de vos évènements."
+  },
+  {
+    "titre": "Comment sont sélectionnés les prestataires ?",
+    "description": "Tous les prestataires sont sélectionnés par nos soins sur des critères précis que vous retrouverez dans la charte de bonne conduite de Manie. Tout prestataire présent sur cette plateforme a signé ce document lors de son inscription."
+  },
+  {
+    "titre": "Que se passe-t-il si un prestataire annule ?",
+    "description": "Manie s'engage à vous proposer un remplaçant équivalent à 5% près du budget initial si l'annulation a lieu jusqu'à un mois avant l'événement."
+  },
+  {
+    "titre": "Comment fonctionne la mise en relation avec les prestataires ?",
+    "description": "Lorsque vous aurez publié votre événement, les prestataires auront accès à cette publication et pourront consulter votre cahier des charges. Seuls les prestataires qui décideront de se positionner sur votre événement pourront entrer en contact avec vous en vous envoyant une première proposition comprenant une présentation de leur offre et un devis estimatif. Vous êtes ensuite libre d'accepter ou non cette prise de contact. Tout contact direct sans ce premier accord via la plateforme n'est pas autorisé."
+  },
+  {
+    "titre": "Comment puis-je suivre l'avancement de mon projet ?",
+    "description": "Vous disposez d'un espace personnel avec, pour chaque évènement, des outils de suivi de projet (check-list, gestion de budget…) ainsi que toutes les avancées du projet (demandes, validation et refus de prestataires, blog d'inspiration…)."
+  },
+  {
+    "titre": "Puis-je annuler mon événement ?",
+    "description": "Oui, mais vous devez en informer rapidement Manie ainsi que les prestataires concernés par quelconque discussion de prestation. Des conditions peuvent s'appliquer selon les prestations déjà engagées."
+  },
+  {
+    "titre": "Quelles sont les garanties en passant par Manie ?",
+    "description": "Passer par Manie pour organiser votre évènement, c'est obtenir des garanties qui vous permettent de rester zen le jour-J. La garantie de trouver des prestataires quali, adaptés à votre projet, mais aussi des prestataires locaux et engagés qui méritent d'être mis en avant à l'échelle régionale. Vous aurez l'assurance d'avoir un soutien en cas de litige, un paiement sécurisé, le remplacement d'un prestataire qui vous aurait planté… et bien d'autres encore."
+  },
+  {
+    "titre": "On n'a toujours pas répondu à votre question ?",
+    "description": "Ecrivez-nous à contact@manie-event.fr !"
+  }
+]

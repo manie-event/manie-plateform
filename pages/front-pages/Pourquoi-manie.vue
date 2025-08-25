@@ -1,11 +1,11 @@
 <template>
-  <div class="notre-histoire__container">
+  <div class="pourquoi-manie__container">
     <base-side-picture>
       <template #bg-image>
         <img
           :src="notreConstat"
           alt=""
-          class="notre-histoire__bg-image"
+          class="pourquoi-manie__bg-image"
           style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px"
         />
       </template>
@@ -13,7 +13,7 @@
         <img :src="LogoManie" alt="" class="manie-logo" />
       </template>
     </base-side-picture>
-    <div class="notre-histoire__descriptif">
+    <div class="pourquoi-manie__descriptif">
       <h1>Pourquoi “Manie” ?</h1>
       <h4>
         Parce que chaque événement est un moment unique, et qu’on a souvent “la manie” de vouloir
@@ -69,7 +69,7 @@ definePageMeta({
 });
 </script>
 <style lang="scss" scoped>
-.notre-histoire {
+.pourquoi-manie {
   &__container {
     display: flex;
     align-items: center;
