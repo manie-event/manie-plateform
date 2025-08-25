@@ -9,11 +9,11 @@
   },
   {
     "titre": "Comment ça fonctionne ?",
-    "description": "Rendez-vous sur la page suivante : commentcamarche/presta si vous souhaitez avoir plus d'informations sur l'ensemble des fonctionnalités de la plateforme ou contactez-nous à l'adresse contact@manie-event.fr."
+    "description": "Rendez-vous sur la page suivante : <a href=\"/front-pages/Ccm-presta\">Comment ça marche ?</a>, si vous souhaitez avoir plus d'informations sur l'ensemble des fonctionnalités de la plateforme ou contactez-nous à l'adresse <b>contact@manie-event.fr</b>."
   },
   {
     "titre": "Comment m'inscrire en tant que partenaire ?",
-    "description": "Vous souhaitez faire partie de l'aventure ? Rien de plus simple ! Rendez-vous sur cette page : https://tcheen.com/inscription/prestataire. Nous prendrons connaissance de votre profil et vous ferons un retour par mail sous 48h."
+    "description": "Vous souhaitez faire partie de l'aventure ? Rien de plus simple ! Rendez-vous sur cette page : <a href=\"/auth/Register\"> A la page d'enregistrement Manie</a>. Nous prendrons connaissance de votre profil et vous ferons un retour par mail sous 48h."
   },
   {
     "titre": "Quels sont les critères pour intégrer la plateforme ?",
@@ -21,7 +21,7 @@
   },
   {
     "titre": "L'inscription est-elle gratuite ?",
-    "description": "L'inscription est gratuite. Vous choisissez ensuite entre deux modèles de rémunération : une commission prélevée sur les devis validés, ou un abonnement annuel fixe (tarif sur demande)."
+    "description": "L'inscription est gratuite. Vous choisissez ensuite entre deux modèles de rémunération : <ul><li>une commission prélevée sur les devis validés</li> <li>ou un abonnement annuel fixe (tarif sur demande).</li></ul>"
   },
   {
     "titre": "Comment créer mon identité ?",
@@ -41,7 +41,7 @@
   },
   {
     "titre": "Comment se passe la tarification ?",
-    "description": "Manie vous laisse le choix de deux tarifications différentes : une commission de 10% sur devis TTC / 12% sur devis HT ; ou un abonnement annuel calculé selon la taille de votre activité et des événements visés."
+    "description": "Manie vous laisse le choix de deux tarifications différentes : <ul><li>une commission de 10% sur devis TTC / 12% sur devis HT</li> <li>ou un abonnement annuel calculé selon la taille de votre activité et des événements visés.</li></ul>"
   },
   {
     "titre": "Que se passe-t-il en cas de litige avec un client ?",
@@ -53,6 +53,6 @@
   },
   {
     "titre": "Mes informations sont-elles partagées ?",
-    "description": "Vos données sont sécurisées et uniquement utilisées dans le cadre de la mise en relation avec les clients. Elles ne sont jamais vendues à des tiers. Vous pouvez consulter notre politique de confidentialité."
+    "description": "Vos données sont sécurisées et uniquement utilisées dans le cadre de la mise en relation avec les clients. Elles ne sont jamais vendues à des tiers. Vous pouvez consulter notre politique de confidentialité juste <a href=\"/juridique/politique-de-confidentialite\">ici</a>."
   }
 ]
