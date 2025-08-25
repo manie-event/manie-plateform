@@ -210,8 +210,8 @@
 <script setup lang="ts">
 import questionnairePresta from '@/data/questionnaire-presta.json';
 import { nextTick, onMounted, ref, watch } from 'vue';
-import { useKeywords } from '~/composables/professional-user/UseKeywords';
-import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
+import { useKeywords } from '~/composables/ProfessionalUser/UseKeywords';
+import { useProfessionalProfile } from '~/composables/ProfessionalUser/UseProfessionalProfile';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { Keywords } from '~/models/professionalService/Keywords';
 import type { ProfessionalServiceUuid } from '~/models/professionalService/professionalServiceUuid';
@@ -347,6 +347,7 @@ const updateQuestionnaireSector = async (questionnaire: QuestionnaireItem, newSe
   questionnaire.keywordsByCategory = {};
   questionnaire.selectedServiceUuid = null;
   questionnaire.selectedKeywords.clear();
+  console.log('ICI');
 
   await getSectors(newSector);
 
@@ -452,6 +453,7 @@ watch(
   () => {
     if (professionnalServices.value?.length && keywords.value?.length && props.sector) {
       if (questionnaires.value.length === 0) {
+        console.log('Watcher de secours - création du questionnaire');
         const firstQuestionnaire = createQuestionnaire(props.sector);
         questionnaires.value.push(firstQuestionnaire);
       }

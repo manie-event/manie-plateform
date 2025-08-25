@@ -56,7 +56,6 @@ export const useKeywords = () => {
           (serviceItem: Services) =>
             serviceItem.sectorUuid.toLowerCase() === sectorUuid.toLowerCase()
         );
-        console.log(serviceFiltered, 'data serviceFiltered');
 
         setProfessionalServices(serviceFiltered);
       }
