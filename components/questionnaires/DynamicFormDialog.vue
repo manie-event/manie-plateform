@@ -93,8 +93,8 @@
 import FormField from '@/components/questionnaires/FormField.vue';
 import SectionController from '@/components/questionnaires/SectionController.vue';
 import ValidationErrors from '@/components/questionnaires/ValidationError.vue';
-import { useDynamicFormWithEmits } from '@/composables/QuestionnaireClient/UseDynamicFormWithEmits';
-import { useKeywords } from '~/composables/ProfessionalUser/UseKeywords';
+import { useDynamicFormWithEmits } from '@/composables/questionnaire-client/UseDynamicFormWithEmits';
+import { useKeywords } from '~/composables/professional-user/UseKeywords';
 import type {
   EventCreatePayload,
   FieldSchema,

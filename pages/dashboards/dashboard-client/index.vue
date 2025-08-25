@@ -9,7 +9,8 @@ import VisitFromUsa from '@/components/dashboards/dashboard-client/VisitFromUsa.
 import Snackbar from '@/components/dashboards/snackbar.vue';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
 import BaseEmptyState from '~/components/common/BaseEmptyState.vue';
-import { useClientProfil } from '../../../composables/client-user/UseClientProfil';
+import Events from '~/components/dashboards/dashboard-client/Events.vue';
+import { useClientProfil } from '../../../composables/ClientUser/UseClientProfil';
 
 const userStore = useUserStore();
 const { isProfileCreated } = storeToRefs(userStore);
@@ -23,11 +24,14 @@ onMounted(() => {
   <!-- Loader -->
   <Snackbar />
   <!-- Loader -->
-  <v-row v-if="isProfileCreated">
+  <v-row v-if="!isProfileCreated">
     <!-- Congratulation Card -->
     <v-col cols="12" sm="12" md="12" lg="6">
       <v-row>
         <!-- Payment Card  -->
+        <v-col cols="12" sm="6">
+          <Events />
+        </v-col>
         <v-col cols="12" sm="6">
           <Payments />
         </v-col>
