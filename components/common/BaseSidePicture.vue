@@ -20,6 +20,7 @@ import manieLogo from '@/public/images/logos/logo-manie-creme.svg';
 .base-component {
   position: relative;
   width: 50vw;
+  height: 100%;
   background: white;
   .image-container {
     position: relative;

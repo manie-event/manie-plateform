@@ -147,7 +147,7 @@ const setHoverState = (key: string, value: boolean) => {
       <!-- <h5 class="text-h5">Different Front Pages</h5>
       <p class="text-subtitle-1 font-weight-medium textSecondary mt-1">Included with the package</p> -->
       <div class="v-row my-5 top-7">
-        <v-col v-for="demo in FrontPageMenu.slice(0, 4)" :key="demo.img">
+        <v-col v-for="demo in FrontPageMenu.slice(0, 5)" :key="demo.img">
           <v-sheet class="text-center position-relative">
             <div class="overflow-hidden rounded-md border">
               <v-card
@@ -163,14 +163,8 @@ const setHoverState = (key: string, value: boolean) => {
                   scrim="rgba(55, 114, 255, 0.5)"
                   contained
                 >
-                  <v-btn
-                    color="primary"
-                    size="small"
-                    rounded="pill"
-                    flat
-                    target="_blank"
-                    :href="demo.link"
-                    >Live Preview</v-btn
+                  <v-btn color="primary" size="small" rounded="pill" flat :href="demo.link"
+                    >En savoir +</v-btn
                   >
                 </v-overlay>
               </v-card>
