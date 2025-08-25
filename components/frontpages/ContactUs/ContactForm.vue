@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import errorToaster from '@/components/common/errorToaster.vue';
 import type { ContactMessage } from '@/models/contact/contactMessage';
+import { Icon } from '@iconify/vue';
 import { ref } from 'vue';
-import { useContactService } from '~/services/useContactService';
 
 const select = ref();
 const items = ref(['Question générale', 'Demande de rendez-vous', 'option 3', 'option 4']);
-
-const { sendContactForm } = useContactService();
 
 const message = ref<ContactMessage>({
   firstName: '',
@@ -40,9 +38,22 @@ const message = ref<ContactMessage>({
               Basé à Lyon disponible en <br />
               Rhône-Alpes
             </h4>
-            <p class="text-16 font-weight-regular">
-              Visit us in person or find our contact details to connect with us directly.
-            </p>
+            <v-divider class="my-10 opacity-20"></v-divider>
+            <div class="contact-form__reseaux">
+              <NuxtLink to="https://www.instagram.com/manie_event/" target="_blank"
+                ><Icon icon="ant-design:instagram-outlined" height="22" width="22"></Icon
+              ></NuxtLink>
+              <NuxtLink to="https://www.linkedin.com/company/manie-event/" target="_blank"
+                ><Icon icon="ant-design:linkedin-outlined" height="22" width="22"></Icon
+              ></NuxtLink>
+              <NuxtLink
+                to="https://www.facebook.com/share/167V8whUYT/?mibextid=wwXIfr"
+                target="_blank"
+                ><Icon icon="ant-design:facebook-outlined" height="22" width="22"></Icon
+              ></NuxtLink>
+              <p>/</p>
+              <p>contact@manie-events.fr</p>
+            </div>
           </div>
         </v-col>
         <v-col cols="12" lg="8">
@@ -123,7 +134,6 @@ const message = ref<ContactMessage>({
                     flat
                     href=""
                     target="_blank"
-                    @click="sendContactForm(message)"
                     >Envoyez votre message</v-btn
                   >
                 </v-col>
@@ -139,3 +149,17 @@ const message = ref<ContactMessage>({
     </Teleport>
   </div>
 </template>
+<style lang="scss" scoped>
+.contact-form {
+  &__reseaux {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem;
+    a {
+      color: white;
+      height: 22px;
+    }
+  }
+}
+</style>
