@@ -347,6 +347,7 @@ const updateQuestionnaireSector = async (questionnaire: QuestionnaireItem, newSe
   questionnaire.keywordsByCategory = {};
   questionnaire.selectedServiceUuid = null;
   questionnaire.selectedKeywords.clear();
+  console.log('ICI');
 
   await getSectors(newSector);
 
@@ -452,6 +453,7 @@ watch(
   () => {
     if (professionnalServices.value?.length && keywords.value?.length && props.sector) {
       if (questionnaires.value.length === 0) {
+        console.log('Watcher de secours - création du questionnaire');
         const firstQuestionnaire = createQuestionnaire(props.sector);
         questionnaires.value.push(firstQuestionnaire);
       }

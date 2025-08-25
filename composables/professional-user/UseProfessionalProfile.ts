@@ -29,6 +29,8 @@ export const useProfessionalProfile = () => {
         return data;
       }
     } catch (error: unknown) {
+      // console.log('Error updating professional profile:', error.response.data.errors);
+
       addError(error.response.data as errorModel);
     }
   };
@@ -43,6 +45,7 @@ export const useProfessionalProfile = () => {
       });
       if (data) {
         setProfessionalUser(data);
+        console.log('User profile details:', data);
 
         return data;
       }
@@ -82,6 +85,8 @@ export const useProfessionalProfile = () => {
         }
       );
       if (data) {
+        console.log('data', data);
+
         setProfessionalUser(data);
 
         return data;
@@ -94,6 +99,8 @@ export const useProfessionalProfile = () => {
   const changeProfessionalBannerPicture = async (file: File) => {
     const formData = new FormData();
     formData.append('file', file);
+
+    console.log('URL finale:', `${config.public.apiUrl}/professional/${professionalUuid}/picture`);
 
     try {
       const { data } = await axios.patch(
@@ -110,6 +117,7 @@ export const useProfessionalProfile = () => {
       if (data?.imageUrl) {
         sendNewPhotoOnProfile(data.imageUrl);
       }
+      console.log('ici', data.imageUrl);
 
       return data;
     } catch (error) {
