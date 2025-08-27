@@ -21,11 +21,9 @@ export const useServiceMapping = () => {
 
     try {
       const data = await getSectorsApi(sectorId);
-      console.log(data, 'DATA ?');
 
       if (data?.services && data?.keywords) {
         loadedSectors.add(sectorId);
-        console.log(sectorId, 'sectorId ?');
 
         sectorDataCache[sectorId] = data;
       } else {
@@ -70,23 +68,18 @@ export const useServiceMapping = () => {
     // Créer des maps de recherche
     const serviceMap = new Map<string, string>();
     const keywordMap = new Map<string, string>();
-    console.log(tokens, 'TOKENS ?');
 
     sectorData.services.forEach((service) => {
       const normalizedName = normalizeText(service.name);
-      console.log(normalizedName, 'normalizedName ?');
 
       const testService = serviceMap.set(normalizedName, service.uuid);
-      console.log(testService, 'testService ?');
     });
 
     // je ne passe pas dans ce code
     sectorData.keywords.forEach((keyword) => {
       const normalizedName = normalizeText(keyword.value);
-      console.log(normalizedName, 'normalizedName Keyword ?');
 
       const testKeywords = keywordMap.set(normalizedName, keyword.uuid);
-      console.log(testKeywords, 'testKeywords ?');
     });
 
     // Mapper les tokens
@@ -133,10 +126,6 @@ export const useServiceMapping = () => {
     for (const section of sections) {
       const sectorData = sectorDataCache[section.id];
 
-      console.log(sectorData, 'sectorData ?');
-      console.log(sections, 'SECTIONS ?');
-      console.log(formAnswers, 'FORMANSWERS ? ');
-
       if (!sectorData) {
         console.warn(`⚠️ Données secteur manquantes pour ${section.id}`);
         continue;
@@ -145,21 +134,15 @@ export const useServiceMapping = () => {
       // Collecter tous les tokens sélectionnés dans cette section
       const selectedTokens = collectSelectedTokens(section, formAnswers);
       if (selectedTokens.size === 0) {
-        console.log(selectedTokens.size, 'selectedTokens ?');
-
         continue;
       }
 
       // Mapper les tokens aux UUIDs
       const { serviceUuids, keywordUuids } = mapTokensToUuids(selectedTokens, sectorData);
-      console.log(keywordUuids.length, 'keywordUuids.length ?');
-      console.log(serviceUuids.length, 'serviceUuids.length ?');
-
       // Créer les sélections de services
       if (keywordUuids.length > 0 && serviceUuids.length > 0) {
         serviceUuids.forEach((serviceUuid) => {
           const selection = { serviceUuid, keywordsUuid: keywordUuids };
-          console.log(selection, 'selection ?');
 
           selections.push(selection);
         });

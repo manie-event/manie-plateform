@@ -10,8 +10,8 @@ import { usePingService } from '../services/UsePingService';
 const { ping } = usePingService();
 
 onMounted(() => {
-  AOS.init();
   ping();
+  AOS.init();
 });
 
 /*for Blank Layout*/

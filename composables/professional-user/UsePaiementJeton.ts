@@ -45,12 +45,6 @@ export const usePaiementJeton = () => {
         return data;
       }
     } catch (error: any) {
-      console.log('=== ERROR DETAILS ===');
-      console.log('Error message:', error.message);
-      console.log('Error status:', error.response?.status);
-      console.log('Error headers:', error.response?.headers);
-      console.log('Error data:', error.response?.data);
-      console.log('Request that failed:', error.config);
       throw error;
     }
   };
@@ -102,38 +96,6 @@ export const usePaiementJeton = () => {
     } else {
       console.log('✅ Profile déjà présent, aucun besoin restock ');
     }
-
-    // const verifyPayment = async (session_id: string) => {
-    //   console.log(session_id, 'session_id');
-
-    //   try {
-    //     loading.value = true;
-
-    //     const { data } = await axios.get(
-    //       `${config.public.apiUrl}/payments/session-status/${session_id}`,
-    //       {
-    //         headers: {
-    //           Authorization: `Bearer ${token.value}`,
-    //           'Content-Type': 'application/json',
-    //         },
-    //       }
-    //     );
-
-    //     if (data.success) {
-    //       console.log(data);
-    //       paymentVerified.value = true;
-    //       paymentData.value = data.session;
-    //       console.log(paymentData.value, 'paymentData');
-    //     } else {
-    //       messageError.value = data.error || 'Échec de la vérification';
-    //     }
-    //   } catch (error) {
-    //     console.error('Erreur lors de la vérification:', error);
-    //     messageError.value = 'Erreur de communication avec le serveur';
-    //   } finally {
-    //     loading.value = false;
-    //   }
-    // };
   };
   return {
     createTokenSession,

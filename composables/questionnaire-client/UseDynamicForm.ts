@@ -18,9 +18,9 @@ interface UseDynamicFormProps {
 }
 
 export function useDynamicForm(props: UseDynamicFormProps) {
-  // État réactif du formulaire
+  const { clientProfile } = storeToRefs(useUserStore());
   const formState = reactive<FormState>({ ...(props.modelValue || {}) });
-  const organisatorUuid = localStorage.getItem('client-uuid')!;
+  const orgaUuid = clientProfile.value?.uuid;
 
   // Composables spécialisés
   const { loadSectorData, buildServiceSelections } = useServiceMapping();
@@ -61,7 +61,6 @@ export function useDynamicForm(props: UseDynamicFormProps) {
       type: 'checkbox',
       multiple: false,
     };
-    console.log(`Champ de contrôle virtuel pour ${section.id}:`, virtualField.id);
     return virtualField;
   };
 
@@ -161,7 +160,7 @@ export function useDynamicForm(props: UseDynamicFormProps) {
         : Number(formState.budget || 0);
 
     const payload: EventCreatePayload = {
-      organisatorUuid: organisatorUuid,
+      organisatorUuid: orgaUuid ?? '',
       date: computeDateRange(formState),
       budget,
       location: String(formState.localisation || ''),
@@ -179,16 +178,13 @@ export function useDynamicForm(props: UseDynamicFormProps) {
   const submitForm = async (getSectorsApi: Function): Promise<EventCreatePayload | null> => {
     const isValid = validatePage(currentPageSections.value, formState, isFieldVisible);
     if (!isValid) {
-      console.log('notValid ?');
       return null;
     }
 
     try {
       const services = buildServiceSelections(props.sections, formState);
-      console.log('SERVICES ?', services);
 
       const payload = buildEventPayload(services);
-      console.log('PAYLOAD ?', payload);
 
       return payload;
     } catch (error) {

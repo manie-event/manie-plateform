@@ -73,6 +73,7 @@ export const useUserStore = defineStore('userStore', () => {
     user,
     bgPicture,
     professionalUser,
+    clientProfile,
     isProfileCreated,
     isStoringUserAccepeted,
     professionnalServices,

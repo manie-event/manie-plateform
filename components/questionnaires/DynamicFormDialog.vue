@@ -156,8 +156,6 @@ const {
 
 /***** Handlers locaux *****/
 const updateFieldValue = (field: FieldSchema, value: any): void => {
-  console.log(`Mise à jour du champ ${field.id}:`, { old: formState[field.id], new: value });
-
   if (field.type === 'number') {
     const num = value === '' || value === null || value === undefined ? undefined : Number(value);
     formState[field.id] = Number.isNaN(num) ? undefined : num;

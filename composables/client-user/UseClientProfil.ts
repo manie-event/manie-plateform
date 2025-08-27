@@ -6,8 +6,8 @@ export const useClientProfil = () => {
   const token = useCookie('token');
   const userStore = useUserStore();
   const { setClientProfile } = userStore;
+  const { clientProfile, isProfileCreated } = storeToRefs(userStore);
   const config = useRuntimeConfig();
-  const clientUuid = localStorage.getItem('client-uuid');
 
   const getClientProfil = async () => {
     const { data } = await axios.get(`${config.public.apiUrl}/organisator`, {
@@ -18,12 +18,13 @@ export const useClientProfil = () => {
     });
     if (data) {
       setClientProfile(data);
-      localStorage.setItem('client-uuid', data.uuid);
       return data;
     }
   };
 
   const patchClientProfil = async (newProfil: ClientModel) => {
+    const clientUuid = clientProfile.value?.uuid;
+
     const { data } = await axios.patch(
       `${config.public.apiUrl}/organisator/${clientUuid}`,
       newProfil,
@@ -35,8 +36,7 @@ export const useClientProfil = () => {
       }
     );
     if (data) {
-      console.log(data, 'Client Data');
-
+      isProfileCreated.value = true;
       return data;
     }
   };

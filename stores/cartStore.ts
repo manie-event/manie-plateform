@@ -13,9 +13,6 @@ export const useCartStore = defineStore('cartStore', () => {
 
   const creditTokensAfterPayment = (newQuantity: number) => {
     userTokenBalance.value = userTokenBalance.value + newQuantity;
-    console.log(
-      `✅ ${cartQuantity.value} jetons crédités. Nouveau solde: ${userTokenBalance.value}`
-    );
   };
   const setBillingInfo = (billingInfo: BillingInfo) => {
     addresses.value.push(billingInfo);
