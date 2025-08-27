@@ -7,11 +7,11 @@
         </div>
       </div>
       <div>
-        <div class="mt-10 mb-sm-12 mb-8 current-events__cards" v-if="mockEventArray.length > 0">
+        <div class="mt-10 mb-sm-12 mb-8 current-events__cards" v-if="events.length > 0">
           <div v-for="event in paginatedEvents" class="current-events__card">
             <div>
-              <h4>{{ event.titre }}</h4>
-              <h5>{{ event.description }}</h5>
+              <h4>{{ event.name }}</h4>
+              <h5>{{ event.date }}</h5>
               <v-chip
                 :color="event.status === 'cancelled' ? 'error' : 'success'"
                 variant="flat"
@@ -19,7 +19,7 @@
                 >{{ event.status == 'cancelled' ? 'rejetée' : 'acceptée' }}</v-chip
               >
             </div>
-            <v-btn color="primary" @click="openDialog(event.eventUuid)">Ajouter un secteur</v-btn>
+            <v-btn color="primary" @click="openDialog(event.uuid)">Ajouter un secteur</v-btn>
           </div>
         </div>
         <v-pagination
@@ -39,6 +39,11 @@
 
 <script setup lang="ts">
 import AddEventService from '@/components/dashboards/dashboard-client/AddEventService.vue';
+import { useEventService } from '~/services/UseEventService';
+
+const { clientProfile } = storeToRefs(useUserStore());
+const { events } = storeToRefs(eventsStore());
+const { getEventsPerOrganisator } = useEventService();
 
 const isDialogOpen = ref(false);
 const currentPage = ref(1);
@@ -46,59 +51,27 @@ const itemsPerPage = 3;
 const selectedEvent = ref();
 
 const totalPages = computed(() => {
-  return Math.ceil(mockEventArray.length / itemsPerPage);
+  return Math.ceil(events.value.length / itemsPerPage);
 });
 
 const paginatedEvents = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
   const end = start + itemsPerPage;
-  return mockEventArray.slice(start, end);
+  return events.value.slice(start, end);
 });
 
-const mockEventArray = [
-  {
-    titre: 'event1',
-    description: 'test1',
-    photoEvent: '',
-    eventUuid: '001',
-    status: 'completed',
-  },
-  {
-    titre: 'event2',
-    description: 'test2',
-    photoEvent: '',
-    eventUuid: '002',
-    status: 'completed',
-  },
-  {
-    titre: 'event3',
-    description: 'test3',
-    photoEvent: '',
-    eventUuid: '003',
-    status: 'cancelled',
-  },
-  {
-    titre: 'event4',
-    description: 'test3',
-    photoEvent: '',
-    eventUuid: '004',
-    status: 'cancelled',
-  },
-  {
-    titre: 'event5',
-    description: 'test3',
-    photoEvent: '',
-    eventUuid: '005',
-    status: 'cancelled',
-  },
-];
-
 const openDialog = (eventUuid: string) => {
-  const findSelectedEvent = mockEventArray.find((event) => event.eventUuid === eventUuid);
+  const findSelectedEvent = events.value.find((event) => event.uuid === eventUuid);
 
   selectedEvent.value = findSelectedEvent;
   isDialogOpen.value = true;
 };
+
+onMounted(async () => {
+  console.log(clientProfile.value, 'CLIENT PROFILE');
+
+  await getEventsPerOrganisator();
+});
 </script>
 
 <style lang="scss" scoped>
