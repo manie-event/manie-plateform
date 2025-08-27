@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { useCustomizerStore } from '@/stores/customizer';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
+import { UserCategory } from '~/models/enums/userCategoryEnums';
 
 const title = ref('Manie');
 
 const customizer = useCustomizerStore();
 const { getProfessionalProfileDetails } = useProfessionalProfile();
+const { user } = storeToRefs(useUserStore());
 
 useHead({
   meta: [{ content: title }],
@@ -16,8 +18,10 @@ useHead({
   },
 });
 
-onMounted(() => {
-  getProfessionalProfileDetails();
+onMounted(async () => {
+  if (user.value?.category === UserCategory.PRESTA) {
+    await getProfessionalProfileDetails();
+  }
 });
 </script>
 

@@ -12,13 +12,15 @@ import WelcomeCard from '@/components/dashboards/dashboard2/WelcomeCard.vue';
 import Footer from '@/components/frontpages/layout/Footer.vue';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
+import { UserCategory } from '~/models/enums/userCategoryEnums';
+
 const userStore = useUserStore();
-const { isProfileCreated } = storeToRefs(userStore);
+const { isProfileCreated, user } = storeToRefs(userStore);
 const { getProfessionalProfileDetails } = useProfessionalProfile();
 
-onMounted(() => {
-  if (isProfileCreated.value) {
-    getProfessionalProfileDetails();
+onMounted(async () => {
+  if (!isProfileCreated.value && user.value?.category == UserCategory.PRESTA) {
+    await getProfessionalProfileDetails();
   }
 });
 </script>

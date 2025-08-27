@@ -47,8 +47,6 @@ export function useFormValidation() {
       });
     });
 
-    console.log(test, 'SU PUTA MADRE ?');
-
     pageErrors.value = errors;
 
     return errors.length === 0;

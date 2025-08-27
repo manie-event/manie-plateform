@@ -39,6 +39,13 @@ export const useUserStore = defineStore('userStore', () => {
   // client setters
   const setClientProfile = (newProfile: clientProfile) => {
     clientProfile.value = newProfile;
+    console.log(clientProfile.value, 'from setClientProfile');
+  };
+
+  const updateClientProfile = (updatedProfile: clientProfile) => {
+    clientProfile.value = updatedProfile;
+
+    console.log(clientProfile.value, 'from updateClientProfile');
   };
 
   // professional setters
@@ -73,6 +80,7 @@ export const useUserStore = defineStore('userStore', () => {
     user,
     bgPicture,
     professionalUser,
+    clientProfile,
     isProfileCreated,
     isStoringUserAccepeted,
     professionnalServices,
@@ -87,5 +95,6 @@ export const useUserStore = defineStore('userStore', () => {
     setKeywords,
     sendNewPhotoOnProfile,
     setUpdateProfile,
+    updateClientProfile,
   };
 });

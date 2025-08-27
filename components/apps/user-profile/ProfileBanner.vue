@@ -60,6 +60,11 @@
             <v-btn color="primary" size="large" class="w-100" @click="openEditProfilModal()"
               >Editez votre profil</v-btn
             >
+            <NuxtLink to="/dashboards/dashboard-client"
+              ><v-btn color="success" size="large" class="w-100">
+                Revenir au dashboard</v-btn
+              ></NuxtLink
+            >
           </div>
         </v-col>
         <v-col md="12" class="order-sm-last">

@@ -14,7 +14,6 @@ function searchbox() {
   showSearch.value = !showSearch.value;
 }
 watch(priority, (newPriority) => {
-  // yes, console.log() is a side effect
   priority.value = newPriority;
 });
 // count items

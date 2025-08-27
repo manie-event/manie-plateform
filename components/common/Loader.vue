@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <img :src="Loader" alt="" class="loader" />
+  <div class="loader__container">
+    <img :src="Loader" alt="" class="loader__img" />
   </div>
 </template>
 <script setup lang="ts">
@@ -8,8 +8,15 @@ import Loader from '@/public/images/logos/logo-manie-bleu-ciel.svg';
 </script>
 <style lang="scss" scoped>
 .loader {
-  width: 250px;
-  animation: loaderAnim 2s infinite;
+  &__container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  &__img {
+    width: 250px;
+    animation: loaderAnim 2s infinite;
+  }
 }
 
 @keyframes loaderAnim {

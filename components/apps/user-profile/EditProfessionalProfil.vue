@@ -291,10 +291,6 @@ const {
   keepValuesOnUnmount: true,
 });
 
-const onSubmit = () => {
-  console.log('Submitting profile:', profile);
-};
-
 const addLink = () => {
   profile.links.push({ type: '', value: '' });
 };

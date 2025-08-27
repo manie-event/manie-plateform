@@ -1,16 +1,23 @@
 <template>
-  <div>
-    <button @click="openModal = !openModal" class="events__add-button">+</button>
-    {{ openModal }}
-    <!-- <client-questionnaire v-if="openModal" v-model:open-modal="openModal"></client-questionnaire> -->
-    <DynamicFormDialog
-      v-if="openModal"
-      v-model:open-modal="openModal"
-      :sections="sections"
-      v-model="answers"
-      @submit="onSubmit"
-    />
-  </div>
+  <v-card elevation="10" class="roun-">
+    <v-card-text class="position-relative events__container">
+      <div class="d-flex justify-space-between d-block align-center">
+        <div class="mb-6">
+          <h5 class="text-h5 mb-1 font-weight-semibold">Créez un évenènement</h5>
+        </div>
+      </div>
+
+      <button @click="openModal = !openModal" class="events__add-button">+</button>
+      <!-- <client-questionnaire v-if="openModal" v-model:open-modal="openModal"></client-questionnaire> -->
+      <DynamicFormDialog
+        v-if="openModal"
+        v-model:open-modal="openModal"
+        :sections="sections"
+        v-model="answers"
+        @submit="onSubmit"
+      />
+    </v-card-text>
+  </v-card>
 </template>
 
 <script setup lang="ts">
@@ -31,40 +38,34 @@ const answers = ref<Record<string, any>>({});
 const { createEventService } = eventService;
 
 const onSubmit = (payload: EventCreatePayload) => {
-  // const formatDateRange = (dates: string[] | string): string => {
-  //   // Si c'est déjà une string (format range), on la retourne
-  //   if (typeof dates === 'string') {
-  //     console.log('ici');
-
-  //     return dates;
-  //   }
-
-  //   // Si c'est un tableau de dates
-  //   if (Array.isArray(dates)) {
-  //     if (dates.length === 1) {
-  //       console.log('dates.length === 1');
-
-  //       // Un seul jour : [2025-08-30,2025-08-30]
-  //       return `[${dates[0]},${dates[0]}]`;
-  //     } else if (dates.length >= 2) {
-  //       console.log('dates.length === 2');
-  //       // Plusieurs jours : [premiere_date,derniere_date]
-  //       return `[${dates[0]},${dates[dates.length - 1]}]`;
-  //     }
-  //   }
-  // };
   createEventService(payload);
 };
 </script>
 <style lang="scss" scoped>
 .events {
+  &__container {
+    position: relative;
+    min-height: 300px;
+  }
   &__add-button {
-    border: 2px solid black;
-    padding: 3rem 5rem;
-    border-radius: 5%;
-    color: black;
-    font-size: 2rem;
+    border-radius: 11%;
+    color: rgb(255, 255, 255);
     font-weight: 900;
+    width: 80px;
+    height: 80px;
+    background: black;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    transition: all 0.4s ease-in;
+    &:hover {
+      background: linear-gradient(310deg, rgba(235, 247, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+      width: 100px;
+      border: 1px solid black;
+      color: black;
+      height: 100px;
+      transition: all 0.4s ease-out;
+    }
   }
 }
 </style>

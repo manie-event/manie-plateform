@@ -19,18 +19,13 @@ export function useDynamicFormWithEmits(
   emit: FormEmits,
   getSectorsApi: Function
 ) {
-  console.log(getSectorsApi, 'getSectorsApi ?');
-
   const formLogic = useDynamicForm(props);
 
   /**
    * Handler de soumission avec émission
    */
   const handleSubmit = async (): Promise<void> => {
-    console.log(getSectorsApi, 'getSectorsApi ?');
-
     const payload = await formLogic.submitForm(getSectorsApi);
-    console.log(payload, 'payload ?');
 
     if (payload) {
       // Émettre la mise à jour du modèle

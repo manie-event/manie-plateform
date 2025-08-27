@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import CurrentEvents from '@/components/dashboards/dashboard-client/CurrentEvents.vue';
 import Customers from '@/components/dashboards/dashboard-client/Customers.vue';
 import LatestDeal from '@/components/dashboards/dashboard-client/LatestDeals.vue';
 import LatestReviews from '@/components/dashboards/dashboard-client/LatestReviews.vue';
@@ -11,12 +12,15 @@ import { useClientProfil } from '@/composables/client-user/UseClientProfil';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
 import BaseEmptyState from '~/components/common/BaseEmptyState.vue';
 import Events from '~/components/dashboards/dashboard-client/Events.vue';
+import { UserCategory } from '~/models/enums/userCategoryEnums';
 
 const userStore = useUserStore();
-const { isProfileCreated } = storeToRefs(userStore);
+const { isProfileCreated, user } = storeToRefs(userStore);
 const { getClientProfil } = useClientProfil();
-onMounted(() => {
-  getClientProfil();
+onMounted(async () => {
+  if (!isProfileCreated.value && user.value?.category == UserCategory.CONSUMER) {
+    await getClientProfil();
+  }
 });
 </script>
 
@@ -24,44 +28,59 @@ onMounted(() => {
   <!-- Loader -->
   <Snackbar />
   <!-- Loader -->
-  <v-row v-if="!isProfileCreated">
-    <!-- Congratulation Card -->
-    <v-col cols="12" sm="12" md="12" lg="6">
+  <!-- Section principale si profil créé -->
+  <v-row v-if="isProfileCreated">
+    <!-- Events et CurrentEvents sur la même ligne -->
+    <v-col cols="12">
       <v-row>
-        <!-- Payment Card  -->
-        <v-col cols="12" sm="6">
+        <v-col cols="4">
           <Events />
         </v-col>
-        <v-col cols="12" sm="6">
-          <Payments />
-        </v-col>
-        <!-- Product Card -->
-        <v-col cols="12" sm="6" class="d-flex">
-          <Products />
-        </v-col>
-        <!-- LatestDeal Card -->
-        <v-col cols="12" sm="6">
-          <LatestDeal />
-        </v-col>
-        <!-- Customer Card -->
-        <v-col cols="12" sm="6" class="d-flex">
-          <Customers />
+        <v-col cols="8">
+          <div style="display: flex; flex-direction: column">
+            <CurrentEvents />
+          </div>
         </v-col>
       </v-row>
     </v-col>
-    <!-- Products Table  -->
+
+    <!-- Payments - 6 colonnes -->
+    <v-col cols="12" sm="6">
+      <Payments />
+    </v-col>
+
+    <!-- Products - 6 colonnes -->
+    <v-col cols="12" sm="6" class="d-flex">
+      <Products />
+    </v-col>
+
+    <!-- LatestDeal - 6 colonnes -->
+    <v-col cols="12" sm="6">
+      <LatestDeal />
+    </v-col>
+
+    <!-- Customers - 6 colonnes -->
+    <v-col cols="12" sm="6" class="d-flex">
+      <Customers />
+    </v-col>
+
+    <!-- ProductsTable - 8 colonnes sur grand écran -->
     <v-col cols="12" sm="12" lg="8">
       <ProductsTable />
     </v-col>
-    <!-- Visit From USA  -->
+
+    <!-- VisitFromUsa - 4 colonnes sur grand écran -->
     <v-col cols="12" sm="12" lg="4">
       <VisitFromUsa />
     </v-col>
-    <!-- Latest reviews -->
+
+    <!-- LatestReviews - pleine largeur -->
     <v-col cols="12" sm="12" lg="12">
       <LatestReviews />
     </v-col>
   </v-row>
+
+  <!-- Section alternative si profil non créé -->
   <v-row v-else>
     <v-col cols="12">
       <BaseEmptyState>
