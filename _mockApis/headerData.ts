@@ -79,7 +79,7 @@ const professionalProfile: profileType[] = [
   },
 ];
 
-const clientProfile: profileType[] = [
+const clientMenu: profileType[] = [
   {
     avatar: 'wallet-2-line-duotone',
     bgcolor: 'info',
@@ -253,7 +253,7 @@ const optionIconData: optionIcon[] = [
 
 export {
   appsLink,
-  clientProfile,
+  clientMenu,
   notifications,
   optionIconData,
   professionalProfile,

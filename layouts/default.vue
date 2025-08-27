@@ -18,9 +18,9 @@ useHead({
   },
 });
 
-onMounted(() => {
+onMounted(async () => {
   if (user.value?.category === UserCategory.PRESTA) {
-    getProfessionalProfileDetails();
+    await getProfessionalProfileDetails();
   }
 });
 </script>

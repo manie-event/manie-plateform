@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { clientProfile, professionalProfile } from '@/_mockApis/headerData';
+import { clientMenu, professionalProfile } from '@/_mockApis/headerData';
 import { UserCategory } from '@/models/enums/userCategoryEnums';
 import { Icon } from '@iconify/vue';
 import { CircleXIcon } from 'vue-tabler-icons';
@@ -7,9 +7,12 @@ import { useProfessionalProfile } from '~/composables/professional-user/UseProfe
 import { useAuthentification } from '../../../../composables/UseAuthentification';
 
 const userStore = useUserStore();
-const { user, professionalUser, isProfileCreated, isProfessional } = storeToRefs(userStore);
+const { user, professionalUser, isProfileCreated, isProfessional, clientProfile } =
+  storeToRefs(userStore);
+
 const { sendLogout } = useAuthentification();
 const { userTokenBalance } = storeToRefs(useCartStore());
+const { getProfessionalProfileDetails } = useProfessionalProfile();
 
 const getNameDependingOnCategory = computed(() => {
   if (
@@ -17,6 +20,9 @@ const getNameDependingOnCategory = computed(() => {
     professionalUser.value?.category == 'professional'
   ) {
     return professionalUser.value?.name;
+  }
+  if (clientProfile.value) {
+    return clientProfile.value.username;
   } else {
     return user.value?.username;
   }
@@ -30,10 +36,8 @@ const getCategory = computed(() => {
   }
 });
 
-const { getProfessionalProfileDetails } = useProfessionalProfile();
-
 onMounted(() => {
-  if (isProfileCreated.value) {
+  if (isProfileCreated.value && user.value?.category === UserCategory.PROFESSIONAL) {
     getProfessionalProfileDetails();
   }
 });
@@ -119,7 +123,7 @@ onMounted(() => {
         </v-list>
         <v-list class="py-0 theme-list" lines="two" v-else>
           <v-list-item
-            v-for="item in clientProfile"
+            v-for="item in clientMenu"
             :key="item.title"
             class="py-4 px-8 custom-text-primary"
             :to="item.href"

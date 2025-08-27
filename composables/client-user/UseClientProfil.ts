@@ -5,7 +5,7 @@ export const useClientProfil = () => {
   const { addError, addSuccess } = useToaster();
   const token = useCookie('token');
   const userStore = useUserStore();
-  const { setClientProfile } = userStore;
+  const { setClientProfile, updateClientProfile } = userStore;
   const { clientProfile, isProfileCreated } = storeToRefs(userStore);
   const config = useRuntimeConfig();
 
@@ -36,6 +36,9 @@ export const useClientProfil = () => {
       }
     );
     if (data) {
+      const profileUpdated = await getClientProfil();
+
+      updateClientProfile(profileUpdated);
       isProfileCreated.value = true;
       return data;
     }

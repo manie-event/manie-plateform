@@ -128,7 +128,6 @@ export const useAuthentification = () => {
 
       if (data) {
         addSuccess('Déconnexion réussie.');
-        localStorage.clear();
         token.value = null;
         await router.push('/');
       }
