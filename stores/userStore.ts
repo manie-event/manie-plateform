@@ -11,7 +11,25 @@ export const useUserStore = defineStore('userStore', () => {
   const isProfilUpdate = ref(false);
 
   //client Ref
-  const clientProfile = ref<clientProfile>();
+  const clientProfile = ref<clientProfile>({
+    address: '',
+    birthDate: '',
+    businessLeader: '',
+    businessName: '',
+    businessSiret: '',
+    city: '',
+    country: '',
+    createdAt: '',
+    email: '',
+    id: 0,
+    isBusiness: false,
+    phoneNumber: '',
+    updatedAt: '',
+    userUuid: '',
+    username: '',
+    uuid: '',
+    zipCode: '',
+  });
 
   //professional Ref
   const professionalUser = ref<ProfessionalProfile>();
@@ -39,7 +57,7 @@ export const useUserStore = defineStore('userStore', () => {
   // client setters
   const setClientProfile = (newProfile: clientProfile) => {
     clientProfile.value = newProfile;
-    console.log(clientProfile.value, 'from setClientProfile');
+    localStorage.setItem('client-uuid', clientProfile.value.uuid);
   };
 
   const updateClientProfile = (updatedProfile: clientProfile) => {

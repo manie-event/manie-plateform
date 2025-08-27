@@ -3,6 +3,7 @@ import { clientMenu, professionalProfile } from '@/_mockApis/headerData';
 import { UserCategory } from '@/models/enums/userCategoryEnums';
 import { Icon } from '@iconify/vue';
 import { CircleXIcon } from 'vue-tabler-icons';
+import { useClientProfil } from '~/composables/client-user/UseClientProfil';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { useAuthentification } from '../../../../composables/UseAuthentification';
 
@@ -13,6 +14,7 @@ const { user, professionalUser, isProfileCreated, isProfessional, clientProfile 
 const { sendLogout } = useAuthentification();
 const { userTokenBalance } = storeToRefs(useCartStore());
 const { getProfessionalProfileDetails } = useProfessionalProfile();
+const { getClientProfil } = useClientProfil();
 
 const getNameDependingOnCategory = computed(() => {
   if (
@@ -36,9 +38,11 @@ const getCategory = computed(() => {
   }
 });
 
-onMounted(() => {
+onMounted(async () => {
   if (isProfileCreated.value && user.value?.category === UserCategory.PROFESSIONAL) {
-    getProfessionalProfileDetails();
+    await getProfessionalProfileDetails();
+  } else {
+    await getClientProfil();
   }
 });
 </script>
