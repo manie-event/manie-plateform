@@ -37,8 +37,7 @@
       v-if="isDialogOpen"
       v-model:open-modal="isDialogOpen"
       :sections="sections"
-      :model-value="answers"
-      v-model="answers"
+      :model-value="formAnswers"
       @submit="onSubmitEdit"
     />
   </Teleport>
@@ -53,15 +52,15 @@ import type { eventModel } from '~/models/events/eventModel';
 import { useEventService } from '~/services/UseEventService';
 
 const { clientProfile } = storeToRefs(useUserStore());
-const { events } = storeToRefs(eventsStore());
-const { getEventsPerOrganisator } = useEventService();
+const { events, answers } = storeToRefs(eventsStore());
+const { getEventsPerOrganisator, getEventsInstance } = useEventService();
 
 const isDialogOpen = ref(false);
 const currentPage = ref(1);
 const itemsPerPage = 3;
 const selectedEvent = ref<eventModel | null>(null);
-const answers = ref<Record<string, any>>({});
 const selectedEventUuid = ref<string | null>(null);
+const formAnswers = ref<Record<string, any>>({});
 const sections = (ClientQuestionnaire.sections as SectionSchema[]);
 const { prefillFormFromEvent } = useEventPrefill();
 
@@ -79,9 +78,9 @@ const openDialog = async (eventUuid: string) => {
   const findSelectedEvent = events.value.find((event) => event.uuid === eventUuid) || null;
   selectedEvent.value = findSelectedEvent;
   selectedEventUuid.value = eventUuid;
-  answers.value = findSelectedEvent
-    ? await prefillFormFromEvent(findSelectedEvent, sections)
-    : {};
+  if (findSelectedEvent) {
+    await getEventsInstance(findSelectedEvent.uuid);
+  }
   isDialogOpen.value = true;
 };
 
@@ -96,6 +95,18 @@ onMounted(async () => {
 
   await getEventsPerOrganisator();
 });
+
+watch(
+  () => answers.value,
+  async (val) => {
+    if (val) {
+      formAnswers.value = await prefillFormFromEvent(val as eventModel, sections);
+    } else {
+      formAnswers.value = {};
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <style lang="scss" scoped>

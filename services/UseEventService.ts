@@ -8,7 +8,7 @@ export const useEventService = () => {
   const config = useRuntimeConfig();
   const token = useCookie('token');
   const { clientProfile } = storeToRefs(useUserStore());
-  const { setEventsByOrganisator } = eventsStore();
+  const { setEventsByOrganisator, setQuestionnaireAnswers } = eventsStore();
   const clientUuid = localStorage.getItem('client-uuid');
 
   const createEventService = async (payload: EventCreatePayload) => {
@@ -51,8 +51,22 @@ export const useEventService = () => {
       return data;
     }
   };
+
+  const getEventsInstance = async (eventUuid: string) => {
+    const { data } = await axios.get(`${config.public.apiUrl}/event/${eventUuid}`, {
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    if (data) {
+      setQuestionnaireAnswers(data);
+      return data;
+    }
+  };
   return {
     createEventService,
     getEventsPerOrganisator,
+    getEventsInstance,
   };
 };
