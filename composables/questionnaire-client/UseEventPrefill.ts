@@ -154,8 +154,9 @@ export const useEventPrefill = () => {
   const prefillFormFromEvent = async (
     event: eventModel,
     sections: SectionSchema[]
-  ): Promise<Record<string, any>> => {
+  ): Promise<{ formState: Record<string, any>; lockedSections: Set<string> }> => {
     const formState: Record<string, any> = {};
+    const lockedSections = new Set<string>();
 
     // 1) Général
     prefillGeneral(formState, event);
@@ -170,6 +171,7 @@ export const useEventPrefill = () => {
 
       // Activer la section et le contrôleur virtuel
       activateSectionControllers(formState, section);
+      lockedSections.add(section.id);
 
       // Sélectionner le type/service (si on a un nom)
       if (serviceName) {
@@ -186,7 +188,7 @@ export const useEventPrefill = () => {
       }
     }
 
-    return formState;
+    return { formState, lockedSections };
   };
 
   return { prefillFormFromEvent };

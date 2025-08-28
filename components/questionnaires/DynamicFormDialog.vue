@@ -28,6 +28,7 @@
                         :field="getVisibleField(section)"
                         :model-value="getSectionControllerValue(section)"
                         :error="fieldErrors[getVisibleField(section)?.id || '']"
+                        :disabled="props.lockedSections?.has(section.id)"
                         @update:modelValue="(v) => handleSectionControllerChange(section, !!v)"
                       />
                     </v-col>
@@ -106,6 +107,7 @@ import type {
 const props = defineProps<{
   sections: SectionSchema[];
   modelValue?: Record<string, any>;
+  lockedSections?: Set<string>;
 }>();
 
 const emit = defineEmits<{

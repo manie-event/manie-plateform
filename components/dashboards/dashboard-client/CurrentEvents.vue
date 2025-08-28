@@ -38,6 +38,7 @@
       v-model:open-modal="isDialogOpen"
       :sections="sections"
       :model-value="formAnswers"
+      :locked-sections="lockedSections"
       @submit="onSubmitEdit"
     />
   </Teleport>
@@ -61,6 +62,7 @@ const itemsPerPage = 3;
 const selectedEvent = ref<eventModel | null>(null);
 const selectedEventUuid = ref<string | null>(null);
 const formAnswers = ref<Record<string, any>>({});
+const lockedSections = ref<Set<string>>(new Set());
 const sections = (ClientQuestionnaire.sections as SectionSchema[]);
 const { prefillFormFromEvent } = useEventPrefill();
 
@@ -100,9 +102,12 @@ watch(
   () => answers.value,
   async (val) => {
     if (val) {
-      formAnswers.value = await prefillFormFromEvent(val as eventModel, sections);
+      const prefilled = await prefillFormFromEvent(val as eventModel, sections);
+      formAnswers.value = prefilled.formState;
+      lockedSections.value = prefilled.lockedSections;
     } else {
       formAnswers.value = {};
+      lockedSections.value = new Set();
     }
   },
   { immediate: true }
