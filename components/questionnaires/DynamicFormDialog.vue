@@ -48,6 +48,7 @@
                           :model-value="formState[field.id]"
                           :options="getDynamicOptions(field)"
                           :error="fieldErrors[field.id]"
+                          :disabled="props.lockedSections?.has(section.id)"
                           @update:model-value="(v) => updateFieldValue(field, v)"
                         />
                       </v-col>
