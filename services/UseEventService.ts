@@ -1,14 +1,15 @@
-import { eventsMapper } from '~/mappers/eventsMapper';
+import { mapDtoToEvent } from '~/mappers/eventsMapper';
 import type { eventModelDto } from '~/models/dto/eventModel';
 import type { EventCreatePayload } from '~/models/questionnaire/QuestionnaireClientModel';
 
 export const useEventService = () => {
   const { addError, addSuccess } = useToaster();
 
+  const eventStore = eventsStore();
   const config = useRuntimeConfig();
   const token = useCookie('token');
   const { clientProfile } = storeToRefs(useUserStore());
-  const { setEventsByOrganisator } = eventsStore();
+  const { setEventsByOrganisator, setQuestionnaireAnswers } = eventStore;
   const clientUuid = localStorage.getItem('client-uuid');
 
   const createEventService = async (payload: EventCreatePayload) => {
@@ -44,15 +45,28 @@ export const useEventService = () => {
       }
     );
     if (data) {
-      const { mapDtoToEvent } = eventsMapper();
-      console.log(data, 'DATA FFROM getEventsPerOrganisator');
-      const events = data.map((event: eventModelDto) => mapDtoToEvent(event));
+      const events = data.data.map((event: eventModelDto) => mapDtoToEvent(event));
       setEventsByOrganisator(events);
       return data;
     }
   };
+
+  const getEventsInstance = async (eventUuid: string) => {
+    const { data } = await axios.get(`${config.public.apiUrl}/event/${eventUuid}`, {
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    if (data) {
+      setQuestionnaireAnswers(data);
+      return data;
+    }
+  };
+
   return {
     createEventService,
     getEventsPerOrganisator,
+    getEventsInstance,
   };
 };

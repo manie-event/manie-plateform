@@ -126,10 +126,12 @@ export const useServiceMapping = () => {
     for (const section of sections) {
       const sectorData = sectorDataCache[section.id];
 
-      if (!sectorData) {
-        console.warn(`⚠️ Données secteur manquantes pour ${section.id}`);
-        continue;
-      }
+      // Si la section n'est pas activée (toggle faux), on ignore silencieusement
+      const toggleId = `__section_${section.id}_toggle`;
+      const isActive = Boolean(formAnswers[toggleId]);
+      if (!isActive) continue;
+      // Section active mais données non chargées: ne pas spammer la console, juste ignorer
+      if (!sectorData) continue;
 
       // Collecter tous les tokens sélectionnés dans cette section
       const selectedTokens = collectSelectedTokens(section, formAnswers);
