@@ -3,7 +3,7 @@ import { useFormNavigation } from '@/composables/questionnaire-client/UseFormNav
 import { useFormValidation } from '@/composables/questionnaire-client/UseFormValidation';
 import { useServiceMapping } from '@/composables/questionnaire-client/UseServiceMapping';
 import { computeDateRange, humanizeEventName } from '@/utils/form-utils';
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive, watch } from 'vue';
 import type {
   EventCreatePayload,
   FieldSchema,
@@ -218,6 +218,15 @@ export function useDynamicForm(props: UseDynamicFormProps) {
   onMounted(() => {
     initializeDefaults();
   });
+
+  // Synchronise les valeurs pré-remplies si le modelValue change après le montage
+  watch(
+    () => props.modelValue,
+    (next) => {
+      if (!next) return;
+      Object.assign(formState, next);
+    }
+  );
 
   return {
     // État

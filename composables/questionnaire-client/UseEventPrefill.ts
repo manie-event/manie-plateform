@@ -18,52 +18,40 @@ interface SectorIndexEntry {
 export const useEventPrefill = () => {
   const { getSectors } = useKeywords();
 
-  const buildSectorsIndex = async (
-    sections: SectionSchema[]
-  ): Promise<Record<string, SectorIndexEntry>> => {
-    const index: Record<string, SectorIndexEntry> = {};
-
-    for (const section of sections) {
-      try {
-        const data = await getSectors(section.id);
-        if (!data) continue;
-
-        const serviceUuidToName: Record<string, string> = {};
-        const keywordsUuidToValue: SectorKeywordsIndex = {};
-
-        (data.services || []).forEach((s: { uuid: string; name: string }) => {
-          serviceUuidToName[s.uuid] = s.name;
-        });
-
-        (data.keywords || []).forEach((k: { uuid: string; value: string }) => {
-          keywordsUuidToValue[k.uuid] = k.value;
-        });
-
-        index[section.id] = {
-          sectionId: section.id,
-          serviceUuidToName,
-          keywordsUuidToValue,
-        };
-      } catch {
-        // Ignorer les secteurs non chargeables
-      }
+  const buildSectorIndexForSection = async (
+    sectionId: string
+  ): Promise<SectorIndexEntry | null> => {
+    try {
+      const data = await getSectors(sectionId);
+      if (!data) return null;
+      const serviceUuidToName: Record<string, string> = {};
+      const keywordsUuidToValue: SectorKeywordsIndex = {};
+      (data.services || []).forEach((s: { uuid: string; name: string }) => {
+        serviceUuidToName[s.uuid] = s.name;
+      });
+      (data.keywords || []).forEach((k: { uuid: string; value: string }) => {
+        keywordsUuidToValue[k.uuid] = k.value;
+      });
+      return { sectionId, serviceUuidToName, keywordsUuidToValue };
+    } catch {
+      return null;
     }
-
-    return index;
   };
 
-  const findSectionForService = (
-    sectorsIndex: Record<string, SectorIndexEntry>,
+  const findSectionForService = async (
+    sections: SectionSchema[],
     serviceUuid: string
-  ): { sectionId: string | null; serviceName: string | null } => {
-    for (const sectionId of Object.keys(sectorsIndex)) {
-      const entry = sectorsIndex[sectionId];
+  ): Promise<{ sectionId: string | null; serviceName: string | null; entry: SectorIndexEntry | null }>
+  => {
+    for (const section of sections) {
+      const entry = await buildSectorIndexForSection(section.id);
+      if (!entry) continue;
       const name = entry.serviceUuidToName[serviceUuid];
       if (name) {
-        return { sectionId, serviceName: name };
+        return { sectionId: section.id, serviceName: name, entry };
       }
     }
-    return { sectionId: null, serviceName: null };
+    return { sectionId: null, serviceName: null, entry: null };
   };
 
   /**
@@ -162,12 +150,9 @@ export const useEventPrefill = () => {
     // 1) Général
     prefillGeneral(formState, event);
 
-    // 2) Charger index secteurs (services/keywords)
-    const sectorsIndex = await buildSectorsIndex(sections);
-
-    // 3) Parcourir les services de l'évènement et reconstruire par section
+    // 2) Parcourir les services de l'évènement et reconstruire par section
     for (const es of event.eventServices || []) {
-      const { sectionId, serviceName } = findSectionForService(sectorsIndex, es.serviceUuid);
+      const { sectionId, serviceName, entry } = await findSectionForService(sections, es.serviceUuid);
       if (!sectionId) continue;
 
       const section = sections.find((s) => s.id === sectionId);
@@ -182,7 +167,6 @@ export const useEventPrefill = () => {
       }
 
       // Sélectionner les keywords correspondants
-      const entry = sectorsIndex[sectionId];
       const keywordValues = (es.keywordsUuid || [])
         .map((uuid) => entry.keywordsUuidToValue[uuid])
         .filter(Boolean);
