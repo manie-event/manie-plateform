@@ -90,6 +90,7 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted, watch } from 'vue';
 import FormField from '@/components/questionnaires/FormField.vue';
 import SectionController from '@/components/questionnaires/SectionController.vue';
 import ValidationErrors from '@/components/questionnaires/ValidationError.vue';
@@ -168,4 +169,33 @@ const updateFieldValue = (field: FieldSchema, value: any): void => {
 
   clearFieldError(field.id);
 };
+
+// Charger les données de secteur si la section est déjà activée via pré-remplissage
+const ensureSectorsLoaded = async (): Promise<void> => {
+  try {
+    for (const page of pages) {
+      for (const section of page.sections) {
+        const toggleId = `__section_${section.id}_toggle`;
+        if (formState[toggleId]) {
+          await handleSectionControllerChange(section, true);
+        }
+      }
+    }
+  } catch {
+    // no-op
+  }
+};
+
+onMounted(async () => {
+  await ensureSectorsLoaded();
+});
+
+watch(
+  () => isOpen.value,
+  async (open) => {
+    if (open) {
+      await ensureSectorsLoaded();
+    }
+  }
+);
 </script>

@@ -1,0 +1,200 @@
+import { normalizeText } from '@/utils/form-utils';
+import type { SectionSchema } from '~/models/questionnaire/QuestionnaireClientModel';
+import type { eventModel } from '~/models/events/eventModel';
+import { useKeywords } from '~/composables/professional-user/UseKeywords';
+
+type SectorKeywordsIndex = Record<string, string>; // keywordUuid -> keywordValue
+
+interface SectorIndexEntry {
+  sectionId: string;
+  serviceUuidToName: Record<string, string>;
+  keywordsUuidToValue: SectorKeywordsIndex;
+}
+
+/**
+ * Reconstruit un formState initial à partir d'un évènement déjà créé
+ * en utilisant les données secteurs (services/keywords) côté front uniquement.
+ */
+export const useEventPrefill = () => {
+  const { getSectors } = useKeywords();
+
+  const buildSectorsIndex = async (
+    sections: SectionSchema[]
+  ): Promise<Record<string, SectorIndexEntry>> => {
+    const index: Record<string, SectorIndexEntry> = {};
+
+    for (const section of sections) {
+      try {
+        const data = await getSectors(section.id);
+        if (!data) continue;
+
+        const serviceUuidToName: Record<string, string> = {};
+        const keywordsUuidToValue: SectorKeywordsIndex = {};
+
+        (data.services || []).forEach((s: { uuid: string; name: string }) => {
+          serviceUuidToName[s.uuid] = s.name;
+        });
+
+        (data.keywords || []).forEach((k: { uuid: string; value: string }) => {
+          keywordsUuidToValue[k.uuid] = k.value;
+        });
+
+        index[section.id] = {
+          sectionId: section.id,
+          serviceUuidToName,
+          keywordsUuidToValue,
+        };
+      } catch {
+        // Ignorer les secteurs non chargeables
+      }
+    }
+
+    return index;
+  };
+
+  const findSectionForService = (
+    sectorsIndex: Record<string, SectorIndexEntry>,
+    serviceUuid: string
+  ): { sectionId: string | null; serviceName: string | null } => {
+    for (const sectionId of Object.keys(sectorsIndex)) {
+      const entry = sectorsIndex[sectionId];
+      const name = entry.serviceUuidToName[serviceUuid];
+      if (name) {
+        return { sectionId, serviceName: name };
+      }
+    }
+    return { sectionId: null, serviceName: null };
+  };
+
+  /**
+   * Marqueurs/contrôleurs de section: active la section et le contrôleur virtuel
+   */
+  const activateSectionControllers = (
+    formState: Record<string, any>,
+    section: SectionSchema
+  ) => {
+    // Virtuel
+    formState[`__section_${section.id}_toggle`] = true;
+
+    // Champs de contrôle (ex: food_deja_trouve, boisson_deja_trouve, ...)
+    section.fields.forEach((f) => {
+      if (f.type === 'checkbox' && !f.multiple && f.visibleSection === false) {
+        formState[f.id] = true;
+      }
+    });
+  };
+
+  /**
+   * Pré-remplissage des champs simples (page générale)
+   */
+  const prefillGeneral = (formState: Record<string, any>, event: eventModel) => {
+    formState.date_status = 'arretee';
+    formState.date_debut = event.date?.[0] || '';
+    formState.date_fin = event.date?.[1] || event.date?.[0] || '';
+    formState.localisation = event.location || undefined;
+    formState.theme = event.name || undefined;
+    formState.nb_personnes = Number(event.people || 0) || undefined;
+    formState.budget_type = 'global';
+    formState.budget = Number(event.budget || 0) || undefined;
+  };
+
+  /**
+   * Sélectionne la valeur de champ correspondant au nom de service (si présent)
+   */
+  const selectServiceTypeField = (
+    formState: Record<string, any>,
+    section: SectionSchema,
+    serviceName: string
+  ) => {
+    const target = normalizeText(serviceName);
+    for (const field of section.fields) {
+      if (!field.options || field.options.length === 0) continue;
+      const match = field.options.find(
+        (opt) => normalizeText(String(opt.value)) === target || normalizeText(opt.label) === target
+      );
+      if (match) {
+        if (field.type === 'checkbox' && field.multiple) {
+          formState[field.id] = Array.isArray(formState[field.id])
+            ? Array.from(new Set([...formState[field.id], match.value]))
+            : [match.value];
+        } else {
+          formState[field.id] = match.value;
+        }
+        break;
+      }
+    }
+  };
+
+  /**
+   * Coche ou sélectionne les options correspondant aux keywords de l'évènement
+   */
+  const selectKeywordsForSection = (
+    formState: Record<string, any>,
+    section: SectionSchema,
+    keywordValues: string[]
+  ) => {
+    const targets = new Set(keywordValues.map((v) => normalizeText(v)));
+
+    for (const field of section.fields) {
+      if (!field.options || field.options.length === 0) continue;
+
+      for (const opt of field.options) {
+        const isTarget =
+          targets.has(normalizeText(String(opt.value))) || targets.has(normalizeText(opt.label));
+        if (!isTarget) continue;
+
+        if (field.type === 'checkbox' && field.multiple) {
+          const existing = Array.isArray(formState[field.id]) ? formState[field.id] : [];
+          formState[field.id] = Array.from(new Set([...existing, opt.value]));
+        } else {
+          formState[field.id] = opt.value;
+        }
+      }
+    }
+  };
+
+  const prefillFormFromEvent = async (
+    event: eventModel,
+    sections: SectionSchema[]
+  ): Promise<Record<string, any>> => {
+    const formState: Record<string, any> = {};
+
+    // 1) Général
+    prefillGeneral(formState, event);
+
+    // 2) Charger index secteurs (services/keywords)
+    const sectorsIndex = await buildSectorsIndex(sections);
+
+    // 3) Parcourir les services de l'évènement et reconstruire par section
+    for (const es of event.eventServices || []) {
+      const { sectionId, serviceName } = findSectionForService(sectorsIndex, es.serviceUuid);
+      if (!sectionId) continue;
+
+      const section = sections.find((s) => s.id === sectionId);
+      if (!section) continue;
+
+      // Activer la section et le contrôleur virtuel
+      activateSectionControllers(formState, section);
+
+      // Sélectionner le type/service (si on a un nom)
+      if (serviceName) {
+        selectServiceTypeField(formState, section, serviceName);
+      }
+
+      // Sélectionner les keywords correspondants
+      const entry = sectorsIndex[sectionId];
+      const keywordValues = (es.keywordsUuid || [])
+        .map((uuid) => entry.keywordsUuidToValue[uuid])
+        .filter(Boolean);
+
+      if (keywordValues.length > 0) {
+        selectKeywordsForSection(formState, section, keywordValues as string[]);
+      }
+    }
+
+    return formState;
+  };
+
+  return { prefillFormFromEvent };
+};
+
