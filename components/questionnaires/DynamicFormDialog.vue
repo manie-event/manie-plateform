@@ -91,7 +91,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, watch } from 'vue';
+import { nextTick, onMounted, watch } from 'vue';
 import FormField from '@/components/questionnaires/FormField.vue';
 import SectionController from '@/components/questionnaires/SectionController.vue';
 import ValidationErrors from '@/components/questionnaires/ValidationError.vue';
@@ -198,6 +198,16 @@ watch(
     if (open) {
       await ensureSectorsLoaded();
     }
+  }
+);
+
+// Quand des valeurs pré-remplies arrivent, s'assurer que les secteurs requis sont chargés,
+// pour que les options (chips) soient disponibles et reflètent la sélection
+watch(
+  () => props.modelValue,
+  async () => {
+    await nextTick();
+    await ensureSectorsLoaded();
   }
 );
 </script>
