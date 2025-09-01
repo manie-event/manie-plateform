@@ -6,6 +6,7 @@
       :model-value="modelValue"
       @update:model-value="$emit('update:modelValue', $event)"
       mandatory
+      :disabled="disabled"
     >
       <v-chip
         v-for="opt in options || []"
@@ -14,6 +15,7 @@
         filter
         variant="outlined"
         class="ma-1"
+        :disabled="disabled"
       >
         {{ opt.label }}
       </v-chip>
@@ -29,6 +31,7 @@
       @update:model-value="$emit('update:modelValue', $event)"
       multiple
       filter
+      :disabled="disabled"
     >
       <v-chip
         v-for="opt in options || []"
@@ -36,6 +39,7 @@
         :value="opt.value"
         variant="outlined"
         class="ma-1"
+        :disabled="disabled"
       >
         {{ opt.label }}
       </v-chip>
@@ -52,6 +56,7 @@
     :error="!!error"
     :error-messages="error ? [error] : []"
     density="comfortable"
+    :disabled="disabled"
   />
 
   <!-- Select -->
@@ -67,6 +72,7 @@
     :error-messages="error ? [error] : []"
     density="comfortable"
     clearable
+    :disabled="disabled"
   />
 
   <!-- Date -->
@@ -79,6 +85,7 @@
     :error="!!error"
     :error-messages="error ? [error] : []"
     density="comfortable"
+    :disabled="disabled"
   />
 
   <!-- Number -->
@@ -92,6 +99,7 @@
     :error="!!error"
     :error-messages="error ? [error] : []"
     density="comfortable"
+    :disabled="disabled"
   />
 
   <!-- Text (par défaut) -->
@@ -104,6 +112,7 @@
     :error-messages="error ? [error] : []"
     density="comfortable"
     clearable
+    :disabled="disabled"
   />
 </template>
 
@@ -115,6 +124,7 @@ defineProps<{
   modelValue: any;
   options?: OptionItem[];
   error?: string;
+  disabled?: boolean;
 }>();
 
 defineEmits<{

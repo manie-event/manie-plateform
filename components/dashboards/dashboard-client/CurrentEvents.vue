@@ -37,27 +37,35 @@
       v-if="isDialogOpen"
       v-model:open-modal="isDialogOpen"
       :sections="sections"
-      :model-value="answers"
+      :model-value="formAnswers"
+      :locked-sections="lockedSections"
       @submit="onSubmitEdit"
     />
   </Teleport>
 </template>
 
 <script setup lang="ts">
+import DynamicFormDialog from '@/components/questionnaires/DynamicFormDialog.vue';
+import { useEventPrefill } from '@/composables/questionnaire-client/UseEventPrefill';
 import ClientQuestionnaire from '@/data/questionnaire-client.json';
-import DynamicFormDialog from '~/components/questionnaires/DynamicFormDialog.vue';
-import { useEventPrefill } from '~/composables/questionnaire-client/UseEventPrefill';
 import type { eventModel } from '~/models/events/eventModel';
-import type { SectionSchema } from '~/models/questionnaire/QuestionnaireClientModel';
+import type {
+  EventCreatePayload,
+  SectionSchema,
+} from '~/models/questionnaire/QuestionnaireClientModel';
 import { useEventService } from '~/services/UseEventService';
+
+const { clientProfile } = storeToRefs(useUserStore());
+const { events, answers } = storeToRefs(eventsStore());
+const { getEventsPerOrganisator, getEventsInstance } = useEventService();
 
 const isDialogOpen = ref(false);
 const currentPage = ref(1);
 const itemsPerPage = 3;
-const selectedEvent = ref();
-const { events, answers } = storeToRefs(eventsStore());
-const { getEventsPerOrganisator, getEventsInstance } = useEventService();
+const selectedEvent = ref<eventModel | null>(null);
+const selectedEventUuid = ref<string | null>(null);
 const formAnswers = ref<Record<string, any>>({});
+const lockedSections = ref<Set<string>>(new Set());
 const sections = ClientQuestionnaire.sections as SectionSchema[];
 const { prefillFormFromEvent } = useEventPrefill();
 
@@ -72,28 +80,55 @@ const paginatedEvents = computed(() => {
 });
 
 const openDialog = async (eventUuid: string) => {
-  const findSelectedEvent = events.value.find((event) => event.uuid === eventUuid);
-  console.log(findSelectedEvent?.uuid, 'findSelectedEvent');
+  const found = events.value.find((e) => e.uuid === eventUuid) || null;
+  selectedEvent.value = found;
+  selectedEventUuid.value = eventUuid;
 
-  if (findSelectedEvent) {
-    await getEventsInstance(findSelectedEvent?.uuid);
+  if (found) {
+    const data = await getEventsInstance(found.uuid); // doit retourner l'event (DTO)
+    if (data) {
+      const prefilled = await prefillFormFromEvent(data as eventModel, sections);
+      formAnswers.value = prefilled.formState;
+      lockedSections.value = prefilled.lockedSections;
+    } else {
+      formAnswers.value = {};
+      lockedSections.value = new Set();
+    }
+  } else {
+    formAnswers.value = {};
+    lockedSections.value = new Set();
   }
 
-  selectedEvent.value = findSelectedEvent;
+  await nextTick(); // garantit que :model-value est prêt au premier rendu
   isDialogOpen.value = true;
 };
 
-watch(
-  () => answers.value,
-  async (val) => {
-    formAnswers.value = val ? await prefillFormFromEvent(val as eventModel, sections) : {};
-  },
-  { immediate: true }
-);
+const onSubmitEdit = async (payload: EventCreatePayload) => {
+  // Placeholder: ici on pourrait appeler un service pour ajouter/mettre à jour les services
+  // await addServicesToEvent(selectedEventUuid.value!, payload.services)
+  isDialogOpen.value = false;
+};
 
 onMounted(async () => {
+  console.log(clientProfile.value, 'CLIENT PROFILE');
+
   await getEventsPerOrganisator();
 });
+
+// watch(
+//   () => answers.value,
+//   async (val) => {
+//     if (val) {
+//       const prefilled = await prefillFormFromEvent(val as eventModel, sections);
+//       formAnswers.value = prefilled.formState;
+//       lockedSections.value = prefilled.lockedSections;
+//     } else {
+//       formAnswers.value = {};
+//       lockedSections.value = new Set();
+//     }
+//   },
+//   { immediate: true }
+// );
 </script>
 
 <style lang="scss" scoped>

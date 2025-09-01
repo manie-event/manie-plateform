@@ -28,6 +28,7 @@
                         :field="getVisibleField(section)"
                         :model-value="getSectionControllerValue(section)"
                         :error="fieldErrors[getVisibleField(section)?.id || '']"
+                        :disabled="props.lockedSections?.has(section.id)"
                         @update:modelValue="(v) => handleSectionControllerChange(section, !!v)"
                       />
                     </v-col>
@@ -47,6 +48,7 @@
                           :model-value="formState[field.id]"
                           :options="getDynamicOptions(field)"
                           :error="fieldErrors[field.id]"
+                          :disabled="props.lockedSections?.has(section.id)"
                           @update:model-value="(v) => updateFieldValue(field, v)"
                         />
                       </v-col>
@@ -94,6 +96,7 @@ import FormField from '@/components/questionnaires/FormField.vue';
 import SectionController from '@/components/questionnaires/SectionController.vue';
 import ValidationErrors from '@/components/questionnaires/ValidationError.vue';
 import { useDynamicFormWithEmits } from '@/composables/questionnaire-client/UseDynamicFormWithEmits';
+import { nextTick, onMounted, watch } from 'vue';
 import { useKeywords } from '~/composables/professional-user/UseKeywords';
 import type {
   EventCreatePayload,
@@ -105,6 +108,7 @@ import type {
 const props = defineProps<{
   sections: SectionSchema[];
   modelValue?: Record<string, any>;
+  lockedSections?: Set<string>;
 }>();
 
 const emit = defineEmits<{
@@ -195,6 +199,14 @@ watch(
     if (open) {
       await ensureSectorsLoaded();
     }
+  }
+);
+
+watch(
+  () => props.modelValue,
+  async () => {
+    await nextTick();
+    await ensureSectorsLoaded();
   }
 );
 </script>
