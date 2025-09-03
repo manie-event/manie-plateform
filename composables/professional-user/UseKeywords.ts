@@ -12,6 +12,7 @@ export const useKeywords = () => {
   const { professionnalServices, keywords } = storeToRefs(userStore);
   const loading = ref(false);
   const token = useCookie('token');
+  const api = useApi();
 
   const getSectors = async (sector: string) => {
     try {
@@ -23,7 +24,6 @@ export const useKeywords = () => {
         const sectorFiltered = response.data.data.filter(
           (sectorItem: Sectors) => sectorItem.name.toLowerCase() === sector.toLowerCase()
         );
-        console.log('Filtered sectors:', sectorFiltered);
 
         await Promise.all([
           getServices(sectorFiltered[0].uuid),
@@ -43,7 +43,7 @@ export const useKeywords = () => {
 
   const getServices = async (sectorUuid: string) => {
     try {
-      const { data } = await axios.get(`${config.public.apiUrl}/service`, {
+      const response = await axios.get(`${config.public.apiUrl}/service`, {
         params: { q: sectorUuid, limit: 100 },
         headers: {
           Authorization: `Bearer ${token.value}`,
@@ -66,7 +66,7 @@ export const useKeywords = () => {
   const getKeywords = async (query: string) => {
     loading.value = true;
     try {
-      const { data } = await axios.get(`${config.public.apiUrl}/keyword`, {
+      const response = await axios.get(`${config.public.apiUrl}/keyword`, {
         params: { q: query, limit: 1000 },
         headers: {
           Authorization: `Bearer ${token.value}`,
@@ -83,7 +83,8 @@ export const useKeywords = () => {
 
         setKeywords(keyWordFilter);
 
-      loading.value = false;
+        loading.value = false;
+      }
     } catch (error: unknown) {
       console.error('Error fetching keywords:', error);
     }

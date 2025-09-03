@@ -183,7 +183,7 @@ export const useEventPrefill = () => {
 
       // Sélectionner les keywords correspondants
       const keywordValues = (es.keywordsUuid || [])
-        .map((uuid) => entry.keywordsUuidToValue[uuid])
+        .map((uuid) => entry?.keywordsUuidToValue[uuid])
         .filter(Boolean);
 
       if (keywordValues.length > 0) {
