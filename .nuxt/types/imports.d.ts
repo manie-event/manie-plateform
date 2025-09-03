@@ -120,6 +120,7 @@ declare global {
   const useAppConfig: typeof import('../../node_modules/nuxt/dist/app/config')['useAppConfig']
   const useAsyncData: typeof import('../../node_modules/nuxt/dist/app/composables/asyncData')['useAsyncData']
   const useAttrs: typeof import('vue')['useAttrs']
+  const useAuthCookies: typeof import('../../composables/UseAuthCookies')['useAuthCookies']
   const useAuthentification: typeof import('../../composables/UseAuthentification')['useAuthentification']
   const useCartStore: typeof import('../../stores/cartStore')['useCartStore']
   const useCatalogStore: typeof import('../../stores/catalogue')['useCatalogStore']
@@ -333,6 +334,7 @@ declare module 'vue' {
     readonly useAppConfig: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/config')['useAppConfig']>
     readonly useAsyncData: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/asyncData')['useAsyncData']>
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
+    readonly useAuthCookies: UnwrapRef<typeof import('../../composables/UseAuthCookies')['useAuthCookies']>
     readonly useAuthentification: UnwrapRef<typeof import('../../composables/UseAuthentification')['useAuthentification']>
     readonly useCartStore: UnwrapRef<typeof import('../../stores/cartStore')['useCartStore']>
     readonly useCatalogStore: UnwrapRef<typeof import('../../stores/catalogue')['useCatalogStore']>

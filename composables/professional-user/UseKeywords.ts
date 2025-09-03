@@ -18,7 +18,6 @@ export const useKeywords = () => {
     try {
       loading.value = true;
       const response = await api?.get(`${config.public.apiUrl}/sector`);
-      console.log(response, 'Response from sectors API');
 
       if (response) {
         const sectorFiltered = response.data.data.filter(
@@ -43,12 +42,8 @@ export const useKeywords = () => {
 
   const getServices = async (sectorUuid: string) => {
     try {
-      const response = await axios.get(`${config.public.apiUrl}/service`, {
+      const response = await api?.get(`${config.public.apiUrl}/service`, {
         params: { q: sectorUuid, limit: 100 },
-        headers: {
-          Authorization: `Bearer ${token.value}`,
-          'Content-Type': 'application/json',
-        },
       });
       if (response) {
         const serviceFiltered = response.data.data.filter(
@@ -66,12 +61,8 @@ export const useKeywords = () => {
   const getKeywords = async (query: string) => {
     loading.value = true;
     try {
-      const response = await axios.get(`${config.public.apiUrl}/keyword`, {
+      const response = await api?.get(`${config.public.apiUrl}/keyword`, {
         params: { q: query, limit: 1000 },
-        headers: {
-          Authorization: `Bearer ${token.value}`,
-          'Content-Type': 'application/json',
-        },
       });
       if (response) {
         const keyWordFilter = response.data.data
@@ -80,6 +71,7 @@ export const useKeywords = () => {
           .map((keyword: KeywordsDto) => keyWordsDtoToKeywords(keyword));
 
         console.log(keyWordFilter, 'Keywords fetched and filtered');
+
 
         setKeywords(keyWordFilter);
 
@@ -92,17 +84,11 @@ export const useKeywords = () => {
 
   const sendProfessionalServices = async (services: ProfessionalServiceUuid) => {
     try {
-      const response = await axios.post(
+      const response = await api?.post(
         `${config.public.apiUrl}/professional-service/create`,
-        services,
-        {
-          headers: {
-            Authorization: `Bearer ${token.value}`,
-            'Content-Type': 'application/json',
-          },
-        }
+        services
       );
-      if (response.data) {
+      if (response) {
         setProfessionalServices(response.data);
         setUpdateProfile(true);
       }

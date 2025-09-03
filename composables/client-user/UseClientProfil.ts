@@ -24,14 +24,9 @@ export const useClientProfil = () => {
     const clientUuid = clientProfile.value?.uuid;
 
     const response = await api?.patch(
+
       `${config.public.apiUrl}/organisator/${clientUuid}`,
-      newProfil,
-      {
-        headers: {
-          Authorization: `Bearer ${token.value}`,
-          'Content-Type': 'application/json',
-        },
-      }
+      newProfil
     );
 
     if (response?.data) {

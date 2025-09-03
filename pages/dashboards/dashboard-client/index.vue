@@ -19,7 +19,6 @@ const { isProfileCreated, user } = storeToRefs(userStore);
 const { getClientProfil } = useClientProfil();
 onMounted(async () => {
   if (user.value?.category == UserCategory.CONSUMER) {
-    console.log('Récupération du profil client');
     await getClientProfil();
   }
 });
