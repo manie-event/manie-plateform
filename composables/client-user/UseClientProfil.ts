@@ -7,32 +7,34 @@ export const useClientProfil = () => {
   const { setClientProfile, updateClientProfile } = userStore;
   const { clientProfile, isProfileCreated } = storeToRefs(userStore);
   const config = useRuntimeConfig();
-  const api = useApi()!;
+  const api = useApi();
 
   const getClientProfil = async () => {
-    const { data } = await api.get(`${config.public.apiUrl}/organisator`);
+    const response = await api?.get(`${config.public.apiUrl}/organisator`);
 
-    if (data) {
-      setClientProfile(data);
-      console.log(clientProfile.value?.uuid, 'Client profile data fetched');
-      return data;
+    if (response) {
+      setClientProfile(response.data);
+      localStorage.setItem('clientProfile', response.data.uuid);
+      console.log(clientProfile.value?.uuid, 'Client profile response fetched');
+      return response;
     }
   };
 
   const patchClientProfil = async (newProfil: ClientModel) => {
     const clientUuid = clientProfile.value?.uuid;
 
-    const { data } = await api.patch(
+    const response = await api?.patch(
+
       `${config.public.apiUrl}/organisator/${clientUuid}`,
       newProfil
     );
 
-    if (data) {
+    if (response?.data) {
       const profileUpdated = await getClientProfil();
 
-      updateClientProfile(profileUpdated);
+      updateClientProfile(profileUpdated?.data);
       isProfileCreated.value = true;
-      return data;
+      return response.data;
     }
   };
   return {

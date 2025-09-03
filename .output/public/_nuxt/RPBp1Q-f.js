@@ -1,0 +1,1 @@
+import{y as e,c,b as n}from"./DkNnpBgi.js";const r={};function t(a,o){return n(),c("h2",null,"Une erreur s'est produite ou vous avez fait le choix d'annuler la transaction")}const l=e(r,[["render",t]]);export{l as default};
