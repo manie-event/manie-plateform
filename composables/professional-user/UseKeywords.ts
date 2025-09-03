@@ -16,16 +16,15 @@ export const useKeywords = () => {
   const getSectors = async (sector: string) => {
     try {
       loading.value = true;
-      const { data } = await axios.get(`${config.public.apiUrl}/sector`, {
-        headers: {
-          Authorization: `Bearer ${token.value}`,
-          'Content-Type': 'application/json',
-        },
-      });
-      if (data) {
-        const sectorFiltered = data.data.filter(
+      const response = await api?.get(`${config.public.apiUrl}/sector`);
+      console.log(response, 'Response from sectors API');
+
+      if (response) {
+        const sectorFiltered = response.data.data.filter(
           (sectorItem: Sectors) => sectorItem.name.toLowerCase() === sector.toLowerCase()
         );
+        console.log('Filtered sectors:', sectorFiltered);
+
         await Promise.all([
           getServices(sectorFiltered[0].uuid),
           getKeywords(sectorFiltered[0].name),
@@ -51,8 +50,8 @@ export const useKeywords = () => {
           'Content-Type': 'application/json',
         },
       });
-      if (data) {
-        const serviceFiltered = data.data.filter(
+      if (response) {
+        const serviceFiltered = response.data.data.filter(
           (serviceItem: Services) =>
             serviceItem.sectorUuid.toLowerCase() === sectorUuid.toLowerCase()
         );
@@ -74,12 +73,15 @@ export const useKeywords = () => {
           'Content-Type': 'application/json',
         },
       });
-      const keyWordFilter = data.data
-        .filter((keyword: Keywords) => keyword.sector.toLowerCase() == query.toLowerCase())
-        .slice(0, 100)
-        .map((keyword: KeywordsDto) => keyWordsDtoToKeywords(keyword));
+      if (response) {
+        const keyWordFilter = response.data.data
+          .filter((keyword: Keywords) => keyword.sector.toLowerCase() == query.toLowerCase())
+          .slice(0, 100)
+          .map((keyword: KeywordsDto) => keyWordsDtoToKeywords(keyword));
 
-      setKeywords(keyWordFilter);
+        console.log(keyWordFilter, 'Keywords fetched and filtered');
+
+        setKeywords(keyWordFilter);
 
       loading.value = false;
     } catch (error: unknown) {

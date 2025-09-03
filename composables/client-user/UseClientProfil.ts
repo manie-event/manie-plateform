@@ -1,4 +1,3 @@
-import axios from 'axios';
 import type { ClientModel } from '~/models/user/ClientModel';
 
 export const useClientProfil = () => {
@@ -8,24 +7,23 @@ export const useClientProfil = () => {
   const { setClientProfile, updateClientProfile } = userStore;
   const { clientProfile, isProfileCreated } = storeToRefs(userStore);
   const config = useRuntimeConfig();
+  const api = useApi();
 
   const getClientProfil = async () => {
-    const { data } = await axios.get(`${config.public.apiUrl}/organisator`, {
-      headers: {
-        Authorization: `Bearer ${token.value}`,
-        'Content-Type': 'application/json',
-      },
-    });
-    if (data) {
-      setClientProfile(data);
-      return data;
+    const response = await api?.get(`${config.public.apiUrl}/organisator`);
+
+    if (response) {
+      setClientProfile(response.data);
+      localStorage.setItem('clientProfile', response.data.uuid);
+      console.log(clientProfile.value?.uuid, 'Client profile response fetched');
+      return response;
     }
   };
 
   const patchClientProfil = async (newProfil: ClientModel) => {
     const clientUuid = clientProfile.value?.uuid;
 
-    const { data } = await axios.patch(
+    const response = await api?.patch(
       `${config.public.apiUrl}/organisator/${clientUuid}`,
       newProfil,
       {
@@ -35,12 +33,13 @@ export const useClientProfil = () => {
         },
       }
     );
-    if (data) {
+
+    if (response?.data) {
       const profileUpdated = await getClientProfil();
 
-      updateClientProfile(profileUpdated);
+      updateClientProfile(profileUpdated?.data);
       isProfileCreated.value = true;
-      return data;
+      return response.data;
     }
   };
   return {
