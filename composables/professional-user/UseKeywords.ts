@@ -12,18 +12,14 @@ export const useKeywords = () => {
   const { professionnalServices, keywords } = storeToRefs(userStore);
   const loading = ref(false);
   const token = useCookie('token');
+  const api = useApi();
 
   const getSectors = async (sector: string) => {
     try {
       loading.value = true;
-      const { data } = await axios.get(`${config.public.apiUrl}/sector`, {
-        headers: {
-          Authorization: `Bearer ${token.value}`,
-          'Content-Type': 'application/json',
-        },
-      });
-      if (data) {
-        const sectorFiltered = data.data.filter(
+      const response = await api?.get(`${config.public.apiUrl}/sector`);
+      if (response) {
+        const sectorFiltered = response.data.filter(
           (sectorItem: Sectors) => sectorItem.name.toLowerCase() === sector.toLowerCase()
         );
         await Promise.all([
@@ -44,15 +40,11 @@ export const useKeywords = () => {
 
   const getServices = async (sectorUuid: string) => {
     try {
-      const { data } = await axios.get(`${config.public.apiUrl}/service`, {
+      const response = await api?.get(`${config.public.apiUrl}/service`, {
         params: { q: sectorUuid, limit: 100 },
-        headers: {
-          Authorization: `Bearer ${token.value}`,
-          'Content-Type': 'application/json',
-        },
       });
-      if (data) {
-        const serviceFiltered = data.data.filter(
+      if (response) {
+        const serviceFiltered = response.data.filter(
           (serviceItem: Services) =>
             serviceItem.sectorUuid.toLowerCase() === sectorUuid.toLowerCase()
         );
@@ -67,21 +59,19 @@ export const useKeywords = () => {
   const getKeywords = async (query: string) => {
     loading.value = true;
     try {
-      const { data } = await axios.get(`${config.public.apiUrl}/keyword`, {
+      const response = await api?.get(`${config.public.apiUrl}/keyword`, {
         params: { q: query, limit: 1000 },
-        headers: {
-          Authorization: `Bearer ${token.value}`,
-          'Content-Type': 'application/json',
-        },
       });
-      const keyWordFilter = data.data
-        .filter((keyword: Keywords) => keyword.sector.toLowerCase() == query.toLowerCase())
-        .slice(0, 100)
-        .map((keyword: KeywordsDto) => keyWordsDtoToKeywords(keyword));
+      if (response) {
+        const keyWordFilter = response.data
+          .filter((keyword: Keywords) => keyword.sector.toLowerCase() == query.toLowerCase())
+          .slice(0, 100)
+          .map((keyword: KeywordsDto) => keyWordsDtoToKeywords(keyword));
 
-      setKeywords(keyWordFilter);
+        setKeywords(keyWordFilter);
 
-      loading.value = false;
+        loading.value = false;
+      }
     } catch (error: unknown) {
       console.error('Error fetching keywords:', error);
     }
@@ -89,17 +79,11 @@ export const useKeywords = () => {
 
   const sendProfessionalServices = async (services: ProfessionalServiceUuid) => {
     try {
-      const response = await axios.post(
+      const response = await api?.post(
         `${config.public.apiUrl}/professional-service/create`,
-        services,
-        {
-          headers: {
-            Authorization: `Bearer ${token.value}`,
-            'Content-Type': 'application/json',
-          },
-        }
+        services
       );
-      if (response.data) {
+      if (response) {
         setProfessionalServices(response.data);
         setUpdateProfile(true);
       }
