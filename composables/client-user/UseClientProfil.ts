@@ -13,8 +13,8 @@ export const useClientProfil = () => {
     const { data } = await api.get(`${config.public.apiUrl}/organisator`);
 
     if (data) {
+      localStorage.setItem('organisator-uuid', data.uuid);
       setClientProfile(data);
-      console.log(clientProfile.value?.uuid, 'Client profile data fetched');
       return data;
     }
   };

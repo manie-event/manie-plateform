@@ -6,7 +6,9 @@
     density="comfortable"
     :error="!!error"
     :error-messages="error ? [error] : []"
+    :disabled="disabled"
   />
+  <div v-if="disabled" class="text-caption text-warning mt-1">Cette section est verrouillée</div>
 </template>
 
 <script setup lang="ts">
@@ -16,6 +18,7 @@ defineProps<{
   field: FieldSchema;
   modelValue: boolean;
   error?: string;
+  disabled?: boolean;
 }>();
 defineEmits<{
   (e: 'update:modelValue', value: boolean): void;

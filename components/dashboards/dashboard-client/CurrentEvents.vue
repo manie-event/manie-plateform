@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="10" class="roun-">
+  <v-card elevation="10" class="roun-" v-if="events">
     <v-card-text class="position-relative current-events__container">
       <div class="d-flex justify-space-between d-block align-center">
         <div>
@@ -7,11 +7,11 @@
         </div>
       </div>
       <div>
-        <div class="mt-10 mb-sm-12 mb-8 current-events__cards" v-if="mockEventArray.length > 0">
+        <div class="mt-10 mb-sm-12 mb-8 current-events__cards" v-if="events.length > 0">
           <div v-for="event in paginatedEvents" class="current-events__card">
             <div>
-              <h4>{{ event.titre }}</h4>
-              <h5>{{ event.description }}</h5>
+              <h4>{{ event.name }}</h4>
+              <h5>{{ event.date }}</h5>
               <v-chip
                 :color="event.status === 'cancelled' ? 'error' : 'success'"
                 variant="flat"
@@ -19,7 +19,7 @@
                 >{{ event.status == 'cancelled' ? 'rejetée' : 'acceptée' }}</v-chip
               >
             </div>
-            <v-btn color="primary" @click="openDialog(event.eventUuid)">Ajouter un secteur</v-btn>
+            <v-btn color="primary" @click="openDialog(event.uuid)">Ajouter un secteur</v-btn>
           </div>
         </div>
         <v-pagination
@@ -33,72 +33,89 @@
     </v-card-text>
   </v-card>
   <Teleport to="body">
-    <AddEventService v-if="isDialogOpen" v-model="selectedEvent" />
+    <DynamicFormDialog
+      v-if="isDialogOpen"
+      v-model:open-modal="isDialogOpen"
+      :sections="sections"
+      :model-value="formAnswers"
+      :locked-sections="lockedSections"
+      @submit="onSubmitEdit"
+    />
   </Teleport>
 </template>
 
 <script setup lang="ts">
-import AddEventService from '@/components/dashboards/dashboard-client/AddEventService.vue';
+import DynamicFormDialog from '@/components/questionnaires/DynamicFormDialog.vue';
+import ClientQuestionnaire from '@/data/questionnaire-client.json';
+import { useEventPrefill } from '~/composables/questionnaire-client/UseEventPrefill';
+import type { eventModel } from '~/models/events/eventModel';
+import type {
+  EventCreatePayload,
+  SectionSchema,
+} from '~/models/questionnaire/QuestionnaireClientModel';
+import { useEventService } from '~/services/UseEventService';
+import { eventsStore } from '~/stores/eventsStore';
+
+const { clientProfile } = storeToRefs(useUserStore());
+const { events, answers } = storeToRefs(eventsStore());
+const { getEventsPerOrganisator, getEventsInstance } = useEventService();
 
 const isDialogOpen = ref(false);
 const currentPage = ref(1);
 const itemsPerPage = 3;
-const selectedEvent = ref();
+const selectedEvent = ref<eventModel | null>(null);
+const selectedEventUuid = ref<string | null>(null);
+const formAnswers = ref<Record<string, any>>({});
+const lockedSections = ref<Set<string>>(new Set());
+const sections = ClientQuestionnaire.sections as SectionSchema[];
+const { prefillFormFromEvent } = useEventPrefill();
 
 const totalPages = computed(() => {
-  return Math.ceil(mockEventArray.length / itemsPerPage);
+  return Math.ceil(events.value.length / itemsPerPage);
 });
 
 const paginatedEvents = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
   const end = start + itemsPerPage;
-  return mockEventArray.slice(start, end);
+  return events.value.slice(start, end);
 });
 
-const mockEventArray = [
-  {
-    titre: 'event1',
-    description: 'test1',
-    photoEvent: '',
-    eventUuid: '001',
-    status: 'completed',
-  },
-  {
-    titre: 'event2',
-    description: 'test2',
-    photoEvent: '',
-    eventUuid: '002',
-    status: 'completed',
-  },
-  {
-    titre: 'event3',
-    description: 'test3',
-    photoEvent: '',
-    eventUuid: '003',
-    status: 'cancelled',
-  },
-  {
-    titre: 'event4',
-    description: 'test3',
-    photoEvent: '',
-    eventUuid: '004',
-    status: 'cancelled',
-  },
-  {
-    titre: 'event5',
-    description: 'test3',
-    photoEvent: '',
-    eventUuid: '005',
-    status: 'cancelled',
-  },
-];
-
-const openDialog = (eventUuid: string) => {
-  const findSelectedEvent = mockEventArray.find((event) => event.eventUuid === eventUuid);
-
+const openDialog = async (eventUuid: string) => {
+  const findSelectedEvent = events.value.find((event) => event.uuid === eventUuid) || null;
   selectedEvent.value = findSelectedEvent;
+  selectedEventUuid.value = eventUuid;
+  if (findSelectedEvent) {
+    await getEventsInstance(findSelectedEvent.uuid);
+  }
   isDialogOpen.value = true;
 };
+
+const onSubmitEdit = async (payload: EventCreatePayload) => {
+  // Placeholder: ici on pourrait appeler un service pour ajouter/mettre à jour les services
+  // await addServicesToEvent(selectedEventUuid.value!, payload.services)
+  isDialogOpen.value = false;
+};
+
+onMounted(async () => {
+  console.log(clientProfile.value, 'CLIENT PROFILE');
+
+  await getEventsPerOrganisator();
+});
+
+watch(
+  () => answers.value,
+  async (val) => {
+    if (val) {
+      const prefilled = await prefillFormFromEvent(val as eventModel, sections);
+      formAnswers.value = prefilled.formState;
+      lockedSections.value = prefilled.lockedSections;
+    } else {
+      formAnswers.value = {};
+      lockedSections.value = new Set();
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <style lang="scss" scoped>

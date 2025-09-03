@@ -3,7 +3,7 @@ import { useFormNavigation } from '@/composables/questionnaire-client/UseFormNav
 import { useFormValidation } from '@/composables/questionnaire-client/UseFormValidation';
 import { useServiceMapping } from '@/composables/questionnaire-client/UseServiceMapping';
 import { computeDateRange, humanizeEventName } from '@/utils/form-utils';
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive, watch } from 'vue';
 import type {
   EventCreatePayload,
   FieldSchema,
@@ -17,7 +17,7 @@ interface UseDynamicFormProps {
   modelValue?: Record<string, any>;
 }
 
-export function useDynamicForm(props: UseDynamicFormProps) {
+export const useDynamicForm = (props: UseDynamicFormProps) => {
   const { clientProfile } = storeToRefs(useUserStore());
   const formState = reactive<FormState>({ ...(props.modelValue || {}) });
   const orgaUuid = clientProfile.value?.uuid;
@@ -214,6 +214,14 @@ export function useDynamicForm(props: UseDynamicFormProps) {
     });
   };
 
+  watch(
+    () => props.modelValue,
+    (next) => {
+      if (!next) return;
+      Object.assign(formState, next);
+    }
+  );
+
   // Initialisation au montage
   onMounted(() => {
     initializeDefaults();
@@ -257,4 +265,4 @@ export function useDynamicForm(props: UseDynamicFormProps) {
     submitForm,
     buildServiceSelections: () => buildServiceSelections(props.sections, formState),
   };
-}
+};

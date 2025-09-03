@@ -19,7 +19,7 @@ export const useKeywords = () => {
       loading.value = true;
       const response = await api?.get(`${config.public.apiUrl}/sector`);
       if (response) {
-        const sectorFiltered = response.data.filter(
+        const sectorFiltered = response.data.data.filter(
           (sectorItem: Sectors) => sectorItem.name.toLowerCase() === sector.toLowerCase()
         );
         await Promise.all([
@@ -44,7 +44,7 @@ export const useKeywords = () => {
         params: { q: sectorUuid, limit: 100 },
       });
       if (response) {
-        const serviceFiltered = response.data.filter(
+        const serviceFiltered = response.data.data.filter(
           (serviceItem: Services) =>
             serviceItem.sectorUuid.toLowerCase() === sectorUuid.toLowerCase()
         );
@@ -63,7 +63,7 @@ export const useKeywords = () => {
         params: { q: query, limit: 1000 },
       });
       if (response) {
-        const keyWordFilter = response.data
+        const keyWordFilter = response.data.data
           .filter((keyword: Keywords) => keyword.sector.toLowerCase() == query.toLowerCase())
           .slice(0, 100)
           .map((keyword: KeywordsDto) => keyWordsDtoToKeywords(keyword));

@@ -29,6 +29,7 @@
                         :model-value="getSectionControllerValue(section)"
                         :error="fieldErrors[getVisibleField(section)?.id || '']"
                         @update:modelValue="(v) => handleSectionControllerChange(section, !!v)"
+                        :disabled="props.lockedSections?.has(section.id)"
                       />
                     </v-col>
                   </template>
@@ -48,6 +49,7 @@
                           :options="getDynamicOptions(field)"
                           :error="fieldErrors[field.id]"
                           @update:model-value="(v) => updateFieldValue(field, v)"
+                          :disabled="props.lockedSections?.has(section.id)"
                         />
                       </v-col>
                     </template>
@@ -105,6 +107,7 @@ import type {
 const props = defineProps<{
   sections: SectionSchema[];
   modelValue?: Record<string, any>;
+  lockedSections?: Set<string>;
 }>();
 
 const emit = defineEmits<{
@@ -168,4 +171,39 @@ const updateFieldValue = (field: FieldSchema, value: any): void => {
 
   clearFieldError(field.id);
 };
+
+const ensureSectorsLoaded = async (): Promise<void> => {
+  try {
+    for (const page of pages.value) {
+      for (const section of page.sections) {
+        const toggleId = `__section_${section.id}_toggle`;
+        if (formState[toggleId]) {
+          await handleSectionControllerChange(section, true);
+        }
+      }
+    }
+  } catch {
+    // no-op
+  }
+};
+onMounted(async () => {
+  await ensureSectorsLoaded();
+});
+watch(
+  () => isOpen.value,
+  async (open) => {
+    if (open) {
+      await ensureSectorsLoaded();
+    }
+  }
+);
+// Quand des valeurs pré-remplies arrivent, s'assurer que les secteurs requis sont chargés,
+// pour que les options (chips) soient disponibles et reflètent la sélection
+watch(
+  () => props.modelValue,
+  async () => {
+    await nextTick();
+    await ensureSectorsLoaded();
+  }
+);
 </script>
