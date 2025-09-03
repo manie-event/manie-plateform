@@ -18,7 +18,7 @@ const userStore = useUserStore();
 const { isProfileCreated, user } = storeToRefs(userStore);
 const { getClientProfil } = useClientProfil();
 onMounted(async () => {
-  if (!isProfileCreated.value && user.value?.category == UserCategory.CONSUMER) {
+  if (user.value?.category == UserCategory.CONSUMER) {
     await getClientProfil();
   }
 });

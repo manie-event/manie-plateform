@@ -1,4 +1,3 @@
-import axios from 'axios';
 import type { ClientModel } from '~/models/user/ClientModel';
 
 export const useClientProfil = () => {
@@ -8,16 +7,14 @@ export const useClientProfil = () => {
   const { setClientProfile, updateClientProfile } = userStore;
   const { clientProfile, isProfileCreated } = storeToRefs(userStore);
   const config = useRuntimeConfig();
+  const api = useApi()!;
 
   const getClientProfil = async () => {
-    const { data } = await axios.get(`${config.public.apiUrl}/organisator`, {
-      headers: {
-        Authorization: `Bearer ${token.value}`,
-        'Content-Type': 'application/json',
-      },
-    });
+    const { data } = await api.get(`${config.public.apiUrl}/organisator`);
+
     if (data) {
       setClientProfile(data);
+      console.log(clientProfile.value?.uuid, 'Client profile data fetched');
       return data;
     }
   };
@@ -25,16 +22,11 @@ export const useClientProfil = () => {
   const patchClientProfil = async (newProfil: ClientModel) => {
     const clientUuid = clientProfile.value?.uuid;
 
-    const { data } = await axios.patch(
+    const { data } = await api.patch(
       `${config.public.apiUrl}/organisator/${clientUuid}`,
-      newProfil,
-      {
-        headers: {
-          Authorization: `Bearer ${token.value}`,
-          'Content-Type': 'application/json',
-        },
-      }
+      newProfil
     );
+
     if (data) {
       const profileUpdated = await getClientProfil();
 

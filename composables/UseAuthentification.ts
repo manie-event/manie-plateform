@@ -1,16 +1,19 @@
+import axios from 'axios'; // Pour les routes sans auth
 import type { AuthentificationModel } from '~/models/authentification/authentificationModel';
 import type { registerNewPasswordModel } from '~/models/authentification/registerNewPasswordModel';
 import type { errorModel } from '~/models/errorModel';
 import type { RegisterModel } from '../models/authentification/registerModel';
 
 export const useAuthentification = () => {
-  const token = useCookie('token');
   const config = useRuntimeConfig();
   const router = useRouter();
   const { addError, addSuccess } = useToaster();
   const userStore = useUserStore();
   const { isStoringUserAccepeted, isProfessional } = storeToRefs(userStore);
+  const { token, refreshToken } = useAuthCookies();
   const { setUser } = userStore;
+
+  const api = useApi();
 
   const sendRegister = async (registerInfo: RegisterModel): Promise<void> => {
     try {
@@ -27,7 +30,6 @@ export const useAuthentification = () => {
     }
   };
 
-  // Connexion d'un nouvel utilisateur
   const sendLogin = async (authentification: AuthentificationModel) => {
     try {
       const { data } = await axios.post(`${config.public.apiUrl}/auth/login`, authentification);
@@ -36,18 +38,11 @@ export const useAuthentification = () => {
 
       addSuccess('Connexion réussie.');
 
-      if (tokenValue && isStoringUserAccepeted.value) {
-        const token = useCookie('token', {
-          maxAge: 60 * 60 * 24 * 30 * 12,
-          path: '/',
-          sameSite: 'strict',
-          secure: process.env.NODE_ENV === 'production',
-          httpOnly: false,
-        });
-
+      if (tokenValue) {
+        refreshToken.value = data.refreshToken;
+        token.value = tokenValue;
         setUser(data.user);
 
-        token.value = tokenValue;
         if (!isProfessional.value) {
           router.push({ path: '/dashboards/dashboard-client' });
         } else {
@@ -63,9 +58,9 @@ export const useAuthentification = () => {
     }
   };
 
-  const checkEmail = async (token: string) => {
+  const checkEmail = async (emailToken: string) => {
     try {
-      const { data } = await axios.get(`${config.public.apiUrl}/auth/verify-email/${token}`);
+      const { data } = await axios.get(`${config.public.apiUrl}/auth/verify-email/${emailToken}`);
       if (data) {
         addSuccess('Email vérifié avec succès, vous pouvez maintenant vous connecter.');
         return data;
@@ -89,18 +84,12 @@ export const useAuthentification = () => {
     }
   };
 
+  // ✅ Routes AVEC authentification - utiliser useApi()
   const registerNewPassword = async (registerPassword: registerNewPasswordModel) => {
     try {
-      const { data } = await axios.post(
-        `${config.public.apiUrl}/auth/reset-password`,
-        registerPassword,
-        {
-          headers: {
-            Authorization: `Bearer  ${token.value}`,
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      if (!api) return;
+
+      const { data } = await api.post('/auth/reset-password', registerPassword);
       if (data) {
         addSuccess('Mot de passe mis à jour avec succès.');
         await router.push('/auth/login');
@@ -115,20 +104,15 @@ export const useAuthentification = () => {
 
   const sendLogout = async () => {
     try {
-      const { data } = await axios.post(
-        `${config.public.apiUrl}/auth/logout`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token.value}`,
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      if (!api) return;
+
+      const { data } = await api.post('/auth/logout');
 
       if (data) {
         addSuccess('Déconnexion réussie.');
+        // ✅ Nettoyage des cookies
         token.value = null;
+        refreshToken.value = null;
         await router.push('/');
       }
     } catch (error: unknown) {
@@ -136,5 +120,12 @@ export const useAuthentification = () => {
     }
   };
 
-  return { sendRegister, sendLogin, sendLogout, checkEmail, sendNewPassword, registerNewPassword };
+  return {
+    sendRegister,
+    sendLogin,
+    sendLogout,
+    checkEmail,
+    sendNewPassword,
+    registerNewPassword,
+  };
 };
