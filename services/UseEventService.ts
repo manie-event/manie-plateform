@@ -49,8 +49,15 @@ export const useEventService = () => {
     );
     if (data) {
       const { mapDtoToEvent } = eventsMapper();
-      console.log(data, 'DATA FFROM getEventsPerOrganisator');
-      const events = data.data.map((event: eventModelDto) => mapDtoToEvent(event));
+      const eventsWithoutEmptyServices = data.data.filter((event: eventModelDto) => {
+        return (
+          event.eventServices &&
+          event.eventServices.length > 0 &&
+          event.eventServices[0].serviceUuid
+        );
+      });
+
+      const events = eventsWithoutEmptyServices.map((event: eventModelDto) => mapDtoToEvent(event));
       setEventsByOrganisator(events);
       return data;
     }
