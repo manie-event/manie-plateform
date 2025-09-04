@@ -2,7 +2,7 @@
   <div class="base-component">
     <div class="image-container">
       <slot name="bg-image">
-        <img src="@/public/images/backgrounds/blog-bg-2x.jpg" alt="Default" class="bg-img" />
+        <img src="@/public/images/backgrounds/profilebg.jpg" alt="Default" class="bg-img" />
       </slot>
       <slot name="logo">
         <img :src="manieLogo" alt="logo manie" class="manie-logo" />
