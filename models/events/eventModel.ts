@@ -3,11 +3,11 @@ export interface eventModel {
   organisatorUuid: string;
   isAlreadyCreated: boolean;
   status: string;
+  date: string[];
   budget: number;
   location: string;
-  people: string;
   name: string;
-  date: string[];
+  people: string;
   eventServices: eventService[];
 }
 

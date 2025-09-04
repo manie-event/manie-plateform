@@ -8,9 +8,8 @@
     :error-messages="error ? [error] : []"
     :disabled="disabled"
   />
-  <div v-if="disabled" class="text-caption text-warning mt-1">
-    Cette section est n'est pas modifiable
-  </div>
+  <div v-if="disabled" class="text-caption text-warning mt-1">Cette section est verrouillée</div>
+
 </template>
 
 <script setup lang="ts">

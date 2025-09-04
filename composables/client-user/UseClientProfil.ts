@@ -12,6 +12,7 @@ export const useClientProfil = () => {
   const getClientProfil = async () => {
     const response = await api?.get(`${config.public.apiUrl}/organisator`);
 
+
     if (response) {
       setClientProfile(response.data);
       localStorage.setItem('clientProfile', response.data.uuid);

@@ -1,0 +1,1 @@
+import{F as o}from"./wAG8HKOa.js";import{d as a,c as r,b as s,f as t,e as n,L as c}from"./KMZoqEnJ.js";const _={class:"front-wraper bg-surface"},f=a({__name:"Layout",setup(l){return(e,m)=>(s(),r("div",_,[t("main",null,[c(e.$slots,"default")]),n(o)]))}});export{f as _};
