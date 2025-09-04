@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Logo from '@/public/images/logos/logo-manie-bleu-ciel.svg';
+import Logo from '@/public/images/logos/logo-manie.png';
 import { useCustomizerStore } from '@/stores/customizer';
 import { onBeforeMount, ref } from 'vue';
 import Navigations from './Navigation.vue';
