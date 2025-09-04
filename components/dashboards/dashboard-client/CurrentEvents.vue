@@ -3,7 +3,9 @@
     <v-card-text class="position-relative current-events__container">
       <div class="d-flex justify-flex-start d-block align-center">
         <div>
-          <h5 class="text-h5 mb-1 font-weight-semibold">Evènements en cours</h5>
+          <h5 class="text-h5 mb-1 font-weight-semibold">
+            Evènements en cours ( {{ events.length }} )
+          </h5>
         </div>
       </div>
       <div>
@@ -12,13 +14,27 @@
             v-for="event in paginatedEvents"
             class="current-events__card"
             :class="getServiceClass(event.eventServices[0].serviceUuid)"
+            :key="event.uuid"
+            @mouseenter="hoveredEvent = event.uuid"
+            @mouseleave="hoveredEvent = null"
           >
             <div>
               <h4>{{ event.name }}</h4>
               <h5>{{ event.date }}</h5>
             </div>
-            <!-- <v-btn color="primary" @click="openDialog(event.uuid)">Ajouter un secteur</v-btn> -->
+            <v-btn
+              v-if="hoveredEvent === event.uuid"
+              color="primary"
+              class="current-events__see-more"
+              @click="openDialog(event.uuid)"
+              >Voir plus de détail +
+            </v-btn>
           </div>
+          <EventDetails
+            v-if="isEventDetailsOpen"
+            :event="selectedEvent"
+            v-model="isEventDetailsOpen"
+          ></EventDetails>
         </div>
         <div v-else class="d-flex flex-column align-center justify-center mb-6">
           <Img :src="emptyCart" width="100" height="100" class="mb-6"></Img>
@@ -65,15 +81,19 @@ import type {
 } from '~/models/questionnaire/QuestionnaireClientModel';
 import { useEventService } from '~/services/UseEventService';
 import { eventsStore } from '~/stores/eventsStore';
+import EventDetails from './EventDetails.vue';
 
 const { clientProfile } = storeToRefs(useUserStore());
 const { events, answers } = storeToRefs(eventsStore());
 const { getEventsPerOrganisator, getEventsInstance } = useEventService();
 
+const isEventDetailsOpen = ref(false);
 const isDialogOpen = ref(false);
+const hoveredEvent = ref<string | null>(null);
 const currentPage = ref(1);
 const itemsPerPage = 3;
-const selectedEvent = ref<eventModel | null>(null);
+const isHover = ref(false);
+const selectedEvent = ref<eventModel>();
 const selectedEventUuid = ref<string | null>(null);
 const formAnswers = ref<Record<string, any>>({});
 const lockedSections = ref<Set<string>>(new Set());
@@ -91,14 +111,24 @@ const paginatedEvents = computed(() => {
 });
 
 const openDialog = async (eventUuid: string) => {
-  const findSelectedEvent = events.value.find((event) => event.uuid === eventUuid) || null;
+  const findSelectedEvent = events.value.find((event) => event.uuid === eventUuid);
   selectedEvent.value = findSelectedEvent;
-  selectedEventUuid.value = eventUuid;
   if (findSelectedEvent) {
-    await getEventsInstance(findSelectedEvent.uuid);
+    isEventDetailsOpen.value = true;
   }
-  isDialogOpen.value = true;
+  // isDialogOpen.value = true;
 };
+
+// const openDialog = async (eventUuid: string) => {
+//   const findSelectedEvent = events.value.find((event) => event.uuid === eventUuid) || null;
+//   selectedEvent.value = findSelectedEvent;
+//   selectedEventUuid.value = eventUuid;
+//   if (findSelectedEvent) {
+//     await getEventsInstance(findSelectedEvent.uuid);
+//   }
+//   isEventDetailsOpen.value = true;
+//   // isDialogOpen.value = true;
+// };
 
 const onSubmitEdit = async (payload: EventCreatePayload) => {
   // Placeholder: ici on pourrait appeler un service pour ajouter/mettre à jour les services
@@ -155,9 +185,13 @@ watch(
     width: 100%;
   }
   &__card {
+    position: relative;
     width: 30%;
     padding: 1.5rem;
+    display: flex;
     border-radius: 8px;
+    align-items: center;
+    justify-content: flex-start;
     min-height: 200px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
     &.food-truck-bg {
@@ -175,6 +209,7 @@ watch(
       background-size: cover;
       background-position: center;
     }
+
     :deep(.v-pagination) {
       font-size: 0.5rem;
     }
@@ -182,6 +217,19 @@ watch(
       min-width: 32px;
       height: 32px;
       font-size: 0.75rem;
+    }
+  }
+  &__see-more {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.6s ease;
+    opacity: 0;
+
+    &:hover {
+      transition: all 0.3s ease;
+      opacity: 1;
     }
   }
 }
