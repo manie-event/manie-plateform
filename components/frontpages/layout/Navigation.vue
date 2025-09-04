@@ -4,7 +4,6 @@ import { ref } from 'vue';
 import { RouterLink, useRoute } from 'vue-router';
 
 const route = useRoute(); // Get current route
-
 const navigation = ref([
   {
     menu: 'About Us',

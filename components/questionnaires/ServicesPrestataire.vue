@@ -347,7 +347,6 @@ const updateQuestionnaireSector = async (questionnaire: QuestionnaireItem, newSe
   questionnaire.keywordsByCategory = {};
   questionnaire.selectedServiceUuid = null;
   questionnaire.selectedKeywords.clear();
-  console.log('ICI');
 
   await getSectors(newSector);
 
