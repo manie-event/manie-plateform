@@ -4,7 +4,6 @@ import { ref } from 'vue';
 import { RouterLink, useRoute } from 'vue-router';
 
 const route = useRoute(); // Get current route
-const isDashboard = ref(false);
 const navigation = ref([
   {
     menu: 'About Us',
@@ -40,18 +39,6 @@ const navigation = ref([
 
 // Function to check if the menu is active
 const isActive = (href: string) => route.path === href;
-
-const isNavigationForDashboard = () => {
-  if (route.path.includes('/dashboards/')) {
-    return (isDashboard.value = true);
-  } else {
-    return (isDashboard.value = false);
-  }
-};
-
-onMounted(() => {
-  isNavigationForDashboard();
-});
 </script>
 
 <template>
@@ -87,7 +74,6 @@ onMounted(() => {
     </div>
 
     <v-btn
-      v-if="!isDashboard"
       class="d-md-none d-flex w-full text-white h-43 px-5 transform-none"
       color="primary"
       href="/auth/login"
