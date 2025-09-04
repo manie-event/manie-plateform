@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Logo from '@/public/images/logos/logo-manie-bleu-ciel.svg';
 import JetonImg from '@/public/images/panier/jeton.png';
 import { Icon } from '@iconify/vue';
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
@@ -48,7 +49,7 @@ onBeforeMount(() => {
     <v-spacer class="hidden-sm-and-down" />
 
     <div class="hidden-md-and-up w-40">
-      <LcFullLogo />
+      <Img :src="Logo" alt="test logo" width="150" />
     </div>
 
     <div class="hidden-sm-and-down me-sm-4 me-4">

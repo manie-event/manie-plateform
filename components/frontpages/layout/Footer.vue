@@ -24,13 +24,6 @@ import manieFooterDroits from '/images/logos/logo-footer-droits.png';
                   <h5>{{ item.description }}</h5>
                 </div>
               </div>
-              <div>
-                <h5 class="text-17 mb-sm-8">Notre FAQ</h5>
-                <NuxtLink to="/front-pages/Faq-client"><p>FAQ spécial client</p></NuxtLink>
-                <NuxtLink to="/front-pages/Faq-prestataire"
-                  ><p>FAQ spécial Prestataire</p></NuxtLink
-                >
-              </div>
             </div>
           </v-col>
           <v-col cols="12" lg="3" sm="6">
@@ -40,7 +33,17 @@ import manieFooterDroits from '/images/logos/logo-footer-droits.png';
                 <h4 class="footer-title">
                   {{ `${item.titre}: ` }}
                 </h4>
-                <h5>{{ item.description }}</h5>
+
+                <h5>
+                  <a href="mailto:contact@manie-event.fr" target="_blank">{{ item.description }}</a>
+                </h5>
+              </div>
+              <div>
+                <h5 class="text-17 mb-sm-8">Notre FAQ</h5>
+                <NuxtLink to="/front-pages/Faq-client"><p>FAQ spécial client</p></NuxtLink>
+                <NuxtLink to="/front-pages/Faq-prestataire"
+                  ><p>FAQ spécial Prestataire</p></NuxtLink
+                >
               </div>
             </div>
           </v-col>
@@ -66,7 +69,6 @@ import manieFooterDroits from '/images/logos/logo-footer-droits.png';
                   ></Icon
                 ></NuxtLink>
               </div>
-              <p>contact@manie-events.fr</p>
             </div>
           </v-col>
         </v-row>
