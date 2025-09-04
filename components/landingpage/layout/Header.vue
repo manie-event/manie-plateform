@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import LogoManie from '@/public/images/logos/logo-manie-bleu-ciel.svg';
 import { useCustomizerStore } from '@/stores/customizer';
 import { ref } from 'vue';
 // import RtlLogo from '@/layouts/full/logo/RtlLogo.vue';
@@ -37,7 +38,7 @@ onUnmounted(() => {
             :class="whiteBgOnScroll ? 'header-scrolled' : 'original-position'"
           >
             <div>
-              <LcFullLogo />
+              <Img :src="LogoManie" width="150" />
             </div>
             <!-- Desktop view Navigation -->
             <div class="navigation d-lg-flex d-none ga-3">

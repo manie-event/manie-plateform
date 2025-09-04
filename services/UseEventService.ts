@@ -6,9 +6,11 @@ import type {
 } from '~/models/questionnaire/QuestionnaireClientModel';
 import { eventsStore } from '~/stores/eventsStore';
 
+
 export const useEventService = () => {
   const { addError, addSuccess } = useToaster();
 
+  const eventStore = eventsStore();
   const config = useRuntimeConfig();
   const token = useCookie('token');
   const { clientProfile } = storeToRefs(useUserStore());
@@ -38,6 +40,7 @@ export const useEventService = () => {
 
   const getEventsPerOrganisator = async () => {
     const clientUuid = localStorage.getItem('organisator-uuid');
+
     const { data } = await axios.get(
       `${config.public.apiUrl}/event/list-by-organisator/${clientUuid}`,
       {
@@ -58,6 +61,7 @@ export const useEventService = () => {
       });
 
       const events = eventsWithoutEmptyServices.map((event: eventModelDto) => mapDtoToEvent(event));
+
       setEventsByOrganisator(events);
       return data;
     }
@@ -120,11 +124,13 @@ export const useEventService = () => {
       // les erreurs sont déjà gérées dans createEventServiceItem
     }
   };
+
   return {
     createEventService,
     getEventsPerOrganisator,
     getEventsInstance,
     createEventServiceItem,
     addServicesToEvent,
+
   };
 };

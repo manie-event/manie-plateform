@@ -129,6 +129,7 @@ export const useServiceMapping = () => {
       const toggleId = `__section_${section.id}_toggle`;
       const isActive = Boolean(formAnswers[toggleId]);
       if (!isActive) continue;
+
       if (!sectorData) continue;
 
       // Collecter tous les tokens sélectionnés dans cette section

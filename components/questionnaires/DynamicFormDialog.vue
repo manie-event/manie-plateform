@@ -28,6 +28,7 @@
                         :field="getVisibleField(section)"
                         :model-value="getSectionControllerValue(section)"
                         :error="fieldErrors[getVisibleField(section)?.id || '']"
+                        :disabled="props.lockedSections?.has(section.id)"
                         @update:modelValue="(v) => handleSectionControllerChange(section, !!v)"
                         :disabled="props.lockedSections?.has(section.id)"
                       />
@@ -48,6 +49,7 @@
                           :model-value="formState[field.id]"
                           :options="getDynamicOptions(field)"
                           :error="fieldErrors[field.id]"
+                          :disabled="props.lockedSections?.has(section.id)"
                           @update:model-value="(v) => updateFieldValue(field, v)"
                           :disabled="props.lockedSections?.has(section.id)"
                         />
@@ -96,6 +98,7 @@ import FormField from '@/components/questionnaires/FormField.vue';
 import SectionController from '@/components/questionnaires/SectionController.vue';
 import ValidationErrors from '@/components/questionnaires/ValidationError.vue';
 import { useDynamicFormWithEmits } from '@/composables/questionnaire-client/UseDynamicFormWithEmits';
+import { nextTick, onMounted, watch } from 'vue';
 import { useKeywords } from '~/composables/professional-user/UseKeywords';
 import type {
   EventCreatePayload,
@@ -175,6 +178,7 @@ const updateFieldValue = (field: FieldSchema, value: any): void => {
 const ensureSectorsLoaded = async (): Promise<void> => {
   try {
     for (const page of pages.value) {
+
       for (const section of page.sections) {
         const toggleId = `__section_${section.id}_toggle`;
         if (formState[toggleId]) {
@@ -189,6 +193,7 @@ const ensureSectorsLoaded = async (): Promise<void> => {
 onMounted(async () => {
   await ensureSectorsLoaded();
 });
+
 watch(
   () => isOpen.value,
   async (open) => {
@@ -197,8 +202,7 @@ watch(
     }
   }
 );
-// Quand des valeurs pré-remplies arrivent, s'assurer que les secteurs requis sont chargés,
-// pour que les options (chips) soient disponibles et reflètent la sélection
+
 watch(
   () => props.modelValue,
   async () => {

@@ -10,6 +10,7 @@ export interface eventModel {
   people: string;
   eventServices: eventService[];
 }
+
 export interface eventService {
   uuid: string;
   eventUuid: string;

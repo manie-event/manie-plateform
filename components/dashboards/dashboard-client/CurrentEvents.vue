@@ -10,7 +10,7 @@
       </div>
       <div>
         <div class="mt-10 mb-sm-12 mb-8 current-events__cards" v-if="events.length > 0">
-          <div
+        <div
             v-for="event in paginatedEvents"
             class="current-events__card"
             :class="getServiceClass(event.eventServices[0].serviceUuid)"
@@ -83,6 +83,7 @@ import { useEventService } from '~/services/UseEventService';
 import { eventsStore } from '~/stores/eventsStore';
 import EventDetails from './EventDetails.vue';
 
+
 const { clientProfile } = storeToRefs(useUserStore());
 const { events, answers } = storeToRefs(eventsStore());
 const { getEventsPerOrganisator, getEventsInstance } = useEventService();
@@ -92,8 +93,8 @@ const isDialogOpen = ref(false);
 const hoveredEvent = ref<string | null>(null);
 const currentPage = ref(1);
 const itemsPerPage = 3;
-const isHover = ref(false);
-const selectedEvent = ref<eventModel>();
+
+const selectedEvent = ref<eventModel | null>(null);
 const selectedEventUuid = ref<string | null>(null);
 const formAnswers = ref<Record<string, any>>({});
 const lockedSections = ref<Set<string>>(new Set());
@@ -167,6 +168,7 @@ watch(
   },
   { immediate: true }
 );
+
 </script>
 
 <style lang="scss" scoped>
