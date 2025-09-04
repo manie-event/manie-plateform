@@ -30,7 +30,6 @@
                         :error="fieldErrors[getVisibleField(section)?.id || '']"
                         :disabled="props.lockedSections?.has(section.id)"
                         @update:modelValue="(v) => handleSectionControllerChange(section, !!v)"
-                        :disabled="props.lockedSections?.has(section.id)"
                       />
                     </v-col>
                   </template>
@@ -51,7 +50,6 @@
                           :error="fieldErrors[field.id]"
                           :disabled="props.lockedSections?.has(section.id)"
                           @update:model-value="(v) => updateFieldValue(field, v)"
-                          :disabled="props.lockedSections?.has(section.id)"
                         />
                       </v-col>
                     </template>
@@ -178,7 +176,6 @@ const updateFieldValue = (field: FieldSchema, value: any): void => {
 const ensureSectorsLoaded = async (): Promise<void> => {
   try {
     for (const page of pages.value) {
-
       for (const section of page.sections) {
         const toggleId = `__section_${section.id}_toggle`;
         if (formState[toggleId]) {
