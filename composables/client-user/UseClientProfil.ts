@@ -12,11 +12,8 @@ export const useClientProfil = () => {
   const getClientProfil = async () => {
     const response = await api?.get(`${config.public.apiUrl}/organisator`);
 
-
     if (response) {
       setClientProfile(response.data);
-      localStorage.setItem('clientProfile', response.data.uuid);
-      console.log(clientProfile.value?.uuid, 'Client profile response fetched');
       return response;
     }
   };
@@ -25,7 +22,6 @@ export const useClientProfil = () => {
     const clientUuid = clientProfile.value?.uuid;
 
     const response = await api?.patch(
-
       `${config.public.apiUrl}/organisator/${clientUuid}`,
       newProfil
     );

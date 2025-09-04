@@ -8,8 +8,12 @@ import Navigations from '@/components/landingpage/layout/Navigation.vue';
 import MobileSidebar from '@/components/landingpage/layout/MobileSidebar.vue';
 /*import tabler icons*/
 import { Menu2Icon } from 'vue-tabler-icons';
+
 const appsdrawer = ref(false);
 const customizer = useCustomizerStore();
+const isAlreadyConnected = localStorage.getItem('pp-created');
+const clientProfile = localStorage.getItem('client-uuid');
+const professionalProfile = localStorage.getItem('professional-uuid');
 
 const whiteBgOnScroll = ref(false);
 const handleScroll = () => {
@@ -38,7 +42,9 @@ onUnmounted(() => {
             :class="whiteBgOnScroll ? 'header-scrolled' : 'original-position'"
           >
             <div>
-              <Img :src="LogoManie" width="150" />
+              <NuxtLink to="/">
+                <Img :src="LogoManie" width="150" />
+              </NuxtLink>
             </div>
             <!-- Desktop view Navigation -->
             <div class="navigation d-lg-flex d-none ga-3">
@@ -46,10 +52,25 @@ onUnmounted(() => {
             </div>
             <!-- Login  -->
             <v-btn
+              v-if="!isAlreadyConnected"
               class="custom-hover-primary bg-primary d-lg-flex d-none px-8 align-center login-shadow"
               rounded="pill"
               to="/auth/login"
               ><span class="text-white">Se connecter</span></v-btn
+            >
+            <v-btn
+              v-else-if="isAlreadyConnected && clientProfile"
+              class="custom-hover-primary bg-primary d-lg-flex d-none px-8 align-center login-shadow"
+              rounded="pill"
+              to="/dashboards/dashboard-client"
+              ><span class="text-white">Mon tableau de bord</span></v-btn
+            >
+            <v-btn
+              v-else-if="isAlreadyConnected && professionalProfile"
+              class="custom-hover-primary bg-primary d-lg-flex d-none px-8 align-center login-shadow"
+              rounded="pill"
+              to="/dashboards/dashboard2"
+              ><span class="text-white">Mon tableau de bord</span></v-btn
             >
             <!-- Mobile Toggle Button -->
             <v-btn

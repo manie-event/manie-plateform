@@ -6,7 +6,6 @@ import type {
 } from '~/models/questionnaire/QuestionnaireClientModel';
 import { eventsStore } from '~/stores/eventsStore';
 
-
 export const useEventService = () => {
   const { addError, addSuccess } = useToaster();
 
@@ -39,7 +38,7 @@ export const useEventService = () => {
   };
 
   const getEventsPerOrganisator = async () => {
-    const clientUuid = localStorage.getItem('organisator-uuid');
+    const clientUuid = localStorage.getItem('client-uuid');
 
     const { data } = await axios.get(
       `${config.public.apiUrl}/event/list-by-organisator/${clientUuid}`,
@@ -131,6 +130,5 @@ export const useEventService = () => {
     getEventsInstance,
     createEventServiceItem,
     addServicesToEvent,
-
   };
 };
