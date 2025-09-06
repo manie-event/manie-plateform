@@ -39,6 +39,7 @@ const { createEventService } = eventService;
 
 const onSubmit = (payload: EventCreatePayload) => {
   createEventService(payload);
+  openModal.value = false;
 };
 </script>
 <style lang="scss" scoped>

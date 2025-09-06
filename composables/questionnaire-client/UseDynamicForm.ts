@@ -158,8 +158,8 @@ export const useDynamicForm = (props: UseDynamicFormProps) => {
       formState.budget_type === 'par_personne'
         ? Number(formState.budgetParPersonne || 0) * peopleNum
         : Number(formState.budget || 0);
-    console.log(orgaUuid, 'Orga UUID in payload');
 
+    const flexibleDate = formState.date_flexible ? 'flexible' : undefined;
     const payload: EventCreatePayload = {
       organisatorUuid: orgaUuid ?? '',
       date: computeDateRange(formState),
@@ -185,6 +185,10 @@ export const useDynamicForm = (props: UseDynamicFormProps) => {
     try {
       const services = buildServiceSelections(props.sections, formState);
 
+      if (services.length === 0) {
+        pageErrors.value = ['Veuillez sélectionner au moins un service.'];
+        return null;
+      }
       const payload = buildEventPayload(services);
 
       return payload;

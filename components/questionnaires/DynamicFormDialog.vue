@@ -2,11 +2,6 @@
   <v-dialog v-model="isOpen" v-bind="$attrs" max-width="900px">
     <v-card>
       <!-- En-tête -->
-      <v-card-title class="d-flex align-center justify-space-between">
-        <div class="text-h6">{{ currentPageTitle }}</div>
-        <div class="text-caption">Page {{ currentPageIndex + 1 }} / {{ pages.length }}</div>
-      </v-card-title>
-      <v-divider></v-divider>
 
       <!-- Contenu -->
       <v-card-text>

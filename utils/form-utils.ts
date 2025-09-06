@@ -74,11 +74,17 @@ export const humanizeEventName = (value?: string, fallback = 'Événement'): str
 /**
  * Calcule la plage de dates à partir des réponses
  */
-export const computeDateRange = (answers: FormState): [string, string] => {
+export const computeDateRange = (answers: FormState): [string, string] | string => {
+  console.log(answers, '---');
+
   if (answers.date_status === 'arretee') {
     const start = String(answers.date_debut || '');
     const end = String(answers.date_fin || answers.date_debut || '');
     return [start, end];
+  }
+  if (answers.date_status === 'flexible') {
+    const date = String(answers.periode || '');
+    return date;
   }
   return ['', ''];
 };

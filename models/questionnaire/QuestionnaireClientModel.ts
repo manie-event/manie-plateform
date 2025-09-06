@@ -48,7 +48,7 @@ export interface ServiceSelection {
 
 export interface EventCreatePayload {
   organisatorUuid: string;
-  date: [string, string];
+  date?: [string, string] | string;
   budget: number;
   location: string;
   name: string;
