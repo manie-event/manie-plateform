@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { clientMenu, professionalProfile } from '@/_mockApis/headerData';
-import { UserCategory } from '@/models/enums/userCategoryEnums';
 import { Icon } from '@iconify/vue';
 import { CircleXIcon } from 'vue-tabler-icons';
 import { useClientProfil } from '~/composables/client-user/UseClientProfil';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
+import { UserCategory } from '~/models/enums/userCategoryEnums';
 import { useAuthentification } from '../../../../composables/UseAuthentification';
 
 const userStore = useUserStore();
@@ -15,33 +15,23 @@ const { sendLogout } = useAuthentification();
 const { userTokenBalance } = storeToRefs(useCartStore());
 const { getProfessionalProfileDetails } = useProfessionalProfile();
 const { getClientProfil } = useClientProfil();
+const userCategory = ref(localStorage.getItem('user-category'));
 
 const getNameDependingOnCategory = computed(() => {
-  if (
-    (isProfessional.value && !user.value?.username) ||
-    professionalUser.value?.category == 'professional'
-  ) {
+  if (userCategory.value === UserCategory.PROFESSIONAL && isProfileCreated.value) {
     return professionalUser.value?.name;
   }
-  if (clientProfile.value) {
+  if (userCategory.value === UserCategory.CONSUMER && isProfileCreated.value) {
     return clientProfile.value.username;
   } else {
-    return user.value?.username;
-  }
-});
-
-const getCategory = computed(() => {
-  if (isProfessional.value) {
-    return UserCategory.PRESTA;
-  } else {
-    return UserCategory.CLIENT;
+    return localStorage.getItem('username');
   }
 });
 
 onMounted(async () => {
-  if (isProfileCreated.value && user.value?.category === UserCategory.PROFESSIONAL) {
+  if (isProfileCreated.value && userCategory.value === UserCategory.PROFESSIONAL) {
     await getProfessionalProfileDetails();
-  } else {
+  } else if (isProfileCreated.value && userCategory.value === UserCategory.CONSUMER) {
     await getClientProfil();
   }
 });
@@ -67,7 +57,7 @@ onMounted(async () => {
             <h6 class="text-h6 d-flex align-center text-black font-weight-semibold">
               {{ getNameDependingOnCategory }}
             </h6>
-            <span class="text-subtitle-2 font-weight-medium text-grey100">{{ getCategory }}</span>
+            <span class="text-subtitle-2 font-weight-medium text-grey100">{{ userCategory }}</span>
           </div>
         </div>
       </div>
@@ -86,14 +76,18 @@ onMounted(async () => {
           <div class="ml-5">
             <h6 class="text-h5 mb-n1">{{ getNameDependingOnCategory }}</h6>
             <span class="text-subtitle-1 font-weight-regular text-grey100 font-weight-medium">{{
-              getCategory
+              userCategory
             }}</span>
           </div>
         </div>
         <v-divider></v-divider>
       </div>
       <div style="height: 100%; max-height: 240px">
-        <v-list class="py-0 theme-list" lines="two" v-if="isProfessional">
+        <v-list
+          class="py-0 theme-list"
+          lines="two"
+          v-if="userCategory === UserCategory.PROFESSIONAL"
+        >
           <v-list-item
             v-for="item in professionalProfile"
             :key="item.title"

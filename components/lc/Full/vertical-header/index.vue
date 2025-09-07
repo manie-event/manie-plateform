@@ -4,12 +4,13 @@ import JetonImg from '@/public/images/panier/jeton.png';
 import { Icon } from '@iconify/vue';
 import Navigation from '~/components/landingpage/layout/Navigation.vue';
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
+import { UserCategory } from '../../../../models/enums/userCategoryEnums';
 
 const { createTokenSession } = usePaiementJeton();
 const { isProfessional } = storeToRefs(useUserStore());
 const jetonAmount = ref(0);
 const stickyHeader = ref(false);
-
+const userCategory = localStorage.getItem('user-category');
 const totalPriceJeton = computed(() => {
   return `${jetonAmount.value * 9} €`;
 });
@@ -68,7 +69,11 @@ onBeforeMount(() => {
       <div class="menu-dashboard__right-part">
         <LcFullVerticalHeaderThemeToggler />
 
-        <v-menu :close-on-content-click="false" class="notification_popup" v-if="isProfessional">
+        <v-menu
+          :close-on-content-click="false"
+          class="notification_popup"
+          v-if="userCategory === UserCategory.PROFESSIONAL"
+        >
           <template v-slot:activator="{ props }">
             <v-btn icon flat v-bind="props" size="small" class="custom-hover-primary">
               <div class="position-realtive">

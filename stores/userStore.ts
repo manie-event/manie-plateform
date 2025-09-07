@@ -48,6 +48,9 @@ export const useUserStore = defineStore('userStore', () => {
   // setters
   const setUser = (userData: User) => {
     user.value = userData;
+    localStorage.setItem('username', userData.username);
+    localStorage.setItem('user-uuid', userData.uuid);
+    localStorage.setItem('user-category', userData.category);
   };
 
   const setUpdateProfile = (newStatus: boolean) => {

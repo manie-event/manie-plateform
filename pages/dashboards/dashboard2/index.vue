@@ -9,17 +9,15 @@ import TextCards from '@/components/dashboards/dashboard2/TextCards.vue';
 import TraficDistribution from '@/components/dashboards/dashboard2/TrafficDistribution.vue';
 import UpcommingSchedule from '@/components/dashboards/dashboard2/UpcommingSchedule.vue';
 import WelcomeCard from '@/components/dashboards/dashboard2/WelcomeCard.vue';
-import Footer from '@/components/frontpages/layout/Footer.vue';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
-import { UserCategory } from '~/models/enums/userCategoryEnums';
 
 const userStore = useUserStore();
-const { isProfileCreated, user } = storeToRefs(userStore);
+const { isProfileCreated, user, isProfessional } = storeToRefs(userStore);
 const { getProfessionalProfileDetails } = useProfessionalProfile();
 
 onMounted(async () => {
-  if (!isProfileCreated.value && user.value?.category == UserCategory.PRESTA) {
+  if (isProfileCreated.value && isProfessional.value) {
     await getProfessionalProfileDetails();
   }
 });
@@ -82,5 +80,4 @@ onMounted(async () => {
       </BaseEmptyState>
     </v-col>
   </v-row>
-  <Footer />
 </template>

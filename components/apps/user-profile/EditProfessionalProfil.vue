@@ -281,7 +281,7 @@ const {
     geographicArea: geographicActivity.value[0]?.label ?? '',
     faq: {},
     minimumReservationPeriod: 0,
-    certification: '',
+    certification: [],
     deposit: false,
     depositAmount: 0,
     billingPeriod: 'beforeEvent',

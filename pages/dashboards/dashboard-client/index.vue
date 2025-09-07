@@ -12,13 +12,15 @@ import { useClientProfil } from '@/composables/client-user/UseClientProfil';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
 import BaseEmptyState from '~/components/common/BaseEmptyState.vue';
 import Events from '~/components/dashboards/dashboard-client/Events.vue';
-import { UserCategory } from '~/models/enums/userCategoryEnums';
 
 const userStore = useUserStore();
-const { isProfileCreated, user } = storeToRefs(userStore);
+const { isProfileCreated, user, isProfessional } = storeToRefs(userStore);
 const { getClientProfil } = useClientProfil();
+
 onMounted(async () => {
-  if (user.value?.category == UserCategory.CONSUMER) {
+  if (isProfileCreated && !isProfessional.value) {
+    console.log('user not defined FROM DASHBOARD CLIENT', user.value);
+
     await getClientProfil();
   }
 });
