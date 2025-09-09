@@ -36,9 +36,10 @@ function handleScroll() {
         <v-container class="py-0 max-width-1218">
           <v-toolbar class="d-flex align-center">
             <!-- Logo -->
-
             <div>
-              <img :src="Logo" alt="" />
+              <NuxtLink to="/">
+                <img :src="Logo" alt="" />
+              </NuxtLink>
             </div>
 
             <!-- Desktop view Navigation -->

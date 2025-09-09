@@ -5,6 +5,7 @@ import type {
   EventCreatePayload,
   ServiceSelection,
 } from '~/models/questionnaire/QuestionnaireClientModel';
+import { eventsStore } from '~/stores/eventsStore';
 
 export const useEventService = () => {
   const { addError, addSuccess } = useToaster();
