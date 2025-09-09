@@ -110,6 +110,7 @@ interface _GlobalComponents {
     'DashboardsDashboard2FigmaCard': typeof import("../components/dashboards/dashboard2/FigmaCard.vue")['default']
     'DashboardsDashboard2PayingTable': typeof import("../components/dashboards/dashboard2/PayingTable.vue")['default']
     'DashboardsDashboard2ProductSales': typeof import("../components/dashboards/dashboard2/ProductSales.vue")['default']
+    'DashboardsDashboard2ProfessionalMarketPlace': typeof import("../components/dashboards/dashboard2/ProfessionalMarketPlace.vue")['default']
     'DashboardsDashboard2ProfileCards': typeof import("../components/dashboards/dashboard2/ProfileCards.vue")['default']
     'DashboardsDashboard2ProfitExpanse': typeof import("../components/dashboards/dashboard2/ProfitExpanse.vue")['default']
     'DashboardsDashboard2TextCards': typeof import("../components/dashboards/dashboard2/TextCards.vue")['default']
@@ -297,6 +298,7 @@ interface _GlobalComponents {
     'PagesFaqQuestion': typeof import("../components/pages/faq/FaqQuestion.vue")['default']
     'PagesFaqStillHaveQuestions': typeof import("../components/pages/faq/StillHaveQuestions.vue")['default']
     'PagesSearchResultsSearchLinks': typeof import("../components/pages/search-results/SearchLinks.vue")['default']
+    'QuestionnairesCustomerForm': typeof import("../components/questionnaires/CustomerForm.vue")['default']
     'QuestionnairesDynamicFormDialog': typeof import("../components/questionnaires/DynamicFormDialog.vue")['default']
     'QuestionnairesFormField': typeof import("../components/questionnaires/FormField.vue")['default']
     'QuestionnairesSectionController': typeof import("../components/questionnaires/SectionController.vue")['default']
@@ -532,6 +534,7 @@ interface _GlobalComponents {
     'LazyDashboardsDashboard2FigmaCard': LazyComponent<typeof import("../components/dashboards/dashboard2/FigmaCard.vue")['default']>
     'LazyDashboardsDashboard2PayingTable': LazyComponent<typeof import("../components/dashboards/dashboard2/PayingTable.vue")['default']>
     'LazyDashboardsDashboard2ProductSales': LazyComponent<typeof import("../components/dashboards/dashboard2/ProductSales.vue")['default']>
+    'LazyDashboardsDashboard2ProfessionalMarketPlace': LazyComponent<typeof import("../components/dashboards/dashboard2/ProfessionalMarketPlace.vue")['default']>
     'LazyDashboardsDashboard2ProfileCards': LazyComponent<typeof import("../components/dashboards/dashboard2/ProfileCards.vue")['default']>
     'LazyDashboardsDashboard2ProfitExpanse': LazyComponent<typeof import("../components/dashboards/dashboard2/ProfitExpanse.vue")['default']>
     'LazyDashboardsDashboard2TextCards': LazyComponent<typeof import("../components/dashboards/dashboard2/TextCards.vue")['default']>
@@ -719,6 +722,7 @@ interface _GlobalComponents {
     'LazyPagesFaqQuestion': LazyComponent<typeof import("../components/pages/faq/FaqQuestion.vue")['default']>
     'LazyPagesFaqStillHaveQuestions': LazyComponent<typeof import("../components/pages/faq/StillHaveQuestions.vue")['default']>
     'LazyPagesSearchResultsSearchLinks': LazyComponent<typeof import("../components/pages/search-results/SearchLinks.vue")['default']>
+    'LazyQuestionnairesCustomerForm': LazyComponent<typeof import("../components/questionnaires/CustomerForm.vue")['default']>
     'LazyQuestionnairesDynamicFormDialog': LazyComponent<typeof import("../components/questionnaires/DynamicFormDialog.vue")['default']>
     'LazyQuestionnairesFormField': LazyComponent<typeof import("../components/questionnaires/FormField.vue")['default']>
     'LazyQuestionnairesSectionController': LazyComponent<typeof import("../components/questionnaires/SectionController.vue")['default']>
@@ -960,6 +964,7 @@ export const DashboardsDashboardClientVisitFromUsa: typeof import("../components
 export const DashboardsDashboard2FigmaCard: typeof import("../components/dashboards/dashboard2/FigmaCard.vue")['default']
 export const DashboardsDashboard2PayingTable: typeof import("../components/dashboards/dashboard2/PayingTable.vue")['default']
 export const DashboardsDashboard2ProductSales: typeof import("../components/dashboards/dashboard2/ProductSales.vue")['default']
+export const DashboardsDashboard2ProfessionalMarketPlace: typeof import("../components/dashboards/dashboard2/ProfessionalMarketPlace.vue")['default']
 export const DashboardsDashboard2ProfileCards: typeof import("../components/dashboards/dashboard2/ProfileCards.vue")['default']
 export const DashboardsDashboard2ProfitExpanse: typeof import("../components/dashboards/dashboard2/ProfitExpanse.vue")['default']
 export const DashboardsDashboard2TextCards: typeof import("../components/dashboards/dashboard2/TextCards.vue")['default']
@@ -1147,6 +1152,7 @@ export const PagesAccountSettingsSecurityTab: typeof import("../components/pages
 export const PagesFaqQuestion: typeof import("../components/pages/faq/FaqQuestion.vue")['default']
 export const PagesFaqStillHaveQuestions: typeof import("../components/pages/faq/StillHaveQuestions.vue")['default']
 export const PagesSearchResultsSearchLinks: typeof import("../components/pages/search-results/SearchLinks.vue")['default']
+export const QuestionnairesCustomerForm: typeof import("../components/questionnaires/CustomerForm.vue")['default']
 export const QuestionnairesDynamicFormDialog: typeof import("../components/questionnaires/DynamicFormDialog.vue")['default']
 export const QuestionnairesFormField: typeof import("../components/questionnaires/FormField.vue")['default']
 export const QuestionnairesSectionController: typeof import("../components/questionnaires/SectionController.vue")['default']
@@ -1382,6 +1388,7 @@ export const LazyDashboardsDashboardClientVisitFromUsa: LazyComponent<typeof imp
 export const LazyDashboardsDashboard2FigmaCard: LazyComponent<typeof import("../components/dashboards/dashboard2/FigmaCard.vue")['default']>
 export const LazyDashboardsDashboard2PayingTable: LazyComponent<typeof import("../components/dashboards/dashboard2/PayingTable.vue")['default']>
 export const LazyDashboardsDashboard2ProductSales: LazyComponent<typeof import("../components/dashboards/dashboard2/ProductSales.vue")['default']>
+export const LazyDashboardsDashboard2ProfessionalMarketPlace: LazyComponent<typeof import("../components/dashboards/dashboard2/ProfessionalMarketPlace.vue")['default']>
 export const LazyDashboardsDashboard2ProfileCards: LazyComponent<typeof import("../components/dashboards/dashboard2/ProfileCards.vue")['default']>
 export const LazyDashboardsDashboard2ProfitExpanse: LazyComponent<typeof import("../components/dashboards/dashboard2/ProfitExpanse.vue")['default']>
 export const LazyDashboardsDashboard2TextCards: LazyComponent<typeof import("../components/dashboards/dashboard2/TextCards.vue")['default']>
@@ -1569,6 +1576,7 @@ export const LazyPagesAccountSettingsSecurityTab: LazyComponent<typeof import(".
 export const LazyPagesFaqQuestion: LazyComponent<typeof import("../components/pages/faq/FaqQuestion.vue")['default']>
 export const LazyPagesFaqStillHaveQuestions: LazyComponent<typeof import("../components/pages/faq/StillHaveQuestions.vue")['default']>
 export const LazyPagesSearchResultsSearchLinks: LazyComponent<typeof import("../components/pages/search-results/SearchLinks.vue")['default']>
+export const LazyQuestionnairesCustomerForm: LazyComponent<typeof import("../components/questionnaires/CustomerForm.vue")['default']>
 export const LazyQuestionnairesDynamicFormDialog: LazyComponent<typeof import("../components/questionnaires/DynamicFormDialog.vue")['default']>
 export const LazyQuestionnairesFormField: LazyComponent<typeof import("../components/questionnaires/FormField.vue")['default']>
 export const LazyQuestionnairesSectionController: LazyComponent<typeof import("../components/questionnaires/SectionController.vue")['default']>

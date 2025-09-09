@@ -10,7 +10,7 @@
       </div>
       <div>
         <div class="mt-10 mb-sm-12 mb-8 current-events__cards" v-if="events.length > 0">
-        <div
+          <div
             v-for="event in paginatedEvents"
             class="current-events__card"
             :class="getServiceClass(event.eventServices[0].serviceUuid)"
@@ -73,6 +73,7 @@
 import DynamicFormDialog from '@/components/questionnaires/DynamicFormDialog.vue';
 import ClientQuestionnaire from '@/data/questionnaire-client.json';
 import emptyCart from '@/public/images/svgs/empty-cart.svg';
+import { eventsStore } from '@/stores/events';
 import { useEventPrefill } from '~/composables/questionnaire-client/UseEventPrefill';
 import type { eventModel } from '~/models/events/eventModel';
 import type {
@@ -80,9 +81,7 @@ import type {
   SectionSchema,
 } from '~/models/questionnaire/QuestionnaireClientModel';
 import { useEventService } from '~/services/UseEventService';
-import { eventsStore } from '~/stores/eventsStore';
 import EventDetails from './EventDetails.vue';
-
 
 const { clientProfile } = storeToRefs(useUserStore());
 const { events, answers } = storeToRefs(eventsStore());
@@ -168,7 +167,6 @@ watch(
   },
   { immediate: true }
 );
-
 </script>
 
 <style lang="scss" scoped>

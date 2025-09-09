@@ -1,11 +1,10 @@
+import { eventsStore } from '@/stores/events';
 import { eventsMapper } from '~/mappers/eventsMapper';
 import type { eventModelDto } from '~/models/dto/eventDto';
 import type {
   EventCreatePayload,
   ServiceSelection,
 } from '~/models/questionnaire/QuestionnaireClientModel';
-import { eventsStore } from '~/stores/eventsStore';
-
 
 export const useEventService = () => {
   const { addError, addSuccess } = useToaster();
@@ -14,7 +13,7 @@ export const useEventService = () => {
   const config = useRuntimeConfig();
   const token = useCookie('token');
   const { clientProfile } = storeToRefs(useUserStore());
-  const { setEventsByOrganisator, setQuestionnaireAnswers } = eventsStore();
+  const { setEventsByOrganisator, setQuestionnaireAnswers } = eventStore;
 
   const createEventService = async (payload: EventCreatePayload) => {
     try {
@@ -39,7 +38,7 @@ export const useEventService = () => {
   };
 
   const getEventsPerOrganisator = async () => {
-    const clientUuid = localStorage.getItem('organisator-uuid');
+    const clientUuid = localStorage.getItem('client-uuid');
 
     const { data } = await axios.get(
       `${config.public.apiUrl}/event/list-by-organisator/${clientUuid}`,
@@ -131,6 +130,5 @@ export const useEventService = () => {
     getEventsInstance,
     createEventServiceItem,
     addServicesToEvent,
-
   };
 };

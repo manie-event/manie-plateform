@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { BasketIcon } from 'vue-tabler-icons';
+import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 import StepFirst from './steps/StepFirst.vue';
 
 const store = useCartStore();
-const { cart } = storeToRefs(store);
+const { cartQuantity } = storeToRefs(store);
 
 const { createTokenSession } = usePaiementJeton();
 const thankyou = ref(false);
@@ -53,10 +54,10 @@ const tab = ref('tab-1');
             </v-col> -->
             <v-col cols="12" sm="6" class="text-sm-right pb-5">
               <v-btn
-                v-if="store.cart.quantity >= 1"
+                v-if="store.cartQuantity >= 1"
                 color="primary"
                 rounded="pill"
-                @click="createTokenSession(cart.quantity)"
+                @click="createTokenSession(cartQuantity)"
                 >Payer</v-btn
               >
             </v-col>

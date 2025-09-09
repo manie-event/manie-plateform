@@ -12,15 +12,23 @@ import { useClientProfil } from '@/composables/client-user/UseClientProfil';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
 import BaseEmptyState from '~/components/common/BaseEmptyState.vue';
 import Events from '~/components/dashboards/dashboard-client/Events.vue';
+import { useProfessionalService } from '~/composables/client-user/UseProfessionalService';
+import { useKeywords } from '~/composables/professional-user/UseKeywords';
 import { UserCategory } from '~/models/enums/userCategoryEnums';
 
 const userStore = useUserStore();
 const { isProfileCreated, user } = storeToRefs(userStore);
 const { getClientProfil } = useClientProfil();
+const { getProfessionalService } = useProfessionalService();
+const { getAllSectors, getKeywords } = useKeywords();
+
 onMounted(async () => {
   if (user.value?.category == UserCategory.CONSUMER) {
     await getClientProfil();
   }
+  await getProfessionalService();
+  await getAllSectors();
+  await getKeywords();
 });
 </script>
 

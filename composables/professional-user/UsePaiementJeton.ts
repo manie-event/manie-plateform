@@ -26,6 +26,8 @@ export const usePaiementJeton = () => {
     try {
       localStorage.setItem('jeton-quantity', JSON.stringify(currentJetonQuantity));
       // === APPEL API STRIPE ===
+      console.log(currentProfile, 'from createTokenSession');
+
       const { data } = await axios.post(
         `${config.public.apiUrl}/payments/token/${currentProfile.uuid}`,
         {
@@ -42,6 +44,8 @@ export const usePaiementJeton = () => {
 
       if (data && data.url) {
         window.location.href = data.url;
+        console.log(window.location.href, 'REDIRECT STRIPE');
+
         return data;
       }
     } catch (error: any) {
@@ -50,6 +54,8 @@ export const usePaiementJeton = () => {
   };
 
   const createJeton = async (quantity: number, professionnalUuid: string) => {
+    console.log('Creating jetons...', quantity, professionnalUuid);
+
     try {
       const { data } = await axios.post(
         `${config.public.apiUrl}/credit/create`,
@@ -74,6 +80,7 @@ export const usePaiementJeton = () => {
   };
 
   const restoreAfterStripe = async (ProfessionalProfile: ProfessionalProfile) => {
+    localStorage.setItem('user-category', 'professional'); // added to fix issue with vertical header
     const urlParams = new URLSearchParams(window.location.search);
     const isStripeReturn =
       urlParams.has('session_id') || urlParams.has('payment_intent') || route.query.success;
@@ -86,6 +93,8 @@ export const usePaiementJeton = () => {
 
           creditTokensAfterPayment(tokensToPurchase);
           if (ProfessionalProfile.uuid) {
+            console.log('✅ Restoring profile and creating tokens');
+
             await createJeton(tokensToPurchase, ProfessionalProfile.uuid);
           }
         }
