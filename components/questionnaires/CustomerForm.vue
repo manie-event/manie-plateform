@@ -4,21 +4,28 @@
       <div v-if="currentPage === 1">
         <h3>{{ questionnaire.general[0].title }}</h3>
         <div class="d-flex w-50 h-50">
-          <v-btn value="particulier" @click="customerResponse.eventType = 'particulier'"
-            >Je suis un particulier</v-btn
+          <v-chip
+            value="particulier"
+            :color="eventType === 'particulier' ? 'primary' : 'default'"
+            @click="eventType = 'particulier'"
           >
-          <v-btn @click="customerResponse.eventType = 'professionnel'"
-            >Je suis un professionnel</v-btn
+            Je suis un particulier
+          </v-chip>
+          <v-chip
+            :color="eventType === 'professionnel' ? 'primary' : 'default'"
+            @click="eventType = 'professionnel'"
           >
+            Je suis un professionnel
+          </v-chip>
         </div>
         <div>
           <v-chip
             v-for="userType in getQuestionOptions(0)"
             :key="userType.value"
-            :color="customerResponse.eventName === userType.value ? 'primary' : 'default'"
-            :variant="customerResponse.eventName === userType.value ? 'flat' : 'outlined'"
+            :color="eventName === userType.value ? 'primary' : 'default'"
+            :variant="eventName === userType.value ? 'flat' : 'outlined'"
             clickable
-            @click="customerResponse.eventName = userType.value"
+            @click="eventName = userType.value"
           >
             {{ userType.label }}
           </v-chip>
@@ -58,37 +65,52 @@
             item-title="label"
             item-value="value"
             label="localisation souhaitée"
-            v-model="customerResponse.location"
+            v-model="location"
           ></v-select>
         </div>
         <div class="mt-4 d-flex">
           <h3>{{ questionnaire.general[2].title }}</h3>
-          <v-radio-group v-model="customerResponse.invites" v-for="invite in getQuestionOptions(2)">
-            <v-radio :label="invite.label" :value="invite.value"></v-radio>
+          <v-radio-group v-model="invites">
+            <v-radio
+              v-for="invite in getQuestionOptions(2)"
+              :key="invite.value"
+              :label="invite.label"
+              :value="invite.value"
+            ></v-radio>
           </v-radio-group>
         </div>
         <div class="mt-4 d-flex">
           <h3>{{ questionnaire.general[3].title }}</h3>
-          <v-radio-group v-model="customerResponse.duration" v-for="duree in getQuestionOptions(3)">
-            <v-radio :label="duree.label" :value="duree.value"></v-radio>
+          <v-radio-group v-model="duration">
+            <v-radio
+              v-for="duree in getQuestionOptions(3)"
+              :key="duree.value"
+              :label="duree.label"
+              :value="duree.value"
+            ></v-radio>
           </v-radio-group>
         </div>
       </div>
+
       <div v-if="currentPage === 2">
         <div class="mt-4 d-flex">
           <h3>{{ questionnaire.general[4].title }}</h3>
-          <v-radio-group v-model="customerResponse.duration" v-for="orga in getQuestionOptions(4)">
-            <v-radio :label="orga.label" :value="orga.value"></v-radio>
+          <v-radio-group v-model="organisation">
+            <v-radio
+              v-for="orga in getQuestionOptions(4)"
+              :key="orga.value"
+              :label="orga.label"
+              :value="orga.value"
+            ></v-radio>
           </v-radio-group>
         </div>
         <div class="mt-4 d-flex">
           <h3>Avez-vous un thème ?</h3>
-          <v-text-field type="text" v-model="customerResponse.theme" label="Avez-vous un thème">
-          </v-text-field>
+          <v-text-field type="text" v-model="theme" label="Avez-vous un thème"> </v-text-field>
         </div>
         <div class="mt-4 d-flex">
           <h3>Combien d'invités sont prévus ?</h3>
-          <v-number-input v-model="customerResponse.people" :min="1" :max="100" controls />
+          <v-text-field v-model="people" />
         </div>
         <div>
           <h3>Vous avez un budget ?</h3>
@@ -97,64 +119,95 @@
             <v-radio label="Global" :value="true"></v-radio>
           </v-radio-group>
 
-          <v-text-field v-model="budgetCalculation" />
+          <v-text-field v-model="budgetInput" type="number" />
         </div>
       </div>
+
       <div v-if="currentPage == 3">
-        <div>
-          <h3>De quoi avez-vous besoin ?</h3>
-          <v-select
-            v-model="selectedSector"
-            :items="sectorFiltered"
-            item-title="label"
-            item-value="value"
-            @update:modelValue="mapSectionsWithServices(selectedSector)"
-            clearable
-            placeholder="Sélectionnez un secteur"
-          ></v-select>
-        </div>
-        <div
-          v-for="question in filteredQuestions"
-          :key="question.sector + question.category"
-          v-if="selectedSector"
-        >
-          <h2>{{ question.question }}</h2>
-          <div v-if="question.isService">
+        <!-- Services existants -->
+        <div v-for="(service, serviceIndex) in selectedServices" :key="serviceIndex" class="mb-6">
+          <div class="d-flex justify-space-between align-center mb-2">
+            <h3>Service {{ serviceIndex + 1 }}</h3>
             <v-btn
-              v-for="answer in question.answers"
-              :key="answer.uuid"
-              :color="selectedService === answer.uuid ? 'primary' : 'default'"
-              :variant="selectedService === answer.uuid ? 'flat' : 'outlined'"
-              clickable
-              @click="selectService(answer.uuid)"
+              v-if="selectedServices.length > 1"
+              size="small"
+              color="red"
+              variant="outlined"
+              @click="removeService(serviceIndex)"
             >
-              <v-icon v-if="selectedService === answer.uuid" start icon="mdi-check"></v-icon>
-              {{ answer.name }}
+              Supprimer
             </v-btn>
           </div>
-          <div v-else>
-            <v-chip
-              v-for="answer in question.answers"
-              :key="answer.id"
-              :color="service.selectedKeywords.includes(answer.uuid) ? 'green' : 'grey'"
-              :variant="selectedKeywords.includes(answer.uuid) ? 'flat' : 'outlined'"
-              clickable
-              @click="toggleKeyword(answer.uuid)"
-            >
-              {{ answer.value }}
-            </v-chip>
+
+          <div>
+            <h4>De quoi avez-vous besoin ?</h4>
+            <v-select
+              v-model="service.selectedSector"
+              :items="sectorFiltered"
+              item-title="label"
+              item-value="value"
+              @update:modelValue="updateServiceSector(serviceIndex, service.selectedSector)"
+              clearable
+              placeholder="Sélectionnez un secteur"
+            ></v-select>
+          </div>
+
+          <div
+            v-for="question in getFilteredQuestionsForService(service.selectedSector)"
+            :key="question.sector + question.category"
+            v-if="service.selectedSector"
+            class="mt-4"
+          >
+            <h4>{{ question.question }}</h4>
+            <div v-if="question.isService">
+              <v-btn
+                v-for="answer in question.answers"
+                :key="answer.uuid"
+                :color="service.selectedServiceId === answer.uuid ? 'primary' : 'default'"
+                :variant="service.selectedServiceId === answer.uuid ? 'flat' : 'outlined'"
+                clickable
+                @click="selectServiceForIndex(serviceIndex, answer.uuid)"
+              >
+                <v-icon
+                  v-if="service.selectedServiceId === answer.uuid"
+                  start
+                  icon="mdi-check"
+                ></v-icon>
+                {{ answer.name }}
+              </v-btn>
+            </div>
+            <div v-else>
+              <v-chip
+                v-for="answer in question.answers"
+                :key="answer.id"
+                :color="service.selectedKeywords.includes(answer.uuid) ? 'green' : 'grey'"
+                :variant="service.selectedKeywords.includes(answer.uuid) ? 'flat' : 'outlined'"
+                clickable
+                @click="toggleKeywordForService(serviceIndex, answer.uuid)"
+              >
+                {{ answer.value }}
+              </v-chip>
+            </div>
           </div>
         </div>
+
         <div class="mt-4">
           <v-btn color="primary" variant="outlined" @click="addNewService" prepend-icon="mdi-plus">
             Ajouter un nouveau service
           </v-btn>
         </div>
       </div>
+
       <div class="d-flex justify-space-between mt-4">
         <v-btn v-if="currentPage > 1" @click="currentPage--">Précédent</v-btn>
         <v-btn v-if="currentPage < 3" @click="currentPage++">Suivant</v-btn>
-        <v-btn v-if="currentPage === 3" color="primary"> Envoyer</v-btn>
+        <v-btn
+          v-if="currentPage === 3"
+          color="primary"
+          @click="createEventService(customerResponse)"
+        >
+          Envoyer
+        </v-btn>
       </div>
     </v-card>
   </v-dialog>
@@ -164,63 +217,117 @@ import questionnaire from '@/data/questionnaire-client-refonte.json';
 import { eventsStore } from '@/stores/events';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { SectorsDto } from '~/models/dto/sectorsDto';
+import { useEventService } from '~/services/UseEventService';
 const openCustomerForm = defineModel<boolean>('openCustomerForm', { default: false });
 
 const { sectors, servicesFiltered } = storeToRefs(eventsStore());
 const { keywords } = storeToRefs(useUserStore());
+const { createEventService } = useEventService();
 
+//ref generale
+const eventType = ref<'particulier' | 'professionnel'>('particulier');
+const eventName = ref('');
+const location = ref('');
+const duration = ref('');
+const invites = ref('');
+const theme = ref('');
+const organisation = ref('');
+const people = ref('');
+//ref de budget
+const isBudgetGlobale = ref(false);
+const currentPage = ref(1);
+const budgetInput = ref(0);
+//ref de date
 const isFlexible = ref(false);
 const flexibleDate = ref<string | undefined>(undefined);
 const dateStart = ref('');
 const dateEnd = ref('');
-const isBudgetGlobale = ref(false);
-const currentPage = ref(1);
-const selectedSector = ref<SectorsDto>();
+
 const selectedServices = ref([
   {
-    selectedService: '',
+    selectedSector: undefined,
+    selectedServiceId: '',
     selectedKeywords: [],
   },
 ]);
 
 const finalDateSelection = computed(() => {
   if (isFlexible.value) {
-    return { type: 'flexible', value: flexibleDate.value };
+    return flexibleDate.value;
   } else {
-    return { type: 'precise', value: [dateStart.value, dateEnd.value] };
+    return [dateStart.value, dateEnd.value];
   }
 });
 
-const budgetCalculation = computed<number>(() => {
-  if (isBudgetGlobale.value) {
-    return customerResponse.value.budget;
-  } else {
-    return customerResponse.value.budget * customerResponse.value.people;
-  }
+const budgetCalculation = computed(() => {
+  return isBudgetGlobale.value ? budgetInput.value : budgetInput.value * people.value;
 });
 
-const customerResponse = computed(() => ({
-  eventType: 'particulier',
-  eventName: '',
-  date: finalDateSelection.value,
-  location: '',
-  duration: '',
-  invites: '',
-  theme: '',
-  organisation: '',
-  people: 0,
-  budget: 0,
-  services: selectedServices.value.map((service) => ({
-    serviceUuid: service.selectedService,
-    keywordsUuid: service.selectedKeywords,
-  })),
-}));
+const customerResponse = computed(() => {
+  return {
+    organisatorUuid: localStorage.getItem('client-uuid'),
+    eventType: eventType.value,
+    eventName: eventName.value,
+    date: finalDateSelection.value,
+    location: location.value,
+    duration: duration.value,
+    invites: invites.value,
+    name: theme.value,
+    organisation: organisation.value,
+    people: people.value,
+    budget: budgetCalculation.value,
+    services: selectedServices.value.map((service) => ({
+      serviceUuid: service.selectedServiceId,
+      keywordsUuid: service.selectedKeywords,
+    })),
+  };
+});
 
 const addNewService = () => {
   selectedServices.value.push({
-    selectedService: '',
+    selectedSector: undefined,
+    selectedServiceId: '',
     selectedKeywords: [],
   });
+};
+
+const removeService = (index: number) => {
+  if (selectedServices.value.length > 1) {
+    selectedServices.value.splice(index, 1);
+  }
+};
+
+const selectServiceForIndex = (serviceIndex: number, serviceUuid: string) => {
+  const service = selectedServices.value[serviceIndex];
+  if (service.selectedServiceId === serviceUuid) {
+    service.selectedServiceId = '';
+  } else {
+    service.selectedServiceId = serviceUuid;
+  }
+};
+
+// Fonction pour toggle un keyword pour un service spécifique
+const toggleKeywordForService = (serviceIndex: number, keywordUuid: string) => {
+  const service = selectedServices.value[serviceIndex];
+  const keywordIndex = service.selectedKeywords.indexOf(keywordUuid);
+
+  if (keywordIndex > -1) {
+    service.selectedKeywords.splice(keywordIndex, 1);
+  } else {
+    service.selectedKeywords.push(keywordUuid);
+  }
+};
+
+const updateServiceSector = (serviceIndex: number, selectedSector: any) => {
+  const service = selectedServices.value[serviceIndex];
+  service.selectedSector = selectedSector;
+  service.selectedServiceId = '';
+  service.selectedKeywords = [];
+};
+
+const getFilteredQuestionsForService = (selectedSector: any) => {
+  if (!selectedSector) return [];
+  return mapSectionsWithServices(selectedSector);
 };
 
 const sectorFiltered = computed(() => {
@@ -240,12 +347,6 @@ const sectorFiltered = computed(() => {
     return null;
   }).filter(Boolean);
   return activityAvailable;
-});
-
-const filteredQuestions = computed(() => {
-  if (!selectedSector.value) return [];
-
-  return mapSectionsWithServices(selectedSector.value);
 });
 
 const mapSectionsWithServices = (selectedSector?: string | SectorsDto) => {
@@ -279,22 +380,6 @@ const mapSectionsWithServices = (selectedSector?: string | SectorsDto) => {
       };
     }
   });
-};
-
-const selectService = (serviceUuid: string) => {
-  if (selectedService.value === serviceUuid) {
-    selectedService.value = '';
-  } else {
-    selectedService.value = serviceUuid;
-  }
-};
-
-const toggleKeyword = (keywordUuid: string) => {
-  if (selectedKeywords.value.includes(keywordUuid)) {
-    selectedKeywords.value = selectedKeywords.value.filter((uuid) => uuid !== keywordUuid);
-  } else {
-    selectedKeywords.value.push(keywordUuid);
-  }
 };
 
 const getQuestionOptions = (sectionIndex: number) => {

@@ -148,8 +148,6 @@ const getServiceClass = (serviceUuid: string) => {
 };
 
 onMounted(async () => {
-  console.log(clientProfile.value, 'CLIENT PROFILE');
-
   await getEventsPerOrganisator();
 });
 
