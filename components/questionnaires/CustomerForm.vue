@@ -203,7 +203,9 @@
         <v-btn v-if="currentPage < 3" @click="currentPage++">Suivant</v-btn>
         <v-btn
           v-if="currentPage === 3"
-          color="primary"
+          :color="!getMinimumResponse ? 'success' : 'primary'"
+          :variant="!getMinimumResponse ? 'plain' : 'outlined'"
+          :disabled="!getMinimumResponse"
           @click="createEventService(customerResponse)"
         >
           Envoyer
@@ -260,7 +262,7 @@ const finalDateSelection = computed(() => {
 });
 
 const budgetCalculation = computed(() => {
-  return isBudgetGlobale.value ? budgetInput.value : budgetInput.value * people.value;
+  return isBudgetGlobale.value ? budgetInput.value : budgetInput.value * Number(people.value);
 });
 
 const customerResponse = computed(() => {
@@ -373,6 +375,7 @@ const mapSectionsWithServices = (selectedSector?: string | SectorsDto) => {
       const keywordsCategory = keywords.value.filter(
         (k) => k.category === section.category && k.sector === section.sector
       );
+      console.log(keywordsCategory, 'keywordsCategory');
 
       return {
         ...section,
@@ -381,6 +384,22 @@ const mapSectionsWithServices = (selectedSector?: string | SectorsDto) => {
     }
   });
 };
+
+const getMinimumResponse = computed(() => {
+  return selectedServices.value.every((service) => {
+    // on "mappe" les sections pour ce secteur
+    const mappedSections = mapSectionsWithServices(service.selectedSector);
+    const sectionMappedWithoutService = mappedSections.filter((section) => !section.isService);
+
+    // chaque section doit avoir au moins un answer sélectionné
+    const minimumKeyword = sectionMappedWithoutService.every((section) =>
+      section.answers.some((answer) => service.selectedKeywords.includes(answer.uuid))
+    );
+    const minimumServiceSelected = service.selectedServiceId.length > 1;
+
+    return minimumKeyword && minimumServiceSelected;
+  });
+});
 
 const getQuestionOptions = (sectionIndex: number) => {
   const section = questionnaire.general[sectionIndex];

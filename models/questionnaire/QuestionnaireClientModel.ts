@@ -5,7 +5,7 @@ export interface QuestionnaireClient {
   location: string;
   duration: string;
   invites: string;
-  theme: string;
+  name: string;
   organisation: string;
   people: number;
   budget: number;
@@ -13,7 +13,7 @@ export interface QuestionnaireClient {
 }
 
 export interface Date {
-  type: string;
+  type: string[] | string | null;
   value: string;
 }
 

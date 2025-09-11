@@ -13,7 +13,6 @@
           <div
             v-for="event in paginatedEvents"
             class="current-events__card"
-            :class="getServiceClass(event.eventServices[0].serviceUuid)"
             :key="event.uuid"
             @mouseenter="hoveredEvent = event.uuid"
             @mouseleave="hoveredEvent = null"
@@ -50,7 +49,7 @@
           v-if="totalPages > 1 && events.length > 0"
           v-model="currentPage"
           :length="totalPages"
-          :total-visible="5"
+          :total-visible="12"
           class="mt-4 current-events__pagination"
           density="compact"
         ></v-pagination>
@@ -106,7 +105,9 @@ const totalPages = computed(() => {
 
 const paginatedEvents = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
+
   const end = start + itemsPerPage;
+
   return events.value.slice(start, end);
 });
 
@@ -157,6 +158,8 @@ watch(
     if (val) {
       const prefilled = await prefillFormFromEvent(val as eventModel, sections);
       formAnswers.value = prefilled.formState;
+      console.log(formAnswers.value, 'formAnswers.value');
+
       lockedSections.value = prefilled.lockedSections;
     } else {
       formAnswers.value = {};
