@@ -220,6 +220,7 @@ import { eventsStore } from '@/stores/events';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { SectorsDto } from '~/models/dto/sectorsDto';
 import { useEventService } from '~/services/UseEventService';
+
 const openCustomerForm = defineModel<boolean>('openCustomerForm', { default: false });
 
 const { sectors, servicesFiltered } = storeToRefs(eventsStore());
@@ -375,7 +376,6 @@ const mapSectionsWithServices = (selectedSector?: string | SectorsDto) => {
       const keywordsCategory = keywords.value.filter(
         (k) => k.category === section.category && k.sector === section.sector
       );
-      console.log(keywordsCategory, 'keywordsCategory');
 
       return {
         ...section,
@@ -414,4 +414,8 @@ const getQuestionOptions = (sectionIndex: number) => {
   }
   return section.reponses;
 };
+
+onMounted(() => {
+  alert('ici');
+});
 </script>

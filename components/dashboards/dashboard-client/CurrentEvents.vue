@@ -57,22 +57,23 @@
     </v-card-text>
   </v-card>
   <Teleport to="body">
-    <DynamicFormDialog
+    <!-- <DynamicFormDialog
       v-if="isDialogOpen"
       v-model:open-modal="isDialogOpen"
       :sections="sections"
       :model-value="formAnswers"
       :locked-sections="lockedSections"
       @submit="onSubmitEdit"
-    />
+    /> -->
+    <CustomerForm v-if="isDialogOpen" v-model:open-customer-form="isDialogOpen" />
   </Teleport>
 </template>
 
 <script setup lang="ts">
-import DynamicFormDialog from '@/components/questionnaires/DynamicFormDialog.vue';
 import ClientQuestionnaire from '@/data/questionnaire-client.json';
 import emptyCart from '@/public/images/svgs/empty-cart.svg';
 import { eventsStore } from '@/stores/events';
+import CustomerForm from '~/components/questionnaires/CustomerForm.vue';
 import { useEventPrefill } from '~/composables/questionnaire-client/UseEventPrefill';
 import type { eventModel } from '~/models/events/eventModel';
 import type {
@@ -112,24 +113,15 @@ const paginatedEvents = computed(() => {
 });
 
 const openDialog = async (eventUuid: string) => {
-  const findSelectedEvent = events.value.find((event) => event.uuid === eventUuid);
+  const findSelectedEvent = events.value.find((event) => event.uuid === eventUuid) || null;
   selectedEvent.value = findSelectedEvent;
+  selectedEventUuid.value = eventUuid;
   if (findSelectedEvent) {
-    isEventDetailsOpen.value = true;
+    await getEventsInstance(findSelectedEvent.uuid);
   }
+  isEventDetailsOpen.value = true;
   // isDialogOpen.value = true;
 };
-
-// const openDialog = async (eventUuid: string) => {
-//   const findSelectedEvent = events.value.find((event) => event.uuid === eventUuid) || null;
-//   selectedEvent.value = findSelectedEvent;
-//   selectedEventUuid.value = eventUuid;
-//   if (findSelectedEvent) {
-//     await getEventsInstance(findSelectedEvent.uuid);
-//   }
-//   isEventDetailsOpen.value = true;
-//   // isDialogOpen.value = true;
-// };
 
 const onSubmitEdit = async (payload: EventCreatePayload) => {
   // Placeholder: ici on pourrait appeler un service pour ajouter/mettre à jour les services
