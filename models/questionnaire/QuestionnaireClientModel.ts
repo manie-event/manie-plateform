@@ -6,6 +6,7 @@ export interface QuestionnaireClient {
   duration: string;
   invites: string;
   name: string;
+  isAlreadyCreated?: boolean;
   organisation: string;
   people: number;
   budget: number;

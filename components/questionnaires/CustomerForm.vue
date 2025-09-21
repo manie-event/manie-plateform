@@ -3,21 +3,6 @@
     <v-card class="pa-4">
       <div v-if="currentPage === 1">
         <h3>{{ questionnaire.general[0].title }}</h3>
-        <div class="d-flex w-50 h-50">
-          <v-chip
-            value="particulier"
-            :color="eventType === 'particulier' ? 'primary' : 'default'"
-            @click="eventType = 'particulier'"
-          >
-            Je suis un particulier
-          </v-chip>
-          <v-chip
-            :color="eventType === 'professionnel' ? 'primary' : 'default'"
-            @click="eventType = 'professionnel'"
-          >
-            Je suis un professionnel
-          </v-chip>
-        </div>
         <div>
           <v-chip
             v-for="userType in getQuestionOptions(0)"
@@ -125,6 +110,10 @@
 
       <div v-if="currentPage == 3">
         <!-- Services existants -->
+        <v-alert color="warning" class="w-auto p-5 mb-5"
+          >Chaque secteur sélectionné ne pourra pas être modifié une fois la mise en relation
+          commencée
+        </v-alert>
         <div v-for="(service, serviceIndex) in selectedServices" :key="serviceIndex" class="mb-6">
           <div class="d-flex justify-space-between align-center mb-2">
             <h3>Service {{ serviceIndex + 1 }}</h3>
@@ -148,6 +137,7 @@
               item-value="value"
               @update:modelValue="updateServiceSector(serviceIndex, service.selectedSector)"
               clearable
+              :disabled="isLockedService(service)"
               placeholder="Sélectionnez un secteur"
             ></v-select>
           </div>
@@ -166,6 +156,7 @@
                 :color="service.selectedServiceId === answer.uuid ? 'primary' : 'default'"
                 :variant="service.selectedServiceId === answer.uuid ? 'flat' : 'outlined'"
                 clickable
+                :disabled="isLockedService(service)"
                 @click="selectServiceForIndex(serviceIndex, answer.uuid)"
               >
                 <v-icon
@@ -183,6 +174,7 @@
                 :color="service.selectedKeywords.includes(answer.uuid) ? 'green' : 'grey'"
                 :variant="service.selectedKeywords.includes(answer.uuid) ? 'flat' : 'outlined'"
                 clickable
+                :disabled="isLockedService(service)"
                 @click="toggleKeywordForService(serviceIndex, answer.uuid)"
               >
                 {{ answer.value }}
@@ -192,7 +184,13 @@
         </div>
 
         <div class="mt-4">
-          <v-btn color="primary" variant="outlined" @click="addNewService" prepend-icon="mdi-plus">
+          <v-btn
+            color="primary"
+            variant="outlined"
+            @click="addNewService"
+            prepend-icon="mdi-plus"
+            v-if="!hasAlreadyCreatedService"
+          >
             Ajouter un nouveau service
           </v-btn>
         </div>
@@ -202,7 +200,7 @@
         <v-btn v-if="currentPage > 1" @click="currentPage--">Précédent</v-btn>
         <v-btn v-if="currentPage < 3" @click="currentPage++">Suivant</v-btn>
         <v-btn
-          v-if="currentPage === 3"
+          v-if="currentPage === 3 && !hasAlreadyCreatedService"
           :color="!getMinimumResponse ? 'success' : 'primary'"
           :variant="!getMinimumResponse ? 'plain' : 'outlined'"
           :disabled="!getMinimumResponse"
@@ -219,12 +217,17 @@ import questionnaire from '@/data/questionnaire-client-refonte.json';
 import { eventsStore } from '@/stores/events';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { SectorsDto } from '~/models/dto/sectorsDto';
+import type { QuestionnaireClient } from '~/models/questionnaire/QuestionnaireClientModel';
 import { useEventService } from '~/services/UseEventService';
+
+const props = defineProps<{
+  answers?: QuestionnaireClient;
+}>();
 
 const openCustomerForm = defineModel<boolean>('openCustomerForm', { default: false });
 
 const { sectors, servicesFiltered } = storeToRefs(eventsStore());
-const { keywords } = storeToRefs(useUserStore());
+const { keywords, clientProfile } = storeToRefs(useUserStore());
 const { createEventService } = useEventService();
 
 //ref generale
@@ -266,6 +269,8 @@ const budgetCalculation = computed(() => {
   return isBudgetGlobale.value ? budgetInput.value : budgetInput.value * Number(people.value);
 });
 
+const hasAlreadyCreatedService = computed(() => props.answers?.isAlreadyCreated ?? false);
+
 const customerResponse = computed(() => {
   return {
     organisatorUuid: localStorage.getItem('client-uuid'),
@@ -298,6 +303,25 @@ const removeService = (index: number) => {
   if (selectedServices.value.length > 1) {
     selectedServices.value.splice(index, 1);
   }
+};
+
+const isLockedService = (service: any) => {
+  // Un service est "verrouillé" seulement s'il a déjà un serviceId sélectionné
+  // ET que tous les keywords requis sont sélectionnés (service complet)
+  if (!service.selectedServiceId || !service.selectedSector) {
+    return false; // Pas verrouillé si pas de service ou secteur sélectionné
+  }
+
+  // Vérifier si le service est complet (a tous les keywords requis)
+  const mappedSections = mapSectionsWithServices(service.selectedSector);
+  const keywordSections = mappedSections.filter((section) => !section.isService);
+
+  // Un service est verrouillé seulement s'il est complet
+  const isComplete = keywordSections.every((section) =>
+    section.answers.some((answer) => service.selectedKeywords.includes(answer.uuid))
+  );
+
+  return isComplete;
 };
 
 const selectServiceForIndex = (serviceIndex: number, serviceUuid: string) => {
@@ -334,22 +358,26 @@ const getFilteredQuestionsForService = (selectedSector: any) => {
 };
 
 const sectorFiltered = computed(() => {
-  const servicefiltered = servicesFiltered.value.map((s) => s.sectorUuid);
+  // services déjà utilisés
+  const usedServices = selectedServices.value
+    .map((s) => s.selectedServiceId)
+    .filter((id) => id && id.length > 0);
 
-  const sector = sectors.value.filter((sector) => servicefiltered.includes(sector.uuid));
+  // secteurs à exclure (ceux qui contiennent un service déjà choisi)
+  const excludedSectorUuids = servicesFiltered.value
+    .filter((s) => usedServices.includes(s.uuid))
+    .map((s) => s.sectorUuid);
 
-  const activityAvailable = ACTIVITY_ITEMS.map((activity) => {
-    const matchingSector = sector.find((s) => s.name === activity.value);
+  // on garde uniquement les secteurs qui ne sont pas exclus
+  const availableSectors = sectors.value.filter(
+    (sector) => !excludedSectorUuids.includes(sector.uuid)
+  );
 
-    if (matchingSector) {
-      return {
-        ...activity,
-        sectorUuid: matchingSector.uuid,
-      };
-    }
-    return null;
+  // mapping avec ACTIVITY_ITEMS pour que ton <v-select> ait les bons labels
+  return ACTIVITY_ITEMS.map((activity) => {
+    const matchingSector = availableSectors.find((s) => s.name === activity.value);
+    return matchingSector ? { ...activity, sectorUuid: matchingSector.uuid } : null;
   }).filter(Boolean);
-  return activityAvailable;
 });
 
 const mapSectionsWithServices = (selectedSector?: string | SectorsDto) => {
@@ -401,9 +429,19 @@ const getMinimumResponse = computed(() => {
   });
 });
 
+// 2. Mise à jour de la fonction getQuestionOptions
 const getQuestionOptions = (sectionIndex: number) => {
-  const section = questionnaire.general[sectionIndex];
+  if (sectionIndex === 0) {
+    // Pour la première question, filtrer selon le profil client automatiquement
+    const eventTypeValue = clientProfile.value.isBusiness ? 'professionnel' : 'particulier';
+    const eventTypes = questionnaire.general[0].reponses.find(
+      (type) => type['event-type'] === eventTypeValue
+    );
+    return eventTypes?.type || [];
+  }
 
+  // Pour les autres questions, garder la logique existante
+  const section = questionnaire.general[sectionIndex];
   const hasEventType = section.reponses.some((r) => 'event-type' in r);
 
   if (hasEventType) {
@@ -416,6 +454,43 @@ const getQuestionOptions = (sectionIndex: number) => {
 };
 
 onMounted(() => {
-  alert('ici');
+  if (!props.answers) return;
+
+  const normalizedAnswer = props.answers.$attributes;
+  console.log(normalizedAnswer, 'normalizedAnswer');
+
+  eventType.value = normalizedAnswer.eventType || 'particulier';
+  eventName.value = normalizedAnswer.eventName || '';
+  location.value = normalizedAnswer.location || '';
+  duration.value = normalizedAnswer.duration || '';
+  invites.value = normalizedAnswer.invites || '';
+  theme.value = normalizedAnswer.name || '';
+  organisation.value = normalizedAnswer.organisation || '';
+  people.value = normalizedAnswer.people || '';
+  budgetInput.value = normalizedAnswer.budget || 0;
+
+  if (Array.isArray(normalizedAnswer.date)) {
+    isFlexible.value = false;
+    dateStart.value = normalizedAnswer.date[0] || '';
+    dateEnd.value = normalizedAnswer.date[1] || '';
+  } else {
+    isFlexible.value = true;
+    flexibleDate.value = normalizedAnswer.date as string;
+  }
+
+  if (props.answers.$preloaded?.eventServices?.length > 0) {
+    selectedServices.value = props.answers.$preloaded.eventServices.map((srv: any) => {
+      // retrouver le secteur correspondant au serviceUuid
+      const service = servicesFiltered.value.find((s) => s.uuid === srv.serviceUuid);
+      const sector = sectors.value.find((sect) => sect.uuid === service?.sectorUuid);
+
+      return {
+        selectedSector: sector?.name ?? undefined,
+        selectedServiceId: srv.serviceUuid,
+        selectedKeywords:
+          srv.keywordsUuid?.map((k: any) => (typeof k === 'string' ? k : k.uuid)) || [],
+      };
+    });
+  }
 });
 </script>

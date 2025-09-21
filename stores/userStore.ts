@@ -57,13 +57,14 @@ export const useUserStore = defineStore('userStore', () => {
   // client setters
   const setClientProfile = (newProfile: clientProfile) => {
     clientProfile.value = newProfile;
-    localStorage.setItem('client-uuid', clientProfile.value.uuid);
+    localStorage.setItem(
+      'client-profile',
+      JSON.stringify({ ...clientProfile.value, email: null, phoneNumber: null, address: null })
+    );
   };
 
   const updateClientProfile = (updatedProfile: clientProfile) => {
     clientProfile.value = updatedProfile;
-
-    console.log(clientProfile.value, 'from updateClientProfile');
   };
 
   // professional setters

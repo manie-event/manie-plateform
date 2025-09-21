@@ -1,7 +1,7 @@
 {
   "general": [
     {
-      "title": "vous êtes ?",
+      "title": "Que fêtez-vous ?",
       "reponses": [
         {
           "event-type": "particulier",

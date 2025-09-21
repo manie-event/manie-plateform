@@ -37,11 +37,13 @@ export const useEventService = () => {
   const getEventsPerOrganisator = async () => {
     const page = ref(1);
     const allEvents = [];
-    const clientUuid = localStorage.getItem('client-uuid');
+    const uuid = ref();
+    const client = localStorage.getItem('client-profile');
+    uuid.value = JSON.parse(client);
 
     while (true) {
       const { data } = await axios.get(
-        `${config.public.apiUrl}/event/list-by-organisator/${clientUuid}`,
+        `${config.public.apiUrl}/event/list-by-organisator/${uuid.value.uuid}`,
         {
           headers: {
             Authorization: `Bearer ${token.value}`,
@@ -77,8 +79,9 @@ export const useEventService = () => {
       },
     });
     if (data) {
-      setQuestionnaireAnswers(data);
-      return data;
+      const responseInstance = { ...data, isAlreadyCreated: true };
+      setQuestionnaireAnswers(responseInstance);
+      return responseInstance;
     }
   };
 
