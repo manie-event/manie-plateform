@@ -118,7 +118,7 @@
           <div class="d-flex justify-space-between align-center mb-2">
             <h3>Service {{ serviceIndex + 1 }}</h3>
             <v-btn
-              v-if="selectedServices.length > 1"
+              v-if="selectedServices.length > 1 && !hasAlreadyCreatedService"
               size="small"
               color="red"
               variant="outlined"
@@ -358,26 +358,22 @@ const getFilteredQuestionsForService = (selectedSector: any) => {
 };
 
 const sectorFiltered = computed(() => {
-  // services déjà utilisés
-  const usedServices = selectedServices.value
-    .map((s) => s.selectedServiceId)
-    .filter((id) => id && id.length > 0);
+  const servicefiltered = servicesFiltered.value.map((s) => s.sectorUuid);
 
-  // secteurs à exclure (ceux qui contiennent un service déjà choisi)
-  const excludedSectorUuids = servicesFiltered.value
-    .filter((s) => usedServices.includes(s.uuid))
-    .map((s) => s.sectorUuid);
+  const sector = sectors.value.filter((sector) => servicefiltered.includes(sector.uuid));
 
-  // on garde uniquement les secteurs qui ne sont pas exclus
-  const availableSectors = sectors.value.filter(
-    (sector) => !excludedSectorUuids.includes(sector.uuid)
-  );
+  const activityAvailable = ACTIVITY_ITEMS.map((activity) => {
+    const matchingSector = sector.find((s) => s.name === activity.value);
 
-  // mapping avec ACTIVITY_ITEMS pour que ton <v-select> ait les bons labels
-  return ACTIVITY_ITEMS.map((activity) => {
-    const matchingSector = availableSectors.find((s) => s.name === activity.value);
-    return matchingSector ? { ...activity, sectorUuid: matchingSector.uuid } : null;
+    if (matchingSector) {
+      return {
+        ...activity,
+        sectorUuid: matchingSector.uuid,
+      };
+    }
+    return null;
   }).filter(Boolean);
+  return activityAvailable;
 });
 
 const mapSectionsWithServices = (selectedSector?: string | SectorsDto) => {

@@ -65,7 +65,6 @@ export const useEventService = () => {
       // Passer à la page suivante
       page.value++;
       setEventsByOrganisator(events);
-      console.log(allEvents, 'allEvents');
 
       return allEvents;
     }
@@ -107,28 +106,6 @@ export const useEventService = () => {
       throw error;
     }
   };
-
-  /**
-   * Ajoute plusieurs services à un événement à partir des sélections du questionnaire
-   */
-  // const addServicesToEvent = async (eventUuid: string, selections: ServiceSelection[]) => {
-  //   if (!selections || selections.length === 0) return;
-  //   try {
-  //     await Promise.all(
-  //       selections.map((sel) =>
-  //         createEventServiceItem({
-  //           serviceUuid: sel.serviceUuid,
-  //           eventUuid,
-  //           keywordsUuid: sel.keywordsUuid,
-  //         })
-  //       )
-  //     );
-  //     addSuccess('Les services ont été ajoutés à votre évènement.');
-  //     await getEventsInstance(eventUuid);
-  //   } catch {
-  //     // les erreurs sont déjà gérées dans createEventServiceItem
-  //   }
-  // };
 
   return {
     createEventService,
