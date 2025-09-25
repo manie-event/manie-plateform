@@ -2,17 +2,51 @@ import type { Keywords } from '@/models/professionalService/Keywords';
 import type { Sectors } from '@/models/professionalService/Sectors';
 import type { Services } from '@/models/professionalService/Services';
 import type { ProfessionalServiceUuid } from '@/models/professionalService/professionalServiceUuid';
+import { eventsStore } from '@/stores/events';
 import { keyWordsDtoToKeywords } from '~/mappers/profesionnalKeywordsMapper';
-import type { KeywordsDto } from '~/models/dto/KeywordsDto';
+import type { KeywordsDto } from '~/models/dto/keywordsDto';
 
 export const useKeywords = () => {
-  const config = useRuntimeConfig();
   const userStore = useUserStore();
+
   const { setProfessionalServices, setKeywords, setUpdateProfile } = userStore;
   const { professionnalServices, keywords } = storeToRefs(userStore);
+
+  const { setSectors } = eventsStore();
+
+  const config = useRuntimeConfig();
   const loading = ref(false);
   const token = useCookie('token');
   const api = useApi();
+
+  const getAllSectors = async () => {
+    try {
+      loading.value = true;
+      let page = 1;
+      let allResults = [];
+
+      while (true) {
+        const response = await api?.get(`${config.public.apiUrl}/sector?page=${page}`);
+
+        if (!response?.data?.data?.length) break; // stop si plus de résultats
+
+        allResults.push(...response.data.data);
+
+        // check si on a atteint la dernière page
+        if (page >= response.data.meta.lastPage) break;
+
+        page++;
+      }
+
+      console.log(allResults, 'ALL SECTORS');
+      setSectors(allResults);
+      return allResults;
+    } catch (error) {
+      console.error('Error fetching sectors:', error);
+    } finally {
+      loading.value = false;
+    }
+  };
 
   const getSectors = async (sector: string) => {
     try {
@@ -58,13 +92,13 @@ export const useKeywords = () => {
     }
   };
 
-  const getKeywords = async (query: string) => {
+  const getKeywords = async (query?: string) => {
     loading.value = true;
     try {
       const response = await api?.get(`${config.public.apiUrl}/keyword`, {
-        params: { q: query, limit: 1000 },
+        params: { q: query, limit: 1500 },
       });
-      if (response) {
+      if (response && query) {
         const keyWordFilter = response.data.data
           .filter((keyword: Keywords) => keyword.sector.toLowerCase() == query.toLowerCase())
           .slice(0, 100)
@@ -72,11 +106,12 @@ export const useKeywords = () => {
 
         console.log(keyWordFilter, 'Keywords fetched and filtered');
 
-
         setKeywords(keyWordFilter);
 
         loading.value = false;
       }
+      setKeywords(response?.data.data);
+      return;
     } catch (error: unknown) {
       console.error('Error fetching keywords:', error);
     }
@@ -100,6 +135,7 @@ export const useKeywords = () => {
     loading,
     getKeywords,
     getSectors,
+    getAllSectors,
     sendProfessionalServices,
   };
 };

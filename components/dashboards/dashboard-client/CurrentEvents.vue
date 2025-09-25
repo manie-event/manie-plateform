@@ -10,10 +10,9 @@
       </div>
       <div>
         <div class="mt-10 mb-sm-12 mb-8 current-events__cards" v-if="events.length > 0">
-        <div
+          <div
             v-for="event in paginatedEvents"
             class="current-events__card"
-            :class="getServiceClass(event.eventServices[0].serviceUuid)"
             :key="event.uuid"
             @mouseenter="hoveredEvent = event.uuid"
             @mouseleave="hoveredEvent = null"
@@ -34,6 +33,7 @@
             v-if="isEventDetailsOpen"
             :event="selectedEvent"
             v-model="isEventDetailsOpen"
+            :answers="formAnswers"
           ></EventDetails>
         </div>
         <div v-else class="d-flex flex-column align-center justify-center mb-6">
@@ -50,7 +50,7 @@
           v-if="totalPages > 1 && events.length > 0"
           v-model="currentPage"
           :length="totalPages"
-          :total-visible="5"
+          :total-visible="12"
           class="mt-4 current-events__pagination"
           density="compact"
         ></v-pagination>
@@ -58,34 +58,20 @@
     </v-card-text>
   </v-card>
   <Teleport to="body">
-    <DynamicFormDialog
-      v-if="isDialogOpen"
-      v-model:open-modal="isDialogOpen"
-      :sections="sections"
-      :model-value="formAnswers"
-      :locked-sections="lockedSections"
-      @submit="onSubmitEdit"
-    />
+    <CustomerForm v-if="isDialogOpen" v-model:open-customer-form="isDialogOpen" />
   </Teleport>
 </template>
 
 <script setup lang="ts">
-import DynamicFormDialog from '@/components/questionnaires/DynamicFormDialog.vue';
-import ClientQuestionnaire from '@/data/questionnaire-client.json';
 import emptyCart from '@/public/images/svgs/empty-cart.svg';
-import { useEventPrefill } from '~/composables/questionnaire-client/UseEventPrefill';
+import { eventsStore } from '@/stores/events';
+import CustomerForm from '~/components/questionnaires/CustomerForm.vue';
 import type { eventModel } from '~/models/events/eventModel';
-import type {
-  EventCreatePayload,
-  SectionSchema,
-} from '~/models/questionnaire/QuestionnaireClientModel';
+import type { QuestionnaireClient } from '~/models/questionnaires/QuestionnaireClient';
 import { useEventService } from '~/services/UseEventService';
-import { eventsStore } from '~/stores/eventsStore';
 import EventDetails from './EventDetails.vue';
 
-
-const { clientProfile } = storeToRefs(useUserStore());
-const { events, answers } = storeToRefs(eventsStore());
+const { events } = storeToRefs(eventsStore());
 const { getEventsPerOrganisator, getEventsInstance } = useEventService();
 
 const isEventDetailsOpen = ref(false);
@@ -95,11 +81,8 @@ const currentPage = ref(1);
 const itemsPerPage = 3;
 
 const selectedEvent = ref<eventModel | null>(null);
-const selectedEventUuid = ref<string | null>(null);
-const formAnswers = ref<Record<string, any>>({});
-const lockedSections = ref<Set<string>>(new Set());
-const sections = ClientQuestionnaire.sections as SectionSchema[];
-const { prefillFormFromEvent } = useEventPrefill();
+const selectedEventUuid = ref('');
+const formAnswers = ref<QuestionnaireClient | null>(null);
 
 const totalPages = computed(() => {
   return Math.ceil(events.value.length / itemsPerPage);
@@ -107,34 +90,22 @@ const totalPages = computed(() => {
 
 const paginatedEvents = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
+
   const end = start + itemsPerPage;
+
   return events.value.slice(start, end);
 });
 
 const openDialog = async (eventUuid: string) => {
-  const findSelectedEvent = events.value.find((event) => event.uuid === eventUuid);
+  const findSelectedEvent = events.value.find((event) => event.uuid === eventUuid) || null;
   selectedEvent.value = findSelectedEvent;
+  selectedEventUuid.value = eventUuid;
   if (findSelectedEvent) {
-    isEventDetailsOpen.value = true;
+    const responses = await getEventsInstance(findSelectedEvent.uuid);
+    formAnswers.value = responses;
   }
+  isEventDetailsOpen.value = true;
   // isDialogOpen.value = true;
-};
-
-// const openDialog = async (eventUuid: string) => {
-//   const findSelectedEvent = events.value.find((event) => event.uuid === eventUuid) || null;
-//   selectedEvent.value = findSelectedEvent;
-//   selectedEventUuid.value = eventUuid;
-//   if (findSelectedEvent) {
-//     await getEventsInstance(findSelectedEvent.uuid);
-//   }
-//   isEventDetailsOpen.value = true;
-//   // isDialogOpen.value = true;
-// };
-
-const onSubmitEdit = async (payload: EventCreatePayload) => {
-  // Placeholder: ici on pourrait appeler un service pour ajouter/mettre à jour les services
-  // await addServicesToEvent(selectedEventUuid.value!, payload.services)
-  isDialogOpen.value = false;
 };
 
 const getServiceClass = (serviceUuid: string) => {
@@ -149,26 +120,8 @@ const getServiceClass = (serviceUuid: string) => {
 };
 
 onMounted(async () => {
-  console.log(clientProfile.value, 'CLIENT PROFILE');
-
   await getEventsPerOrganisator();
 });
-
-watch(
-  () => answers.value,
-  async (val) => {
-    if (val) {
-      const prefilled = await prefillFormFromEvent(val as eventModel, sections);
-      formAnswers.value = prefilled.formState;
-      lockedSections.value = prefilled.lockedSections;
-    } else {
-      formAnswers.value = {};
-      lockedSections.value = new Set();
-    }
-  },
-  { immediate: true }
-);
-
 </script>
 
 <style lang="scss" scoped>

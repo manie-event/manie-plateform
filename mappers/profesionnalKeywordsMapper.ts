@@ -1,5 +1,5 @@
 import type { Keywords } from '@/models/professionalService/Keywords';
-import type { KeywordsDto } from '~/models/dto/KeywordsDto';
+import type { KeywordsDto } from '~/models/dto/keywordsDto';
 
 export const keyWordsDtoToKeywords = (data: KeywordsDto): Keywords => {
   return {

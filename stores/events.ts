@@ -1,8 +1,12 @@
+import type { SectorsDto } from '~/models/dto/sectorsDto';
+import type { ServicesFiltered } from '~/models/dto/serviceFiltered';
 import type { eventModel } from '~/models/events/eventModel';
 
 export const eventsStore = defineStore('eventsStore', () => {
   const events = ref<eventModel[]>([]);
   const answers = ref<eventModel>();
+  const sectors = ref<SectorsDto[]>([]);
+  const servicesFiltered = ref<ServicesFiltered[]>([]);
 
   //setters
 
@@ -12,7 +16,26 @@ export const eventsStore = defineStore('eventsStore', () => {
 
   const setQuestionnaireAnswers = (newAnswers: eventModel) => {
     answers.value = newAnswers;
-    console.log(answers.value, 'answers VALUE');
   };
-  return { events, answers, setEventsByOrganisator, setQuestionnaireAnswers };
+
+  const setSectors = (newSectors: SectorsDto[]) => {
+    sectors.value.push(...newSectors);
+  };
+
+  const setServicesFiltered = (newServicesFiltered: ServicesFiltered[]) => {
+    servicesFiltered.value.push(...newServicesFiltered);
+
+    console.log(servicesFiltered.value, 'SERVICEFILTERED');
+  };
+
+  return {
+    events,
+    answers,
+    sectors,
+    servicesFiltered,
+    setEventsByOrganisator,
+    setSectors,
+    setServicesFiltered,
+    setQuestionnaireAnswers,
+  };
 });

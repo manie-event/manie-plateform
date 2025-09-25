@@ -9,13 +9,14 @@
 
       <button @click="openModal = !openModal" class="events__add-button">+</button>
       <!-- <client-questionnaire v-if="openModal" v-model:open-modal="openModal"></client-questionnaire> -->
-      <DynamicFormDialog
+      <!-- <DynamicFormDialog
         v-if="openModal"
         v-model:open-modal="openModal"
         :sections="sections"
         v-model="answers"
         @submit="onSubmit"
-      />
+      /> -->
+      <CustomerForm v-if="openModal" v-model:open-customer-form="openModal" />
     </v-card-text>
   </v-card>
 </template>
@@ -23,7 +24,7 @@
 <script setup lang="ts">
 import ClientQuestionnaire from '@/data/questionnaire-client.json';
 import { ref } from 'vue';
-import DynamicFormDialog from '~/components/questionnaires/DynamicFormDialog.vue';
+import CustomerForm from '~/components/questionnaires/CustomerForm.vue';
 import type {
   EventCreatePayload,
   SectionSchema,

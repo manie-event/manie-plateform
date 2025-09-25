@@ -31,7 +31,7 @@ declare global {
   const defineStore: typeof import('../../node_modules/@pinia/nuxt/dist/runtime/composables')['defineStore']
   const effect: typeof import('vue')['effect']
   const effectScope: typeof import('vue')['effectScope']
-  const eventsStore: typeof import('../../stores/eventsStore')['eventsStore']
+  const eventsStore: typeof import('../../stores/events')['eventsStore']
   const getAppManifest: typeof import('../../node_modules/nuxt/dist/app/composables/manifest')['getAppManifest']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
@@ -245,7 +245,7 @@ declare module 'vue' {
     readonly defineStore: UnwrapRef<typeof import('../../node_modules/@pinia/nuxt/dist/runtime/composables')['defineStore']>
     readonly effect: UnwrapRef<typeof import('vue')['effect']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
-    readonly eventsStore: UnwrapRef<typeof import('../../stores/eventsStore')['eventsStore']>
+    readonly eventsStore: UnwrapRef<typeof import('../../stores/events')['eventsStore']>
     readonly getAppManifest: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/manifest')['getAppManifest']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>

@@ -1,10 +1,7 @@
+import { eventsStore } from '@/stores/events';
 import { eventsMapper } from '~/mappers/eventsMapper';
 import type { eventModelDto } from '~/models/dto/eventDto';
-import type {
-  EventCreatePayload,
-  ServiceSelection,
-} from '~/models/questionnaire/QuestionnaireClientModel';
-import { eventsStore } from '~/stores/eventsStore';
+import type { QuestionnaireClient } from '~/models/questionnaire/QuestionnaireClientModel';
 
 export const useEventService = () => {
   const { addError, addSuccess } = useToaster();
@@ -13,9 +10,9 @@ export const useEventService = () => {
   const config = useRuntimeConfig();
   const token = useCookie('token');
   const { clientProfile } = storeToRefs(useUserStore());
-  const { setEventsByOrganisator, setQuestionnaireAnswers } = eventsStore();
+  const { setEventsByOrganisator, setQuestionnaireAnswers } = eventStore;
 
-  const createEventService = async (payload: EventCreatePayload) => {
+  const createEventService = async (payload: QuestionnaireClient) => {
     try {
       const { data } = await axios.post(`${config.public.apiUrl}/event/create`, payload, {
         headers: {
@@ -38,31 +35,38 @@ export const useEventService = () => {
   };
 
   const getEventsPerOrganisator = async () => {
-    const clientUuid = localStorage.getItem('client-uuid');
+    const page = ref(1);
+    const allEvents = [];
+    const uuid = ref();
+    const client = localStorage.getItem('client-profile');
+    uuid.value = JSON.parse(client);
 
-    const { data } = await axios.get(
-      `${config.public.apiUrl}/event/list-by-organisator/${clientUuid}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token.value}`,
-          'Content-Type': 'application/json',
-        },
+    while (true) {
+      const { data } = await axios.get(
+        `${config.public.apiUrl}/event/list-by-organisator/${uuid.value.uuid}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      if (!data.data.length) {
+        break;
       }
-    );
-    if (data) {
+
       const { mapDtoToEvent } = eventsMapper();
-      const eventsWithoutEmptyServices = data.data.filter((event: eventModelDto) => {
-        return (
-          event.eventServices &&
-          event.eventServices.length > 0 &&
-          event.eventServices[0].serviceUuid
-        );
-      });
 
-      const events = eventsWithoutEmptyServices.map((event: eventModelDto) => mapDtoToEvent(event));
+      const events = data.data.map((event: eventModelDto) => mapDtoToEvent(event));
 
+      // Ajouter les événements de cette page au tableau total
+      allEvents.push(...events);
+
+      // Passer à la page suivante
+      page.value++;
       setEventsByOrganisator(events);
-      return data;
+
+      return allEvents;
     }
   };
 
@@ -74,8 +78,9 @@ export const useEventService = () => {
       },
     });
     if (data) {
-      setQuestionnaireAnswers(data);
-      return data;
+      const responseInstance = { ...data, isAlreadyCreated: true };
+      setQuestionnaireAnswers(responseInstance);
+      return responseInstance;
     }
   };
 
@@ -102,33 +107,11 @@ export const useEventService = () => {
     }
   };
 
-  /**
-   * Ajoute plusieurs services à un événement à partir des sélections du questionnaire
-   */
-  const addServicesToEvent = async (eventUuid: string, selections: ServiceSelection[]) => {
-    if (!selections || selections.length === 0) return;
-    try {
-      await Promise.all(
-        selections.map((sel) =>
-          createEventServiceItem({
-            serviceUuid: sel.serviceUuid,
-            eventUuid,
-            keywordsUuid: sel.keywordsUuid,
-          })
-        )
-      );
-      addSuccess('Les services ont été ajoutés à votre évènement.');
-      await getEventsInstance(eventUuid);
-    } catch {
-      // les erreurs sont déjà gérées dans createEventServiceItem
-    }
-  };
-
   return {
     createEventService,
     getEventsPerOrganisator,
     getEventsInstance,
     createEventServiceItem,
-    addServicesToEvent,
+    // addServicesToEvent,
   };
 };

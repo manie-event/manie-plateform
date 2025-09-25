@@ -8,13 +8,15 @@ import { useProfessionalProfile } from '~/composables/professional-user/UseProfe
 import { useAuthentification } from '../../../../composables/UseAuthentification';
 
 const userStore = useUserStore();
-const { user, professionalUser, isProfileCreated, isProfessional, clientProfile } =
-  storeToRefs(userStore);
+const { user, professionalUser, isProfileCreated, isProfessional } = storeToRefs(userStore);
 
 const { sendLogout } = useAuthentification();
 const { userTokenBalance } = storeToRefs(useCartStore());
 const { getProfessionalProfileDetails } = useProfessionalProfile();
 const { getClientProfil } = useClientProfil();
+
+const clientProfile = localStorage.getItem('client-profile');
+const getclientName = ref();
 
 const getNameDependingOnCategory = computed(() => {
   if (
@@ -23,8 +25,9 @@ const getNameDependingOnCategory = computed(() => {
   ) {
     return professionalUser.value?.name;
   }
-  if (clientProfile.value) {
-    return clientProfile.value.username;
+  if (clientProfile) {
+    getclientName.value = JSON.parse(clientProfile);
+    return getclientName.value.username;
   } else {
     return user.value?.username;
   }
