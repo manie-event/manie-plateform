@@ -1,5 +1,4 @@
 import type { ProfessionalProfile, User, clientProfile } from '@/models/user/UserModel';
-import { useLocalStorage } from '@vueuse/core';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import type { Keywords } from '~/models/professionalService/Keywords';
@@ -33,7 +32,7 @@ export const useUserStore = defineStore('userStore', () => {
 
   //professional Ref
   const professionalUser = ref<ProfessionalProfile>();
-  const isProfileCreated = useLocalStorage('pp-created', false);
+  const isProfileCreated = ref(false);
   const isStoringUserAccepeted = ref(false);
   const professionnalServices = ref<Services[]>([]);
   const keywords = ref<Keywords[]>([]);
@@ -75,6 +74,7 @@ export const useUserStore = defineStore('userStore', () => {
     };
 
     localStorage.setItem('professional-uuid', professionalUser.value.uuid || '');
+    localStorage.setItem('pro-name', newProfessionalUser.name);
     localStorage.setItem('is-profile-verified', JSON.stringify(true));
     isProfileCreated.value = true;
   };

@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="currentPage" fullscreen transition="dialog-bottom-transition">
+  <v-dialog v-model="serviceModal" fullscreen transition="dialog-bottom-transition">
     <v-card v-if="professionalUser?.uuid" width="800">
       <div class="questionnaires-container">
         <div
@@ -158,11 +158,15 @@
       </div>
     </v-card>
   </v-dialog>
+
+  <Teleport to="body">
+    <ModalRedirection :redirection="'dashboard2'" v-model="isProfilUpdate" />
+  </Teleport>
 </template>
 
 <script setup lang="ts">
 import questionnairePresta from '@/data/questionnaire-presta.json';
-import { ref, watch } from 'vue';
+import { ref, Teleport, watch } from 'vue';
 import { useKeywords } from '~/composables/professional-user/UseKeywords';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
@@ -171,8 +175,9 @@ import type { ProfessionalServiceUuid } from '~/models/professionalService/profe
 import type { QuestionnaireItem } from '~/models/professionalService/QuestionnairePresta';
 import type { Services } from '~/models/professionalService/Services';
 import type { ProfessionalProfile } from '~/models/user/UserModel';
+import ModalRedirection from '../apps/user-profile/ModalRedirection.vue';
 
-const currentPage = defineModel<boolean>('pageActuelle', { default: false });
+const serviceModal = defineModel<boolean>('pageActuelle', { default: false });
 
 const userStore = useUserStore();
 const { professionnalServices, keywords, professionalUser } = storeToRefs(userStore);
@@ -183,6 +188,7 @@ const { patchProfessionnalProfileDetails } = useProfessionalProfile();
 const questionnaires = ref<QuestionnaireItem[]>([]);
 const activityItems = ref(ACTIVITY_ITEMS);
 const payloadArray = ref<ProfessionalServiceUuid[]>([]);
+const isProfilUpdate = ref(false);
 
 const generateId = () => Math.random().toString(36).substr(2, 9);
 
@@ -309,7 +315,6 @@ const updatePayloadArray = () => {
   questionnaires.value.forEach((questionnaire) => {
     if (questionnaire.selectedServiceUuid && professionalUser.value?.uuid) {
       payloadArray.value.push({
-        isVerified: true,
         serviceUuid: questionnaire.selectedServiceUuid,
         professionalUuid: professionalUser.value.uuid,
         keywordsUuid: Array.from(questionnaire.selectedKeywords),
@@ -344,12 +349,6 @@ const submitAllQuestionnaires = async () => {
   }
 
   try {
-    console.log(
-      'faq avant envoi:',
-      professionalUser.value?.faq,
-      typeof professionalUser.value?.faq
-    );
-
     const selectedActivities = questionnaires.value
       .filter((q) => q.sector && q.selectedServiceUuid)
       .map((q) => q.sector);
@@ -371,7 +370,8 @@ const submitAllQuestionnaires = async () => {
     await Promise.all(promises);
 
     addSuccess(`${payloadArray.value.length} service(s) créé(s) avec succès !`);
-    currentPage.value = false;
+    serviceModal.value = false;
+    isProfilUpdate.value = true;
   } catch (error) {
     console.error("Erreur lors de l'envoi:", error);
     addError({ message: "Erreur lors de l'envoi des services" });

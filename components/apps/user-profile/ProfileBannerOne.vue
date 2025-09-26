@@ -99,13 +99,11 @@
   <Teleport to="body">
     <EditerProfessionalProfile v-model:openModal="openModal" />
     <services-prestataire class="mt-6" v-model:pageActuelle="openServiceModal" />
-    <ModalRedirection :redirection="'dashboard2'" v-model="isProfilUpdate" />
   </Teleport>
 </template>
 
 <script setup lang="ts">
 import EditerProfessionalProfile from '@/components/apps/user-profile/EditProfessionalProfil.vue';
-import ModalRedirection from '@/components/apps/user-profile/ModalRedirection.vue';
 import { ref, shallowRef, Teleport } from 'vue';
 import { IdIcon, Layout2Icon, PlusIcon, UserCircleIcon, UsersIcon } from 'vue-tabler-icons';
 import ServicesPrestataire from '~/components/questionnaires/ServicesPrestataire.vue';
@@ -120,11 +118,10 @@ const openModal = ref(false);
 const openServiceModal = ref(false);
 const fileInput = ref(null);
 
-const { user, isProfilUpdate } = storeToRefs(useUserStore());
+const { user, isProfileCreated } = storeToRefs(useUserStore());
 const { getKeywords } = useKeywords();
 const { changeProfessionalBannerPicture } = useProfessionalProfile();
 const isProfileVerified = localStorage.getItem('is-profile-verified');
-const isProfileCreated = localStorage.getItem('pp-created');
 
 const triggerClickFileInput = () => fileInput.value?.click();
 const changeBannerPhoto = async (e: Event) => {

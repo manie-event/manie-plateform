@@ -189,6 +189,7 @@
     </template>
   </BaseModal>
   <Teleport to="body">
+    <ModalRedirection :redirection="'dashboard2'" v-model="isProfilUpdate" />
     <CommonSuccessToaster></CommonSuccessToaster>
     <error-toaster></error-toaster>
   </Teleport>
@@ -204,6 +205,7 @@ import { useProfessionalProfile } from '~/composables/professional-user/UseProfe
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import { GEOGRAPHIC_ACTIVITY } from '~/constants/geographicActivity';
 import type { Faq, Link, ProfessionalProfile } from '~/models/user/UserModel';
+import ModalRedirection from './ModalRedirection.vue';
 
 const userStore = useUserStore();
 const { createProfessionalProfile, patchProfessionnalProfileDetails } = useProfessionalProfile();
@@ -218,6 +220,7 @@ const activityItems = ref(ACTIVITY_ITEMS);
 const geographicActivity = ref(GEOGRAPHIC_ACTIVITY);
 const isProfileVerified = localStorage.getItem('is-profile-verified');
 const reservationDelay = ref(0);
+const isProfilUpdate = ref(false);
 
 const minimumDaysReservation = computed(() => reservationDelay.value * 7);
 
@@ -325,11 +328,11 @@ const createProfile = async (values: ProfessionalProfile) => {
       minimumReservationPeriod: minimumDaysReservation.value,
     };
     const response = await createProfessionalProfile(payload);
-    console.log(response, 'RESPINSE CREATE');
 
     if (response.message === 'Professional created') {
       addSuccess('Votre profil a été envoyé pour être soumi à vérification');
       openModal.value = false;
+      isProfilUpdate.value = true;
     } else {
       addError({ message: 'La mise à jour du profil a échoué.' });
     }
@@ -351,6 +354,7 @@ const modifyProfile = async (newValues: ProfessionalProfile) => {
     if (response.message === 'Professional updated') {
       addSuccess('Votre profil a été modifié avec success');
       openModal.value = false;
+      isProfilUpdate.value = true;
     } else {
       addError({ message: 'La mise à jour du profil a échoué.' });
     }

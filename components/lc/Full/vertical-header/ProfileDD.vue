@@ -17,6 +17,7 @@ const { getClientProfil } = useClientProfil();
 
 const clientProfile = localStorage.getItem('client-profile');
 const isProfessional = localStorage.getItem('is-professional');
+const professionalName = localStorage.getItem('pro-name');
 const getclientName = ref();
 
 const getNameDependingOnCategory = computed(() => {
@@ -24,7 +25,7 @@ const getNameDependingOnCategory = computed(() => {
     (isProfessional && !user.value?.username) ||
     professionalUser.value?.category == 'professional'
   ) {
-    return professionalUser.value?.name;
+    return professionalName;
   }
   if (clientProfile) {
     getclientName.value = JSON.parse(clientProfile);
@@ -43,9 +44,9 @@ const getCategory = computed(() => {
 });
 
 onMounted(async () => {
-  if (isProfileCreated.value && isProfessional) {
+  if (isProfessional) {
     await getProfessionalProfileDetails();
-  } else if (isProfileCreated.value && !isProfessional) {
+  } else if (!isProfessional) {
     await getClientProfil();
   }
 });
