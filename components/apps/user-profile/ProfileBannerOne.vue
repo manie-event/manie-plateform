@@ -49,17 +49,26 @@
           >
             <div class="d-flex flex-column justify-center align-center gap-4">
               <div>
-                <v-btn color="primary" size="large" class="w-100" @click="openEditProfilModal()"
+                <v-btn
+                  v-if="!isProfileCreated"
+                  color="primary"
+                  size="large"
+                  class="w-100"
+                  @click="openEditProfilModal()"
                   >Editez votre profil</v-btn
                 >
+                <v-btn
+                  v-if="isProfileCreated && isProfileVerified"
+                  color="primary"
+                  size="large"
+                  class="w-100"
+                  @click="openEditProfilModal()"
+                  >Modifier votre profil</v-btn
+                >
               </div>
-              <div v-if="isProfileCreated">
-                <NuxtLink :to="`/dashboards/dashboard2`" class="w-100">
-                  <v-btn color="success" size="large" class="w-100">
-                    Revenir à votre dashboard
-                  </v-btn>
-                </NuxtLink>
-              </div>
+              <p v-if="isProfileCreated && !isProfileVerified">
+                <span :style="{ fontSize: '14px' }"> Nous reviendrons dans les 48heures...</span>
+              </p>
             </div>
           </v-col>
         </v-row>
@@ -108,9 +117,13 @@ const tab = ref(null);
 const openModal = ref(false);
 const fileInput = ref(null);
 
-const { user, isProfileCreated, isProfilUpdate } = storeToRefs(useUserStore());
+const { user, isProfilUpdate } = storeToRefs(useUserStore());
 const { getKeywords } = useKeywords();
 const { changeProfessionalBannerPicture } = useProfessionalProfile();
+const isProfileVerified = localStorage.getItem('is-profile-verified');
+const isProfileCreated = localStorage.getItem('pp-created');
+console.log(isProfileCreated, 'isProfileCreated');
+console.log(isProfileVerified, 'isProfileVerified');
 
 const triggerClickFileInput = () => fileInput.value?.click();
 const changeBannerPhoto = async (e: Event) => {

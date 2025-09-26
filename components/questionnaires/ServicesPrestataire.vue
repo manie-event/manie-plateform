@@ -406,23 +406,23 @@ const submitAllQuestionnaires = async () => {
     return;
   }
 
+  console.log(payloadArray.value, 'payloadArray.value');
+
   try {
     const promises = payloadArray.value.map((serviceData: ProfessionalServiceUuid) =>
       sendProfessionalServices(serviceData)
     );
     await Promise.all(promises);
-    if (payloadArray.value.length >= 2) {
-      await patchProfessionnalProfileDetails({
-        ...professionalUser.value,
-        secondActivity: questionnairePresta[1].sector ?? '',
-        thirdActivity: questionnairePresta[2].sector ?? '',
-      } as ProfessionalProfile);
-    }
-    addSuccess({ message: `${payloadArray.value.length} service(s) créé(s) avec succès !` });
+    addSuccess(`${payloadArray.value.length} service(s) créé(s) avec succès !`);
   } catch (error) {
     console.error("Erreur lors de l'envoi:", error);
     addError({ message: "Erreur lors de l'envoi des services" });
   }
+  await patchProfessionnalProfileDetails({
+    ...professionalUser.value,
+    secondActivity: questionnairePresta[1].sector ?? '',
+    thirdActivity: questionnairePresta[2].sector ?? '',
+  } as ProfessionalProfile);
 };
 
 onMounted(async () => {

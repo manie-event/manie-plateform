@@ -8,7 +8,7 @@ import { useProfessionalProfile } from '~/composables/professional-user/UseProfe
 import { useAuthentification } from '../../../../composables/UseAuthentification';
 
 const userStore = useUserStore();
-const { user, professionalUser, isProfileCreated, isProfessional } = storeToRefs(userStore);
+const { user, professionalUser, isProfileCreated } = storeToRefs(userStore);
 
 const { sendLogout } = useAuthentification();
 const { userTokenBalance } = storeToRefs(useCartStore());
@@ -16,11 +16,12 @@ const { getProfessionalProfileDetails } = useProfessionalProfile();
 const { getClientProfil } = useClientProfil();
 
 const clientProfile = localStorage.getItem('client-profile');
+const isProfessional = localStorage.getItem('is-professional');
 const getclientName = ref();
 
 const getNameDependingOnCategory = computed(() => {
   if (
-    (isProfessional.value && !user.value?.username) ||
+    (isProfessional && !user.value?.username) ||
     professionalUser.value?.category == 'professional'
   ) {
     return professionalUser.value?.name;
@@ -34,7 +35,7 @@ const getNameDependingOnCategory = computed(() => {
 });
 
 const getCategory = computed(() => {
-  if (isProfessional.value) {
+  if (isProfessional) {
     return UserCategory.PRESTA;
   } else {
     return UserCategory.CLIENT;
@@ -42,9 +43,9 @@ const getCategory = computed(() => {
 });
 
 onMounted(async () => {
-  if (isProfileCreated.value && user.value?.category === UserCategory.PROFESSIONAL) {
+  if (isProfileCreated.value && isProfessional) {
     await getProfessionalProfileDetails();
-  } else {
+  } else if (isProfileCreated.value && !isProfessional) {
     await getClientProfil();
   }
 });

@@ -1,9 +1,5 @@
 <template>
   <BaseModal v-model="openModal" fullscreen transition="dialog-bottom-transition">
-    <template #title>{{
-      !isProfileCreated ? 'Renseignez votre profil' : 'Modifier votre profil'
-    }}</template>
-
     <template #content>
       <v-form class="px-4">
         <div v-show="currentPage === 1">
@@ -39,6 +35,7 @@
             :items="activityItems"
             item-title="label"
             item-value="value"
+            @update:model-value="setSector"
             :error-messages="showErrors ? errors.mainActivity : undefined"
           />
           <v-text-field
@@ -74,7 +71,7 @@
             variant="solo"
             :min="0"
             label="Votre délai de réservation minimum (en semaine) ?"
-            v-model="profile.minimumReservationPeriod"
+            v-model="reservationDelay"
             :error-messages="showErrors ? errors.minimumReservationPeriod : undefined"
           />
           <v-checkbox
@@ -186,12 +183,20 @@
         />
         <div v-if="currentPage === 1" class="d-flex justify-space-between">
           <v-btn @click="openModal = false">Annuler</v-btn>
-          <v-btn color="primary" @click="setSector(profile)">Vers le questionnaire détaillé</v-btn>
+          <v-btn v-if="!isProfileVerified" color="primary" @click="createProfile(profile)">
+            Valider mon profil
+          </v-btn>
+          <v-btn v-else color="primary" @click="modifyProfile(profile)">
+            Modifier mon profil
+          </v-btn>
         </div>
       </v-form>
     </template>
   </BaseModal>
-  <Teleport to="body"> <error-toaster></error-toaster> </Teleport>
+  <Teleport to="body">
+    <CommonSuccessToaster></CommonSuccessToaster>
+    <error-toaster></error-toaster>
+  </Teleport>
 </template>
 <script setup lang="ts">
 import BaseModal from '@/components/common/BaseModal.vue';
@@ -207,7 +212,7 @@ import { GEOGRAPHIC_ACTIVITY } from '~/constants/geographicActivity';
 import type { Faq, Link, ProfessionalProfile } from '~/models/user/UserModel';
 
 const userStore = useUserStore();
-const { createProfessionalProfile } = useProfessionalProfile();
+const { createProfessionalProfile, patchProfessionnalProfileDetails } = useProfessionalProfile();
 const { getSectors } = useKeywords();
 const { isProfileCreated } = storeToRefs(userStore);
 const openModal = defineModel<boolean>('openModal');
@@ -218,6 +223,10 @@ const { addError, addSuccess } = useToaster();
 const currentPage = ref(1);
 const activityItems = ref(ACTIVITY_ITEMS);
 const geographicActivity = ref(GEOGRAPHIC_ACTIVITY);
+const isProfileVerified = localStorage.getItem('is-profile-verified');
+const reservationDelay = ref(0);
+
+const minimumDaysReservation = computed(() => reservationDelay.value * 7);
 
 const mergedFaq = computed(() => {
   return faqArray.value.reduce(
@@ -279,8 +288,8 @@ const {
     mainInterlocutor: '',
     experience: 0,
     geographicArea: geographicActivity.value[0]?.label ?? '',
-    faq: {},
-    minimumReservationPeriod: 0,
+    faq: mergedFaq.value,
+    minimumReservationPeriod: minimumDaysReservation.value,
     certification: '',
     deposit: false,
     depositAmount: 0,
@@ -314,19 +323,17 @@ const removeFaq = (index: number) => {
   }
 };
 
-const setSector = async (values: ProfessionalProfile) => {
-  const finalValues = {
-    ...values,
-    faq: mergedFaq.value,
-    minimumReservationPeriod: values.minimumReservationPeriod * 7,
-  };
+const setSector = () => {
+  getSectors(profile.mainActivity);
+};
 
+const createProfile = async (values: ProfessionalProfile) => {
   try {
-    const response = await createProfessionalProfile(finalValues);
+    const response = await createProfessionalProfile(values);
 
     if (response.message === 'Professional created') {
-      getSectors(profile.mainActivity);
-      currentPage.value = 2;
+      addSuccess('Votre profil a été envoyé pour être soumi à vérification');
+      openModal.value = false;
     } else {
       addError({ message: 'La mise à jour du profil a échoué.' });
     }
@@ -334,5 +341,19 @@ const setSector = async (values: ProfessionalProfile) => {
     addError({ message: 'Erreur lors de la mise à jour du profil.' });
   }
 };
-resetForm();
+
+const modifyProfile = async (newValues: ProfessionalProfile) => {
+  try {
+    const response = await patchProfessionnalProfileDetails(newValues);
+
+    if (response.message === 'Professional updated') {
+      addSuccess('Votre profil a été modifié avec success');
+      openModal.value = false;
+    } else {
+      addError({ message: 'La mise à jour du profil a échoué.' });
+    }
+  } catch (error) {
+    addError({ message: 'Erreur lors de la mise à jour du profil.' });
+  }
+};
 </script>
