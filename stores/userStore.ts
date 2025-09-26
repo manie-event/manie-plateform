@@ -66,6 +66,8 @@ export const useUserStore = defineStore('userStore', () => {
 
   // professional setters
   const setProfessionalUser = (newProfessionalUser: ProfessionalProfile) => {
+    console.log(newProfessionalUser, 'setProfessionalUser');
+
     professionalUser.value = {
       ...newProfessionalUser,
       uuid: newProfessionalUser.uuid?.replace(/[""]/g, '') || '',
@@ -83,6 +85,7 @@ export const useUserStore = defineStore('userStore', () => {
 
   const setProfessionalServices = (services: Services[]) => {
     professionnalServices.value = services;
+    console.log(professionnalServices.value, 'professionnalServices.value');
   };
 
   const setKeywords = (newKeywords: Keywords[]) => {

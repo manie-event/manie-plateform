@@ -175,20 +175,15 @@
             </v-btn>
           </div>
         </div>
-        <services-prestataire
-          v-if="currentPage === 2"
-          class="mt-6"
-          :sector="profile.mainActivity"
-          v-model:pageActuelle="currentPage"
-        />
+
         <div v-if="currentPage === 1" class="d-flex justify-space-between">
           <v-btn @click="openModal = false">Annuler</v-btn>
           <v-btn v-if="!isProfileVerified" color="primary" @click="createProfile(profile)">
             Valider mon profil
           </v-btn>
-          <v-btn v-else color="primary" @click="modifyProfile(profile)">
-            Modifier mon profil
-          </v-btn>
+          <div v-if="isProfileVerified">
+            <v-btn color="primary" @click="modifyProfile(profile)"> Modifier mon profil </v-btn>
+          </div>
         </div>
       </v-form>
     </template>
@@ -204,7 +199,6 @@ import { useForm } from 'vee-validate';
 import { ref, Teleport } from 'vue';
 import * as yup from 'yup';
 import errorToaster from '~/components/common/errorToaster.vue';
-import ServicesPrestataire from '~/components/questionnaires/ServicesPrestataire.vue';
 import { useKeywords } from '~/composables/professional-user/UseKeywords';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
@@ -214,7 +208,6 @@ import type { Faq, Link, ProfessionalProfile } from '~/models/user/UserModel';
 const userStore = useUserStore();
 const { createProfessionalProfile, patchProfessionnalProfileDetails } = useProfessionalProfile();
 const { getSectors } = useKeywords();
-const { isProfileCreated } = storeToRefs(userStore);
 const openModal = defineModel<boolean>('openModal');
 
 const faqArray = ref<Faq[]>([]);
@@ -229,15 +222,12 @@ const reservationDelay = ref(0);
 const minimumDaysReservation = computed(() => reservationDelay.value * 7);
 
 const mergedFaq = computed(() => {
-  return faqArray.value.reduce(
-    (acc, faq) => {
-      if (faq.question && faq.reponse) {
-        acc[faq.question] = faq.reponse;
-      }
-      return acc;
-    },
-    {} as Record<string, string>
-  );
+  return faqArray.value.reduce((acc, faq) => {
+    if (faq.question && faq.reponse) {
+      acc[faq.question] = faq.reponse;
+    }
+    return acc;
+  }, null);
 });
 
 const validationSchema = yup.object({
@@ -288,8 +278,8 @@ const {
     mainInterlocutor: '',
     experience: 0,
     geographicArea: geographicActivity.value[0]?.label ?? '',
-    faq: mergedFaq.value,
-    minimumReservationPeriod: minimumDaysReservation.value,
+    faq: {},
+    minimumReservationPeriod: 0,
     certification: '',
     deposit: false,
     depositAmount: 0,
@@ -329,7 +319,13 @@ const setSector = () => {
 
 const createProfile = async (values: ProfessionalProfile) => {
   try {
-    const response = await createProfessionalProfile(values);
+    const payload = {
+      ...values,
+      faq: mergedFaq.value || {},
+      minimumReservationPeriod: minimumDaysReservation.value,
+    };
+    const response = await createProfessionalProfile(payload);
+    console.log(response, 'RESPINSE CREATE');
 
     if (response.message === 'Professional created') {
       addSuccess('Votre profil a été envoyé pour être soumi à vérification');
@@ -344,7 +340,13 @@ const createProfile = async (values: ProfessionalProfile) => {
 
 const modifyProfile = async (newValues: ProfessionalProfile) => {
   try {
-    const response = await patchProfessionnalProfileDetails(newValues);
+    const payload = {
+      ...newValues,
+      faq: mergedFaq.value || {},
+      minimumReservationPeriod: minimumDaysReservation.value,
+    };
+    const response = await patchProfessionnalProfileDetails(payload);
+    console.log(response, 'RESPINSE MODIFY');
 
     if (response.message === 'Professional updated') {
       addSuccess('Votre profil a été modifié avec success');

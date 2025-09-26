@@ -52,9 +52,6 @@ onMounted(async () => {
 </script>
 
 <template>
-  <!-- ---------------------------------------------- -->
-  <!-- notifications DD -->
-  <!-- ---------------------------------------------- -->
   <v-menu :close-on-content-click="true" class="profile_popup">
     <template v-slot:activator="{ props }">
       <div class="text-left px-0 cursor-pointer" variant="text" v-bind="props">

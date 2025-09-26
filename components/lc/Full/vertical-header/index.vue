@@ -8,7 +8,7 @@ import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJet
 const { createTokenSession } = usePaiementJeton();
 const jetonAmount = ref(0);
 const stickyHeader = ref(false);
-const isProfessional = localStorage.getItem('is-profesionnal');
+const isProfessional = localStorage.getItem('is-professional');
 
 const totalPriceJeton = computed(() => {
   return `${jetonAmount.value * 9} €`;
