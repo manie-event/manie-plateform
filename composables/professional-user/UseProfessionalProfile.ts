@@ -70,11 +70,14 @@ export const useProfessionalProfile = () => {
   };
 
   const patchProfessionnalProfileDetails = async (newProfile: ProfessionalProfile) => {
+    console.log(newProfile, 'newProfile');
+    console.log(professionalUuid, 'professionalUuid');
+
     try {
       const { data } = await axios.patch(
         `${config.public.apiUrl}/professional/${professionalUuid}`,
+        newProfile,
         {
-          newProfile,
           headers: {
             Authorization: `Bearer ${token.value}`,
             'Content-Type': 'application/json',
@@ -87,6 +90,8 @@ export const useProfessionalProfile = () => {
         return data;
       }
     } catch (error: unknown) {
+      console.log(error, 'error');
+
       addError({ message: 'Une erreur est survenue lors de la récupération du profil.' });
     }
   };

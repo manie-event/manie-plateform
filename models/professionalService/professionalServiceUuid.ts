@@ -1,5 +1,6 @@
 export interface ProfessionalServiceUuid {
-  serviceUuid: 'string';
-  professionalUuid: 'string';
-  keywordsUuid: 'string[]';
+  serviceUuid: string;
+  professionalUuid: string;
+  keywordsUuid: string[];
+  isVerified: boolean;
 }

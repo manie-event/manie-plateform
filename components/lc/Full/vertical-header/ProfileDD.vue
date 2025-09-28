@@ -8,7 +8,7 @@ import { useProfessionalProfile } from '~/composables/professional-user/UseProfe
 import { useAuthentification } from '../../../../composables/UseAuthentification';
 
 const userStore = useUserStore();
-const { user, professionalUser, isProfileCreated, isProfessional } = storeToRefs(userStore);
+const { user, professionalUser } = storeToRefs(userStore);
 
 const { sendLogout } = useAuthentification();
 const { userTokenBalance } = storeToRefs(useCartStore());
@@ -16,14 +16,17 @@ const { getProfessionalProfileDetails } = useProfessionalProfile();
 const { getClientProfil } = useClientProfil();
 
 const clientProfile = localStorage.getItem('client-profile');
+const isProfessional = localStorage.getItem('is-professional');
+const isProfileCreated = localStorage.getItem('pp-created');
+const professionalName = localStorage.getItem('pro-name');
 const getclientName = ref();
 
 const getNameDependingOnCategory = computed(() => {
   if (
-    (isProfessional.value && !user.value?.username) ||
+    (isProfessional && !user.value?.username) ||
     professionalUser.value?.category == 'professional'
   ) {
-    return professionalUser.value?.name;
+    return professionalName;
   }
   if (clientProfile) {
     getclientName.value = JSON.parse(clientProfile);
@@ -34,26 +37,27 @@ const getNameDependingOnCategory = computed(() => {
 });
 
 const getCategory = computed(() => {
-  if (isProfessional.value) {
+  if (isProfessional) {
     return UserCategory.PRESTA;
   } else {
     return UserCategory.CLIENT;
   }
 });
-
 onMounted(async () => {
-  if (isProfileCreated.value && user.value?.category === UserCategory.PROFESSIONAL) {
-    await getProfessionalProfileDetails();
+  // Vérifie que l'utilisateur est chargé et a un UUID
+  if (userStore.user && userStore.user.uuid) {
+    if (isProfessional) {
+      await getProfessionalProfileDetails();
+    } else {
+      await getClientProfil();
+    }
   } else {
-    await getClientProfil();
+    console.warn('Utilisateur non encore chargé ou UUID manquant');
   }
 });
 </script>
 
 <template>
-  <!-- ---------------------------------------------- -->
-  <!-- notifications DD -->
-  <!-- ---------------------------------------------- -->
   <v-menu :close-on-content-click="true" class="profile_popup">
     <template v-slot:activator="{ props }">
       <div class="text-left px-0 cursor-pointer" variant="text" v-bind="props">

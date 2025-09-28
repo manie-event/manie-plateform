@@ -49,17 +49,26 @@
           >
             <div class="d-flex flex-column justify-center align-center gap-4">
               <div>
-                <v-btn color="primary" size="large" class="w-100" @click="openEditProfilModal()"
+                <v-btn
+                  v-if="!isProfileCreated"
+                  color="primary"
+                  size="large"
+                  class="w-100"
+                  @click="openEditProfilModal()"
                   >Editez votre profil</v-btn
                 >
+                <div v-if="isProfileCreated && isProfileVerified">
+                  <v-btn color="primary" size="large" class="w-100" @click="openEditProfilModal()"
+                    >Modifier votre profil</v-btn
+                  >
+                  <v-btn color="success" size="large" class="w-100" @click="openServiceModal = true"
+                    >Ajouter votre secteur d'activité</v-btn
+                  >
+                </div>
               </div>
-              <div v-if="isProfileCreated">
-                <NuxtLink :to="`/dashboards/dashboard2`" class="w-100">
-                  <v-btn color="success" size="large" class="w-100">
-                    Revenir à votre dashboard
-                  </v-btn>
-                </NuxtLink>
-              </div>
+              <p v-if="isProfileCreated && !isProfileVerified">
+                <span :style="{ fontSize: '14px' }"> Nous reviendrons dans les 48heures...</span>
+              </p>
             </div>
           </v-col>
         </v-row>
@@ -89,15 +98,15 @@
   </div>
   <Teleport to="body">
     <EditerProfessionalProfile v-model:openModal="openModal" />
-    <ModalRedirection :redirection="'dashboard2'" v-model="isProfilUpdate" />
+    <services-prestataire class="mt-6" v-model:pageActuelle="openServiceModal" />
   </Teleport>
 </template>
 
 <script setup lang="ts">
 import EditerProfessionalProfile from '@/components/apps/user-profile/EditProfessionalProfil.vue';
-import ModalRedirection from '@/components/apps/user-profile/ModalRedirection.vue';
 import { ref, shallowRef, Teleport } from 'vue';
 import { IdIcon, Layout2Icon, PlusIcon, UserCircleIcon, UsersIcon } from 'vue-tabler-icons';
+import ServicesPrestataire from '~/components/questionnaires/ServicesPrestataire.vue';
 import { useKeywords } from '~/composables/professional-user/UseKeywords';
 import { useProfessionalProfile } from '../../../composables/professional-user/UseProfessionalProfile';
 import UserImage from '/images/profile/user6.jpg';
@@ -106,11 +115,13 @@ const { bgPicture } = storeToRefs(useUserStore());
 
 const tab = ref(null);
 const openModal = ref(false);
+const openServiceModal = ref(false);
 const fileInput = ref(null);
 
-const { user, isProfileCreated, isProfilUpdate } = storeToRefs(useUserStore());
+const { user, isProfileCreated } = storeToRefs(useUserStore());
 const { getKeywords } = useKeywords();
 const { changeProfessionalBannerPicture } = useProfessionalProfile();
+const isProfileVerified = localStorage.getItem('is-profile-verified');
 
 const triggerClickFileInput = () => fileInput.value?.click();
 const changeBannerPhoto = async (e: Event) => {
