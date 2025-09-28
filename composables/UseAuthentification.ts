@@ -44,6 +44,8 @@ export const useAuthentification = () => {
         token.value = tokenValue;
         setUser(data.user);
 
+        console.log(isProfessional, 'isProfessional- isProfessional');
+
         if (!isProfessional) {
           router.push({ path: '/dashboards/dashboard-client' });
         } else {

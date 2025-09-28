@@ -208,6 +208,7 @@ import type { Faq, Link, ProfessionalProfile } from '~/models/user/UserModel';
 import ModalRedirection from './ModalRedirection.vue';
 
 const userStore = useUserStore();
+const { professionalUser } = storeToRefs(userStore);
 const { createProfessionalProfile, patchProfessionnalProfileDetails } = useProfessionalProfile();
 const { getSectors } = useKeywords();
 const openModal = defineModel<boolean>('openModal');
@@ -362,4 +363,34 @@ const modifyProfile = async (newValues: ProfessionalProfile) => {
     addError({ message: 'Erreur lors de la mise à jour du profil.' });
   }
 };
+
+onMounted(() => {
+  if (professionalUser.value) {
+    resetForm({
+      values: {
+        name: professionalUser.value.name ?? '',
+        siret: professionalUser.value.siret ?? '',
+        address: professionalUser.value.address ?? '',
+        bio: professionalUser.value.bio ?? '',
+        mainActivity: professionalUser.value.mainActivity ?? 'Veuillez choisir votre activité',
+        mainInterlocutor: professionalUser.value.mainInterlocutor ?? '',
+        experience: professionalUser.value.experience ?? 0,
+        geographicArea:
+          professionalUser.value.geographicArea ?? geographicActivity.value[0]?.label ?? '',
+        certification: professionalUser.value.certification ?? '',
+        minimumReservationPeriod: professionalUser.value.minimumReservationPeriod ?? 0,
+        deposit: professionalUser.value.deposit ?? false,
+        depositAmount: professionalUser.value.depositAmount ?? 0,
+        billingPeriod: professionalUser.value.billingPeriod ?? 'beforeEvent',
+        links: professionalUser.value.links?.length
+          ? professionalUser.value.links
+          : [{ type: '', value: '' }],
+        faq: professionalUser.value.faq ?? {},
+      },
+    });
+
+    // Pré-remplir la FAQ et les liens si tu gères des refs séparés
+    faqArray.value = professionalUser.value.faqArray ?? [];
+  }
+});
 </script>

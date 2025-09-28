@@ -42,6 +42,7 @@ export const useUserStore = defineStore('userStore', () => {
   // setters
   const setUser = (userData: User) => {
     user.value = userData;
+    localStorage.setItem('username', userData.username);
     if (userData.category === 'professional') {
       localStorage.setItem('is-professional', JSON.stringify(true));
     }
@@ -75,7 +76,6 @@ export const useUserStore = defineStore('userStore', () => {
     };
 
     localStorage.setItem('professional-uuid', professionalUser.value.uuid || '');
-    localStorage.setItem('pro-name', newProfessionalUser.name);
     localStorage.setItem('is-profile-verified', JSON.stringify(true));
     isProfileCreated.value = true;
   };

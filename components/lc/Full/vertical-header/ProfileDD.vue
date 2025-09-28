@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { clientMenu, professionalProfile } from '@/_mockApis/headerData';
 import { UserCategory } from '@/models/enums/userCategoryEnums';
+import type { clientProfile } from '@/models/user/UserModel';
 import { Icon } from '@iconify/vue';
 import { CircleXIcon } from 'vue-tabler-icons';
 import { useClientProfil } from '~/composables/client-user/UseClientProfil';
@@ -8,32 +9,38 @@ import { useProfessionalProfile } from '~/composables/professional-user/UseProfe
 import { useAuthentification } from '../../../../composables/UseAuthentification';
 
 const userStore = useUserStore();
-const { user, professionalUser } = storeToRefs(userStore);
+const { user, professionalUser, isProfileCreated } = storeToRefs(userStore);
 
 const { sendLogout } = useAuthentification();
 const { userTokenBalance } = storeToRefs(useCartStore());
-const { getProfessionalProfileDetails } = useProfessionalProfile();
+const { getProfessionalProfileDetails, getProfessionalProfile } = useProfessionalProfile();
 const { getClientProfil } = useClientProfil();
 
 const clientProfile = localStorage.getItem('client-profile');
 const isProfessional = localStorage.getItem('is-professional');
-const isProfileCreated = localStorage.getItem('pp-created');
-const professionalName = localStorage.getItem('pro-name');
+const username = localStorage.getItem('username');
 const getclientName = ref();
 
 const getNameDependingOnCategory = computed(() => {
-  if (
-    (isProfessional && !user.value?.username) ||
-    professionalUser.value?.category == 'professional'
-  ) {
-    return professionalName;
+  // console.log(isProfessional, 'isProfessional');
+  // console.log(isProfileCreated.value, 'isProfileCreated');
+
+  if (isProfessional && isProfileCreated.value) {
+    return professionalUser.value?.name;
   }
+
+  // Sinon, si c'est un client et qu'on a un profil client sauvegardé
   if (clientProfile) {
+    console.log(clientProfile, 'clientProfile');
+
     getclientName.value = JSON.parse(clientProfile);
     return getclientName.value.username;
-  } else {
-    return user.value?.username;
   }
+
+  console.log(username, 'user.value?.username');
+
+  // Par défaut, on retombe sur l'user classique
+  return username;
 });
 
 const getCategory = computed(() => {
@@ -44,11 +51,16 @@ const getCategory = computed(() => {
   }
 });
 onMounted(async () => {
-  // Vérifie que l'utilisateur est chargé et a un UUID
-  if (userStore.user && userStore.user.uuid) {
-    if (isProfessional) {
+  if (username) {
+    if (isProfessional && isProfileCreated.value) {
       await getProfessionalProfileDetails();
-    } else {
+    } else if (isProfessional && !isProfileCreated.value) {
+      const allProfessionalProfile = await getProfessionalProfile();
+
+      return allProfessionalProfile.find(
+        (yourProfile: clientProfile) => yourProfile.userUuid == user.value?.uuid
+      );
+    } else if (!isProfessional && isProfileCreated) {
       await getClientProfil();
     }
   } else {
