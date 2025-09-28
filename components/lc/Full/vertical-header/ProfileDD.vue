@@ -8,7 +8,7 @@ import { useProfessionalProfile } from '~/composables/professional-user/UseProfe
 import { useAuthentification } from '../../../../composables/UseAuthentification';
 
 const userStore = useUserStore();
-const { user, professionalUser, isProfileCreated } = storeToRefs(userStore);
+const { user, professionalUser } = storeToRefs(userStore);
 
 const { sendLogout } = useAuthentification();
 const { userTokenBalance } = storeToRefs(useCartStore());
@@ -17,6 +17,7 @@ const { getClientProfil } = useClientProfil();
 
 const clientProfile = localStorage.getItem('client-profile');
 const isProfessional = localStorage.getItem('is-professional');
+const isProfileCreated = localStorage.getItem('pp-created');
 const professionalName = localStorage.getItem('pro-name');
 const getclientName = ref();
 
@@ -42,12 +43,16 @@ const getCategory = computed(() => {
     return UserCategory.CLIENT;
   }
 });
-
 onMounted(async () => {
-  if (isProfessional) {
-    await getProfessionalProfileDetails();
-  } else if (!isProfessional) {
-    await getClientProfil();
+  // Vérifie que l'utilisateur est chargé et a un UUID
+  if (userStore.user && userStore.user.uuid) {
+    if (isProfessional) {
+      await getProfessionalProfileDetails();
+    } else {
+      await getClientProfil();
+    }
+  } else {
+    console.warn('Utilisateur non encore chargé ou UUID manquant');
   }
 });
 </script>
