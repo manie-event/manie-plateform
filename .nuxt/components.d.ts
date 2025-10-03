@@ -12,21 +12,7 @@ type HydrationStrategies = {
 }
 type LazyComponent<T> = (T & DefineComponent<HydrationStrategies, {}, {}, {}, {}, {}, {}, { hydrated: () => void }>)
 interface _GlobalComponents {
-      'AppsBlogCardGrid': typeof import("../components/apps/blog/blogCardGrid.vue")['default']
-    'AppsBlogPosts': typeof import("../components/apps/blog/blogPosts.vue")['default']
-    'AppsBlogDetailAddCommnet': typeof import("../components/apps/blog/detail/addCommnet.vue")['default']
-    'AppsBlogDetail': typeof import("../components/apps/blog/detail/blogDetail.vue")['default']
-    'AppsBlogFeatureBlogCard': typeof import("../components/apps/blog/featureBlogCard.vue")['default']
-    'AppsChatsChatDetail': typeof import("../components/apps/chats/ChatDetail.vue")['default']
-    'AppsChatsChatInfo': typeof import("../components/apps/chats/ChatInfo.vue")['default']
-    'AppsChatsChatListing': typeof import("../components/apps/chats/ChatListing.vue")['default']
-    'AppsChatsChatProfile': typeof import("../components/apps/chats/ChatProfile.vue")['default']
-    'AppsChatsChatSendMsg': typeof import("../components/apps/chats/ChatSendMsg.vue")['default']
-    'AppsEcommerceAddproductAdvanceTab': typeof import("../components/apps/ecommerce/addproduct/AdvanceTab.vue")['default']
-    'AppsEcommerceAddproductGeneralTab': typeof import("../components/apps/ecommerce/addproduct/GeneralTab.vue")['default']
-    'AppsEcommerceAddproductLeftSide': typeof import("../components/apps/ecommerce/addproduct/LeftSide.vue")['default']
-    'AppsEcommerceAddproductRightSide': typeof import("../components/apps/ecommerce/addproduct/RightSide.vue")['default']
-    'AppsEcommerceCartCheckout': typeof import("../components/apps/ecommerce/cart/CartCheckout.vue")['default']
+      'AppsEcommerceCartCheckout': typeof import("../components/apps/ecommerce/cart/CartCheckout.vue")['default']
     'AppsEcommerceCartEmpty': typeof import("../components/apps/ecommerce/cart/CartEmpty.vue")['default']
     'AppsEcommerceCartStepsAddAddress': typeof import("../components/apps/ecommerce/cart/steps/AddAddress.vue")['default']
     'AppsEcommerceCartStepsAddCard': typeof import("../components/apps/ecommerce/cart/steps/AddCard.vue")['default']
@@ -37,49 +23,10 @@ interface _GlobalComponents {
     'AppsEcommerceCartStepsStepSecond': typeof import("../components/apps/ecommerce/cart/steps/StepSecond.vue")['default']
     'AppsEcommerceCartStepsTestStripe': typeof import("../components/apps/ecommerce/cart/steps/TestStripe.vue")['default']
     'AppsEcommerceCartStepsThankyou': typeof import("../components/apps/ecommerce/cart/steps/Thankyou.vue")['default']
-    'AppsEcommerceDetailProductCarousel': typeof import("../components/apps/ecommerce/detail/ProductCarousel.vue")['default']
-    'AppsEcommerceDetailProductDescription': typeof import("../components/apps/ecommerce/detail/ProductDescription.vue")['default']
-    'AppsEcommerceDetailProductDetail': typeof import("../components/apps/ecommerce/detail/ProductDetail.vue")['default']
-    'AppsEcommerceDetailProductReview': typeof import("../components/apps/ecommerce/detail/ProductReview.vue")['default']
-    'AppsEcommerceDetailProductTab': typeof import("../components/apps/ecommerce/detail/ProductTab.vue")['default']
-    'AppsEcommerceDetailRelatedProducts': typeof import("../components/apps/ecommerce/detail/RelatedProducts.vue")['default']
-    'AppsEcommerceDetailOneProducOneCurosel': typeof import("../components/apps/ecommerce/detail/one/ProducOneCurosel.vue")['default']
-    'AppsEcommerceDetailOneProductDetailOne': typeof import("../components/apps/ecommerce/detail/one/ProductDetailOne.vue")['default']
-    'AppsEcommerceDetailOneProductReviewOne': typeof import("../components/apps/ecommerce/detail/one/ProductReviewOne.vue")['default']
-    'AppsEcommerceDetailOneRelatedProductOne': typeof import("../components/apps/ecommerce/detail/one/RelatedProductOne.vue")['default']
-    'AppsEcommerceEditproductAdvanceTab': typeof import("../components/apps/ecommerce/editproduct/AdvanceTab.vue")['default']
-    'AppsEcommerceEditproductDailySalesChart': typeof import("../components/apps/ecommerce/editproduct/DailySalesChart.vue")['default']
-    'AppsEcommerceEditproductGeneralTab': typeof import("../components/apps/ecommerce/editproduct/GeneralTab.vue")['default']
-    'AppsEcommerceEditproductLeftSide': typeof import("../components/apps/ecommerce/editproduct/LeftSide.vue")['default']
-    'AppsEcommerceEditproductReviewsTab': typeof import("../components/apps/ecommerce/editproduct/ReviewsTab.vue")['default']
-    'AppsEcommerceEditproductRightSide': typeof import("../components/apps/ecommerce/editproduct/RightSide.vue")['default']
-    'AppsEcommerceListingProductEmplty': typeof import("../components/apps/ecommerce/listing/ProductEmplty.vue")['default']
-    'AppsEcommerceListingProductFilters': typeof import("../components/apps/ecommerce/listing/ProductFilters.vue")['default']
-    'AppsEcommerceListingProductItem': typeof import("../components/apps/ecommerce/listing/ProductItem.vue")['default']
-    'AppsEcommerceListingProductItemOne': typeof import("../components/apps/ecommerce/listing/ProductItemOne.vue")['default']
-    'AppsEcommerceListingProductfilterOne': typeof import("../components/apps/ecommerce/listing/ProductfilterOne.vue")['default']
-    'AppsEcommerceListingColorsOption': typeof import("../components/apps/ecommerce/listing/colorsOption")['default']
-    'AppsEmailCompose': typeof import("../components/apps/email/EmailCompose.vue")['default']
-    'AppsEmailDetail': typeof import("../components/apps/email/EmailDetail.vue")['default']
-    'AppsEmailListing': typeof import("../components/apps/email/EmailListing.vue")['default']
-    'AppsInvoiceCreate': typeof import("../components/apps/invoice/Create.vue")['default']
-    'AppsInvoiceDetail': typeof import("../components/apps/invoice/Detail.vue")['default']
-    'AppsInvoiceEdit': typeof import("../components/apps/invoice/Edit.vue")['default']
-    'AppsInvoiceList': typeof import("../components/apps/invoice/List.vue")['default']
-    'AppsKanbanAddTask': typeof import("../components/apps/kanban/AddTask.vue")['default']
-    'AppsKanbanTaskCard': typeof import("../components/apps/kanban/TaskCard.vue")['default']
-    'AppsKanbanTaskColumn': typeof import("../components/apps/kanban/TaskColumn.vue")['default']
-    'AppsKanbanTaskItemCard': typeof import("../components/apps/kanban/TaskItemCard.vue")['default']
-    'AppsNotesAddNote': typeof import("../components/apps/notes/AddNote.vue")['default']
-    'AppsNotesContent': typeof import("../components/apps/notes/NotesContent.vue")['default']
-    'AppsNotesListing': typeof import("../components/apps/notes/NotesListing.vue")['default']
-    'AppsTicketsTicketList': typeof import("../components/apps/tickets/TicketList.vue")['default']
     'AppsUserProfileEditClientProfil': typeof import("../components/apps/user-profile/EditClientProfil.vue")['default']
     'AppsUserProfileEditProfessionalProfil': typeof import("../components/apps/user-profile/EditProfessionalProfil.vue")['default']
     'AppsUserProfileIntroCard': typeof import("../components/apps/user-profile/IntroCard.vue")['default']
     'AppsUserProfileModalRedirection': typeof import("../components/apps/user-profile/ModalRedirection.vue")['default']
-    'AppsUserProfilePhotosCard': typeof import("../components/apps/user-profile/PhotosCard.vue")['default']
-    'AppsUserProfilePostListing': typeof import("../components/apps/user-profile/PostListing.vue")['default']
     'AppsUserProfileBanner': typeof import("../components/apps/user-profile/ProfileBanner.vue")['default']
     'AppsUserProfileBannerOne': typeof import("../components/apps/user-profile/ProfileBannerOne.vue")['default']
     'AppsUserProfileProfileOneIntroCard': typeof import("../components/apps/user-profile/profile-one/IntroCard.vue")['default']
@@ -113,11 +60,11 @@ interface _GlobalComponents {
     'DashboardsDashboard2ProfessionalMarketPlace': typeof import("../components/dashboards/dashboard2/ProfessionalMarketPlace.vue")['default']
     'DashboardsDashboard2ProfileCards': typeof import("../components/dashboards/dashboard2/ProfileCards.vue")['default']
     'DashboardsDashboard2ProfitExpanse': typeof import("../components/dashboards/dashboard2/ProfitExpanse.vue")['default']
+    'DashboardsDashboard2PropositionAccepted': typeof import("../components/dashboards/dashboard2/PropositionAccepted.vue")['default']
     'DashboardsDashboard2TextCards': typeof import("../components/dashboards/dashboard2/TextCards.vue")['default']
     'DashboardsDashboard2TrafficDistribution': typeof import("../components/dashboards/dashboard2/TrafficDistribution.vue")['default']
     'DashboardsDashboard2UpcommingSchedule': typeof import("../components/dashboards/dashboard2/UpcommingSchedule.vue")['default']
     'DashboardsDashboard2WelcomeCard': typeof import("../components/dashboards/dashboard2/WelcomeCard.vue")['default']
-    'DashboardsSnackbar': typeof import("../components/dashboards/snackbar.vue")['default']
     'FormsFormCustomFrom': typeof import("../components/forms/form-custom/CustomFrom.vue")['default']
     'FormsFormElementsAutocompleteComboBox': typeof import("../components/forms/form-elements/autocomplete/ComboBox.vue")['default']
     'FormsFormElementsAutocompleteMultipleOptions': typeof import("../components/forms/form-elements/autocomplete/MultipleOptions.vue")['default']
@@ -230,9 +177,6 @@ interface _GlobalComponents {
     'FrontpagesAboutUsArchivement': typeof import("../components/frontpages/AboutUs/Archivement.vue")['default']
     'FrontpagesAboutUsHeroText': typeof import("../components/frontpages/AboutUs/HeroText.vue")['default']
     'FrontpagesAboutUsSetupProcess': typeof import("../components/frontpages/AboutUs/SetupProcess.vue")['default']
-    'FrontpagesBlogGrid': typeof import("../components/frontpages/Blog/BlogGrid.vue")['default']
-    'FrontpagesBlogPagesPosts': typeof import("../components/frontpages/Blog/BlogPagesPosts.vue")['default']
-    'FrontpagesBlogDetails': typeof import("../components/frontpages/Blog/details/BlogDetails.vue")['default']
     'FrontpagesContactUsContactForm': typeof import("../components/frontpages/ContactUs/ContactForm.vue")['default']
     'FrontpagesContactUsContactMap': typeof import("../components/frontpages/ContactUs/ContactMap.vue")['default']
     'FrontpagesHomepageClientReviews': typeof import("../components/frontpages/Homepage/ClientReviews.vue")['default']
@@ -249,7 +193,6 @@ interface _GlobalComponents {
     'FrontpagesHomepageProfessionalTabs': typeof import("../components/frontpages/Homepage/ProfessionalTabs.vue")['default']
     'FrontpagesHomepagePurchaseTemplate': typeof import("../components/frontpages/Homepage/PurchaseTemplate.vue")['default']
     'FrontpagesHomepageSecurePayment': typeof import("../components/frontpages/Homepage/SecurePayment.vue")['default']
-    'FrontpagesPortfolioGalleryBox': typeof import("../components/frontpages/Portfolio/GalleryBox.vue")['default']
     'FrontpagesSharedTextBannerCard': typeof import("../components/frontpages/Shared/TextBannerCard.vue")['default']
     'FrontpagesLayoutAnnounceBar': typeof import("../components/frontpages/layout/AnnounceBar.vue")['default']
     'FrontpagesLayoutFooter': typeof import("../components/frontpages/layout/Footer.vue")['default']
@@ -324,7 +267,6 @@ interface _GlobalComponents {
     'StyleComponentsTypographyOpacity': typeof import("../components/style-components/typography/Opacity.vue")['default']
     'StyleComponentsTypographyTextAlignment': typeof import("../components/style-components/typography/TextAlignment.vue")['default']
     'StyleComponentsTypographyTextDecoration': typeof import("../components/style-components/typography/TextDecoration.vue")['default']
-    'TableEditableTable': typeof import("../components/table/EditableTable.vue")['default']
     'TableTable1': typeof import("../components/table/Table1.vue")['default']
     'TableTable2': typeof import("../components/table/Table2.vue")['default']
     'TableTable3': typeof import("../components/table/Table3.vue")['default']
@@ -436,21 +378,7 @@ interface _GlobalComponents {
     'Body': typeof import("../node_modules/nuxt/dist/head/runtime/components")['Body']
     'NuxtIsland': typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']
     'NuxtRouteAnnouncer': typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']
-      'LazyAppsBlogCardGrid': LazyComponent<typeof import("../components/apps/blog/blogCardGrid.vue")['default']>
-    'LazyAppsBlogPosts': LazyComponent<typeof import("../components/apps/blog/blogPosts.vue")['default']>
-    'LazyAppsBlogDetailAddCommnet': LazyComponent<typeof import("../components/apps/blog/detail/addCommnet.vue")['default']>
-    'LazyAppsBlogDetail': LazyComponent<typeof import("../components/apps/blog/detail/blogDetail.vue")['default']>
-    'LazyAppsBlogFeatureBlogCard': LazyComponent<typeof import("../components/apps/blog/featureBlogCard.vue")['default']>
-    'LazyAppsChatsChatDetail': LazyComponent<typeof import("../components/apps/chats/ChatDetail.vue")['default']>
-    'LazyAppsChatsChatInfo': LazyComponent<typeof import("../components/apps/chats/ChatInfo.vue")['default']>
-    'LazyAppsChatsChatListing': LazyComponent<typeof import("../components/apps/chats/ChatListing.vue")['default']>
-    'LazyAppsChatsChatProfile': LazyComponent<typeof import("../components/apps/chats/ChatProfile.vue")['default']>
-    'LazyAppsChatsChatSendMsg': LazyComponent<typeof import("../components/apps/chats/ChatSendMsg.vue")['default']>
-    'LazyAppsEcommerceAddproductAdvanceTab': LazyComponent<typeof import("../components/apps/ecommerce/addproduct/AdvanceTab.vue")['default']>
-    'LazyAppsEcommerceAddproductGeneralTab': LazyComponent<typeof import("../components/apps/ecommerce/addproduct/GeneralTab.vue")['default']>
-    'LazyAppsEcommerceAddproductLeftSide': LazyComponent<typeof import("../components/apps/ecommerce/addproduct/LeftSide.vue")['default']>
-    'LazyAppsEcommerceAddproductRightSide': LazyComponent<typeof import("../components/apps/ecommerce/addproduct/RightSide.vue")['default']>
-    'LazyAppsEcommerceCartCheckout': LazyComponent<typeof import("../components/apps/ecommerce/cart/CartCheckout.vue")['default']>
+      'LazyAppsEcommerceCartCheckout': LazyComponent<typeof import("../components/apps/ecommerce/cart/CartCheckout.vue")['default']>
     'LazyAppsEcommerceCartEmpty': LazyComponent<typeof import("../components/apps/ecommerce/cart/CartEmpty.vue")['default']>
     'LazyAppsEcommerceCartStepsAddAddress': LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/AddAddress.vue")['default']>
     'LazyAppsEcommerceCartStepsAddCard': LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/AddCard.vue")['default']>
@@ -461,49 +389,10 @@ interface _GlobalComponents {
     'LazyAppsEcommerceCartStepsStepSecond': LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/StepSecond.vue")['default']>
     'LazyAppsEcommerceCartStepsTestStripe': LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/TestStripe.vue")['default']>
     'LazyAppsEcommerceCartStepsThankyou': LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/Thankyou.vue")['default']>
-    'LazyAppsEcommerceDetailProductCarousel': LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductCarousel.vue")['default']>
-    'LazyAppsEcommerceDetailProductDescription': LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductDescription.vue")['default']>
-    'LazyAppsEcommerceDetailProductDetail': LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductDetail.vue")['default']>
-    'LazyAppsEcommerceDetailProductReview': LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductReview.vue")['default']>
-    'LazyAppsEcommerceDetailProductTab': LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductTab.vue")['default']>
-    'LazyAppsEcommerceDetailRelatedProducts': LazyComponent<typeof import("../components/apps/ecommerce/detail/RelatedProducts.vue")['default']>
-    'LazyAppsEcommerceDetailOneProducOneCurosel': LazyComponent<typeof import("../components/apps/ecommerce/detail/one/ProducOneCurosel.vue")['default']>
-    'LazyAppsEcommerceDetailOneProductDetailOne': LazyComponent<typeof import("../components/apps/ecommerce/detail/one/ProductDetailOne.vue")['default']>
-    'LazyAppsEcommerceDetailOneProductReviewOne': LazyComponent<typeof import("../components/apps/ecommerce/detail/one/ProductReviewOne.vue")['default']>
-    'LazyAppsEcommerceDetailOneRelatedProductOne': LazyComponent<typeof import("../components/apps/ecommerce/detail/one/RelatedProductOne.vue")['default']>
-    'LazyAppsEcommerceEditproductAdvanceTab': LazyComponent<typeof import("../components/apps/ecommerce/editproduct/AdvanceTab.vue")['default']>
-    'LazyAppsEcommerceEditproductDailySalesChart': LazyComponent<typeof import("../components/apps/ecommerce/editproduct/DailySalesChart.vue")['default']>
-    'LazyAppsEcommerceEditproductGeneralTab': LazyComponent<typeof import("../components/apps/ecommerce/editproduct/GeneralTab.vue")['default']>
-    'LazyAppsEcommerceEditproductLeftSide': LazyComponent<typeof import("../components/apps/ecommerce/editproduct/LeftSide.vue")['default']>
-    'LazyAppsEcommerceEditproductReviewsTab': LazyComponent<typeof import("../components/apps/ecommerce/editproduct/ReviewsTab.vue")['default']>
-    'LazyAppsEcommerceEditproductRightSide': LazyComponent<typeof import("../components/apps/ecommerce/editproduct/RightSide.vue")['default']>
-    'LazyAppsEcommerceListingProductEmplty': LazyComponent<typeof import("../components/apps/ecommerce/listing/ProductEmplty.vue")['default']>
-    'LazyAppsEcommerceListingProductFilters': LazyComponent<typeof import("../components/apps/ecommerce/listing/ProductFilters.vue")['default']>
-    'LazyAppsEcommerceListingProductItem': LazyComponent<typeof import("../components/apps/ecommerce/listing/ProductItem.vue")['default']>
-    'LazyAppsEcommerceListingProductItemOne': LazyComponent<typeof import("../components/apps/ecommerce/listing/ProductItemOne.vue")['default']>
-    'LazyAppsEcommerceListingProductfilterOne': LazyComponent<typeof import("../components/apps/ecommerce/listing/ProductfilterOne.vue")['default']>
-    'LazyAppsEcommerceListingColorsOption': LazyComponent<typeof import("../components/apps/ecommerce/listing/colorsOption")['default']>
-    'LazyAppsEmailCompose': LazyComponent<typeof import("../components/apps/email/EmailCompose.vue")['default']>
-    'LazyAppsEmailDetail': LazyComponent<typeof import("../components/apps/email/EmailDetail.vue")['default']>
-    'LazyAppsEmailListing': LazyComponent<typeof import("../components/apps/email/EmailListing.vue")['default']>
-    'LazyAppsInvoiceCreate': LazyComponent<typeof import("../components/apps/invoice/Create.vue")['default']>
-    'LazyAppsInvoiceDetail': LazyComponent<typeof import("../components/apps/invoice/Detail.vue")['default']>
-    'LazyAppsInvoiceEdit': LazyComponent<typeof import("../components/apps/invoice/Edit.vue")['default']>
-    'LazyAppsInvoiceList': LazyComponent<typeof import("../components/apps/invoice/List.vue")['default']>
-    'LazyAppsKanbanAddTask': LazyComponent<typeof import("../components/apps/kanban/AddTask.vue")['default']>
-    'LazyAppsKanbanTaskCard': LazyComponent<typeof import("../components/apps/kanban/TaskCard.vue")['default']>
-    'LazyAppsKanbanTaskColumn': LazyComponent<typeof import("../components/apps/kanban/TaskColumn.vue")['default']>
-    'LazyAppsKanbanTaskItemCard': LazyComponent<typeof import("../components/apps/kanban/TaskItemCard.vue")['default']>
-    'LazyAppsNotesAddNote': LazyComponent<typeof import("../components/apps/notes/AddNote.vue")['default']>
-    'LazyAppsNotesContent': LazyComponent<typeof import("../components/apps/notes/NotesContent.vue")['default']>
-    'LazyAppsNotesListing': LazyComponent<typeof import("../components/apps/notes/NotesListing.vue")['default']>
-    'LazyAppsTicketsTicketList': LazyComponent<typeof import("../components/apps/tickets/TicketList.vue")['default']>
     'LazyAppsUserProfileEditClientProfil': LazyComponent<typeof import("../components/apps/user-profile/EditClientProfil.vue")['default']>
     'LazyAppsUserProfileEditProfessionalProfil': LazyComponent<typeof import("../components/apps/user-profile/EditProfessionalProfil.vue")['default']>
     'LazyAppsUserProfileIntroCard': LazyComponent<typeof import("../components/apps/user-profile/IntroCard.vue")['default']>
     'LazyAppsUserProfileModalRedirection': LazyComponent<typeof import("../components/apps/user-profile/ModalRedirection.vue")['default']>
-    'LazyAppsUserProfilePhotosCard': LazyComponent<typeof import("../components/apps/user-profile/PhotosCard.vue")['default']>
-    'LazyAppsUserProfilePostListing': LazyComponent<typeof import("../components/apps/user-profile/PostListing.vue")['default']>
     'LazyAppsUserProfileBanner': LazyComponent<typeof import("../components/apps/user-profile/ProfileBanner.vue")['default']>
     'LazyAppsUserProfileBannerOne': LazyComponent<typeof import("../components/apps/user-profile/ProfileBannerOne.vue")['default']>
     'LazyAppsUserProfileProfileOneIntroCard': LazyComponent<typeof import("../components/apps/user-profile/profile-one/IntroCard.vue")['default']>
@@ -537,11 +426,11 @@ interface _GlobalComponents {
     'LazyDashboardsDashboard2ProfessionalMarketPlace': LazyComponent<typeof import("../components/dashboards/dashboard2/ProfessionalMarketPlace.vue")['default']>
     'LazyDashboardsDashboard2ProfileCards': LazyComponent<typeof import("../components/dashboards/dashboard2/ProfileCards.vue")['default']>
     'LazyDashboardsDashboard2ProfitExpanse': LazyComponent<typeof import("../components/dashboards/dashboard2/ProfitExpanse.vue")['default']>
+    'LazyDashboardsDashboard2PropositionAccepted': LazyComponent<typeof import("../components/dashboards/dashboard2/PropositionAccepted.vue")['default']>
     'LazyDashboardsDashboard2TextCards': LazyComponent<typeof import("../components/dashboards/dashboard2/TextCards.vue")['default']>
     'LazyDashboardsDashboard2TrafficDistribution': LazyComponent<typeof import("../components/dashboards/dashboard2/TrafficDistribution.vue")['default']>
     'LazyDashboardsDashboard2UpcommingSchedule': LazyComponent<typeof import("../components/dashboards/dashboard2/UpcommingSchedule.vue")['default']>
     'LazyDashboardsDashboard2WelcomeCard': LazyComponent<typeof import("../components/dashboards/dashboard2/WelcomeCard.vue")['default']>
-    'LazyDashboardsSnackbar': LazyComponent<typeof import("../components/dashboards/snackbar.vue")['default']>
     'LazyFormsFormCustomFrom': LazyComponent<typeof import("../components/forms/form-custom/CustomFrom.vue")['default']>
     'LazyFormsFormElementsAutocompleteComboBox': LazyComponent<typeof import("../components/forms/form-elements/autocomplete/ComboBox.vue")['default']>
     'LazyFormsFormElementsAutocompleteMultipleOptions': LazyComponent<typeof import("../components/forms/form-elements/autocomplete/MultipleOptions.vue")['default']>
@@ -654,9 +543,6 @@ interface _GlobalComponents {
     'LazyFrontpagesAboutUsArchivement': LazyComponent<typeof import("../components/frontpages/AboutUs/Archivement.vue")['default']>
     'LazyFrontpagesAboutUsHeroText': LazyComponent<typeof import("../components/frontpages/AboutUs/HeroText.vue")['default']>
     'LazyFrontpagesAboutUsSetupProcess': LazyComponent<typeof import("../components/frontpages/AboutUs/SetupProcess.vue")['default']>
-    'LazyFrontpagesBlogGrid': LazyComponent<typeof import("../components/frontpages/Blog/BlogGrid.vue")['default']>
-    'LazyFrontpagesBlogPagesPosts': LazyComponent<typeof import("../components/frontpages/Blog/BlogPagesPosts.vue")['default']>
-    'LazyFrontpagesBlogDetails': LazyComponent<typeof import("../components/frontpages/Blog/details/BlogDetails.vue")['default']>
     'LazyFrontpagesContactUsContactForm': LazyComponent<typeof import("../components/frontpages/ContactUs/ContactForm.vue")['default']>
     'LazyFrontpagesContactUsContactMap': LazyComponent<typeof import("../components/frontpages/ContactUs/ContactMap.vue")['default']>
     'LazyFrontpagesHomepageClientReviews': LazyComponent<typeof import("../components/frontpages/Homepage/ClientReviews.vue")['default']>
@@ -673,7 +559,6 @@ interface _GlobalComponents {
     'LazyFrontpagesHomepageProfessionalTabs': LazyComponent<typeof import("../components/frontpages/Homepage/ProfessionalTabs.vue")['default']>
     'LazyFrontpagesHomepagePurchaseTemplate': LazyComponent<typeof import("../components/frontpages/Homepage/PurchaseTemplate.vue")['default']>
     'LazyFrontpagesHomepageSecurePayment': LazyComponent<typeof import("../components/frontpages/Homepage/SecurePayment.vue")['default']>
-    'LazyFrontpagesPortfolioGalleryBox': LazyComponent<typeof import("../components/frontpages/Portfolio/GalleryBox.vue")['default']>
     'LazyFrontpagesSharedTextBannerCard': LazyComponent<typeof import("../components/frontpages/Shared/TextBannerCard.vue")['default']>
     'LazyFrontpagesLayoutAnnounceBar': LazyComponent<typeof import("../components/frontpages/layout/AnnounceBar.vue")['default']>
     'LazyFrontpagesLayoutFooter': LazyComponent<typeof import("../components/frontpages/layout/Footer.vue")['default']>
@@ -748,7 +633,6 @@ interface _GlobalComponents {
     'LazyStyleComponentsTypographyOpacity': LazyComponent<typeof import("../components/style-components/typography/Opacity.vue")['default']>
     'LazyStyleComponentsTypographyTextAlignment': LazyComponent<typeof import("../components/style-components/typography/TextAlignment.vue")['default']>
     'LazyStyleComponentsTypographyTextDecoration': LazyComponent<typeof import("../components/style-components/typography/TextDecoration.vue")['default']>
-    'LazyTableEditableTable': LazyComponent<typeof import("../components/table/EditableTable.vue")['default']>
     'LazyTableTable1': LazyComponent<typeof import("../components/table/Table1.vue")['default']>
     'LazyTableTable2': LazyComponent<typeof import("../components/table/Table2.vue")['default']>
     'LazyTableTable3': LazyComponent<typeof import("../components/table/Table3.vue")['default']>
@@ -866,20 +750,6 @@ declare module 'vue' {
   export interface GlobalComponents extends _GlobalComponents { }
 }
 
-export const AppsBlogCardGrid: typeof import("../components/apps/blog/blogCardGrid.vue")['default']
-export const AppsBlogPosts: typeof import("../components/apps/blog/blogPosts.vue")['default']
-export const AppsBlogDetailAddCommnet: typeof import("../components/apps/blog/detail/addCommnet.vue")['default']
-export const AppsBlogDetail: typeof import("../components/apps/blog/detail/blogDetail.vue")['default']
-export const AppsBlogFeatureBlogCard: typeof import("../components/apps/blog/featureBlogCard.vue")['default']
-export const AppsChatsChatDetail: typeof import("../components/apps/chats/ChatDetail.vue")['default']
-export const AppsChatsChatInfo: typeof import("../components/apps/chats/ChatInfo.vue")['default']
-export const AppsChatsChatListing: typeof import("../components/apps/chats/ChatListing.vue")['default']
-export const AppsChatsChatProfile: typeof import("../components/apps/chats/ChatProfile.vue")['default']
-export const AppsChatsChatSendMsg: typeof import("../components/apps/chats/ChatSendMsg.vue")['default']
-export const AppsEcommerceAddproductAdvanceTab: typeof import("../components/apps/ecommerce/addproduct/AdvanceTab.vue")['default']
-export const AppsEcommerceAddproductGeneralTab: typeof import("../components/apps/ecommerce/addproduct/GeneralTab.vue")['default']
-export const AppsEcommerceAddproductLeftSide: typeof import("../components/apps/ecommerce/addproduct/LeftSide.vue")['default']
-export const AppsEcommerceAddproductRightSide: typeof import("../components/apps/ecommerce/addproduct/RightSide.vue")['default']
 export const AppsEcommerceCartCheckout: typeof import("../components/apps/ecommerce/cart/CartCheckout.vue")['default']
 export const AppsEcommerceCartEmpty: typeof import("../components/apps/ecommerce/cart/CartEmpty.vue")['default']
 export const AppsEcommerceCartStepsAddAddress: typeof import("../components/apps/ecommerce/cart/steps/AddAddress.vue")['default']
@@ -891,49 +761,10 @@ export const AppsEcommerceCartStepsStepFirst: typeof import("../components/apps/
 export const AppsEcommerceCartStepsStepSecond: typeof import("../components/apps/ecommerce/cart/steps/StepSecond.vue")['default']
 export const AppsEcommerceCartStepsTestStripe: typeof import("../components/apps/ecommerce/cart/steps/TestStripe.vue")['default']
 export const AppsEcommerceCartStepsThankyou: typeof import("../components/apps/ecommerce/cart/steps/Thankyou.vue")['default']
-export const AppsEcommerceDetailProductCarousel: typeof import("../components/apps/ecommerce/detail/ProductCarousel.vue")['default']
-export const AppsEcommerceDetailProductDescription: typeof import("../components/apps/ecommerce/detail/ProductDescription.vue")['default']
-export const AppsEcommerceDetailProductDetail: typeof import("../components/apps/ecommerce/detail/ProductDetail.vue")['default']
-export const AppsEcommerceDetailProductReview: typeof import("../components/apps/ecommerce/detail/ProductReview.vue")['default']
-export const AppsEcommerceDetailProductTab: typeof import("../components/apps/ecommerce/detail/ProductTab.vue")['default']
-export const AppsEcommerceDetailRelatedProducts: typeof import("../components/apps/ecommerce/detail/RelatedProducts.vue")['default']
-export const AppsEcommerceDetailOneProducOneCurosel: typeof import("../components/apps/ecommerce/detail/one/ProducOneCurosel.vue")['default']
-export const AppsEcommerceDetailOneProductDetailOne: typeof import("../components/apps/ecommerce/detail/one/ProductDetailOne.vue")['default']
-export const AppsEcommerceDetailOneProductReviewOne: typeof import("../components/apps/ecommerce/detail/one/ProductReviewOne.vue")['default']
-export const AppsEcommerceDetailOneRelatedProductOne: typeof import("../components/apps/ecommerce/detail/one/RelatedProductOne.vue")['default']
-export const AppsEcommerceEditproductAdvanceTab: typeof import("../components/apps/ecommerce/editproduct/AdvanceTab.vue")['default']
-export const AppsEcommerceEditproductDailySalesChart: typeof import("../components/apps/ecommerce/editproduct/DailySalesChart.vue")['default']
-export const AppsEcommerceEditproductGeneralTab: typeof import("../components/apps/ecommerce/editproduct/GeneralTab.vue")['default']
-export const AppsEcommerceEditproductLeftSide: typeof import("../components/apps/ecommerce/editproduct/LeftSide.vue")['default']
-export const AppsEcommerceEditproductReviewsTab: typeof import("../components/apps/ecommerce/editproduct/ReviewsTab.vue")['default']
-export const AppsEcommerceEditproductRightSide: typeof import("../components/apps/ecommerce/editproduct/RightSide.vue")['default']
-export const AppsEcommerceListingProductEmplty: typeof import("../components/apps/ecommerce/listing/ProductEmplty.vue")['default']
-export const AppsEcommerceListingProductFilters: typeof import("../components/apps/ecommerce/listing/ProductFilters.vue")['default']
-export const AppsEcommerceListingProductItem: typeof import("../components/apps/ecommerce/listing/ProductItem.vue")['default']
-export const AppsEcommerceListingProductItemOne: typeof import("../components/apps/ecommerce/listing/ProductItemOne.vue")['default']
-export const AppsEcommerceListingProductfilterOne: typeof import("../components/apps/ecommerce/listing/ProductfilterOne.vue")['default']
-export const AppsEcommerceListingColorsOption: typeof import("../components/apps/ecommerce/listing/colorsOption")['default']
-export const AppsEmailCompose: typeof import("../components/apps/email/EmailCompose.vue")['default']
-export const AppsEmailDetail: typeof import("../components/apps/email/EmailDetail.vue")['default']
-export const AppsEmailListing: typeof import("../components/apps/email/EmailListing.vue")['default']
-export const AppsInvoiceCreate: typeof import("../components/apps/invoice/Create.vue")['default']
-export const AppsInvoiceDetail: typeof import("../components/apps/invoice/Detail.vue")['default']
-export const AppsInvoiceEdit: typeof import("../components/apps/invoice/Edit.vue")['default']
-export const AppsInvoiceList: typeof import("../components/apps/invoice/List.vue")['default']
-export const AppsKanbanAddTask: typeof import("../components/apps/kanban/AddTask.vue")['default']
-export const AppsKanbanTaskCard: typeof import("../components/apps/kanban/TaskCard.vue")['default']
-export const AppsKanbanTaskColumn: typeof import("../components/apps/kanban/TaskColumn.vue")['default']
-export const AppsKanbanTaskItemCard: typeof import("../components/apps/kanban/TaskItemCard.vue")['default']
-export const AppsNotesAddNote: typeof import("../components/apps/notes/AddNote.vue")['default']
-export const AppsNotesContent: typeof import("../components/apps/notes/NotesContent.vue")['default']
-export const AppsNotesListing: typeof import("../components/apps/notes/NotesListing.vue")['default']
-export const AppsTicketsTicketList: typeof import("../components/apps/tickets/TicketList.vue")['default']
 export const AppsUserProfileEditClientProfil: typeof import("../components/apps/user-profile/EditClientProfil.vue")['default']
 export const AppsUserProfileEditProfessionalProfil: typeof import("../components/apps/user-profile/EditProfessionalProfil.vue")['default']
 export const AppsUserProfileIntroCard: typeof import("../components/apps/user-profile/IntroCard.vue")['default']
 export const AppsUserProfileModalRedirection: typeof import("../components/apps/user-profile/ModalRedirection.vue")['default']
-export const AppsUserProfilePhotosCard: typeof import("../components/apps/user-profile/PhotosCard.vue")['default']
-export const AppsUserProfilePostListing: typeof import("../components/apps/user-profile/PostListing.vue")['default']
 export const AppsUserProfileBanner: typeof import("../components/apps/user-profile/ProfileBanner.vue")['default']
 export const AppsUserProfileBannerOne: typeof import("../components/apps/user-profile/ProfileBannerOne.vue")['default']
 export const AppsUserProfileProfileOneIntroCard: typeof import("../components/apps/user-profile/profile-one/IntroCard.vue")['default']
@@ -967,11 +798,11 @@ export const DashboardsDashboard2ProductSales: typeof import("../components/dash
 export const DashboardsDashboard2ProfessionalMarketPlace: typeof import("../components/dashboards/dashboard2/ProfessionalMarketPlace.vue")['default']
 export const DashboardsDashboard2ProfileCards: typeof import("../components/dashboards/dashboard2/ProfileCards.vue")['default']
 export const DashboardsDashboard2ProfitExpanse: typeof import("../components/dashboards/dashboard2/ProfitExpanse.vue")['default']
+export const DashboardsDashboard2PropositionAccepted: typeof import("../components/dashboards/dashboard2/PropositionAccepted.vue")['default']
 export const DashboardsDashboard2TextCards: typeof import("../components/dashboards/dashboard2/TextCards.vue")['default']
 export const DashboardsDashboard2TrafficDistribution: typeof import("../components/dashboards/dashboard2/TrafficDistribution.vue")['default']
 export const DashboardsDashboard2UpcommingSchedule: typeof import("../components/dashboards/dashboard2/UpcommingSchedule.vue")['default']
 export const DashboardsDashboard2WelcomeCard: typeof import("../components/dashboards/dashboard2/WelcomeCard.vue")['default']
-export const DashboardsSnackbar: typeof import("../components/dashboards/snackbar.vue")['default']
 export const FormsFormCustomFrom: typeof import("../components/forms/form-custom/CustomFrom.vue")['default']
 export const FormsFormElementsAutocompleteComboBox: typeof import("../components/forms/form-elements/autocomplete/ComboBox.vue")['default']
 export const FormsFormElementsAutocompleteMultipleOptions: typeof import("../components/forms/form-elements/autocomplete/MultipleOptions.vue")['default']
@@ -1084,9 +915,6 @@ export const FormsPluginsEditorMenubar: typeof import("../components/forms/plugi
 export const FrontpagesAboutUsArchivement: typeof import("../components/frontpages/AboutUs/Archivement.vue")['default']
 export const FrontpagesAboutUsHeroText: typeof import("../components/frontpages/AboutUs/HeroText.vue")['default']
 export const FrontpagesAboutUsSetupProcess: typeof import("../components/frontpages/AboutUs/SetupProcess.vue")['default']
-export const FrontpagesBlogGrid: typeof import("../components/frontpages/Blog/BlogGrid.vue")['default']
-export const FrontpagesBlogPagesPosts: typeof import("../components/frontpages/Blog/BlogPagesPosts.vue")['default']
-export const FrontpagesBlogDetails: typeof import("../components/frontpages/Blog/details/BlogDetails.vue")['default']
 export const FrontpagesContactUsContactForm: typeof import("../components/frontpages/ContactUs/ContactForm.vue")['default']
 export const FrontpagesContactUsContactMap: typeof import("../components/frontpages/ContactUs/ContactMap.vue")['default']
 export const FrontpagesHomepageClientReviews: typeof import("../components/frontpages/Homepage/ClientReviews.vue")['default']
@@ -1103,7 +931,6 @@ export const FrontpagesHomepagePackages: typeof import("../components/frontpages
 export const FrontpagesHomepageProfessionalTabs: typeof import("../components/frontpages/Homepage/ProfessionalTabs.vue")['default']
 export const FrontpagesHomepagePurchaseTemplate: typeof import("../components/frontpages/Homepage/PurchaseTemplate.vue")['default']
 export const FrontpagesHomepageSecurePayment: typeof import("../components/frontpages/Homepage/SecurePayment.vue")['default']
-export const FrontpagesPortfolioGalleryBox: typeof import("../components/frontpages/Portfolio/GalleryBox.vue")['default']
 export const FrontpagesSharedTextBannerCard: typeof import("../components/frontpages/Shared/TextBannerCard.vue")['default']
 export const FrontpagesLayoutAnnounceBar: typeof import("../components/frontpages/layout/AnnounceBar.vue")['default']
 export const FrontpagesLayoutFooter: typeof import("../components/frontpages/layout/Footer.vue")['default']
@@ -1178,7 +1005,6 @@ export const StyleComponentsTypographyHeading: typeof import("../components/styl
 export const StyleComponentsTypographyOpacity: typeof import("../components/style-components/typography/Opacity.vue")['default']
 export const StyleComponentsTypographyTextAlignment: typeof import("../components/style-components/typography/TextAlignment.vue")['default']
 export const StyleComponentsTypographyTextDecoration: typeof import("../components/style-components/typography/TextDecoration.vue")['default']
-export const TableEditableTable: typeof import("../components/table/EditableTable.vue")['default']
 export const TableTable1: typeof import("../components/table/Table1.vue")['default']
 export const TableTable2: typeof import("../components/table/Table2.vue")['default']
 export const TableTable3: typeof import("../components/table/Table3.vue")['default']
@@ -1290,20 +1116,6 @@ export const Html: typeof import("../node_modules/nuxt/dist/head/runtime/compone
 export const Body: typeof import("../node_modules/nuxt/dist/head/runtime/components")['Body']
 export const NuxtIsland: typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']
 export const NuxtRouteAnnouncer: typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']
-export const LazyAppsBlogCardGrid: LazyComponent<typeof import("../components/apps/blog/blogCardGrid.vue")['default']>
-export const LazyAppsBlogPosts: LazyComponent<typeof import("../components/apps/blog/blogPosts.vue")['default']>
-export const LazyAppsBlogDetailAddCommnet: LazyComponent<typeof import("../components/apps/blog/detail/addCommnet.vue")['default']>
-export const LazyAppsBlogDetail: LazyComponent<typeof import("../components/apps/blog/detail/blogDetail.vue")['default']>
-export const LazyAppsBlogFeatureBlogCard: LazyComponent<typeof import("../components/apps/blog/featureBlogCard.vue")['default']>
-export const LazyAppsChatsChatDetail: LazyComponent<typeof import("../components/apps/chats/ChatDetail.vue")['default']>
-export const LazyAppsChatsChatInfo: LazyComponent<typeof import("../components/apps/chats/ChatInfo.vue")['default']>
-export const LazyAppsChatsChatListing: LazyComponent<typeof import("../components/apps/chats/ChatListing.vue")['default']>
-export const LazyAppsChatsChatProfile: LazyComponent<typeof import("../components/apps/chats/ChatProfile.vue")['default']>
-export const LazyAppsChatsChatSendMsg: LazyComponent<typeof import("../components/apps/chats/ChatSendMsg.vue")['default']>
-export const LazyAppsEcommerceAddproductAdvanceTab: LazyComponent<typeof import("../components/apps/ecommerce/addproduct/AdvanceTab.vue")['default']>
-export const LazyAppsEcommerceAddproductGeneralTab: LazyComponent<typeof import("../components/apps/ecommerce/addproduct/GeneralTab.vue")['default']>
-export const LazyAppsEcommerceAddproductLeftSide: LazyComponent<typeof import("../components/apps/ecommerce/addproduct/LeftSide.vue")['default']>
-export const LazyAppsEcommerceAddproductRightSide: LazyComponent<typeof import("../components/apps/ecommerce/addproduct/RightSide.vue")['default']>
 export const LazyAppsEcommerceCartCheckout: LazyComponent<typeof import("../components/apps/ecommerce/cart/CartCheckout.vue")['default']>
 export const LazyAppsEcommerceCartEmpty: LazyComponent<typeof import("../components/apps/ecommerce/cart/CartEmpty.vue")['default']>
 export const LazyAppsEcommerceCartStepsAddAddress: LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/AddAddress.vue")['default']>
@@ -1315,49 +1127,10 @@ export const LazyAppsEcommerceCartStepsStepFirst: LazyComponent<typeof import(".
 export const LazyAppsEcommerceCartStepsStepSecond: LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/StepSecond.vue")['default']>
 export const LazyAppsEcommerceCartStepsTestStripe: LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/TestStripe.vue")['default']>
 export const LazyAppsEcommerceCartStepsThankyou: LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/Thankyou.vue")['default']>
-export const LazyAppsEcommerceDetailProductCarousel: LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductCarousel.vue")['default']>
-export const LazyAppsEcommerceDetailProductDescription: LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductDescription.vue")['default']>
-export const LazyAppsEcommerceDetailProductDetail: LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductDetail.vue")['default']>
-export const LazyAppsEcommerceDetailProductReview: LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductReview.vue")['default']>
-export const LazyAppsEcommerceDetailProductTab: LazyComponent<typeof import("../components/apps/ecommerce/detail/ProductTab.vue")['default']>
-export const LazyAppsEcommerceDetailRelatedProducts: LazyComponent<typeof import("../components/apps/ecommerce/detail/RelatedProducts.vue")['default']>
-export const LazyAppsEcommerceDetailOneProducOneCurosel: LazyComponent<typeof import("../components/apps/ecommerce/detail/one/ProducOneCurosel.vue")['default']>
-export const LazyAppsEcommerceDetailOneProductDetailOne: LazyComponent<typeof import("../components/apps/ecommerce/detail/one/ProductDetailOne.vue")['default']>
-export const LazyAppsEcommerceDetailOneProductReviewOne: LazyComponent<typeof import("../components/apps/ecommerce/detail/one/ProductReviewOne.vue")['default']>
-export const LazyAppsEcommerceDetailOneRelatedProductOne: LazyComponent<typeof import("../components/apps/ecommerce/detail/one/RelatedProductOne.vue")['default']>
-export const LazyAppsEcommerceEditproductAdvanceTab: LazyComponent<typeof import("../components/apps/ecommerce/editproduct/AdvanceTab.vue")['default']>
-export const LazyAppsEcommerceEditproductDailySalesChart: LazyComponent<typeof import("../components/apps/ecommerce/editproduct/DailySalesChart.vue")['default']>
-export const LazyAppsEcommerceEditproductGeneralTab: LazyComponent<typeof import("../components/apps/ecommerce/editproduct/GeneralTab.vue")['default']>
-export const LazyAppsEcommerceEditproductLeftSide: LazyComponent<typeof import("../components/apps/ecommerce/editproduct/LeftSide.vue")['default']>
-export const LazyAppsEcommerceEditproductReviewsTab: LazyComponent<typeof import("../components/apps/ecommerce/editproduct/ReviewsTab.vue")['default']>
-export const LazyAppsEcommerceEditproductRightSide: LazyComponent<typeof import("../components/apps/ecommerce/editproduct/RightSide.vue")['default']>
-export const LazyAppsEcommerceListingProductEmplty: LazyComponent<typeof import("../components/apps/ecommerce/listing/ProductEmplty.vue")['default']>
-export const LazyAppsEcommerceListingProductFilters: LazyComponent<typeof import("../components/apps/ecommerce/listing/ProductFilters.vue")['default']>
-export const LazyAppsEcommerceListingProductItem: LazyComponent<typeof import("../components/apps/ecommerce/listing/ProductItem.vue")['default']>
-export const LazyAppsEcommerceListingProductItemOne: LazyComponent<typeof import("../components/apps/ecommerce/listing/ProductItemOne.vue")['default']>
-export const LazyAppsEcommerceListingProductfilterOne: LazyComponent<typeof import("../components/apps/ecommerce/listing/ProductfilterOne.vue")['default']>
-export const LazyAppsEcommerceListingColorsOption: LazyComponent<typeof import("../components/apps/ecommerce/listing/colorsOption")['default']>
-export const LazyAppsEmailCompose: LazyComponent<typeof import("../components/apps/email/EmailCompose.vue")['default']>
-export const LazyAppsEmailDetail: LazyComponent<typeof import("../components/apps/email/EmailDetail.vue")['default']>
-export const LazyAppsEmailListing: LazyComponent<typeof import("../components/apps/email/EmailListing.vue")['default']>
-export const LazyAppsInvoiceCreate: LazyComponent<typeof import("../components/apps/invoice/Create.vue")['default']>
-export const LazyAppsInvoiceDetail: LazyComponent<typeof import("../components/apps/invoice/Detail.vue")['default']>
-export const LazyAppsInvoiceEdit: LazyComponent<typeof import("../components/apps/invoice/Edit.vue")['default']>
-export const LazyAppsInvoiceList: LazyComponent<typeof import("../components/apps/invoice/List.vue")['default']>
-export const LazyAppsKanbanAddTask: LazyComponent<typeof import("../components/apps/kanban/AddTask.vue")['default']>
-export const LazyAppsKanbanTaskCard: LazyComponent<typeof import("../components/apps/kanban/TaskCard.vue")['default']>
-export const LazyAppsKanbanTaskColumn: LazyComponent<typeof import("../components/apps/kanban/TaskColumn.vue")['default']>
-export const LazyAppsKanbanTaskItemCard: LazyComponent<typeof import("../components/apps/kanban/TaskItemCard.vue")['default']>
-export const LazyAppsNotesAddNote: LazyComponent<typeof import("../components/apps/notes/AddNote.vue")['default']>
-export const LazyAppsNotesContent: LazyComponent<typeof import("../components/apps/notes/NotesContent.vue")['default']>
-export const LazyAppsNotesListing: LazyComponent<typeof import("../components/apps/notes/NotesListing.vue")['default']>
-export const LazyAppsTicketsTicketList: LazyComponent<typeof import("../components/apps/tickets/TicketList.vue")['default']>
 export const LazyAppsUserProfileEditClientProfil: LazyComponent<typeof import("../components/apps/user-profile/EditClientProfil.vue")['default']>
 export const LazyAppsUserProfileEditProfessionalProfil: LazyComponent<typeof import("../components/apps/user-profile/EditProfessionalProfil.vue")['default']>
 export const LazyAppsUserProfileIntroCard: LazyComponent<typeof import("../components/apps/user-profile/IntroCard.vue")['default']>
 export const LazyAppsUserProfileModalRedirection: LazyComponent<typeof import("../components/apps/user-profile/ModalRedirection.vue")['default']>
-export const LazyAppsUserProfilePhotosCard: LazyComponent<typeof import("../components/apps/user-profile/PhotosCard.vue")['default']>
-export const LazyAppsUserProfilePostListing: LazyComponent<typeof import("../components/apps/user-profile/PostListing.vue")['default']>
 export const LazyAppsUserProfileBanner: LazyComponent<typeof import("../components/apps/user-profile/ProfileBanner.vue")['default']>
 export const LazyAppsUserProfileBannerOne: LazyComponent<typeof import("../components/apps/user-profile/ProfileBannerOne.vue")['default']>
 export const LazyAppsUserProfileProfileOneIntroCard: LazyComponent<typeof import("../components/apps/user-profile/profile-one/IntroCard.vue")['default']>
@@ -1391,11 +1164,11 @@ export const LazyDashboardsDashboard2ProductSales: LazyComponent<typeof import("
 export const LazyDashboardsDashboard2ProfessionalMarketPlace: LazyComponent<typeof import("../components/dashboards/dashboard2/ProfessionalMarketPlace.vue")['default']>
 export const LazyDashboardsDashboard2ProfileCards: LazyComponent<typeof import("../components/dashboards/dashboard2/ProfileCards.vue")['default']>
 export const LazyDashboardsDashboard2ProfitExpanse: LazyComponent<typeof import("../components/dashboards/dashboard2/ProfitExpanse.vue")['default']>
+export const LazyDashboardsDashboard2PropositionAccepted: LazyComponent<typeof import("../components/dashboards/dashboard2/PropositionAccepted.vue")['default']>
 export const LazyDashboardsDashboard2TextCards: LazyComponent<typeof import("../components/dashboards/dashboard2/TextCards.vue")['default']>
 export const LazyDashboardsDashboard2TrafficDistribution: LazyComponent<typeof import("../components/dashboards/dashboard2/TrafficDistribution.vue")['default']>
 export const LazyDashboardsDashboard2UpcommingSchedule: LazyComponent<typeof import("../components/dashboards/dashboard2/UpcommingSchedule.vue")['default']>
 export const LazyDashboardsDashboard2WelcomeCard: LazyComponent<typeof import("../components/dashboards/dashboard2/WelcomeCard.vue")['default']>
-export const LazyDashboardsSnackbar: LazyComponent<typeof import("../components/dashboards/snackbar.vue")['default']>
 export const LazyFormsFormCustomFrom: LazyComponent<typeof import("../components/forms/form-custom/CustomFrom.vue")['default']>
 export const LazyFormsFormElementsAutocompleteComboBox: LazyComponent<typeof import("../components/forms/form-elements/autocomplete/ComboBox.vue")['default']>
 export const LazyFormsFormElementsAutocompleteMultipleOptions: LazyComponent<typeof import("../components/forms/form-elements/autocomplete/MultipleOptions.vue")['default']>
@@ -1508,9 +1281,6 @@ export const LazyFormsPluginsEditorMenubar: LazyComponent<typeof import("../comp
 export const LazyFrontpagesAboutUsArchivement: LazyComponent<typeof import("../components/frontpages/AboutUs/Archivement.vue")['default']>
 export const LazyFrontpagesAboutUsHeroText: LazyComponent<typeof import("../components/frontpages/AboutUs/HeroText.vue")['default']>
 export const LazyFrontpagesAboutUsSetupProcess: LazyComponent<typeof import("../components/frontpages/AboutUs/SetupProcess.vue")['default']>
-export const LazyFrontpagesBlogGrid: LazyComponent<typeof import("../components/frontpages/Blog/BlogGrid.vue")['default']>
-export const LazyFrontpagesBlogPagesPosts: LazyComponent<typeof import("../components/frontpages/Blog/BlogPagesPosts.vue")['default']>
-export const LazyFrontpagesBlogDetails: LazyComponent<typeof import("../components/frontpages/Blog/details/BlogDetails.vue")['default']>
 export const LazyFrontpagesContactUsContactForm: LazyComponent<typeof import("../components/frontpages/ContactUs/ContactForm.vue")['default']>
 export const LazyFrontpagesContactUsContactMap: LazyComponent<typeof import("../components/frontpages/ContactUs/ContactMap.vue")['default']>
 export const LazyFrontpagesHomepageClientReviews: LazyComponent<typeof import("../components/frontpages/Homepage/ClientReviews.vue")['default']>
@@ -1527,7 +1297,6 @@ export const LazyFrontpagesHomepagePackages: LazyComponent<typeof import("../com
 export const LazyFrontpagesHomepageProfessionalTabs: LazyComponent<typeof import("../components/frontpages/Homepage/ProfessionalTabs.vue")['default']>
 export const LazyFrontpagesHomepagePurchaseTemplate: LazyComponent<typeof import("../components/frontpages/Homepage/PurchaseTemplate.vue")['default']>
 export const LazyFrontpagesHomepageSecurePayment: LazyComponent<typeof import("../components/frontpages/Homepage/SecurePayment.vue")['default']>
-export const LazyFrontpagesPortfolioGalleryBox: LazyComponent<typeof import("../components/frontpages/Portfolio/GalleryBox.vue")['default']>
 export const LazyFrontpagesSharedTextBannerCard: LazyComponent<typeof import("../components/frontpages/Shared/TextBannerCard.vue")['default']>
 export const LazyFrontpagesLayoutAnnounceBar: LazyComponent<typeof import("../components/frontpages/layout/AnnounceBar.vue")['default']>
 export const LazyFrontpagesLayoutFooter: LazyComponent<typeof import("../components/frontpages/layout/Footer.vue")['default']>
@@ -1602,7 +1371,6 @@ export const LazyStyleComponentsTypographyHeading: LazyComponent<typeof import("
 export const LazyStyleComponentsTypographyOpacity: LazyComponent<typeof import("../components/style-components/typography/Opacity.vue")['default']>
 export const LazyStyleComponentsTypographyTextAlignment: LazyComponent<typeof import("../components/style-components/typography/TextAlignment.vue")['default']>
 export const LazyStyleComponentsTypographyTextDecoration: LazyComponent<typeof import("../components/style-components/typography/TextDecoration.vue")['default']>
-export const LazyTableEditableTable: LazyComponent<typeof import("../components/table/EditableTable.vue")['default']>
 export const LazyTableTable1: LazyComponent<typeof import("../components/table/Table1.vue")['default']>
 export const LazyTableTable2: LazyComponent<typeof import("../components/table/Table2.vue")['default']>
 export const LazyTableTable3: LazyComponent<typeof import("../components/table/Table3.vue")['default']>

@@ -47,6 +47,7 @@ export const useProfessionalProfile = () => {
         return data;
       }
     } catch (error: unknown) {
+      console.log(error, 'getProfessionalProfileError');
       addError({ message: 'Une erreur est survenue lors de la récupération du profil.' });
     }
   };

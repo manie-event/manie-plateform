@@ -50,6 +50,7 @@ declare global {
   const humanizeEventName: typeof import('../../utils/form-utils')['humanizeEventName']
   const inject: typeof import('vue')['inject']
   const injectHead: typeof import('../../node_modules/nuxt/dist/app/composables/head')['injectHead']
+  const isEventDone: typeof import('../../utils/date-utils')['isEventDone']
   const isNuxtError: typeof import('../../node_modules/nuxt/dist/app/composables/error')['isNuxtError']
   const isPrerendered: typeof import('../../node_modules/nuxt/dist/app/composables/payload')['isPrerendered']
   const isProxy: typeof import('vue')['isProxy']
@@ -90,6 +91,7 @@ declare global {
   const preloadPayload: typeof import('../../node_modules/nuxt/dist/app/composables/payload')['preloadPayload']
   const preloadRouteComponents: typeof import('../../node_modules/nuxt/dist/app/composables/preload')['preloadRouteComponents']
   const prerenderRoutes: typeof import('../../node_modules/nuxt/dist/app/composables/ssr')['prerenderRoutes']
+  const propositionStore: typeof import('../../stores/propositionStore')['propositionStore']
   const provide: typeof import('vue')['provide']
   const proxyRefs: typeof import('vue')['proxyRefs']
   const reactive: typeof import('vue')['reactive']
@@ -123,7 +125,6 @@ declare global {
   const useAuthCookies: typeof import('../../composables/UseAuthCookies')['useAuthCookies']
   const useAuthentification: typeof import('../../composables/UseAuthentification')['useAuthentification']
   const useCartStore: typeof import('../../stores/cartStore')['useCartStore']
-  const useCatalogStore: typeof import('../../stores/catalogue')['useCatalogStore']
   const useContactService: typeof import('../../composables/UseContactService')['useContactService']
   const useCookie: typeof import('../../node_modules/nuxt/dist/app/composables/cookie')['useCookie']
   const useCssModule: typeof import('vue')['useCssModule']
@@ -264,6 +265,7 @@ declare module 'vue' {
     readonly humanizeEventName: UnwrapRef<typeof import('../../utils/form-utils')['humanizeEventName']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
     readonly injectHead: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/head')['injectHead']>
+    readonly isEventDone: UnwrapRef<typeof import('../../utils/date-utils')['isEventDone']>
     readonly isNuxtError: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/error')['isNuxtError']>
     readonly isPrerendered: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/payload')['isPrerendered']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
@@ -304,6 +306,7 @@ declare module 'vue' {
     readonly preloadPayload: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/payload')['preloadPayload']>
     readonly preloadRouteComponents: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/preload')['preloadRouteComponents']>
     readonly prerenderRoutes: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/ssr')['prerenderRoutes']>
+    readonly propositionStore: UnwrapRef<typeof import('../../stores/propositionStore')['propositionStore']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
     readonly proxyRefs: UnwrapRef<typeof import('vue')['proxyRefs']>
     readonly reactive: UnwrapRef<typeof import('vue')['reactive']>
@@ -337,7 +340,6 @@ declare module 'vue' {
     readonly useAuthCookies: UnwrapRef<typeof import('../../composables/UseAuthCookies')['useAuthCookies']>
     readonly useAuthentification: UnwrapRef<typeof import('../../composables/UseAuthentification')['useAuthentification']>
     readonly useCartStore: UnwrapRef<typeof import('../../stores/cartStore')['useCartStore']>
-    readonly useCatalogStore: UnwrapRef<typeof import('../../stores/catalogue')['useCatalogStore']>
     readonly useContactService: UnwrapRef<typeof import('../../composables/UseContactService')['useContactService']>
     readonly useCookie: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/cookie')['useCookie']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>

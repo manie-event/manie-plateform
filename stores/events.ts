@@ -24,8 +24,6 @@ export const eventsStore = defineStore('eventsStore', () => {
 
   const setServicesFiltered = (newServicesFiltered: ServicesFiltered[]) => {
     servicesFiltered.value.push(...newServicesFiltered);
-
-    console.log(servicesFiltered.value, 'SERVICEFILTERED');
   };
 
   return {
