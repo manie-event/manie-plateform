@@ -350,7 +350,6 @@ const modifyProfile = async (newValues: ProfessionalProfile) => {
       minimumReservationPeriod: minimumDaysReservation.value,
     };
     const response = await patchProfessionnalProfileDetails(payload);
-    console.log(response, 'RESPINSE MODIFY');
 
     if (response.message === 'Professional updated') {
       addSuccess('Votre profil a été modifié avec success');

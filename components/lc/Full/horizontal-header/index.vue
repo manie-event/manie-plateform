@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { useEcomStore } from '@/stores/apps/eCommerce';
 import { useCustomizerStore } from '@/stores/customizer';
-import { computed, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 // Icon Imports
 // dropdown imports
 import { Icon } from '@iconify/vue';
@@ -17,10 +16,6 @@ watch(priority, (newPriority) => {
   priority.value = newPriority;
 });
 // count items
-const store = useEcomStore();
-const getCart = computed(() => {
-  return store.cart;
-});
 </script>
 
 <template>

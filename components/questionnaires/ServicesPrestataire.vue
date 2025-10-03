@@ -325,10 +325,6 @@ const updatePayloadArray = () => {
 
 const submitAllQuestionnaires = async () => {
   // Debug pour comprendre le problème
-  console.log('=== DEBUG SUBMIT ===');
-  console.log('questionnaires:', questionnaires.value);
-  console.log('professionalUser.value?.uuid:', professionalUser.value?.uuid);
-  console.log('payloadArray avant updatePayloadArray:', payloadArray.value);
 
   // Forcer la mise à jour du payload
   updatePayloadArray();

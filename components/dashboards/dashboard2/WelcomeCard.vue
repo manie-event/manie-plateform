@@ -24,10 +24,17 @@
 </template>
 <script setup lang="ts">
 import ProfessionalMarketPlace from '@/components/dashboards/dashboard2/ProfessionalMarketPlace.vue';
+import { useEventServiceProposition } from '@/composables/event-service-propositions/UseEventServiceProposition';
+
 const { user, professionalUser } = storeToRefs(useUserStore());
+const { getServicePropositionForProfessional } = useEventServiceProposition();
 const username = localStorage.getItem('username');
 
 const openMarketModal = ref(false);
+
+onMounted(async () => {
+  getServicePropositionForProfessional();
+});
 </script>
 
 <style scoped>

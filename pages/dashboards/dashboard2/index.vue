@@ -2,7 +2,6 @@
 import BaseEmptyState from '@/components/common/BaseEmptyState.vue';
 import FigmaCard from '@/components/dashboards/dashboard2/FigmaCard.vue';
 import PayingTable from '@/components/dashboards/dashboard2/PayingTable.vue';
-import ProductSales from '@/components/dashboards/dashboard2/ProductSales.vue';
 import ProfileCards from '@/components/dashboards/dashboard2/ProfileCards.vue';
 import ProfitExpanse from '@/components/dashboards/dashboard2/ProfitExpanse.vue';
 import TextCards from '@/components/dashboards/dashboard2/TextCards.vue';

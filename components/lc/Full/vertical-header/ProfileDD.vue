@@ -22,24 +22,17 @@ const username = localStorage.getItem('username');
 const getclientName = ref();
 
 const getNameDependingOnCategory = computed(() => {
-  // console.log(isProfessional, 'isProfessional');
-  // console.log(isProfileCreated.value, 'isProfileCreated');
-
   if (isProfessional && isProfileCreated.value) {
     return professionalUser.value?.name;
   }
 
-  // Sinon, si c'est un client et qu'on a un profil client sauvegardé
   if (clientProfile) {
-    console.log(clientProfile, 'clientProfile');
-
     getclientName.value = JSON.parse(clientProfile);
     return getclientName.value.username;
   }
 
   console.log(username, 'user.value?.username');
 
-  // Par défaut, on retombe sur l'user classique
   return username;
 });
 
