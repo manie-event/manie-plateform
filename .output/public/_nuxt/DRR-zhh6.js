@@ -1,1 +1,0 @@
-import{E as c,k as s}from"./DRerZXE8.js";const S=c("eventsStore",()=>{const r=s([]),n=s(),o=s([]),t=s([]);return{events:r,answers:n,sectors:o,servicesFiltered:t,setEventsByOrganisator:e=>{r.value=e},setSectors:e=>{o.value.push(...e)},setServicesFiltered:e=>{t.value.push(...e),console.log(t.value,"SERVICEFILTERED")},setQuestionnaireAnswers:e=>{n.value=e}}});export{S as e};

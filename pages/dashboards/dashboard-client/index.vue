@@ -7,7 +7,6 @@ import Payments from '@/components/dashboards/dashboard-client/Payments.vue';
 import Products from '@/components/dashboards/dashboard-client/ProductsChart.vue';
 import ProductsTable from '@/components/dashboards/dashboard-client/ProductsTable.vue';
 import VisitFromUsa from '@/components/dashboards/dashboard-client/VisitFromUsa.vue';
-import Snackbar from '@/components/dashboards/snackbar.vue';
 import { useClientProfil } from '@/composables/client-user/UseClientProfil';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
 import BaseEmptyState from '~/components/common/BaseEmptyState.vue';
@@ -34,7 +33,6 @@ onMounted(async () => {
 
 <template>
   <!-- Loader -->
-  <Snackbar />
   <!-- Loader -->
   <!-- Section principale si profil créé -->
   <v-row v-if="isProfileCreated">
