@@ -35,31 +35,31 @@ const getStatusName = (status: string) => {
 const getDate = (date: string[]) => formatDate(date);
 
 onMounted(() => {
-  // setPropositions({
-  //   serviceUuid: '0a4a35ef-f705-405f-972f-cfd143f69a71',
-  //   keywordsUuid: [
-  //     '4c188e62-61ea-49ef-8257-8e06c5d4988a',
-  //     '44a6b945-edbc-4316-8a11-cf3e275dc20d',
-  //     'e8453a9b-4912-428e-8433-5566d253cb3d',
-  //     '9f9f76e3-ca45-4ac0-bab4-bdec9268b1b6',
-  //   ],
-  //   budget: 2500,
-  //   location: 'auvergne-rhone-alpes',
-  //   date: ['2025-09-01', '2025-10-06'],
-  //   people: '50',
-  //   name: 'r',
-  //   theme: null,
-  //   duration: null,
-  //   organized_for: null,
-  //   group_type: null,
-  //   professionalServiceUuid: 'f5fc318b-c803-4aba-98d9-f39aedf8b512',
-  //   proposition: {
-  //     uuid: '0bd4bb88-e9dd-44a7-bb6b-38247217d835',
-  //     status: 'pending',
-  //     professionalMessage: 'test',
-  //     tokens: 1,
-  //   },
-  // });
+  setPropositions({
+    serviceUuid: '0a4a35ef-f705-405f-972f-cfd143f69a71',
+    keywordsUuid: [
+      '4c188e62-61ea-49ef-8257-8e06c5d4988a',
+      '44a6b945-edbc-4316-8a11-cf3e275dc20d',
+      'e8453a9b-4912-428e-8433-5566d253cb3d',
+      '9f9f76e3-ca45-4ac0-bab4-bdec9268b1b6',
+    ],
+    budget: 2500,
+    location: 'auvergne-rhone-alpes',
+    date: ['2025-09-01', '2025-10-06'],
+    people: '50',
+    name: '30 ans Léo',
+    theme: null,
+    duration: null,
+    organized_for: null,
+    group_type: null,
+    professionalServiceUuid: 'f5fc318b-c803-4aba-98d9-f39aedf8b512',
+    proposition: {
+      uuid: '0bd4bb88-e9dd-44a7-bb6b-38247217d835',
+      status: 'pending',
+      professionalMessage: 'test',
+      tokens: 1,
+    },
+  });
   console.log('propositionsSelected', propositionsSelected.value);
 });
 </script>
@@ -76,14 +76,18 @@ onMounted(() => {
           <template v-slot:default>
             <thead>
               <tr>
+                <!-- A voir pour changer avec nom de la personne -->
                 <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
-                  Service vendu
+                  Nom de l'évènement
                 </th>
                 <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
                   Date de la prestation
                 </th>
                 <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
                   Localisation
+                </th>
+                <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
+                  Nombre d'invités
                 </th>
                 <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
                   Status de la demande
@@ -95,16 +99,10 @@ onMounted(() => {
               <tr v-for="item in propositionsSelected" :key="item.id" class="month-item">
                 <td>
                   <div class="d-flex align-center">
-                    <v-avatar size="50">
-                      <img :src="item.location" alt="user" width="50" />
-                    </v-avatar>
-                    <div class="mx-4">
+                    <div class="mr-4">
                       <h4 class="text-subtitle-1 font-weight-bold text-no-wrap text-grey200">
                         {{ item.name }}
                       </h4>
-                      <h6 class="text-subtitle-1 text-no-wrap font-weight-medium mt-1 text-grey200">
-                        {{ item.people }}
-                      </h6>
                     </div>
                   </div>
                 </td>
@@ -116,6 +114,11 @@ onMounted(() => {
                 <td>
                   <h4 class="text-subtitle-1 text-no-wrap font-weight-medium text-grey200">
                     {{ item.location.toUpperCase() }}
+                  </h4>
+                </td>
+                <td>
+                  <h4 class="text-subtitle-1 text-no-wrap font-weight-medium text-grey200">
+                    <span>{{ item.people }} pers.</span>
                   </h4>
                 </td>
                 <td>
