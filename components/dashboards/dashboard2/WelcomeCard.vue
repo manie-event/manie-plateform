@@ -12,8 +12,7 @@
         size="large"
         @click="openMarketModal = true"
       >
-        {{ openMarketModal }}
-        visit now
+        Découvrir les annonces
       </v-btn>
     </v-card-text>
     <img src="/images/backgrounds/school.png" class="bg-img-1 mt-sm-0 mt-sm-n10" />

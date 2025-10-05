@@ -3,7 +3,7 @@
     <v-card>
       <v-card-title class="text-h5">Professional Market Place</v-card-title>
       <v-card-text>
-        <div v-if="paginatedEvents.length > 0">
+        <div v-if="props.propositionFiltered && paginatedEvents.length">
           <v-card v-for="proposition in paginatedEvents">
             <v-card-text>
               {{ proposition }}
@@ -13,8 +13,21 @@
             </v-card-text>
           </v-card>
         </div>
-        <div v-else>
-          <p>Aucune event aujourd'hui</p>
+        <div v-else class="position-relative">
+          <v-col cols="12" class="mt-6">
+            <BaseEmptyState
+              :style="{
+                position: 'relative',
+              }"
+            >
+              <template #image>
+                <img :src="EmptyState" alt="Empty State" />
+              </template>
+              <template #description>
+                <p class="text-subtitle-1">Aucune nouvelle annonce qui correspond à vos critères</p>
+              </template>
+            </BaseEmptyState>
+          </v-col>
         </div>
       </v-card-text>
       <div class="text-center">
@@ -28,7 +41,7 @@
       </div>
       <v-card-actions>
         <v-spacer />
-        <v-btn text @click="openPropositionPro = false">Close</v-btn>
+        <v-btn text @click="openPropositionPro = false">Fermer</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -38,8 +51,11 @@
 </template>
 
 <script setup lang="ts">
+import BaseEmptyState from '@/components/common/BaseEmptyState.vue';
+import EmptyState from '@/public/images/empty-state/profil-vide.png';
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
 import PropositionAccepted from './PropositionAccepted.vue';
+
 const props = defineProps<{ propositionFiltered: EventModelForProposition[] }>();
 const openPropositionPro = defineModel<boolean>('openPropositionPro', { default: false });
 
