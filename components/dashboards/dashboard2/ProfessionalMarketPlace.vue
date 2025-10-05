@@ -13,7 +13,10 @@
             </v-card-text>
           </v-card>
         </div>
-        <div v-else class="position-relative">
+        <div
+          v-else-if="!props.propositionFiltered && !paginatedEvents.length"
+          class="position-relative"
+        >
           <v-col cols="12" class="mt-6">
             <BaseEmptyState
               :style="{

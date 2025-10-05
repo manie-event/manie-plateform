@@ -49,7 +49,7 @@ onBeforeMount(() => {
     <div class="menu-dashboard__container">
       <div>
         <NuxtLink to="/">
-          <Img :src="Logo" alt="test logo" width="150" height="100" />
+          <Logo :style="{ width: '150px', height: '100px' }" />
         </NuxtLink>
         <!---/Search part -->
       </div>

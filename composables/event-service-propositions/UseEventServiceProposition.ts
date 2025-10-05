@@ -2,6 +2,8 @@ import type { ProfessionalServiceUuid } from '~/models/professionalService/profe
 import { useProfessionalProposition } from '~/services/UseProfessionalProposition';
 import { useProfessionalService } from '../../services/UseProfessionalService';
 
+const servicePropositionAvailable = ref(false);
+
 export const useEventServiceProposition = () => {
   const { getListProfessionalServiceByProfessional } = useProfessionalService();
   const { getListProfessionalProposition, getListEventServiceProposition } =
@@ -44,12 +46,12 @@ export const useEventServiceProposition = () => {
       );
 
       const cleanList = eventList.filter(Boolean);
-
+      servicePropositionAvailable.value = true;
       setServiceEventProposition(cleanList);
     } catch (error) {
       console.error('❌ Erreur getServicePropositionForProfessional:', error);
     }
   };
 
-  return { getServicePropositionForProfessional };
+  return { getServicePropositionForProfessional, servicePropositionAvailable };
 };

@@ -11,11 +11,15 @@
         rounded="pill"
         size="large"
         @click="openMarketModal = true"
+        v-if="servicePropositionAvailable"
       >
         Découvrir les annonces
       </v-btn>
+      <v-btn color="primary" class="mt-4 mb-2 px-7" rounded="pill" size="large" v-else>
+        <Loader class="w-2 h-2 animate-spin" />
+      </v-btn>
+      <img :src="PhotoAModifier" class="bg-img-1 mt-sm-0 mt-sm-n10" />
     </v-card-text>
-    <img src="/images/backgrounds/school.png" class="bg-img-1 mt-sm-0 mt-sm-n10" />
   </v-card>
   <Teleport to="body">
     <ProfessionalMarketPlace
@@ -25,13 +29,17 @@
   </Teleport>
 </template>
 <script setup lang="ts">
-import ProfessionalMarketPlace from '@/components/dashboards/dashboard2/ProfessionalMarketPlace.vue';
 import { useEventServiceProposition } from '@/composables/event-service-propositions/UseEventServiceProposition';
+import PhotoAModifier from '@/public/images/backgrounds/school.png';
+import Loader from '@/public/images/svgs/minimal-spinner.svg';
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
+import ProfessionalMarketPlace from './ProfessionalMarketPlace.vue';
 
 const { user, professionalUser } = storeToRefs(useUserStore());
 const { serviceEventProposition } = storeToRefs(usePropositionStore());
 const { getServicePropositionForProfessional } = useEventServiceProposition();
+const { servicePropositionAvailable } = useEventServiceProposition();
+
 const username = localStorage.getItem('username');
 
 const openMarketModal = ref(false);

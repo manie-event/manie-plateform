@@ -1,8 +1,10 @@
 import { fileURLToPath } from 'url';
+import svgLoader from 'vite-svg-loader';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: false,
+
   runtimeConfig: {
     public: {
       tokenStripe: process.env.TOKEN_STRIPE,
@@ -25,6 +27,11 @@ export default defineNuxtConfig({
 
   // Modules
   modules: ['@pinia/nuxt'],
+
+  //Plugins
+  vite: {
+    plugins: [svgLoader()],
+  },
 
   // Application metadata
   app: {
