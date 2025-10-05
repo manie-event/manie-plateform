@@ -1,4 +1,5 @@
 import { fileURLToPath } from 'url';
+import svgLoader from 'vite-svg-loader';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -21,6 +22,11 @@ export default defineNuxtConfig({
   // Vuetify build configuration
   build: {
     transpile: ['vuetify', 'vee-validate'],
+  },
+
+  //Plugins
+  vite: {
+    plugins: [svgLoader()],
   },
 
   // Modules

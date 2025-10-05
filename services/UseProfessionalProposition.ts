@@ -3,6 +3,7 @@ export const useProfessionalProposition = () => {
   const token = useCookie('token');
 
   const { creditTokensAfterPayment } = useCartStore();
+  const { setPropositions } = usePropositionStore();
 
   const getListEventServiceProposition = async (professionalServiceUuid: string) => {
     try {
@@ -35,9 +36,11 @@ export const useProfessionalProposition = () => {
           },
         }
       );
-      if (response) {
-        // getListEventServiceProposition(response.data.data[0].uuid);
-        return response.data.data[0];
+      if (response?.data) {
+        const propositions = response.data.data;
+
+        // setPropositions(propositions);
+        return propositions;
       }
     } catch (error) {
       console.error('❌ Erreur getListProfessionalProposition:', error);

@@ -1,12 +1,20 @@
-export const propositionStore = defineStore('proposition', () => {
-  const serviceEventProposition = ref<string[]>([]);
+import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
 
-  const setServiceEventProposition = (newServiceEvent: string[]) => {
+export const usePropositionStore = defineStore('proposition', () => {
+  const serviceEventProposition = ref<EventModelForProposition[]>([]);
+  const propositionsSelected = ref<EventModelForProposition[]>([]);
+
+  const setServiceEventProposition = (newServiceEvent: EventModelForProposition[]) => {
     serviceEventProposition.value = newServiceEvent;
-    // console.log(serviceEventProposition.value, 'serviceEventProposition.value');
+  };
+
+  const setPropositions = (newPropositionSelected: EventModelForProposition) => {
+    propositionsSelected.value.push(newPropositionSelected);
   };
   return {
     serviceEventProposition,
+    propositionsSelected,
     setServiceEventProposition,
+    setPropositions,
   };
 });
