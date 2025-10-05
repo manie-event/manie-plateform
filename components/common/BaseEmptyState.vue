@@ -6,10 +6,6 @@
 </template>
 <style scoped>
 .container {
-  position: absolute;
-  top: 50vh;
-  left: 50vw;
-  transform: translate(-20vw, -50vh);
   display: flex;
   flex-direction: column;
   align-items: center;

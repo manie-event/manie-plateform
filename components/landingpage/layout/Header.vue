@@ -40,7 +40,7 @@ onUnmounted(() => {
           >
             <div>
               <NuxtLink to="/">
-                <Img :src="LogoManie" width="150" />
+                <LogoManie width="150" />
               </NuxtLink>
             </div>
             <!-- Desktop view Navigation -->

@@ -2,24 +2,56 @@ import type { ProfessionalServiceUuid } from '~/models/professionalService/profe
 import { useProfessionalProposition } from '~/services/UseProfessionalProposition';
 import { useProfessionalService } from '../../services/UseProfessionalService';
 
+const servicePropositionAvailable = ref(false);
+
 export const useEventServiceProposition = () => {
-  const { getListProfessionalService } = useProfessionalService();
+  const { getListProfessionalServiceByProfessional } = useProfessionalService();
   const { getListProfessionalProposition, getListEventServiceProposition } =
     useProfessionalProposition();
-  const { setServiceEventProposition } = propositionStore();
+  const { setServiceEventProposition } = usePropositionStore();
 
   const getServicePropositionForProfessional = async () => {
-    const professionalService = await getListProfessionalService();
+    try {
+      const professionalServices = await getListProfessionalServiceByProfessional();
+      const eventList = await Promise.all(
+        professionalServices.map(async (service: ProfessionalServiceUuid) => {
+          const propositionList = await getListProfessionalProposition(service.uuid);
+          const proposition = Array.isArray(propositionList) ? propositionList[0] : propositionList;
+          if (!proposition || !proposition.uuid) {
+            console.warn(
+              `⚠️ Pas de proposition valide pour le service ${service.uuid}`,
+              proposition
+            );
+            return null;
+          }
 
-    const eventList = await Promise.all(
-      professionalService.map(async (ps: ProfessionalServiceUuid) => {
-        const proposition = await getListProfessionalProposition(ps.uuid);
-        return getListEventServiceProposition(proposition.uuid);
-      })
-    );
+          const event = await getListEventServiceProposition(proposition.uuid);
 
-    setServiceEventProposition(eventList);
+          if (!event) {
+            console.warn(`⚠️ Pas d'événement pour la proposition ${proposition.uuid}`);
+            return null;
+          }
+
+          return {
+            ...event,
+            professionalServiceUuid: service.uuid,
+            proposition: {
+              uuid: proposition.uuid,
+              status: proposition.status,
+              professionalMessage: proposition.professionalMessage,
+              tokens: proposition.tokens,
+            },
+          };
+        })
+      );
+
+      const cleanList = eventList.filter(Boolean);
+      servicePropositionAvailable.value = true;
+      setServiceEventProposition(cleanList);
+    } catch (error) {
+      console.error('❌ Erreur getServicePropositionForProfessional:', error);
+    }
   };
 
-  return { getServicePropositionForProfessional };
+  return { getServicePropositionForProfessional, servicePropositionAvailable };
 };

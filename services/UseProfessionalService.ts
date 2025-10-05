@@ -28,7 +28,7 @@ export const useProfessionalService = () => {
     }
   };
 
-  const getListProfessionalService = async () => {
+  const getListProfessionalServiceByProfessional = async () => {
     try {
       const { data } = await axios.get(
         `${config.public.apiUrl}/professional-service/list-by-professional/${professionalUuid}`,
@@ -39,7 +39,7 @@ export const useProfessionalService = () => {
           },
         }
       );
-      // console.log('getListProfessionalService', data);
+
       return data.data ?? [];
     } catch (error: unknown) {
       addError({ message: "Une erreur est survenue lors de l'envoi du message." });
@@ -48,6 +48,6 @@ export const useProfessionalService = () => {
 
   return {
     getProfessionalService,
-    getListProfessionalService,
+    getListProfessionalServiceByProfessional,
   };
 };
