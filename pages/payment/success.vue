@@ -61,7 +61,6 @@ onMounted(async () => {
   if (!sessionId) return;
 
   const result = await processStripeReturn(sessionId, ProfessionalProfile.value);
-  console.log(result, 'RESULT');
 
   if (!result.success) {
     console.error('Paiement non validé:', result.message);
@@ -71,7 +70,6 @@ onMounted(async () => {
     setTimeout(() => {
       router.push('/dashboards/dashboard2');
     }, 3000);
-    // Mettre à jour ton UI ici, par exemple un message de succès avec les détails
   }
 });
 </script>
