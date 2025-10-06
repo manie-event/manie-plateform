@@ -13,7 +13,10 @@ export const useCartStore = defineStore('cartStore', () => {
 
   const creditTokensAfterPayment = (newQuantity: number) => {
     userTokenBalance.value = userTokenBalance.value + newQuantity;
+    console.log(userTokenBalance.value, 'userTokenBalance.value');
+    console.log(newQuantity, 'newQuantity');
   };
+
   const setBillingInfo = (billingInfo: BillingInfo) => {
     addresses.value.push(billingInfo);
   };

@@ -83,6 +83,10 @@ export const usePaiementJeton = () => {
    */
   const createJeton = async (quantity: number, professionalUuid: string, sessionId: string) => {
     try {
+      console.log(quantity, 'QUANTITY');
+      console.log(professionalUuid, 'professionalUuid');
+      console.log(sessionId, 'sessionId');
+
       const { data } = await axios.post(
         `${config.public.apiUrl}/credit/create`,
         {
@@ -133,6 +137,7 @@ export const usePaiementJeton = () => {
 
       // 2. Récupérer la quantité depuis les metadata de la session
       const quantity = sessionData.metadata?.quantity || sessionData.amount_total / 100;
+      console.log(quantity, 'QUANTITY');
 
       if (!professionalProfile.uuid) {
         throw new Error('Profil professionnel introuvable');
@@ -141,6 +146,7 @@ export const usePaiementJeton = () => {
       // 3. Créer les jetons
       console.log('✨ Création des jetons...');
       const jetonData = await createJeton(Number(quantity), professionalProfile.uuid, sessionId);
+      console.log(jetonData, 'jetonData');
 
       // 4. Mettre à jour le store local
       creditTokensAfterPayment(Number(quantity));

@@ -13,6 +13,7 @@
             <span>ID de session :</span>
             <code>{{ sessionId }}</code>
             <h2>Félicitation paiement effectué</h2>
+            <h3>Vous allez être redirigé sur votre dashboard dans 3 secondes</h3>
           </div>
         </div>
       </div>
@@ -63,7 +64,9 @@ onMounted(async () => {
       console.error('Paiement non validé:', result.message);
       // tu peux rediriger vers une page d’erreur ou afficher un message
     } else {
-      console.log('Paiement validé:', result);
+      setTimeout(() => {
+        router.push('/dashboards/dashboard2');
+      }, 3000);
       // Mettre à jour ton UI ici, par exemple un message de succès avec les détails
     }
   });
