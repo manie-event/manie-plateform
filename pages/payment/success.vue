@@ -14,7 +14,7 @@
             <span>ID de session :</span>
             <code>{{ sessionId }}</code>
             <h2>Félicitation paiement effectué</h2>
-            <h3>Vous allez être redirigé sur votre dashboard dans 3 secondes</h3>
+            <p>Retour dans 5 secondes</p>
           </div>
         </div>
       </div>
@@ -64,18 +64,14 @@ onMounted(async () => {
 
   const result = await processStripeReturn(sessionId, ProfessionalProfile.value);
 
-  if (!result.success) {
-    console.error('Paiement non validé:', result.message);
-    // tu peux rediriger vers une page d’erreur ou afficher un message
-  } else {
-    paymentData.value = result.sessionData; // par exemple
-    console.log(paymentData.value, 'PaymentData.value');
-    console.log(userTokenBalance.value, 'userTokenBalance');
-    setTimeout(() => {
-      router.push('dashboards/dashboard2');
-    }, 3000);
-    // Mettre à jour ton UI ici, par exemple un message de succès avec les détails
-  }
+  paymentData.value = result.sessionData; // par exemple
+  console.log(paymentData.value, 'PaymentData.value');
+  console.log(result.sessionData, 'result.sessionData');
+  console.log(userTokenBalance.value, 'userTokenBalance');
+  setTimeout(() => {
+    router.push('dashboards/dashboard2');
+  }, 3000);
+  // Mettre à jour ton UI ici, par exemple un message de succès avec les détails
 });
 </script>
 
