@@ -8,7 +8,7 @@ export const usePaiementJeton = () => {
   const userStore = useUserStore();
   const { professionalUser } = storeToRefs(userStore);
   const cartStore = useCartStore();
-  const { creditTokensAfterPayment } = cartStore;
+  const { creditTokensAfterPayment, initializeTokenBalance } = cartStore;
 
   const isProcessing = ref(false);
   const error = ref<string | null>(null);
@@ -108,6 +108,8 @@ export const usePaiementJeton = () => {
       console.log(`🎟️ Jetons achetés: ${quantity}`);
       const currentBalance = await getJetonQuantity();
       console.log('📊 Solde actuel depuis backend:', currentBalance);
+
+      initializeTokenBalance(currentBalance);
 
       // Les jetons sont déjà créés par le webhook, on met juste à jour le store
       creditTokensAfterPayment(quantity);
