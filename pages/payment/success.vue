@@ -6,6 +6,7 @@
         <div class="success-icon">✅</div>
         <h1>Paiement réussi !</h1>
         <p>Merci pour votre achat. Votre commande a été confirmée.</p>
+        <p>Retour dans 3 secondes</p>
 
         <div class="payment-details" v-if="paymentData">
           <h3>Détails de la commande :</h3>
@@ -13,6 +14,7 @@
             <span>ID de session :</span>
             <code>{{ sessionId }}</code>
             <h2>Félicitation paiement effectué</h2>
+            <p>Retour dans 5 secondes</p>
           </div>
         </div>
       </div>
@@ -54,19 +56,18 @@ useHead({
   meta: [{ name: 'robots', content: 'noindex, nofollow' }],
 });
 onMounted(async () => {
-  onMounted(async () => {
-    if (!sessionId.value) return;
+  if (!sessionId) return;
 
-    const result = await processStripeReturn(sessionId.value, ProfessionalProfile.value);
+  const result = await processStripeReturn(sessionId, ProfessionalProfile.value);
 
-    if (!result.success) {
-      console.error('Paiement non validé:', result.message);
-      // tu peux rediriger vers une page d’erreur ou afficher un message
-    } else {
-      console.log('Paiement validé:', result);
-      // Mettre à jour ton UI ici, par exemple un message de succès avec les détails
-    }
-  });
+  paymentData.value = result.sessionData; // par exemple
+  console.log(paymentData.value, 'PaymentData.value');
+  console.log(result.sessionData, 'result.sessionData');
+  console.log(userTokenBalance.value, 'userTokenBalance');
+  setTimeout(() => {
+    router.push('dashboards/dashboard2');
+  }, 3000);
+  // Mettre à jour ton UI ici, par exemple un message de succès avec les détails
 });
 </script>
 
