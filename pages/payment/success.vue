@@ -37,7 +37,9 @@ const { processStripeReturn } = usePaiementJeton();
 const userStore = useUserStore();
 const { ProfessionalProfile } = storeToRefs(userStore);
 
-const sessionId = computed(() => route.query.session_id);
+const sessionId = route.query.session_id;
+const paymentData = ref(null);
+
 console.log(sessionId, 'sessionId');
 console.log(route.query.session_id, 'route.query.session_id');
 
@@ -64,8 +66,9 @@ onMounted(async () => {
     console.error('Paiement non validé:', result.message);
     // tu peux rediriger vers une page d’erreur ou afficher un message
   } else {
+    paymentData.value = result.sessionData; // par exemple
     setTimeout(() => {
-      router.push('/dashboards/dashboard2');
+      router.push('dashboards/dashboard2');
     }, 3000);
     // Mettre à jour ton UI ici, par exemple un message de succès avec les détails
   }
