@@ -6,6 +6,7 @@
         <div class="success-icon">✅</div>
         <h1>Paiement réussi !</h1>
         <p>Merci pour votre achat. Votre commande a été confirmée.</p>
+        <h3>Vous allez être redirigé sur votre dashboard dans 3 secondes</h3>
 
         <div class="payment-details" v-if="paymentData">
           <h3>Détails de la commande :</h3>
@@ -36,6 +37,7 @@ const router = useRouter();
 const { processStripeReturn } = usePaiementJeton();
 const userStore = useUserStore();
 const { ProfessionalProfile } = storeToRefs(userStore);
+const { userTokenBalance } = storeToRefs(useCartStore());
 
 const sessionId = route.query.session_id;
 const paymentData = ref(null);
@@ -58,15 +60,17 @@ useHead({
 });
 
 onMounted(async () => {
-  if (!sessionId.value) return;
+  if (!sessionId) return;
 
-  const result = await processStripeReturn(sessionId.value, ProfessionalProfile.value);
+  const result = await processStripeReturn(sessionId, ProfessionalProfile.value);
 
   if (!result.success) {
     console.error('Paiement non validé:', result.message);
     // tu peux rediriger vers une page d’erreur ou afficher un message
   } else {
     paymentData.value = result.sessionData; // par exemple
+    console.log(paymentData.value, 'PaymentData.value');
+    console.log(userTokenBalance.value, 'userTokenBalance');
     setTimeout(() => {
       router.push('dashboards/dashboard2');
     }, 3000);
