@@ -32,15 +32,13 @@ definePageMeta({
 // Récupération du session_id depuis l'URL
 const route = useRoute();
 const router = useRouter();
-const { restoreAfterStripe } = usePaiementJeton();
-console.log(route, 'route');
+const { processStripeReturn } = usePaiementJeton();
+const userStore = useUserStore();
+const { ProfessionalProfile } = storeToRefs(userStore);
 
 const sessionId = computed(() => route.query.session_id);
 console.log(sessionId, 'sessionId');
 console.log(route.query.session_id, 'route.query.session_id');
-
-const userStore = useUserStore();
-const { ProfessionalProfile } = storeToRefs(userStore);
 
 // Fonctions utilitaires
 const formatAmount = (amount, currency) => {
@@ -56,10 +54,19 @@ useHead({
   meta: [{ name: 'robots', content: 'noindex, nofollow' }],
 });
 onMounted(async () => {
-  console.log(ProfessionalProfile.value, 'ProfessionalProfile.value');
-  if (ProfessionalProfile.value) {
-    await restoreAfterStripe(ProfessionalProfile.value);
-  }
+  onMounted(async () => {
+    if (!sessionId.value) return;
+
+    const result = await processStripeReturn(sessionId.value, ProfessionalProfile.value);
+
+    if (!result.success) {
+      console.error('Paiement non validé:', result.message);
+      // tu peux rediriger vers une page d’erreur ou afficher un message
+    } else {
+      console.log('Paiement validé:', result);
+      // Mettre à jour ton UI ici, par exemple un message de succès avec les détails
+    }
+  });
 });
 </script>
 

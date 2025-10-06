@@ -10,29 +10,31 @@ export const usePaiementJeton = () => {
   const { professionalUser } = storeToRefs(userStore);
   const cartStore = useCartStore();
   const { creditTokensAfterPayment } = cartStore;
+
+  const isProcessing = ref(false);
+  const error = ref<string | null>(null);
+
   loadStripe(config.public.tokenStripe);
 
+  /**
+   * Crée une session de paiement Stripe
+   */
   const createTokenSession = async (amount: number) => {
     const currentProfile = professionalUser.value;
-    const currentJetonQuantity = amount;
 
-    localStorage.setItem('professional-uuid', currentProfile?.uuid?.replace(/[""]/g, '') || '');
-    localStorage.setItem('token-session', token.value || '');
     if (!currentProfile?.uuid) {
-      console.error('❌ No professional profile found');
-      return;
+      throw new Error('Profil professionnel non trouvé');
     }
 
     try {
-      localStorage.setItem('jeton-quantity', JSON.stringify(currentJetonQuantity));
-      // === APPEL API STRIPE ===
-      console.log(currentProfile, 'from createTokenSession');
-
       const { data } = await axios.post(
         `${config.public.apiUrl}/payments/token/${currentProfile.uuid}`,
         {
           quantity: amount,
           professional_uuid: currentProfile.uuid,
+          // Ajout des URLs de callback avec metadata
+          success_url: `${window.location.origin}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
+          cancel_url: `${window.location.origin}/payment/cancel`,
         },
         {
           headers: {
@@ -42,26 +44,51 @@ export const usePaiementJeton = () => {
         }
       );
 
-      if (data && data.url) {
+      if (data?.url) {
+        // Redirection vers Stripe
         window.location.href = data.url;
-        console.log(window.location.href, 'REDIRECT STRIPE');
-
         return data;
       }
-    } catch (error: any) {
-      throw error;
+
+      throw new Error('URL de paiement non reçue');
+    } catch (err: any) {
+      console.error('Erreur création session Stripe:', err);
+      throw new Error(err.response?.data?.message || 'Erreur lors de la création du paiement');
     }
   };
 
-  const createJeton = async (quantity: number, professionnalUuid: string) => {
-    console.log('Creating jetons...', quantity, professionnalUuid);
+  /**
+   * Vérifie le statut d'une session Stripe côté backend
+   */
+  const verifyStripeSession = async (sessionId: string) => {
+    try {
+      const { data } = await axios.get(
+        `${config.public.apiUrl}/payments/verify-session/${sessionId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+          },
+        }
+      );
+      console.log(data, 'verifyStripeSession');
+      return data;
+    } catch (err: any) {
+      console.error('Erreur vérification session:', err);
+      throw new Error('Impossible de vérifier le paiement');
+    }
+  };
 
+  /**
+   * Crée les jetons après validation du paiement
+   */
+  const createJeton = async (quantity: number, professionalUuid: string, sessionId: string) => {
     try {
       const { data } = await axios.post(
         `${config.public.apiUrl}/credit/create`,
         {
-          quantity: quantity,
-          professionalUuid: professionnalUuid,
+          quantity,
+          professionalUuid,
+          stripeSessionId: sessionId, // Important : permet d'éviter les doublons
         },
         {
           headers: {
@@ -70,48 +97,80 @@ export const usePaiementJeton = () => {
           },
         }
       );
-      if (data) {
-        console.log(data, 'CREATE JETON');
 
-        localStorage.removeItem('jeton-quantity');
-        return data;
-      }
-    } catch (error) {
-      console.log(error);
+      return data;
+    } catch (err: any) {
+      console.error('Erreur création jetons:', err);
+      throw new Error(err.response?.data?.message || 'Erreur lors de la création des jetons');
     }
   };
 
-  const restoreAfterStripe = async (ProfessionalProfile: ProfessionalProfile) => {
-    localStorage.setItem('user-category', 'professional'); // added to fix issue with vertical header
-    const urlParams = new URLSearchParams(window.location.search);
-    console.log(urlParams, 'urlParams');
+  /**
+   * Process le retour de Stripe après paiement
+   * À appeler sur la page de succès uniquement
+   */
+  const processStripeReturn = async (
+    sessionId: string,
+    professionalProfile: ProfessionalProfile
+  ) => {
+    // Évite le double traitement
+    if (isProcessing.value) {
+      console.log('⏳ Traitement déjà en cours...');
+      return { success: false, message: 'Traitement en cours' };
+    }
 
-    const isStripeReturn =
-      urlParams.has('session_id') || urlParams.has('payment_intent') || route.query.success;
+    isProcessing.value = true;
+    error.value = null;
 
-    if (isStripeReturn) {
-      const purchasedTokens = localStorage.getItem('jeton-quantity');
-      try {
-        if (purchasedTokens) {
-          const tokensToPurchase = JSON.parse(purchasedTokens);
+    try {
+      // 1. Vérifier la session Stripe côté serveur
+      console.log('🔍 Vérification du paiement...');
+      const sessionData = await verifyStripeSession(sessionId);
 
-          creditTokensAfterPayment(tokensToPurchase);
-          if (ProfessionalProfile.uuid) {
-            console.log('✅ Restoring profile and creating tokens');
-
-            await createJeton(tokensToPurchase, ProfessionalProfile.uuid);
-          }
-        }
-      } catch (e) {
-        console.warn('LocalStorage restore failed:', e);
+      if (sessionData.payment_status !== 'paid') {
+        throw new Error("Le paiement n'a pas été complété");
       }
-      console.error('❌ All restore attempts failed');
-    } else {
-      console.log('✅ Profile déjà présent, aucun besoin restock ');
+
+      // 2. Récupérer la quantité depuis les metadata de la session
+      const quantity = sessionData.metadata?.quantity || sessionData.amount_total / 100;
+
+      if (!professionalProfile.uuid) {
+        throw new Error('Profil professionnel introuvable');
+      }
+
+      // 3. Créer les jetons
+      console.log('✨ Création des jetons...');
+      const jetonData = await createJeton(Number(quantity), professionalProfile.uuid, sessionId);
+
+      // 4. Mettre à jour le store local
+      creditTokensAfterPayment(Number(quantity));
+
+      console.log('✅ Paiement traité avec succès');
+
+      return {
+        success: true,
+        quantity,
+        sessionData,
+        jetonData,
+      };
+    } catch (err: any) {
+      console.error('❌ Erreur traitement paiement:', err);
+      error.value = err.message || 'Une erreur est survenue';
+
+      return {
+        success: false,
+        message: error.value,
+      };
+    } finally {
+      isProcessing.value = false;
     }
   };
+
   return {
     createTokenSession,
-    restoreAfterStripe,
+    processStripeReturn,
+    verifyStripeSession,
+    isProcessing: readonly(isProcessing),
+    error: readonly(error),
   };
 };
