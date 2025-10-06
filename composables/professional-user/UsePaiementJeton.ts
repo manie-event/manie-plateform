@@ -12,12 +12,13 @@ export const usePaiementJeton = () => {
 
   const isProcessing = ref(false);
   const error = ref<string | null>(null);
-  const currentProfile = professionalUser.value;
 
   /**
    * Crée une session de paiement Stripe
    */
   const createTokenSession = async (amount: number) => {
+    const currentProfile = professionalUser.value;
+
     if (!currentProfile?.uuid) {
       throw new Error('Profil professionnel non trouvé');
     }
@@ -51,6 +52,7 @@ export const usePaiementJeton = () => {
   };
 
   const getJetonQuantity = async () => {
+    const currentProfile = professionalUser.value;
     try {
       const { data } = await axios.get(`${config.public.apiUrl}/credit/${currentProfile?.uuid}`, {
         headers: {
