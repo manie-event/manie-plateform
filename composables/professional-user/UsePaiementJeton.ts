@@ -1,4 +1,3 @@
-import { loadStripe } from '@stripe/stripe-js';
 import axios from 'axios';
 import type { ProfessionalProfile } from '../../models/user/UserModel';
 
@@ -13,8 +12,6 @@ export const usePaiementJeton = () => {
 
   const isProcessing = ref(false);
   const error = ref<string | null>(null);
-
-  loadStripe(config.public.tokenStripe);
 
   /**
    * Crée une session de paiement Stripe
@@ -32,9 +29,6 @@ export const usePaiementJeton = () => {
         {
           quantity: amount,
           professional_uuid: currentProfile.uuid,
-          // Ajout des URLs de callback avec metadata
-          success_url: `${window.location.origin}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
-          cancel_url: `${window.location.origin}/payment/cancel`,
         },
         {
           headers: {
@@ -45,7 +39,6 @@ export const usePaiementJeton = () => {
       );
 
       if (data?.url) {
-        // Redirection vers Stripe
         window.location.href = data.url;
         return data;
       }

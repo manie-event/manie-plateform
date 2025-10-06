@@ -55,6 +55,7 @@ useHead({
   title: 'Paiement réussi - Manie Event',
   meta: [{ name: 'robots', content: 'noindex, nofollow' }],
 });
+
 onMounted(async () => {
   if (!sessionId) return;
 
@@ -67,7 +68,6 @@ onMounted(async () => {
   setTimeout(() => {
     router.push('dashboards/dashboard2');
   }, 3000);
-  // Mettre à jour ton UI ici, par exemple un message de succès avec les détails
 });
 </script>
 
