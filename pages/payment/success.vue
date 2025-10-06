@@ -69,7 +69,7 @@ onMounted(async () => {
   } else {
     paymentData.value = result.sessionData; // par exemple
     setTimeout(() => {
-      router.push('dashboards/dashboard2');
+      router.push('/dashboards/dashboard2');
     }, 3000);
     // Mettre à jour ton UI ici, par exemple un message de succès avec les détails
   }
