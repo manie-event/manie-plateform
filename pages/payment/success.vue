@@ -55,7 +55,7 @@ useHead({
 onMounted(async () => {
   console.log(ProfessionalProfile.value, 'ProfessionalProfile.value');
   if (ProfessionalProfile.value) {
-    await usePaiementJeton().restoreAfterStripe(ProfessionalProfile.value?.uuid);
+    await usePaiementJeton().restoreAfterStripe(ProfessionalProfile.value);
   }
 });
 </script>
