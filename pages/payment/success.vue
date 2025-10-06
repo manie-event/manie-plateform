@@ -54,22 +54,21 @@ useHead({
   title: 'Paiement réussi - Manie Event',
   meta: [{ name: 'robots', content: 'noindex, nofollow' }],
 });
+
 onMounted(async () => {
-  onMounted(async () => {
-    if (!sessionId.value) return;
+  if (!sessionId.value) return;
 
-    const result = await processStripeReturn(sessionId.value, ProfessionalProfile.value);
+  const result = await processStripeReturn(sessionId.value, ProfessionalProfile.value);
 
-    if (!result.success) {
-      console.error('Paiement non validé:', result.message);
-      // tu peux rediriger vers une page d’erreur ou afficher un message
-    } else {
-      setTimeout(() => {
-        router.push('/dashboards/dashboard2');
-      }, 3000);
-      // Mettre à jour ton UI ici, par exemple un message de succès avec les détails
-    }
-  });
+  if (!result.success) {
+    console.error('Paiement non validé:', result.message);
+    // tu peux rediriger vers une page d’erreur ou afficher un message
+  } else {
+    setTimeout(() => {
+      router.push('/dashboards/dashboard2');
+    }, 3000);
+    // Mettre à jour ton UI ici, par exemple un message de succès avec les détails
+  }
 });
 </script>
 
