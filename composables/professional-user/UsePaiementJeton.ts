@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { PRICE_PER_TOKEN } from '~/constants/prixeToken';
 
 export const usePaiementJeton = () => {
   const token = useCookie('token');
@@ -76,14 +77,19 @@ export const usePaiementJeton = () => {
     isProcessing.value = true;
 
     try {
-      const sessionData = await verifyStripeSession(sessionId);
+      const response = await verifyStripeSession(sessionId);
+      const sessionData = response.session;
 
       if (sessionData.payment_status !== 'paid') {
         throw new Error("Le paiement n'a pas été complété");
       }
 
-      const quantity = Number(sessionData.metadata?.quantity);
-      console.log(quantity, 'QUANTITY');
+      // Calculer la quantité depuis le montant
+      const amountInEuros = sessionData.amount_total / 100; // Convertir centimes en euros
+      const quantity = Math.floor(amountInEuros / PRICE_PER_TOKEN); // 36€ / 9€ = 4 jetons
+
+      console.log(`💰 Montant payé: ${amountInEuros}€`);
+      console.log(`🎟️ Jetons achetés: ${quantity}`);
 
       // Les jetons sont déjà créés par le webhook, on met juste à jour le store
       creditTokensAfterPayment(quantity);
