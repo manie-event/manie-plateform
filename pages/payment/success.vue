@@ -58,9 +58,10 @@ useHead({
 });
 
 onMounted(async () => {
-  if (!sessionId.value) return;
+  if (!sessionId) return;
 
-  const result = await processStripeReturn(sessionId.value, ProfessionalProfile.value);
+  const result = await processStripeReturn(sessionId, ProfessionalProfile.value);
+  console.log(result, 'RESULT');
 
   if (!result.success) {
     console.error('Paiement non validé:', result.message);

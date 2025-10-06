@@ -139,9 +139,9 @@ export const usePaiementJeton = () => {
       }
 
       // 3. Créer les jetons
-      console.log('✨ Création des jetons...');
-      const jetonData = await createJeton(Number(quantity), professionalProfile.uuid, sessionId);
-      console.log(jetonData, 'jetonData');
+      // console.log('✨ Création des jetons...');
+      // const jetonData = await createJeton(Number(quantity), professionalProfile.uuid, sessionId);
+      // console.log(jetonData, 'jetonData');
 
       // 4. Mettre à jour le store local
       creditTokensAfterPayment(Number(quantity));
@@ -152,7 +152,7 @@ export const usePaiementJeton = () => {
         success: true,
         quantity,
         sessionData,
-        jetonData,
+        // jetonData,
       };
     } catch (err: any) {
       console.error('❌ Erreur traitement paiement:', err);
