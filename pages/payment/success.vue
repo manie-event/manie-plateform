@@ -6,7 +6,7 @@
         <div class="success-icon">✅</div>
         <h1>Paiement réussi !</h1>
         <p>Merci pour votre achat. Votre commande a été confirmée.</p>
-        <p>Retour dans 3 secondes</p>
+        <h3>Vous allez être redirigé sur votre dashboard dans 3 secondes</h3>
 
         <div class="payment-details" v-if="paymentData">
           <h3>Détails de la commande :</h3>
@@ -37,8 +37,11 @@ const router = useRouter();
 const { processStripeReturn } = usePaiementJeton();
 const userStore = useUserStore();
 const { ProfessionalProfile } = storeToRefs(userStore);
+const { userTokenBalance } = storeToRefs(useCartStore());
 
-const sessionId = computed(() => route.query.session_id);
+const sessionId = route.query.session_id;
+const paymentData = ref(null);
+
 console.log(sessionId, 'sessionId');
 console.log(route.query.session_id, 'route.query.session_id');
 
@@ -55,6 +58,7 @@ useHead({
   title: 'Paiement réussi - Manie Event',
   meta: [{ name: 'robots', content: 'noindex, nofollow' }],
 });
+
 onMounted(async () => {
   if (!sessionId) return;
 
