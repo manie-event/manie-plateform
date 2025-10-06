@@ -91,12 +91,6 @@
       "public/*": [
         "../public/*"
       ],
-      "@components": [
-        "../components"
-      ],
-      "@components/*": [
-        "../components/*"
-      ],
       "#app": [
         "../node_modules/nuxt/dist/app"
       ],

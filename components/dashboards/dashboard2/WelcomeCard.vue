@@ -2,7 +2,9 @@
   <v-card elevation="10" class="overflow-visible">
     <v-card-text class="position-relative pb-5">
       <h5 class="text-h5 mb-1 font-weight-semibold">
-        {{ `${username ? username : professionalUser?.name}, content de vous voir ici,` }}
+        {{
+          `${username ? username : professionalUser?.name}, content de vous voir PROUTPROUT ici,`
+        }}
       </h5>
       <div class="text-subtitle-1 text-grey100 pb-1">Un coup d'oeil sur les annonces du jour ?</div>
       <v-btn

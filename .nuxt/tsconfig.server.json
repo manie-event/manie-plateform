@@ -104,12 +104,6 @@
       "#internal/nuxt/paths": [
         "../node_modules/nuxt/dist/core/runtime/nitro/utils/paths"
       ],
-      "@components": [
-        "../components"
-      ],
-      "@components/*": [
-        "../components/*"
-      ],
       "pinia": [
         "../node_modules/pinia/dist/pinia"
       ],
