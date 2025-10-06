@@ -37,8 +37,11 @@ const router = useRouter();
 const { processStripeReturn } = usePaiementJeton();
 const userStore = useUserStore();
 const { ProfessionalProfile } = storeToRefs(userStore);
+const { userTokenBalance } = storeToRefs(useCartStore());
 
-const sessionId = computed(() => route.query.session_id);
+const sessionId = route.query.session_id;
+const paymentData = ref(null);
+
 console.log(sessionId, 'sessionId');
 console.log(route.query.session_id, 'route.query.session_id');
 
