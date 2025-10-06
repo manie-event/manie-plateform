@@ -12,13 +12,12 @@ export const usePaiementJeton = () => {
 
   const isProcessing = ref(false);
   const error = ref<string | null>(null);
+  const currentProfile = professionalUser.value;
 
   /**
    * Crée une session de paiement Stripe
    */
   const createTokenSession = async (amount: number) => {
-    const currentProfile = professionalUser.value;
-
     if (!currentProfile?.uuid) {
       throw new Error('Profil professionnel non trouvé');
     }
@@ -48,6 +47,19 @@ export const usePaiementJeton = () => {
     } catch (err: any) {
       console.error('Erreur création session Stripe:', err);
       throw new Error(err.response?.data?.message || 'Erreur lors de la création du paiement');
+    }
+  };
+
+  const getJetonQuantity = async () => {
+    try {
+      const { data } = await axios.get(`${config.public.apiUrl}/credit/${currentProfile?.uuid}`, {
+        headers: {
+          Authorization: `Bearer ${token.value}`,
+          'Content-Type': 'application/json',
+        },
+      });
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -90,9 +102,13 @@ export const usePaiementJeton = () => {
 
       console.log(`💰 Montant payé: ${amountInEuros}€`);
       console.log(`🎟️ Jetons achetés: ${quantity}`);
+      const currentBalance = await getJetonQuantity();
+      console.log('📊 Solde actuel depuis backend:', currentBalance);
 
       // Les jetons sont déjà créés par le webhook, on met juste à jour le store
       creditTokensAfterPayment(quantity);
+
+      console.log('✅ Solde final:', cartStore.userTokenBalance);
 
       // Optionnel : recharger le profil pour avoir le vrai nombre de jetons
       // await userStore.fetchProfessionalProfile();
