@@ -6,6 +6,7 @@
         <div class="success-icon">✅</div>
         <h1>Paiement réussi !</h1>
         <p>Merci pour votre achat. Votre commande a été confirmée.</p>
+        <p>Redirection vers le dashboard dans 3secondes</p>
 
         <div class="payment-details" v-if="paymentData">
           <h3>Détails de la commande :</h3>
@@ -54,19 +55,20 @@ useHead({
   meta: [{ name: 'robots', content: 'noindex, nofollow' }],
 });
 onMounted(async () => {
-  onMounted(async () => {
-    if (!sessionId.value) return;
+  if (!sessionId.value) return;
 
-    const result = await processStripeReturn(sessionId.value);
+  const result = await processStripeReturn(sessionId.value);
 
-    if (!result.success) {
-      console.error('Paiement non validé:', result.message);
-      // tu peux rediriger vers une page d’erreur ou afficher un message
-    } else {
-      console.log('Paiement validé:', result);
-      // Mettre à jour ton UI ici, par exemple un message de succès avec les détails
-    }
-  });
+  if (!result.success) {
+    console.error('Paiement non validé:', result.message);
+    // tu peux rediriger vers une page d’erreur ou afficher un message
+  } else {
+    setTimeout(() => {
+      navigateTo('/dashboards/dashboard2', { replace: true });
+    }, 3000);
+    console.log('Paiement validé:', result);
+    // Mettre à jour ton UI ici, par exemple un message de succès avec les détails
+  }
 });
 </script>
 
