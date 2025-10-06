@@ -1,4 +1,3 @@
-import { ProfessionalProfile } from '../../models/user/UserModel';
 <template>
   <div class="success-container">
     <div class="success-card">
@@ -31,10 +30,14 @@ definePageMeta({
 // Récupération du session_id depuis l'URL
 const route = useRoute();
 const router = useRouter();
+console.log(route, 'route');
+
 const sessionId = computed(() => route.query.session_id);
+console.log(sessionId, 'sessionId');
+console.log(route.query.session_id, 'route.query.session_id');
+
 const userStore = useUserStore();
 const { ProfessionalProfile } = storeToRefs(userStore);
-const { debugAuth, getUserProfileDetails } = useUserProfile();
 
 // Fonctions utilitaires
 const formatAmount = (amount, currency) => {
@@ -50,8 +53,7 @@ useHead({
   meta: [{ name: 'robots', content: 'noindex, nofollow' }],
 });
 onMounted(async () => {
-  await debugAuth();
-  await getUserProfileDetails();
+  console.log(ProfessionalProfile.value, 'ProfessionalProfile.value');
   if (ProfessionalProfile.value) {
     await usePaiementJeton().restoreAfterStripe(ProfessionalProfile.value?.uuid);
   }

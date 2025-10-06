@@ -71,6 +71,8 @@ export const usePaiementJeton = () => {
         }
       );
       if (data) {
+        console.log(data, 'CREATE JETON');
+
         localStorage.removeItem('jeton-quantity');
         return data;
       }
@@ -82,6 +84,8 @@ export const usePaiementJeton = () => {
   const restoreAfterStripe = async (ProfessionalProfile: ProfessionalProfile) => {
     localStorage.setItem('user-category', 'professional'); // added to fix issue with vertical header
     const urlParams = new URLSearchParams(window.location.search);
+    console.log(urlParams, 'urlParams');
+
     const isStripeReturn =
       urlParams.has('session_id') || urlParams.has('payment_intent') || route.query.success;
 
