@@ -13,7 +13,6 @@
             <span>ID de session :</span>
             <code>{{ sessionId }}</code>
             <h2>Félicitation paiement effectué</h2>
-            <h3>Vous allez être redirigé sur votre dashboard dans 3 secondes</h3>
           </div>
         </div>
       </div>
@@ -37,9 +36,7 @@ const { processStripeReturn } = usePaiementJeton();
 const userStore = useUserStore();
 const { ProfessionalProfile } = storeToRefs(userStore);
 
-const sessionId = route.query.session_id;
-const paymentData = ref(null);
-
+const sessionId = computed(() => route.query.session_id);
 console.log(sessionId, 'sessionId');
 console.log(route.query.session_id, 'route.query.session_id');
 
@@ -56,21 +53,20 @@ useHead({
   title: 'Paiement réussi - Manie Event',
   meta: [{ name: 'robots', content: 'noindex, nofollow' }],
 });
-
 onMounted(async () => {
-  if (!sessionId) return;
+  onMounted(async () => {
+    if (!sessionId.value) return;
 
-  const result = await processStripeReturn(sessionId, ProfessionalProfile.value);
+    const result = await processStripeReturn(sessionId.value);
 
-  if (!result.success) {
-    console.error('Paiement non validé:', result.message);
-    // tu peux rediriger vers une page d’erreur ou afficher un message
-  } else {
-    paymentData.value = result.sessionData; // par exemple
-    setTimeout(() => {
-      router.push('/dashboards/dashboard2');
-    }, 3000);
-  }
+    if (!result.success) {
+      console.error('Paiement non validé:', result.message);
+      // tu peux rediriger vers une page d’erreur ou afficher un message
+    } else {
+      console.log('Paiement validé:', result);
+      // Mettre à jour ton UI ici, par exemple un message de succès avec les détails
+    }
+  });
 });
 </script>
 
