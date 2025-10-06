@@ -21,6 +21,8 @@
 </template>
 
 <script setup>
+import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
+
 // Métadonnées de la page
 definePageMeta({
   title: 'Paiement réussi',
@@ -30,6 +32,7 @@ definePageMeta({
 // Récupération du session_id depuis l'URL
 const route = useRoute();
 const router = useRouter();
+const { restoreAfterStripe } = usePaiementJeton();
 console.log(route, 'route');
 
 const sessionId = computed(() => route.query.session_id);
@@ -55,7 +58,7 @@ useHead({
 onMounted(async () => {
   console.log(ProfessionalProfile.value, 'ProfessionalProfile.value');
   if (ProfessionalProfile.value) {
-    await usePaiementJeton().restoreAfterStripe(ProfessionalProfile.value);
+    await restoreAfterStripe(ProfessionalProfile.value);
   }
 });
 </script>

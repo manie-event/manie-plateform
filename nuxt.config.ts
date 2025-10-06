@@ -19,6 +19,11 @@ export default defineNuxtConfig({
     shim: false,
   },
 
+  routeRules: {
+    // Active SSR uniquement pour les routes de paiement
+    '/payment/**': { ssr: true },
+  },
+
   // Vuetify build configuration
   build: {
     transpile: ['vuetify', 'vee-validate'],
