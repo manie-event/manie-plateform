@@ -5,6 +5,7 @@ import type { clientProfile } from '@/models/user/UserModel';
 import { Icon } from '@iconify/vue';
 import { CircleXIcon } from 'vue-tabler-icons';
 import { useClientProfil } from '~/composables/client-user/UseClientProfil';
+import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { useAuthentification } from '../../../../composables/UseAuthentification';
 
@@ -15,24 +16,24 @@ const { sendLogout } = useAuthentification();
 const { userTokenBalance } = storeToRefs(useCartStore());
 const { getProfessionalProfileDetails, getProfessionalProfile } = useProfessionalProfile();
 const { getClientProfil } = useClientProfil();
+const { getJetonQuantity } = usePaiementJeton();
 
 const clientProfile = localStorage.getItem('client-profile');
 const isProfessional = localStorage.getItem('is-professional');
 const username = localStorage.getItem('username');
+const proName = localStorage.getItem('pro-name');
 const getclientName = ref();
+const jetonBalance = ref(0);
 
 const getNameDependingOnCategory = computed(() => {
   if (isProfessional && isProfileCreated.value) {
-    return professionalUser.value?.name;
+    return proName ? proName : professionalUser.value?.name;
   }
 
   if (clientProfile) {
     getclientName.value = JSON.parse(clientProfile);
     return getclientName.value.username;
   }
-
-  console.log(username, 'user.value?.username');
-
   return username;
 });
 
@@ -43,19 +44,19 @@ const getCategory = computed(() => {
     return UserCategory.CLIENT;
   }
 });
-onMounted(async () => {
-  if (username) {
-    if (isProfessional && isProfileCreated.value) {
-      await getProfessionalProfileDetails();
-    } else if (isProfessional && !isProfileCreated.value) {
-      const allProfessionalProfile = await getProfessionalProfile();
 
-      return allProfessionalProfile.find(
-        (yourProfile: clientProfile) => yourProfile.userUuid == user.value?.uuid
-      );
-    } else if (!isProfessional && isProfileCreated) {
-      await getClientProfil();
-    }
+onMounted(async () => {
+  if (isProfessional && isProfileCreated.value) {
+    await getProfessionalProfileDetails();
+    jetonBalance.value = await getJetonQuantity();
+  } else if (isProfessional && !isProfileCreated.value) {
+    const allProfessionalProfile = await getProfessionalProfile();
+
+    return allProfessionalProfile.find(
+      (yourProfile: clientProfile) => yourProfile.userUuid == user.value?.uuid
+    );
+  } else if (!isProfessional && isProfileCreated) {
+    await getClientProfil();
   } else {
     console.warn('Utilisateur non encore chargé ou UUID manquant');
   }
@@ -132,9 +133,9 @@ onMounted(async () => {
               </h6>
             </div>
             <p class="text-subtitle-1 font-weight-regular text-grey100">
-              <b>{{ item.requiresProfile ? userTokenBalance : '' }}</b> {{ item.subtitle }}
+              <b>{{ item.requiresProfile ? jetonBalance : '' }}</b>
+              {{ item.subtitle }}
             </p>
-            <p>{{ item.title }}</p>
           </v-list-item>
         </v-list>
         <v-list class="py-0 theme-list" lines="two" v-else>
@@ -164,7 +165,7 @@ onMounted(async () => {
               </h6>
             </div>
             <p class="text-subtitle-1 font-weight-regular text-grey100">
-              <b>{{ item.requiresProfile ? userTokenBalance : '' }}</b> {{ item.subtitle }}
+              <b>{{ item.requiresProfile ? userTokenBalance : '' }}</b>
             </p>
           </v-list-item>
         </v-list>

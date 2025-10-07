@@ -1,70 +1,3 @@
-<script setup lang="ts">
-import BaseEmptyState from '@/components/common/BaseEmptyState.vue';
-import EmptyState from '@/public/images/empty-state/profil-vide.png';
-import { usePropositionStore } from '~/stores/propositionStore';
-
-const { setPropositions } = usePropositionStore();
-const { propositionsSelected } = storeToRefs(usePropositionStore());
-
-const getStatusColor = (status: string) => {
-  switch (status) {
-    case 'pending':
-      return 'warning';
-    case 'reviewing':
-      return 'primary';
-    case 'completed':
-      return 'success';
-    case 'cancelled':
-      return 'error';
-    default:
-      return 'grey';
-  }
-};
-
-const getStatusName = (status: string) => {
-  switch (status) {
-    case 'pending':
-      return 'En attente';
-    case 'reviewing':
-      return 'En cours d’examen';
-    case 'completed':
-      return 'Accepté';
-    case 'cancelled':
-      return 'Refusé';
-  }
-};
-
-const getDate = (date: string[]) => formatDate(date);
-
-onMounted(() => {
-  setPropositions({
-    serviceUuid: '0a4a35ef-f705-405f-972f-cfd143f69a71',
-    keywordsUuid: [
-      '4c188e62-61ea-49ef-8257-8e06c5d4988a',
-      '44a6b945-edbc-4316-8a11-cf3e275dc20d',
-      'e8453a9b-4912-428e-8433-5566d253cb3d',
-      '9f9f76e3-ca45-4ac0-bab4-bdec9268b1b6',
-    ],
-    budget: 2500,
-    location: 'auvergne-rhone-alpes',
-    date: ['2025-09-01', '2025-10-06'],
-    people: '50',
-    name: '30 ans Léo',
-    theme: null,
-    duration: null,
-    organized_for: null,
-    group_type: null,
-    professionalServiceUuid: 'f5fc318b-c803-4aba-98d9-f39aedf8b512',
-    proposition: {
-      uuid: '0bd4bb88-e9dd-44a7-bb6b-38247217d835',
-      status: 'pending',
-      professionalMessage: 'test',
-      tokens: 1,
-    },
-  });
-  console.log('propositionsSelected', propositionsSelected.value);
-});
-</script>
 <template>
   <VCard elevation="10" class="mb-16">
     <v-card-text>
@@ -73,7 +6,7 @@ onMounted(() => {
           <h5 class="text-h5 mb-1 font-weight-semibold">Vos propositions en cours</h5>
         </div>
       </div>
-      <div class="month-table" v-if="propositionsSelected.length > 0">
+      <div class="month-table" v-if="selectedProposition.length > 0">
         <v-table class="mt-5 mb-0">
           <template v-slot:default>
             <thead>
@@ -98,7 +31,7 @@ onMounted(() => {
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in propositionsSelected" :key="item.id" class="month-item">
+              <tr v-for="item in selectedProposition" :key="item.id" class="month-item">
                 <td>
                   <div class="d-flex align-center">
                     <div class="mr-4">
@@ -148,7 +81,7 @@ onMounted(() => {
             }"
           >
             <template #image>
-              <img :src="EmptyState" alt="Empty State" />
+              <EmptyState :style="{ color: svgColor }" class="transition-colors duration-300" />
             </template>
             <template #description>
               <p class="text-subtitle-1">
@@ -160,4 +93,59 @@ onMounted(() => {
       </div>
     </v-card-text>
   </VCard>
+  <Teleport to="body">
+    <errorToaster></errorToaster>
+  </Teleport>
 </template>
+<script setup lang="ts">
+import BaseEmptyState from '@/components/common/BaseEmptyState.vue';
+import errorToaster from '@/components/common/errorToaster.vue';
+import EmptyState from '@/public/images/empty-state/profil-vides.svg';
+import { Teleport } from 'vue';
+import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
+import { usePropositionStore } from '~/stores/propositionStore';
+
+const { setPropositions } = usePropositionStore();
+const { serviceEventProposition } = storeToRefs(usePropositionStore());
+
+const getStatusColor = (status: string) => {
+  switch (status) {
+    case 'pending':
+      return 'warning';
+    case 'reviewing':
+      return 'primary';
+    case 'completed':
+      return 'success';
+    case 'cancelled':
+      return 'error';
+    default:
+      return 'grey';
+  }
+};
+
+const getStatusName = (status: string) => {
+  switch (status) {
+    case 'pending':
+      return 'En attente';
+    case 'reviewing':
+      return 'En cours d’examen';
+    case 'completed':
+      return 'Accepté';
+    case 'cancelled':
+      return 'Refusé';
+  }
+};
+
+const getDate = (date: string[]) => formatDate(date);
+const customizer = useCustomizerStore();
+
+const svgColor = computed(() => {
+  return customizer.actTheme === 'DARK_BLUE_THEME' ? '#FFFFFF' : '#000000';
+});
+
+const selectedProposition = computed(() =>
+  serviceEventProposition.value.filter(
+    (proposition: EventModelForProposition) => proposition.proposition.professionalMessage
+  )
+);
+</script>

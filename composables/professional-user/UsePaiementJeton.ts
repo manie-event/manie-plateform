@@ -60,7 +60,8 @@ export const usePaiementJeton = () => {
           'Content-Type': 'application/json',
         },
       });
-      console.log(data.quantity, 'getJetonQuantity');
+      console.log('getJetonQuantity', data.quantity);
+
       return data.quantity;
     } catch (error) {
       console.log(error);
@@ -105,7 +106,6 @@ export const usePaiementJeton = () => {
       const quantity = Math.floor(amountInEuros / PRICE_PER_TOKEN); // 36€ / 9€ = 4 jetons
 
       const currentBalance = await getJetonQuantity();
-      console.log('📊 Solde actuel depuis backend:', currentBalance);
 
       initializeTokenBalance(currentBalance);
 
@@ -122,6 +122,7 @@ export const usePaiementJeton = () => {
     createTokenSession,
     processStripeReturn,
     verifyStripeSession,
+    getJetonQuantity,
     isProcessing: readonly(isProcessing),
     error: readonly(error),
   };

@@ -29,8 +29,8 @@
           </p>
           <div class="p-3">
             <v-alert density="compact" border-color="warning" color="warning" elevation="2"
-              >Une fois avoir présenter votre offre au clien, un jeton est mis en jeu. Si le client
-              accepte votre offre alors un jeton sera débité. S'il décline le jeton sera recrédité
+              ><b>1 jeton(s)</b> est mis en jeu pour cette annonce. Il sera débité si vous gagné,
+              remboursé si ce n'est pas le cas.
             </v-alert>
           </div>
           <v-btn class="mt-2" color="primary" type="submit" block @click="sendMessage()"
@@ -40,17 +40,20 @@
       </v-card-text>
     </v-card>
   </v-dialog>
-  <Teleport to="body"> </Teleport>
 </template>
 <script setup lang="ts">
-import { Teleport } from 'vue';
+import { useEventServiceProposition } from '~/composables/event-service-propositions/UseEventServiceProposition';
 import { useProfessionalProposition } from '~/services/UseProfessionalProposition';
 
 const props = defineProps<{
   uuid: string;
 }>();
+
+const emit = defineEmits(['message-sent']);
+
 const isOpen = defineModel<boolean>('is-proposition-accepted', { default: false });
 
+const { getServicePropositionForProfessional } = useEventServiceProposition();
 const { updateProfessionalMessage } = useProfessionalProposition();
 const message = ref({
   description: '',
@@ -58,18 +61,19 @@ const message = ref({
   fourchetteB: 1,
 });
 
-const sendMessage = () => {
+const sendMessage = async () => {
   const messageAllTogether = message.value.description.concat(
     ' fourchette basse ' + message.value.fourchetteB,
     ' fourchette haute ' + message.value.fourchetteH
   );
 
-  //PERMET DE RECUPERER LA FOURCHETTE
-  // const basseMatch = messageAllTogether.match(/fourchette basse\s+(\d+)/);
-  // const hauteMatch = messageAllTogether.match(/fourchette haute\s+(\d+)/);
+  const response = await updateProfessionalMessage(props.uuid, messageAllTogether);
 
-  // const fourchetteBasse = basseMatch ? parseInt(basseMatch[1], 10) : null;
-  // const fourchetteHaute = hauteMatch ? parseInt(hauteMatch[1], 10) : null;
-  updateProfessionalMessage(props.uuid, messageAllTogether);
+  if (response?.status === 200) {
+    emit('message-sent', props.uuid);
+    await getServicePropositionForProfessional();
+
+    isOpen.value = false;
+  }
 };
 </script>

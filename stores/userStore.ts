@@ -67,8 +67,6 @@ export const useUserStore = defineStore('userStore', () => {
 
   // professional setters
   const setProfessionalUser = (newProfessionalUser: ProfessionalProfile) => {
-    console.log(newProfessionalUser, 'setProfessionalUser');
-
     professionalUser.value = {
       ...newProfessionalUser,
       uuid: newProfessionalUser.uuid?.replace(/[""]/g, '') || '',
@@ -77,6 +75,7 @@ export const useUserStore = defineStore('userStore', () => {
 
     localStorage.setItem('professional-uuid', professionalUser.value.uuid || '');
     localStorage.setItem('is-profile-verified', JSON.stringify(true));
+    localStorage.setItem('pro-name', newProfessionalUser.name);
     isProfileCreated.value = true;
   };
 
