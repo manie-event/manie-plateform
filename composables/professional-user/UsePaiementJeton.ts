@@ -8,7 +8,7 @@ export const usePaiementJeton = () => {
   const userStore = useUserStore();
   const { professionalUser } = storeToRefs(userStore);
   const cartStore = useCartStore();
-  const { creditTokensAfterPayment, initializeTokenBalance } = cartStore;
+  const { initializeTokenBalance } = cartStore;
 
   const isProcessing = ref(false);
   const error = ref<string | null>(null);
@@ -104,20 +104,10 @@ export const usePaiementJeton = () => {
       const amountInEuros = sessionData.amount_total / 100; // Convertir centimes en euros
       const quantity = Math.floor(amountInEuros / PRICE_PER_TOKEN); // 36€ / 9€ = 4 jetons
 
-      console.log(`💰 Montant payé: ${amountInEuros}€`);
-      console.log(`🎟️ Jetons achetés: ${quantity}`);
       const currentBalance = await getJetonQuantity();
       console.log('📊 Solde actuel depuis backend:', currentBalance);
 
       initializeTokenBalance(currentBalance);
-
-      // Les jetons sont déjà créés par le webhook, on met juste à jour le store
-      creditTokensAfterPayment(quantity);
-
-      console.log('✅ Solde final:', cartStore.userTokenBalance);
-
-      // Optionnel : recharger le profil pour avoir le vrai nombre de jetons
-      // await userStore.fetchProfessionalProfile();
 
       return { success: true, quantity, sessionData };
     } catch (err: any) {
