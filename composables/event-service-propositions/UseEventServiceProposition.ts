@@ -13,6 +13,8 @@ export const useEventServiceProposition = () => {
   const getServicePropositionForProfessional = async () => {
     try {
       const professionalServices = await getListProfessionalServiceByProfessional();
+      console.log(professionalServices, 'professionalServices');
+
       const eventList = await Promise.all(
         professionalServices.map(async (service: ProfessionalServiceUuid) => {
           const propositionList = await getListProfessionalProposition(service.uuid);

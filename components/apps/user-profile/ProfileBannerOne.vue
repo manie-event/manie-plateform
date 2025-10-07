@@ -1,6 +1,10 @@
 <template>
   <div class="position-relative">
-    <img :src="bgPicture" alt="profile" class="w-100" />
+    <img
+      :src="professionalUser?.picture ? professionalUser?.picture : bgPicture"
+      alt="profile"
+      class="w-100 max-h-600 rounded-md obj-cover"
+    />
     <button @click="triggerClickFileInput" class="profile-banner__change-image">+</button>
     <input
       type="file"
@@ -118,9 +122,9 @@ const openModal = ref(false);
 const openServiceModal = ref(false);
 const fileInput = ref(null);
 
-const { user, isProfileCreated } = storeToRefs(useUserStore());
+const { user, isProfileCreated, professionalUser } = storeToRefs(useUserStore());
 const { getKeywords } = useKeywords();
-const { changeProfessionalBannerPicture } = useProfessionalProfile();
+const { changeProfessionalBannerPicture, getProfessionalProfileDetails } = useProfessionalProfile();
 const isProfileVerified = localStorage.getItem('is-profile-verified');
 
 const triggerClickFileInput = () => fileInput.value?.click();
@@ -142,6 +146,11 @@ const items = shallowRef([
 const openEditProfilModal = () => {
   openModal.value = !openModal.value;
 };
+
+onMounted(() => {
+  getProfessionalProfileDetails();
+  console.log(bgPicture.value, 'bgPicture');
+});
 </script>
 
 <style lang="scss" scoped>

@@ -48,11 +48,7 @@
     </v-card>
   </v-dialog>
   <Teleport to="body">
-    <PropositionAccepted
-      v-model:is-proposition-accepted="isAccepted"
-      :uuid="propositionUuid"
-      @message-sent="handleMessageSent"
-    />
+    <PropositionAccepted v-model:is-proposition-accepted="isAccepted" :uuid="propositionUuid" />
   </Teleport>
 </template>
 

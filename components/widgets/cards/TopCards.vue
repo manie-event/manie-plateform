@@ -18,10 +18,6 @@
 import { textCardsData } from '@/_mockApis/components/dashboards/dashboard2';
 import { Icon } from '@iconify/vue';
 
-// Evenement sélectionnés All time
-// Evenement signés all time
-// CA all time
-
 const propositionSelected = computed(() => {});
 </script>
 <style scoped>

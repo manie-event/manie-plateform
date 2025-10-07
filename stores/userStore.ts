@@ -37,7 +37,9 @@ export const useUserStore = defineStore('userStore', () => {
   const isStoringUserAccepeted = ref(false);
   const professionnalServices = ref<Services[]>([]);
   const keywords = ref<Keywords[]>([]);
-  const bgPicture = ref('/images/backgrounds/profilebg-2.jpg');
+  const bgPicture = ref();
+
+  const definePictureBanner = computed(() => {});
 
   // setters
   const setUser = (userData: User) => {

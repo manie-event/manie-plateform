@@ -61,6 +61,7 @@ interface _GlobalComponents {
     'DashboardsDashboard2ProfileCards': typeof import("../components/dashboards/dashboard2/ProfileCards.vue")['default']
     'DashboardsDashboard2ProfitExpanse': typeof import("../components/dashboards/dashboard2/ProfitExpanse.vue")['default']
     'DashboardsDashboard2PropositionAccepted': typeof import("../components/dashboards/dashboard2/PropositionAccepted.vue")['default']
+    'DashboardsDashboard2PropositionDetails': typeof import("../components/dashboards/dashboard2/PropositionDetails.vue")['default']
     'DashboardsDashboard2TextCards': typeof import("../components/dashboards/dashboard2/TextCards.vue")['default']
     'DashboardsDashboard2TrafficDistribution': typeof import("../components/dashboards/dashboard2/TrafficDistribution.vue")['default']
     'DashboardsDashboard2UpcommingSchedule': typeof import("../components/dashboards/dashboard2/UpcommingSchedule.vue")['default']
@@ -427,6 +428,7 @@ interface _GlobalComponents {
     'LazyDashboardsDashboard2ProfileCards': LazyComponent<typeof import("../components/dashboards/dashboard2/ProfileCards.vue")['default']>
     'LazyDashboardsDashboard2ProfitExpanse': LazyComponent<typeof import("../components/dashboards/dashboard2/ProfitExpanse.vue")['default']>
     'LazyDashboardsDashboard2PropositionAccepted': LazyComponent<typeof import("../components/dashboards/dashboard2/PropositionAccepted.vue")['default']>
+    'LazyDashboardsDashboard2PropositionDetails': LazyComponent<typeof import("../components/dashboards/dashboard2/PropositionDetails.vue")['default']>
     'LazyDashboardsDashboard2TextCards': LazyComponent<typeof import("../components/dashboards/dashboard2/TextCards.vue")['default']>
     'LazyDashboardsDashboard2TrafficDistribution': LazyComponent<typeof import("../components/dashboards/dashboard2/TrafficDistribution.vue")['default']>
     'LazyDashboardsDashboard2UpcommingSchedule': LazyComponent<typeof import("../components/dashboards/dashboard2/UpcommingSchedule.vue")['default']>
@@ -799,6 +801,7 @@ export const DashboardsDashboard2ProfessionalMarketPlace: typeof import("../comp
 export const DashboardsDashboard2ProfileCards: typeof import("../components/dashboards/dashboard2/ProfileCards.vue")['default']
 export const DashboardsDashboard2ProfitExpanse: typeof import("../components/dashboards/dashboard2/ProfitExpanse.vue")['default']
 export const DashboardsDashboard2PropositionAccepted: typeof import("../components/dashboards/dashboard2/PropositionAccepted.vue")['default']
+export const DashboardsDashboard2PropositionDetails: typeof import("../components/dashboards/dashboard2/PropositionDetails.vue")['default']
 export const DashboardsDashboard2TextCards: typeof import("../components/dashboards/dashboard2/TextCards.vue")['default']
 export const DashboardsDashboard2TrafficDistribution: typeof import("../components/dashboards/dashboard2/TrafficDistribution.vue")['default']
 export const DashboardsDashboard2UpcommingSchedule: typeof import("../components/dashboards/dashboard2/UpcommingSchedule.vue")['default']
@@ -1165,6 +1168,7 @@ export const LazyDashboardsDashboard2ProfessionalMarketPlace: LazyComponent<type
 export const LazyDashboardsDashboard2ProfileCards: LazyComponent<typeof import("../components/dashboards/dashboard2/ProfileCards.vue")['default']>
 export const LazyDashboardsDashboard2ProfitExpanse: LazyComponent<typeof import("../components/dashboards/dashboard2/ProfitExpanse.vue")['default']>
 export const LazyDashboardsDashboard2PropositionAccepted: LazyComponent<typeof import("../components/dashboards/dashboard2/PropositionAccepted.vue")['default']>
+export const LazyDashboardsDashboard2PropositionDetails: LazyComponent<typeof import("../components/dashboards/dashboard2/PropositionDetails.vue")['default']>
 export const LazyDashboardsDashboard2TextCards: LazyComponent<typeof import("../components/dashboards/dashboard2/TextCards.vue")['default']>
 export const LazyDashboardsDashboard2TrafficDistribution: LazyComponent<typeof import("../components/dashboards/dashboard2/TrafficDistribution.vue")['default']>
 export const LazyDashboardsDashboard2UpcommingSchedule: LazyComponent<typeof import("../components/dashboards/dashboard2/UpcommingSchedule.vue")['default']>

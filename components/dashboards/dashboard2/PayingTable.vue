@@ -66,7 +66,9 @@
                   >
                 </td>
                 <td>
-                  <v-btn color="primary">voir plus+</v-btn>
+                  <v-btn color="primary" @click="findSelectedProposition(item.proposition.uuid)"
+                    >voir plus+</v-btn
+                  >
                 </td>
               </tr>
             </tbody>
@@ -94,6 +96,10 @@
     </v-card-text>
   </VCard>
   <Teleport to="body">
+    <PropositionDetails
+      v-model:open-proposition-detail="openMarketModal"
+      :selectedProposition="selectedPropositionInformation"
+    />
     <errorToaster></errorToaster>
   </Teleport>
 </template>
@@ -104,6 +110,7 @@ import EmptyState from '@/public/images/empty-state/profil-vides.svg';
 import { Teleport } from 'vue';
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
 import { usePropositionStore } from '~/stores/propositionStore';
+import PropositionDetails from './PropositionDetails.vue';
 
 const { setPropositions } = usePropositionStore();
 const { serviceEventProposition } = storeToRefs(usePropositionStore());
@@ -138,11 +145,20 @@ const getStatusName = (status: string) => {
 
 const getDate = (date: string[]) => formatDate(date);
 const customizer = useCustomizerStore();
+const selectedPropositionInformation = ref<EventModelForProposition>();
+const openMarketModal = ref(false);
 
 const svgColor = computed(() => {
   return customizer.actTheme === 'DARK_BLUE_THEME' ? '#FFFFFF' : '#000000';
 });
 
+const findSelectedProposition = (propositionUuid: string) => {
+  selectedPropositionInformation.value = serviceEventProposition.value.find(
+    (p) => p.proposition.uuid === propositionUuid
+  );
+
+  openMarketModal.value = true;
+};
 const selectedProposition = computed(() =>
   serviceEventProposition.value.filter(
     (proposition: EventModelForProposition) => proposition.proposition.professionalMessage

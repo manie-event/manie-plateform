@@ -45,6 +45,22 @@ const getCategory = computed(() => {
   }
 });
 
+const getInitials = computed(() => {
+  if (username) {
+    return username
+      .split(' ') // coupe sur les espaces → ['Manie', 'Events']
+      .filter(Boolean) // enlève les chaînes vides (au cas où il y a des doubles espaces)
+      .map((word) => word[0].toUpperCase()) // prend la première lettre et la met en majuscule
+      .join('');
+  } else if (proName) {
+    return proName
+      .split(' ') // coupe sur les espaces → ['Manie', 'Events']
+      .filter(Boolean) // enlève les chaînes vides (au cas où il y a des doubles espaces)
+      .map((word) => word[0].toUpperCase()) // prend la première lettre et la met en majuscule
+      .join('');
+  }
+});
+
 onMounted(async () => {
   if (isProfessional && isProfileCreated.value) {
     await getProfessionalProfileDetails();
@@ -68,14 +84,7 @@ onMounted(async () => {
     <template v-slot:activator="{ props }">
       <div class="text-left px-0 cursor-pointer" variant="text" v-bind="props">
         <div class="d-flex align-center">
-          <v-avatar size="50">
-            <img
-              src="/images/profile/user6.jpg"
-              width="50"
-              alt="profile picture"
-              :class="{ 'profile-not-defined': !isProfileCreated }"
-            />
-          </v-avatar>
+          <div class="avatar">{{ getInitials }}</div>
           <div class="ml-md-4 d-md-block d-none">
             <h6 class="text-h6 d-flex align-center text-black font-weight-semibold">
               {{ getNameDependingOnCategory }}
@@ -93,9 +102,7 @@ onMounted(async () => {
         </div>
 
         <div class="d-flex align-center mt-5 pb-6">
-          <v-avatar size="90">
-            <img src="/images/profile/user6.jpg" width="90" />
-          </v-avatar>
+          <div class="avatar">{{ getInitials }}</div>
           <div class="ml-5">
             <h6 class="text-h5 mb-n1">{{ getNameDependingOnCategory }}</h6>
             <span class="text-subtitle-1 font-weight-regular text-grey100 font-weight-medium">{{
@@ -179,6 +186,12 @@ onMounted(async () => {
   </v-menu>
 </template>
 <style scoped>
+.avatar {
+  position: relative;
+  padding: 6px;
+  border-radius: 50%;
+  border: 1px solid rgb(213, 213, 213);
+}
 .profile-not-defined {
   padding: 2px;
   border-radius: 50%;
