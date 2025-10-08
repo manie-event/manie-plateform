@@ -13,4 +13,6 @@ export const ERROR_MESSAGES = {
   'Invalid user credentials': 'Identifiants utilisateur invalides, veuillez réessayer.',
   'insert into "users" ("category", "created_at", "email", "password", "updated_at", "username", "uuid") values ($1, $2, $3, $4, $5, $6, $7) returning "id" - duplicate key value violates unique constraint "users_email_unique"':
     "L'adresse e-mail est déjà utilisée, veuillez en choisir une autre.",
+  'You do not have enough credits to accept this event service proposition':
+    "Vous n'avez pas assez de jeton pour vous positionner, veuillez en racheter",
 };

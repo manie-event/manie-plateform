@@ -12,7 +12,6 @@ export const useCartStore = defineStore('cartStore', () => {
 
   const initializeTokenBalance = (balance: number) => {
     userTokenBalance.value = Number(balance) || 0;
-    console.log(userTokenBalance.value, 'userTokenBalance.value');
   };
 
   const setBillingInfo = (billingInfo: BillingInfo) => {

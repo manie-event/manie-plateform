@@ -114,6 +114,8 @@ export const useProfessionalProfile = () => {
       );
 
       if (data?.imageUrl) {
+        console.log(data.imageUrl, 'data.imageUrl');
+
         sendNewPhotoOnProfile(data.imageUrl);
       }
 

@@ -3,20 +3,19 @@
     <v-card>
       <v-card-title class="text-h5">Professional Market Place</v-card-title>
       <v-card-text>
-        <div v-if="props.propositionFiltered && paginatedEvents.length">
+        <div v-if="props.propositionFiltered.length > 0 && paginatedEvents.length > 0">
           <v-card v-for="proposition in paginatedEvents">
             <v-card-text>
               {{ proposition }}
-              <v-btn color="success" @click="openPropositionAcceptedModal(proposition.serviceUuid)"
+              <v-btn
+                color="success"
+                @click="openPropositionAcceptedModal(proposition.proposition.uuid)"
                 >Je souhaite me positionner sur cette annonce</v-btn
               >
             </v-card-text>
           </v-card>
         </div>
-        <div
-          v-else-if="!props.propositionFiltered && !paginatedEvents.length"
-          class="position-relative"
-        >
+        <div v-else-if="paginatedEvents.length < 1" class="position-relative">
           <v-col cols="12" class="mt-6">
             <BaseEmptyState
               :style="{

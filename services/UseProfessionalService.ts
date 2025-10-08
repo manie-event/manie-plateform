@@ -6,7 +6,7 @@ export const useProfessionalService = () => {
   const token = useCookie('token');
   const { setServicesFiltered } = eventsStore();
   // const { professionalProfile } = storeToRefs(useUserStore());
-  // const { setProfessionalsByService } = professionalsStore();
+  const { setProfessionalServices } = usePropositionStore();
 
   const professionalUuid = localStorage.getItem('professional-uuid');
 
@@ -39,7 +39,7 @@ export const useProfessionalService = () => {
           },
         }
       );
-
+      setProfessionalServices(data.data);
       return data.data ?? [];
     } catch (error: unknown) {
       addError({ message: "Une erreur est survenue lors de l'envoi du message." });

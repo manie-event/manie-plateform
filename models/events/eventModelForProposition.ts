@@ -6,12 +6,11 @@ export interface EventModelForProposition {
   budget: number;
   location: string;
   people: string;
-  created_at: string;
-  updated_at: string;
   name: string;
   date: string[];
   theme: string;
   group_type: string;
+  professionalServiceUuid: string;
   duration: string;
   organized_for: string;
   proposition: PropositionInterface;

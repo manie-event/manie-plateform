@@ -2,9 +2,7 @@
   <v-card elevation="10" class="overflow-visible">
     <v-card-text class="position-relative pb-5">
       <h5 class="text-h5 mb-1 font-weight-semibold">
-        {{
-          `${username ? username : professionalUser?.name}, content de vous voir PROUTPROUT ici,`
-        }}
+        {{ `${proName ? proName : professionalUser?.name}, content de vous voir ici,` }}
       </h5>
       <div class="text-subtitle-1 text-grey100 pb-1">Un coup d'oeil sur les annonces du jour ?</div>
       <v-btn
@@ -35,24 +33,30 @@ import { useEventServiceProposition } from '@/composables/event-service-proposit
 import PhotoAModifier from '@/public/images/backgrounds/school.png';
 import Loader from '@/public/images/svgs/minimal-spinner.svg';
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
-import { usePropositionStore } from '~/stores/propositionStore';
 import ProfessionalMarketPlace from './ProfessionalMarketPlace.vue';
 
-const { user, professionalUser } = storeToRefs(useUserStore());
+const { professionalUser } = storeToRefs(useUserStore());
 const { serviceEventProposition } = storeToRefs(usePropositionStore());
 const { getServicePropositionForProfessional } = useEventServiceProposition();
 const { servicePropositionAvailable } = useEventServiceProposition();
 
-const username = localStorage.getItem('username');
-
+const proName = localStorage.getItem('pro-name');
 const openMarketModal = ref(false);
 const propositionFiltered = ref<EventModelForProposition[]>([]);
 
 const isPropositionStillAvailable = () => {
-  propositionFiltered.value = serviceEventProposition.value.filter(
-    (proposition: EventModelForProposition) => isEventDone(proposition.date[1])
-  );
+  propositionFiltered.value = serviceEventProposition.value
+    .filter((proposition: EventModelForProposition) => isEventDone(proposition.date[1]))
+    .filter((proposition) => !proposition.proposition.professionalMessage);
 };
+
+watch(
+  serviceEventProposition,
+  () => {
+    isPropositionStillAvailable();
+  },
+  { deep: true }
+);
 
 onMounted(async () => {
   await getServicePropositionForProfessional();

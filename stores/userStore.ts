@@ -37,7 +37,9 @@ export const useUserStore = defineStore('userStore', () => {
   const isStoringUserAccepeted = ref(false);
   const professionnalServices = ref<Services[]>([]);
   const keywords = ref<Keywords[]>([]);
-  const bgPicture = ref('/images/backgrounds/profilebg-2.jpg');
+  const bgPicture = ref();
+
+  const definePictureBanner = computed(() => {});
 
   // setters
   const setUser = (userData: User) => {
@@ -67,8 +69,6 @@ export const useUserStore = defineStore('userStore', () => {
 
   // professional setters
   const setProfessionalUser = (newProfessionalUser: ProfessionalProfile) => {
-    console.log(newProfessionalUser, 'setProfessionalUser');
-
     professionalUser.value = {
       ...newProfessionalUser,
       uuid: newProfessionalUser.uuid?.replace(/[""]/g, '') || '',
@@ -77,6 +77,7 @@ export const useUserStore = defineStore('userStore', () => {
 
     localStorage.setItem('professional-uuid', professionalUser.value.uuid || '');
     localStorage.setItem('is-profile-verified', JSON.stringify(true));
+    localStorage.setItem('pro-name', newProfessionalUser.name);
     isProfileCreated.value = true;
   };
 

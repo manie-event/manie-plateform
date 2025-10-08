@@ -59,17 +59,13 @@ onMounted(async () => {
 
   const result = await processStripeReturn(sessionId.value);
 
-  console.log(result, 'RESULT');
-
   if (!result.success) {
     console.error('Paiement non validé:', result.message);
-    // tu peux rediriger vers une page d’erreur ou afficher un message
   } else {
     setTimeout(() => {
       navigateTo('/dashboards/dashboard2', { replace: true });
     }, 3000);
     console.log('Paiement validé:', result);
-    // Mettre à jour ton UI ici, par exemple un message de succès avec les détails
   }
 });
 </script>
