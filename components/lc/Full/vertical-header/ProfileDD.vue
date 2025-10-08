@@ -46,18 +46,20 @@ const getCategory = computed(() => {
 });
 
 const getInitials = computed(() => {
-  if (username) {
-    return username
-      .split(' ') // coupe sur les espaces → ['Manie', 'Events']
-      .filter(Boolean) // enlève les chaînes vides (au cas où il y a des doubles espaces)
-      .map((word) => word[0].toUpperCase()) // prend la première lettre et la met en majuscule
-      .join('');
-  } else if (proName) {
+  if (proName) {
     return proName
       .split(' ') // coupe sur les espaces → ['Manie', 'Events']
       .filter(Boolean) // enlève les chaînes vides (au cas où il y a des doubles espaces)
       .map((word) => word[0].toUpperCase()) // prend la première lettre et la met en majuscule
       .join('');
+  } else {
+    if (username) {
+      return username
+        .split(' ') // coupe sur les espaces → ['Manie', 'Events']
+        .filter(Boolean) // enlève les chaînes vides (au cas où il y a des doubles espaces)
+        .map((word) => word[0].toUpperCase()) // prend la première lettre et la met en majuscule
+        .join('');
+    }
   }
 });
 
@@ -102,7 +104,14 @@ onMounted(async () => {
         </div>
 
         <div class="d-flex align-center mt-5 pb-6">
-          <div class="avatar">{{ getInitials }}</div>
+          <div
+            class="avatar"
+            :class="{
+              'profile-not-defined': !isProfileCreated,
+            }"
+          >
+            {{ getInitials }}
+          </div>
           <div class="ml-5">
             <h6 class="text-h5 mb-n1">{{ getNameDependingOnCategory }}</h6>
             <span class="text-subtitle-1 font-weight-regular text-grey100 font-weight-medium">{{

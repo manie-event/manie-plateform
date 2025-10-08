@@ -1,9 +1,11 @@
 <template>
+  <v-btn>Revenir à votre Dashboard</v-btn>
+
   <div class="position-relative">
     <img
       :src="professionalUser?.picture ? professionalUser?.picture : bgPicture"
       alt="profile"
-      class="w-100 max-h-600 rounded-md obj-cover"
+      class="w-100 max-h-400 rounded-md obj-cover"
     />
     <button @click="triggerClickFileInput" class="profile-banner__change-image">+</button>
     <input
@@ -149,7 +151,6 @@ const openEditProfilModal = () => {
 
 onMounted(() => {
   getProfessionalProfileDetails();
-  console.log(bgPicture.value, 'bgPicture');
 });
 </script>
 
