@@ -53,7 +53,8 @@ interface _GlobalComponents {
     'DashboardsDashboardClientPayments': typeof import("../components/dashboards/dashboard-client/Payments.vue")['default']
     'DashboardsDashboardClientProductsChart': typeof import("../components/dashboards/dashboard-client/ProductsChart.vue")['default']
     'DashboardsDashboardClientProductsTable': typeof import("../components/dashboards/dashboard-client/ProductsTable.vue")['default']
-    'DashboardsDashboardClientVisitFromUsa': typeof import("../components/dashboards/dashboard-client/VisitFromUsa.vue")['default']
+    'DashboardsDashboardClientProjectLeap': typeof import("../components/dashboards/dashboard-client/ProjectLeap.vue")['default']
+    'DashboardsDashboardClientPropositionsPresta': typeof import("../components/dashboards/dashboard-client/PropositionsPresta.vue")['default']
     'DashboardsDashboard2FigmaCard': typeof import("../components/dashboards/dashboard2/FigmaCard.vue")['default']
     'DashboardsDashboard2PayingTable': typeof import("../components/dashboards/dashboard2/PayingTable.vue")['default']
     'DashboardsDashboard2ProductSales': typeof import("../components/dashboards/dashboard2/ProductSales.vue")['default']
@@ -420,7 +421,8 @@ interface _GlobalComponents {
     'LazyDashboardsDashboardClientPayments': LazyComponent<typeof import("../components/dashboards/dashboard-client/Payments.vue")['default']>
     'LazyDashboardsDashboardClientProductsChart': LazyComponent<typeof import("../components/dashboards/dashboard-client/ProductsChart.vue")['default']>
     'LazyDashboardsDashboardClientProductsTable': LazyComponent<typeof import("../components/dashboards/dashboard-client/ProductsTable.vue")['default']>
-    'LazyDashboardsDashboardClientVisitFromUsa': LazyComponent<typeof import("../components/dashboards/dashboard-client/VisitFromUsa.vue")['default']>
+    'LazyDashboardsDashboardClientProjectLeap': LazyComponent<typeof import("../components/dashboards/dashboard-client/ProjectLeap.vue")['default']>
+    'LazyDashboardsDashboardClientPropositionsPresta': LazyComponent<typeof import("../components/dashboards/dashboard-client/PropositionsPresta.vue")['default']>
     'LazyDashboardsDashboard2FigmaCard': LazyComponent<typeof import("../components/dashboards/dashboard2/FigmaCard.vue")['default']>
     'LazyDashboardsDashboard2PayingTable': LazyComponent<typeof import("../components/dashboards/dashboard2/PayingTable.vue")['default']>
     'LazyDashboardsDashboard2ProductSales': LazyComponent<typeof import("../components/dashboards/dashboard2/ProductSales.vue")['default']>
@@ -793,7 +795,8 @@ export const DashboardsDashboardClientLatestReviews: typeof import("../component
 export const DashboardsDashboardClientPayments: typeof import("../components/dashboards/dashboard-client/Payments.vue")['default']
 export const DashboardsDashboardClientProductsChart: typeof import("../components/dashboards/dashboard-client/ProductsChart.vue")['default']
 export const DashboardsDashboardClientProductsTable: typeof import("../components/dashboards/dashboard-client/ProductsTable.vue")['default']
-export const DashboardsDashboardClientVisitFromUsa: typeof import("../components/dashboards/dashboard-client/VisitFromUsa.vue")['default']
+export const DashboardsDashboardClientProjectLeap: typeof import("../components/dashboards/dashboard-client/ProjectLeap.vue")['default']
+export const DashboardsDashboardClientPropositionsPresta: typeof import("../components/dashboards/dashboard-client/PropositionsPresta.vue")['default']
 export const DashboardsDashboard2FigmaCard: typeof import("../components/dashboards/dashboard2/FigmaCard.vue")['default']
 export const DashboardsDashboard2PayingTable: typeof import("../components/dashboards/dashboard2/PayingTable.vue")['default']
 export const DashboardsDashboard2ProductSales: typeof import("../components/dashboards/dashboard2/ProductSales.vue")['default']
@@ -1160,7 +1163,8 @@ export const LazyDashboardsDashboardClientLatestReviews: LazyComponent<typeof im
 export const LazyDashboardsDashboardClientPayments: LazyComponent<typeof import("../components/dashboards/dashboard-client/Payments.vue")['default']>
 export const LazyDashboardsDashboardClientProductsChart: LazyComponent<typeof import("../components/dashboards/dashboard-client/ProductsChart.vue")['default']>
 export const LazyDashboardsDashboardClientProductsTable: LazyComponent<typeof import("../components/dashboards/dashboard-client/ProductsTable.vue")['default']>
-export const LazyDashboardsDashboardClientVisitFromUsa: LazyComponent<typeof import("../components/dashboards/dashboard-client/VisitFromUsa.vue")['default']>
+export const LazyDashboardsDashboardClientProjectLeap: LazyComponent<typeof import("../components/dashboards/dashboard-client/ProjectLeap.vue")['default']>
+export const LazyDashboardsDashboardClientPropositionsPresta: LazyComponent<typeof import("../components/dashboards/dashboard-client/PropositionsPresta.vue")['default']>
 export const LazyDashboardsDashboard2FigmaCard: LazyComponent<typeof import("../components/dashboards/dashboard2/FigmaCard.vue")['default']>
 export const LazyDashboardsDashboard2PayingTable: LazyComponent<typeof import("../components/dashboards/dashboard2/PayingTable.vue")['default']>
 export const LazyDashboardsDashboard2ProductSales: LazyComponent<typeof import("../components/dashboards/dashboard2/ProductSales.vue")['default']>

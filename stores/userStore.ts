@@ -57,10 +57,9 @@ export const useUserStore = defineStore('userStore', () => {
   // client setters
   const setClientProfile = (newProfile: clientProfile) => {
     clientProfile.value = newProfile;
-    localStorage.setItem(
-      'client-profile',
-      JSON.stringify({ ...clientProfile.value, email: null, phoneNumber: null, address: null })
-    );
+    isProfileCreated.value = true;
+    localStorage.setItem('client-uuid', newProfile.uuid);
+    localStorage.setItem('client-name', newProfile.username);
   };
 
   const updateClientProfile = (updatedProfile: clientProfile) => {
@@ -87,7 +86,6 @@ export const useUserStore = defineStore('userStore', () => {
 
   const setProfessionalServices = (services: Services[]) => {
     professionnalServices.value = services;
-    console.log(professionnalServices.value, 'professionnalServices.value');
   };
 
   const setKeywords = (newKeywords: Keywords[]) => {

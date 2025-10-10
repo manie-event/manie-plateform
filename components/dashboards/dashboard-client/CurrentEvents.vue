@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="10" class="roun-">
+  <v-card elevation="10">
     <v-card-text class="position-relative current-events__container">
       <div class="d-flex justify-flex-start d-block align-center">
         <div>
@@ -9,7 +9,7 @@
         </div>
       </div>
       <div>
-        <div class="mt-10 mb-sm-12 mb-8 current-events__cards" v-if="events.length > 0">
+        <div class="current-events__cards" v-if="events.length > 0">
           <div
             v-for="event in paginatedEvents"
             class="current-events__card"
@@ -67,7 +67,7 @@ import emptyCart from '@/public/images/svgs/empty-cart.svg';
 import { eventsStore } from '@/stores/events';
 import CustomerForm from '~/components/questionnaires/CustomerForm.vue';
 import type { eventModel } from '~/models/events/eventModel';
-import type { QuestionnaireClient } from '~/models/questionnaires/QuestionnaireClient';
+import type { QuestionnaireClient } from '~/models/questionnaire/QuestionnaireClientModel';
 import { useEventService } from '~/services/UseEventService';
 import EventDetails from './EventDetails.vue';
 
@@ -128,7 +128,7 @@ onMounted(async () => {
 .current-events {
   &__container {
     position: relative;
-    min-height: 300px;
+    height: 250px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -142,12 +142,12 @@ onMounted(async () => {
   &__card {
     position: relative;
     width: 30%;
-    padding: 1.5rem;
+    padding: 1rem 1.5rem;
     display: flex;
     border-radius: 8px;
     align-items: center;
     justify-content: flex-start;
-    min-height: 200px;
+    min-height: 150px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
     &.food-truck-bg {
       background: url('/public/images/backgrounds/test.jpg');

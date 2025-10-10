@@ -23,6 +23,29 @@ export const useProfessionalProposition = () => {
     }
   };
 
+  const getListPropositionByEventService = async (professionalServiceUuid: string) => {
+    try {
+      const response = await axios.get(
+        `${config.public.apiUrl}/event-service-proposition/list-by-event-service/${professionalServiceUuid}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      if (response?.data) {
+        const propositions = response.data.data;
+
+        // setPropositions(propositions);
+        return propositions;
+      }
+    } catch (error) {
+      console.error('❌ Erreur getListProfessionalProposition:', error);
+      return null;
+    }
+  };
+
   const getListProfessionalProposition = async (professionalServiceUuid: string) => {
     try {
       const response = await axios.get(
@@ -72,6 +95,7 @@ export const useProfessionalProposition = () => {
   return {
     getListProfessionalProposition,
     getListEventServiceProposition,
+    getListPropositionByEventService,
     updateProfessionalMessage,
   };
 };

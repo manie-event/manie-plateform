@@ -1,16 +1,19 @@
 <script setup lang="ts">
 import CurrentEvents from '@/components/dashboards/dashboard-client/CurrentEvents.vue';
-import Customers from '@/components/dashboards/dashboard-client/Customers.vue';
-import LatestDeal from '@/components/dashboards/dashboard-client/LatestDeals.vue';
-import LatestReviews from '@/components/dashboards/dashboard-client/LatestReviews.vue';
-import Payments from '@/components/dashboards/dashboard-client/Payments.vue';
+import Events from '@/components/dashboards/dashboard-client/Events.vue';
 import Products from '@/components/dashboards/dashboard-client/ProductsChart.vue';
-import ProductsTable from '@/components/dashboards/dashboard-client/ProductsTable.vue';
-import VisitFromUsa from '@/components/dashboards/dashboard-client/VisitFromUsa.vue';
-import { useClientProfil } from '@/composables/client-user/UseClientProfil';
-import EmptyState from '@/public/images/empty-state/profil-vide.png';
+import ProjectLeap from '@/components/dashboards/dashboard-client/ProjectLeap.vue';
+import EmptyState from '@/public/images/empty-state/profil-vide.svg';
+import { storeToRefs } from 'pinia';
+import { onMounted } from 'vue';
 import BaseEmptyState from '~/components/common/BaseEmptyState.vue';
-import Events from '~/components/dashboards/dashboard-client/Events.vue';
+import Customers from '~/components/dashboards/dashboard-client/Customers.vue';
+import LatestDeals from '~/components/dashboards/dashboard-client/LatestDeals.vue';
+import LatestReviews from '~/components/dashboards/dashboard-client/LatestReviews.vue';
+import Payments from '~/components/dashboards/dashboard-client/Payments.vue';
+import ProductsTable from '~/components/dashboards/dashboard-client/ProductsTable.vue';
+import PropositionsPresta from '~/components/dashboards/dashboard-client/PropositionsPresta.vue';
+import { useClientProfil } from '~/composables/client-user/UseClientProfil';
 import { useKeywords } from '~/composables/professional-user/UseKeywords';
 import { UserCategory } from '~/models/enums/userCategoryEnums';
 import { useProfessionalService } from '~/services/UseProfessionalService';
@@ -39,15 +42,21 @@ onMounted(async () => {
     <!-- Events et CurrentEvents sur la même ligne -->
     <v-col cols="12">
       <v-row>
-        <v-col cols="4">
+        <v-col cols="2">
           <Events />
         </v-col>
-        <v-col cols="8">
+        <v-col cols="6">
           <div style="display: flex; flex-direction: column">
             <CurrentEvents />
           </div>
         </v-col>
+        <v-col cols="4">
+          <ProjectLeap />
+        </v-col>
       </v-row>
+    </v-col>
+    <v-col cols="12" sm="12" lg="12">
+      <PropositionsPresta />
     </v-col>
 
     <!-- Payments - 6 colonnes -->
@@ -62,7 +71,7 @@ onMounted(async () => {
 
     <!-- LatestDeal - 6 colonnes -->
     <v-col cols="12" sm="6">
-      <LatestDeal />
+      <LatestDeals />
     </v-col>
 
     <!-- Customers - 6 colonnes -->
@@ -73,11 +82,6 @@ onMounted(async () => {
     <!-- ProductsTable - 8 colonnes sur grand écran -->
     <v-col cols="12" sm="12" lg="8">
       <ProductsTable />
-    </v-col>
-
-    <!-- VisitFromUsa - 4 colonnes sur grand écran -->
-    <v-col cols="12" sm="12" lg="4">
-      <VisitFromUsa />
     </v-col>
 
     <!-- LatestReviews - pleine largeur -->

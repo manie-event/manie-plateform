@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="10" class="roun-">
+  <v-card elevation="10">
     <v-card-text class="position-relative events__container">
       <div class="d-flex justify-space-between d-block align-center">
         <div class="mb-6">
@@ -46,25 +46,24 @@ const onSubmit = (payload: EventCreatePayload) => {
 .events {
   &__container {
     position: relative;
-    min-height: 300px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.5rem;
   }
   &__add-button {
-    border-radius: 11%;
-    color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
     font-weight: 900;
-    width: 80px;
-    height: 80px;
-    background: black;
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
+    font-size: 1.2rem;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 1px solid black;
     transition: all 0.4s ease-in;
     &:hover {
-      background: linear-gradient(310deg, rgba(235, 247, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
-      width: 100px;
-      border: 1px solid black;
-      color: black;
-      height: 100px;
+      background: black;
+      color: rgb(255, 255, 255);
       transition: all 0.4s ease-out;
     }
   }
