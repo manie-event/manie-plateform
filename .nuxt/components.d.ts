@@ -43,6 +43,7 @@ interface _GlobalComponents {
     'CommonErrorToaster': typeof import("../components/common/errorToaster.vue")['default']
     'CommonSuccessToaster': typeof import("../components/common/successToaster.vue")['default']
     'DashboardsDashboardClientAddEventService': typeof import("../components/dashboards/dashboard-client/AddEventService.vue")['default']
+    'DashboardsDashboardClientCheckList': typeof import("../components/dashboards/dashboard-client/CheckList.vue")['default']
     'DashboardsDashboardClientCongratulationsCard': typeof import("../components/dashboards/dashboard-client/CongratulationsCard.vue")['default']
     'DashboardsDashboardClientCurrentEvents': typeof import("../components/dashboards/dashboard-client/CurrentEvents.vue")['default']
     'DashboardsDashboardClientCustomers': typeof import("../components/dashboards/dashboard-client/Customers.vue")['default']
@@ -411,6 +412,7 @@ interface _GlobalComponents {
     'LazyCommonErrorToaster': LazyComponent<typeof import("../components/common/errorToaster.vue")['default']>
     'LazyCommonSuccessToaster': LazyComponent<typeof import("../components/common/successToaster.vue")['default']>
     'LazyDashboardsDashboardClientAddEventService': LazyComponent<typeof import("../components/dashboards/dashboard-client/AddEventService.vue")['default']>
+    'LazyDashboardsDashboardClientCheckList': LazyComponent<typeof import("../components/dashboards/dashboard-client/CheckList.vue")['default']>
     'LazyDashboardsDashboardClientCongratulationsCard': LazyComponent<typeof import("../components/dashboards/dashboard-client/CongratulationsCard.vue")['default']>
     'LazyDashboardsDashboardClientCurrentEvents': LazyComponent<typeof import("../components/dashboards/dashboard-client/CurrentEvents.vue")['default']>
     'LazyDashboardsDashboardClientCustomers': LazyComponent<typeof import("../components/dashboards/dashboard-client/Customers.vue")['default']>
@@ -785,6 +787,7 @@ export const CommonLoader: typeof import("../components/common/Loader.vue")['def
 export const CommonErrorToaster: typeof import("../components/common/errorToaster.vue")['default']
 export const CommonSuccessToaster: typeof import("../components/common/successToaster.vue")['default']
 export const DashboardsDashboardClientAddEventService: typeof import("../components/dashboards/dashboard-client/AddEventService.vue")['default']
+export const DashboardsDashboardClientCheckList: typeof import("../components/dashboards/dashboard-client/CheckList.vue")['default']
 export const DashboardsDashboardClientCongratulationsCard: typeof import("../components/dashboards/dashboard-client/CongratulationsCard.vue")['default']
 export const DashboardsDashboardClientCurrentEvents: typeof import("../components/dashboards/dashboard-client/CurrentEvents.vue")['default']
 export const DashboardsDashboardClientCustomers: typeof import("../components/dashboards/dashboard-client/Customers.vue")['default']
@@ -1153,6 +1156,7 @@ export const LazyCommonLoader: LazyComponent<typeof import("../components/common
 export const LazyCommonErrorToaster: LazyComponent<typeof import("../components/common/errorToaster.vue")['default']>
 export const LazyCommonSuccessToaster: LazyComponent<typeof import("../components/common/successToaster.vue")['default']>
 export const LazyDashboardsDashboardClientAddEventService: LazyComponent<typeof import("../components/dashboards/dashboard-client/AddEventService.vue")['default']>
+export const LazyDashboardsDashboardClientCheckList: LazyComponent<typeof import("../components/dashboards/dashboard-client/CheckList.vue")['default']>
 export const LazyDashboardsDashboardClientCongratulationsCard: LazyComponent<typeof import("../components/dashboards/dashboard-client/CongratulationsCard.vue")['default']>
 export const LazyDashboardsDashboardClientCurrentEvents: LazyComponent<typeof import("../components/dashboards/dashboard-client/CurrentEvents.vue")['default']>
 export const LazyDashboardsDashboardClientCustomers: LazyComponent<typeof import("../components/dashboards/dashboard-client/Customers.vue")['default']>
