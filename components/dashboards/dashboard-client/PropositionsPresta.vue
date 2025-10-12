@@ -117,7 +117,15 @@
             }"
           >
             <template #image>
-              <EmptyState :style="{ color: svgColor }" class="transition-colors duration-300" />
+              <img
+                :src="
+                  customizer.actTheme === 'DARK_BLUE_THEME'
+                    ? '/images/empty-state-dark.svg'
+                    : '/images/empty-state-light.svg'
+                "
+                alt="No data"
+                style="width: 150px; height: auto; margin-bottom: 16px"
+              />
             </template>
             <template #description>
               <p class="text-subtitle-1">
@@ -131,18 +139,21 @@
   </VCard>
   <Teleport to="body">
     <PropositionDetails
+      v-if="selectedPropositionInformation"
       v-model:open-proposition-detail="openMarketModal"
-      :selectedProposition="selectedPropositionInformation"
+      :selectedProposition="selectedPropositionInformation!"
     />
     <errorToaster></errorToaster>
   </Teleport>
 </template>
 <script setup lang="ts">
+import BaseEmptyState from '@/components/common/BaseEmptyState.vue';
 import errorToaster from '@/components/common/errorToaster.vue';
 import { Icon } from '@iconify/vue';
 import { Teleport } from 'vue';
 import { useEventServiceProposition } from '~/composables/event-service-propositions/UseEventServiceProposition';
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
+import PropositionDetails from '../dashboard2/PropositionDetails.vue';
 
 const { getServicePropositionForClient } = useEventServiceProposition();
 const { professionalResponseProposition } = storeToRefs(usePropositionStore());

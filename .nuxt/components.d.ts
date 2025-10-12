@@ -23,6 +23,9 @@ interface _GlobalComponents {
     'AppsEcommerceCartStepsStepSecond': typeof import("../components/apps/ecommerce/cart/steps/StepSecond.vue")['default']
     'AppsEcommerceCartStepsTestStripe': typeof import("../components/apps/ecommerce/cart/steps/TestStripe.vue")['default']
     'AppsEcommerceCartStepsThankyou': typeof import("../components/apps/ecommerce/cart/steps/Thankyou.vue")['default']
+    'AppsNotesAddNote': typeof import("../components/apps/notes/AddNote.vue")['default']
+    'AppsNotesContent': typeof import("../components/apps/notes/NotesContent.vue")['default']
+    'AppsNotesListing': typeof import("../components/apps/notes/NotesListing.vue")['default']
     'AppsUserProfileEditClientProfil': typeof import("../components/apps/user-profile/EditClientProfil.vue")['default']
     'AppsUserProfileEditProfessionalProfil': typeof import("../components/apps/user-profile/EditProfessionalProfil.vue")['default']
     'AppsUserProfileIntroCard': typeof import("../components/apps/user-profile/IntroCard.vue")['default']
@@ -392,6 +395,9 @@ interface _GlobalComponents {
     'LazyAppsEcommerceCartStepsStepSecond': LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/StepSecond.vue")['default']>
     'LazyAppsEcommerceCartStepsTestStripe': LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/TestStripe.vue")['default']>
     'LazyAppsEcommerceCartStepsThankyou': LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/Thankyou.vue")['default']>
+    'LazyAppsNotesAddNote': LazyComponent<typeof import("../components/apps/notes/AddNote.vue")['default']>
+    'LazyAppsNotesContent': LazyComponent<typeof import("../components/apps/notes/NotesContent.vue")['default']>
+    'LazyAppsNotesListing': LazyComponent<typeof import("../components/apps/notes/NotesListing.vue")['default']>
     'LazyAppsUserProfileEditClientProfil': LazyComponent<typeof import("../components/apps/user-profile/EditClientProfil.vue")['default']>
     'LazyAppsUserProfileEditProfessionalProfil': LazyComponent<typeof import("../components/apps/user-profile/EditProfessionalProfil.vue")['default']>
     'LazyAppsUserProfileIntroCard': LazyComponent<typeof import("../components/apps/user-profile/IntroCard.vue")['default']>
@@ -767,6 +773,9 @@ export const AppsEcommerceCartStepsStepFirst: typeof import("../components/apps/
 export const AppsEcommerceCartStepsStepSecond: typeof import("../components/apps/ecommerce/cart/steps/StepSecond.vue")['default']
 export const AppsEcommerceCartStepsTestStripe: typeof import("../components/apps/ecommerce/cart/steps/TestStripe.vue")['default']
 export const AppsEcommerceCartStepsThankyou: typeof import("../components/apps/ecommerce/cart/steps/Thankyou.vue")['default']
+export const AppsNotesAddNote: typeof import("../components/apps/notes/AddNote.vue")['default']
+export const AppsNotesContent: typeof import("../components/apps/notes/NotesContent.vue")['default']
+export const AppsNotesListing: typeof import("../components/apps/notes/NotesListing.vue")['default']
 export const AppsUserProfileEditClientProfil: typeof import("../components/apps/user-profile/EditClientProfil.vue")['default']
 export const AppsUserProfileEditProfessionalProfil: typeof import("../components/apps/user-profile/EditProfessionalProfil.vue")['default']
 export const AppsUserProfileIntroCard: typeof import("../components/apps/user-profile/IntroCard.vue")['default']
@@ -1136,6 +1145,9 @@ export const LazyAppsEcommerceCartStepsStepFirst: LazyComponent<typeof import(".
 export const LazyAppsEcommerceCartStepsStepSecond: LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/StepSecond.vue")['default']>
 export const LazyAppsEcommerceCartStepsTestStripe: LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/TestStripe.vue")['default']>
 export const LazyAppsEcommerceCartStepsThankyou: LazyComponent<typeof import("../components/apps/ecommerce/cart/steps/Thankyou.vue")['default']>
+export const LazyAppsNotesAddNote: LazyComponent<typeof import("../components/apps/notes/AddNote.vue")['default']>
+export const LazyAppsNotesContent: LazyComponent<typeof import("../components/apps/notes/NotesContent.vue")['default']>
+export const LazyAppsNotesListing: LazyComponent<typeof import("../components/apps/notes/NotesListing.vue")['default']>
 export const LazyAppsUserProfileEditClientProfil: LazyComponent<typeof import("../components/apps/user-profile/EditClientProfil.vue")['default']>
 export const LazyAppsUserProfileEditProfessionalProfil: LazyComponent<typeof import("../components/apps/user-profile/EditProfessionalProfil.vue")['default']>
 export const LazyAppsUserProfileIntroCard: LazyComponent<typeof import("../components/apps/user-profile/IntroCard.vue")['default']>

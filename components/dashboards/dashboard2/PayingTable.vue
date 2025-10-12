@@ -97,6 +97,7 @@
   </VCard>
   <Teleport to="body">
     <PropositionDetails
+      v-if="selectedPropositionInformation"
       v-model:open-proposition-detail="openMarketModal"
       :selectedProposition="selectedPropositionInformation"
     />

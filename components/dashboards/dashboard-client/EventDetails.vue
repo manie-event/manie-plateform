@@ -7,11 +7,15 @@
           <h3 class="mb-4">Services de l'événement</h3>
           <v-row>
             <v-col cols="6">
-              <LatestDeals />
+              <LatestDeals :event="getEventProgression" />
             </v-col>
             <v-col cols="6">
               <Product />
             </v-col>
+            <v-col cols="12">
+              <Notes />
+            </v-col>
+            <!-- <v-col cols="6"> <ContactList /> </v-col> -->
             <v-col cols="12">
               <CheckList />
             </v-col>
@@ -55,23 +59,6 @@
               </v-list>
             </div>
 
-            <!-- Progression -->
-            <div class="w-100 mb-6">
-              <div class="d-flex justify-space-between mb-2">
-                <span class="text-caption">Progression</span>
-                <span class="text-caption font-weight-bold">{{ event.progressPercentage }}%</span>
-              </div>
-              <v-progress-linear
-                :model-value="event.progressPercentage"
-                color="success"
-                height="8"
-                rounded
-              />
-            </div>
-
-            <!-- Spacer pour pousser les boutons en bas -->
-            <div class="flex-grow-1"></div>
-
             <!-- Actions -->
             <v-btn
               @click="isEventModificationOpen = true"
@@ -99,20 +86,49 @@
 </template>
 <script setup lang="ts">
 import Product from '@/components/dashboards/dashboard-client/ProductsChart.vue';
+import Notes from '@/pages/apps/notes/index.vue';
 import { Teleport } from 'vue';
+import LatestDeals from '~/components/dashboards/dashboard-client/LatestDeals.vue';
 import CustomerForm from '~/components/questionnaires/CustomerForm.vue';
-import type { eventModel } from '~/models/events/eventModel';
+import type { eventModel, eventService } from '~/models/events/eventModel';
+import type { EventModelForProposition } from '~/models/events/eventModelForProgression';
 import type { QuestionnaireClient } from '~/models/questionnaire/QuestionnaireClientModel';
 import AddEventService from './AddEventService.vue';
 import CheckList from './CheckList.vue';
-import LatestDeals from './LatestDeals.vue';
 
 const isEventModificationOpen = ref(false);
 const isAddingServiceOpen = ref(false);
-defineProps<{
+const props = defineProps<{
   event: eventModel;
   answers: QuestionnaireClient;
 }>();
 
 const openEventDetails = defineModel<boolean>('modelValue', { default: false });
+
+const getEventProgression = computed(() => {
+  const uniqueEventServices = props.event.eventServices.reduce((acc: eventService[], current) => {
+    const existing = acc.find((es: eventService) => es.serviceUuid === current.serviceUuid);
+
+    if (!existing) {
+      acc.push(current);
+    } else if (current.status === 'completed' && existing.status !== 'completed') {
+      const index = acc.indexOf(existing);
+      acc[index] = current;
+    }
+
+    return acc;
+  }, [] as eventService[]);
+
+  const totalServices = uniqueEventServices.length;
+  const completedServices = props.event.eventServices.filter(
+    (es) => es.status === 'completed'
+  ).length;
+  const progression = totalServices > 0 ? Math.round((completedServices / totalServices) * 100) : 0;
+  return {
+    ...props.event,
+    progression: progression,
+    completedServices: completedServices,
+    totalServices: totalServices,
+  } as EventModelForProposition;
+});
 </script>
