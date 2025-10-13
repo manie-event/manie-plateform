@@ -50,6 +50,7 @@ interface _GlobalComponents {
     'DashboardsDashboardClientCongratulationsCard': typeof import("../components/dashboards/dashboard-client/CongratulationsCard.vue")['default']
     'DashboardsDashboardClientCurrentEvents': typeof import("../components/dashboards/dashboard-client/CurrentEvents.vue")['default']
     'DashboardsDashboardClientCustomers': typeof import("../components/dashboards/dashboard-client/Customers.vue")['default']
+    'DashboardsDashboardClientDateCounter': typeof import("../components/dashboards/dashboard-client/DateCounter.vue")['default']
     'DashboardsDashboardClientEventDetails': typeof import("../components/dashboards/dashboard-client/EventDetails.vue")['default']
     'DashboardsDashboardClientEvents': typeof import("../components/dashboards/dashboard-client/Events.vue")['default']
     'DashboardsDashboardClientLatestDeals': typeof import("../components/dashboards/dashboard-client/LatestDeals.vue")['default']
@@ -422,6 +423,7 @@ interface _GlobalComponents {
     'LazyDashboardsDashboardClientCongratulationsCard': LazyComponent<typeof import("../components/dashboards/dashboard-client/CongratulationsCard.vue")['default']>
     'LazyDashboardsDashboardClientCurrentEvents': LazyComponent<typeof import("../components/dashboards/dashboard-client/CurrentEvents.vue")['default']>
     'LazyDashboardsDashboardClientCustomers': LazyComponent<typeof import("../components/dashboards/dashboard-client/Customers.vue")['default']>
+    'LazyDashboardsDashboardClientDateCounter': LazyComponent<typeof import("../components/dashboards/dashboard-client/DateCounter.vue")['default']>
     'LazyDashboardsDashboardClientEventDetails': LazyComponent<typeof import("../components/dashboards/dashboard-client/EventDetails.vue")['default']>
     'LazyDashboardsDashboardClientEvents': LazyComponent<typeof import("../components/dashboards/dashboard-client/Events.vue")['default']>
     'LazyDashboardsDashboardClientLatestDeals': LazyComponent<typeof import("../components/dashboards/dashboard-client/LatestDeals.vue")['default']>
@@ -800,6 +802,7 @@ export const DashboardsDashboardClientCheckList: typeof import("../components/da
 export const DashboardsDashboardClientCongratulationsCard: typeof import("../components/dashboards/dashboard-client/CongratulationsCard.vue")['default']
 export const DashboardsDashboardClientCurrentEvents: typeof import("../components/dashboards/dashboard-client/CurrentEvents.vue")['default']
 export const DashboardsDashboardClientCustomers: typeof import("../components/dashboards/dashboard-client/Customers.vue")['default']
+export const DashboardsDashboardClientDateCounter: typeof import("../components/dashboards/dashboard-client/DateCounter.vue")['default']
 export const DashboardsDashboardClientEventDetails: typeof import("../components/dashboards/dashboard-client/EventDetails.vue")['default']
 export const DashboardsDashboardClientEvents: typeof import("../components/dashboards/dashboard-client/Events.vue")['default']
 export const DashboardsDashboardClientLatestDeals: typeof import("../components/dashboards/dashboard-client/LatestDeals.vue")['default']
@@ -1172,6 +1175,7 @@ export const LazyDashboardsDashboardClientCheckList: LazyComponent<typeof import
 export const LazyDashboardsDashboardClientCongratulationsCard: LazyComponent<typeof import("../components/dashboards/dashboard-client/CongratulationsCard.vue")['default']>
 export const LazyDashboardsDashboardClientCurrentEvents: LazyComponent<typeof import("../components/dashboards/dashboard-client/CurrentEvents.vue")['default']>
 export const LazyDashboardsDashboardClientCustomers: LazyComponent<typeof import("../components/dashboards/dashboard-client/Customers.vue")['default']>
+export const LazyDashboardsDashboardClientDateCounter: LazyComponent<typeof import("../components/dashboards/dashboard-client/DateCounter.vue")['default']>
 export const LazyDashboardsDashboardClientEventDetails: LazyComponent<typeof import("../components/dashboards/dashboard-client/EventDetails.vue")['default']>
 export const LazyDashboardsDashboardClientEvents: LazyComponent<typeof import("../components/dashboards/dashboard-client/Events.vue")['default']>
 export const LazyDashboardsDashboardClientLatestDeals: LazyComponent<typeof import("../components/dashboards/dashboard-client/LatestDeals.vue")['default']>

@@ -17,6 +17,7 @@ declare global {
   const createError: typeof import('../../node_modules/nuxt/dist/app/composables/error')['createError']
   const customRef: typeof import('vue')['customRef']
   const customizer: typeof import('../../utils/UpdateColors')['customizer']
+  const dateCounter: typeof import('../../utils/date-utils')['dateCounter']
   const defineAppConfig: typeof import('../../node_modules/nuxt/dist/app/nuxt')['defineAppConfig']
   const defineAsyncComponent: typeof import('vue')['defineAsyncComponent']
   const defineComponent: typeof import('vue')['defineComponent']
@@ -234,6 +235,7 @@ declare module 'vue' {
     readonly createError: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/error')['createError']>
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>
     readonly customizer: UnwrapRef<typeof import('../../utils/UpdateColors')['customizer']>
+    readonly dateCounter: UnwrapRef<typeof import('../../utils/date-utils')['dateCounter']>
     readonly defineAppConfig: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/nuxt')['defineAppConfig']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>

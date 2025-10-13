@@ -1,11 +1,15 @@
+import { useLocalStorage } from '@vueuse/core';
 import type { Note } from '~/models/notes/notes';
 
 export const useNotesStore = defineStore('notes', () => {
-  const notes = ref<Note[]>([]);
+  // LocalStorage persistant pour les notes
+  const notes = useLocalStorage<Note[]>('notes', []); // clé en pluriel pour plus de clarté
   const selectedNote = ref<Note | null>(null);
   const searchQuery = ref('');
 
   const addNote = (note: Note) => {
+    // Génération d’un ID unique si besoin
+    if (!note.id) note.id = Date.now();
     notes.value.push(note);
   };
 
@@ -18,15 +22,14 @@ export const useNotesStore = defineStore('notes', () => {
 
   const selectNote = (noteId: number) => {
     selectedNote.value = notes.value.find((note) => note.id === noteId) || null;
-    console.log(selectedNote.value, 'selectedNote');
   };
 
   const updateNote = (updatedNote: Note) => {
     const index = notes.value.findIndex((note) => note.id === updatedNote.id);
     if (index !== -1) {
-      notes.value[index] = updatedNote;
+      notes.value[index] = { ...updatedNote };
       if (selectedNote.value?.id === updatedNote.id) {
-        selectedNote.value = updatedNote;
+        selectedNote.value = { ...updatedNote };
       }
     }
   };

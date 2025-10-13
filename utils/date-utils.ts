@@ -12,3 +12,11 @@ export const formatDate = (date: string[]) => {
   const formatDate = date.map((d) => format(parseISO(d), 'dd MMM yyyy', { locale: fr }));
   return formatDate;
 };
+
+export const dateCounter = (date: string) => {
+  const today = new Date();
+  const targetDate = new Date(date);
+  const timeDiff = targetDate.getTime() - today.getTime();
+  const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+  return daysDiff;
+};

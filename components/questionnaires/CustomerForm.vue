@@ -280,7 +280,7 @@ const customerResponse = computed(() => {
     location: location.value,
     duration: duration.value,
     invites: invites.value,
-    name: theme.value,
+    theme: theme.value,
     organisation: organisation.value,
     people: people.value,
     budget: budgetCalculation.value,

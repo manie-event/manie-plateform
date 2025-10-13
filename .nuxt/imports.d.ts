@@ -34,7 +34,7 @@ export { useAuthentification } from '../composables/UseAuthentification';
 export { useContactService } from '../composables/UseContactService';
 export { customizer, getPrimary, getSecondary, getLightPrimary, getLightSecondary, getLight100, getLightborder, getTextGrey100, getWarning, getError } from '../utils/UpdateColors';
 export { default as axios } from '../utils/axios';
-export { isEventDone, formatDate } from '../utils/date-utils';
+export { isEventDone, formatDate, dateCounter } from '../utils/date-utils';
 export { normalizeText, isValueEmpty, addTokenWithLabel, chunkArray, isUuid, humanizeEventName, computeDateRange } from '../utils/form-utils';
 export { linkify } from '../utils/text-utils';
 export { useToaster } from '../utils/toaster';

@@ -6,7 +6,8 @@
         <div class="flex-grow-1 pa-8" style="max-width: 60%">
           <h3 class="mb-4">Services de l'événement</h3>
           <v-row>
-            <v-col cols="6">
+            <v-col cols="6" class="d-flex flex-column gap-4">
+              <DateCounter :eventDate="event.date[0]" />
               <LatestDeals :event="getEventProgression" />
             </v-col>
             <v-col cols="6">
@@ -95,6 +96,7 @@ import type { EventModelForProposition } from '~/models/events/eventModelForProg
 import type { QuestionnaireClient } from '~/models/questionnaire/QuestionnaireClientModel';
 import AddEventService from './AddEventService.vue';
 import CheckList from './CheckList.vue';
+import DateCounter from './DateCounter.vue';
 
 const isEventModificationOpen = ref(false);
 const isAddingServiceOpen = ref(false);

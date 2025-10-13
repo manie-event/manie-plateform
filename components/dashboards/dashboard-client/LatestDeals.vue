@@ -1,5 +1,5 @@
 <template>
-  <VCard elevation="10" class="roun-" v-if="props.event">
+  <VCard elevation="10" class="roun- progression" v-if="props.event">
     <v-card-title class="text-h5 font-weight-bold"> Progression: </v-card-title>
 
     <div class="mb-6 pa-6">
@@ -31,5 +31,8 @@ const props = defineProps<{
 <style>
 .avatar-border {
   border: 2px solid rgb(var(--v-theme-surface));
+}
+.progression {
+  height: 150px;
 }
 </style>
