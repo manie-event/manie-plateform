@@ -2,55 +2,81 @@ import { useLocalStorage } from '@vueuse/core';
 import type { Note } from '~/models/notes/notes';
 
 export const useNotesStore = defineStore('notes', () => {
-  // LocalStorage persistant pour les notes
-  const notes = useLocalStorage<Note[]>('notes', []); // clé en pluriel pour plus de clarté
+  const notesByEvent = useLocalStorage<EventNotes>('notesByEvent', {});
   const selectedNote = ref<Note | null>(null);
-  const searchQuery = ref('');
+  const selectedEventUuid = ref<string | null>(null);
 
-  const addNote = (note: Note) => {
-    // Génération d’un ID unique si besoin
-    if (!note.id) note.id = Date.now();
-    notes.value.push(note);
-  };
-
-  const deleteNote = (noteId: number) => {
-    notes.value = notes.value.filter((note) => note.id !== noteId);
-    if (selectedNote.value?.id === noteId) {
-      selectedNote.value = null;
+  const addNote = (eventUuid: string, note: Note) => {
+    // Initialiser le tableau pour cet événement s'il n'existe pas
+    if (!notesByEvent.value[eventUuid]) {
+      notesByEvent.value[eventUuid] = [];
     }
+
+    // Génération d'un ID unique si besoin
+    if (!note.id) {
+      note.id = Date.now();
+    }
+
+    // Ajouter la note au tableau de cet événement
+    notesByEvent.value[eventUuid].push(note);
   };
 
-  const selectNote = (noteId: number) => {
-    selectedNote.value = notes.value.find((note) => note.id === noteId) || null;
+  const getNotesByEvent = (eventUuid: string): Note[] => {
+    return notesByEvent.value[eventUuid] || [];
   };
 
-  const updateNote = (updatedNote: Note) => {
-    const index = notes.value.findIndex((note) => note.id === updatedNote.id);
-    if (index !== -1) {
-      notes.value[index] = { ...updatedNote };
-      if (selectedNote.value?.id === updatedNote.id) {
-        selectedNote.value = { ...updatedNote };
+  const selectNote = (eventUuid: string, noteId: number) => {
+    if (notesByEvent.value[eventUuid]) {
+      const note = notesByEvent.value[eventUuid].find((n) => n.id === noteId);
+      if (note) {
+        selectedNote.value = note;
+        selectedEventUuid.value = eventUuid;
       }
     }
   };
 
-  const filteredNotes = computed(() => {
-    if (!searchQuery.value) return notes.value;
-    return notes.value.filter(
-      (note) =>
-        note.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-        note.content.toLowerCase().includes(searchQuery.value.toLowerCase())
-    );
-  });
+  const deleteNote = (eventUuid: string, noteId: number) => {
+    if (notesByEvent.value[eventUuid]) {
+      notesByEvent.value[eventUuid] = notesByEvent.value[eventUuid].filter(
+        (note) => note.id !== noteId
+      );
+    }
+  };
+
+  const updateNote = (eventUuid: string, noteId: number, updatedNote: Partial<Note>) => {
+    const notes = notesByEvent.value[eventUuid];
+    if (!notes) return;
+
+    const index = notes.findIndex((n) => n.id === noteId);
+    if (index !== -1) {
+      const newNote = {
+        ...notes[index],
+        ...updatedNote,
+      };
+
+      notes[index] = newNote;
+
+      // 🪄 Si c’est la note sélectionnée, on la met à jour aussi
+      if (selectedNote.value?.id === noteId) {
+        selectedNote.value = newNote;
+      }
+    }
+  };
+
+  const clearSelection = () => {
+    selectedNote.value = null;
+    selectedEventUuid.value = null;
+  };
 
   return {
-    notes,
+    notesByEvent,
     selectedNote,
-    searchQuery,
+    selectedEventUuid,
     addNote,
+    getNotesByEvent,
     deleteNote,
-    selectNote,
     updateNote,
-    filteredNotes,
+    selectNote,
+    clearSelection,
   };
 });

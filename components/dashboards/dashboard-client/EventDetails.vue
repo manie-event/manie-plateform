@@ -14,7 +14,7 @@
               <Product />
             </v-col>
             <v-col cols="12">
-              <Notes />
+              <Notes :event />
             </v-col>
             <!-- <v-col cols="6"> <ContactList /> </v-col> -->
             <v-col cols="12">

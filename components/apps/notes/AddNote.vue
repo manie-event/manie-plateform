@@ -1,29 +1,29 @@
 <script setup lang="ts">
 import { useNotesStore } from '@/stores/notesStore';
 import { ref } from 'vue';
+import type { eventModel } from '~/models/events/eventModel';
 import { colorVariation } from '~~/_mockApis/apps/notes/index';
+
+const props = defineProps<{
+  event?: eventModel;
+}>();
 
 const store = useNotesStore();
 const { selectedNote, notes } = storeToRefs(store);
-const { updateNote } = store;
+const { updateNote, getNotesByEvent, addNote } = store;
 
 // common components
 const dialog = ref(false);
 const title = ref('');
 const color = ref('primary');
 
-function colorset(btcolor: any) {
+const colorset = (btcolor: any) => {
   return (color.value = btcolor);
-}
+};
 
-function addNote() {
-  // ✅ Calculer l'ID à chaque appel
-  const newId = notes.value.length + 1;
-  console.log(typeof newId, 'newId');
-  console.log(notes.value, 'notes');
-
-  notes.value.push({
-    id: newId,
+const handleAddNote = () => {
+  addNote(props.event?.uuid || '', {
+    id: Date.now(), // ou laissez vide, sera généré automatiquement
     title: title.value,
     content: '',
     color: color.value,
@@ -32,7 +32,7 @@ function addNote() {
 
   dialog.value = false;
   title.value = '';
-}
+};
 </script>
 
 <template>
@@ -63,7 +63,7 @@ function addNote() {
           </div>
 
           <div class="pt-6 pb-3 d-flex gap-2">
-            <v-btn color="primary" @click="addNote" rounded="pill">Enregistrer</v-btn>
+            <v-btn color="primary" @click="handleAddNote" rounded="pill">Enregistrer</v-btn>
             <v-btn color="error" @click="dialog = false" rounded="pill">Fermer</v-btn>
           </div>
         </v-card-text>

@@ -7,10 +7,10 @@
           <v-chip
             v-for="userType in getQuestionOptions(0)"
             :key="userType.value"
-            :color="eventName === userType.value ? 'primary' : 'default'"
-            :variant="eventName === userType.value ? 'flat' : 'outlined'"
+            :color="name === userType.value ? 'primary' : 'default'"
+            :variant="name === userType.value ? 'flat' : 'outlined'"
             clickable
-            @click="eventName = userType.value"
+            @click="name = userType.value"
           >
             {{ userType.label }}
           </v-chip>
@@ -55,7 +55,7 @@
         </div>
         <div class="mt-4 d-flex">
           <h3>{{ questionnaire.general[2].title }}</h3>
-          <v-radio-group v-model="invites">
+          <v-radio-group v-model="group_type">
             <v-radio
               v-for="invite in getQuestionOptions(2)"
               :key="invite.value"
@@ -80,7 +80,7 @@
       <div v-if="currentPage === 2">
         <div class="mt-4 d-flex">
           <h3>{{ questionnaire.general[4].title }}</h3>
-          <v-radio-group v-model="organisation">
+          <v-radio-group v-model="organized_for">
             <v-radio
               v-for="orga in getQuestionOptions(4)"
               :key="orga.value"
@@ -232,12 +232,12 @@ const { createEventService } = useEventService();
 
 //ref generale
 const eventType = ref<'particulier' | 'professionnel'>('particulier');
-const eventName = ref('');
+const name = ref('');
 const location = ref('');
 const duration = ref('');
-const invites = ref('');
+const group_type = ref('');
 const theme = ref('');
-const organisation = ref('');
+const organized_for = ref('');
 const people = ref('');
 //ref de budget
 const isBudgetGlobale = ref(false);
@@ -275,13 +275,13 @@ const customerResponse = computed(() => {
   return {
     organisatorUuid: localStorage.getItem('client-uuid'),
     eventType: eventType.value,
-    eventName: eventName.value,
+    name: name.value,
     date: finalDateSelection.value,
     location: location.value,
     duration: duration.value,
-    invites: invites.value,
+    group_type: group_type.value,
     theme: theme.value,
-    organisation: organisation.value,
+    organized_for: organized_for.value,
     people: people.value,
     budget: budgetCalculation.value,
     services: selectedServices.value.map((service) => ({
@@ -456,12 +456,12 @@ onMounted(() => {
   console.log(normalizedAnswer, 'normalizedAnswer');
 
   eventType.value = normalizedAnswer.eventType || 'particulier';
-  eventName.value = normalizedAnswer.eventName || '';
+  name.value = normalizedAnswer.name || '';
   location.value = normalizedAnswer.location || '';
   duration.value = normalizedAnswer.duration || '';
-  invites.value = normalizedAnswer.invites || '';
+  group_type.value = normalizedAnswer.group_type || '';
   theme.value = normalizedAnswer.name || '';
-  organisation.value = normalizedAnswer.organisation || '';
+  organized_for.value = normalizedAnswer.organized_for || '';
   people.value = normalizedAnswer.people || '';
   budgetInput.value = normalizedAnswer.budget || 0;
 

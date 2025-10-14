@@ -1,6 +1,11 @@
 <script setup lang="ts">
 // component
+import type { eventModel } from '~/models/events/eventModel';
 import NotesListing from '~~/components/apps/notes/NotesListing.vue';
+
+defineProps<{
+  event?: eventModel;
+}>();
 </script>
 
 <template>
@@ -8,7 +13,7 @@ import NotesListing from '~~/components/apps/notes/NotesListing.vue';
   <!-- Table Basic -->
   <!-- ---------------------------------------------------- -->
   <v-card elevation="10" class="mt-6">
-    <NotesListing />
+    <NotesListing :event />
     <!-- <template v-slot:rightpart><NotesContent /> </template> -->
 
     <!-- <template v-slot:mobileLeftContent><NotesListing /> </template> -->
