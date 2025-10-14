@@ -24,6 +24,6 @@ const dateCounterValue = dateCounter(props.eventDate);
 </script>
 <style lang="scss" scoped>
 .date-counter {
-  height: 120px;
+  height: 150px;
 }
 </style>

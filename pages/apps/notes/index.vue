@@ -12,7 +12,7 @@ defineProps<{
   <!-- ---------------------------------------------------- -->
   <!-- Table Basic -->
   <!-- ---------------------------------------------------- -->
-  <v-card elevation="10" class="mt-6">
+  <v-card elevation="10">
     <NotesListing :event />
     <!-- <template v-slot:rightpart><NotesContent /> </template> -->
 

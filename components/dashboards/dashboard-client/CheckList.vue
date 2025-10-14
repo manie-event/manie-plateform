@@ -1,24 +1,29 @@
 <template>
   <v-card class="position-relative">
-    <v-btn color="primary" class="checklist-btn" variant="flat" @click="addTask">
+    <v-btn color="primary" class="checklist-btn" variant="flat" @click="handleAddTask()">
       <v-icon center>mdi-plus</v-icon>
     </v-btn>
     <v-card-title class="text-h5 font-weight-bold"> 🧾 Liste des tâches </v-card-title>
 
     <v-card-subtitle class="text-body-2 mb-4">
-      {{ completedTasks }}/{{ tasks.length }} tâche(s) complétée(s)
+      {{ completedTasks }}/{{ currentTasks.length }} tâche(s) complétée(s)
     </v-card-subtitle>
 
     <transition-group name="fade" tag="div">
       <v-list-item
-        v-for="(task, index) in tasks"
+        v-for="(task, index) in currentTasks"
         :key="task.id"
         class="py-2"
         :class="task.done ? 'task-done' : 'task-pending'"
       >
         <v-row class="align-center" no-gutters>
           <v-col cols="auto">
-            <v-checkbox v-model="task.done" color="primary" hide-details></v-checkbox>
+            <v-checkbox
+              v-model="task.done"
+              color="primary"
+              hide-details
+              @update:model-value="handleUpdateTask(task.id, { done: task.done })"
+            ></v-checkbox>
           </v-col>
 
           <v-col class="flex-grow-1">
@@ -29,12 +34,12 @@
               placeholder="Nouvelle tâche"
               hide-details
               class="task-input"
-              @blur="saveTasks"
+              @blur="handleUpdateTask(task.id, { text: task.text })"
             ></v-text-field>
           </v-col>
 
           <v-col cols="auto">
-            <v-icon color="error" class="cursor-pointer" @click="removeTask(index)">
+            <v-icon color="error" class="cursor-pointer" @click="handleRemoveTask(index)">
               mdi-delete
             </v-icon>
           </v-col>
@@ -44,46 +49,55 @@
   </v-card>
 </template>
 
-<script setup>
-import { computed, onMounted, ref, watch } from 'vue';
+<script setup lang="ts">
+import { useTasksStore } from '@/stores/taskStore';
+import { computed, onMounted } from 'vue';
+import type { eventModel } from '~/models/events/eventModel';
+import type { Task } from '~/models/tasks/eventTasks';
 
-const STORAGE_KEY = 'vuetify-checklist-tasks';
+const props = defineProps<{
+  event?: eventModel;
+}>();
 
-const tasks = ref([]);
+const store = useTasksStore();
+const { loadTasksFromStorage, getTasksByEvent, addTask, removeTask, updateTask } = store;
 
-// Charger les tâches
+// Charger les tâches au montage
 onMounted(() => {
-  const saved = localStorage.getItem(STORAGE_KEY);
-  if (saved) {
-    try {
-      tasks.value = JSON.parse(saved);
-    } catch {
-      tasks.value = [];
-    }
-  } else {
-    tasks.value = [
-      { id: Date.now(), text: 'Apprendre Vuetify 3', done: false },
-      { id: Date.now() + 1, text: 'Créer une checklist stylée', done: false },
-    ];
-  }
+  loadTasksFromStorage();
 });
 
-// Sauvegarde auto
-watch(tasks, (newVal) => localStorage.setItem(STORAGE_KEY, JSON.stringify(newVal)), { deep: true });
+// Récupérer les tâches de cet événement
+const currentTasks = computed(() => {
+  if (!props.event?.uuid) return [];
+  console.log('Fetching tasks for event:', props.event.uuid);
 
-const addTask = () => {
-  tasks.value.push({ id: Date.now(), text: '', done: false });
-  saveTasks();
+  return getTasksByEvent(props.event.uuid);
+});
+
+// Nombre de tâches complétées
+const completedTasks = computed(() => currentTasks.value.filter((t) => t.done).length);
+
+// Handlers
+const handleAddTask = () => {
+  console.log('Adding task');
+
+  if (props.event?.uuid) {
+    addTask(props.event.uuid);
+  }
 };
 
-const removeTask = (index) => {
-  tasks.value.splice(index, 1);
-  saveTasks();
+const handleRemoveTask = (index: number) => {
+  if (props.event?.uuid) {
+    removeTask(props.event.uuid, index);
+  }
 };
 
-const completedTasks = computed(() => tasks.value.filter((t) => t.done).length);
-
-const saveTasks = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks.value));
+const handleUpdateTask = (taskId: number, updates: Partial<Task>) => {
+  if (props.event?.uuid) {
+    updateTask(props.event.uuid, taskId, updates);
+  }
+};
 </script>
 
 <style scoped>
@@ -115,6 +129,7 @@ const saveTasks = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks.v
   margin: unset !important;
   padding: 0 !important;
 }
+
 :deep(.v-field__input) {
   padding-top: 0 !important;
   padding-bottom: 0 !important;

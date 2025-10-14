@@ -194,6 +194,7 @@ declare global {
   const useShadowRoot: typeof import('vue')['useShadowRoot']
   const useSlots: typeof import('vue')['useSlots']
   const useState: typeof import('../../node_modules/nuxt/dist/app/composables/state')['useState']
+  const useTasksStore: typeof import('../../stores/taskStore')['useTasksStore']
   const useTemplateRef: typeof import('vue')['useTemplateRef']
   const useToaster: typeof import('../../utils/toaster')['useToaster']
   const useTransitionState: typeof import('vue')['useTransitionState']
@@ -412,6 +413,7 @@ declare module 'vue' {
     readonly useShadowRoot: UnwrapRef<typeof import('vue')['useShadowRoot']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
     readonly useState: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/state')['useState']>
+    readonly useTasksStore: UnwrapRef<typeof import('../../stores/taskStore')['useTasksStore']>
     readonly useTemplateRef: UnwrapRef<typeof import('vue')['useTemplateRef']>
     readonly useToaster: UnwrapRef<typeof import('../../utils/toaster')['useToaster']>
     readonly useTransitionState: UnwrapRef<typeof import('vue')['useTransitionState']>

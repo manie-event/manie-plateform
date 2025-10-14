@@ -6,19 +6,22 @@
         <div class="flex-grow-1 pa-8" style="max-width: 60%">
           <h3 class="mb-4">Services de l'événement</h3>
           <v-row>
-            <v-col cols="6" class="d-flex flex-column gap-4">
+            <v-col cols="6">
               <DateCounter :eventDate="event.date[0]" />
-              <LatestDeals :event="getEventProgression" />
+              <!-- <LatestDeals :event="getEventProgression" /> -->
             </v-col>
             <v-col cols="6">
-              <Product />
+              <LatestDeals :event="getEventProgression" />
             </v-col>
+            <!-- <v-col cols="6">
+              <Product />
+            </v-col> -->
             <v-col cols="12">
               <Notes :event />
             </v-col>
             <!-- <v-col cols="6"> <ContactList /> </v-col> -->
             <v-col cols="12">
-              <CheckList />
+              <CheckList :event />
             </v-col>
           </v-row>
         </div>
@@ -86,7 +89,6 @@
   </Teleport>
 </template>
 <script setup lang="ts">
-import Product from '@/components/dashboards/dashboard-client/ProductsChart.vue';
 import Notes from '@/pages/apps/notes/index.vue';
 import { Teleport } from 'vue';
 import LatestDeals from '~/components/dashboards/dashboard-client/LatestDeals.vue';

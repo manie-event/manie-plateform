@@ -43,6 +43,7 @@ export { useCustomizerStore } from '../stores/customizer';
 export { eventsStore } from '../stores/events';
 export { useNotesStore } from '../stores/notesStore';
 export { usePropositionStore } from '../stores/propositionStore';
+export { useTasksStore } from '../stores/taskStore';
 export { useUserStore } from '../stores/userStore';
 export { defineStore, acceptHMRUpdate, usePinia, storeToRefs } from '../node_modules/@pinia/nuxt/dist/runtime/composables';
 export { useNuxtDevTools } from '../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools';
