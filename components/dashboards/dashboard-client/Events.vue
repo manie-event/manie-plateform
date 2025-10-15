@@ -1,9 +1,9 @@
 <template>
   <v-card elevation="10">
     <v-card-text class="position-relative events__container">
-      <div class="d-flex justify-space-between d-block align-center">
+      <div class="d-flex justify-space-between">
         <div class="mb-6">
-          <h5 class="text-h5 mb-1 font-weight-semibold">Créez un évenènement</h5>
+          <h5 class="v-card-title">Créez un évenènement</h5>
         </div>
       </div>
 

@@ -3,7 +3,7 @@
     <v-card-text>
       <div class="d-flex align-center justify-space-between">
         <div>
-          <h5 class="text-h5 mb-1 font-weight-semibold">Vos propositions en cours</h5>
+          <h5 class="v-card-title">Vos propositions en cours</h5>
         </div>
       </div>
       <div class="month-table" v-if="professionalResponseProposition.length > 0">
@@ -87,19 +87,32 @@
                     >{{ getStatusName(item.status) }}</v-chip
                   >
                 </td>
-                <td v-if="item.status === 'completed'">
+                <td
+                  v-if="item.status === 'completed'"
+                  @click="confirmedProposition(item.eventServiceUuid)"
+                >
                   <v-btn color="primary">Voir le profil du prestataire</v-btn>
                 </td>
                 <td v-else>
                   <div class="d-flex align-center gap-4">
-                    <v-btn variant="outlined" color="success"
+                    <v-btn
+                      variant="outlined"
+                      color="success"
+                      @click="
+                        {
+                          propositionAcceptedByClient(item.uuid);
+                        }
+                      "
                       ><Icon
                         icon="material-symbols-light:check-rounded"
                         height="24"
                         width="24"
                         class="text-success"
                     /></v-btn>
-                    <v-btn variant="outlined" color="error"
+                    <v-btn
+                      variant="outlined"
+                      color="error"
+                      @click="propositionDeclinedByClient(item.uuid)"
                       ><Icon icon="iconoir:cancel" height="24" width="24" class="text-error"
                     /></v-btn>
                   </div>
@@ -143,6 +156,11 @@
       v-model:open-proposition-detail="openMarketModal"
       :selectedProposition="selectedPropositionInformation!"
     />
+    <ProfessionalProfil
+      v-if="professionalProfileForCustomer"
+      :professional-profile="isAcceptedByClient"
+      :pprofile="professionalProfileForCustomer"
+    />
     <errorToaster></errorToaster>
   </Teleport>
 </template>
@@ -152,11 +170,18 @@ import errorToaster from '@/components/common/errorToaster.vue';
 import { Icon } from '@iconify/vue';
 import { Teleport } from 'vue';
 import { useEventServiceProposition } from '~/composables/event-service-propositions/UseEventServiceProposition';
+import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
 import PropositionDetails from '../dashboard2/PropositionDetails.vue';
+import ProfessionalProfil from './ProfessionalProfil.vue';
 
-const { getServicePropositionForClient } = useEventServiceProposition();
+const { getServicePropositionForClient, propositionAcceptedByClient, propositionDeclinedByClient } =
+  useEventServiceProposition();
+const { getProfessionalProfileForCustomer } = useProfessionalProfile();
 const { professionalResponseProposition } = storeToRefs(usePropositionStore());
+const { professionalProfileForCustomer } = storeToRefs(useUserStore());
+
+const isAcceptedByClient = ref(false);
 
 const getStatusColor = (status: string) => {
   switch (status) {
@@ -214,6 +239,10 @@ const getPriceFromMessage = (message: string) => {
   } else {
     return `Entre ${fourchetteBasse}€ et ${fourchetteHaute}€`;
   }
+};
+
+const confirmedProposition = async (eventServiceUuid: string) => {
+  ((isAcceptedByClient.value = true), await getProfessionalProfileForCustomer(eventServiceUuid));
 };
 
 onMounted(() => {

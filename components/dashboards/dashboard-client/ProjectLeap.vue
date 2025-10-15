@@ -3,7 +3,7 @@
     <v-card-text>
       <div class="d-flex justify-flex-start d-block align-center">
         <div>
-          <h5 class="text-h5 mb-1 font-weight-semibold">Progression de vos events</h5>
+          <h5 class="v-card-title">Progression de vos events</h5>
         </div>
       </div>
       <div v-for="event in eventsLeap" :key="event.uuid">

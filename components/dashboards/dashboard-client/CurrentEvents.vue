@@ -3,9 +3,7 @@
     <v-card-text class="position-relative current-events__container">
       <div class="d-flex justify-flex-start d-block align-center">
         <div>
-          <h5 class="text-h5 mb-1 font-weight-semibold">
-            Evènements en cours ( {{ events.length }} )
-          </h5>
+          <h5 class="v-card-title">Evènements en cours ( {{ events.length }} )</h5>
         </div>
       </div>
       <div>

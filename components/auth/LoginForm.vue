@@ -25,6 +25,9 @@ const authentification = ref({
 const passwordRules = ref([
   (v: string) => !!v || 'Le mot de passe est obligatoire',
   (v: string) => (v && v.length >= 10) || 'Le mot de passe doit faire 10 caractères minimum',
+  (v: string) =>
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{10,}$/.test(v) ||
+    'Le mot de passe doit contenir une majuscule, une minuscule, un chiffre et un caractère spécial',
 ]);
 const emailRules = ref([
   (v: string) => !!v || "L'e-mail est obligatoire",

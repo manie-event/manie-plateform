@@ -12,6 +12,8 @@ export const useEventServiceProposition = () => {
     getListProfessionalProposition,
     getListEventServiceProposition,
     getListPropositionByEventService,
+    acceptedByClient,
+    declinedByClient,
   } = useProfessionalProposition();
   const { servicesFiltered } = storeToRefs(eventsStore());
   const { getEventsPerOrganisator, getEventServiceList } = useEventService();
@@ -23,20 +25,17 @@ export const useEventServiceProposition = () => {
       const allEvents = await getEventsPerOrganisator();
 
       if (!allEvents || allEvents.length === 0) {
-        console.log('No events found');
         return [];
       }
 
       const propositionList = await Promise.all(
         allEvents.map(async (event) => {
           const serviceList = await getEventServiceList(event.uuid);
-          console.log(serviceList, 'serviceList');
 
           const serviceListFiltered = serviceList.filter(
             (service: EventServiceProposition) =>
               service.status !== ('completed' as EventServiceProposition['status'])
           );
-          console.log('Services for event:', serviceListFiltered);
 
           if (!serviceListFiltered || serviceListFiltered.length === 0) {
             return [];
@@ -47,7 +46,11 @@ export const useEventServiceProposition = () => {
           const clientPropositions = await Promise.all(
             serviceList.map(async (service: EventServiceProposition) => {
               const propositions = await getListPropositionByEventService(service.uuid);
-              const propositionsFiltered = propositions.filter((p) => p.status !== 'pending');
+              console.log(propositions, 'propositions');
+
+              const propositionsFiltered = propositions.filter(
+                (p) => p.status !== 'pending' && p.status !== 'cancelled'
+              );
               // Ajouter les infos de l'événement à chaque proposition
               return propositionsFiltered.map((proposition: any) => ({
                 ...proposition,
@@ -58,12 +61,12 @@ export const useEventServiceProposition = () => {
             })
           );
 
-          console.log('Client propositions:', clientPropositions.flat());
           return clientPropositions.flat();
         })
       );
       setServiceEventPropositionForClient(propositionList.flat());
-      console.log('propositionList:', propositionList.flat());
+
+      console.log(propositionList.flat(), 'propositionList');
 
       return propositionList.flat();
     } catch (error) {
@@ -116,9 +119,31 @@ export const useEventServiceProposition = () => {
     }
   };
 
+  const propositionAcceptedByClient = async (propositionUuid: string) => {
+    try {
+      // Appeler une méthode du service pour accepter la proposition
+      await acceptedByClient(propositionUuid);
+      // Mettre à jour la liste des propositions après l'acceptation
+    } catch (error) {
+      console.error('❌ Erreur propositionAcceptedByClient:', error);
+    }
+  };
+
+  const propositionDeclinedByClient = async (propositionUuid: string) => {
+    try {
+      // Appeler une méthode du service pour refuser la proposition
+      await declinedByClient(propositionUuid);
+      // Mettre à jour la liste des propositions après le refus
+    } catch (error) {
+      console.error('❌ Erreur propositionDeclinedByClient:', error);
+    }
+  };
+
   return {
     getServicePropositionForProfessional,
+    propositionAcceptedByClient,
     getServicePropositionForClient,
+    propositionDeclinedByClient,
     servicePropositionAvailable,
   };
 };
