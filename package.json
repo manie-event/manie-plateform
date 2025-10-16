@@ -34,6 +34,7 @@
     "@iconify/vue": "^4.3.0",
     "@mdi/font": "7.4.47",
     "@nuxt/vite-builder": "^3.13.1",
+    "@nuxtjs/gtm": "^2.4.0",
     "@pinia/nuxt": "^0.5.4",
     "@stripe/stripe-js": "^7.5.0",
     "@tiptap/extension-text-style": "^2.8.0",
