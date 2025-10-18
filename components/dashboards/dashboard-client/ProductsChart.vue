@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { getPrimary } from '@/utils/UpdateColors';
 import { computed } from 'vue';
-import { getPrimary, getSecondary } from '@/utils/UpdateColors';
 /* Chart */
 const chartOptions = computed(() => {
   return {
@@ -62,16 +61,16 @@ const chartOptions = computed(() => {
           ><apexchart
             type="donut"
             class="paymentchart"
-            height="170"
+            height="150"
             :options="chartOptions"
             :series="chartOptions.series"
           >
           </apexchart
         ></ClientOnly>
       </div>
-      <p class="text-subtitle-1 text-grey100 font-weight-medium text-center pb-1">
+      <!-- <p class="text-subtitle-1 text-grey100 font-weight-medium text-center pb-1">
         $18k Profit more than last month
-      </p>
+      </p> -->
     </v-card-text>
   </v-card>
 </template>

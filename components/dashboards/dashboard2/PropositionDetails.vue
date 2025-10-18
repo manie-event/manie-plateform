@@ -1,7 +1,6 @@
 <template>
   <v-dialog v-model="openPropositionDetail" max-width="800">
     <v-card>
-      <v-card-title class="text-h5">Proposition N°{{ props.selectedProposition.id }}</v-card-title>
       <v-card-text>
         <v-card>
           <v-card-text>

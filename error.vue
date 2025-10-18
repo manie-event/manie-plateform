@@ -1,8 +1,3 @@
-<script setup lang="ts">
-definePageMeta({
-  layout: 'blank',
-});
-</script>
 <template>
   <div class="v-application d-flex">
     <div class="nopage">

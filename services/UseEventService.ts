@@ -37,13 +37,11 @@ export const useEventService = () => {
   const getEventsPerOrganisator = async () => {
     const page = ref(1);
     const allEvents = [];
-    const uuid = ref();
-    const client = localStorage.getItem('client-profile');
-    uuid.value = JSON.parse(client);
+    const uuid = localStorage.getItem('client-uuid');
 
     while (true) {
       const { data } = await axios.get(
-        `${config.public.apiUrl}/event/list-by-organisator/${uuid.value.uuid}`,
+        `${config.public.apiUrl}/event/list-by-organisator/${uuid}`,
         {
           headers: {
             Authorization: `Bearer ${token.value}`,
@@ -66,7 +64,7 @@ export const useEventService = () => {
       page.value++;
       setEventsByOrganisator(events);
 
-      return allEvents;
+      return allEvents ?? [];
     }
   };
 
@@ -107,10 +105,29 @@ export const useEventService = () => {
     }
   };
 
+  const getEventServiceList = async (uuid: string) => {
+    try {
+      const { data } = await axios.get(
+        `${config.public.apiUrl}/event-service/list-by-event/${uuid}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      return data.data;
+    } catch (error) {
+      addError({ message: "Impossible d'ajouter le service à l'événement." });
+      throw error;
+    }
+  };
+
   return {
     createEventService,
     getEventsPerOrganisator,
     getEventsInstance,
+    getEventServiceList,
     createEventServiceItem,
     // addServicesToEvent,
   };

@@ -6,7 +6,8 @@ export const useProfessionalProfile = () => {
   const { addError, addSuccess } = useToaster();
   const token = useCookie('token');
   const userStore = useUserStore();
-  const { setProfessionalUser, sendNewPhotoOnProfile } = userStore;
+  const { setProfessionalUser, sendNewPhotoOnProfile, sendProfessionalProfileForCustomer } =
+    userStore;
   const config = useRuntimeConfig();
 
   const professionalUuid = localStorage.getItem('professional-uuid');
@@ -126,11 +127,33 @@ export const useProfessionalProfile = () => {
     }
   };
 
+  const getProfessionalProfileForCustomer = async (eventServiceUuid: string) => {
+    try {
+      const { data } = await axios.get(
+        `${config.public.apiUrl}/professional/show-professional-for-organisator/${eventServiceUuid}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      if (data) {
+        sendProfessionalProfileForCustomer(data);
+
+        return data;
+      }
+    } catch (error: unknown) {
+      addError({ message: 'Une erreur est survenue lors de la récupération du profil.' });
+    }
+  };
+
   return {
     createProfessionalProfile,
     getProfessionalProfile,
     getProfessionalProfileDetails,
     patchProfessionnalProfileDetails,
+    getProfessionalProfileForCustomer,
     changeProfessionalBannerPicture,
   };
 };

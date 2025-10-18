@@ -1,7 +1,6 @@
 <script setup>
-import { computed, nextTick, ref, watch } from 'vue';
-import BaseBreadcrumb from '@/components/shared/BaseBreadcrumb.vue';
 import UiParentCard from '@/components/shared/UiParentCard.vue';
+import { computed, nextTick, ref, watch } from 'vue';
 const page = ref({ title: 'CRUD Table' });
 const breadcrumbs = ref([
   {
@@ -170,10 +169,9 @@ initialize();
 </script>
 
 <template>
-  <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
   <v-row>
     <v-col cols="12">
-      <UiParentCard title="Crud Table">
+      <UiParentCard>
         <v-data-table
           class="border rounded-md crud-tbl"
           :headers="headers"

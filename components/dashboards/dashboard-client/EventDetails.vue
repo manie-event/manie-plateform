@@ -1,13 +1,85 @@
 <template>
   <v-dialog v-model="openEventDetails" max-width="1200">
     <v-card>
-      <h3>{{ event }}</h3>
-      <v-btn @click="isEventModificationOpen = true" color="primary" class="w-50 my-6"
-        >Je souhaite modifier mon évênement
-      </v-btn>
-      <v-btn @click="isAddingServiceOpen = true" color="success" class="w-50 my-6"
-        >Je souhaite ajouter un/des service(s)
-      </v-btn>
+      <div class="d-flex flex-row" style="height: 100%">
+        <!-- Colonne gauche : Liste des services -->
+        <div class="flex-grow-1 pa-8" style="max-width: 60%">
+          <h3 class="mb-4">Services de l'événement</h3>
+          <v-row>
+            <v-col cols="6">
+              <DateCounter :eventDate="event.date[0]" />
+              <!-- <LatestDeals :event="getEventProgression" /> -->
+            </v-col>
+            <v-col cols="6">
+              <LatestDeals :event="getEventProgression" />
+            </v-col>
+            <!-- <v-col cols="6">
+              <Product />
+            </v-col> -->
+            <v-col cols="12">
+              <Notes :event />
+            </v-col>
+            <!-- <v-col cols="6"> <ContactList /> </v-col> -->
+            <v-col cols="12">
+              <CheckList :event />
+            </v-col>
+          </v-row>
+        </div>
+
+        <v-divider vertical></v-divider>
+
+        <!-- Colonne droite : Infos et actions -->
+        <div class="pa-8 d-flex flex-column" style="width: 40%; min-width: 350px">
+          <div class="d-flex flex-column align-center flex-grow-1">
+            <h2 class="mb-6">{{ event.name }}</h2>
+
+            <!-- Informations de l'événement -->
+            <div class="w-100 mb-6">
+              <v-list density="compact">
+                <v-list-item>
+                  <template v-slot:prepend>
+                    <v-icon>mdi-calendar</v-icon>
+                  </template>
+                  <v-list-item-title>{{ event.date[0] }}</v-list-item-title>
+                </v-list-item>
+                <v-list-item>
+                  <template v-slot:prepend>
+                    <v-icon>mdi-map-marker</v-icon>
+                  </template>
+                  <v-list-item-title>{{ event.location }}</v-list-item-title>
+                </v-list-item>
+                <v-list-item>
+                  <template v-slot:prepend>
+                    <v-icon>mdi-account-group</v-icon>
+                  </template>
+                  <v-list-item-title>{{ event.people }} personnes</v-list-item-title>
+                </v-list-item>
+                <v-list-item>
+                  <template v-slot:prepend>
+                    <v-icon>mdi-currency-eur</v-icon>
+                  </template>
+                  <v-list-item-title>Budget : {{ event.budget }}€</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </div>
+
+            <!-- Actions -->
+            <v-btn
+              @click="isEventModificationOpen = true"
+              color="primary"
+              class="w-100 mb-4"
+              variant="tonal"
+            >
+              <v-icon start>mdi-pencil</v-icon>
+              Modifier l'événement
+            </v-btn>
+            <v-btn @click="isAddingServiceOpen = true" color="success" class="w-100" variant="flat">
+              <v-icon start>mdi-plus</v-icon>
+              Ajouter des services
+            </v-btn>
+          </div>
+        </div>
+      </div>
     </v-card>
   </v-dialog>
 
@@ -17,18 +89,50 @@
   </Teleport>
 </template>
 <script setup lang="ts">
+import Notes from '@/pages/apps/notes/index.vue';
 import { Teleport } from 'vue';
+import LatestDeals from '~/components/dashboards/dashboard-client/LatestDeals.vue';
 import CustomerForm from '~/components/questionnaires/CustomerForm.vue';
-import type { eventModel } from '~/models/events/eventModel';
+import type { eventModel, eventService } from '~/models/events/eventModel';
+import type { EventModelForProposition } from '~/models/events/eventModelForProgression';
 import type { QuestionnaireClient } from '~/models/questionnaire/QuestionnaireClientModel';
 import AddEventService from './AddEventService.vue';
+import CheckList from './CheckList.vue';
+import DateCounter from './DateCounter.vue';
 
 const isEventModificationOpen = ref(false);
 const isAddingServiceOpen = ref(false);
-defineProps<{
+const props = defineProps<{
   event: eventModel;
   answers: QuestionnaireClient;
 }>();
 
 const openEventDetails = defineModel<boolean>('modelValue', { default: false });
+
+const getEventProgression = computed(() => {
+  const uniqueEventServices = props.event.eventServices.reduce((acc: eventService[], current) => {
+    const existing = acc.find((es: eventService) => es.serviceUuid === current.serviceUuid);
+
+    if (!existing) {
+      acc.push(current);
+    } else if (current.status === 'completed' && existing.status !== 'completed') {
+      const index = acc.indexOf(existing);
+      acc[index] = current;
+    }
+
+    return acc;
+  }, [] as eventService[]);
+
+  const totalServices = uniqueEventServices.length;
+  const completedServices = props.event.eventServices.filter(
+    (es) => es.status === 'completed'
+  ).length;
+  const progression = totalServices > 0 ? Math.round((completedServices / totalServices) * 100) : 0;
+  return {
+    ...props.event,
+    progression: progression,
+    completedServices: completedServices,
+    totalServices: totalServices,
+  } as EventModelForProposition;
+});
 </script>

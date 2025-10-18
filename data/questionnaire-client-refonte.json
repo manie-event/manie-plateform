@@ -166,7 +166,7 @@
     {
       "title": "Où ça se passe ?",
       "reponses": [
-        { "value": "auvergne-rhone-alpes", "label": "Auvergne-Rhône-Alpes" },
+        { "value": "Auvergne-Rhône-Alpes", "label": "Auvergne-Rhône-Alpes" },
         { "value": "rhone", "label": "Rhône" },
         { "value": "savoie", "label": "Savoie" },
         { "value": "haute_savoie", "label": "Haute-Savoie" },
@@ -187,9 +187,9 @@
         {
           "event-type": "particulier",
           "type": [
-            { "value": "famille", "label": "En famille" },
-            { "value": "amis", "label": "Entre amis" },
-            { "value": "melange", "label": "Mélangés" }
+            { "value": "family", "label": "En famille" },
+            { "value": "friends", "label": "Entre amis" },
+            { "value": "mixed", "label": "Mélangés" }
           ]
         },
         {
@@ -209,9 +209,9 @@
         {
           "event-type": "particulier",
           "type": [
-            { "value": "repas", "label": "Le temps d'un repas" },
-            { "value": "journee", "label": "Une journée" },
-            { "value": "sejour", "label": "Un séjour (min 1 nuit)" }
+            { "value": "meal", "label": "Le temps d'un repas" },
+            { "value": "day", "label": "Une journée" },
+            { "value": "stay", "label": "Un séjour (min 1 nuit)" }
           ]
         },
         {
@@ -228,8 +228,8 @@
     {
       "title": "Vous organisez ?",
       "reponses": [
-        { "value": "pour_vous", "label": "Pour vous" },
-        { "value": "pour_autre", "label": "Pour quelqu'un d'autre" },
+        { "value": "self", "label": "Pour vous" },
+        { "value": "other", "label": "Pour quelqu'un d'autre" },
         { "value": "surprise", "label": "C'est une surprise" }
       ]
     }

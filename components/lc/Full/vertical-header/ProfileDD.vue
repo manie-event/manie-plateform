@@ -18,11 +18,9 @@ const { getProfessionalProfileDetails, getProfessionalProfile } = useProfessiona
 const { getClientProfil } = useClientProfil();
 const { getJetonQuantity } = usePaiementJeton();
 
-const clientProfile = localStorage.getItem('client-profile');
 const isProfessional = localStorage.getItem('is-professional');
-const username = localStorage.getItem('username');
+const username = localStorage.getItem('client-name');
 const proName = localStorage.getItem('pro-name');
-const getclientName = ref();
 const jetonBalance = ref(0);
 
 const getNameDependingOnCategory = computed(() => {
@@ -30,10 +28,6 @@ const getNameDependingOnCategory = computed(() => {
     return proName ? proName : professionalUser.value?.name;
   }
 
-  if (clientProfile) {
-    getclientName.value = JSON.parse(clientProfile);
-    return getclientName.value.username;
-  }
   return username;
 });
 

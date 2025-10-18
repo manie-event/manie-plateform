@@ -25,6 +25,29 @@ export const useProfessionalProposition = () => {
     }
   };
 
+  const getListPropositionByEventService = async (professionalServiceUuid: string) => {
+    try {
+      const response = await axios.get(
+        `${config.public.apiUrl}/event-service-proposition/list-by-event-service/${professionalServiceUuid}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      if (response?.data) {
+        const propositions = response.data.data;
+
+        // setPropositions(propositions);
+        return propositions;
+      }
+    } catch (error) {
+      console.error('❌ Erreur getListProfessionalProposition:', error);
+      return null;
+    }
+  };
+
   const getListProfessionalProposition = async (professionalServiceUuid: string) => {
     try {
       const response = await axios.get(
@@ -71,9 +94,60 @@ export const useProfessionalProposition = () => {
     }
   };
 
+  const acceptedByClient = async (propositionUuid: string) => {
+    console.log('propositionUuid', propositionUuid);
+
+    try {
+      const response = await axios.patch(
+        `${config.public.apiUrl}/event-service-proposition/accept-by-organisator/${propositionUuid}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      if (response) {
+        addSuccess("Félicitations, vous venez d'avoir accès au profil prestataire !");
+        return response;
+      }
+    } catch (error) {
+      addError({ message: error.message });
+      console.error('❌ Erreur acceptedByClient:', error);
+      return null;
+    }
+  };
+
+  const declinedByClient = async (propositionUuid: string) => {
+    try {
+      const response = await axios.patch(
+        `${config.public.apiUrl}/event-service-proposition/decline-by-organisator/${propositionUuid}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      if (response) {
+        addSuccess('Vous avez décliné cette proposition');
+        return response;
+      }
+    } catch (error) {
+      addError({ message: error.message });
+      console.error('❌ Erreur declinedByClient:', error);
+      return null;
+    }
+  };
+
   return {
     getListProfessionalProposition,
     getListEventServiceProposition,
+    getListPropositionByEventService,
     updateProfessionalMessage,
+    acceptedByClient,
+    declinedByClient,
   };
 };

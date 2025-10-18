@@ -21,6 +21,9 @@ const openModalCharte = ref(false);
 const passwordRules = ref([
   (v: string) => !!v || 'Le mot de passe est obligatoire',
   (v: string) => (v && v.length >= 10) || 'Le mot de passe doit faire 10 caractères minimum',
+  (v: string) =>
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{10,}$/.test(v) ||
+    'Le mot de passe doit contenir une majuscule, une minuscule, un chiffre et un caractère spécial',
 ]);
 const checkPasswordRules = ref([
   (v: string) => !!v || 'La confirmation du mot de passe est obligatoire',
@@ -105,17 +108,23 @@ const register = async () => {
       autocomplete="new-email"
       placeholder="info@manie.com"
     ></VTextField>
-    <v-label class="text-subtitle-1 font-weight-medium pb-2">Mot de passe</v-label>
-    <VTextField
-      v-model="registerForm.password"
-      :rules="passwordRules"
-      placeholder="**********"
-      required
-      autocomplete="new-password"
-      type="password"
-      variant="outlined"
-      color="primary"
-    ></VTextField>
+    <div class="d-flex flex-column gap-2">
+      <v-label class="text-subtitle-1 font-weight-medium pb-2">Mot de passe</v-label>
+      <span :style="{ fontSize: '0.75rem', opacity: 0.5, marginBottom: '1rem' }"
+        >Votre mot de passe doit combiner au moins une majuscule, une minuscule, un chiffre, un
+        caractère spécial et dois faire au moins 10 caractères</span
+      >
+      <VTextField
+        v-model="registerForm.password"
+        :rules="passwordRules"
+        placeholder="**********"
+        required
+        autocomplete="new-password"
+        type="password"
+        variant="outlined"
+        color="primary"
+      ></VTextField>
+    </div>
     <v-label class="text-subtitle-1 font-weight-medium pb-2">Je confirme mon mot de passe</v-label>
     <VTextField
       v-model="registerForm.confirmPassword"

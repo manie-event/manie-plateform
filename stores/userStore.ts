@@ -38,6 +38,7 @@ export const useUserStore = defineStore('userStore', () => {
   const professionnalServices = ref<Services[]>([]);
   const keywords = ref<Keywords[]>([]);
   const bgPicture = ref();
+  const professionalProfileForCustomer = ref<ProfessionalProfile>();
 
   const definePictureBanner = computed(() => {});
 
@@ -57,6 +58,9 @@ export const useUserStore = defineStore('userStore', () => {
   // client setters
   const setClientProfile = (newProfile: clientProfile) => {
     clientProfile.value = newProfile;
+    isProfileCreated.value = true;
+    localStorage.setItem('client-uuid', newProfile.uuid);
+    localStorage.setItem('client-name', newProfile.username);
     localStorage.setItem(
       'client-profile',
       JSON.stringify({ ...clientProfile.value, email: null, phoneNumber: null, address: null })
@@ -88,7 +92,6 @@ export const useUserStore = defineStore('userStore', () => {
 
   const setProfessionalServices = (services: Services[]) => {
     professionnalServices.value = services;
-    console.log(professionnalServices.value, 'professionnalServices.value');
   };
 
   const setKeywords = (newKeywords: Keywords[]) => {
@@ -99,6 +102,12 @@ export const useUserStore = defineStore('userStore', () => {
     bgPicture.value = newPicture;
   };
 
+  const sendProfessionalProfileForCustomer = (profile: ProfessionalProfile) => {
+    console.log(profile, 'profile');
+
+    professionalProfileForCustomer.value = profile;
+  };
+
   return {
     user,
     bgPicture,
@@ -107,6 +116,7 @@ export const useUserStore = defineStore('userStore', () => {
     isProfileCreated,
     isStoringUserAccepeted,
     professionnalServices,
+    professionalProfileForCustomer,
     isProfilUpdate,
     keywords,
     setUserAccepted,
@@ -118,5 +128,6 @@ export const useUserStore = defineStore('userStore', () => {
     sendNewPhotoOnProfile,
     setUpdateProfile,
     updateClientProfile,
+    sendProfessionalProfileForCustomer,
   };
 });

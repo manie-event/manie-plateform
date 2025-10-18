@@ -1,1 +1,0 @@
-import{bb as a,bc as s,bd as r,b3 as o,be as c}from"./Y2cM3ybq.js";function i(n){var t;const e=n||s();return((t=e==null?void 0:e.ssrContext)==null?void 0:t.head)||(e==null?void 0:e.runWithContext(()=>{if(r())return o(c)}))}function b(n,e={}){const t=i(e.nuxt);if(t)return a(n,{head:t,...e})}export{b as u};
