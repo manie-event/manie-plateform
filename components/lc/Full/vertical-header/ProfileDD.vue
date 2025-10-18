@@ -40,8 +40,8 @@ const getCategory = computed(() => {
 });
 
 const getInitials = computed(() => {
-  if (proName) {
-    return proName
+  if (professionalUser.value?.name) {
+    return professionalUser.value?.name
       .split(' ') // coupe sur les espaces → ['Manie', 'Events']
       .filter(Boolean) // enlève les chaînes vides (au cas où il y a des doubles espaces)
       .map((word) => word[0].toUpperCase()) // prend la première lettre et la met en majuscule
@@ -51,7 +51,7 @@ const getInitials = computed(() => {
       return username
         .split(' ') // coupe sur les espaces → ['Manie', 'Events']
         .filter(Boolean) // enlève les chaînes vides (au cas où il y a des doubles espaces)
-        .map((word) => word[0].toUpperCase()) // prend la première lettre et la met en majuscule
+        .map((word) => word[0].toUpperCase())
         .join('');
     }
   }
@@ -59,14 +59,14 @@ const getInitials = computed(() => {
 
 onMounted(async () => {
   if (isProfessional && isProfileCreated.value) {
-    await getProfessionalProfileDetails();
+    const professionalDetail = await getProfessionalProfileDetails();
     jetonBalance.value = await getJetonQuantity();
+    return professionalDetail;
   } else if (isProfessional && !isProfileCreated.value) {
     const allProfessionalProfile = await getProfessionalProfile();
+    jetonBalance.value = await getJetonQuantity();
 
-    return allProfessionalProfile.find(
-      (yourProfile: clientProfile) => yourProfile.userUuid == user.value?.uuid
-    );
+    return allProfessionalProfile;
   } else if (!isProfessional && isProfileCreated) {
     await getClientProfil();
   } else {

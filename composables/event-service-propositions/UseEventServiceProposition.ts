@@ -79,43 +79,50 @@ export const useEventServiceProposition = () => {
     try {
       const professionalServices = await getListProfessionalServiceByProfessional();
 
-      const eventList = await Promise.all(
+      const allPropositions = await Promise.all(
         professionalServices.map(async (service: ProfessionalServiceUuid) => {
           const propositionList = await getListProfessionalProposition(service.uuid);
-          const proposition = Array.isArray(propositionList) ? propositionList[0] : propositionList;
-          if (!proposition || !proposition.uuid) {
-            console.warn(
-              `⚠️ Pas de proposition valide pour le service ${service.uuid}`,
-              proposition
-            );
-            return null;
-          }
 
-          const event = await getListEventServiceProposition(proposition.uuid);
+          const propositionsWithEvents = await Promise.all(
+            propositionList.map(async (prop) => {
+              try {
+                const event = await getListEventServiceProposition(prop.uuid);
 
-          if (!event) {
-            console.warn(`⚠️ Pas d'événement pour la proposition ${proposition.uuid}`);
-            return null;
-          }
+                if (!event) {
+                  console.warn(`⚠️ Pas d'événement pour la proposition ${prop.uuid}`);
+                  return null;
+                }
 
-          return {
-            ...event,
-            professionalServiceUuid: service.uuid,
-            proposition: {
-              uuid: proposition.uuid,
-              status: proposition.status,
-              professionalMessage: proposition.professionalMessage,
-              tokens: proposition.tokens,
-            },
-          };
+                return {
+                  ...event,
+                  professionalServiceUuid: service.uuid,
+                  proposition: {
+                    uuid: prop.uuid,
+                    status: prop.status,
+                    professionalMessage: prop.professionalMessage,
+                    tokens: prop.tokens,
+                  },
+                };
+              } catch (error) {
+                console.error(
+                  `❌ Erreur lors de la récupération de l'événement pour ${prop.uuid}:`,
+                  error
+                );
+                return null;
+              }
+            })
+          );
+          return propositionsWithEvents.filter(Boolean);
         })
       );
 
-      const cleanList = eventList.filter(Boolean);
-      servicePropositionAvailable.value = true;
-      setServiceEventPropositionForPresta(cleanList);
+      const flattenedList = allPropositions.flat();
+
+      servicePropositionAvailable.value = flattenedList.length > 0;
+      setServiceEventProposition(flattenedList);
     } catch (error) {
       console.error('❌ Erreur getServicePropositionForProfessional:', error);
+      servicePropositionAvailable.value = false;
     }
   };
 

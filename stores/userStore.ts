@@ -61,6 +61,11 @@ export const useUserStore = defineStore('userStore', () => {
     isProfileCreated.value = true;
     localStorage.setItem('client-uuid', newProfile.uuid);
     localStorage.setItem('client-name', newProfile.username);
+    localStorage.setItem(
+      'client-profile',
+      JSON.stringify({ ...clientProfile.value, email: null, phoneNumber: null, address: null })
+    );
+    isProfileCreated.value = true;
   };
 
   const updateClientProfile = (updatedProfile: clientProfile) => {

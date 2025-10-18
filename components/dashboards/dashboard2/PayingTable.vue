@@ -154,15 +154,17 @@ const svgColor = computed(() => {
 });
 
 const findSelectedProposition = (propositionUuid: string) => {
+  console.log(serviceEventProposition.value, 'serviceEventProposition.value');
+
   selectedPropositionInformation.value = serviceEventProposition.value.find(
     (p) => p.proposition.uuid === propositionUuid
   );
 
   openMarketModal.value = true;
 };
-const selectedProposition = computed(() =>
-  serviceEventProposition.value.filter(
+const selectedProposition = computed(() => {
+  return serviceEventProposition.value.filter(
     (proposition: EventModelForProposition) => proposition.proposition.professionalMessage
-  )
-);
+  );
+});
 </script>

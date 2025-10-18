@@ -60,7 +60,6 @@ export const usePaiementJeton = () => {
           'Content-Type': 'application/json',
         },
       });
-      console.log('getJetonQuantity', data.quantity);
 
       return data.quantity;
     } catch (error) {
