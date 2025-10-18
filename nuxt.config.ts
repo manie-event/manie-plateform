@@ -33,7 +33,7 @@ export default defineNuxtConfig({
   },
 
   gtm: {
-    id: 'GTM-5V625W39',
+    id: process.env.GOOGLE_ANALYTICS_ID,
     enabled: true,
     debug: false,
     loadScript: true,
