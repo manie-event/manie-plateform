@@ -111,11 +111,11 @@ export const useAuthentification = () => {
       const { data } = await api.post('/auth/logout');
 
       if (data) {
-        addSuccess('Déconnexion réussie.');
-        // ✅ Nettoyage des cookies
         token.value = null;
         refreshToken.value = null;
+        localStorage.clear();
         await router.push('/');
+        addSuccess('Déconnexion réussie.');
       }
     } catch (error: unknown) {
       addError(error as errorModel);

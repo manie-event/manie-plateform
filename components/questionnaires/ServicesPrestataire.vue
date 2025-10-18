@@ -329,8 +329,6 @@ const submitAllQuestionnaires = async () => {
   // Forcer la mise à jour du payload
   updatePayloadArray();
 
-  console.log('payloadArray après updatePayloadArray:', payloadArray.value);
-
   // Vérifier si au moins un service est sélectionné
   const hasSelectedServices = questionnaires.value.some((q) => q.selectedServiceUuid);
 
