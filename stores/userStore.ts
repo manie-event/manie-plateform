@@ -61,6 +61,7 @@ export const useUserStore = defineStore('userStore', () => {
       'client-profile',
       JSON.stringify({ ...clientProfile.value, email: null, phoneNumber: null, address: null })
     );
+    isProfileCreated.value = true;
   };
 
   const updateClientProfile = (updatedProfile: clientProfile) => {

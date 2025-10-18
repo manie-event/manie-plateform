@@ -46,7 +46,7 @@ export const useAuthentification = () => {
 
         console.log(isProfessional, 'isProfessional- isProfessional');
 
-        if (data.user.category === 'client') {
+        if (data.user.category === 'consumer') {
           router.push({ path: '/dashboards/dashboard-client' });
         } else {
           router.push({ path: '/dashboards/dashboard2' });

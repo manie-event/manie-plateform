@@ -57,7 +57,7 @@ const getInitials = computed(() => {
       return username
         .split(' ') // coupe sur les espaces → ['Manie', 'Events']
         .filter(Boolean) // enlève les chaînes vides (au cas où il y a des doubles espaces)
-        .map((word) => word[0].toUpperCase()) // prend la première lettre et la met en majuscule
+        .map((word) => word[0].toUpperCase())
         .join('');
     }
   }
