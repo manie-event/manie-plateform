@@ -2,6 +2,8 @@ import { format, isBefore, parseISO } from 'date-fns';
 import { fr } from 'date-fns/locale';
 
 export const isEventDone = (date: string) => {
+  if (!date) return false;
+
   const today = format(new Date(), 'yyyy-MM-dd');
   const isEventAlreadyPast = isBefore(today, date);
 

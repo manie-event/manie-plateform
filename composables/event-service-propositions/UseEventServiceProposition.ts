@@ -78,15 +78,18 @@ export const useEventServiceProposition = () => {
   const getServicePropositionForProfessional = async () => {
     try {
       const professionalServices = await getListProfessionalServiceByProfessional();
+      console.log(professionalServices, 'professionalServices');
 
       const allPropositions = await Promise.all(
         professionalServices.map(async (service: ProfessionalServiceUuid) => {
           const propositionList = await getListProfessionalProposition(service.uuid);
+          console.log(propositionList, 'propositionList for service');
 
           const propositionsWithEvents = await Promise.all(
             propositionList.map(async (prop) => {
               try {
                 const event = await getListEventServiceProposition(prop.uuid);
+                console.log(event, 'event from propositionsWithEvents');
 
                 if (!event) {
                   console.warn(`⚠️ Pas d'événement pour la proposition ${prop.uuid}`);
@@ -119,7 +122,7 @@ export const useEventServiceProposition = () => {
       const flattenedList = allPropositions.flat();
 
       servicePropositionAvailable.value = flattenedList.length > 0;
-      setServiceEventProposition(flattenedList);
+      setServiceEventPropositionForPresta(flattenedList);
     } catch (error) {
       console.error('❌ Erreur getServicePropositionForProfessional:', error);
       servicePropositionAvailable.value = false;

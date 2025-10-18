@@ -46,8 +46,10 @@ const propositionFiltered = ref<EventModelForProposition[]>([]);
 
 const isPropositionStillAvailable = () => {
   propositionFiltered.value = serviceEventProposition.value
-    .filter((proposition: EventModelForProposition) => isEventDone(proposition.date[1]))
-    .filter((proposition) => !proposition.proposition.professionalMessage);
+    .filter((proposition) => !proposition.proposition.professionalMessage)
+    .filter((proposition: EventModelForProposition) =>
+      Array.isArray(proposition.date) ? isEventDone(proposition.date[1]) : undefined
+    );
 };
 
 watch(
