@@ -120,6 +120,7 @@ export const useEventServiceProposition = () => {
       );
 
       const flattenedList = allPropositions.flat();
+      console.log(flattenedList, 'flattenedList');
 
       servicePropositionAvailable.value = flattenedList.length > 0;
       setServiceEventPropositionForPresta(flattenedList);

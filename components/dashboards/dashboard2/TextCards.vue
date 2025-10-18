@@ -41,9 +41,11 @@ const getMonthKey = (date: Date | string): string => {
 
 // Filtrer les propositions associées aux services du professionnel
 const totalSelectedEvent = computed(() => {
-  return serviceEventProposition.value.filter((sep) =>
-    professionalServices.value.some((ps) => ps.uuid === sep.professionalServiceUuid)
-  );
+  return serviceEventProposition.value
+    .filter((sep) =>
+      professionalServices.value.some((ps) => ps.uuid === sep.professionalServiceUuid)
+    )
+    .filter((ps) => ps.proposition.professionalMessage);
 });
 
 // Filtrer les propositions signées (status = 'completed')
