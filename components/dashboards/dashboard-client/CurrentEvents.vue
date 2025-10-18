@@ -29,9 +29,9 @@
           </div>
           <EventDetails
             v-if="isEventDetailsOpen"
-            :event="selectedEvent"
+            :event="selectedEvent!"
             v-model="isEventDetailsOpen"
-            :answers="formAnswers"
+            :answers="formAnswers!"
           ></EventDetails>
         </div>
         <div v-else class="d-flex flex-column align-center justify-center mb-6">

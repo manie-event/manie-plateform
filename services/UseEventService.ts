@@ -14,7 +14,8 @@ export const useEventService = () => {
 
   const createEventService = async (payload: QuestionnaireClient) => {
     try {
-      const { data } = await axios.post(`${config.public.apiUrl}/event/create`, payload, {
+      // const { data } = await axios.post(`${config.public.apiUrl}/event/create`, payload, {
+      const { data } = await axios.post('http://127.0.0.1:3333/event/create', payload, {
         headers: {
           Authorization: `Bearer ${token.value}`,
           'Content-Type': 'application/json',
@@ -81,6 +82,30 @@ export const useEventService = () => {
       return responseInstance;
     }
   };
+  // event/update/{eventUuid}
+  const updateEventsInstance = async (eventUuid: string, payload: Partial<QuestionnaireClient>) => {
+    try {
+      // const { data } = await axios.patch(`${config.public.apiUrl}/event/update/${eventUuid}`,
+      const { data } = await axios.patch(
+        `http://127.0.0.1:3333/event/update/${eventUuid}`,
+
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      if (data) {
+        addSuccess('Les informations de votre évènement ont été mises à jour avec succès.');
+        return data;
+      }
+    } catch (error) {
+      addError({ message: "Une erreur est survenue lors de la mise à jour de l'évènement." });
+      throw error;
+    }
+  };
 
   /**
    * Crée un service d'événement existant
@@ -116,6 +141,8 @@ export const useEventService = () => {
           },
         }
       );
+      console.log(data, 'getEventServiceList');
+
       return data.data;
     } catch (error) {
       addError({ message: "Impossible d'ajouter le service à l'événement." });
@@ -129,6 +156,7 @@ export const useEventService = () => {
     getEventsInstance,
     getEventServiceList,
     createEventServiceItem,
+    updateEventsInstance,
     // addServicesToEvent,
   };
 };

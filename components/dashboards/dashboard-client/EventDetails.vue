@@ -6,10 +6,11 @@
         <div class="flex-grow-1 pa-8" style="max-width: 60%">
           <h3 class="mb-4">Services de l'événement</h3>
           <v-row>
-            <v-col cols="6">
+            <v-col cols="6" v-if="Array.isArray(event.date)">
               <DateCounter :eventDate="event.date[0]" />
               <!-- <LatestDeals :event="getEventProgression" /> -->
             </v-col>
+            {{ event.date }}
             <v-col cols="6">
               <LatestDeals :event="getEventProgression" />
             </v-col>
@@ -40,7 +41,9 @@
                   <template v-slot:prepend>
                     <v-icon>mdi-calendar</v-icon>
                   </template>
-                  <v-list-item-title>{{ event.date[0] }}</v-list-item-title>
+                  <v-list-item-title>{{
+                    Array.isArray(event.date) ? event.date[0] : event.date
+                  }}</v-list-item-title>
                 </v-list-item>
                 <v-list-item>
                   <template v-slot:prepend>
@@ -98,7 +101,6 @@ import type { EventModelForProposition } from '~/models/events/eventModelForProg
 import type { QuestionnaireClient } from '~/models/questionnaire/QuestionnaireClientModel';
 import AddEventService from './AddEventService.vue';
 import CheckList from './CheckList.vue';
-import DateCounter from './DateCounter.vue';
 
 const isEventModificationOpen = ref(false);
 const isAddingServiceOpen = ref(false);

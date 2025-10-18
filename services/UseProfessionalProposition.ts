@@ -95,8 +95,6 @@ export const useProfessionalProposition = () => {
   };
 
   const acceptedByClient = async (propositionUuid: string) => {
-    console.log('propositionUuid', propositionUuid);
-
     try {
       const response = await axios.patch(
         `${config.public.apiUrl}/event-service-proposition/accept-by-organisator/${propositionUuid}`,

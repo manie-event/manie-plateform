@@ -35,10 +35,10 @@
             En semaine
           </v-chip>
           <v-chip
-            :color="flexibleDate === 'week-end' ? 'primary' : 'default'"
-            :variant="flexibleDate === 'week-end' ? 'flat' : 'outlined'"
+            :color="flexibleDate === 'weekend' ? 'primary' : 'default'"
+            :variant="flexibleDate === 'weekend' ? 'flat' : 'outlined'"
             clickable
-            @click="flexibleDate = 'week-end'"
+            @click="flexibleDate = 'weekend'"
           >
             En week-end
           </v-chip>
@@ -95,7 +95,8 @@
         </div>
         <div class="mt-4 d-flex">
           <h3>Combien d'invités sont prévus ?</h3>
-          <v-text-field v-model="people" />
+          <v-text-field type="number" v-model.number="people"></v-text-field>
+          {{ people }}
         </div>
         <div>
           <h3>Vous avez un budget ?</h3>
@@ -104,7 +105,8 @@
             <v-radio label="Global" :value="true"></v-radio>
           </v-radio-group>
 
-          <v-text-field v-model="budgetInput" type="number" />
+          <v-text-field v-model.number="budgetInput" type="number" />
+          {{ budgetInput }}
         </div>
       </div>
 
@@ -118,7 +120,7 @@
           <div class="d-flex justify-space-between align-center mb-2">
             <h3>Service {{ serviceIndex + 1 }}</h3>
             <v-btn
-              v-if="selectedServices.length > 1 && !hasAlreadyCreatedService"
+              v-if="selectedServices.length > 1"
               size="small"
               color="red"
               variant="outlined"
@@ -184,13 +186,7 @@
         </div>
 
         <div class="mt-4">
-          <v-btn
-            color="primary"
-            variant="outlined"
-            @click="addNewService"
-            prepend-icon="mdi-plus"
-            v-if="!hasAlreadyCreatedService"
-          >
+          <v-btn color="primary" variant="outlined" @click="addNewService" prepend-icon="mdi-plus">
             Ajouter un nouveau service
           </v-btn>
         </div>
@@ -203,10 +199,17 @@
           v-if="currentPage === 3 && !hasAlreadyCreatedService"
           :color="!getMinimumResponse ? 'success' : 'primary'"
           :variant="!getMinimumResponse ? 'plain' : 'outlined'"
-          :disabled="!getMinimumResponse"
           @click="createEventService(customerResponse)"
         >
           Envoyer
+        </v-btn>
+        <v-btn
+          v-if="currentPage === 3 && hasAlreadyCreatedService"
+          :color="!getMinimumResponse ? 'success' : 'primary'"
+          :variant="!getMinimumResponse ? 'plain' : 'outlined'"
+          @click="updateEventsInstance(uuid, customerResponse)"
+        >
+          Mettre à jour
         </v-btn>
       </div>
     </v-card>
@@ -228,9 +231,10 @@ const openCustomerForm = defineModel<boolean>('openCustomerForm', { default: fal
 
 const { sectors, servicesFiltered } = storeToRefs(eventsStore());
 const { keywords, clientProfile } = storeToRefs(useUserStore());
-const { createEventService } = useEventService();
+const { createEventService, updateEventsInstance } = useEventService();
 
 //ref generale
+const uuid = ref('');
 const eventType = ref<'particulier' | 'professionnel'>('particulier');
 const name = ref('');
 const location = ref('');
@@ -238,16 +242,16 @@ const duration = ref('');
 const group_type = ref('');
 const theme = ref('');
 const organized_for = ref('');
-const people = ref('');
+const people = ref(0);
 //ref de budget
 const isBudgetGlobale = ref(false);
-const currentPage = ref(1);
 const budgetInput = ref(0);
 //ref de date
 const isFlexible = ref(false);
-const flexibleDate = ref<string | undefined>(undefined);
+const flexibleDate = ref<string>('');
 const dateStart = ref('');
 const dateEnd = ref('');
+const currentPage = ref(1);
 
 const selectedServices = ref([
   {
@@ -266,7 +270,14 @@ const finalDateSelection = computed(() => {
 });
 
 const budgetCalculation = computed(() => {
-  return isBudgetGlobale.value ? budgetInput.value : budgetInput.value * Number(people.value);
+  console.log(
+    isBudgetGlobale.value ? budgetInput.value : budgetInput.value * people.value,
+    'Calcul du budget'
+  );
+  console.log(budgetInput.value, 'budgetInput');
+  console.log(budgetInput.value * people.value, 'budgetInput * people.value');
+
+  return isBudgetGlobale.value ? budgetInput.value : budgetInput.value * people.value;
 });
 
 const hasAlreadyCreatedService = computed(() => props.answers?.isAlreadyCreated ?? false);
@@ -455,6 +466,7 @@ onMounted(() => {
   const normalizedAnswer = props.answers.$attributes;
   console.log(normalizedAnswer, 'normalizedAnswer');
 
+  uuid.value = normalizedAnswer.uuid;
   eventType.value = normalizedAnswer.eventType || 'particulier';
   name.value = normalizedAnswer.name || '';
   location.value = normalizedAnswer.location || '';

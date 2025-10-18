@@ -1,21 +1,17 @@
 export interface QuestionnaireClient {
+  uuid?: string;
   eventType: string;
-  eventName: string;
-  date: Date;
+  name: string;
+  date: string[] | string;
   location: string;
   duration: string;
-  invites: string;
-  name: string;
-  isAlreadyCreated?: boolean;
-  organisation: string;
+  group_type: string;
+  theme: string;
+  organized_for: string;
   people: number;
+  isAlreadyCreated?: boolean;
   budget: number;
   services: Services[];
-}
-
-export interface Date {
-  type: string[] | string | null;
-  value: string;
 }
 
 export interface Services {
