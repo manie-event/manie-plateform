@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import LogoManie from '@/public/images/logos/logo-manie-bleu-ciel.svg';
-import { useCustomizerStore } from '@/stores/customizer';
 import { ref } from 'vue';
 // import RtlLogo from '@/layouts/full/logo/RtlLogo.vue';
 import Navigations from '@/components/landingpage/layout/Navigation.vue';
@@ -10,7 +9,6 @@ import MobileSidebar from '@/components/landingpage/layout/MobileSidebar.vue';
 import { Menu2Icon } from 'vue-tabler-icons';
 
 const appsdrawer = ref(false);
-const customizer = useCustomizerStore();
 const isAlreadyConnected = localStorage.getItem('pp-created');
 const clientProfile = localStorage.getItem('client-uuid');
 const professionalProfile = localStorage.getItem('professional-uuid');
@@ -18,7 +16,6 @@ const professionalProfile = localStorage.getItem('professional-uuid');
 const whiteBgOnScroll = ref(false);
 const handleScroll = () => {
   whiteBgOnScroll.value = window.scrollY > 80;
-  console.log(whiteBgOnScroll.value);
 };
 
 onMounted(() => {
@@ -43,7 +40,7 @@ onUnmounted(() => {
           >
             <div>
               <NuxtLink to="/">
-                <Img :src="LogoManie" width="150" />
+                <LogoManie width="150" />
               </NuxtLink>
             </div>
             <!-- Desktop view Navigation -->

@@ -1,4 +1,3 @@
-import { ProfessionalProfile } from '../../models/user/UserModel';
 <template>
   <div class="success-container">
     <div class="success-card">
@@ -7,6 +6,7 @@ import { ProfessionalProfile } from '../../models/user/UserModel';
         <div class="success-icon">✅</div>
         <h1>Paiement réussi !</h1>
         <p>Merci pour votre achat. Votre commande a été confirmée.</p>
+        <p>Redirection vers le dashboard dans 3secondes</p>
 
         <div class="payment-details" v-if="paymentData">
           <h3>Détails de la commande :</h3>
@@ -22,6 +22,8 @@ import { ProfessionalProfile } from '../../models/user/UserModel';
 </template>
 
 <script setup>
+import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
+
 // Métadonnées de la page
 definePageMeta({
   title: 'Paiement réussi',
@@ -31,10 +33,13 @@ definePageMeta({
 // Récupération du session_id depuis l'URL
 const route = useRoute();
 const router = useRouter();
-const sessionId = computed(() => route.query.session_id);
+const { processStripeReturn } = usePaiementJeton();
 const userStore = useUserStore();
 const { ProfessionalProfile } = storeToRefs(userStore);
-const { debugAuth, getUserProfileDetails } = useUserProfile();
+
+const sessionId = computed(() => route.query.session_id);
+console.log(sessionId, 'sessionId');
+console.log(route.query.session_id, 'route.query.session_id');
 
 // Fonctions utilitaires
 const formatAmount = (amount, currency) => {
@@ -50,10 +55,17 @@ useHead({
   meta: [{ name: 'robots', content: 'noindex, nofollow' }],
 });
 onMounted(async () => {
-  await debugAuth();
-  await getUserProfileDetails();
-  if (ProfessionalProfile.value) {
-    await usePaiementJeton().restoreAfterStripe(ProfessionalProfile.value?.uuid);
+  if (!sessionId.value) return;
+
+  const result = await processStripeReturn(sessionId.value);
+
+  if (!result.success) {
+    console.error('Paiement non validé:', result.message);
+  } else {
+    setTimeout(() => {
+      navigateTo('/dashboards/dashboard2', { replace: true });
+    }, 3000);
+    console.log('Paiement validé:', result);
   }
 });
 </script>

@@ -37,17 +37,17 @@ export const useUserStore = defineStore('userStore', () => {
   const isStoringUserAccepeted = ref(false);
   const professionnalServices = ref<Services[]>([]);
   const keywords = ref<Keywords[]>([]);
-  const bgPicture = ref('/images/backgrounds/profilebg-2.jpg');
+  const bgPicture = ref();
 
-  // getters
-  const isProfessional = computed(
-    () =>
-      user.value?.category === 'professional' || professionalUser.value?.category === 'professional'
-  );
+  const definePictureBanner = computed(() => {});
 
   // setters
   const setUser = (userData: User) => {
     user.value = userData;
+    localStorage.setItem('username', userData.username);
+    if (userData.category === 'professional') {
+      localStorage.setItem('is-professional', JSON.stringify(true));
+    }
   };
 
   const setUpdateProfile = (newStatus: boolean) => {
@@ -76,6 +76,8 @@ export const useUserStore = defineStore('userStore', () => {
     };
 
     localStorage.setItem('professional-uuid', professionalUser.value.uuid || '');
+    localStorage.setItem('is-profile-verified', JSON.stringify(true));
+    localStorage.setItem('pro-name', newProfessionalUser.name);
     isProfileCreated.value = true;
   };
 
@@ -85,6 +87,7 @@ export const useUserStore = defineStore('userStore', () => {
 
   const setProfessionalServices = (services: Services[]) => {
     professionnalServices.value = services;
+    console.log(professionnalServices.value, 'professionnalServices.value');
   };
 
   const setKeywords = (newKeywords: Keywords[]) => {
@@ -105,7 +108,6 @@ export const useUserStore = defineStore('userStore', () => {
     professionnalServices,
     isProfilUpdate,
     keywords,
-    isProfessional,
     setUserAccepted,
     setUser,
     setProfessionalUser,

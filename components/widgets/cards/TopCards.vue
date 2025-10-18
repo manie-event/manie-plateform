@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import { textCardsData } from '@/_mockApis/components/dashboards/dashboard2';
-import { Icon } from '@iconify/vue';
-</script>
 <template>
   <v-row class="d-flex">
     <v-col v-for="item in textCardsData" :key="item.title" cols="12" sm="3" class="d-flex">
@@ -18,6 +14,12 @@ import { Icon } from '@iconify/vue';
     </v-col>
   </v-row>
 </template>
+<script setup lang="ts">
+import { textCardsData } from '@/_mockApis/components/dashboards/dashboard2';
+import { Icon } from '@iconify/vue';
+
+const propositionSelected = computed(() => {});
+</script>
 <style scoped>
 .shape {
   position: absolute;

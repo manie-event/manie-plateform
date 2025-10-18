@@ -9,9 +9,10 @@ export const useAuthentification = () => {
   const router = useRouter();
   const { addError, addSuccess } = useToaster();
   const userStore = useUserStore();
-  const { isStoringUserAccepeted, isProfessional } = storeToRefs(userStore);
+  const { isStoringUserAccepeted } = storeToRefs(userStore);
   const { token, refreshToken } = useAuthCookies();
   const { setUser } = userStore;
+  const isProfessional = localStorage.getItem('is-professional');
 
   const api = useApi();
 
@@ -43,7 +44,9 @@ export const useAuthentification = () => {
         token.value = tokenValue;
         setUser(data.user);
 
-        if (!isProfessional.value) {
+        console.log(isProfessional, 'isProfessional- isProfessional');
+
+        if (data.user.category === 'client') {
           router.push({ path: '/dashboards/dashboard-client' });
         } else {
           router.push({ path: '/dashboards/dashboard2' });
@@ -84,7 +87,6 @@ export const useAuthentification = () => {
     }
   };
 
-  // ✅ Routes AVEC authentification - utiliser useApi()
   const registerNewPassword = async (registerPassword: registerNewPasswordModel) => {
     try {
       if (!api) return;
@@ -109,11 +111,11 @@ export const useAuthentification = () => {
       const { data } = await api.post('/auth/logout');
 
       if (data) {
-        addSuccess('Déconnexion réussie.');
-        // ✅ Nettoyage des cookies
         token.value = null;
         refreshToken.value = null;
+        localStorage.clear();
         await router.push('/');
+        addSuccess('Déconnexion réussie.');
       }
     } catch (error: unknown) {
       addError(error as errorModel);

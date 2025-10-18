@@ -1,36 +1,67 @@
-import { Teleport } from 'vue';
 <template>
   <v-card elevation="10" class="overflow-visible">
     <v-card-text class="position-relative pb-5">
       <h5 class="text-h5 mb-1 font-weight-semibold">
-        {{ user?.name ? user.name : user?.username }}
+        {{ `${proName ? proName : professionalUser?.name}, content de vous voir ici,` }}
       </h5>
-      <div class="text-subtitle-1 text-grey100 pb-1">Check all the statastics</div>
+      <div class="text-subtitle-1 text-grey100 pb-1">Un coup d'oeil sur les annonces du jour ?</div>
       <v-btn
         color="primary"
         class="mt-4 mb-2 px-7"
         rounded="pill"
         size="large"
         @click="openMarketModal = true"
+        v-if="servicePropositionAvailable"
       >
-        visit now
+        Découvrir les annonces
       </v-btn>
+      <v-btn color="primary" class="mt-4 mb-2 px-7" rounded="pill" size="large" v-else>
+        <Loader class="w-2 h-2 animate-spin" />
+      </v-btn>
+      <img :src="PhotoAModifier" class="bg-img-1 mt-sm-0 mt-sm-n10" />
     </v-card-text>
-    <img src="/images/backgrounds/school.png" class="bg-img-1 mt-sm-0 mt-sm-n10" />
   </v-card>
   <Teleport to="body">
     <ProfessionalMarketPlace
-      v-if="openMarketModal"
-      @close="openMarketModal = false"
-      v-model:open-market-modal="openMarketModal"
+      v-model:open-proposition-pro="openMarketModal"
+      :propositionFiltered="propositionFiltered"
     />
   </Teleport>
 </template>
 <script setup lang="ts">
-import ProfessionalMarketPlace from '@/components/dashboards/dashboard2/ProfessionalMarketPlace.vue';
-const { user } = storeToRefs(useUserStore());
+import { useEventServiceProposition } from '@/composables/event-service-propositions/UseEventServiceProposition';
+import PhotoAModifier from '@/public/images/backgrounds/school.png';
+import Loader from '@/public/images/svgs/minimal-spinner.svg';
+import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
+import ProfessionalMarketPlace from './ProfessionalMarketPlace.vue';
 
+const { professionalUser } = storeToRefs(useUserStore());
+const { serviceEventProposition } = storeToRefs(usePropositionStore());
+const { getServicePropositionForProfessional } = useEventServiceProposition();
+const { servicePropositionAvailable } = useEventServiceProposition();
+
+const proName = localStorage.getItem('pro-name');
 const openMarketModal = ref(false);
+const propositionFiltered = ref<EventModelForProposition[]>([]);
+
+const isPropositionStillAvailable = () => {
+  propositionFiltered.value = serviceEventProposition.value
+    .filter((proposition: EventModelForProposition) => isEventDone(proposition.date[1]))
+    .filter((proposition) => !proposition.proposition.professionalMessage);
+};
+
+watch(
+  serviceEventProposition,
+  () => {
+    isPropositionStillAvailable();
+  },
+  { deep: true }
+);
+
+onMounted(async () => {
+  await getServicePropositionForProfessional();
+  isPropositionStillAvailable();
+});
 </script>
 
 <style scoped>

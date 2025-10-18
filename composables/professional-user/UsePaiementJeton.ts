@@ -1,6 +1,5 @@
-import { loadStripe } from '@stripe/stripe-js';
 import axios from 'axios';
-import type { ProfessionalProfile } from '../../models/user/UserModel';
+import { PRICE_PER_TOKEN } from '~/constants/prixeToken';
 
 export const usePaiementJeton = () => {
   const token = useCookie('token');
@@ -9,25 +8,22 @@ export const usePaiementJeton = () => {
   const userStore = useUserStore();
   const { professionalUser } = storeToRefs(userStore);
   const cartStore = useCartStore();
-  const { creditTokensAfterPayment } = cartStore;
-  loadStripe(config.public.tokenStripe);
+  const { initializeTokenBalance } = cartStore;
 
+  const isProcessing = ref(false);
+  const error = ref<string | null>(null);
+
+  /**
+   * Crée une session de paiement Stripe
+   */
   const createTokenSession = async (amount: number) => {
     const currentProfile = professionalUser.value;
-    const currentJetonQuantity = amount;
 
-    localStorage.setItem('professional-uuid', currentProfile?.uuid?.replace(/[""]/g, '') || '');
-    localStorage.setItem('token-session', token.value || '');
     if (!currentProfile?.uuid) {
-      console.error('❌ No professional profile found');
-      return;
+      throw new Error('Profil professionnel non trouvé');
     }
 
     try {
-      localStorage.setItem('jeton-quantity', JSON.stringify(currentJetonQuantity));
-      // === APPEL API STRIPE ===
-      console.log(currentProfile, 'from createTokenSession');
-
       const { data } = await axios.post(
         `${config.public.apiUrl}/payments/token/${currentProfile.uuid}`,
         {
@@ -42,72 +38,91 @@ export const usePaiementJeton = () => {
         }
       );
 
-      if (data && data.url) {
+      if (data?.url) {
+        // Redirection vers Stripe
         window.location.href = data.url;
-        console.log(window.location.href, 'REDIRECT STRIPE');
-
         return data;
       }
-    } catch (error: any) {
-      throw error;
+
+      throw new Error('URL de paiement non reçue');
+    } catch (err: any) {
+      console.error('Erreur création session Stripe:', err);
+      throw new Error(err.response?.data?.message || 'Erreur lors de la création du paiement');
     }
   };
 
-  const createJeton = async (quantity: number, professionnalUuid: string) => {
-    console.log('Creating jetons...', quantity, professionnalUuid);
-
+  const getJetonQuantity = async () => {
+    const currentProfile = professionalUser.value;
     try {
-      const { data } = await axios.post(
-        `${config.public.apiUrl}/credit/create`,
-        {
-          quantity: quantity,
-          professionalUuid: professionnalUuid,
+      const { data } = await axios.get(`${config.public.apiUrl}/credit/${currentProfile?.uuid}`, {
+        headers: {
+          Authorization: `Bearer ${token.value}`,
+          'Content-Type': 'application/json',
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token.value}`,
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      if (data) {
-        localStorage.removeItem('jeton-quantity');
-        return data;
-      }
+      });
+
+      return data.quantity;
     } catch (error) {
       console.log(error);
     }
   };
 
-  const restoreAfterStripe = async (ProfessionalProfile: ProfessionalProfile) => {
-    localStorage.setItem('user-category', 'professional'); // added to fix issue with vertical header
-    const urlParams = new URLSearchParams(window.location.search);
-    const isStripeReturn =
-      urlParams.has('session_id') || urlParams.has('payment_intent') || route.query.success;
-
-    if (isStripeReturn) {
-      const purchasedTokens = localStorage.getItem('jeton-quantity');
-      try {
-        if (purchasedTokens) {
-          const tokensToPurchase = JSON.parse(purchasedTokens);
-
-          creditTokensAfterPayment(tokensToPurchase);
-          if (ProfessionalProfile.uuid) {
-            console.log('✅ Restoring profile and creating tokens');
-
-            await createJeton(tokensToPurchase, ProfessionalProfile.uuid);
-          }
+  /**
+   * Vérifie le statut d'une session Stripe côté backend
+   */
+  const verifyStripeSession = async (sessionId: string) => {
+    try {
+      const { data } = await axios.get(
+        `${config.public.apiUrl}/payments/session-status/${sessionId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+          },
         }
-      } catch (e) {
-        console.warn('LocalStorage restore failed:', e);
-      }
-      console.error('❌ All restore attempts failed');
-    } else {
-      console.log('✅ Profile déjà présent, aucun besoin restock ');
+      );
+      console.log(data, 'verifyStripeSession');
+      return data;
+    } catch (err: any) {
+      console.error('Erreur vérification session:', err);
+      throw new Error('Impossible de vérifier le paiement');
     }
   };
+  const processStripeReturn = async (sessionId: string) => {
+    if (isProcessing.value) return { success: false, message: 'Traitement en cours' };
+
+    isProcessing.value = true;
+
+    try {
+      const response = await verifyStripeSession(sessionId);
+      const sessionData = response.session;
+
+      if (sessionData.payment_status !== 'paid') {
+        throw new Error("Le paiement n'a pas été complété");
+      }
+
+      // Calculer la quantité depuis le montant
+      const amountInEuros = sessionData.amount_total / 100; // Convertir centimes en euros
+      const quantity = Math.floor(amountInEuros / PRICE_PER_TOKEN); // 36€ / 9€ = 4 jetons
+
+      const currentBalance = await getJetonQuantity();
+
+      initializeTokenBalance(currentBalance);
+
+      return { success: true, quantity, sessionData };
+    } catch (err: any) {
+      error.value = err.message;
+      return { success: false, message: error.value };
+    } finally {
+      isProcessing.value = false;
+    }
+  };
+
   return {
     createTokenSession,
-    restoreAfterStripe,
+    processStripeReturn,
+    verifyStripeSession,
+    getJetonQuantity,
+    isProcessing: readonly(isProcessing),
+    error: readonly(error),
   };
 };

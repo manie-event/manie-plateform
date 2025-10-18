@@ -1,92 +1,73 @@
-<script setup lang="ts">
-import { ref } from 'vue';
-import { projectTableData } from '@/_mockApis/components/dashboards/dashboard2';
-const items = ref([
-  { title: 'Action' },
-  { title: 'Another action' },
-  { title: 'Something else here' },
-]);
-</script>
 <template>
-  <VCard elevation="10">
+  <VCard elevation="10" class="mb-16">
     <v-card-text>
       <div class="d-flex align-center justify-space-between">
         <div>
-          <h5 class="text-h5 mb-1 font-weight-semibold">Top Employees</h5>
-        </div>
-        <div>
-          <v-menu bottom left>
-            <template v-slot:activator="{ props }">
-              <v-btn icon color="inherit" v-bind="props" flat>
-                <DotsVerticalIcon stroke-width="1.5" size="24" class="text-grey100" />
-              </v-btn>
-            </template>
-            <v-list density="compact">
-              <v-list-item v-for="(item, i) in items" :key="i" :value="i">
-                <v-list-item-title>{{ item.title }}</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
+          <h5 class="text-h5 mb-1 font-weight-semibold">Vos propositions en cours</h5>
         </div>
       </div>
-      <div class="month-table">
+      <div class="month-table" v-if="selectedProposition.length > 0">
         <v-table class="mt-5 mb-0">
           <template v-slot:default>
             <thead>
               <tr>
+                <!-- A voir pour changer avec nom de la personne -->
                 <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
-                  Profile
+                  Nom de l'évènement
                 </th>
                 <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
-                  Hour Rate
+                  Date de la prestation
                 </th>
                 <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
-                  Skills
+                  Localisation
                 </th>
                 <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
-                  Status
+                  Nombre d'invités
                 </th>
+                <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
+                  Status de la demande
+                </th>
+                <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap"></th>
               </tr>
             </thead>
             <tbody>
-              <tr
-                v-for="item in projectTableData"
-                :key="item.leadname"
-                :class="item.activestate"
-                class="month-item"
-              >
+              <tr v-for="item in selectedProposition" :key="item.id" class="month-item">
                 <td>
                   <div class="d-flex align-center">
-                    <v-avatar size="50">
-                      <img :src="item.img" alt="user" width="50" />
-                    </v-avatar>
-                    <div class="mx-4">
+                    <div class="mr-4">
                       <h4 class="text-subtitle-1 font-weight-bold text-no-wrap text-grey200">
-                        {{ item.leadname }}
+                        {{ item.name }}
                       </h4>
-                      <h6 class="text-subtitle-1 text-no-wrap font-weight-medium mt-1 text-grey200">
-                        {{ item.leademail }}
-                      </h6>
                     </div>
                   </div>
                 </td>
                 <td>
                   <h5 class="text-subtitle-1 font-weight-medium text-no-wrap text-grey200">
-                    {{ item.projectname }}
+                    Du <b>{{ getDate(item.date)[0] }}</b> au <b>{{ getDate(item.date)[1] }}</b>
                   </h5>
                 </td>
                 <td>
                   <h4 class="text-subtitle-1 text-no-wrap font-weight-medium text-grey200">
-                    {{ item.skill }}
+                    {{ item.location.toUpperCase() }}
+                  </h4>
+                </td>
+                <td>
+                  <h4 class="text-subtitle-1 text-no-wrap font-weight-medium text-grey200">
+                    <span>{{ item.people }} pers.</span>
                   </h4>
                 </td>
                 <td>
                   <v-chip
-                    :class="'text-subtitle-1 font-weight-medium bg-light' + item.statuscolor"
+                    :class="'text-subtitle-1 font-weight-medium bg-light'"
                     variant="outlined"
                     size="x-small"
-                    :color="item.statuscolor"
-                    >{{ item.statustext }}</v-chip
+                    :color="getStatusColor(item.proposition.status)"
+                    >{{ getStatusName(item.proposition.status) }}</v-chip
+                  >
+                </td>
+                <td>
+                  <v-btn color="primary" @click="findSelectedProposition(item.proposition.uuid)"
+                    >voir plus+</v-btn
                   >
                 </td>
               </tr>
@@ -94,6 +75,95 @@ const items = ref([
           </template>
         </v-table>
       </div>
+      <div v-else class="position-relative">
+        <v-col cols="12" class="mt-6">
+          <BaseEmptyState
+            :style="{
+              position: 'relative',
+            }"
+          >
+            <template #image>
+              <EmptyState :style="{ color: svgColor }" class="transition-colors duration-300" />
+            </template>
+            <template #description>
+              <p class="text-subtitle-1">
+                Veuillez vous positionner sur au moins une proposition pour accéder à cette section
+              </p>
+            </template>
+          </BaseEmptyState>
+        </v-col>
+      </div>
     </v-card-text>
   </VCard>
+  <Teleport to="body">
+    <PropositionDetails
+      v-model:open-proposition-detail="openMarketModal"
+      :selectedProposition="selectedPropositionInformation"
+    />
+    <errorToaster></errorToaster>
+  </Teleport>
 </template>
+<script setup lang="ts">
+import BaseEmptyState from '@/components/common/BaseEmptyState.vue';
+import errorToaster from '@/components/common/errorToaster.vue';
+import EmptyState from '@/public/images/empty-state/profil-vides.svg';
+import { Teleport } from 'vue';
+import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
+import { usePropositionStore } from '~/stores/propositionStore';
+import PropositionDetails from './PropositionDetails.vue';
+
+const { setPropositions } = usePropositionStore();
+const { serviceEventProposition } = storeToRefs(usePropositionStore());
+
+const getStatusColor = (status: string) => {
+  switch (status) {
+    case 'pending':
+      return 'warning';
+    case 'reviewing':
+      return 'primary';
+    case 'completed':
+      return 'success';
+    case 'cancelled':
+      return 'error';
+    default:
+      return 'grey';
+  }
+};
+
+const getStatusName = (status: string) => {
+  switch (status) {
+    case 'pending':
+      return 'En attente';
+    case 'reviewing':
+      return 'En cours d’examen';
+    case 'completed':
+      return 'Accepté';
+    case 'cancelled':
+      return 'Refusé';
+  }
+};
+
+const getDate = (date: string[]) => formatDate(date);
+const customizer = useCustomizerStore();
+const selectedPropositionInformation = ref<EventModelForProposition>();
+const openMarketModal = ref(false);
+
+const svgColor = computed(() => {
+  return customizer.actTheme === 'DARK_BLUE_THEME' ? '#FFFFFF' : '#000000';
+});
+
+const findSelectedProposition = (propositionUuid: string) => {
+  console.log(serviceEventProposition.value, 'serviceEventProposition.value');
+
+  selectedPropositionInformation.value = serviceEventProposition.value.find(
+    (p) => p.proposition.uuid === propositionUuid
+  );
+
+  openMarketModal.value = true;
+};
+const selectedProposition = computed(() => {
+  return serviceEventProposition.value.filter(
+    (proposition: EventModelForProposition) => proposition.proposition.professionalMessage
+  );
+});
+</script>

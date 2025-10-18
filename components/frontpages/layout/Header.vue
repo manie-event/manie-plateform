@@ -38,7 +38,7 @@ function handleScroll() {
             <!-- Logo -->
             <div>
               <NuxtLink to="/">
-                <img :src="Logo" alt="" />
+                <Logo />
               </NuxtLink>
             </div>
 

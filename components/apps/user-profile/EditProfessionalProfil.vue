@@ -1,9 +1,5 @@
 <template>
   <BaseModal v-model="openModal" fullscreen transition="dialog-bottom-transition">
-    <template #title>{{
-      !isProfileCreated ? 'Renseignez votre profil' : 'Modifier votre profil'
-    }}</template>
-
     <template #content>
       <v-form class="px-4">
         <div v-show="currentPage === 1">
@@ -39,6 +35,7 @@
             :items="activityItems"
             item-title="label"
             item-value="value"
+            @update:model-value="setSector"
             :error-messages="showErrors ? errors.mainActivity : undefined"
           />
           <v-text-field
@@ -74,7 +71,7 @@
             variant="solo"
             :min="0"
             label="Votre délai de réservation minimum (en semaine) ?"
-            v-model="profile.minimumReservationPeriod"
+            v-model="reservationDelay"
             :error-messages="showErrors ? errors.minimumReservationPeriod : undefined"
           />
           <v-checkbox
@@ -178,20 +175,24 @@
             </v-btn>
           </div>
         </div>
-        <services-prestataire
-          v-if="currentPage === 2"
-          class="mt-6"
-          :sector="profile.mainActivity"
-          v-model:pageActuelle="currentPage"
-        />
+
         <div v-if="currentPage === 1" class="d-flex justify-space-between">
           <v-btn @click="openModal = false">Annuler</v-btn>
-          <v-btn color="primary" @click="setSector(profile)">Vers le questionnaire détaillé</v-btn>
+          <v-btn v-if="!isProfileVerified" color="primary" @click="createProfile(profile)">
+            Valider mon profil
+          </v-btn>
+          <div v-if="isProfileVerified">
+            <v-btn color="primary" @click="modifyProfile(profile)"> Modifier mon profil </v-btn>
+          </div>
         </div>
       </v-form>
     </template>
   </BaseModal>
-  <Teleport to="body"> <error-toaster></error-toaster> </Teleport>
+  <Teleport to="body">
+    <ModalRedirection :redirection="'dashboard2'" v-model="isProfilUpdate" />
+    <CommonSuccessToaster></CommonSuccessToaster>
+    <error-toaster></error-toaster>
+  </Teleport>
 </template>
 <script setup lang="ts">
 import BaseModal from '@/components/common/BaseModal.vue';
@@ -199,17 +200,17 @@ import { useForm } from 'vee-validate';
 import { ref, Teleport } from 'vue';
 import * as yup from 'yup';
 import errorToaster from '~/components/common/errorToaster.vue';
-import ServicesPrestataire from '~/components/questionnaires/ServicesPrestataire.vue';
 import { useKeywords } from '~/composables/professional-user/UseKeywords';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import { GEOGRAPHIC_ACTIVITY } from '~/constants/geographicActivity';
 import type { Faq, Link, ProfessionalProfile } from '~/models/user/UserModel';
+import ModalRedirection from './ModalRedirection.vue';
 
 const userStore = useUserStore();
-const { createProfessionalProfile } = useProfessionalProfile();
+const { professionalUser } = storeToRefs(userStore);
+const { createProfessionalProfile, patchProfessionnalProfileDetails } = useProfessionalProfile();
 const { getSectors } = useKeywords();
-const { isProfileCreated } = storeToRefs(userStore);
 const openModal = defineModel<boolean>('openModal');
 
 const faqArray = ref<Faq[]>([]);
@@ -218,17 +219,19 @@ const { addError, addSuccess } = useToaster();
 const currentPage = ref(1);
 const activityItems = ref(ACTIVITY_ITEMS);
 const geographicActivity = ref(GEOGRAPHIC_ACTIVITY);
+const isProfileVerified = localStorage.getItem('is-profile-verified');
+const reservationDelay = ref(0);
+const isProfilUpdate = ref(false);
+
+const minimumDaysReservation = computed(() => reservationDelay.value * 7);
 
 const mergedFaq = computed(() => {
-  return faqArray.value.reduce(
-    (acc, faq) => {
-      if (faq.question && faq.reponse) {
-        acc[faq.question] = faq.reponse;
-      }
-      return acc;
-    },
-    {} as Record<string, string>
-  );
+  return faqArray.value.reduce((acc, faq) => {
+    if (faq.question && faq.reponse) {
+      acc[faq.question] = faq.reponse;
+    }
+    return acc;
+  }, null);
 });
 
 const validationSchema = yup.object({
@@ -314,19 +317,23 @@ const removeFaq = (index: number) => {
   }
 };
 
-const setSector = async (values: ProfessionalProfile) => {
-  const finalValues = {
-    ...values,
-    faq: mergedFaq.value,
-    minimumReservationPeriod: values.minimumReservationPeriod * 7,
-  };
+const setSector = () => {
+  getSectors(profile.mainActivity);
+};
 
+const createProfile = async (values: ProfessionalProfile) => {
   try {
-    const response = await createProfessionalProfile(finalValues);
+    const payload = {
+      ...values,
+      faq: mergedFaq.value || {},
+      minimumReservationPeriod: minimumDaysReservation.value,
+    };
+    const response = await createProfessionalProfile(payload);
 
     if (response.message === 'Professional created') {
-      getSectors(profile.mainActivity);
-      currentPage.value = 2;
+      addSuccess('Votre profil a été envoyé pour être soumi à vérification');
+      openModal.value = false;
+      isProfilUpdate.value = true;
     } else {
       addError({ message: 'La mise à jour du profil a échoué.' });
     }
@@ -334,5 +341,55 @@ const setSector = async (values: ProfessionalProfile) => {
     addError({ message: 'Erreur lors de la mise à jour du profil.' });
   }
 };
-resetForm();
+
+const modifyProfile = async (newValues: ProfessionalProfile) => {
+  try {
+    const payload = {
+      ...newValues,
+      faq: mergedFaq.value || {},
+      minimumReservationPeriod: minimumDaysReservation.value,
+    };
+    const response = await patchProfessionnalProfileDetails(payload);
+
+    if (response.message === 'Professional updated') {
+      addSuccess('Votre profil a été modifié avec success');
+      openModal.value = false;
+      isProfilUpdate.value = true;
+    } else {
+      addError({ message: 'La mise à jour du profil a échoué.' });
+    }
+  } catch (error) {
+    addError({ message: 'Erreur lors de la mise à jour du profil.' });
+  }
+};
+
+onMounted(() => {
+  if (professionalUser.value) {
+    resetForm({
+      values: {
+        name: professionalUser.value.name ?? '',
+        siret: professionalUser.value.siret ?? '',
+        address: professionalUser.value.address ?? '',
+        bio: professionalUser.value.bio ?? '',
+        mainActivity: professionalUser.value.mainActivity ?? 'Veuillez choisir votre activité',
+        mainInterlocutor: professionalUser.value.mainInterlocutor ?? '',
+        experience: professionalUser.value.experience ?? 0,
+        geographicArea:
+          professionalUser.value.geographicArea ?? geographicActivity.value[0]?.label ?? '',
+        certification: professionalUser.value.certification ?? '',
+        minimumReservationPeriod: professionalUser.value.minimumReservationPeriod ?? 0,
+        deposit: professionalUser.value.deposit ?? false,
+        depositAmount: professionalUser.value.depositAmount ?? 0,
+        billingPeriod: professionalUser.value.billingPeriod ?? 'beforeEvent',
+        links: professionalUser.value.links?.length
+          ? professionalUser.value.links
+          : [{ type: '', value: '' }],
+        faq: professionalUser.value.faq ?? {},
+      },
+    });
+
+    // Pré-remplir la FAQ et les liens si tu gères des refs séparés
+    faqArray.value = professionalUser.value.faqArray ?? [];
+  }
+});
 </script>

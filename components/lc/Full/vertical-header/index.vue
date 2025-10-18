@@ -6,9 +6,9 @@ import Navigation from '~/components/landingpage/layout/Navigation.vue';
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 
 const { createTokenSession } = usePaiementJeton();
-const { isProfessional } = storeToRefs(useUserStore());
 const jetonAmount = ref(0);
 const stickyHeader = ref(false);
+const isProfessional = localStorage.getItem('is-professional');
 
 const totalPriceJeton = computed(() => {
   return `${jetonAmount.value * 9} €`;
@@ -49,7 +49,7 @@ onBeforeMount(() => {
     <div class="menu-dashboard__container">
       <div>
         <NuxtLink to="/">
-          <Img :src="Logo" alt="test logo" width="150" height="100" />
+          <Logo width="150" height="100" />
         </NuxtLink>
         <!---/Search part -->
       </div>

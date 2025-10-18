@@ -1,71 +1,92 @@
 <script setup lang="ts">
 import { clientMenu, professionalProfile } from '@/_mockApis/headerData';
 import { UserCategory } from '@/models/enums/userCategoryEnums';
+import type { clientProfile } from '@/models/user/UserModel';
 import { Icon } from '@iconify/vue';
 import { CircleXIcon } from 'vue-tabler-icons';
 import { useClientProfil } from '~/composables/client-user/UseClientProfil';
+import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { useAuthentification } from '../../../../composables/UseAuthentification';
 
 const userStore = useUserStore();
-const { user, professionalUser, isProfileCreated, isProfessional } = storeToRefs(userStore);
+const { user, professionalUser, isProfileCreated } = storeToRefs(userStore);
 
 const { sendLogout } = useAuthentification();
 const { userTokenBalance } = storeToRefs(useCartStore());
-const { getProfessionalProfileDetails } = useProfessionalProfile();
+const { getProfessionalProfileDetails, getProfessionalProfile } = useProfessionalProfile();
 const { getClientProfil } = useClientProfil();
+const { getJetonQuantity } = usePaiementJeton();
 
 const clientProfile = localStorage.getItem('client-profile');
+const isProfessional = localStorage.getItem('is-professional');
+const username = localStorage.getItem('username');
+const proName = localStorage.getItem('pro-name');
 const getclientName = ref();
+const jetonBalance = ref(0);
 
 const getNameDependingOnCategory = computed(() => {
-  if (
-    (isProfessional.value && !user.value?.username) ||
-    professionalUser.value?.category == 'professional'
-  ) {
-    return professionalUser.value?.name;
+  if (isProfessional && isProfileCreated.value) {
+    return proName ? proName : professionalUser.value?.name;
   }
+
   if (clientProfile) {
     getclientName.value = JSON.parse(clientProfile);
     return getclientName.value.username;
-  } else {
-    return user.value?.username;
   }
+  return username;
 });
 
 const getCategory = computed(() => {
-  if (isProfessional.value) {
+  if (isProfessional) {
     return UserCategory.PRESTA;
   } else {
     return UserCategory.CLIENT;
   }
 });
 
-onMounted(async () => {
-  if (isProfileCreated.value && user.value?.category === UserCategory.PROFESSIONAL) {
-    await getProfessionalProfileDetails();
+const getInitials = computed(() => {
+  if (professionalUser.value?.name) {
+    return professionalUser.value?.name
+      .split(' ') // coupe sur les espaces → ['Manie', 'Events']
+      .filter(Boolean) // enlève les chaînes vides (au cas où il y a des doubles espaces)
+      .map((word) => word[0].toUpperCase()) // prend la première lettre et la met en majuscule
+      .join('');
   } else {
+    if (username) {
+      return username
+        .split(' ') // coupe sur les espaces → ['Manie', 'Events']
+        .filter(Boolean) // enlève les chaînes vides (au cas où il y a des doubles espaces)
+        .map((word) => word[0].toUpperCase()) // prend la première lettre et la met en majuscule
+        .join('');
+    }
+  }
+});
+
+onMounted(async () => {
+  if (isProfessional && isProfileCreated.value) {
+    const professionalDetail = await getProfessionalProfileDetails();
+    jetonBalance.value = await getJetonQuantity();
+    return professionalDetail;
+  } else if (isProfessional && !isProfileCreated.value) {
+    const allProfessionalProfile = await getProfessionalProfile();
+    jetonBalance.value = await getJetonQuantity();
+
+    return allProfessionalProfile;
+  } else if (!isProfessional && isProfileCreated) {
     await getClientProfil();
+  } else {
+    console.warn('Utilisateur non encore chargé ou UUID manquant');
   }
 });
 </script>
 
 <template>
-  <!-- ---------------------------------------------- -->
-  <!-- notifications DD -->
-  <!-- ---------------------------------------------- -->
   <v-menu :close-on-content-click="true" class="profile_popup">
     <template v-slot:activator="{ props }">
       <div class="text-left px-0 cursor-pointer" variant="text" v-bind="props">
         <div class="d-flex align-center">
-          <v-avatar size="50">
-            <img
-              src="/images/profile/user6.jpg"
-              width="50"
-              alt="profile picture"
-              :class="{ 'profile-not-defined': !isProfileCreated }"
-            />
-          </v-avatar>
+          <div class="avatar">{{ getInitials }}</div>
           <div class="ml-md-4 d-md-block d-none">
             <h6 class="text-h6 d-flex align-center text-black font-weight-semibold">
               {{ getNameDependingOnCategory }}
@@ -83,9 +104,14 @@ onMounted(async () => {
         </div>
 
         <div class="d-flex align-center mt-5 pb-6">
-          <v-avatar size="90">
-            <img src="/images/profile/user6.jpg" width="90" />
-          </v-avatar>
+          <div
+            class="avatar"
+            :class="{
+              'profile-not-defined': !isProfileCreated,
+            }"
+          >
+            {{ getInitials }}
+          </div>
           <div class="ml-5">
             <h6 class="text-h5 mb-n1">{{ getNameDependingOnCategory }}</h6>
             <span class="text-subtitle-1 font-weight-regular text-grey100 font-weight-medium">{{
@@ -123,9 +149,9 @@ onMounted(async () => {
               </h6>
             </div>
             <p class="text-subtitle-1 font-weight-regular text-grey100">
-              <b>{{ item.requiresProfile ? userTokenBalance : '' }}</b> {{ item.subtitle }}
+              <b>{{ item.requiresProfile ? jetonBalance : '' }}</b>
+              {{ item.subtitle }}
             </p>
-            <p>{{ item.title }}</p>
           </v-list-item>
         </v-list>
         <v-list class="py-0 theme-list" lines="two" v-else>
@@ -155,7 +181,7 @@ onMounted(async () => {
               </h6>
             </div>
             <p class="text-subtitle-1 font-weight-regular text-grey100">
-              <b>{{ item.requiresProfile ? userTokenBalance : '' }}</b> {{ item.subtitle }}
+              <b>{{ item.requiresProfile ? userTokenBalance : '' }}</b>
             </p>
           </v-list-item>
         </v-list>
@@ -169,6 +195,12 @@ onMounted(async () => {
   </v-menu>
 </template>
 <style scoped>
+.avatar {
+  position: relative;
+  padding: 6px;
+  border-radius: 50%;
+  border: 1px solid rgb(213, 213, 213);
+}
 .profile-not-defined {
   padding: 2px;
   border-radius: 50%;

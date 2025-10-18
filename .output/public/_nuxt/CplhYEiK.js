@@ -1,1 +1,0 @@
-import{y as s,c as n,b as o,L as t}from"./DFIvP0J7.js";const r={},a={class:"container"};function c(e,i){return o(),n("div",a,[t(e.$slots,"image",{},void 0,!0),t(e.$slots,"description",{class:"description"},void 0,!0)])}const p=s(r,[["render",c],["__scopeId","data-v-53974d70"]]),l=""+new URL("profil-vide.DzXRbW1q.png",import.meta.url).href;export{p as B,l as E};

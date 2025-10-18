@@ -32,6 +32,7 @@ declare global {
   const effect: typeof import('vue')['effect']
   const effectScope: typeof import('vue')['effectScope']
   const eventsStore: typeof import('../../stores/events')['eventsStore']
+  const formatDate: typeof import('../../utils/date-utils')['formatDate']
   const getAppManifest: typeof import('../../node_modules/nuxt/dist/app/composables/manifest')['getAppManifest']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
@@ -50,6 +51,7 @@ declare global {
   const humanizeEventName: typeof import('../../utils/form-utils')['humanizeEventName']
   const inject: typeof import('vue')['inject']
   const injectHead: typeof import('../../node_modules/nuxt/dist/app/composables/head')['injectHead']
+  const isEventDone: typeof import('../../utils/date-utils')['isEventDone']
   const isNuxtError: typeof import('../../node_modules/nuxt/dist/app/composables/error')['isNuxtError']
   const isPrerendered: typeof import('../../node_modules/nuxt/dist/app/composables/payload')['isPrerendered']
   const isProxy: typeof import('vue')['isProxy']
@@ -123,7 +125,6 @@ declare global {
   const useAuthCookies: typeof import('../../composables/UseAuthCookies')['useAuthCookies']
   const useAuthentification: typeof import('../../composables/UseAuthentification')['useAuthentification']
   const useCartStore: typeof import('../../stores/cartStore')['useCartStore']
-  const useCatalogStore: typeof import('../../stores/catalogue')['useCatalogStore']
   const useContactService: typeof import('../../composables/UseContactService')['useContactService']
   const useCookie: typeof import('../../node_modules/nuxt/dist/app/composables/cookie')['useCookie']
   const useCssModule: typeof import('vue')['useCssModule']
@@ -145,6 +146,7 @@ declare global {
   const useNuxtDevTools: typeof import('../../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools')['useNuxtDevTools']
   const usePinia: typeof import('../../node_modules/@pinia/nuxt/dist/runtime/composables')['usePinia']
   const usePreviewMode: typeof import('../../node_modules/nuxt/dist/app/composables/preview')['usePreviewMode']
+  const usePropositionStore: typeof import('../../stores/propositionStore')['usePropositionStore']
   const useRequestEvent: typeof import('../../node_modules/nuxt/dist/app/composables/ssr')['useRequestEvent']
   const useRequestFetch: typeof import('../../node_modules/nuxt/dist/app/composables/ssr')['useRequestFetch']
   const useRequestHeader: typeof import('../../node_modules/nuxt/dist/app/composables/ssr')['useRequestHeader']
@@ -246,6 +248,7 @@ declare module 'vue' {
     readonly effect: UnwrapRef<typeof import('vue')['effect']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly eventsStore: UnwrapRef<typeof import('../../stores/events')['eventsStore']>
+    readonly formatDate: UnwrapRef<typeof import('../../utils/date-utils')['formatDate']>
     readonly getAppManifest: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/manifest')['getAppManifest']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
@@ -264,6 +267,7 @@ declare module 'vue' {
     readonly humanizeEventName: UnwrapRef<typeof import('../../utils/form-utils')['humanizeEventName']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
     readonly injectHead: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/head')['injectHead']>
+    readonly isEventDone: UnwrapRef<typeof import('../../utils/date-utils')['isEventDone']>
     readonly isNuxtError: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/error')['isNuxtError']>
     readonly isPrerendered: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/payload')['isPrerendered']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
@@ -337,7 +341,6 @@ declare module 'vue' {
     readonly useAuthCookies: UnwrapRef<typeof import('../../composables/UseAuthCookies')['useAuthCookies']>
     readonly useAuthentification: UnwrapRef<typeof import('../../composables/UseAuthentification')['useAuthentification']>
     readonly useCartStore: UnwrapRef<typeof import('../../stores/cartStore')['useCartStore']>
-    readonly useCatalogStore: UnwrapRef<typeof import('../../stores/catalogue')['useCatalogStore']>
     readonly useContactService: UnwrapRef<typeof import('../../composables/UseContactService')['useContactService']>
     readonly useCookie: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/cookie')['useCookie']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
@@ -359,6 +362,7 @@ declare module 'vue' {
     readonly useNuxtDevTools: UnwrapRef<typeof import('../../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools')['useNuxtDevTools']>
     readonly usePinia: UnwrapRef<typeof import('../../node_modules/@pinia/nuxt/dist/runtime/composables')['usePinia']>
     readonly usePreviewMode: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/preview')['usePreviewMode']>
+    readonly usePropositionStore: UnwrapRef<typeof import('../../stores/propositionStore')['usePropositionStore']>
     readonly useRequestEvent: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/ssr')['useRequestEvent']>
     readonly useRequestFetch: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/ssr')['useRequestFetch']>
     readonly useRequestHeader: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/ssr')['useRequestHeader']>
