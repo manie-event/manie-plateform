@@ -15,6 +15,8 @@ export const useProfessionalProposition = () => {
         }
       );
       if (response) {
+        console.log(response.data, 'response event service proposition');
+
         return response.data;
       }
     } catch (error) {
