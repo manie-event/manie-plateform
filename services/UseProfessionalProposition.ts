@@ -37,7 +37,7 @@ export const useProfessionalProposition = () => {
         }
       );
       if (response?.data) {
-        const propositions = response.data.data;
+        const propositions = response.data;
 
         // setPropositions(propositions);
         return propositions;

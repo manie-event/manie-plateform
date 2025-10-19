@@ -141,8 +141,6 @@ export const useEventService = () => {
           },
         }
       );
-      console.log(data, 'getEventServiceList');
-
       return data.data;
     } catch (error) {
       addError({ message: "Impossible d'ajouter le service à l'événement." });

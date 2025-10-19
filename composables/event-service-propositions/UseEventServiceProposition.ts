@@ -19,57 +19,51 @@ export const useEventServiceProposition = () => {
   const { getEventsPerOrganisator, getEventServiceList } = useEventService();
   const { setServiceEventPropositionForPresta, setServiceEventPropositionForClient } =
     usePropositionStore();
-
   const getServicePropositionForClient = async () => {
     try {
       const allEvents = await getEventsPerOrganisator();
       if (!allEvents?.length) return [];
 
-      // 1. Pour chaque event, lance en parallèle la récupération des services + propositions
-      const propositionList = await Promise.all(
+      console.log(allEvents, 'OLL');
+
+      const eventWithServiceProposition = await Promise.all(
         allEvents.map(async (event) => {
           const serviceList = await getEventServiceList(event.uuid);
 
-          // Filtrer les services pertinents
-          const servicesFiltered = serviceList.filter(
-            (service: EventServiceProposition) => service.status !== 'completed'
+          // Filtrer les services actifs
+          const activeServices = serviceList.filter(
+            (service: EventServiceProposition) => String(service.status) !== 'completed'
           );
-          console.log(servicesFiltered, 'servicesFiltered');
+          // console.log(, 'activeServices');
 
-          if (!servicesFiltered.length) return [];
-
-          // 2. Pour chaque service, récupère les propositions en parallèle
-          const propositionsForEvent = await Promise.all(
-            servicesFiltered.map(async (service: EventServiceProposition) => {
-              console.log(service, 'SERVICE');
+          // Pour chaque service actif, on récupère ses propositions
+          const servicesWithPropositions = await Promise.all(
+            activeServices.map(async (service: EventServiceProposition) => {
+              console.log(service.uuid, 'SERVICE UUID');
 
               const propositions = await getListPropositionByEventService(service.uuid);
-              console.log(propositions, 'PROPOSITIONS');
+              // console.log(propositions, 'PROPOSITION');
 
-              // Filtrer les propositions valides
-              return propositions
-                .filter((p) => p.status !== 'cancelled')
-                .map((p) => ({
-                  ...p,
-                  eventName: event.name,
-                  eventDate: event.date,
-                  serviceName: service.name,
-                }));
+              // Si tu veux stocker les propositions à l’intérieur de chaque service :
+              return {
+                ...service,
+                propositions: propositions || [],
+              };
             })
           );
 
-          // Flatten au niveau event (car chaque service renvoie un tableau)
-          return propositionsForEvent.flat();
+          // On retourne l’event enrichi avec ses services et leurs propositions
+          return {
+            ...event,
+            services: servicesWithPropositions,
+          };
         })
       );
 
-      // Flatten global (car chaque event renvoie un tableau)
-      const flattenedPropositions = propositionList.flat();
+      console.log(eventWithServiceProposition, '✅ eventWithServiceProposition');
 
-      setServiceEventPropositionForClient(flattenedPropositions);
-      console.log(flattenedPropositions, '✅ Propositions finales');
-
-      return flattenedPropositions;
+      setServiceEventPropositionForClient(eventWithServiceProposition);
+      return eventWithServiceProposition;
     } catch (error) {
       console.error('Error fetching service propositions:', error);
       throw error;
