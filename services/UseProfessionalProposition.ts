@@ -99,7 +99,7 @@ export const useProfessionalProposition = () => {
 
     try {
       const response = await axios.patch(
-        `${config.public.apiUrl}/event-service-proposition/accept-by-organisator/${propositionUuid}`,
+        `http://127.0.0.1:3333/event-service-proposition/accept-by-organisator/${propositionUuid}`,
         {},
         {
           headers: {
@@ -122,7 +122,7 @@ export const useProfessionalProposition = () => {
   const declinedByClient = async (propositionUuid: string) => {
     try {
       const response = await axios.patch(
-        `${config.public.apiUrl}/event-service-proposition/decline-by-organisator/${propositionUuid}`,
+        `http://127.0.0.1:3333/event-service-proposition/decline-by-organisator/${propositionUuid}`,
         {},
         {
           headers: {

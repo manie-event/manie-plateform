@@ -33,6 +33,7 @@ import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
 
 const { events } = storeToRefs(eventsStore());
+const { professionalResponseProposition } = storeToRefs(usePropositionStore());
 
 const getProgressColor = (percentage) => {
   if (percentage === 100) return 'success';
@@ -43,6 +44,7 @@ const getProgressColor = (percentage) => {
 
 const eventsLeap = computed(() => {
   return events.value.map((event) => {
+    // On filtre les services uniques de l'event
     const uniqueEventServices = event.eventServices.reduce((acc, current) => {
       const existing = acc.find((es) => es.serviceUuid === current.serviceUuid);
 
@@ -56,19 +58,34 @@ const eventsLeap = computed(() => {
       return acc;
     }, []);
 
-    // Calculer la progression
     const eventTitleCroped = event.name.length > 20 ? event.name.slice(0, 20) + '...' : event.name;
+
+    // Total de services dans l’event
     const totalServices = uniqueEventServices.length;
-    const completedServices = uniqueEventServices.filter((es) => es.status === 'completed').length;
+
+    // On filtre les propositions liées à CET event
+    // const eventPropositions = professionalResponseProposition.value.filter(
+    //   (p) => {
+    //     (console.log(p.eventServiceUuid, 'professionalResponsePropositionUuid'),
+    //       console.log(event.eventServices[0].eventUuid, 'EVENTUuid'));
+    //   } // <-- condition essentielle
+    // );
+
+    const eventPropositions = professionalResponseProposition.value.filter(
+      (p) => p.uuid === event.eventServices[0].eventUuid
+    );
+
+    const completedPropositions = eventPropositions.filter((p) => p.status === 'completed').length;
+
     const progressPercentage =
-      totalServices > 0 ? Math.round((completedServices / totalServices) * 100) : 0;
+      totalServices > 0 ? Math.round((completedPropositions / totalServices) * 100) : 0;
 
     return {
       ...event,
       eventServices: uniqueEventServices,
       eventTitleCroped,
       totalServices,
-      completedServices,
+      completedPropositions,
       progressPercentage,
     };
   });

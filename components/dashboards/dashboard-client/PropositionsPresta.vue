@@ -38,7 +38,7 @@
                   <div class="d-flex align-center">
                     <div class="mr-4">
                       <h4 class="text-subtitle-1 font-weight-bold text-no-wrap text-grey200">
-                        {{ item.eventName }}
+                        {{ item.name }}
                       </h4>
                     </div>
                   </div>
@@ -50,7 +50,7 @@
                     size="x-small"
                     :class="'text-subtitle-1 font-weight-medium bg-light'"
                   >
-                    <h4>{{ item.serviceName }}</h4></v-chip
+                    <h4>{{ item.serviceEngage }}</h4></v-chip
                   >
                 </td>
                 <td>
@@ -83,12 +83,12 @@
                     :class="'text-subtitle-1 font-weight-medium bg-light'"
                     variant="outlined"
                     size="x-small"
-                    :color="getStatusColor(item.status)"
-                    >{{ getStatusName(item.status) }}</v-chip
+                    :color="getStatusColor(item.propositionStatus)"
+                    >{{ getStatusName(item.propositionStatus) }}</v-chip
                   >
                 </td>
                 <td
-                  v-if="item.status === 'completed'"
+                  v-if="item.propositionStatus === 'completed'"
                   @click="confirmedProposition(item.eventServiceUuid)"
                 >
                   <v-btn color="primary">Voir le profil du prestataire</v-btn>
@@ -100,7 +100,7 @@
                       color="success"
                       @click="
                         {
-                          propositionAcceptedByClient(item.uuid);
+                          propositionAcceptedByClient(item.propositionUuid);
                         }
                       "
                       ><Icon
@@ -112,7 +112,7 @@
                     <v-btn
                       variant="outlined"
                       color="error"
-                      @click="propositionDeclinedByClient(item.uuid)"
+                      @click="propositionDeclinedByClient(item.propositionUuid)"
                       ><Icon icon="iconoir:cancel" height="24" width="24" class="text-error"
                     /></v-btn>
                   </div>
