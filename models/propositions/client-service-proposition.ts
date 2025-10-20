@@ -8,8 +8,27 @@ export interface ClientServiceProposition {
   createdAt: string;
   updatedAt: string;
   tokens: number;
-  eventName: string;
-  eventUuid: string;
-  eventDate: string[];
-  serviceUuid: string;
+  propositionUuid: string;
+  propositionStatus: string;
+  organisatorUuid: string;
+  isAlreadyCreated: true;
+  budget: number;
+  location: string;
+  people: string;
+  name: string;
+  date: string;
+  eventServices: [
+    {
+      id: number;
+      uuid: string;
+      eventUuid: string;
+      professionalServiceUuid: string;
+      serviceUuid: string;
+      status: string;
+      createdAt: string;
+      updatedAt: string;
+      keywordsUuid: [string];
+    },
+  ];
+  serviceEngage: string;
 }

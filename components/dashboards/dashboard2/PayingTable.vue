@@ -42,8 +42,14 @@
                   </div>
                 </td>
                 <td>
-                  <h5 class="text-subtitle-1 font-weight-medium text-no-wrap text-grey200">
+                  <h5
+                    class="text-subtitle-1 font-weight-medium text-no-wrap text-grey200"
+                    v-if="Array.isArray(item.date) && item.date.length"
+                  >
                     Du <b>{{ getDate(item.date)[0] }}</b> au <b>{{ getDate(item.date)[1] }}</b>
+                  </h5>
+                  <h5 class="text-subtitle-1 font-weight-medium text-no-wrap text-grey200" v-else>
+                    {{ item.date ? `Plutôt en ${item.date}` : 'A définir' }}
                   </h5>
                 </td>
                 <td>
@@ -144,7 +150,7 @@ const getStatusName = (status: string) => {
   }
 };
 
-const getDate = (date: string[]) => formatDate(date);
+const getDate = (date: string[]) => (Array.isArray(date) ? formatDate(date) : undefined);
 const customizer = useCustomizerStore();
 const selectedPropositionInformation = ref<EventModelForProposition>();
 const openMarketModal = ref(false);
@@ -154,8 +160,6 @@ const svgColor = computed(() => {
 });
 
 const findSelectedProposition = (propositionUuid: string) => {
-  console.log(serviceEventProposition.value, 'serviceEventProposition.value');
-
   selectedPropositionInformation.value = serviceEventProposition.value.find(
     (p) => p.proposition.uuid === propositionUuid
   );

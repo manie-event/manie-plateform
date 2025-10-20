@@ -1,5 +1,4 @@
 import type { ProfessionalServiceUuid } from '~/models/professionalService/professionalServiceUuid';
-import type { EventServiceProposition } from '~/models/propositions/event-service-proposition';
 import { useEventService } from '~/services/UseEventService';
 import { useProfessionalProposition } from '~/services/UseProfessionalProposition';
 import { useProfessionalService } from '../../services/UseProfessionalService';
@@ -30,43 +29,20 @@ export const useEventServiceProposition = () => {
 
       const propositionList = await Promise.all(
         allEvents.map(async (event) => {
-          const serviceList = await getEventServiceList(event.uuid);
+          const serviceList = await getListPropositionByEventService(event.eventServices[0].uuid);
 
-          const serviceListFiltered = serviceList.filter(
-            (service: EventServiceProposition) =>
-              service.status !== ('completed' as EventServiceProposition['status'])
-          );
-
-          if (!serviceListFiltered || serviceListFiltered.length === 0) {
-            return [];
-          }
-
-          const serviceName = servicesFiltered.value.find((s) => s.name);
-
-          const clientPropositions = await Promise.all(
-            serviceList.map(async (service: EventServiceProposition) => {
-              const propositions = await getListPropositionByEventService(service.uuid);
-              console.log(propositions, 'propositions');
-
-              const propositionsFiltered = propositions.filter(
-                (p) => p.status !== 'pending' && p.status !== 'cancelled'
-              );
-              // Ajouter les infos de l'événement à chaque proposition
-              return propositionsFiltered.map((proposition: any) => ({
-                ...proposition,
-                eventName: event.name,
-                eventDate: event.date,
-                serviceName: serviceName?.name,
-              }));
-            })
-          );
-
-          return clientPropositions.flat();
+          const serviceEngage = servicesFiltered.value[0].name;
+          return {
+            ...serviceList[0],
+            propositionUuid: serviceList[0].uuid,
+            propositionStatus: serviceList[0].status,
+            ...event,
+            serviceEngage,
+          };
         })
       );
       setServiceEventPropositionForClient(propositionList.flat());
-
-      console.log(propositionList.flat(), 'propositionList');
+      console.log(propositionList.flat());
 
       return propositionList.flat();
     } catch (error) {
@@ -78,6 +54,7 @@ export const useEventServiceProposition = () => {
   const getServicePropositionForProfessional = async () => {
     try {
       const professionalServices = await getListProfessionalServiceByProfessional();
+      console.log(professionalServices, 'professionalServices');
 
       const allPropositions = await Promise.all(
         professionalServices.map(async (service: ProfessionalServiceUuid) => {
@@ -117,9 +94,10 @@ export const useEventServiceProposition = () => {
       );
 
       const flattenedList = allPropositions.flat();
+      console.log(flattenedList, 'flattenedList');
 
       servicePropositionAvailable.value = flattenedList.length > 0;
-      setServiceEventProposition(flattenedList);
+      setServiceEventPropositionForPresta(flattenedList);
     } catch (error) {
       console.error('❌ Erreur getServicePropositionForProfessional:', error);
       servicePropositionAvailable.value = false;
