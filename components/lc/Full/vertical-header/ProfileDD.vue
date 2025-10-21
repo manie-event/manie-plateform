@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { clientMenu, professionalProfile } from '@/_mockApis/headerData';
 import { UserCategory } from '@/models/enums/userCategoryEnums';
-import type { clientProfile } from '@/models/user/UserModel';
 import { Icon } from '@iconify/vue';
 import { CircleXIcon } from 'vue-tabler-icons';
 import { useClientProfil } from '~/composables/client-user/UseClientProfil';
@@ -40,7 +39,7 @@ const getCategory = computed(() => {
 });
 
 const getInitials = computed(() => {
-  if (professionalUser.value?.name) {
+  if (professionalUser.value?.name || proName || username) {
     return professionalUser.value?.name
       .split(' ') // coupe sur les espaces → ['Manie', 'Events']
       .filter(Boolean) // enlève les chaînes vides (au cas où il y a des doubles espaces)
@@ -73,6 +72,8 @@ onMounted(async () => {
     console.warn('Utilisateur non encore chargé ou UUID manquant');
   }
 });
+
+watch(() => {});
 </script>
 
 <template>
