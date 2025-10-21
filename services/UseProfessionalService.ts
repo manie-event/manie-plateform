@@ -29,6 +29,8 @@ export const useProfessionalService = () => {
   };
 
   const getListProfessionalServiceByProfessional = async () => {
+    console.log(professionalUuid, 'professionalUuid');
+
     try {
       const { data } = await axios.get(
         `${config.public.apiUrl}/professional-service/list-by-professional/${professionalUuid}`,

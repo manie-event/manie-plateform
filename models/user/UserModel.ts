@@ -33,34 +33,13 @@ export interface ProfessionalProfile {
   uuid?: string;
   userUuid?: string;
   siret: string;
+  telephone: string;
   address: string;
   bio: string;
   mainActivity: string;
   secondActivity?: string;
   thirdActivity?: string;
-  mainInterlocutor: string;
-  experience: number;
-  category?: string;
-  geographicArea: string;
-  picture: string;
-  faq: Faq;
-  minimumReservationPeriod: number;
-  deposit: boolean;
-  depositAmount?: number;
-  billingPeriod: string;
-  links?: Link[];
-}
-
-export interface ProfessionalProfile {
-  name: string;
-  uuid?: string;
-  userUuid?: string;
-  siret: string;
-  address: string;
-  bio: string;
-  mainActivity: string;
-  secondActivity?: string;
-  thirdActivity?: string;
+  certification: string[];
   mainInterlocutor: string;
   experience: number;
   category?: string;
