@@ -20,6 +20,11 @@
             :error-messages="showErrors ? errors.siret : undefined"
           />
           <v-text-field
+            label="Votre numéro de téléphone ?"
+            v-model="profile.telephone"
+            :error-messages="showErrors ? errors.siret : undefined"
+          />
+          <v-text-field
             label="L'adresse complète du siège social ?"
             v-model="profile.address"
             :error-messages="showErrors ? errors.address : undefined"
@@ -53,6 +58,7 @@
           <v-divider class="border-opacity-50 mb-6"
             ><p class="mb-6">A propos de votre activité</p></v-divider
           >
+
           <v-select
             label="Votre secteur géographique ?"
             v-model="profile.geographicArea"
@@ -61,12 +67,38 @@
             item-value="value"
             :error-messages="showErrors ? errors.geographicArea : undefined"
           />
-          <v-text-field
-            v-model="profile.certification"
-            label="Labels & Certifications"
-            variant="outlined"
-            placeholder="exemple: Label AB (Bio)"
-          />
+
+          <div>
+            <div
+              v-for="(certif, index) in profile.certification"
+              :key="index"
+              class="flex items-center gap-2 mb-3"
+            >
+              <v-text-field
+                v-model="profile.certification[index]"
+                label="Certification(s) & Label(s)"
+                variant="outlined"
+                placeholder="Exemple : Label AB (Bio)"
+                hide-details
+                class="flex-1"
+              />
+
+              <v-btn
+                v-if="profile.certification.length > 1"
+                icon="mdi-delete"
+                color="error"
+                variant="text"
+                size="small"
+                @click="removeCertification(index)"
+              />
+            </div>
+
+            <!-- Bouton d’ajout -->
+            <v-btn color="primary" class="mt-2" @click="addCertification">
+              Ajouter une certification
+            </v-btn>
+          </div>
+
           <v-number-input
             variant="solo"
             :min="0"
@@ -241,6 +273,10 @@ const validationSchema = yup.object({
     .required('Le SIRET est requis')
     .length(14, 'Le SIRET doit contenir 14 caractères'),
   address: yup.string().required("L'adresse est requise"),
+  telephone: yup
+    .string()
+    .length(10, 'Vous devez indiquer 10 numéros')
+    .required('Le numéro de téléphone est obligatoire'),
   bio: yup.string().required('La bio est requise'),
   mainActivity: yup.string().required('Activité requise'),
   mainInterlocutor: yup.string().required("L'interlocuteur principal est requis"),
@@ -277,6 +313,7 @@ const {
     name: '',
     siret: '',
     address: '',
+    telephone: '',
     bio: '',
     mainActivity: 'Veuillez choisir votre activité',
     mainInterlocutor: '',
@@ -284,7 +321,7 @@ const {
     geographicArea: geographicActivity.value[0]?.label ?? '',
     faq: {},
     minimumReservationPeriod: 0,
-    certification: '',
+    certification: [''],
     deposit: false,
     depositAmount: 0,
     billingPeriod: 'beforeEvent',
@@ -317,6 +354,14 @@ const removeFaq = (index: number) => {
   }
 };
 
+const addCertification = () => {
+  profile.certification.push('');
+};
+
+const removeCertification = (index: number) => {
+  profile.certification.splice(index, 1);
+};
+
 const setSector = () => {
   getSectors(profile.mainActivity);
 };
@@ -327,11 +372,21 @@ const createProfile = async (values: ProfessionalProfile) => {
       ...values,
       faq: mergedFaq.value || {},
       minimumReservationPeriod: minimumDaysReservation.value,
+      links: profile.links.filter((link) => link.type.trim() && link.value.trim()),
+      certification: profile.certification.filter((c) => c.trim()),
     };
     const response = await createProfessionalProfile(payload);
 
-    if (response.message === 'Professional created') {
-      addSuccess('Votre profil a été envoyé pour être soumi à vérification');
+    if (response.message === 'Professional updated') {
+      console.log(professionalUser.value, 'professionalUser.VALUE');
+
+      if (professionalUser.value?.uuid) {
+        localStorage.setItem('professional-uuid', professionalUser.value?.uuid);
+      }
+      if (professionalUser.value?.name) {
+        localStorage.setItem('pro-name', professionalUser.value?.name);
+      }
+      addSuccess('Votre profil a été modifié avec success');
       openModal.value = false;
       isProfilUpdate.value = true;
     } else {
@@ -348,10 +403,26 @@ const modifyProfile = async (newValues: ProfessionalProfile) => {
       ...newValues,
       faq: mergedFaq.value || {},
       minimumReservationPeriod: minimumDaysReservation.value,
+      links: profile.links.filter((link) => link.type.trim() && link.value.trim()),
+      certification: profile.certification.filter((c) => c.trim()),
     };
     const response = await patchProfessionnalProfileDetails(payload);
 
     if (response.message === 'Professional updated') {
+      const professional = response.newPro || response.data?.professional;
+      console.log(professional, 'PROFESSIONAL');
+
+      if (professional?.uuid) {
+        console.log(professional?.uuid, 'professional?.uuid');
+
+        localStorage.setItem('professional-uuid', professional.uuid);
+      }
+
+      if (professional?.name) {
+        console.log(professional?.name, 'professional?.name');
+
+        localStorage.setItem('pro-name', professional.name);
+      }
       addSuccess('Votre profil a été modifié avec success');
       openModal.value = false;
       isProfilUpdate.value = true;
@@ -365,10 +436,17 @@ const modifyProfile = async (newValues: ProfessionalProfile) => {
 
 onMounted(() => {
   if (professionalUser.value) {
+    const isBooleanBillingPeriod =
+      typeof professionalUser.value.billingPeriod === 'boolean'
+        ? professionalUser.value.billingPeriod
+          ? 'afterEvent'
+          : 'beforeEvent'
+        : professionalUser.value.billingPeriod || 'beforeEvent';
     resetForm({
       values: {
         name: professionalUser.value.name ?? '',
         siret: professionalUser.value.siret ?? '',
+        telephone: professionalUser.value.telephone ?? '',
         address: professionalUser.value.address ?? '',
         bio: professionalUser.value.bio ?? '',
         mainActivity: professionalUser.value.mainActivity ?? 'Veuillez choisir votre activité',
@@ -376,14 +454,16 @@ onMounted(() => {
         experience: professionalUser.value.experience ?? 0,
         geographicArea:
           professionalUser.value.geographicArea ?? geographicActivity.value[0]?.label ?? '',
-        certification: professionalUser.value.certification ?? '',
+        certification:
+          Array.isArray(professionalUser.value.certification) &&
+          professionalUser.value.certification.length > 0
+            ? professionalUser.value.certification
+            : [''],
         minimumReservationPeriod: professionalUser.value.minimumReservationPeriod ?? 0,
         deposit: professionalUser.value.deposit ?? false,
         depositAmount: professionalUser.value.depositAmount ?? 0,
-        billingPeriod: professionalUser.value.billingPeriod ?? 'beforeEvent',
-        links: professionalUser.value.links?.length
-          ? professionalUser.value.links
-          : [{ type: '', value: '' }],
+        billingPeriod: isBooleanBillingPeriod,
+        links: professionalUser.value.links?.length ? professionalUser.value.links : [],
         faq: professionalUser.value.faq ?? {},
       },
     });
