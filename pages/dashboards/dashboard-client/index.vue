@@ -15,7 +15,6 @@ import ProductsTable from '~/components/dashboards/dashboard-client/ProductsTabl
 import PropositionsPresta from '~/components/dashboards/dashboard-client/PropositionsPresta.vue';
 import { useClientProfil } from '~/composables/client-user/UseClientProfil';
 import { useKeywords } from '~/composables/professional-user/UseKeywords';
-import { UserCategory } from '~/models/enums/userCategoryEnums';
 import { useProfessionalService } from '~/services/UseProfessionalService';
 
 const userStore = useUserStore();
@@ -25,9 +24,9 @@ const { getProfessionalService } = useProfessionalService();
 const { getAllSectors, getKeywords } = useKeywords();
 
 onMounted(async () => {
-  if (user.value?.category == UserCategory.CONSUMER) {
-    await getClientProfil();
-  }
+  // if (user.value?.category == UserCategory.CONSUMER) {
+  //   await getClientProfil();
+  // }
   await getProfessionalService();
   await getAllSectors();
   await getKeywords();

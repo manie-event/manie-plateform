@@ -158,7 +158,7 @@
     />
     <ProfessionalProfil
       v-if="professionalProfileForCustomer"
-      :professional-profile="isAcceptedByClient"
+      v-model:professional-profile="isAcceptedByClient"
       :pprofile="professionalProfileForCustomer"
     />
     <errorToaster></errorToaster>
@@ -242,6 +242,7 @@ const getPriceFromMessage = (message: string) => {
 };
 
 const confirmedProposition = async (eventServiceUuid: string) => {
+  console.log((isAcceptedByClient.value = true));
   ((isAcceptedByClient.value = true), await getProfessionalProfileForCustomer(eventServiceUuid));
 };
 
