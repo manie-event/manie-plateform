@@ -9,7 +9,7 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="front-wraper bg-surface">
+  <div>
     <Mainbanner />
     <FeatureTabs />
     <PurchaseTemplate />

@@ -19,18 +19,8 @@ watch(priority, (newPriority) => {
 </script>
 
 <template>
-  <v-app-bar
-    elevation="0"
-    :priority="priority"
-    height="75"
-    class="horizontal-header"
-    color="background"
-  >
-    <div
-      :class="
-        customizer.boxed ? 'maxWidth v-toolbar__content px-lg-0 px-4' : 'v-toolbar__content px-6'
-      "
-    >
+  <v-app-bar elevation="0" :priority="priority" height="75" class="horizontal-header">
+    <div :class="customizer.boxed ? 'maxWidth  px-lg-0 px-4' : 'v-toolbar__content px-6'">
       <div class="hidden-md-and-down mt-2 pr-4">
         <LcFullLogo />
       </div>

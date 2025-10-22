@@ -22,3 +22,8 @@ const customizer = useCustomizerStore();
     </v-app>
   </v-locale-provider>
 </template>
+<style lang="scss" scoped>
+.authpage {
+  background: var(--bg-color);
+}
+</style>

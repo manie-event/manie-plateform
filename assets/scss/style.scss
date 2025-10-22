@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Margarine&family=Parkinsans:wght@600&family=Poppins:wght@300;500&display=swap');
+
 @import './variables';
 @import 'vuetify/styles.scss';
 @import './override';
@@ -48,4 +50,5 @@
 @import './pages/authentication';
 @import './pages/apps';
 
+@import './_override';
 @import 'vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css';

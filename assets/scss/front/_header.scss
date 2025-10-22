@@ -1,31 +1,20 @@
 .front-lp-header {
-  .v-toolbar {
-    background: rgb(var(--v-theme-surface));
-  }
-
   &.v-app-bar .v-toolbar__content {
     padding: 0;
   }
 
   .v-toolbar__content {
-    background: transparent !important;
     box-shadow: none !important;
   }
 
   &.v-toolbar {
-    background: transparent !important;
     top: 0 !important;
-  }
-
-  .v-toolbar {
-    background: transparent !important;
   }
 
   &.sticky-header {
     position: fixed !important;
     top: 0 !important;
     transition: 0.5s;
-    background-color: rgba(var(--v-theme-surface)) !important;
   }
 }
 //

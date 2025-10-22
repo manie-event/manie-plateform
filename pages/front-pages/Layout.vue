@@ -2,7 +2,7 @@
 import Footer from '@/components/frontpages/layout/Footer.vue';
 </script>
 <template>
-  <div class="front-wraper bg-surface">
+  <div class="front-wraper">
     <!-- <AnnounceBar /> -->
     <!-- <Header /> -->
     <main>

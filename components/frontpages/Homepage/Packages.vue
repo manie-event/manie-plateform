@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import { Packages } from '@/_mockApis/front-pages/PagesData';
 import { CircleCheckIcon, CircleXIcon } from 'vue-tabler-icons';
 </script>
 
 <template>
-  <div class="pt-96 bg-surface">
+  <div class="pt-96">
     <v-container class="max-width-1218 package py-0" id="pricing">
       <div class="pb-12 text-center">
         <h2 class="display-1 font-weight-bold textPrimary">Fair pricing for everyone.</h2>
