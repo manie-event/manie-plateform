@@ -14,7 +14,7 @@ export const useClientProfil = () => {
 
     if (response) {
       setClientProfile(response.data);
-      return response;
+      return response.data;
     }
   };
 

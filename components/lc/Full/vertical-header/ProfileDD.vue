@@ -21,6 +21,7 @@ const isProfessional = localStorage.getItem('is-professional');
 const username = localStorage.getItem('client-name');
 const proName = localStorage.getItem('pro-name');
 const jetonBalance = ref(0);
+const name = ref('');
 
 const getNameDependingOnCategory = computed(() => {
   if (isProfessional && isProfileCreated.value) {
@@ -38,36 +39,37 @@ const getCategory = computed(() => {
   }
 });
 
-const getInitials = computed(() => {
-  if (professionalUser.value?.name || proName || username) {
-    return professionalUser.value?.name
-      .split(' ') // coupe sur les espaces → ['Manie', 'Events']
-      .filter(Boolean) // enlève les chaînes vides (au cas où il y a des doubles espaces)
-      .map((word) => word[0].toUpperCase()) // prend la première lettre et la met en majuscule
-      .join('');
-  } else {
-    if (username) {
-      return username
-        .split(' ') // coupe sur les espaces → ['Manie', 'Events']
-        .filter(Boolean) // enlève les chaînes vides (au cas où il y a des doubles espaces)
-        .map((word) => word[0].toUpperCase())
-        .join('');
-    }
+const getInitials = (name?: string) => {
+  if (!name) return '';
+
+  const parts = name
+    .trim()
+    .toUpperCase()
+    .replace(/\s+/g, ' ')
+    .split(/[-\s']+/);
+
+  if (parts.length === 1) {
+    return parts[0].substring(0, 2);
   }
-});
+
+  return parts[0][0] + (parts[1]?.[0] ?? '');
+};
 
 onMounted(async () => {
   if (isProfessional && isProfileCreated.value) {
     const professionalDetail = await getProfessionalProfileDetails();
     jetonBalance.value = await getJetonQuantity();
+    name.value = getInitials(professionalDetail.name);
     return professionalDetail;
   } else if (isProfessional && !isProfileCreated.value) {
     const allProfessionalProfile = await getProfessionalProfile();
     jetonBalance.value = await getJetonQuantity();
+    name.value = getInitials(allProfessionalProfile.name);
 
     return allProfessionalProfile;
   } else if (!isProfessional && isProfileCreated) {
-    await getClientProfil();
+    const client = await getClientProfil();
+    name.value = getInitials(client.username);
   } else {
     console.warn('Utilisateur non encore chargé ou UUID manquant');
   }
@@ -81,7 +83,7 @@ watch(() => {});
     <template v-slot:activator="{ props }">
       <div class="text-left px-0 cursor-pointer" variant="text" v-bind="props">
         <div class="d-flex align-center">
-          <div class="avatar">{{ getInitials }}</div>
+          <div class="avatar">{{ name }}</div>
           <div class="ml-md-4 d-md-block d-none">
             <h6 class="text-h6 d-flex align-center text-black font-weight-semibold">
               {{ getNameDependingOnCategory }}
@@ -105,7 +107,7 @@ watch(() => {});
               'profile-not-defined': !isProfileCreated,
             }"
           >
-            {{ getInitials }}
+            {{ name }}
           </div>
           <div class="ml-5">
             <h6 class="text-h5 mb-n1">{{ getNameDependingOnCategory }}</h6>
