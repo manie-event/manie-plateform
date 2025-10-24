@@ -23,23 +23,26 @@
             </div>
           </div>
         </v-col>
-        <v-col>
-          <div class="main-banner d-lg-block d-none mt-16">
-            <img
-              src="/images/front-pages/background/main-banner.png"
-              alt="banner-right-image"
-              class="rtlImg"
-            />
-          </div>
-        </v-col>
       </v-row>
     </v-container>
-    <span class="main-banner__gradient-bg"></span>
   </div>
 </template>
 
 <script setup lang="ts">
 import homePage from '@/public/images/backgrounds/homepage2.png';
+const { $gsap, $ScrollTrigger } = useNuxtApp();
+
+onMounted(() => {
+  $gsap.to('.main-banner__cta', {
+    top: '80%',
+    scrollTrigger: {
+      trigger: '.main-banner__picture-container',
+      start: 'top 30%',
+      end: 'bottom 70%',
+      scrub: 1.5,
+    },
+  });
+});
 </script>
 
 <style lang="scss" scoped>
@@ -74,10 +77,17 @@ import homePage from '@/public/images/backgrounds/homepage2.png';
   &__picture-container {
     position: relative;
     top: -40px;
+    height: 700px;
   }
   &__party-picture {
     max-width: 90vw !important;
+    width: 100%;
+    height: 100%;
     margin: 0 auto;
+    z-index: 1;
+    border-radius: 10px;
+    filter: grayscale(0.5);
+    object-fit: cover;
 
     z-index: 1;
     border-radius: 10px;

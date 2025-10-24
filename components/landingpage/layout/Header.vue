@@ -30,22 +30,22 @@ const professionalProfile = localStorage.getItem('professional-uuid');
       </div>
       <!-- Login  -->
       <v-btn
-        v-if="!isAlreadyConnected"
-        class="custom-hover-primary bg-primary d-lg-flex d-none px-8 align-center login-shadow"
+        v-if="isAlreadyConnected === 'false'"
+        class="custom-hover-primary header__btn d-lg-flex d-none px-8 align-center login-shadow"
         rounded="pill"
         to="/auth/login"
         ><span class="text-white">Se connecter</span></v-btn
       >
       <v-btn
         v-else-if="isAlreadyConnected && clientProfile"
-        class="custom-hover-primary bg-primary d-lg-flex d-none px-8 align-center login-shadow"
+        class="custom-hover-primary header__btn d-lg-flex d-none px-8 align-center login-shadow"
         rounded="pill"
         to="/dashboards/dashboard-client"
         ><span class="text-white">Mon tableau de bord</span></v-btn
       >
       <v-btn
         v-else-if="isAlreadyConnected && professionalProfile"
-        class="custom-hover-primary bg-primary d-lg-flex d-none px-8 align-center login-shadow"
+        class="custom-hover-primary header__btn d-lg-flex d-none px-8 align-center login-shadow"
         rounded="pill"
         to="/dashboards/dashboard2"
         ><span class="text-white">Mon tableau de bord</span></v-btn
@@ -74,6 +74,10 @@ const professionalProfile = localStorage.getItem('professional-uuid');
   background: var(--bg-color);
   width: 100vw;
   z-index: 10;
-  padding: 0 20px;
+  padding: 0 2vw;
+}
+
+.header__btn {
+  background: var(--manie-primary);
 }
 </style>

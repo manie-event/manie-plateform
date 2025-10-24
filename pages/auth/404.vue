@@ -5,7 +5,7 @@ definePageMeta({
 </script>
 <template>
   <div class="v-application">
-    <div class="v-application__wrap">
+    <div>
       <div class="d-flex justify-center align-center text-center h-100">
         <div>
           <img src="/images/backgrounds/errorimg.svg" width="500" alt="404" />

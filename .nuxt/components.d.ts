@@ -194,6 +194,7 @@ interface _GlobalComponents {
     'FrontpagesHomepageFAQ': typeof import("../components/frontpages/Homepage/FAQ.vue")['default']
     'FrontpagesHomepageFeatureTabs': typeof import("../components/frontpages/Homepage/FeatureTabs.vue")['default']
     'FrontpagesHomepageHighlights': typeof import("../components/frontpages/Homepage/Highlights.vue")['default']
+    'FrontpagesHomepageHomeDescription': typeof import("../components/frontpages/Homepage/HomeDescription.vue")['default']
     'FrontpagesHomepageMainbanner': typeof import("../components/frontpages/Homepage/Mainbanner.vue")['default']
     'FrontpagesHomepageOurClients': typeof import("../components/frontpages/Homepage/OurClients.vue")['default']
     'FrontpagesHomepageOurTeam': typeof import("../components/frontpages/Homepage/OurTeam.vue")['default']
@@ -568,6 +569,7 @@ interface _GlobalComponents {
     'LazyFrontpagesHomepageFAQ': LazyComponent<typeof import("../components/frontpages/Homepage/FAQ.vue")['default']>
     'LazyFrontpagesHomepageFeatureTabs': LazyComponent<typeof import("../components/frontpages/Homepage/FeatureTabs.vue")['default']>
     'LazyFrontpagesHomepageHighlights': LazyComponent<typeof import("../components/frontpages/Homepage/Highlights.vue")['default']>
+    'LazyFrontpagesHomepageHomeDescription': LazyComponent<typeof import("../components/frontpages/Homepage/HomeDescription.vue")['default']>
     'LazyFrontpagesHomepageMainbanner': LazyComponent<typeof import("../components/frontpages/Homepage/Mainbanner.vue")['default']>
     'LazyFrontpagesHomepageOurClients': LazyComponent<typeof import("../components/frontpages/Homepage/OurClients.vue")['default']>
     'LazyFrontpagesHomepageOurTeam': LazyComponent<typeof import("../components/frontpages/Homepage/OurTeam.vue")['default']>
@@ -948,6 +950,7 @@ export const FrontpagesHomepageContactBar: typeof import("../components/frontpag
 export const FrontpagesHomepageFAQ: typeof import("../components/frontpages/Homepage/FAQ.vue")['default']
 export const FrontpagesHomepageFeatureTabs: typeof import("../components/frontpages/Homepage/FeatureTabs.vue")['default']
 export const FrontpagesHomepageHighlights: typeof import("../components/frontpages/Homepage/Highlights.vue")['default']
+export const FrontpagesHomepageHomeDescription: typeof import("../components/frontpages/Homepage/HomeDescription.vue")['default']
 export const FrontpagesHomepageMainbanner: typeof import("../components/frontpages/Homepage/Mainbanner.vue")['default']
 export const FrontpagesHomepageOurClients: typeof import("../components/frontpages/Homepage/OurClients.vue")['default']
 export const FrontpagesHomepageOurTeam: typeof import("../components/frontpages/Homepage/OurTeam.vue")['default']
@@ -1322,6 +1325,7 @@ export const LazyFrontpagesHomepageContactBar: LazyComponent<typeof import("../c
 export const LazyFrontpagesHomepageFAQ: LazyComponent<typeof import("../components/frontpages/Homepage/FAQ.vue")['default']>
 export const LazyFrontpagesHomepageFeatureTabs: LazyComponent<typeof import("../components/frontpages/Homepage/FeatureTabs.vue")['default']>
 export const LazyFrontpagesHomepageHighlights: LazyComponent<typeof import("../components/frontpages/Homepage/Highlights.vue")['default']>
+export const LazyFrontpagesHomepageHomeDescription: LazyComponent<typeof import("../components/frontpages/Homepage/HomeDescription.vue")['default']>
 export const LazyFrontpagesHomepageMainbanner: LazyComponent<typeof import("../components/frontpages/Homepage/Mainbanner.vue")['default']>
 export const LazyFrontpagesHomepageOurClients: LazyComponent<typeof import("../components/frontpages/Homepage/OurClients.vue")['default']>
 export const LazyFrontpagesHomepageOurTeam: LazyComponent<typeof import("../components/frontpages/Homepage/OurTeam.vue")['default']>

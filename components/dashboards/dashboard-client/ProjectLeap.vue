@@ -95,6 +95,7 @@ const eventsLeap = computed(() => {
 <style lang="scss" scoped>
 .project-leap {
   height: 250px;
+  background: transparent;
 }
 
 .event-card {

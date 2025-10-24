@@ -1,12 +1,15 @@
 <template>
-  <VCard elevation="10" class="mb-16">
+  <VCard elevation="10" class="mb-16 proposition-presta">
     <v-card-text>
       <div class="d-flex align-center justify-space-between">
         <div>
           <h5 class="v-card-title">Vos propositions en cours</h5>
         </div>
       </div>
-      <div class="month-table" v-if="professionalResponseProposition.length > 0">
+      <div
+        class="month-table proposition-presta__table"
+        v-if="professionalResponseProposition.length > 0"
+      >
         <v-table class="mt-5 mb-0">
           <template v-slot:default>
             <thead>
@@ -251,6 +254,13 @@ onMounted(() => {
 });
 </script>
 <style lang="scss" scoped>
+.proposition-presta {
+  background: transparent;
+
+  &__table {
+    background: transparent;
+  }
+}
 :deep(.tooltip-custom) {
   max-width: 450px !important;
   white-space: normal !important;

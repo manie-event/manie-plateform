@@ -11,7 +11,7 @@ const customizer = useCustomizerStore();
 </script>
 <template>
   <div>
-    <div>
+    <div class="v-container">
       <!-- -----------------------------------------------
                     Start Header
                     ----------------------------------------------- -->

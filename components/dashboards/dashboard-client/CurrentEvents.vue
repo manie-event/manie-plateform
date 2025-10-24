@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="10">
+  <v-card elevation="10" class="current-events">
     <v-card-text class="position-relative current-events__container">
       <div class="d-flex justify-flex-start d-block align-center">
         <div>
@@ -124,6 +124,7 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .current-events {
+  background: transparent;
   &__container {
     position: relative;
     height: 250px;

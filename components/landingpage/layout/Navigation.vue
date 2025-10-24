@@ -25,11 +25,7 @@ const setHoverState = (key: string, value: boolean) => {
   <!-- ---------------------------------------------- -->
   <v-menu open-on-hover :close-on-content-click="false" class="position-relative">
     <template v-slot:activator="{ props }">
-      <v-btn
-        class="custom-hover-primary font-weight-regular"
-        rounded="pill"
-        variant="text"
-        v-bind="props"
+      <v-btn class="font-weight-regular nav-links" rounded="pill" variant="text" v-bind="props"
         >A propos<ChevronDownIcon size="18" class="mt-1 ml-1" />
       </v-btn>
     </template>
@@ -56,7 +52,7 @@ const setHoverState = (key: string, value: boolean) => {
                 <img :src="demo.img" :alt="demo.img" class="w-100" />
                 <v-overlay
                   :model-value="hoverStates[demo.img]"
-                  class="align-center justify-center"
+                  class="align-center justify-center nav-links"
                   scrim="rgba(55, 114, 255, 0.5)"
                   contained
                 >
@@ -75,22 +71,31 @@ const setHoverState = (key: string, value: boolean) => {
     </v-sheet>
   </v-menu>
 
-  <v-btn
-    variant="text"
-    color="primary"
-    class="custom-hover-primary nav-links"
-    rounded="pill"
-    :ripple="false"
-    href="/front-pages/pricing"
+  <v-btn variant="text" class="nav-links" rounded="pill" :ripple="false" href="/front-pages/pricing"
     >Formules</v-btn
   >
   <v-btn
     variant="text"
-    color="primary"
-    class="custom-hover-primary nav-links"
+    class="nav-links"
     rounded="pill"
     href="/front-pages/Contact-us"
     :ripple="false"
     >Contact</v-btn
   >
 </template>
+<style lang="scss">
+.nav-links {
+  color: var(--manie-secondary);
+
+  :deep(.v-btn__overlay) {
+    background-color: transparent;
+  }
+
+  &:hover {
+    :deep(.v-btn__overlay) {
+      background-color: var(--manie-thirdy) !important;
+      opacity: 1 !important;
+    }
+  }
+}
+</style>

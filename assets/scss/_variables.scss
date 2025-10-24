@@ -10,10 +10,6 @@ $border-radius-root: 7px;
 $btn-font-weight: 400 !default;
 $btn-letter-spacing: 0 !default;
 
-// colors
-
-$bg-color: #fff5eb;
-
 // Global Shadow
 $box-shadow: 0 2px 6px rgba(37, 83, 185, 0.1);
 
@@ -67,7 +63,7 @@ $box-shadow: 0 2px 6px rgba(37, 83, 185, 0.1);
         'size': 0.875rem,
         'weight': 400,
         'line-height': 1.1rem,
-        'font-family': inherit,
+        'font-family': 'Poppins',
       ),
       'subtitle-2': (
         'size': 0.75rem,

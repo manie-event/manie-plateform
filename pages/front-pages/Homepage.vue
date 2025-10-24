@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import FeatureTabs from '@/components/frontpages/Homepage/FeatureTabs.vue';
+import homePage from '@/components/frontpages/Homepage/HomeDescription.vue';
 import Mainbanner from '@/components/frontpages/Homepage/Mainbanner.vue';
-import PurchaseTemplate from '@/components/frontpages/Homepage/PurchaseTemplate.vue';
 /*for Blank Layout*/
 definePageMeta({
   layout: 'blank',
@@ -11,16 +10,6 @@ definePageMeta({
 <template>
   <div>
     <Mainbanner />
-    <FeatureTabs />
-    <PurchaseTemplate />
-    <!-- <OurClients />
-    <OurTeam />
-    <ContactBar />
-    <ClientReviews />
-    <Componies />
-    <Highlights />
-    <Packages />
-    <SecurePayment />
-    <FAQ /> -->
+    <homePage />
   </div>
 </template>
