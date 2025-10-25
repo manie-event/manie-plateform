@@ -20,6 +20,8 @@ export default defineNuxtConfig({
     transpile: ['vuetify', 'vee-validate'],
   },
 
+  css: ['~/assets/scss/style.scss'],
+
   vite: {
     plugins: [svgLoader()],
   },

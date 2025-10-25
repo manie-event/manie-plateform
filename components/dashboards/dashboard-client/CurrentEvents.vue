@@ -1,16 +1,16 @@
 <template>
-  <v-card elevation="10">
+  <v-card elevation="10" class="current-events">
     <v-card-text class="position-relative current-events__container">
       <div class="d-flex justify-flex-start d-block align-center">
         <div>
-          <h5 class="v-card-title">Evènements en cours ( {{ events.length }} )</h5>
+          <h5 class="title">Evènements en cours ( {{ events.length }} )</h5>
         </div>
       </div>
       <div>
         <div class="current-events__cards" v-if="events.length > 0">
           <div
             v-for="event in paginatedEvents"
-            class="current-events__card"
+            class="current-events__card successStatus"
             :key="event.uuid"
             @mouseenter="hoveredEvent = event.uuid"
             @mouseleave="hoveredEvent = null"
@@ -124,6 +124,7 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .current-events {
+  background: transparent;
   &__container {
     position: relative;
     height: 250px;
@@ -131,6 +132,9 @@ onMounted(async () => {
     flex-direction: column;
     justify-content: space-between;
     padding: 1.5rem;
+  }
+  &__title {
+    color: var(--manie-primary);
   }
   &__cards {
     display: flex;

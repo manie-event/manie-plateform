@@ -24,14 +24,7 @@ import VueEasyLightbox from 'vue-easy-lightbox';
 import VueScrollTo from 'vue-scrollto';
 
 //i18
-import {
-  DARK_AQUA_THEME,
-  DARK_BLUE_THEME,
-  DARK_CYAN_THEME,
-  DARK_GREEN_THEME,
-  DARK_ORANGE_THEME,
-  DARK_PURPLE_THEME,
-} from '@/theme/DarkTheme';
+import { DARK_BLUE_THEME } from '@/theme/DarkTheme';
 import {
   AQUA_THEME,
   BLUE_THEME,
@@ -60,11 +53,6 @@ export default defineNuxtPlugin((nuxtApp) => {
         CYAN_THEME,
         ORANGE_THEME,
         DARK_BLUE_THEME,
-        DARK_AQUA_THEME,
-        DARK_ORANGE_THEME,
-        DARK_PURPLE_THEME,
-        DARK_GREEN_THEME,
-        DARK_CYAN_THEME,
       },
     },
     defaults: {

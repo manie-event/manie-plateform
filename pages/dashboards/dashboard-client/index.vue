@@ -1,17 +1,11 @@
 <script setup lang="ts">
 import CurrentEvents from '@/components/dashboards/dashboard-client/CurrentEvents.vue';
 import Events from '@/components/dashboards/dashboard-client/Events.vue';
-import Products from '@/components/dashboards/dashboard-client/ProductsChart.vue';
 import ProjectLeap from '@/components/dashboards/dashboard-client/ProjectLeap.vue';
 import EmptyState from '@/public/images/empty-state/profil-vide.svg';
 import { storeToRefs } from 'pinia';
 import { onMounted } from 'vue';
 import BaseEmptyState from '~/components/common/BaseEmptyState.vue';
-import Customers from '~/components/dashboards/dashboard-client/Customers.vue';
-import LatestDeals from '~/components/dashboards/dashboard-client/LatestDeals.vue';
-import LatestReviews from '~/components/dashboards/dashboard-client/LatestReviews.vue';
-import Payments from '~/components/dashboards/dashboard-client/Payments.vue';
-import ProductsTable from '~/components/dashboards/dashboard-client/ProductsTable.vue';
 import PropositionsPresta from '~/components/dashboards/dashboard-client/PropositionsPresta.vue';
 import { useClientProfil } from '~/composables/client-user/UseClientProfil';
 import { useKeywords } from '~/composables/professional-user/UseKeywords';
@@ -37,55 +31,25 @@ onMounted(async () => {
   <!-- Loader -->
   <!-- Loader -->
   <!-- Section principale si profil créé -->
-  <v-row v-if="isProfileCreated">
+  <v-row v-if="isProfileCreated" class="dashboard-client">
     <!-- Events et CurrentEvents sur la même ligne -->
     <v-col cols="12">
       <v-row>
-        <v-col cols="2">
+        <v-col cols="2" class="borderColor">
           <Events />
         </v-col>
-        <v-col cols="6">
+        <v-col cols="6" class="borderColor">
           <div style="display: flex; flex-direction: column">
             <CurrentEvents />
           </div>
         </v-col>
-        <v-col cols="4">
+        <v-col cols="4" class="borderColor">
           <ProjectLeap />
         </v-col>
       </v-row>
     </v-col>
     <v-col cols="12" sm="12" lg="12">
       <PropositionsPresta />
-    </v-col>
-
-    <!-- Payments - 6 colonnes -->
-    <v-col cols="12" sm="6">
-      <Payments />
-    </v-col>
-
-    <!-- Products - 6 colonnes -->
-    <v-col cols="12" sm="6" class="d-flex">
-      <Products />
-    </v-col>
-
-    <!-- LatestDeal - 6 colonnes -->
-    <v-col cols="12" sm="6">
-      <LatestDeals />
-    </v-col>
-
-    <!-- Customers - 6 colonnes -->
-    <v-col cols="12" sm="6" class="d-flex">
-      <Customers />
-    </v-col>
-
-    <!-- ProductsTable - 8 colonnes sur grand écran -->
-    <v-col cols="12" sm="12" lg="8">
-      <ProductsTable />
-    </v-col>
-
-    <!-- LatestReviews - pleine largeur -->
-    <v-col cols="12" sm="12" lg="12">
-      <LatestReviews />
     </v-col>
   </v-row>
 
@@ -106,3 +70,9 @@ onMounted(async () => {
     </v-col>
   </v-row>
 </template>
+<style lang="scss" scoped>
+.dashboard-client {
+  max-width: 1280px;
+  margin: 2rem auto;
+}
+</style>

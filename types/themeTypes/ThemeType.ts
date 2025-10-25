@@ -7,6 +7,7 @@ export interface ThemeTypes {
     secondary?: string;
     info?: string;
     success?: string;
+    successStatus?: string;
     warning?: string;
     error?: string;
     indigo?: string;
@@ -30,5 +31,6 @@ export interface ThemeTypes {
     darkbg?: string;
     bglight?: string;
     bgdark?: string;
+    title: string;
   };
 }

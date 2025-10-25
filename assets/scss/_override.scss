@@ -18,6 +18,20 @@ html {
   }
 }
 
+$manie-primary: #293b57;
+$manie-secondary: #5d79a4;
+$manie-thirdy: #f39454;
+$bg-color: #fff5eb;
+$font-family-big-title: 'Parkinsans';
+
+:root {
+  --manie-primary: #{$manie-primary};
+  --manie-secondary: #{$manie-secondary};
+  --manie-thirdy: #{$manie-thirdy};
+  --bg-color: #{$bg-color};
+  --big-title: #{$font-family-big-title};
+}
+
 //Button Bg Shadow
 .v-btn--elevated {
   &.bg-primary {
