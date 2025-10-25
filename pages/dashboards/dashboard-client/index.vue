@@ -35,15 +35,15 @@ onMounted(async () => {
     <!-- Events et CurrentEvents sur la même ligne -->
     <v-col cols="12">
       <v-row>
-        <v-col cols="2">
+        <v-col cols="2" class="borderColor">
           <Events />
         </v-col>
-        <v-col cols="6">
+        <v-col cols="6" class="borderColor">
           <div style="display: flex; flex-direction: column">
             <CurrentEvents />
           </div>
         </v-col>
-        <v-col cols="4">
+        <v-col cols="4" class="borderColor">
           <ProjectLeap />
         </v-col>
       </v-row>

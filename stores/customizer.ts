@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia';
 import config from '@/config';
+import { defineStore } from 'pinia';
 
 export const useCustomizerStore = defineStore({
   id: 'customizer',

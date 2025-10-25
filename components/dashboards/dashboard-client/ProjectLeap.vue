@@ -3,15 +3,15 @@
     <v-card-text>
       <div class="d-flex justify-flex-start d-block align-center">
         <div>
-          <h5 class="v-card-title">Progression de vos events</h5>
+          <h5 class="title">Progression de vos events</h5>
         </div>
       </div>
       <div v-for="event in eventsLeap" :key="event.uuid">
         <!-- Barre de progression -->
         <div class="progress-section">
           <div class="progress-info">
-            <span>{{ event.eventTitleCroped }}</span>
-            <span class="progress-percentage">{{ event.progressPercentage }}%</span>
+            <span class="textSecondary">{{ event.eventTitleCroped }}</span>
+            <span class="textSecondary">{{ event.progressPercentage }}%</span>
           </div>
 
           <div class="d-flex align-center justify-space-between">

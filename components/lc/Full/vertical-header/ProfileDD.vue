@@ -74,8 +74,6 @@ onMounted(async () => {
     console.warn('Utilisateur non encore chargé ou UUID manquant');
   }
 });
-
-watch(() => {});
 </script>
 
 <template>

@@ -8,6 +8,12 @@ export const usePropositionStore = defineStore('proposition', () => {
   const propositionsSelected = ref<EventModelForProposition[]>([]);
   const professionalServices = ref<ProfessionalServiceUuid[]>([]);
 
+  const getProfessionalResponseFiltered = computed(() => {
+    return professionalResponseProposition.value.filter(
+      (professional) => professional.propositionStatus !== 'cancelled'
+    );
+  });
+
   const setServiceEventPropositionForPresta = (newServiceEvent: EventModelForProposition[]) => {
     serviceEventProposition.value = newServiceEvent;
   };
@@ -30,6 +36,7 @@ export const usePropositionStore = defineStore('proposition', () => {
     propositionsSelected,
     professionalServices,
     professionalResponseProposition,
+    getProfessionalResponseFiltered,
     setServiceEventPropositionForPresta,
     setServiceEventPropositionForClient,
     setPropositions,

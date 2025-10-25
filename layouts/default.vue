@@ -42,20 +42,10 @@ onMounted(async () => {
       </ClientOnly>
       <v-main>
         <div class="rtl-lyt hr-layout">
-          <v-container fluid class="page-wrapper bg-background px-sm-5 px-4 rounded-xl">
+          <v-container fluid class="page-wrapper px-sm-5 px-4 rounded-xl">
             <div class="">
               <div :class="customizer.boxed ? 'maxWidth' : ''">
                 <NuxtPage />
-                <v-btn
-                  class="customizer-btn"
-                  size="large"
-                  icon
-                  variant="flat"
-                  color="primary"
-                  @click.stop="customizer.SET_CUSTOMIZER_DRAWER(!customizer.Customizer_drawer)"
-                >
-                  <SettingsIcon />
-                </v-btn>
               </div>
             </div>
           </v-container>
@@ -79,21 +69,11 @@ onMounted(async () => {
         <LcFullHorizontalSidebar v-if="customizer.setHorizontalLayout" />
       </ClientOnly>
       <v-main>
-        <div class="hr-layout">
-          <v-container fluid class="page-wrapper bg-background px-sm-5 px-4 rounded-xl">
+        <div>
+          <v-container fluid class="page-wrapper px-sm-5 px-4 rounded-xl">
             <div class="">
               <div :class="customizer.boxed ? 'maxWidth' : ''">
                 <NuxtPage />
-                <v-btn
-                  class="customizer-btn"
-                  size="large"
-                  icon
-                  variant="flat"
-                  color="primary"
-                  @click.stop="customizer.SET_CUSTOMIZER_DRAWER(!customizer.Customizer_drawer)"
-                >
-                  <SettingsIcon />
-                </v-btn>
               </div>
             </div>
           </v-container>

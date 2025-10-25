@@ -76,7 +76,21 @@
 
 .v-theme--AQUA_THEME {
   .bg-background {
-    background-color: #e0eef7 !important;
+    background-color: #307cab !important;
+  }
+  .v-application__wrap,
+  .v-app-bar.v-toolbar {
+    background-color: #8026b0 !important;
+  }
+  &.horizontalLayout {
+    .v-app-bar.v-toolbar {
+      background-color: yellow !important;
+    }
+  }
+}
+.v-theme--ORANGE_THEME {
+  .bg-background {
+    background-color: var(--bg-color) !important;
   }
   .v-application__wrap,
   .v-app-bar.v-toolbar {
@@ -88,69 +102,8 @@
     }
   }
 }
-.v-theme--PURPLE_THEME {
-  .bg-background {
-    background-color: #eee7f7 !important;
-  }
-  .v-application__wrap,
-  .v-app-bar.v-toolbar {
-    background-color: #eee7f7 !important;
-  }
-  &.horizontalLayout {
-    .v-app-bar.v-toolbar {
-      background-color: rgba(var(--v-theme-containerBg)) !important;
-    }
-  }
-}
-.v-theme--GREEN_THEME {
-  .bg-background {
-    background-color: #e1eff4 !important;
-  }
-  .v-application__wrap,
-  .v-app-bar.v-toolbar {
-    background-color: #e1eff4 !important;
-  }
-  &.horizontalLayout {
-    .v-app-bar.v-toolbar {
-      background-color: rgba(var(--v-theme-containerBg)) !important;
-    }
-  }
-}
-.v-theme--CYAN_THEME {
-  .bg-background {
-    background-color: #e0f8f9 !important;
-  }
-  .v-application__wrap,
-  .v-app-bar.v-toolbar {
-    background-color: #e0f8f9 !important;
-  }
-  &.horizontalLayout {
-    .v-app-bar.v-toolbar {
-      background-color: rgba(var(--v-theme-containerBg)) !important;
-    }
-  }
-}
-.v-theme--ORANGE_THEME {
-  .bg-background {
-    background-color: #fff1ed !important;
-  }
-  .v-application__wrap,
-  .v-app-bar.v-toolbar {
-    background-color: #fff1ed !important;
-  }
-  &.horizontalLayout {
-    .v-app-bar.v-toolbar {
-      background-color: rgba(var(--v-theme-containerBg)) !important;
-    }
-  }
-}
 
-.DARK_BLUE_THEME,
-.DARK_AQUA_THEME,
-.DARK_ORANGE_THEME,
-.DARK_PURPLE_THEME,
-.DARK_GREEN_THEME,
-.DARK_CYAN_THEME {
+.DARK_BLUE_THEME {
   .togglethemeBlue {
     display: block !important;
   }
@@ -161,9 +114,7 @@
 }
 
 .BLUE_THEME,
-.AQUA_THEME,
 .ORANGE_THEME,
-.PURPLE_THEME,
 .GREEN_THEME,
 .CYAN_THEME {
   .togglethemeDarkBlue {

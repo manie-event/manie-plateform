@@ -87,7 +87,7 @@
   </v-dialog>
 </template>
 <script setup lang="ts">
-import questionnaire from '@/data/questionnaire-client-refonte.json';
+import questionnaire from '@/data/questionnaire-client.json';
 import { eventsStore } from '@/stores/events';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { SectorsDto } from '~/models/dto/sectorsDto';

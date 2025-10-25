@@ -32,7 +32,7 @@ export { useApi } from '../composables/UseApi';
 export { useAuthCookies } from '../composables/UseAuthCookies';
 export { useAuthentification } from '../composables/UseAuthentification';
 export { useContactService } from '../composables/UseContactService';
-export { customizer, getPrimary, getSecondary, getLightPrimary, getLightSecondary, getLight100, getLightborder, getTextGrey100, getWarning, getError } from '../utils/UpdateColors';
+export { customizer, getError, getLight100, getLightborder, getLightPrimary, getLightSecondary, getPrimary, getSecondary, getTextGrey100, getWarning } from '../utils/UpdateColors';
 export { default as axios } from '../utils/axios';
 export { isEventDone, formatDate, dateCounter } from '../utils/date-utils';
 export { normalizeText, isValueEmpty, addTokenWithLabel, chunkArray, isUuid, humanizeEventName, computeDateRange } from '../utils/form-utils';

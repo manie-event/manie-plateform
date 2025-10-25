@@ -51,6 +51,7 @@ const { $gsap, $ScrollTrigger } = useNuxtApp();
 onMounted(() => {
   $gsap.to('.home-description__section1__big-title', {
     left: '-10vw',
+    opacity: 1,
     scrollTrigger: {
       trigger: '.home-description__section1',
       start: 'top 80%',
@@ -61,6 +62,7 @@ onMounted(() => {
 
   $gsap.to('.home-description__section3__big-title', {
     right: '-10vw',
+    opacity: 1,
     scrollTrigger: {
       trigger: '.home-description__section3',
       start: 'top 50%',
@@ -107,6 +109,7 @@ onMounted(() => {
       line-height: 0.5;
       z-index: 4;
       top: 0;
+      opacity: 0;
       left: 0vw;
       // background-color: purple;
     }
@@ -174,6 +177,7 @@ onMounted(() => {
       font-size: clamp(10vw, 15vw + 1rem, 25vw);
       line-height: 0.5;
       z-index: 4;
+      opacity: 0;
       top: 0;
       // background-color: purple;
     }

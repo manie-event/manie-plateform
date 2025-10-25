@@ -6,11 +6,8 @@
           <h5 class="v-card-title">Vos propositions en cours</h5>
         </div>
       </div>
-      <div
-        class="month-table proposition-presta__table"
-        v-if="professionalResponseProposition.length > 0"
-      >
-        <v-table class="mt-5 mb-0">
+      <div v-if="getProfessionalResponseFiltered.length > 0">
+        <v-table class="mt-5 mb-0 proposition-presta__table">
           <template v-slot:default>
             <thead>
               <tr>
@@ -28,7 +25,7 @@
                   Prix de la prestation
                 </th>
                 <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
-                  Status de la demande
+                  Status
                 </th>
                 <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
                   J'accepte/Refuse la proposition
@@ -36,7 +33,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in professionalResponseProposition" :key="item.id" class="month-item">
+              <tr v-for="item in getProfessionalResponseFiltered" :key="item.id" class="month-item">
                 <td>
                   <div class="d-flex align-center">
                     <div class="mr-4">
@@ -96,7 +93,7 @@
                 >
                   <v-btn color="primary">Voir le profil du prestataire</v-btn>
                 </td>
-                <td v-else>
+                <td v-else-if="item.propositionStatus === 'reviewing'">
                   <div class="d-flex align-center gap-4">
                     <v-btn
                       variant="outlined"
@@ -181,7 +178,7 @@ import ProfessionalProfil from './ProfessionalProfil.vue';
 const { getServicePropositionForClient, propositionAcceptedByClient, propositionDeclinedByClient } =
   useEventServiceProposition();
 const { getProfessionalProfileForCustomer } = useProfessionalProfile();
-const { professionalResponseProposition } = storeToRefs(usePropositionStore());
+const { getProfessionalResponseFiltered } = storeToRefs(usePropositionStore());
 const { professionalProfileForCustomer } = storeToRefs(useUserStore());
 
 const isAcceptedByClient = ref(false);
@@ -191,7 +188,7 @@ const getStatusColor = (status: string) => {
     case 'reviewing':
       return 'primary';
     case 'completed':
-      return 'success';
+      return 'successStatus';
     case 'cancelled':
       return 'error';
     default:
@@ -245,7 +242,6 @@ const getPriceFromMessage = (message: string) => {
 };
 
 const confirmedProposition = async (eventServiceUuid: string) => {
-  console.log((isAcceptedByClient.value = true));
   ((isAcceptedByClient.value = true), await getProfessionalProfileForCustomer(eventServiceUuid));
 };
 
