@@ -14,7 +14,7 @@ export const useEventService = () => {
 
   const createEventService = async (payload: QuestionnaireClient) => {
     try {
-      const { data } = await axios.post(`${config.public.apiUrl}/event/create`, payload, {
+      const { data } = await axios.post(`http://127.0.0.1:3333/event/create`, payload, {
         headers: {
           Authorization: `Bearer ${token.value}`,
           'Content-Type': 'application/json',

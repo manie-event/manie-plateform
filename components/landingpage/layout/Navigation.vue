@@ -128,7 +128,7 @@ const setHoverState = (key: string, value: boolean) => {
     class="custom-hover-primary nav-links"
     rounded="pill"
     :ripple="false"
-    href="https://demos.wrappixel.com/premium-admin-templates/nuxtjs/spike-nuxtjs/docs/index.html"
+    href="/front-pages/pricing"
     >Formules</v-btn
   >
   <v-btn

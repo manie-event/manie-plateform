@@ -316,123 +316,150 @@ const ThemeFeature3: ThemeFeatures[] = [
 const Packages: PackageType[] = [
   {
     tagtext: false,
-    caption: 'Single Use',
-    subtext: 'Use for single end product which end users can’t be charged for.',
-    price: 49,
-    period: 'one time pay',
-    buttontext: 'Purchase Now',
+    caption: 'Booster',
+    subtext:
+      'Tu es charrette, tu cherches un prestataire de dernière minute qui correspond à tes critères.',
+    price: '15%',
+    subprice: 'du montant de la prestation retenue',
+    buttontext: "J'essaie !",
     url: '/',
     list: [
+      // {
+      //   listtitle: 'Formule Gratuite',
+      //   status: false,
+      //   icon: true,
+      //   disable: false,
+      // },
       {
-        listtitle: 'Full source code',
-        status: false,
-        icon: true,
-        disable: false,
-      },
-      {
-        listtitle: 'Documentation',
-        status: false,
-        icon: true,
-        disable: false,
-      },
-      {
-        listtitle: 'Use in SaaS app',
-        status: true,
-        icon: true,
-        disable: true,
-      },
-      {
-        listtitle: '<b>One</b> Project',
-        status: false,
-        icon: true,
-        disable: false,
-      },
-      {
-        listtitle: '<b>One Year</b> Technical Support',
+        listtitle:
+          '<b>On vous présente 2 prestataires sous 2 semaines.</b> <br><br> Vous n’avez plus qu’à choisir celui qui correspond le plus à votre projet. <br><br> La seule condition : <br> Minimum 1 mois avant l’évènement ! ',
         status: false,
         icon: true,
         disable: false,
       },
     ],
   },
-
   {
     tagtext: false,
-    caption: 'Multiple Use',
-    subtext: 'Use for unlimited end products end users can’t be charged for.',
-    price: 89,
-    period: 'one time pay',
-    buttontext: 'Purchase Now',
+    caption: 'Coup de pouce',
+    subtext:
+      'Tu organises ton évènement en autonomie et souhaites être accompagné(e) par un professionnel à chaque étape clé de ton projet (au moins 6 mois à l’avance)',
+    price: '990€',
+    buttontext: "J'essaie !",
     url: '/',
     list: [
+      // {
+      //   listtitle: 'Formule Gratuite',
+      //   status: false,
+      //   icon: true,
+      //   disable: false,
+      // },
       {
-        listtitle: 'Full source code',
+        listtitle:
+          'RDV découverte : <br> Cahier des charges (attentes et priorités) <br> Budget prévisionnel',
         status: false,
         icon: true,
         disable: false,
       },
       {
-        listtitle: 'Documentation',
+        listtitle:
+          'RDV de point d’étape : Choix des prestataires <br> Ajustements du rétro-planning <br> Document techniques lieu (accès, parking, plan fluides, plan techniques) ',
         status: false,
         icon: true,
         disable: false,
       },
       {
-        listtitle: 'Use in SaaS app',
-        status: true,
-        icon: true,
-        disable: true,
-      },
-      {
-        listtitle: '<b>Unlimited</b> Project',
+        listtitle:
+          'RDV avant jour-J : <br> Point sur les documents supports : <br> planning détaillé, déroulé prestataires, plan de table, menu, plans techniques, installation, contacts',
         status: false,
         icon: true,
         disable: false,
       },
       {
-        listtitle: '<b>One Year</b> Technical Support',
+        listtitle:
+          '<b><u>Option</u></b> : Conversation Whatsapp dédié pour toutes questions 5/7J réponse sous 24h jours ouvrés (49€/mois) ',
         status: false,
         icon: true,
         disable: false,
       },
     ],
   },
-
   {
     tagtext: true,
-    caption: 'Extended Use',
-    subtext: 'Use for single end product which end users can be charged for.',
-    price: 299,
-    period: 'one time pay',
-    buttontext: 'Purchase Now',
+    caption: 'Grande pompe',
+    subtext:
+      "Vous vous (re)mariez et vous souhaitez déléguer l'entièreté de l’organisation à un professionnel dédié.",
+    price: '2990€',
+    subprice: 'ou 400€/jour (7 jours de travail complet max)',
+    buttontext: "J'essaie !",
     url: '/',
     list: [
       {
-        listtitle: 'Full source code',
+        listtitle:
+          'RDV découverte : <br> Cahier des charges (attentes et priorités) <br> Budget prévisionnel <br>Rétro-planning général (points, réunions, échéances) ',
         status: false,
         icon: true,
         disable: false,
       },
       {
-        listtitle: 'Documentation',
+        listtitle: 'Recherche de prestataires',
         status: false,
         icon: true,
         disable: false,
       },
       {
-        listtitle: 'Use in SaaS app',
+        listtitle: 'Accompagnement visio sur RDV prestataires',
         status: false,
         icon: true,
         disable: false,
       },
       {
-        listtitle: '<b>One</b> Project',
+        listtitle: 'Analyse des devis, négociation',
         status: false,
         icon: true,
         disable: false,
       },
       {
-        listtitle: '<b>One Year</b> Technical Support',
+        listtitle:
+          'Rdv point d’étape : <br> bilan, ajustements, mise à jour du planning, réponse aux questions',
+        status: false,
+        icon: true,
+        disable: false,
+      },
+      {
+        listtitle: 'Repérage des lieux (accès, parking, plan fluides, techniques)',
+        status: false,
+        icon: true,
+        disable: false,
+      },
+      {
+        listtitle:
+          'Rdv avant jour J : <br> Présentation des doc supports : planning détaillé, déroulé prestataires, plan de table, menu, plans techniques, installation, contacts',
+        status: false,
+        icon: true,
+        disable: false,
+      },
+      {
+        listtitle: 'Dernier point prestataires: <br> Derniers ajustement des docs supports',
+        status: false,
+        icon: true,
+        disable: false,
+      },
+      {
+        listtitle: 'Création du dossier final',
+        status: false,
+        icon: true,
+        disable: false,
+      },
+      {
+        listtitle:
+          'Conversation Whatsapp dédié pour toutes questions 5/7J réponse sous 24h jours ouvrés',
+        status: false,
+        icon: true,
+        disable: false,
+      },
+      {
+        listtitle: '<b><u>Option</u></b> : coordination (+990)',
         status: false,
         icon: true,
         disable: false,
@@ -441,39 +468,30 @@ const Packages: PackageType[] = [
   },
   {
     tagtext: false,
-    caption: 'Unlimited Use',
-    subtext: 'Use in unlimited end products end users can be charged for.',
-    price: 499,
-    period: 'one time pay',
-    buttontext: 'Purchase Now',
+    caption: 'coordination de jour-J',
+    subtext: 'Le jour J, tu souris, tu vibres, tu vis — pendant qu’on fait tourner la machine.',
+    price: '990€',
+    subprice: ' ou 45€/heure',
+    buttontext: "J'essaie !",
     url: '/',
     list: [
       {
-        listtitle: 'Full source code',
+        listtitle:
+          '<b>Avant :</b> <br> - Rdv client M-2 + J-7 <br> - Contact du lieu ou visite <br> - Visio prestataires pour point <br> - Création planning (déroulé, interventions, surprises) <br> - Création annuaire d’urgence (contacts) <br> - Création feuille de route presta <br> - Agencement d’espace (plan lieu) <br> - Menu traiteur et boissons <br> - Rassemblement des devis presta',
         status: false,
         icon: true,
         disable: false,
       },
       {
-        listtitle: 'Documentation',
+        listtitle:
+          '<b>Pendant :</b> <br> - Présence des préparatifs à l’ouverture de bal ou au service du gâteau (8h-23h) <br> - Supervision des installations <br> - Accueil des invités <br> - Gestion des prestataires <br> - Interlocuteur principal des témoins et de la famille (mariage) <br> - Gestion des imprévus ',
         status: false,
         icon: true,
         disable: false,
       },
       {
-        listtitle: 'Use in SaaS app',
-        status: false,
-        icon: true,
-        disable: false,
-      },
-      {
-        listtitle: '<b>Unlimited</b> Project',
-        status: false,
-        icon: true,
-        disable: false,
-      },
-      {
-        listtitle: '<b>One Year</b> Technical Support',
+        listtitle:
+          '<b> Ce qui peut faire varier ce devis :</b> <br> - + 200 invités (assistant)> <br> - heures supplémentaires> <br> - Présence brunch du lendemain> <br> - Frais annexes : restauration, déplacement, hébergement> <br> - complexité logistique (assistant)',
         status: false,
         icon: true,
         disable: false,

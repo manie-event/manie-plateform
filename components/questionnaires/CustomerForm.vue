@@ -16,16 +16,16 @@
           </v-chip>
         </div>
         <h3>A quelle date ?</h3>
-        <v-radio-group v-model="isFlexible">
+        <!-- <v-radio-group v-model="isFlexible">
           <v-radio label="J'ai une date précise" :value="false"></v-radio>
           <v-radio label="Je suis flexible" :value="true"></v-radio>
-        </v-radio-group>
+        </v-radio-group> -->
 
-        <div v-if="!isFlexible" class="d-flex">
+        <div class="d-flex">
           <v-text-field type="date" v-model="dateStart" />
           <v-text-field type="date" v-model="dateEnd" />
         </div>
-        <div v-else>
+        <!-- <div v-else>
           <v-chip
             :color="flexibleDate === 'semaine' ? 'primary' : 'default'"
             :variant="flexibleDate === 'semaine' ? 'flat' : 'outlined'"
@@ -42,7 +42,7 @@
           >
             En week-end
           </v-chip>
-        </div>
+        </div> -->
         <div>
           <h3>{{ questionnaire.general[1].title }}</h3>
           <v-select
@@ -204,21 +204,24 @@
           :color="!getMinimumResponse ? 'success' : 'primary'"
           :variant="!getMinimumResponse ? 'plain' : 'outlined'"
           :disabled="!getMinimumResponse"
-          @click="createEventService(customerResponse)"
+          @click="submitEvent(customerResponse)"
         >
           Envoyer
         </v-btn>
       </div>
     </v-card>
   </v-dialog>
+  <Teleport to="body"> <PricingChoice v-model:isModalOpen="isModalOpen" /> </Teleport>
 </template>
 <script setup lang="ts">
+import PricingChoice from '@/components/dashboards/dashboard-client/PricingChoice.vue';
 import questionnaire from '@/data/questionnaire-client-refonte.json';
 import { eventsStore } from '@/stores/events';
+import { Teleport } from 'vue';
+import { UseEvent } from '~/composables/event/UseEvent';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { SectorsDto } from '~/models/dto/sectorsDto';
 import type { QuestionnaireClient } from '~/models/questionnaire/QuestionnaireClientModel';
-import { useEventService } from '~/services/UseEventService';
 
 const props = defineProps<{
   answers?: QuestionnaireClient;
@@ -228,8 +231,7 @@ const openCustomerForm = defineModel<boolean>('openCustomerForm', { default: fal
 
 const { sectors, servicesFiltered } = storeToRefs(eventsStore());
 const { keywords, clientProfile } = storeToRefs(useUserStore());
-const { createEventService } = useEventService();
-
+const { submitEvent, isModalOpen } = UseEvent();
 //ref generale
 const eventType = ref<'particulier' | 'professionnel'>('particulier');
 const name = ref('');
@@ -244,8 +246,8 @@ const isBudgetGlobale = ref(false);
 const currentPage = ref(1);
 const budgetInput = ref(0);
 //ref de date
-const isFlexible = ref(false);
-const flexibleDate = ref<string | undefined>(undefined);
+// const isFlexible = ref(false);
+// const flexibleDate = ref<string | undefined>(undefined);
 const dateStart = ref('');
 const dateEnd = ref('');
 
@@ -258,11 +260,10 @@ const selectedServices = ref([
 ]);
 
 const finalDateSelection = computed(() => {
-  if (isFlexible.value) {
-    return flexibleDate.value;
-  } else {
-    return [dateStart.value, dateEnd.value];
-  }
+  // if (isFlexible.value) {
+  //   return flexibleDate.value;
+  // } else {
+  return [dateStart.value, dateEnd.value];
 });
 
 const budgetCalculation = computed(() => {
@@ -271,14 +272,19 @@ const budgetCalculation = computed(() => {
 
 const hasAlreadyCreatedService = computed(() => props.answers?.isAlreadyCreated ?? false);
 
+const chooseEventTypeDependingOnUserCategory = computed(() => {
+  return clientProfile.value?.isBusiness ? 'professionnel' : 'particulier';
+});
+
 const customerResponse = computed(() => {
   return {
     organisatorUuid: localStorage.getItem('client-uuid'),
-    eventType: eventType.value,
+    event_type: chooseEventTypeDependingOnUserCategory.value,
     name: name.value,
     date: finalDateSelection.value,
     location: location.value,
     duration: duration.value,
+    formule: 'gratuit',
     group_type: group_type.value,
     theme: theme.value,
     organized_for: organized_for.value,
@@ -427,11 +433,12 @@ const getMinimumResponse = computed(() => {
 
 // 2. Mise à jour de la fonction getQuestionOptions
 const getQuestionOptions = (sectionIndex: number) => {
+  const eventTypeValue = clientProfile.value.isBusiness ? 'professionnel' : 'particulier';
+
   if (sectionIndex === 0) {
     // Pour la première question, filtrer selon le profil client automatiquement
-    const eventTypeValue = clientProfile.value.isBusiness ? 'professionnel' : 'particulier';
     const eventTypes = questionnaire.general[0].reponses.find(
-      (type) => type['event-type'] === eventTypeValue
+      (type) => type['event-type'] === chooseEventTypeDependingOnUserCategory.value
     );
     return eventTypes?.type || [];
   }
@@ -442,8 +449,9 @@ const getQuestionOptions = (sectionIndex: number) => {
 
   if (hasEventType) {
     return (
-      section.reponses.find((reponse) => reponse['event-type'] === customerResponse.value.eventType)
-        ?.type || []
+      section.reponses.find(
+        (reponse) => reponse['event-type'] === chooseEventTypeDependingOnUserCategory.value
+      )?.type || []
     );
   }
   return section.reponses;
@@ -453,26 +461,19 @@ onMounted(() => {
   if (!props.answers) return;
 
   const normalizedAnswer = props.answers.$attributes;
-  console.log(normalizedAnswer, 'normalizedAnswer');
+  console.log(normalizedAnswer, 'NORMALIZED');
 
-  eventType.value = normalizedAnswer.eventType || 'particulier';
+  eventType.value = normalizedAnswer.event_type || '';
   name.value = normalizedAnswer.name || '';
   location.value = normalizedAnswer.location || '';
   duration.value = normalizedAnswer.duration || '';
   group_type.value = normalizedAnswer.group_type || '';
-  theme.value = normalizedAnswer.name || '';
+  theme.value = normalizedAnswer.theme || '';
   organized_for.value = normalizedAnswer.organized_for || '';
   people.value = normalizedAnswer.people || '';
   budgetInput.value = normalizedAnswer.budget || 0;
-
-  if (Array.isArray(normalizedAnswer.date)) {
-    isFlexible.value = false;
-    dateStart.value = normalizedAnswer.date[0] || '';
-    dateEnd.value = normalizedAnswer.date[1] || '';
-  } else {
-    isFlexible.value = true;
-    flexibleDate.value = normalizedAnswer.date as string;
-  }
+  dateStart.value = normalizedAnswer.date[0] || '';
+  dateEnd.value = normalizedAnswer.date[1] || '';
 
   if (props.answers.$preloaded?.eventServices?.length > 0) {
     selectedServices.value = props.answers.$preloaded.eventServices.map((srv: any) => {
