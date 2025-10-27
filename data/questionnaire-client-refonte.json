@@ -167,18 +167,18 @@
       "title": "Où ça se passe ?",
       "reponses": [
         { "value": "Auvergne-Rhône-Alpes", "label": "Auvergne-Rhône-Alpes" },
-        { "value": "rhone", "label": "Rhône" },
-        { "value": "savoie", "label": "Savoie" },
-        { "value": "haute_savoie", "label": "Haute-Savoie" },
-        { "value": "allier", "label": "Allier" },
-        { "value": "puy_de_dome", "label": "Puy-de-Dôme" },
-        { "value": "cantal", "label": "Cantal" },
-        { "value": "haute_loire", "label": "Haute-Loire" },
-        { "value": "loire", "label": "Loire" },
-        { "value": "ardeche", "label": "Ardèche" },
-        { "value": "drome", "label": "Drôme" },
-        { "value": "isere", "label": "Isère" },
-        { "value": "ain", "label": "Ain" }
+        { "value": "Rhône", "label": "Rhône" },
+        { "value": "Savoie", "label": "Savoie" },
+        { "value": "Haute-Savoie", "label": "Haute-Savoie" },
+        { "value": "Allier", "label": "Allier" },
+        { "value": "Puy-de-Dôme", "label": "Puy-de-Dôme" },
+        { "value": "Cantal", "label": "Cantal" },
+        { "value": "Haute-Loire", "label": "Haute-Loire" },
+        { "value": "Loire", "label": "Loire" },
+        { "value": "Ardèche", "label": "Ardèche" },
+        { "value": "Drôme", "label": "Drôme" },
+        { "value": "Isère", "label": "Isère" },
+        { "value": "Ain", "label": "Ain" }
       ]
     },
     {

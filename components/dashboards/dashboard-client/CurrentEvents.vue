@@ -77,6 +77,8 @@ const isDialogOpen = ref(false);
 const hoveredEvent = ref<string | null>(null);
 const currentPage = ref(1);
 const itemsPerPage = 3;
+const isModalOpenForPricing = ref(false);
+const previousEventCount = ref(0);
 
 const selectedEvent = ref<eventModel | null>(null);
 const selectedEventUuid = ref('');
@@ -116,6 +118,22 @@ const getServiceClass = (serviceUuid: string) => {
       return 'bg-light-yellow';
   }
 };
+
+watch(
+  events,
+  (newEvents) => {
+    // ouverture uniquement quand le nombre d’événements augmente
+    if (newEvents.length > previousEventCount.value) {
+      // petit délai pour laisser le store se mettre à jour
+      setTimeout(() => {
+        isModalOpenForPricing.value = true;
+      }, 300);
+    }
+
+    previousEventCount.value = newEvents.length;
+  },
+  { deep: true }
+);
 
 onMounted(async () => {
   await getEventsPerOrganisator();

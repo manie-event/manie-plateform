@@ -40,8 +40,6 @@ export const useUserStore = defineStore('userStore', () => {
   const bgPicture = ref();
   const professionalProfileForCustomer = ref<ProfessionalProfile>();
 
-  const definePictureBanner = computed(() => {});
-
   // setters
   const setUser = (userData: User) => {
     user.value = userData;

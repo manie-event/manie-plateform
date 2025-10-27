@@ -55,7 +55,7 @@
                 </td>
                 <td>
                   <v-tooltip
-                    :text="item.professionalMessage.split('fourchette basse')[0].trim()"
+                    :text="item.professionalMessage?.split('fourchette basse')[0].trim() || ''"
                     interactive
                     content-class="tooltip-custom"
                     target="cursor"
@@ -217,28 +217,22 @@ const svgColor = computed(() => {
   return customizer.actTheme === 'DARK_BLUE_THEME' ? '#FFFFFF' : '#000000';
 });
 
-const getProfessionalMessage = (message: string) => {
-  const cleanMessage = message.split('fourchette basse')[0].trim();
-
-  if (cleanMessage.length <= 30) {
-    return cleanMessage;
-  } else {
-    return cleanMessage.substring(0, 30) + '...';
-  }
+const getProfessionalMessage = (message?: string | null) => {
+  if (!message) return '—'; // ou retourne une chaîne vide
+  const cleanMessage = message.split('fourchette basse')[0]?.trim() ?? '';
+  return cleanMessage.length <= 30 ? cleanMessage : cleanMessage.substring(0, 30) + '...';
 };
 
-const getPriceFromMessage = (message: string) => {
+const getPriceFromMessage = (message?: string | null) => {
+  if (!message) return 'Non précisé';
   const fourchetteBasse = message
     .split('fourchette basse')[1]
     ?.split('fourchette haute')[0]
     ?.trim();
-
   const fourchetteHaute = message.split('fourchette haute')[1]?.trim();
-  if (!fourchetteHaute) {
-    return `À partir de ${fourchetteBasse}`;
-  } else {
-    return `Entre ${fourchetteBasse}€ et ${fourchetteHaute}€`;
-  }
+  if (!fourchetteBasse && !fourchetteHaute) return 'Non précisé';
+  if (!fourchetteHaute) return `À partir de ${fourchetteBasse ?? '?'}`;
+  return `Entre ${fourchetteBasse ?? '?'}€ et ${fourchetteHaute ?? '?'}€`;
 };
 
 const confirmedProposition = async (eventServiceUuid: string) => {

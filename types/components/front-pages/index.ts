@@ -29,9 +29,11 @@ interface PackagesPriceType {
 
 interface PackageType {
   caption: string;
+  subCaption: string;
   subtext: string;
-  price: number;
-  period: string;
+  price: string;
+  subprice?: string;
+  period?: string;
   buttontext: string;
   url: string;
   tagtext: boolean;

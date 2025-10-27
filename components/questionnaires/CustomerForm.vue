@@ -1,61 +1,64 @@
 <template>
-  <v-dialog v-model="openCustomerForm">
-    <v-card class="pa-4">
-      <div v-if="currentPage === 1">
-        <h3>{{ questionnaire.general[0].title }}</h3>
-        <div>
+  <v-dialog v-model="openCustomerForm" transition="dialog-bottom-transition" max-width="800">
+    <v-card class="pa-6 rounded-2xl elevation-3 bg-grey-lighten-5">
+      <div v-if="currentPage === 1" key="page1">
+        <h2 class="text-h5 font-weight-bold mb-4">
+          {{ questionnaire.general[0].title }}
+        </h2>
+
+        <!-- Type d'utilisateur -->
+        <div class="d-flex flex-wrap gap-2 mb-6">
           <v-chip
             v-for="userType in getQuestionOptions(0)"
             :key="userType.value"
             :color="name === userType.value ? 'primary' : 'default'"
             :variant="name === userType.value ? 'flat' : 'outlined'"
-            clickable
+            size="large"
+            class="rounded-xl transition-all"
             @click="name = userType.value"
           >
             {{ userType.label }}
           </v-chip>
         </div>
-        <h3>A quelle date ?</h3>
-        <v-radio-group v-model="isFlexible">
-          <v-radio label="J'ai une date précise" :value="false"></v-radio>
-          <v-radio label="Je suis flexible" :value="true"></v-radio>
-        </v-radio-group>
 
-        <div v-if="!isFlexible" class="d-flex">
-          <v-text-field type="date" v-model="dateStart" />
-          <v-text-field type="date" v-model="dateEnd" />
-        </div>
-        <div v-else>
-          <v-chip
-            :color="flexibleDate === 'semaine' ? 'primary' : 'default'"
-            :variant="flexibleDate === 'semaine' ? 'flat' : 'outlined'"
-            clickable
-            @click="flexibleDate = 'semaine'"
-          >
-            En semaine
-          </v-chip>
-          <v-chip
-            :color="flexibleDate === 'week-end' ? 'primary' : 'default'"
-            :variant="flexibleDate === 'week-end' ? 'flat' : 'outlined'"
-            clickable
-            @click="flexibleDate = 'week-end'"
-          >
-            En week-end
-          </v-chip>
-        </div>
-        <div>
-          <h3>{{ questionnaire.general[1].title }}</h3>
-          <v-select
-            :items="questionnaire.general[1].reponses"
-            item-title="label"
-            item-value="value"
-            label="localisation souhaitée"
-            v-model="location"
-          ></v-select>
-        </div>
-        <div class="mt-4 d-flex">
-          <h3>{{ questionnaire.general[2].title }}</h3>
-          <v-radio-group v-model="group_type">
+        <!-- Dates -->
+        <h3 class="text-h6 mb-2">📅 À quelle date ?</h3>
+        <v-row dense>
+          <v-col cols="12" sm="6">
+            <v-text-field
+              type="date"
+              v-model="dateStart"
+              :min="today"
+              label="Date de début"
+              variant="outlined"
+            />
+          </v-col>
+          <v-col cols="12" sm="6">
+            <v-text-field
+              type="date"
+              v-model="dateEnd"
+              :min="dateStart"
+              label="Date de fin"
+              variant="outlined"
+            />
+          </v-col>
+        </v-row>
+
+        <!-- Localisation -->
+        <h3 class="text-h6 mt-6 mb-2">{{ questionnaire.general[1].title }}</h3>
+        <v-select
+          :items="questionnaire.general[1].reponses"
+          item-title="label"
+          item-value="value"
+          v-model="location"
+          label="Localisation souhaitée"
+          variant="outlined"
+        />
+
+        <!-- Type de groupe -->
+        <div class="mt-6">
+          <h3 class="text-h6 mb-2">{{ questionnaire.general[2].title }}</h3>
+          <v-radio-group v-model="group_type" inline>
             <v-radio
               v-for="invite in getQuestionOptions(2)"
               :key="invite.value"
@@ -64,9 +67,11 @@
             ></v-radio>
           </v-radio-group>
         </div>
-        <div class="mt-4 d-flex">
-          <h3>{{ questionnaire.general[3].title }}</h3>
-          <v-radio-group v-model="duration">
+
+        <!-- Durée -->
+        <div class="mt-6">
+          <h3 class="text-h6 mb-2">{{ questionnaire.general[3].title }}</h3>
+          <v-radio-group v-model="duration" inline>
             <v-radio
               v-for="duree in getQuestionOptions(3)"
               :key="duree.value"
@@ -77,70 +82,87 @@
         </div>
       </div>
 
-      <div v-if="currentPage === 2">
-        <div class="mt-4 d-flex">
-          <h3>{{ questionnaire.general[4].title }}</h3>
-          <v-radio-group v-model="organized_for">
-            <v-radio
-              v-for="orga in getQuestionOptions(4)"
-              :key="orga.value"
-              :label="orga.label"
-              :value="orga.value"
-            ></v-radio>
-          </v-radio-group>
-        </div>
-        <div class="mt-4 d-flex">
-          <h3>Avez-vous un thème ?</h3>
-          <v-text-field type="text" v-model="theme" label="Avez-vous un thème"> </v-text-field>
-        </div>
-        <div class="mt-4 d-flex">
-          <h3>Combien d'invités sont prévus ?</h3>
-          <v-text-field v-model="people" />
-        </div>
-        <div>
-          <h3>Vous avez un budget ?</h3>
-          <v-radio-group v-model="isBudgetGlobale">
-            <v-radio label="Par personne" :value="false"></v-radio>
-            <v-radio label="Global" :value="true"></v-radio>
-          </v-radio-group>
+      <!-- PAGE 2 -->
 
-          <v-text-field v-model="budgetInput" type="number" />
-        </div>
+      <div v-if="currentPage === 2" key="page2">
+        <h2 class="text-h5 font-weight-bold mb-4">Détails de votre événement 🎉</h2>
+
+        <v-radio-group v-model="organized_for" class="mb-4">
+          <h3 class="text-h6">{{ questionnaire.general[4].title }}</h3>
+          <v-radio
+            v-for="orga in getQuestionOptions(4)"
+            :key="orga.value"
+            :label="orga.label"
+            :value="orga.value"
+          />
+        </v-radio-group>
+
+        <v-text-field
+          v-model="theme"
+          label="Thème de l'événement"
+          prepend-inner-icon="mdi-palette-outline"
+          variant="outlined"
+          class="mb-4"
+        />
+
+        <v-text-field
+          v-model="people"
+          type="number"
+          label="Nombre d'invités"
+          prepend-inner-icon="mdi-account-group-outline"
+          variant="outlined"
+          class="mb-4"
+        />
+
+        <v-radio-group v-model="isBudgetGlobale" class="mb-2">
+          <h3 class="text-h6 mb-1">💰 Votre budget</h3>
+          <v-radio label="Par personne" :value="false"></v-radio>
+          <v-radio label="Global" :value="true"></v-radio>
+        </v-radio-group>
+
+        <v-text-field
+          v-model="budgetInput"
+          type="number"
+          label="Montant"
+          prepend-inner-icon="mdi-cash"
+          variant="outlined"
+        />
       </div>
 
-      <div v-if="currentPage == 3">
-        <!-- Services existants -->
-        <v-alert color="warning" class="w-auto p-5 mb-5"
-          >Chaque secteur sélectionné ne pourra pas être modifié une fois la mise en relation
-          commencée
+      <!-- PAGE 3 -->
+
+      <div v-if="currentPage === 3" key="page3">
+        <v-alert color="warning" class="mb-6">
+          ⚠️ Chaque secteur sélectionné ne pourra pas être modifié une fois la mise en relation
+          commencée.
         </v-alert>
-        <div v-for="(service, serviceIndex) in selectedServices" :key="serviceIndex" class="mb-6">
-          <div class="d-flex justify-space-between align-center mb-2">
-            <h3>Service {{ serviceIndex + 1 }}</h3>
+
+        <div
+          v-for="(service, serviceIndex) in selectedServices"
+          :key="serviceIndex"
+          class="mb-8 p-4 bg-white rounded-xl shadow-sm"
+        >
+          <div class="d-flex justify-space-between align-center mb-3">
+            <h3 class="font-weight-bold">Service {{ serviceIndex + 1 }}</h3>
             <v-btn
               v-if="selectedServices.length > 1 && !hasAlreadyCreatedService"
-              size="small"
-              color="red"
-              variant="outlined"
+              color="error"
+              variant="text"
+              icon="mdi-delete-outline"
               @click="removeService(serviceIndex)"
-            >
-              Supprimer
-            </v-btn>
+            />
           </div>
 
-          <div>
-            <h4>De quoi avez-vous besoin ?</h4>
-            <v-select
-              v-model="service.selectedSector"
-              :items="sectorFiltered"
-              item-title="label"
-              item-value="value"
-              @update:modelValue="updateServiceSector(serviceIndex, service.selectedSector)"
-              clearable
-              :disabled="isLockedService(service)"
-              placeholder="Sélectionnez un secteur"
-            ></v-select>
-          </div>
+          <v-select
+            v-model="service.selectedSector"
+            :items="sectorFiltered"
+            item-title="label"
+            item-value="value"
+            placeholder="Sélectionnez un secteur"
+            variant="outlined"
+            :disabled="isLockedService(service)"
+            @update:modelValue="updateServiceSector(serviceIndex, service.selectedSector)"
+          />
 
           <div
             v-for="question in getFilteredQuestionsForService(service.selectedSector)"
@@ -148,22 +170,16 @@
             v-if="service.selectedSector"
             class="mt-4"
           >
-            <h4>{{ question.question }}</h4>
+            <h4 class="mb-2">{{ question.question }}</h4>
             <div v-if="question.isService">
               <v-btn
                 v-for="answer in question.answers"
                 :key="answer.uuid"
-                :color="service.selectedServiceId === answer.uuid ? 'primary' : 'default'"
+                :color="service.selectedServiceId === answer.uuid ? 'primary' : 'grey-lighten-2'"
                 :variant="service.selectedServiceId === answer.uuid ? 'flat' : 'outlined'"
-                clickable
-                :disabled="isLockedService(service)"
+                class="ma-1"
                 @click="selectServiceForIndex(serviceIndex, answer.uuid)"
               >
-                <v-icon
-                  v-if="service.selectedServiceId === answer.uuid"
-                  start
-                  icon="mdi-check"
-                ></v-icon>
                 {{ answer.name }}
               </v-btn>
             </div>
@@ -171,10 +187,9 @@
               <v-chip
                 v-for="answer in question.answers"
                 :key="answer.id"
-                :color="service.selectedKeywords.includes(answer.uuid) ? 'green' : 'grey'"
+                :color="service.selectedKeywords.includes(answer.uuid) ? 'primary' : 'default'"
                 :variant="service.selectedKeywords.includes(answer.uuid) ? 'flat' : 'outlined'"
-                clickable
-                :disabled="isLockedService(service)"
+                class="ma-1"
                 @click="toggleKeywordForService(serviceIndex, answer.uuid)"
               >
                 {{ answer.value }}
@@ -183,42 +198,40 @@
           </div>
         </div>
 
-        <div class="mt-4">
-          <v-btn
-            color="primary"
-            variant="outlined"
-            @click="addNewService"
-            prepend-icon="mdi-plus"
-            v-if="!hasAlreadyCreatedService"
-          >
-            Ajouter un nouveau service
-          </v-btn>
-        </div>
+        <v-btn color="primary" variant="outlined" prepend-icon="mdi-plus" @click="addNewService">
+          Ajouter un nouveau service
+        </v-btn>
       </div>
 
-      <div class="d-flex justify-space-between mt-4">
-        <v-btn v-if="currentPage > 1" @click="currentPage--">Précédent</v-btn>
-        <v-btn v-if="currentPage < 3" @click="currentPage++">Suivant</v-btn>
+      <!-- Navigation -->
+      <div class="d-flex justify-space-between mt-8">
+        <v-btn v-if="currentPage > 1" variant="text" @click="currentPage--"> Précédent</v-btn>
+
+        <v-btn v-if="currentPage < 3" color="primary" variant="flat" @click="nextPage">
+          Suivant
+        </v-btn>
+
         <v-btn
-          v-if="currentPage === 3 && !hasAlreadyCreatedService"
-          :color="!getMinimumResponse ? 'success' : 'primary'"
-          :variant="!getMinimumResponse ? 'plain' : 'outlined'"
+          v-if="currentPage === 3"
+          color="success"
+          variant="flat"
           :disabled="!getMinimumResponse"
-          @click="createEventService(customerResponse)"
+          @click="handleSubmit"
         >
-          Envoyer
+          🚀 Envoyer
         </v-btn>
       </div>
     </v-card>
   </v-dialog>
 </template>
+
 <script setup lang="ts">
 import questionnaire from '@/data/questionnaire-client-refonte.json';
 import { eventsStore } from '@/stores/events';
+import { UseEvent } from '~/composables/event/UseEvent';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { SectorsDto } from '~/models/dto/sectorsDto';
 import type { QuestionnaireClient } from '~/models/questionnaire/QuestionnaireClientModel';
-import { useEventService } from '~/services/UseEventService';
 
 const props = defineProps<{
   answers?: QuestionnaireClient;
@@ -228,8 +241,7 @@ const openCustomerForm = defineModel<boolean>('openCustomerForm', { default: fal
 
 const { sectors, servicesFiltered } = storeToRefs(eventsStore());
 const { keywords, clientProfile } = storeToRefs(useUserStore());
-const { createEventService } = useEventService();
-
+const { submitEvent, isLoading, error } = UseEvent();
 //ref generale
 const eventType = ref<'particulier' | 'professionnel'>('particulier');
 const name = ref('');
@@ -244,8 +256,9 @@ const isBudgetGlobale = ref(false);
 const currentPage = ref(1);
 const budgetInput = ref(0);
 //ref de date
-const isFlexible = ref(false);
-const flexibleDate = ref<string | undefined>(undefined);
+// const isFlexible = ref(false);
+// const flexibleDate = ref<string | undefined>(undefined);
+const today = new Date().toISOString().split('T')[0];
 const dateStart = ref('');
 const dateEnd = ref('');
 
@@ -258,27 +271,33 @@ const selectedServices = ref([
 ]);
 
 const finalDateSelection = computed(() => {
-  if (isFlexible.value) {
-    return flexibleDate.value;
-  } else {
-    return [dateStart.value, dateEnd.value];
-  }
+  // if (isFlexible.value) {
+  //   return flexibleDate.value;
+  // } else {
+  return [dateStart.value, dateEnd.value];
 });
+
+const nextPage = () => {
+  if (currentPage.value < 3) currentPage.value++;
+};
 
 const budgetCalculation = computed(() => {
   return isBudgetGlobale.value ? budgetInput.value : budgetInput.value * Number(people.value);
 });
 
-const hasAlreadyCreatedService = computed(() => props.answers?.isAlreadyCreated ?? false);
+const chooseEventTypeDependingOnUserCategory = computed(() => {
+  return clientProfile.value?.isBusiness ? 'professionnel' : 'particulier';
+});
 
 const customerResponse = computed(() => {
   return {
     organisatorUuid: localStorage.getItem('client-uuid'),
-    eventType: eventType.value,
+    event_type: chooseEventTypeDependingOnUserCategory.value,
     name: name.value,
     date: finalDateSelection.value,
     location: location.value,
     duration: duration.value,
+    formule: 'gratuit',
     group_type: group_type.value,
     theme: theme.value,
     organized_for: organized_for.value,
@@ -427,11 +446,12 @@ const getMinimumResponse = computed(() => {
 
 // 2. Mise à jour de la fonction getQuestionOptions
 const getQuestionOptions = (sectionIndex: number) => {
+  const eventTypeValue = clientProfile.value.isBusiness ? 'professionnel' : 'particulier';
+
   if (sectionIndex === 0) {
     // Pour la première question, filtrer selon le profil client automatiquement
-    const eventTypeValue = clientProfile.value.isBusiness ? 'professionnel' : 'particulier';
     const eventTypes = questionnaire.general[0].reponses.find(
-      (type) => type['event-type'] === eventTypeValue
+      (type) => type['event-type'] === chooseEventTypeDependingOnUserCategory.value
     );
     return eventTypes?.type || [];
   }
@@ -442,37 +462,41 @@ const getQuestionOptions = (sectionIndex: number) => {
 
   if (hasEventType) {
     return (
-      section.reponses.find((reponse) => reponse['event-type'] === customerResponse.value.eventType)
-        ?.type || []
+      section.reponses.find(
+        (reponse) => reponse['event-type'] === chooseEventTypeDependingOnUserCategory.value
+      )?.type || []
     );
   }
   return section.reponses;
+};
+
+const handleSubmit = async () => {
+  await submitEvent(customerResponse.value);
+
+  // si tu n’as pas d’erreur (ou si submitEvent() ne renvoie pas de valeur utile),
+  // tu fermes le formulaire et tu ouvres la modale pricing.
+  if (!error.value) {
+    openCustomerForm.value = false;
+  }
 };
 
 onMounted(() => {
   if (!props.answers) return;
 
   const normalizedAnswer = props.answers.$attributes;
-  console.log(normalizedAnswer, 'normalizedAnswer');
+  console.log(normalizedAnswer, 'NORMALIZED');
 
-  eventType.value = normalizedAnswer.eventType || 'particulier';
+  eventType.value = normalizedAnswer.event_type || '';
   name.value = normalizedAnswer.name || '';
   location.value = normalizedAnswer.location || '';
   duration.value = normalizedAnswer.duration || '';
   group_type.value = normalizedAnswer.group_type || '';
-  theme.value = normalizedAnswer.name || '';
+  theme.value = normalizedAnswer.theme || '';
   organized_for.value = normalizedAnswer.organized_for || '';
   people.value = normalizedAnswer.people || '';
   budgetInput.value = normalizedAnswer.budget || 0;
-
-  if (Array.isArray(normalizedAnswer.date)) {
-    isFlexible.value = false;
-    dateStart.value = normalizedAnswer.date[0] || '';
-    dateEnd.value = normalizedAnswer.date[1] || '';
-  } else {
-    isFlexible.value = true;
-    flexibleDate.value = normalizedAnswer.date as string;
-  }
+  dateStart.value = normalizedAnswer.date[0] || '';
+  dateEnd.value = normalizedAnswer.date[1] || '';
 
   if (props.answers.$preloaded?.eventServices?.length > 0) {
     selectedServices.value = props.answers.$preloaded.eventServices.map((srv: any) => {

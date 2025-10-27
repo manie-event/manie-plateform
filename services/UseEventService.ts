@@ -14,7 +14,7 @@ export const useEventService = () => {
 
   const createEventService = async (payload: QuestionnaireClient) => {
     try {
-      const { data } = await axios.post(`${config.public.apiUrl}/event/create`, payload, {
+      const { data } = await axios.post(`http://127.0.0.1:3333/event/create`, payload, {
         headers: {
           Authorization: `Bearer ${token.value}`,
           'Content-Type': 'application/json',
@@ -123,12 +123,35 @@ export const useEventService = () => {
     }
   };
 
+  const updateEventFormuleService = async (formule: string, uuid: string) => {
+    console.log(formule, 'FORMULE');
+    console.log(uuid, 'UUID');
+
+    try {
+      const { data } = await axios.patch(
+        `http://127.0.0.1:3333/event/${uuid}/update-formule`,
+        { formule },
+        {
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      return data.data;
+    } catch (error) {
+      addError({ message: "Impossible d'ajouter le service à l'événement." });
+      throw error;
+    }
+  };
+
   return {
     createEventService,
     getEventsPerOrganisator,
     getEventsInstance,
     getEventServiceList,
     createEventServiceItem,
+    updateEventFormuleService,
     // addServicesToEvent,
   };
 };

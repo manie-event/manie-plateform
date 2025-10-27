@@ -18,7 +18,7 @@ export const useAuthentification = () => {
 
   const sendRegister = async (registerInfo: RegisterModel): Promise<void> => {
     try {
-      const { data } = await axios.post(`${config.public.apiUrl}/auth/register`, registerInfo);
+      const { data } = await axios.post(`http://127.0.0.1:52693/auth/register`, registerInfo);
       if (data) {
         addSuccess(
           'Inscription réussie, veuillez vérifier votre email pour confirmer votre compte.'
