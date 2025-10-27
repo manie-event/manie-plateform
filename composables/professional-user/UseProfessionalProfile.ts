@@ -77,7 +77,7 @@ export const useProfessionalProfile = () => {
 
     try {
       const { data } = await axios.patch(
-        `http://127.0.0.1:3333/professional/${professionalUuid}`,
+        `${config.public.apiUrl}/professional/${professionalUuid}`,
         newProfile,
         {
           headers: {
