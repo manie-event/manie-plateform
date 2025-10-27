@@ -29,6 +29,7 @@ interface PackagesPriceType {
 
 interface PackageType {
   caption: string;
+  subCaption: string;
   subtext: string;
   price: string;
   subprice?: string;

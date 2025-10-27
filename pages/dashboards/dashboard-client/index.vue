@@ -105,4 +105,8 @@ onMounted(async () => {
       </BaseEmptyState>
     </v-col>
   </v-row>
+
+  <Teleport to="body">
+    <PricingChoice v-model:test="isModalOpenForPricing" />
+  </Teleport>
 </template>

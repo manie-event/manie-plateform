@@ -67,6 +67,15 @@
 
             <!-- Actions -->
             <v-btn
+              @click="openPricingModal = true"
+              color="primary"
+              class="w-100 mb-4"
+              variant="tonal"
+            >
+              <v-icon start>mdi-page-last</v-icon>
+              Me faire accompagner
+            </v-btn>
+            <v-btn
               @click="isEventModificationOpen = true"
               color="primary"
               class="w-100 mb-4"
@@ -88,9 +97,11 @@
   <Teleport to="body">
     <CustomerForm v-model:open-customer-form="isEventModificationOpen" :answers />
     <AddEventService v-model:add-service-open="isAddingServiceOpen" :answers />
+    <PricingChoice v-model:test="openPricingModal" :selectedEventUuid="event.uuid" />
   </Teleport>
 </template>
 <script setup lang="ts">
+import PricingChoice from '@/components/dashboards/dashboard-client/PricingChoice.vue';
 import Notes from '@/pages/apps/notes/index.vue';
 import { Teleport } from 'vue';
 import LatestDeals from '~/components/dashboards/dashboard-client/LatestDeals.vue';
@@ -111,6 +122,8 @@ const props = defineProps<{
 
 const openEventDetails = defineModel<boolean>('modelValue', { default: false });
 
+const openPricingModal = ref(false);
+
 const getEventProgression = computed(() => {
   const uniqueEventServices = props.event.eventServices.reduce((acc: eventService[], current) => {
     const existing = acc.find((es: eventService) => es.serviceUuid === current.serviceUuid);
@@ -126,6 +139,7 @@ const getEventProgression = computed(() => {
   }, [] as eventService[]);
 
   const totalServices = uniqueEventServices.length;
+
   const completedServices = props.event.eventServices.filter(
     (es) => es.status === 'completed'
   ).length;

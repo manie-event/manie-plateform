@@ -317,6 +317,7 @@ const Packages: PackageType[] = [
   {
     tagtext: false,
     caption: 'Booster',
+    subCaption: 'booster',
     subtext:
       'Tu es charrette, tu cherches un prestataire de dernière minute qui correspond à tes critères.',
     price: '15%',
@@ -342,6 +343,7 @@ const Packages: PackageType[] = [
   {
     tagtext: false,
     caption: 'Coup de pouce',
+    subCaption: 'coup-de-pouce',
     subtext:
       'Tu organises ton évènement en autonomie et souhaites être accompagné(e) par un professionnel à chaque étape clé de ton projet (au moins 6 mois à l’avance)',
     price: '990€',
@@ -387,6 +389,7 @@ const Packages: PackageType[] = [
   {
     tagtext: true,
     caption: 'Grande pompe',
+    subCaption: 'grande-pompe',
     subtext:
       "Vous vous (re)mariez et vous souhaitez déléguer l'entièreté de l’organisation à un professionnel dédié.",
     price: '2990€',
@@ -469,6 +472,7 @@ const Packages: PackageType[] = [
   {
     tagtext: false,
     caption: 'coordination de jour-J',
+    subCaption: 'coordination',
     subtext: 'Le jour J, tu souris, tu vibres, tu vis — pendant qu’on fait tourner la machine.',
     price: '990€',
     subprice: ' ou 45€/heure',

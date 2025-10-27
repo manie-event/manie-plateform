@@ -19,7 +19,6 @@
       <CustomerForm v-if="openModal" v-model:open-customer-form="openModal" />
     </v-card-text>
   </v-card>
-  <!-- <Teleport to="body"> <PricingChoice v-model:isModalOpen="openModal" /> </Teleport> -->
 </template>
 
 <script setup lang="ts">

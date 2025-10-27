@@ -34,7 +34,18 @@
               <v-btn variant="outlined" color="primary" size="small" @click="openDetails(formule)">
                 En savoir +
               </v-btn>
-              <v-btn color="primary" size="small"> Je change de formule </v-btn>
+              <v-btn
+                color="primary"
+                size="small"
+                @click="
+                  {
+                    (changeEventFormule(formule.subCaption, selectedEventUuid),
+                      (openPricingChoice = false));
+                  }
+                "
+              >
+                Je change de formule
+              </v-btn>
             </div>
           </v-card>
         </v-list-item>
@@ -72,11 +83,18 @@
 <script setup lang="ts">
 import { Packages } from '@/_mockApis/front-pages/PagesData';
 import { ref } from 'vue';
+import { UseEvent } from '~/composables/event/UseEvent';
 
-const openPricingChoice = defineModel<boolean>('isModalOpen', { default: false });
+defineProps<{
+  selectedEventUuid: string;
+}>();
+
+const openPricingChoice = defineModel<boolean>('test', { default: false });
+
 const detailsDialog = ref(false);
 const selectedFormule = ref<any>(null);
 
+const { changeEventFormule } = UseEvent();
 function openDetails(formule: any) {
   selectedFormule.value = formule;
   detailsDialog.value = true;
