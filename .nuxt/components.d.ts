@@ -56,6 +56,7 @@ interface _GlobalComponents {
     'DashboardsDashboardClientLatestDeals': typeof import("../components/dashboards/dashboard-client/LatestDeals.vue")['default']
     'DashboardsDashboardClientLatestReviews': typeof import("../components/dashboards/dashboard-client/LatestReviews.vue")['default']
     'DashboardsDashboardClientPayments': typeof import("../components/dashboards/dashboard-client/Payments.vue")['default']
+    'DashboardsDashboardClientPricingChoice': typeof import("../components/dashboards/dashboard-client/PricingChoice.vue")['default']
     'DashboardsDashboardClientProductsChart': typeof import("../components/dashboards/dashboard-client/ProductsChart.vue")['default']
     'DashboardsDashboardClientProductsTable': typeof import("../components/dashboards/dashboard-client/ProductsTable.vue")['default']
     'DashboardsDashboardClientProfessionalProfil': typeof import("../components/dashboards/dashboard-client/ProfessionalProfil.vue")['default']
@@ -430,6 +431,7 @@ interface _GlobalComponents {
     'LazyDashboardsDashboardClientLatestDeals': LazyComponent<typeof import("../components/dashboards/dashboard-client/LatestDeals.vue")['default']>
     'LazyDashboardsDashboardClientLatestReviews': LazyComponent<typeof import("../components/dashboards/dashboard-client/LatestReviews.vue")['default']>
     'LazyDashboardsDashboardClientPayments': LazyComponent<typeof import("../components/dashboards/dashboard-client/Payments.vue")['default']>
+    'LazyDashboardsDashboardClientPricingChoice': LazyComponent<typeof import("../components/dashboards/dashboard-client/PricingChoice.vue")['default']>
     'LazyDashboardsDashboardClientProductsChart': LazyComponent<typeof import("../components/dashboards/dashboard-client/ProductsChart.vue")['default']>
     'LazyDashboardsDashboardClientProductsTable': LazyComponent<typeof import("../components/dashboards/dashboard-client/ProductsTable.vue")['default']>
     'LazyDashboardsDashboardClientProfessionalProfil': LazyComponent<typeof import("../components/dashboards/dashboard-client/ProfessionalProfil.vue")['default']>
@@ -810,6 +812,7 @@ export const DashboardsDashboardClientEvents: typeof import("../components/dashb
 export const DashboardsDashboardClientLatestDeals: typeof import("../components/dashboards/dashboard-client/LatestDeals.vue")['default']
 export const DashboardsDashboardClientLatestReviews: typeof import("../components/dashboards/dashboard-client/LatestReviews.vue")['default']
 export const DashboardsDashboardClientPayments: typeof import("../components/dashboards/dashboard-client/Payments.vue")['default']
+export const DashboardsDashboardClientPricingChoice: typeof import("../components/dashboards/dashboard-client/PricingChoice.vue")['default']
 export const DashboardsDashboardClientProductsChart: typeof import("../components/dashboards/dashboard-client/ProductsChart.vue")['default']
 export const DashboardsDashboardClientProductsTable: typeof import("../components/dashboards/dashboard-client/ProductsTable.vue")['default']
 export const DashboardsDashboardClientProfessionalProfil: typeof import("../components/dashboards/dashboard-client/ProfessionalProfil.vue")['default']
@@ -1184,6 +1187,7 @@ export const LazyDashboardsDashboardClientEvents: LazyComponent<typeof import(".
 export const LazyDashboardsDashboardClientLatestDeals: LazyComponent<typeof import("../components/dashboards/dashboard-client/LatestDeals.vue")['default']>
 export const LazyDashboardsDashboardClientLatestReviews: LazyComponent<typeof import("../components/dashboards/dashboard-client/LatestReviews.vue")['default']>
 export const LazyDashboardsDashboardClientPayments: LazyComponent<typeof import("../components/dashboards/dashboard-client/Payments.vue")['default']>
+export const LazyDashboardsDashboardClientPricingChoice: LazyComponent<typeof import("../components/dashboards/dashboard-client/PricingChoice.vue")['default']>
 export const LazyDashboardsDashboardClientProductsChart: LazyComponent<typeof import("../components/dashboards/dashboard-client/ProductsChart.vue")['default']>
 export const LazyDashboardsDashboardClientProductsTable: LazyComponent<typeof import("../components/dashboards/dashboard-client/ProductsTable.vue")['default']>
 export const LazyDashboardsDashboardClientProfessionalProfil: LazyComponent<typeof import("../components/dashboards/dashboard-client/ProfessionalProfil.vue")['default']>
