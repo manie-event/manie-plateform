@@ -1,1 +1,5 @@
 .env
+.nuxt/
+.output/
+.vercel/
+.node_modules/

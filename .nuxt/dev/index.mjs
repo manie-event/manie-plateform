@@ -648,7 +648,6 @@ const _inlineRuntimeConfig = {
     }
   },
   "public": {
-    "tokenStripe": "",
     "apiUrl": "https://manie-api.onrender.com"
   }
 };
