@@ -5,99 +5,75 @@ import type { QuestionnaireClient } from '~/models/questionnaire/QuestionnaireCl
 
 export const useEventService = () => {
   const { addError, addSuccess } = useToaster();
-
+  const api = useApi(); // ✅ instance sécurisée avec refresh
   const eventStore = eventsStore();
-  const config = useRuntimeConfig();
-  const token = useCookie('token');
   const { clientProfile } = storeToRefs(useUserStore());
   const { setEventsByOrganisator, setQuestionnaireAnswers } = eventStore;
 
   const createEventService = async (payload: QuestionnaireClient) => {
     try {
-      const { data } = await axios.post(`${config.public.apiUrl}/event/create`, payload, {
-        headers: {
-          Authorization: `Bearer ${token.value}`,
-          'Content-Type': 'application/json',
-        },
-      });
-      if (data) {
-        addSuccess(
-          "Votre souhait d'évènement a été envoyé avec succès, nous vous mettons en relation avec des partenaires"
-        );
-        if (clientProfile.value) {
-          getEventsPerOrganisator();
-        }
-        return data;
-      }
-    } catch (error: unknown) {
-      addError({ message: "Une erreur est survenue lors de l'envoi du message." });
+      if (!api) return;
+
+      const { data } = await api.post('/event/create', payload);
+
+      addSuccess(
+        "Votre souhait d'évènement a été envoyé avec succès, nous vous mettons en relation avec des partenaires."
+      );
+
+      if (clientProfile.value) await getEventsPerOrganisator();
+      return data;
+    } catch (error) {
+      console.error(error);
+      addError({ message: "Une erreur est survenue lors de la création de l'événement." });
     }
   };
 
   const getEventsPerOrganisator = async () => {
-    const page = ref(1);
-    const allEvents = [];
-    const uuid = localStorage.getItem('client-uuid');
-
-    while (true) {
-      const { data } = await axios.get(
-        `${config.public.apiUrl}/event/list-by-organisator/${uuid}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token.value}`,
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      if (!data.data.length) {
-        break;
-      }
-
+    try {
+      if (!api) return;
+      const uuid = localStorage.getItem('client-uuid');
+      const page = ref(1);
+      const allEvents: any[] = [];
       const { mapDtoToEvent } = eventsMapper();
 
-      const events = data.data.map((event: eventModelDto) => mapDtoToEvent(event));
+      while (true) {
+        const { data } = await api.get(`/event/list-by-organisator/${uuid}?page=${page.value}`);
+        if (!data.data?.length) break;
 
-      // Ajouter les événements de cette page au tableau total
-      allEvents.push(...events);
+        const events = data.data.map((e: eventModelDto) => mapDtoToEvent(e));
+        allEvents.push(...events);
+        setEventsByOrganisator(events);
+        page.value++;
+      }
 
-      // Passer à la page suivante
-      page.value++;
-      setEventsByOrganisator(events);
-
-      return allEvents ?? [];
+      return allEvents;
+    } catch (error) {
+      console.error(error);
+      addError({ message: 'Erreur lors de la récupération des événements.' });
     }
   };
 
   const getEventsInstance = async (eventUuid: string) => {
-    const { data } = await axios.get(`${config.public.apiUrl}/event/${eventUuid}`, {
-      headers: {
-        Authorization: `Bearer ${token.value}`,
-        'Content-Type': 'application/json',
-      },
-    });
-    if (data) {
+    try {
+      if (!api) return;
+      const { data } = await api.get(`/event/${eventUuid}`);
       const responseInstance = { ...data, isAlreadyCreated: true };
       setQuestionnaireAnswers(responseInstance);
       return responseInstance;
+    } catch (error) {
+      console.error(error);
+      addError({ message: 'Erreur lors de la récupération de l’événement.' });
     }
   };
 
-  /**
-   * Crée un service d'événement existant
-   * POST /event-service/create
-   */
   const createEventServiceItem = async (payload: {
     serviceUuid: string;
     eventUuid: string;
     keywordsUuid: string[];
   }) => {
     try {
-      const { data } = await axios.post(`${config.public.apiUrl}/event-service/create`, payload, {
-        headers: {
-          Authorization: `Bearer ${token.value}`,
-          'Content-Type': 'application/json',
-        },
-      });
+      if (!api) return;
+      const { data } = await api.post('/event-service/create', payload);
       return data;
     } catch (error) {
       addError({ message: "Impossible d'ajouter le service à l'événement." });
@@ -107,37 +83,22 @@ export const useEventService = () => {
 
   const getEventServiceList = async (uuid: string) => {
     try {
-      const { data } = await axios.get(
-        `${config.public.apiUrl}/event-service/list-by-event/${uuid}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token.value}`,
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      if (!api) return;
+      const { data } = await api.get(`/event-service/list-by-event/${uuid}`);
       return data.data;
     } catch (error) {
-      addError({ message: "Impossible d'ajouter le service à l'événement." });
+      addError({ message: "Erreur lors de la récupération des services de l'événement." });
       throw error;
     }
   };
 
   const updateEventFormuleService = async (formule: string, uuid: string) => {
     try {
-      const { data } = await axios.patch(
-        `${config.public.apiUrl}/event/${uuid}/update-formule`,
-        { formule },
-        {
-          headers: {
-            Authorization: `Bearer ${token.value}`,
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      if (!api) return;
+      const { data } = await api.patch(`/event/${uuid}/update-formule`, { formule });
       return data.data;
     } catch (error) {
-      addError({ message: "Impossible d'ajouter le service à l'événement." });
+      addError({ message: "Erreur lors de la mise à jour de la formule de l'événement." });
       throw error;
     }
   };
@@ -149,6 +110,5 @@ export const useEventService = () => {
     getEventServiceList,
     createEventServiceItem,
     updateEventFormuleService,
-    // addServicesToEvent,
   };
 };

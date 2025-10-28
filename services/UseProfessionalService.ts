@@ -1,50 +1,41 @@
 export const useProfessionalService = () => {
-  const { addError, addSuccess } = useToaster();
-
-  // const professionalStore = professionalsStore();
-  const config = useRuntimeConfig();
-  const token = useCookie('token');
+  const { addError } = useToaster();
   const { setServicesFiltered } = eventsStore();
-  // const { professionalProfile } = storeToRefs(useUserStore());
   const { setProfessionalServices } = usePropositionStore();
-
+  const api = useApi(); // ✅ instance Axios avec interceptors
   const professionalUuid = localStorage.getItem('professional-uuid');
 
+  /**
+   * Récupère les services sélectionnés du professionnel
+   */
   const getProfessionalService = async () => {
     try {
-      const { data } = await axios.get(
-        `${config.public.apiUrl}/professional-service/show-selected-services-for-professional`,
-        {
-          headers: {
-            Authorization: `Bearer ${token.value}`,
-            'Content-Type': 'application/json',
-          },
-        }
+      if (!api) return;
+      const { data } = await api.get(
+        '/professional-service/show-selected-services-for-professional'
       );
       setServicesFiltered(data);
       return data ?? [];
-    } catch (error: unknown) {
-      addError({ message: "Une erreur est survenue lors de l'envoi du message." });
+    } catch (error: any) {
+      console.error('❌ getProfessionalService:', error);
+      addError({ message: 'Une erreur est survenue lors de la récupération des services.' });
     }
   };
 
+  /**
+   * Récupère la liste des services du professionnel
+   */
   const getListProfessionalServiceByProfessional = async () => {
-    console.log(professionalUuid, 'professionalUuid');
-
     try {
-      const { data } = await axios.get(
-        `${config.public.apiUrl}/professional-service/list-by-professional/${professionalUuid}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token.value}`,
-            'Content-Type': 'application/json',
-          },
-        }
+      if (!api || !professionalUuid) return;
+      const { data } = await api.get(
+        `/professional-service/list-by-professional/${professionalUuid}`
       );
       setProfessionalServices(data.data);
       return data.data ?? [];
-    } catch (error: unknown) {
-      addError({ message: "Une erreur est survenue lors de l'envoi du message." });
+    } catch (error: any) {
+      console.error('❌ getListProfessionalServiceByProfessional:', error);
+      addError({ message: 'Une erreur est survenue lors de la récupération des services.' });
     }
   };
 

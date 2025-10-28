@@ -1,58 +1,74 @@
-import axios from 'axios'; // Pour les routes sans auth
+// useAuthentification.ts
+import axios from 'axios'; // routes publiques (sans auth)
 import type { AuthentificationModel } from '~/models/authentification/authentificationModel';
+import type { RegisterModel } from '~/models/authentification/registerModel';
 import type { registerNewPasswordModel } from '~/models/authentification/registerNewPasswordModel';
 import type { errorModel } from '~/models/errorModel';
-import type { RegisterModel } from '../models/authentification/registerModel';
 
 export const useAuthentification = () => {
   const config = useRuntimeConfig();
   const router = useRouter();
   const { addError, addSuccess } = useToaster();
   const userStore = useUserStore();
-  const { isStoringUserAccepeted } = storeToRefs(userStore);
-  const { token, refreshToken } = useAuthCookies();
   const { setUser } = userStore;
-  const isProfessional = localStorage.getItem('is-professional');
 
+  const { token } = useAuthCookies(); // access token (15 min)
+  const { refreshToken } = useRefreshToken(); // refresh token (7 jours)
+
+  const isProfessional = process.client ? localStorage.getItem('is-professional') : null;
+
+  // Instance Axios authentifiée (interceptors + refresh)
   const api = useApi();
 
+  // --- REGISTER --------------------------------------------------------------
   const sendRegister = async (registerInfo: RegisterModel): Promise<void> => {
     try {
       const { data } = await axios.post(`${config.public.apiUrl}/auth/register`, registerInfo);
+
       if (data) {
         addSuccess(
           'Inscription réussie, veuillez vérifier votre email pour confirmer votre compte.'
         );
         await router.push('/auth/login');
-        return data;
       }
-    } catch (error: unknown) {
+    } catch {
+      // message dédié si SIRET invalide (tu pourras affiner selon status backend)
       addError({ message: 'Veuillez vérifier que le SIRET soit valide.' });
     }
   };
 
+  // --- LOGIN ----------------------------------------------------------------
   const sendLogin = async (authentification: AuthentificationModel) => {
     try {
       const { data } = await axios.post(`${config.public.apiUrl}/auth/login`, authentification);
 
-      const tokenValue = data?.token?.token;
+      const tokenValue: string | undefined = data?.token?.token;
+      const newRefresh: string | undefined = data?.refreshToken;
+      const user = data?.user;
+
+      if (!tokenValue || !newRefresh || !user) {
+        throw new Error('Réponse de login invalide (token/refresh/user manquant).');
+      }
+
+      // Persist tokens avant navigation
+      refreshToken.value = newRefresh;
+      token.value = tokenValue;
+
+      // Enregistre l’utilisateur dans le store
+      setUser(user);
 
       addSuccess('Connexion réussie.');
 
-      if (tokenValue) {
-        refreshToken.value = data.refreshToken;
-        token.value = tokenValue;
-        setUser(data.user);
+      // Debug gentil si besoin
+      if (process.dev) {
+        console.info('[auth] isProfessional:', isProfessional);
+      }
 
-        console.log(isProfessional, 'isProfessional- isProfessional');
-
-        if (data.user.category === 'consumer') {
-          router.push({ path: '/dashboards/dashboard-client' });
-        } else {
-          router.push({ path: '/dashboards/dashboard2' });
-        }
+      // Redirection par rôle
+      if (user.category === 'consumer') {
+        await router.push({ path: '/dashboards/dashboard-client' });
       } else {
-        throw new Error('Token non reçu du serveur');
+        await router.push({ path: '/dashboards/dashboard2' });
       }
     } catch (error: unknown) {
       console.error('Login error:', error);
@@ -61,6 +77,7 @@ export const useAuthentification = () => {
     }
   };
 
+  // --- VERIFY EMAIL ----------------------------------------------------------
   const checkEmail = async (emailToken: string) => {
     try {
       const { data } = await axios.get(`${config.public.apiUrl}/auth/verify-email/${emailToken}`);
@@ -74,6 +91,7 @@ export const useAuthentification = () => {
     }
   };
 
+  // --- FORGOT PASSWORD -------------------------------------------------------
   const sendNewPassword = async (email: string) => {
     try {
       const { data } = await axios.post(`${config.public.apiUrl}/auth/forgot-password`, { email });
@@ -87,9 +105,10 @@ export const useAuthentification = () => {
     }
   };
 
+  // --- RESET PASSWORD (AUTH) -------------------------------------------------
   const registerNewPassword = async (registerPassword: registerNewPasswordModel) => {
     try {
-      if (!api) return;
+      if (!api) return; // garde-fou si l’instance n’est pas prête (théoriquement jamais ici)
 
       const { data } = await api.post('/auth/reset-password', registerPassword);
       if (data) {
@@ -104,19 +123,27 @@ export const useAuthentification = () => {
     }
   };
 
+  // --- LOGOUT (AUTH) ---------------------------------------------------------
   const sendLogout = async () => {
     try {
       if (!api) return;
 
-      const { data } = await api.post('/auth/logout');
-
-      if (data) {
-        token.value = null;
-        refreshToken.value = null;
-        localStorage.clear();
-        await router.push('/');
-        addSuccess('Déconnexion réussie.');
+      // même si l’API échoue, on nettoie local (don’t lock the user out)
+      try {
+        await api.post('/auth/logout');
+      } catch (e) {
+        if (process.dev) console.warn('[auth] logout backend failed, cleaning local anyway.', e);
       }
+
+      token.value = null;
+      refreshToken.value = null;
+
+      if (process.client) {
+        localStorage.clear();
+      }
+
+      await router.push('/');
+      addSuccess('Déconnexion réussie.');
     } catch (error: unknown) {
       addError(error as errorModel);
     }

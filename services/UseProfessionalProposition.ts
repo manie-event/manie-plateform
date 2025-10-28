@@ -1,70 +1,41 @@
 export const useProfessionalProposition = () => {
-  const config = useRuntimeConfig();
-  const token = useCookie('token');
-
   const { addSuccess, addError } = useToaster();
+  const api = useApi(); // ✅ instance avec interceptors et refresh auto
+
   const getListEventServiceProposition = async (professionalServiceUuid: string) => {
     try {
-      const response = await axios.get(
-        `${config.public.apiUrl}/event-service-proposition/${professionalServiceUuid}/show-event-service-for-professional`,
-        {
-          headers: {
-            Authorization: `Bearer ${token.value}`,
-            'Content-Type': 'application/json',
-          },
-        }
+      if (!api) return;
+      const { data } = await api.get(
+        `/event-service-proposition/${professionalServiceUuid}/show-event-service-for-professional`
       );
-      if (response) {
-        console.log(response.data, 'response event service proposition');
-
-        return response.data;
-      }
+      console.log(data, 'response event service proposition');
+      return data;
     } catch (error) {
-      console.error('❌ Erreur getListProfessionalProposition:', error);
+      console.error('❌ Erreur getListEventServiceProposition:', error);
       return null;
     }
   };
 
   const getListPropositionByEventService = async (professionalServiceUuid: string) => {
     try {
-      const response = await axios.get(
-        `${config.public.apiUrl}/event-service-proposition/list-by-event-service/${professionalServiceUuid}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token.value}`,
-            'Content-Type': 'application/json',
-          },
-        }
+      if (!api) return;
+      const { data } = await api.get(
+        `/event-service-proposition/list-by-event-service/${professionalServiceUuid}`
       );
-      if (response?.data) {
-        const propositions = response.data.data;
-
-        // setPropositions(propositions);
-        return propositions;
-      }
+      return data?.data ?? [];
     } catch (error) {
-      console.error('❌ Erreur getListProfessionalProposition:', error);
+      console.error('❌ Erreur getListPropositionByEventService:', error);
       return null;
     }
   };
 
   const getListProfessionalProposition = async (professionalServiceUuid: string) => {
     try {
-      const response = await axios.get(
-        `${config.public.apiUrl}/event-service-proposition/list-by-professional-service/${professionalServiceUuid}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token.value}`,
-            'Content-Type': 'application/json',
-          },
-        }
+      if (!api) return;
+      const { data } = await api.get(
+        `/event-service-proposition/list-by-professional-service/${professionalServiceUuid}`
       );
-      if (response?.data) {
-        const propositions = response.data.data;
-
-        // setPropositions(propositions);
-        return propositions;
-      }
+      return data?.data ?? [];
     } catch (error) {
       console.error('❌ Erreur getListProfessionalProposition:', error);
       return null;
@@ -73,47 +44,30 @@ export const useProfessionalProposition = () => {
 
   const updateProfessionalMessage = async (uuid: string, message: string) => {
     try {
-      const response = await axios.patch(
-        `${config.public.apiUrl}/event-service-proposition/accept-by-professional/${uuid}`,
-        { professionalMessage: message },
-        {
-          headers: {
-            Authorization: `Bearer ${token.value}`,
-            'Content-Type': 'application/json',
-          },
-        }
+      if (!api) return;
+      const { data } = await api.patch(
+        `/event-service-proposition/accept-by-professional/${uuid}`,
+        { professionalMessage: message }
       );
-      if (response) {
-        addSuccess('Félicitations, vous vous êtes positionné sur cet évènement');
-        return response;
-      }
-    } catch (error) {
-      addError({ message: error.message });
-      console.error('❌ Erreur getListProfessionalProposition:', error);
+      addSuccess('Félicitations, vous vous êtes positionné sur cet évènement 🎉');
+      return data;
+    } catch (error: any) {
+      addError({ message: error.message || 'Erreur lors de la mise à jour du message.' });
+      console.error('❌ Erreur updateProfessionalMessage:', error);
       return null;
     }
   };
 
   const acceptedByClient = async (propositionUuid: string) => {
-    console.log('propositionUuid', propositionUuid);
-
     try {
-      const response = await axios.patch(
-        `${config.public.apiUrl}/event-service-proposition/accept-by-organisator/${propositionUuid}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token.value}`,
-            'Content-Type': 'application/json',
-          },
-        }
+      if (!api) return;
+      const { data } = await api.patch(
+        `/event-service-proposition/accept-by-organisator/${propositionUuid}`
       );
-      if (response) {
-        addSuccess("Félicitations, vous venez d'avoir accès au profil prestataire !");
-        return response;
-      }
-    } catch (error) {
-      addError({ message: error.message });
+      addSuccess("Félicitations 🎊 Vous venez d'avoir accès au profil prestataire !");
+      return data;
+    } catch (error: any) {
+      addError({ message: error.message || "Erreur lors de l'acceptation." });
       console.error('❌ Erreur acceptedByClient:', error);
       return null;
     }
@@ -121,31 +75,23 @@ export const useProfessionalProposition = () => {
 
   const declinedByClient = async (propositionUuid: string) => {
     try {
-      const response = await axios.patch(
-        `${config.public.apiUrl}/event-service-proposition/decline-by-organisator/${propositionUuid}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token.value}`,
-            'Content-Type': 'application/json',
-          },
-        }
+      if (!api) return;
+      const { data } = await api.patch(
+        `/event-service-proposition/decline-by-organisator/${propositionUuid}`
       );
-      if (response) {
-        addSuccess('Vous avez décliné cette proposition');
-        return response;
-      }
-    } catch (error) {
-      addError({ message: error.message });
+      addSuccess('Vous avez décliné cette proposition 🙅‍♂️');
+      return data;
+    } catch (error: any) {
+      addError({ message: error.message || 'Erreur lors du refus de la proposition.' });
       console.error('❌ Erreur declinedByClient:', error);
       return null;
     }
   };
 
   return {
-    getListProfessionalProposition,
     getListEventServiceProposition,
     getListPropositionByEventService,
+    getListProfessionalProposition,
     updateProfessionalMessage,
     acceptedByClient,
     declinedByClient,

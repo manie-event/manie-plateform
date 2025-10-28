@@ -5,9 +5,13 @@ export const useContactService = () => {
   const config = useRuntimeConfig();
   const token = useCookie('token');
 
+  const api = useApi();
+
   const sendContactForm = async (contactData: ContactMessage) => {
     try {
-      const { data } = await axios.post(`${config.public.apiUrl}/contact`, contactData, {
+      if (!api) return;
+
+      const { data } = await api.post(`${config.public.apiUrl}/contact`, contactData, {
         headers: {
           Authorization: `Bearer ${token.value}`,
           'Content-Type': 'application/json',

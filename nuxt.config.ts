@@ -13,7 +13,6 @@ export default defineNuxtConfig({
     preset: 'vercel',
   },
 
-  // Le reste de votre config...
   build: {
     transpile: ['vuetify', 'vee-validate'],
   },
