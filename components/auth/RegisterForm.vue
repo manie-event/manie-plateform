@@ -81,7 +81,7 @@ const register = async () => {
           v-model="registerForm.category"
           false-value="professional"
           true-value="consumer"
-          :color="registerForm.category === 'consumer' ? 'success' : 'primary'"
+          :color="registerForm.category === 'consumer' ? '#f39454' : 'primary'"
           hide-details
           >{{ registerForm.category }}</v-switch
         >
@@ -136,9 +136,6 @@ const register = async () => {
       variant="outlined"
       color="primary"
     ></VTextField>
-    <v-btn size="large" class="mt-2" color="primary" block submit rounded="pill" @click="register"
-      >Je créer mon compte</v-btn
-    >
     <div v-if="registerForm.category === 'professional'">
       <div class="d-flex gap-4 mt-3">
         <p style="font-size: small">
@@ -150,12 +147,34 @@ const register = async () => {
         </p>
         <v-checkbox v-model="isCharteBonneConduite"></v-checkbox>
       </div>
-      <div v-if="openModalCharte">
-        <JuridiqueCharteBonneConduite
-          v-model:openModal="openModalCharte"
-          @isCharteBonneConduite="isCharteBonneConduite = $event"
-        />
+    </div>
+    <div v-else>
+      <div class="d-flex gap-4 mt-3">
+        <p style="font-size: small">
+          Je certifie avoir lu et accepté la charte de bonne conduite de MANIE. Je m’engage à
+          respecter les valeurs et engagements qui y figurent.
+          <span @click="openModalCharte = true" style="opacity: 0.5; cursor: pointer"
+            >En savoir plus ici</span
+          >
+        </p>
+        <v-checkbox v-model="isCharteBonneConduite"></v-checkbox>
       </div>
+    </div>
+    <v-btn
+      size="large"
+      class="mt-2"
+      block
+      submit
+      rounded="pill"
+      @click="register"
+      :disabled="!isCharteBonneConduite"
+      >Je créer mon compte</v-btn
+    >
+    <div v-if="openModalCharte">
+      <JuridiqueCharteBonneConduite
+        v-model:openModal="openModalCharte"
+        @isCharteBonneConduite="isCharteBonneConduite = $event"
+      />
     </div>
   </v-form>
   <Teleport to="body">

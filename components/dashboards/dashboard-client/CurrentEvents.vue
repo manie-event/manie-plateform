@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="10">
+  <v-card elevation="10" class="current-events">
     <v-card-text class="position-relative current-events__container">
       <div class="d-flex justify-flex-start d-block align-center">
         <div>
@@ -63,6 +63,8 @@
 <script setup lang="ts">
 import emptyCart from '@/public/images/svgs/empty-cart.svg';
 import { eventsStore } from '@/stores/events';
+import { storeToRefs } from 'pinia';
+import { computed, onMounted, ref } from 'vue';
 import CustomerForm from '~/components/questionnaires/CustomerForm.vue';
 import type { eventModel } from '~/models/events/eventModel';
 import type { QuestionnaireClient } from '~/models/questionnaire/QuestionnaireClientModel';
@@ -124,6 +126,7 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .current-events {
+  background: transparent;
   &__container {
     position: relative;
     height: 250px;

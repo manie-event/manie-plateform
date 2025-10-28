@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="10">
+  <v-card elevation="10" class="events">
     <v-card-text class="position-relative events__container">
       <div class="d-flex justify-space-between">
         <div class="mb-6">
@@ -44,6 +44,7 @@ const onSubmit = (payload: EventCreatePayload) => {
 </script>
 <style lang="scss" scoped>
 .events {
+  background: transparent;
   &__container {
     position: relative;
     height: 250px;

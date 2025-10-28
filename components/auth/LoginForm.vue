@@ -66,8 +66,8 @@ onMounted(() => {
   <div class="d-flex align-center text-center mb-6">
     <div class="text-h6 w-100 px-5 font-weight-regular auth-divider position-relative">
       <span class="bg-surface px-5 py-3 position-relative text-subtitle-1 text-grey100"
-        >Identifiez-vous avec</span
-      >
+        >Identifiez-vous
+      </span>
     </div>
   </div>
   <Form @submit="validate" v-slot="{ errors, isSubmitting }" class="mt-5">
@@ -99,12 +99,16 @@ onMounted(() => {
         color="primary"
         @change="isMemoryUser()"
       >
-        <template v-slot:label class="">Se souvenir de mes infos</template>
+        <template v-slot:label>Se souvenir de mes infos</template>
       </v-checkbox>
       <div class="ml-sm-auto">
         <NuxtLink
           to="/auth/forgot-password"
-          class="text-primary text-decoration-none text-body-1 opacity-1 font-weight-medium"
+          :style="{
+            color: 'var(--manie-secondary)',
+            textDecoration: 'unset',
+            fontFamily: 'Poppins',
+          }"
           >Mot de passe oublié ?</NuxtLink
         >
       </div>
@@ -113,7 +117,7 @@ onMounted(() => {
       size="large"
       rounded="pill"
       :loading="isSubmitting"
-      color="primary"
+      class="login__btn"
       :disabled="valid"
       block
       type="submit"
@@ -129,3 +133,11 @@ onMounted(() => {
     <CommonSuccessToaster></CommonSuccessToaster>
   </Teleport>
 </template>
+<style lang="scss" scoped>
+.login {
+  &__btn {
+    background: var(--manie-primary);
+    color: white;
+  }
+}
+</style>

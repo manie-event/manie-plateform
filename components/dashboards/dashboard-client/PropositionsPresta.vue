@@ -1,12 +1,15 @@
 <template>
-  <VCard elevation="10" class="mb-16">
+  <VCard elevation="10" class="mb-16 proposition-presta">
     <v-card-text>
       <div class="d-flex align-center justify-space-between">
         <div>
           <h5 class="v-card-title">Vos propositions en cours</h5>
         </div>
       </div>
-      <div class="month-table" v-if="professionalResponseProposition.length > 0">
+      <div
+        class="month-table proposition-presta__table"
+        v-if="professionalResponseProposition.length > 0"
+      >
         <v-table class="mt-5 mb-0">
           <template v-slot:default>
             <thead>
@@ -55,7 +58,7 @@
                 </td>
                 <td>
                   <v-tooltip
-                    :text="item.professionalMessage?.split('fourchette basse')[0].trim() || ''"
+                    :text="item.professionalMessage.split('fourchette basse')[0].trim()"
                     interactive
                     content-class="tooltip-custom"
                     target="cursor"
@@ -168,10 +171,12 @@
 import BaseEmptyState from '@/components/common/BaseEmptyState.vue';
 import errorToaster from '@/components/common/errorToaster.vue';
 import { Icon } from '@iconify/vue';
-import { Teleport } from 'vue';
+import { storeToRefs } from 'pinia';
+import { computed, ref, Teleport } from 'vue';
 import { useEventServiceProposition } from '~/composables/event-service-propositions/UseEventServiceProposition';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
+import { useCustomizerStore } from '../../../stores/customizer';
 import PropositionDetails from '../dashboard2/PropositionDetails.vue';
 import ProfessionalProfil from './ProfessionalProfil.vue';
 
@@ -217,22 +222,28 @@ const svgColor = computed(() => {
   return customizer.actTheme === 'DARK_BLUE_THEME' ? '#FFFFFF' : '#000000';
 });
 
-const getProfessionalMessage = (message?: string | null) => {
-  if (!message) return '—'; // ou retourne une chaîne vide
-  const cleanMessage = message.split('fourchette basse')[0]?.trim() ?? '';
-  return cleanMessage.length <= 30 ? cleanMessage : cleanMessage.substring(0, 30) + '...';
+const getProfessionalMessage = (message: string) => {
+  const cleanMessage = message.split('fourchette basse')[0].trim();
+
+  if (cleanMessage.length <= 30) {
+    return cleanMessage;
+  } else {
+    return cleanMessage.substring(0, 30) + '...';
+  }
 };
 
-const getPriceFromMessage = (message?: string | null) => {
-  if (!message) return 'Non précisé';
+const getPriceFromMessage = (message: string) => {
   const fourchetteBasse = message
     .split('fourchette basse')[1]
     ?.split('fourchette haute')[0]
     ?.trim();
+
   const fourchetteHaute = message.split('fourchette haute')[1]?.trim();
-  if (!fourchetteBasse && !fourchetteHaute) return 'Non précisé';
-  if (!fourchetteHaute) return `À partir de ${fourchetteBasse ?? '?'}`;
-  return `Entre ${fourchetteBasse ?? '?'}€ et ${fourchetteHaute ?? '?'}€`;
+  if (!fourchetteHaute) {
+    return `À partir de ${fourchetteBasse}`;
+  } else {
+    return `Entre ${fourchetteBasse}€ et ${fourchetteHaute}€`;
+  }
 };
 
 const confirmedProposition = async (eventServiceUuid: string) => {
@@ -245,6 +256,13 @@ onMounted(() => {
 });
 </script>
 <style lang="scss" scoped>
+.proposition-presta {
+  background: transparent;
+
+  &__table {
+    background: transparent;
+  }
+}
 :deep(.tooltip-custom) {
   max-width: 450px !important;
   white-space: normal !important;

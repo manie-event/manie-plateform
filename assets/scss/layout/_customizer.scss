@@ -80,7 +80,7 @@
   }
   .v-application__wrap,
   .v-app-bar.v-toolbar {
-    background-color: #e0eef7 !important;
+    background-color: var(--bg-color) !important;
   }
   &.horizontalLayout {
     .v-app-bar.v-toolbar {

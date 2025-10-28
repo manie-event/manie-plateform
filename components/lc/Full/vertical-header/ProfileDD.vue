@@ -42,17 +42,13 @@ const getCategory = computed(() => {
 const getInitials = (name?: string) => {
   if (!name) return '';
 
-  const parts = name
-    .trim()
-    .toUpperCase()
-    .replace(/\s+/g, ' ')
-    .split(/[-\s']+/);
+  const parts = name.trim().toUpperCase().replace(/\s+/g, ' ');
 
   if (parts.length === 1) {
-    return parts[0].substring(0, 2);
+    return parts[0].substring(0, 1);
   }
 
-  return parts[0][0] + (parts[1]?.[0] ?? '');
+  return parts[0][0];
 };
 
 onMounted(async () => {
@@ -74,8 +70,6 @@ onMounted(async () => {
     console.warn('Utilisateur non encore chargé ou UUID manquant');
   }
 });
-
-watch(() => {});
 </script>
 
 <template>
@@ -194,7 +188,11 @@ watch(() => {});
 <style scoped>
 .avatar {
   position: relative;
-  padding: 6px;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 50%;
   border: 1px solid rgb(213, 213, 213);
 }

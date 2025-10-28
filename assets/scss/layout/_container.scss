@@ -2,10 +2,6 @@ html {
   overflow-y: auto;
 }
 
-.v-application__wrap {
-  background-color: rgba(var(--v-theme-background));
-}
-
 .v-main {
   min-height: 100vh;
   padding-left: calc(var(--v-layout-left) + 20px) !important;
