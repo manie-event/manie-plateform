@@ -124,9 +124,6 @@ export const useEventService = () => {
   };
 
   const updateEventFormuleService = async (formule: string, uuid: string) => {
-    console.log(formule, 'FORMULE');
-    console.log(uuid, 'UUID');
-
     try {
       const { data } = await axios.patch(
         `${config.public.apiUrl}/event/${uuid}/update-formule`,
