@@ -52,14 +52,20 @@ export const useApi = (): AxiosInstance | null => {
 
           isRefreshing = true;
           try {
-            const response = await axios.post(
-              `${runtimeConfig.public.apiUrl}/auth/refresh-token`,
+            console.log('[REFRESH TOKEN]', refreshToken.value);
+            console.log('[REFRESH BODY]', { refreshToken: refreshToken.value });
+            const { data } = await axios.post(
+              `http://127.0.0.1:3333/auth/refresh-token`,
               { refreshToken: refreshToken.value },
               { headers: { 'Content-Type': 'application/json' } }
             );
 
-            const newAccessToken = response.data.token?.token;
-            const newRefreshToken = response.data.refreshToken;
+            console.log('[REFRESH RESPONSE RAW]', data);
+
+            const newAccessToken = data.token?.token;
+            const newRefreshToken = data.refreshToken;
+
+            console.log('[PARSED TOKENS]', { newAccessToken, newRefreshToken });
 
             if (newAccessToken && newRefreshToken) {
               token.value = newAccessToken;
