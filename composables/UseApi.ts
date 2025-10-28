@@ -55,7 +55,7 @@ export const useApi = (): AxiosInstance | null => {
             console.log('[REFRESH TOKEN]', refreshToken.value);
             console.log('[REFRESH BODY]', { refreshToken: refreshToken.value });
             const { data } = await axios.post(
-              `http://127.0.0.1:3333/auth/refresh-token`,
+              `${runtimeConfig.public.apiUrl}/auth/refresh-token`,
               { refreshToken: refreshToken.value },
               { headers: { 'Content-Type': 'application/json' } }
             );
