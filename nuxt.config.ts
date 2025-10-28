@@ -10,8 +10,7 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    preset: 'vercel-static',
-    serveStatic: true,
+    preset: 'vercel',
   },
 
   // Le reste de votre config...
