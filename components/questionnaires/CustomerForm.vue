@@ -105,7 +105,7 @@
           class="mb-4"
         />
 
-        <v-text-field
+        <v-number-input
           v-model="people"
           type="number"
           label="Nombre d'invités"
@@ -120,7 +120,7 @@
           <v-radio label="Global" :value="true"></v-radio>
         </v-radio-group>
 
-        <v-text-field
+        <v-number-input
           v-model="budgetInput"
           type="number"
           label="Montant"
@@ -145,7 +145,7 @@
           <div class="d-flex justify-space-between align-center mb-3">
             <h3 class="font-weight-bold">Service {{ serviceIndex + 1 }}</h3>
             <v-btn
-              v-if="selectedServices.length > 1 && !hasAlreadyCreatedService"
+              v-if="selectedServices.length > 1"
               color="error"
               variant="text"
               icon="mdi-delete-outline"
@@ -250,7 +250,7 @@ const duration = ref('');
 const group_type = ref('');
 const theme = ref('');
 const organized_for = ref('');
-const people = ref('');
+const people = ref(0);
 //ref de budget
 const isBudgetGlobale = ref(false);
 const currentPage = ref(1);
@@ -282,7 +282,7 @@ const nextPage = () => {
 };
 
 const budgetCalculation = computed(() => {
-  return isBudgetGlobale.value ? budgetInput.value : budgetInput.value * Number(people.value);
+  return isBudgetGlobale.value ? budgetInput.value : budgetInput.value * people.value;
 });
 
 const chooseEventTypeDependingOnUserCategory = computed(() => {
@@ -493,7 +493,7 @@ onMounted(() => {
   group_type.value = normalizedAnswer.group_type || '';
   theme.value = normalizedAnswer.theme || '';
   organized_for.value = normalizedAnswer.organized_for || '';
-  people.value = normalizedAnswer.people || '';
+  people.value = normalizedAnswer.people || 0;
   budgetInput.value = normalizedAnswer.budget || 0;
   dateStart.value = normalizedAnswer.date[0] || '';
   dateEnd.value = normalizedAnswer.date[1] || '';

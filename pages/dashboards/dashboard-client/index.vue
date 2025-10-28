@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import CurrentEvents from '@/components/dashboards/dashboard-client/CurrentEvents.vue';
 import Events from '@/components/dashboards/dashboard-client/Events.vue';
-import Products from '@/components/dashboards/dashboard-client/ProductsChart.vue';
 import ProjectLeap from '@/components/dashboards/dashboard-client/ProjectLeap.vue';
 import EmptyState from '@/public/images/empty-state/profil-vide.svg';
 import { storeToRefs } from 'pinia';
@@ -61,11 +60,6 @@ onMounted(async () => {
     <!-- Payments - 6 colonnes -->
     <v-col cols="12" sm="6">
       <Payments />
-    </v-col>
-
-    <!-- Products - 6 colonnes -->
-    <v-col cols="12" sm="6" class="d-flex">
-      <Products />
     </v-col>
 
     <!-- LatestDeal - 6 colonnes -->
