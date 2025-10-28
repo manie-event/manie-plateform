@@ -5,7 +5,6 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      tokenStripe: process.env.TOKEN_STRIPE,
       apiUrl: process.env.NUXT_API_URL || 'https://manie-api.onrender.com',
     },
   },
