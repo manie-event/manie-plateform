@@ -378,8 +378,6 @@ const createProfile = async (values: ProfessionalProfile) => {
     const response = await createProfessionalProfile(payload);
 
     if (response.message === 'Professional updated') {
-      console.log(professionalUser.value, 'professionalUser.VALUE');
-
       if (professionalUser.value?.uuid) {
         localStorage.setItem('professional-uuid', professionalUser.value?.uuid);
       }
@@ -410,17 +408,12 @@ const modifyProfile = async (newValues: ProfessionalProfile) => {
 
     if (response.message === 'Professional updated') {
       const professional = response.newPro || response.data?.professional;
-      console.log(professional, 'PROFESSIONAL');
 
       if (professional?.uuid) {
-        console.log(professional?.uuid, 'professional?.uuid');
-
         localStorage.setItem('professional-uuid', professional.uuid);
       }
 
       if (professional?.name) {
-        console.log(professional?.name, 'professional?.name');
-
         localStorage.setItem('pro-name', professional.name);
       }
       addSuccess('Votre profil a été modifié avec success');

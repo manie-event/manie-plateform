@@ -39,11 +39,11 @@ export interface ProfessionalProfile {
   mainActivity: string;
   secondActivity?: string;
   thirdActivity?: string;
-  certification: string[];
   mainInterlocutor: string;
   experience: number;
   category?: string;
   geographicArea: string;
+  picture: string;
   faq: Faq;
   minimumReservationPeriod: number;
   deposit: boolean;
