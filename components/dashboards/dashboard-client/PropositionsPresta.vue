@@ -241,6 +241,7 @@ const getPriceFromMessage = (message?: string) => {
     .split('fourchette basse')[1]
     ?.split('fourchette haute')[0]
     ?.trim();
+
   const fourchetteHaute = message.split('fourchette haute')[1]?.trim();
   if (!fourchetteHaute) return `À partir de ${fourchetteBasse}`;
   return `Entre ${fourchetteBasse}€ et ${fourchetteHaute}€`;
