@@ -8,18 +8,25 @@
         <div class="text-right">
           <v-btn @click="openExpenseModal = true" color="primary">+</v-btn>
         </div>
+        <div class="text-right">
+          <v-btn
+            @click="removeExpenseModal = true"
+            color="error"
+            variant="tonal"
+            icon="mdi-delete"
+          ></v-btn>
+        </div>
       </div>
-      <div class="my-7">
-        <ClientOnly
-          ><apexchart
+      <div class="chart-container relative my-6">
+        <ClientOnly>
+          <apexchart
             type="donut"
             class="paymentchart"
             height="150"
             :options="chartOptions"
             :series="chartOptions.series"
-          >
-          </apexchart
-        ></ClientOnly>
+          />
+        </ClientOnly>
       </div>
       <p>
         <i>{{ budgetSavings }}</i>
@@ -79,6 +86,45 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
+
+  <v-dialog v-model="removeExpenseModal" max-width="420">
+    <v-card class="rounded-xl">
+      <v-card-title class="text-h6 font-weight-bold py-4 px-6">
+        🗑️ Supprimer une dépense
+      </v-card-title>
+
+      <v-card-text class="pt-6 pb-4 px-6">
+        <v-form class="space-y-4">
+          <!-- on propose les labels existants pour éviter les typos -->
+          <v-autocomplete
+            v-model="removeExpenseTitle"
+            :items="labels"
+            label="Titre de la dépense"
+            variant="outlined"
+            density="comfortable"
+            color="error"
+            clearable
+          />
+
+          <v-btn
+            class="mt-4 text-none"
+            block
+            color="error"
+            variant="flat"
+            size="large"
+            :disabled="!removeExpenseTitle"
+            @click="removeDepenseByTitle()"
+          >
+            Supprimer
+          </v-btn>
+        </v-form>
+      </v-card-text>
+
+      <v-card-actions class="justify-end pb-4 pr-4">
+        <v-btn variant="text" color="grey" @click="removeExpenseModal = false">Annuler</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup lang="ts">
@@ -89,48 +135,61 @@ const props = defineProps<{
   event: eventModel;
 }>();
 const openExpenseModal = ref(false);
+const removeExpenseModal = ref(false);
+const removeExpenseTitle = ref<string | null>(null);
 const prestataire = ref('');
 const prix = ref('');
-// 🔥 Données dynamiques pour le graphe
+
 const series = ref<number[]>([]);
 const labels = ref<string[]>([]);
 
-// Identifiant unique de stockage par event
 const storageKey = computed(() => `event-expenses-${props.event.uuid}`);
 
-// 🧠 Charger les données sauvegardées
-onMounted(() => {
-  const savedData = localStorage.getItem(storageKey.value);
-  if (savedData) {
-    const parsed = JSON.parse(savedData);
-    series.value = parsed.series || [];
-    labels.value = parsed.labels || [];
-  }
-});
+const resetRemoveForm = () => {
+  removeExpenseTitle.value = null;
+  removeExpenseModal.value = false;
+};
 
-// 🔥 Sauvegarde automatique à chaque modification
-watch(
-  [series, labels],
-  () => {
-    const dataToSave = JSON.stringify({
-      series: series.value,
-      labels: labels.value,
-    });
-    localStorage.setItem(storageKey.value, dataToSave);
-  },
-  { deep: true }
-);
+const removeDepenseByTitle = () => {
+  const title = removeExpenseTitle.value;
+  if (!title) return;
+
+  const indexes = labels.value.map((lbl, i) => (lbl === title ? i : -1)).filter((i) => i !== -1);
+
+  if (indexes.length === 0) {
+    resetRemoveForm();
+    return;
+  }
+
+  const idx = indexes[0];
+  labels.value.splice(idx, 1);
+  series.value.splice(idx, 1);
+
+  // reset sélection en cours si besoin
+  selectedIndex.value = null;
+  resetRemoveForm();
+};
 
 const addDepense = () => {
-  const expensePourcentage = (Number(prix.value) / props.event.budget) * 100;
+  const expensePourcentage = Math.max(
+    0,
+    Math.min(100, (Number(prix.value) / props.event.budget) * 100)
+  );
 
-  // on met à jour les refs directement
-  series.value.push(expensePourcentage);
-  labels.value.push(prestataire.value);
+  if (selectedIndex.value !== null) {
+    // 🧩 Cas modification
+    series.value[selectedIndex.value] = expensePourcentage;
+    labels.value[selectedIndex.value] = prestataire.value;
+  } else {
+    // 🆕 Cas ajout
+    series.value.push(expensePourcentage);
+    labels.value.push(prestataire.value);
+  }
 
-  // reset du formulaire
+  // reset du form
   prestataire.value = '';
   prix.value = '';
+  selectedIndex.value = null;
   openExpenseModal.value = false;
 };
 
@@ -146,41 +205,67 @@ const budgetSavings = computed(() => {
   }
 });
 
-// 🧠 Les options du graphique dépendent de series & labels
-const chartOptions = computed(() => ({
-  series: series.value,
-  labels: labels.value,
-  chart: {
-    height: 170,
-    type: 'donut',
-    fontFamily: `inherit`,
-    foreColor: '#adb0bb',
-  },
-  plotOptions: {
-    pie: {
-      startAngle: 0,
-      endAngle: 360,
-      donut: {
-        size: '75%',
+const selectedIndex = ref<number | null>(null);
+
+const chartOptions = computed(() => {
+  const hasData = series.value.some((v) => v > 0);
+  const displaySeries = hasData ? series.value : [0.0001];
+  const displayLabels = hasData ? labels.value : ['Aucune dépense'];
+
+  return {
+    series: displaySeries,
+    labels: displayLabels,
+    chart: {
+      height: 170,
+      type: 'donut',
+      fontFamily: `inherit`,
+      foreColor: '#adb0bb',
+      events: {
+        dataPointSelection: function (_event: any, _chartContext: any, config: any) {
+          // index du segment cliqué
+          const index = config.dataPointIndex;
+          if (index >= 0 && hasData) {
+            selectedIndex.value = index;
+            prestataire.value = labels.value[index];
+            prix.value = ((series.value[index] / 100) * props.event.budget).toFixed(2);
+            openExpenseModal.value = true;
+          }
+        },
       },
     },
-  },
-  stroke: {
-    show: false,
-  },
+    plotOptions: {
+      pie: {
+        startAngle: 0,
+        endAngle: 360,
+        donut: { size: '75%' },
+      },
+    },
+    stroke: { show: false },
+    dataLabels: { enabled: false },
+    legend: { show: false },
+    colors: hasData ? ['#5d79a4', '#e34632', '#f39454', '#fabe4a', '#293b57'] : ['#e0e0e0'],
+    tooltip: { theme: 'dark', fillSeriesColor: false, enabled: hasData },
+  };
+});
 
-  dataLabels: {
-    enabled: false,
+watch(
+  [series, labels],
+  () => {
+    const dataToSave = JSON.stringify({
+      series: series.value,
+      labels: labels.value,
+    });
+    localStorage.setItem(storageKey.value, dataToSave);
   },
+  { deep: true }
+);
 
-  legend: {
-    show: false,
-  },
-  colors: ['#5d79a4', '#e34632', '#f39454', '#fabe4a', '#293b57'],
-
-  tooltip: {
-    theme: 'dark',
-    fillSeriesColor: false,
-  },
-}));
+onMounted(() => {
+  const savedData = localStorage.getItem(storageKey.value);
+  if (savedData) {
+    const parsed = JSON.parse(savedData);
+    series.value = parsed.series || [];
+    labels.value = parsed.labels || [];
+  }
+});
 </script>
