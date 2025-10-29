@@ -136,7 +136,6 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .current-events {
   background: rgb(var(--v-theme-background));
-
   &__container {
     position: relative;
     height: 270px;
