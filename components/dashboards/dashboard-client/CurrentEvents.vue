@@ -27,10 +27,10 @@
             </div>
             <v-btn
               v-if="hoveredEvent === event.uuid"
-              color="primary"
-              class="current-events__see-more"
+              color="#293b57"
+              class="current-events__see-more pa-3"
               @click="openDialog(event.uuid)"
-              >Voir plus de détail +
+              >Voir plus de détail
             </v-btn>
           </div>
           <EventDetails

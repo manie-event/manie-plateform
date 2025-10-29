@@ -11,7 +11,7 @@
           <v-chip
             v-for="userType in getQuestionOptions(0)"
             :key="userType.value"
-            :color="name === userType.value ? 'primary' : 'default'"
+            :color="name === userType.value ? '#293b57' : 'default'"
             :variant="name === userType.value ? 'flat' : 'outlined'"
             size="large"
             class="rounded-xl transition-all"
@@ -122,8 +122,8 @@
 
         <v-number-input
           v-model="budgetInput"
-          type="number"
           label="Montant"
+          color="primary"
           prepend-inner-icon="mdi-cash"
           variant="outlined"
         />
@@ -143,7 +143,7 @@
           class="mb-8 p-4 bg-white rounded-xl shadow-sm"
         >
           <div class="d-flex justify-space-between align-center mb-3">
-            <h3 class="font-weight-bold">Service {{ serviceIndex + 1 }}</h3>
+            <h3 class="font-weight-bold">Choisissez un univers</h3>
             <v-btn
               v-if="selectedServices.length > 1"
               color="error"
@@ -175,9 +175,9 @@
               <v-btn
                 v-for="answer in question.answers"
                 :key="answer.uuid"
-                :color="service.selectedServiceId === answer.uuid ? 'primary' : 'grey-lighten-2'"
+                :color="baseColor"
                 :variant="service.selectedServiceId === answer.uuid ? 'flat' : 'outlined'"
-                class="ma-1"
+                class="ma-1 transition-all pa-3"
                 @click="selectServiceForIndex(serviceIndex, answer.uuid)"
               >
                 {{ answer.name }}
@@ -187,7 +187,7 @@
               <v-chip
                 v-for="answer in question.answers"
                 :key="answer.id"
-                :color="service.selectedKeywords.includes(answer.uuid) ? 'primary' : 'default'"
+                :color="service.selectedKeywords.includes(answer.uuid) ? '#293b57' : 'default'"
                 :variant="service.selectedKeywords.includes(answer.uuid) ? 'flat' : 'outlined'"
                 class="ma-1"
                 @click="toggleKeywordForService(serviceIndex, answer.uuid)"
@@ -198,7 +198,13 @@
           </div>
         </div>
 
-        <v-btn color="primary" variant="outlined" prepend-icon="mdi-plus" @click="addNewService">
+        <v-btn
+          color="#293b57"
+          variant="outlined"
+          prepend-icon="mdi-plus"
+          class="pa-3"
+          @click="addNewService"
+        >
           Ajouter un nouveau service
         </v-btn>
       </div>
@@ -213,12 +219,13 @@
 
         <v-btn
           v-if="currentPage === 3"
-          color="success"
+          color="#f39454"
+          style="color: white"
+          class="pa-3"
           variant="flat"
-          :disabled="!getMinimumResponse"
           @click="handleSubmit"
         >
-          🚀 Envoyer
+          Envoyer
         </v-btn>
       </div>
     </v-card>
@@ -261,6 +268,8 @@ const budgetInput = ref(0);
 const today = new Date().toISOString().split('T')[0];
 const dateStart = ref('');
 const dateEnd = ref('');
+
+const baseColor = '#5d79a4';
 
 const selectedServices = ref([
   {
@@ -428,23 +437,6 @@ const mapSectionsWithServices = (selectedSector?: string | SectorsDto) => {
   });
 };
 
-const getMinimumResponse = computed(() => {
-  return selectedServices.value.every((service) => {
-    // on "mappe" les sections pour ce secteur
-    const mappedSections = mapSectionsWithServices(service.selectedSector);
-    const sectionMappedWithoutService = mappedSections.filter((section) => !section.isService);
-
-    // chaque section doit avoir au moins un answer sélectionné
-    const minimumKeyword = sectionMappedWithoutService.every((section) =>
-      section.answers.some((answer) => service.selectedKeywords.includes(answer.uuid))
-    );
-    const minimumServiceSelected = service.selectedServiceId.length > 1;
-
-    return minimumKeyword && minimumServiceSelected;
-  });
-});
-
-// 2. Mise à jour de la fonction getQuestionOptions
 const getQuestionOptions = (sectionIndex: number) => {
   const eventTypeValue = clientProfile.value.isBusiness ? 'professionnel' : 'particulier';
 
@@ -456,7 +448,6 @@ const getQuestionOptions = (sectionIndex: number) => {
     return eventTypes?.type || [];
   }
 
-  // Pour les autres questions, garder la logique existante
   const section = questionnaire.general[sectionIndex];
   const hasEventType = section.reponses.some((r) => 'event-type' in r);
 
@@ -492,14 +483,13 @@ onMounted(() => {
   group_type.value = normalizedAnswer.group_type || '';
   theme.value = normalizedAnswer.theme || '';
   organized_for.value = normalizedAnswer.organized_for || '';
-  people.value = normalizedAnswer.people || 0;
+  people.value = Number(normalizedAnswer.people) || 0;
   budgetInput.value = normalizedAnswer.budget || 0;
   dateStart.value = normalizedAnswer.date[0] || '';
   dateEnd.value = normalizedAnswer.date[1] || '';
 
   if (props.answers.$preloaded?.eventServices?.length > 0) {
     selectedServices.value = props.answers.$preloaded.eventServices.map((srv: any) => {
-      // retrouver le secteur correspondant au serviceUuid
       const service = servicesFiltered.value.find((s) => s.uuid === srv.serviceUuid);
       const sector = sectors.value.find((sect) => sect.uuid === service?.sectorUuid);
 
