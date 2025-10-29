@@ -1,12 +1,10 @@
-@use 'sass:math';
-@use 'sass:map';
-@use 'sass:meta';
-@use 'vuetify/lib/styles/tools/functions' as *;
-
 // Custom Variables
 // colors
 $white: #fff !default;
-$manie-primary: #14366c;
+$manie-primary: #293b57;
+$manie-secondary: #5d79a4;
+$manie-thirdy: #f39454;
+$bg-color: #fff5eb;
 
 // cards
 $card-title-size: 18px !default;
@@ -20,7 +18,6 @@ $btn-letter-spacing: 0 !default;
 $box-shadow: 0 2px 6px rgba(37, 83, 185, 0.1);
 
 // Global Radius as per breakeven point
-
 @forward 'vuetify/settings' with (
   $color-pack: false !default,
   // Global font size and border radius
@@ -31,46 +28,47 @@ $box-shadow: 0 2px 6px rgba(37, 83, 185, 0.1);
   // 👉 Typography
   $typography: (
       'h1': (
-        'size': 2.25rem,
+        'size': 8.25rem,
         'weight': 600,
         'line-height': 2.75rem,
-        'font-family': inherit,
+        'font-family': 'Parkinsans',
       ),
       'h2': (
         'size': 1.875rem,
         'weight': 600,
         'line-height': 2.25rem,
-        'font-family': inherit,
+        'font-family': 'Poppins',
       ),
       'h3': (
         'size': 1.5rem,
         'weight': 600,
         'line-height': 2rem,
-        'font-family': inherit,
+        'font-family': 'Poppins',
       ),
       'h4': (
         'size': 1.25rem,
         'weight': 600,
         'line-height': 1.6rem,
-        'font-family': inherit,
+        'font-family': 'Poppins',
       ),
       'h5': (
         'size': 1.125rem,
         'weight': 600,
         'line-height': 1.6rem,
-        'font-family': inherit,
+        'font-family': 'Poppins',
       ),
       'h6': (
         'size': 1rem,
         'weight': 500,
         'line-height': 1.2rem,
-        'font-family': inherit,
+        'font-family': 'Poppins',
       ),
       'subtitle-1': (
         'size': 0.875rem,
         'weight': 400,
         'line-height': 1.1rem,
-        'font-family': inherit,
+        'font-family': 'Poppins',
+        'color': $manie-thirdy,
       ),
       'subtitle-2': (
         'size': 0.75rem,
@@ -120,3 +118,15 @@ $box-shadow: 0 2px 6px rgba(37, 83, 185, 0.1);
       'circle': 50%,
     )
 );
+
+@use 'sass:math';
+@use 'sass:map';
+@use 'sass:meta';
+@use 'vuetify/lib/styles/tools/functions' as *;
+
+:root {
+  --manie-primary: #{$manie-primary};
+  --manie-secondary: #{$manie-secondary};
+  --manie-thirdy: #{$manie-thirdy};
+  --bg-color: #{$bg-color};
+}

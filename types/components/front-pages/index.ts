@@ -28,6 +28,7 @@ interface PackagesPriceType {
 }
 
 interface PackageType {
+  index: number;
   caption: string;
   subCaption: string;
   subtext: string;

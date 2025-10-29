@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { appsMegamenu, demosMegamenu, FrontPageMenu } from '@/_mockApis/landingpage/lpPage';
+import { demosMegamenu, FrontPageMenu } from '@/_mockApis/landingpage/lpPage';
 import { ref } from 'vue';
 import { ChevronDownIcon } from 'vue-tabler-icons';
 // Create a hover state object keyed by unique identifiers
@@ -23,62 +23,14 @@ const setHoverState = (key: string, value: boolean) => {
   <!-- ---------------------------------------------- -->
   <!-- mega menu DD -->
   <!-- ---------------------------------------------- -->
-  <v-menu
-    open-on-hover
-    open-delay="1"
-    :close-on-content-click="false"
-    class="lp_wrapper position-relative"
-  >
-    <v-sheet>
-      <div class="mt-8">
-        <h5 class="text-h5">Different Apps</h5>
-        <div class="v-row mt-3">
-          <v-col v-for="demo in appsMegamenu" :key="demo.img">
-            <v-sheet class="text-center position-relative">
-              <div class="overflow-hidden rounded-md border">
-                <v-card
-                  class="mx-auto"
-                  rounded="0"
-                  @mouseenter="setHoverState(demo.img, true)"
-                  @mouseleave="setHoverState(demo.img, false)"
-                >
-                  <img :src="demo.img" :alt="demo.img" class="w-100" />
-                  <v-overlay
-                    :model-value="hoverStates[demo.img]"
-                    class="align-center justify-center"
-                    scrim="rgba(55, 114, 255, 0.5)"
-                    contained
-                  >
-                    <v-btn
-                      color="primary"
-                      size="small"
-                      rounded="pill"
-                      flat
-                      target="_blank"
-                      :href="demo.link"
-                      >Live Preview</v-btn
-                    >
-                  </v-overlay>
-                </v-card>
-              </div>
-            </v-sheet>
-            <p class="text-body-1 font-weight-semibold text-grey200 text-center mt-1">
-              {{ demo.name }}
-            </p>
-          </v-col>
-        </div>
-      </div>
-    </v-sheet>
-  </v-menu>
-  <v-menu open-on-hover :close-on-content-click="false" class="lp_wrapper position-relative">
+  <v-menu open-on-hover :close-on-content-click="false" class="position-relative">
     <template v-slot:activator="{ props }">
-      <v-btn
-        class="hidden-sm-and-down nav-links custom-hover-primary font-weight-regular"
-        rounded="pill"
-        variant="text"
-        v-bind="props"
-        >A propos<ChevronDownIcon size="18" class="mt-1 ml-1" />
-      </v-btn>
+      <div class="d-flex align-center">
+        <NuxtLink class="nuxt-link" v-bind="props">A propos </NuxtLink>
+        <i class="ddIcon me-3 z-index-1 d-flex align-center">
+          <ChevronDownIcon size="15" />
+        </i>
+      </div>
     </template>
     <v-sheet
       max-width="100%"
@@ -103,12 +55,12 @@ const setHoverState = (key: string, value: boolean) => {
                 <img :src="demo.img" :alt="demo.img" class="w-100" />
                 <v-overlay
                   :model-value="hoverStates[demo.img]"
-                  class="align-center justify-center"
+                  class="align-center justify-center nav-links"
                   scrim="rgba(55, 114, 255, 0.5)"
                   contained
                 >
-                  <v-btn color="primary" size="small" rounded="pill" flat :href="demo.link"
-                    >En savoir +</v-btn
+                  <NuxtLink class="nuxt-link" size="small" rounded="pill" flat :href="demo.link"
+                    >En savoir +</NuxtLink
                   >
                 </v-overlay>
               </v-card>
@@ -122,22 +74,6 @@ const setHoverState = (key: string, value: boolean) => {
     </v-sheet>
   </v-menu>
 
-  <v-btn
-    variant="text"
-    color="primary"
-    class="custom-hover-primary nav-links"
-    rounded="pill"
-    :ripple="false"
-    href="/front-pages/pricing"
-    >Formules</v-btn
-  >
-  <v-btn
-    variant="text"
-    color="primary"
-    class="custom-hover-primary nav-links"
-    rounded="pill"
-    href="/front-pages/Contact-us"
-    :ripple="false"
-    >Contact</v-btn
-  >
+  <NuxtLink class="nuxt-link" to="/front-pages/pricing">Formules</NuxtLink>
+  <NuxtLink class="nuxt-link" to="/front-pages/Contact-us">Contact</NuxtLink>
 </template>

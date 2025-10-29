@@ -160,6 +160,7 @@ const userReview: UserReviewTypes[] = [
 
 /*Feature Section*/
 /*import tabler icons*/
+import frnt5 from '@/public/images/backgrounds/flutter.png';
 import {
   AdjustmentsIcon,
   ArchiveIcon,
@@ -349,7 +350,7 @@ const FrontPageMenu: DemosMegaMenuTypes[] = [
   {
     img: frnt1,
     name: 'Notre Constat',
-    link: '/front-pages/about-us',
+    link: '/front-pages/Constat',
   },
   {
     img: frnt2,
@@ -368,7 +369,7 @@ const FrontPageMenu: DemosMegaMenuTypes[] = [
     link: '/front-pages/Notre-zone-de-jeu',
   },
   {
-    img: frnt4,
+    img: frnt5,
     name: 'Pourquoi Manie',
     link: '/front-pages/Pourquoi-manie',
   },

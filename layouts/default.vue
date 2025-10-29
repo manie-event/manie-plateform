@@ -41,8 +41,8 @@ onMounted(async () => {
         <LcFullHorizontalSidebar v-if="customizer.setHorizontalLayout" />
       </ClientOnly>
       <v-main>
-        <div class="rtl-lyt hr-layout">
-          <v-container fluid class="page-wrapper bg-background px-sm-5 px-4 rounded-xl">
+        <div class="rtl-lyt">
+          <v-container fluid class="px-sm-5 px-4">
             <div class="">
               <div :class="customizer.boxed ? 'maxWidth' : ''">
                 <NuxtPage />
@@ -79,12 +79,12 @@ onMounted(async () => {
         <LcFullHorizontalSidebar v-if="customizer.setHorizontalLayout" />
       </ClientOnly>
       <v-main>
-        <div class="hr-layout">
-          <v-container fluid class="page-wrapper bg-background px-sm-5 px-4 rounded-xl">
+        <div>
+          <v-container class="dashboard-position">
             <div class="">
               <div :class="customizer.boxed ? 'maxWidth' : ''">
                 <NuxtPage />
-                <v-btn
+                <!-- <v-btn
                   class="customizer-btn"
                   size="large"
                   icon
@@ -93,7 +93,7 @@ onMounted(async () => {
                   @click.stop="customizer.SET_CUSTOMIZER_DRAWER(!customizer.Customizer_drawer)"
                 >
                   <SettingsIcon />
-                </v-btn>
+                </v-btn> -->
               </div>
             </div>
           </v-container>
@@ -102,3 +102,12 @@ onMounted(async () => {
     </v-app>
   </v-locale-provider>
 </template>
+<style lang="scss" scoped>
+.dashboard-position {
+  display: flex;
+  width: 100vw;
+  justify-content: center;
+  top: -40px;
+  position: relative;
+}
+</style>

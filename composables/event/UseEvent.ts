@@ -23,7 +23,6 @@ export const UseEvent = () => {
   const changeEventFormule = async (formule: string, uuid: string) => {
     isLoading.value = true;
     error.value = null;
-    console.log(formule, 'FORM');
 
     try {
       const formuleEvent = await updateEventFormuleService(formule, uuid);

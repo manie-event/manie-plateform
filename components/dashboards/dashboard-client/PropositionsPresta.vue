@@ -1,13 +1,13 @@
 <template>
-  <VCard elevation="10" class="mb-16">
+  <VCard elevation="10" class="proposition-presta">
     <v-card-text>
       <div class="d-flex align-center justify-space-between">
         <div>
           <h5 class="v-card-title">Vos propositions en cours</h5>
         </div>
       </div>
-      <div class="month-table" v-if="professionalResponseProposition.length > 0">
-        <v-table class="mt-5 mb-0">
+      <div class="month-table" v-if="filteredPropositionByStatus.length > 0">
+        <v-table class="mt-5 mb-0 proposition-presta__table">
           <template v-slot:default>
             <thead>
               <tr>
@@ -33,7 +33,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in professionalResponseProposition" :key="item.id" class="month-item">
+              <tr
+                v-for="item in filteredPropositionByStatus"
+                :key="item.id"
+                class="month-item"
+                style="border: 2px solid black"
+              >
                 <td>
                   <div class="d-flex align-center">
                     <div class="mr-4">
@@ -55,7 +60,7 @@
                 </td>
                 <td>
                   <v-tooltip
-                    :text="item.professionalMessage?.split('fourchette basse')[0].trim() || ''"
+                    :text="getTooltipText(item.professionalMessage)"
                     interactive
                     content-class="tooltip-custom"
                     target="cursor"
@@ -130,19 +135,15 @@
             }"
           >
             <template #image>
-              <img
-                :src="
-                  customizer.actTheme === 'DARK_BLUE_THEME'
-                    ? '/images/empty-state-dark.svg'
-                    : '/images/empty-state-light.svg'
-                "
-                alt="No data"
-                style="width: 150px; height: auto; margin-bottom: 16px"
+              <LigthIcon
+                v-if="customizer.actTheme !== 'DARK_BLUE_THEME'"
+                style="width: 150px; height: auto; margin-bottom: 10px"
               />
+              <DarkIcon v-else style="width: 150px; height: auto; margin-bottom: 10px" />
             </template>
             <template #description>
               <p class="text-subtitle-1">
-                Veuillez vous positionner sur au moins une proposition pour accéder à cette section
+                Aucun prestataire n'a, pour l'instant, répondu à votre annonce.
               </p>
             </template>
           </BaseEmptyState>
@@ -167,11 +168,16 @@
 <script setup lang="ts">
 import BaseEmptyState from '@/components/common/BaseEmptyState.vue';
 import errorToaster from '@/components/common/errorToaster.vue';
+import DarkIcon from '@/public/images/empty-state/dark-profil-vide.svg';
+import LigthIcon from '@/public/images/empty-state/profil-vide.svg';
 import { Icon } from '@iconify/vue';
-import { Teleport } from 'vue';
+import { storeToRefs } from 'pinia';
+import { computed, ref, Teleport } from 'vue';
 import { useEventServiceProposition } from '~/composables/event-service-propositions/UseEventServiceProposition';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
+import type { ClientServiceProposition } from '~/models/propositions/client-service-proposition';
+import { useCustomizerStore } from '../../../stores/customizer';
 import PropositionDetails from '../dashboard2/PropositionDetails.vue';
 import ProfessionalProfil from './ProfessionalProfil.vue';
 
@@ -217,34 +223,51 @@ const svgColor = computed(() => {
   return customizer.actTheme === 'DARK_BLUE_THEME' ? '#FFFFFF' : '#000000';
 });
 
-const getProfessionalMessage = (message?: string | null) => {
-  if (!message) return '—'; // ou retourne une chaîne vide
-  const cleanMessage = message.split('fourchette basse')[0]?.trim() ?? '';
+const getProfessionalMessage = (message?: string) => {
+  if (!message) return 'Aucune proposition reçue';
+  const cleanMessage = message.split('fourchette basse')[0].trim();
   return cleanMessage.length <= 30 ? cleanMessage : cleanMessage.substring(0, 30) + '...';
 };
 
-const getPriceFromMessage = (message?: string | null) => {
-  if (!message) return 'Non précisé';
+const getTooltipText = (message?: string) => {
+  if (!message || typeof message !== 'string') return 'Aucune proposition reçue';
+  const part = message.split('fourchette basse')[0]?.trim();
+  return part || message;
+};
+
+const getPriceFromMessage = (message?: string) => {
+  if (!message) return 'A définir par le prestataire';
   const fourchetteBasse = message
     .split('fourchette basse')[1]
     ?.split('fourchette haute')[0]
     ?.trim();
   const fourchetteHaute = message.split('fourchette haute')[1]?.trim();
-  if (!fourchetteBasse && !fourchetteHaute) return 'Non précisé';
-  if (!fourchetteHaute) return `À partir de ${fourchetteBasse ?? '?'}`;
-  return `Entre ${fourchetteBasse ?? '?'}€ et ${fourchetteHaute ?? '?'}€`;
+  if (!fourchetteHaute) return `À partir de ${fourchetteBasse}`;
+  return `Entre ${fourchetteBasse}€ et ${fourchetteHaute}€`;
 };
 
 const confirmedProposition = async (eventServiceUuid: string) => {
-  console.log((isAcceptedByClient.value = true));
   ((isAcceptedByClient.value = true), await getProfessionalProfileForCustomer(eventServiceUuid));
 };
+
+const filteredPropositionByStatus = computed<ClientServiceProposition[]>(() => {
+  return professionalResponseProposition.value.filter(
+    (professionalProposition) => professionalProposition.propositionStatus === 'reviewing'
+  );
+});
 
 onMounted(() => {
   getServicePropositionForClient();
 });
 </script>
 <style lang="scss" scoped>
+.proposition-presta {
+  background: rgb(var(--v-theme-background));
+
+  &__table {
+    background: rgb(var(--v-theme-background));
+  }
+}
 :deep(.tooltip-custom) {
   max-width: 450px !important;
   white-space: normal !important;

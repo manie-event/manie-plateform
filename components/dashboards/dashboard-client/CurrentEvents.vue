@@ -1,13 +1,13 @@
 <template>
-  <v-card elevation="10">
-    <v-card-text class="position-relative current-events__container">
+  <v-card elevation="10" class="current-events">
+    <v-card-text class="position-relative current-events__container pb-3">
       <div class="d-flex justify-flex-start d-block align-center">
         <div>
           <h5 class="v-card-title">Evènements en cours ( {{ events.length }} )</h5>
         </div>
       </div>
       <div>
-        <div class="current-events__cards" v-if="events.length > 0">
+        <div class="current-events__cards-container" v-if="events.length > 0">
           <div
             v-for="event in paginatedEvents"
             class="current-events__card"
@@ -15,16 +15,22 @@
             @mouseenter="hoveredEvent = event.uuid"
             @mouseleave="hoveredEvent = null"
           >
-            <div>
+            <div style="width: 100%; height: 100%">
+              <div
+                :class="getServiceClass(event.name)"
+                class="current-events__event-service-bg"
+              ></div>
               <h4>{{ event.name }}</h4>
-              <h5>{{ event.date }}</h5>
+              <span v-if="Array.isArray(event.date)" style="font-size: 0.7rem"
+                >{{ formatDate(event.date)[0] }} - {{ formatDate(event.date)[1] }}</span
+              >
             </div>
             <v-btn
               v-if="hoveredEvent === event.uuid"
-              color="primary"
-              class="current-events__see-more"
+              color="#293b57"
+              class="current-events__see-more pa-3"
               @click="openDialog(event.uuid)"
-              >Voir plus de détail +
+              >Voir plus de détail
             </v-btn>
           </div>
           <EventDetails
@@ -34,23 +40,24 @@
             :answers="formAnswers"
           ></EventDetails>
         </div>
-        <div v-else class="d-flex flex-column align-center justify-center mb-6">
-          <Img :src="emptyCart" width="100" height="100" class="mb-6"></Img>
-          <div class="text-center">
+        <div v-else class="current-events__empty mb-6">
+          <div>
             <h4 class="text-h4 font-weight-semibold">Aucun évènement en cours</h4>
             <p class="text-subtitle-2">
-              Vous n'avez pas encore d'évènement en cours. Créez un évènement pour commencer à
-              recevoir des demandes de services.
+              Créez un évènement pour commencer à recevoir des demandes de services.
             </p>
           </div>
         </div>
         <v-pagination
-          v-if="totalPages > 1 && events.length > 0"
+          v-if="paginatedEvents.length > 0"
           v-model="currentPage"
           :length="totalPages"
+          color="#5d79a4"
+          :activeColor="'var(--manie-primary)'"
           :total-visible="12"
-          class="mt-4 current-events__pagination"
+          class="mt-4"
           density="compact"
+          size="small"
         ></v-pagination>
       </div>
     </v-card-text>
@@ -61,8 +68,9 @@
 </template>
 
 <script setup lang="ts">
-import emptyCart from '@/public/images/svgs/empty-cart.svg';
 import { eventsStore } from '@/stores/events';
+import { storeToRefs } from 'pinia';
+import { computed, onMounted, ref } from 'vue';
 import CustomerForm from '~/components/questionnaires/CustomerForm.vue';
 import type { eventModel } from '~/models/events/eventModel';
 import type { QuestionnaireClient } from '~/models/questionnaire/QuestionnaireClientModel';
@@ -72,11 +80,12 @@ import EventDetails from './EventDetails.vue';
 const { events } = storeToRefs(eventsStore());
 const { getEventsPerOrganisator, getEventsInstance } = useEventService();
 
+const customizer = useCustomizerStore();
 const isEventDetailsOpen = ref(false);
 const isDialogOpen = ref(false);
 const hoveredEvent = ref<string | null>(null);
 const currentPage = ref(1);
-const itemsPerPage = 3;
+const itemsPerPage = 2;
 
 const selectedEvent = ref<eventModel | null>(null);
 const selectedEventUuid = ref('');
@@ -106,13 +115,15 @@ const openDialog = async (eventUuid: string) => {
   // isDialogOpen.value = true;
 };
 
+const getDate = computed(() => {});
+
 const getServiceClass = (serviceUuid: string) => {
   switch (serviceUuid) {
-    case '1007ecfb-913a-4e71-9252-1877c462d080':
+    case 'pacs':
       return 'food-truck-bg';
-    case '6c4974e6-409b-4277-997a-7aa2cd919502':
+    case 'mariage':
       return 'domaine-bg';
-    case '266da727-570b-4613-9ebf-02556a556080':
+    case 'baby_shower':
       return 'bg-light-yellow';
   }
 };
@@ -124,52 +135,76 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .current-events {
+  background: rgb(var(--v-theme-background));
+
   &__container {
     position: relative;
-    height: 250px;
+    height: 270px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 1.5rem;
   }
-  &__cards {
+  &__empty {
+    display: flex;
+    padding-bottom: 30px;
+    flex-direction: column;
+    justify-content: center; /* centre verticalement */
+    align-items: center; /* centre horizontalement */
+    height: 100%; /* prend toute la hauteur de la card */
+    text-align: center;
+
+    h4 {
+      color: rgb(var(--v-theme-textPrimary));
+    }
+
+    p {
+      color: rgb(var(--v-theme-textSecondary));
+    }
+  }
+  &__cards-container {
     display: flex;
     gap: 2rem;
     width: 100%;
   }
   &__card {
     position: relative;
-    width: 30%;
-    padding: 1rem 1.5rem;
+    width: 50%;
+    padding: 0.5rem 0.5rem 1rem;
     display: flex;
     border-radius: 8px;
     align-items: center;
+    background: rgb(var(--v-theme-containerBg));
+    box-shadow: 5px 5px 15px 5px rgb(var(--v-theme-textSecondary));
     justify-content: flex-start;
-    min-height: 150px;
+    height: 120px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  &__event-service-bg {
+    background: red;
+    width: 100%;
+    height: 80%;
+
     &.food-truck-bg {
       background: url('/public/images/backgrounds/test.jpg');
       background-size: cover;
       background-position: center;
+      border-radius: 10px;
+      height: 70%;
     }
     &.domaine-bg {
       background: url('/public/images/backgrounds/school.png');
       background-size: cover;
       background-position: center;
+      border-radius: 10px;
+      height: 70%;
     }
     &.bg-light-yellow {
       background: url('/public/images/backgrounds/profilebg.jpg');
       background-size: cover;
       background-position: center;
-    }
-
-    :deep(.v-pagination) {
-      font-size: 0.5rem;
-    }
-    :deep(.v-pagination__item) {
-      min-width: 32px;
-      height: 32px;
-      font-size: 0.75rem;
+      border-radius: 10px;
+      height: 70%;
     }
   }
   &__see-more {

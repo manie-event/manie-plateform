@@ -1,6 +1,6 @@
 import type { InvoiceType } from '@/types/apps/InvoiceTypes';
-import mock from '../../mockAdapter';
 import { Chance } from 'chance';
+import mock from '../../mockAdapter';
 const chance = new Chance();
 
 const InvoiceData: InvoiceType[] = [
@@ -229,14 +229,12 @@ mock.onPost('/api/data/invoices/invoiceData').reply((config) => {
 // Handle PUT requests to update an existing invoice
 mock.onPut(/\/api\/data\/invoices\/invoiceData\/\d+/).reply((config) => {
   const id = config.url?.split('/').pop(); // Get the last segment of the URL
-  console.log('Extracted ID:', id);
   if (!id) {
     return [400, { message: 'Invalid ID' }];
   }
 
   const updatedInvoice = JSON.parse(config.data) as InvoiceType;
   const index = InvoiceData.findIndex((invoice) => invoice.id === parseInt(id, 10));
-  console.log('Index of invoice to update:', index);
 
   if (index !== -1) {
     InvoiceData[index] = { ...InvoiceData[index], ...updatedInvoice };

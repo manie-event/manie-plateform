@@ -123,20 +123,21 @@
     height: 100%;
     display: flex;
     justify-content: center;
-    overflow: hidden;
   }
 
   .auth-login {
-    max-width: 1600px;
-    margin: 10px auto;
+    margin: 0 auto;
     width: 100%;
     display: flex !important;
+    overflow: hidden;
     justify-content: center;
+    background-color: var(--bg-color);
+    padding: 0 !important;
+    border-radius: unset !important;
 
     .auth-login-wrapper {
       box-shadow: 0 2px 30px 15px rgba(37, 83, 185, 0.1);
       z-index: 2;
-      max-width: 1200px;
 
       &::before {
         content: '';
@@ -146,19 +147,20 @@
         width: 427px;
         height: 417px;
         border-radius: 100%;
-        background-color: rgb(var(--v-theme-error));
+        background-color: var(--manie-primary);
       }
 
       &::after {
         content: '';
         position: absolute;
-        top: -100px;
+        z-index: 999;
+        top: -70px;
         right: -75px;
-        width: 304px;
-        height: 315px;
-        background: url('/images/backgrounds/shap-login.png');
-        background-repeat: no-repeat;
+        width: 404px;
+        height: 405px;
+        background-color: var(--manie-thirdy);
         z-index: -1;
+        border-radius: 100%;
       }
     }
   }

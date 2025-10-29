@@ -24,22 +24,16 @@ definePageMeta({
               </v-col>
               <v-col cols="12" lg="5" md="6">
                 <div class="mt-xl-0 mt-5 mw-100">
-                  <h2 class="text-h2 font-weight-bold mb-2">Bienvenue sur Manie !</h2>
+                  <h2 class="text-h2 font-weight-bold mb-2">Bienvenue sur Manie,</h2>
                   <div class="text-h6 mb-6 font-weight-medium mt-3 mb-8">
-                    Votre assistant à la création et gestion d'évènements
+                    votre assistant à la création et gestion d'évènement.
                   </div>
                   <RegisterForm />
                   <h6
                     class="text-subtitle-1 text-grey100 d-flex align-center mt-6 font-weight-medium"
                   >
                     Vous avez déjà un compte?
-                    <v-btn
-                      class="pl-0 text-primary text-body-1 opacity-1 pl-2 font-weight-medium"
-                      height="auto"
-                      to="/auth/login"
-                      variant="plain"
-                      >Identifiez-vous</v-btn
-                    >
+                    <NuxtLink class="nuxt-link" to="/auth/login">Identifiez-vous</NuxtLink>
                   </h6>
                 </div>
               </v-col>

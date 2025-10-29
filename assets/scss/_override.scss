@@ -18,6 +18,12 @@ html {
   }
 }
 
+//typo
+
+.v-theme--light .text-subtitle-1 {
+  color: var(--manie-thirdy) !important;
+}
+
 //Button Bg Shadow
 .v-btn--elevated {
   &.bg-primary {
@@ -186,13 +192,13 @@ html {
 .custom-hover-primary {
   .iconify {
     color: rgba(var(--v-theme-textPrimary), 0.9) !important;
+    transition: all 0.4s ease-in;
   }
 
   &:hover {
-    background-color: rgb(var(--v-theme-lightprimary));
-
     .iconify {
-      color: rgb(var(--v-theme-primary)) !important;
+      color: var(--manie-thirdy) !important;
+      transition: all 0.4s ease-out;
     }
   }
 }

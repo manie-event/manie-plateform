@@ -7,9 +7,9 @@ import Componies from '@/components/frontpages/Homepage/Componies.vue';
 import FAQ from '@/components/frontpages/Homepage/FAQ.vue';
 import Highlights from '@/components/frontpages/Homepage/Highlights.vue';
 import OurTeam from '@/components/frontpages/Homepage/OurTeam.vue';
-import Packages from '@/components/frontpages/Homepage/Packages.vue';
 import PurchaseTemplate from '@/components/frontpages/Homepage/PurchaseTemplate.vue';
 import SecurePayment from '@/components/frontpages/Homepage/SecurePayment.vue';
+import Packages from '~/components/frontpages/Homepage/FormulesAccompagnement.vue';
 import DefaultLayout from './Layout.vue';
 /*for Blank Layout*/
 definePageMeta({

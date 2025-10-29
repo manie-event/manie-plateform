@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Logo from '@/public/images/logos/logo-manie-bleu-ciel.svg';
 import JetonImg from '@/public/images/panier/jeton.png';
+import Logo from '@/public/images/svgs/logo-manie-nav.svg';
 import { Icon } from '@iconify/vue';
 import Navigation from '~/components/landingpage/layout/Navigation.vue';
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
@@ -53,7 +53,7 @@ onBeforeMount(() => {
         </NuxtLink>
         <!---/Search part -->
       </div>
-      <div>
+      <div class="menu-dashboard__navigation">
         <Navigation />
       </div>
       <!-- <div class="hidden-sm-and-down me-sm-4 me-4">
@@ -72,7 +72,13 @@ onBeforeMount(() => {
 
         <v-menu :close-on-content-click="false" class="notification_popup" v-if="isProfessional">
           <template v-slot:activator="{ props }">
-            <v-btn icon flat v-bind="props" size="small" class="custom-hover-primary">
+            <v-btn
+              icon
+              flat
+              v-bind="props"
+              size="small"
+              class="custom-hover-primary no-global-style"
+            >
               <div class="position-realtive">
                 <Icon icon="solar:cart-3-outline" height="24" width="24" />
               </div>
@@ -168,12 +174,21 @@ onBeforeMount(() => {
   </v-app-bar>
 </template>
 <style scoped lang="scss">
+.no-global-style.v-btn {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+}
 .menu-dashboard {
   &__container {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    background: rgb(var(--v-theme-background));
+  }
+  &__navigation {
+    display: flex;
   }
   &__right-part {
     display: flex;
