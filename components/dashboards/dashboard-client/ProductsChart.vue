@@ -196,7 +196,6 @@ const addDepense = () => {
 const budgetSavings = computed(() => {
   const totalExpense = series.value.reduce((acc, val) => acc + val, 0);
   const totalExpenseInEuro = props.event.budget * (totalExpense / 100);
-  console.log(totalExpense);
 
   if (totalExpense > 100) {
     return `Vous avez dépassé le budget de ${totalExpense - 100} % soit ${totalExpenseInEuro}`;

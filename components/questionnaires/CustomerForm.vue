@@ -484,7 +484,6 @@ onMounted(() => {
   if (!props.answers) return;
 
   const normalizedAnswer = props.answers.$attributes;
-  console.log(normalizedAnswer, 'NORMALIZED');
 
   eventType.value = normalizedAnswer.event_type || '';
   name.value = normalizedAnswer.name || '';

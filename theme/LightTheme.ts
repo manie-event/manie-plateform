@@ -27,7 +27,7 @@ const BLUE_THEME: ThemeTypes = {
     borderColor: '#e5eaef',
     inputBorder: '#DFE5EF',
     containerBg: '#ffffff',
-    background: '#f0f5f9',
+    background: '#fff5eb',
     hoverColor: '#f6f9fc',
     surface: '#fff',
     grey100: '#707a82',
@@ -228,4 +228,4 @@ const ORANGE_THEME: ThemeTypes = {
   },
 };
 
-export { BLUE_THEME, AQUA_THEME, ORANGE_THEME, PURPLE_THEME, GREEN_THEME, CYAN_THEME };
+export { AQUA_THEME, BLUE_THEME, CYAN_THEME, GREEN_THEME, ORANGE_THEME, PURPLE_THEME };

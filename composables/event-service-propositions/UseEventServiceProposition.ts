@@ -23,30 +23,57 @@ export const useEventServiceProposition = () => {
     try {
       const allEvents = await getEventsPerOrganisator();
 
-      if (!allEvents || allEvents.length === 0) {
+      if (!Array.isArray(allEvents) || allEvents.length === 0) {
+        console.warn('⚠️ Aucun événement trouvé.');
         return [];
       }
 
       const propositionList = await Promise.all(
         allEvents.map(async (event) => {
-          const serviceList = await getListPropositionByEventService(event.eventServices[0].uuid);
+          try {
+            // Vérifie la structure
+            if (!event?.eventServices?.length) {
+              console.warn(`⚠️ Aucun service trouvé pour l'événement ${event.uuid}`);
+              return null;
+            }
 
-          const serviceEngage = servicesFiltered.value[0].name;
-          return {
-            ...serviceList[0],
-            propositionUuid: serviceList[0].uuid,
-            propositionStatus: serviceList[0].status,
-            ...event,
-            serviceEngage,
-          };
+            const firstService = event.eventServices[0];
+            if (!firstService?.uuid) {
+              console.warn(`⚠️ Service sans UUID pour l'événement ${event.uuid}`);
+              return null;
+            }
+
+            // Appel API sécurisé
+            const serviceList = await getListPropositionByEventService(firstService.uuid);
+
+            if (!Array.isArray(serviceList) || serviceList.length === 0) {
+              console.warn(`⚠️ Aucune proposition trouvée pour service ${firstService.uuid}`);
+              return null;
+            }
+
+            const serviceEngage = servicesFiltered.value?.[0]?.name ?? 'Service inconnu';
+
+            return {
+              ...serviceList[0],
+              propositionUuid: serviceList[0].uuid,
+              propositionStatus: serviceList[0].status,
+              ...event,
+              serviceEngage,
+            };
+          } catch (innerError) {
+            console.error(`❌ Erreur sur event ${event.uuid}:`, innerError);
+            return null;
+          }
         })
       );
-      setServiceEventPropositionForClient(propositionList.flat());
-      console.log(propositionList.flat());
 
-      return propositionList.flat();
+      const cleanList = propositionList.filter(Boolean);
+
+      setServiceEventPropositionForClient(cleanList);
+
+      return cleanList;
     } catch (error) {
-      console.error('Error fetching service propositions:', error);
+      console.error('❌ Erreur getServicePropositionForClient:', error);
       throw error;
     }
   };
@@ -54,7 +81,6 @@ export const useEventServiceProposition = () => {
   const getServicePropositionForProfessional = async () => {
     try {
       const professionalServices = await getListProfessionalServiceByProfessional();
-      console.log(professionalServices, 'professionalServices');
 
       const allPropositions = await Promise.all(
         professionalServices.map(async (service: ProfessionalServiceUuid) => {
@@ -94,7 +120,6 @@ export const useEventServiceProposition = () => {
       );
 
       const flattenedList = allPropositions.flat();
-      console.log(flattenedList, 'flattenedList');
 
       servicePropositionAvailable.value = flattenedList.length > 0;
       setServiceEventPropositionForPresta(flattenedList);

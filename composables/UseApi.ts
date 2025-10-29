@@ -5,8 +5,6 @@ let apiInstance: AxiosInstance | null = null;
 
 export const useApi = (): AxiosInstance | null => {
   const runtimeConfig = useRuntimeConfig();
-  const { refreshToken } = useRefreshToken();
-  const { token } = useAuthCookies();
   const router = useRouter();
   let isRefreshing = false;
   let refreshQueue: (() => void)[] = [];
@@ -21,8 +19,10 @@ export const useApi = (): AxiosInstance | null => {
       baseURL: runtimeConfig.public.apiUrl,
     });
 
+    // ✅ Interceptor REQUEST — lit toujours le cookie le plus à jour
     apiInstance.interceptors.request.use(
       (config) => {
+        const { token } = useAuthCookies(); // ← lu dynamiquement à chaque requête
         if (token.value) {
           config.headers = config.headers || {};
           config.headers.Authorization = `Bearer ${token.value}`;
@@ -32,16 +32,19 @@ export const useApi = (): AxiosInstance | null => {
       (error) => Promise.reject(error)
     );
 
+    // ✅ Interceptor RESPONSE — gère le refresh de manière centralisée
     apiInstance.interceptors.response.use(
       (response) => response,
       async (error) => {
         const originalRequest = error.config;
+        const { token } = useAuthCookies();
+        const { refreshToken } = useRefreshToken();
 
+        // Si 401 et qu'on a un refreshToken valide
         if (error.response?.status === 401 && refreshToken.value && !originalRequest._retry) {
-          (originalRequest as any)._retry = true;
-
+          originalRequest._retry = true;
           if (isRefreshing) {
-            // Attendre que le refresh en cours se termine
+            // ⏳ Si un refresh est déjà en cours → on met la requête en attente
             return new Promise((resolve) => {
               refreshQueue.push(() => {
                 originalRequest.headers.Authorization = `Bearer ${token.value}`;
@@ -52,29 +55,30 @@ export const useApi = (): AxiosInstance | null => {
 
           isRefreshing = true;
           try {
-            console.log('[REFRESH TOKEN]', refreshToken.value);
-            console.log('[REFRESH BODY]', { refreshToken: refreshToken.value });
+            // 🔁 Appel du refresh
             const { data } = await axios.post(
               `${runtimeConfig.public.apiUrl}/auth/refresh-token`,
               { refreshToken: refreshToken.value },
               { headers: { 'Content-Type': 'application/json' } }
             );
 
-            console.log('[REFRESH RESPONSE RAW]', data);
-
-            const newAccessToken = data.token?.token;
+            const newAccessToken = data.accessToken.token;
             const newRefreshToken = data.refreshToken;
-
-            console.log('[PARSED TOKENS]', { newAccessToken, newRefreshToken });
 
             if (newAccessToken && newRefreshToken) {
               token.value = newAccessToken;
               refreshToken.value = newRefreshToken;
+
+              // ✅ Met à jour les headers globaux Axios
+              apiInstance!.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+
+              // ✅ Relance la requête initiale avec le nouveau token
               originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
               processQueue();
               return apiInstance!.request(originalRequest);
             }
           } catch (refreshError) {
+            // 💣 Si le refresh échoue → redirection login
             token.value = null;
             refreshToken.value = null;
             await router.push('/auth/login');

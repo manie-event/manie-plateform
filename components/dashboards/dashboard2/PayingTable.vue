@@ -3,7 +3,7 @@
     <v-card-text>
       <div class="d-flex align-center justify-space-between">
         <div>
-          <h5 class="v-card-title">Vos propositions en cours</h5>
+          <h5 class="text-h5 mb-1 font-weight-semibold">Vos propositions en cours</h5>
         </div>
       </div>
       <div class="month-table" v-if="selectedProposition.length > 0">

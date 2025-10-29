@@ -3,8 +3,10 @@ html {
 }
 
 .v-main {
-  min-height: 100vh;
-  padding-left: calc(var(--v-layout-left) + 20px) !important;
+  min-height: calc(100vh - 175px);
+  background: var(--bg-color);
+  position: relative;
+  top: -75px;
 }
 
 .v-application {

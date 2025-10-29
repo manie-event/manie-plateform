@@ -38,7 +38,6 @@ export const useKeywords = () => {
         page++;
       }
 
-      console.log(allResults, 'ALL SECTORS');
       setSectors(allResults);
       return allResults;
     } catch (error) {
@@ -103,8 +102,6 @@ export const useKeywords = () => {
           .filter((keyword: Keywords) => keyword.sector.toLowerCase() == query.toLowerCase())
           .slice(0, 100)
           .map((keyword: KeywordsDto) => keyWordsDtoToKeywords(keyword));
-
-        console.log(keyWordFilter, 'Keywords fetched and filtered');
 
         setKeywords(keyWordFilter);
 

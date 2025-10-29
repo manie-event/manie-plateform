@@ -41,8 +41,8 @@ onMounted(async () => {
         <LcFullHorizontalSidebar v-if="customizer.setHorizontalLayout" />
       </ClientOnly>
       <v-main>
-        <div class="rtl-lyt hr-layout">
-          <v-container fluid class="page-wrapper bg-background px-sm-5 px-4 rounded-xl">
+        <div class="rtl-lyt">
+          <v-container fluid class="px-sm-5 px-4 rounded-xl">
             <div class="">
               <div :class="customizer.boxed ? 'maxWidth' : ''">
                 <NuxtPage />
@@ -79,8 +79,8 @@ onMounted(async () => {
         <LcFullHorizontalSidebar v-if="customizer.setHorizontalLayout" />
       </ClientOnly>
       <v-main>
-        <div class="hr-layout">
-          <v-container fluid class="page-wrapper bg-background px-sm-5 px-4 rounded-xl">
+        <div>
+          <v-container class="dashboard-position">
             <div class="">
               <div :class="customizer.boxed ? 'maxWidth' : ''">
                 <NuxtPage />
@@ -102,3 +102,10 @@ onMounted(async () => {
     </v-app>
   </v-locale-provider>
 </template>
+<style lang="scss" scoped>
+.dashboard-position {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+}
+</style>

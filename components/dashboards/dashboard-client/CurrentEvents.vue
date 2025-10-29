@@ -1,6 +1,6 @@
 <template>
   <v-card elevation="10" class="current-events">
-    <v-card-text class="position-relative current-events__container">
+    <v-card-text class="position-relative current-events__container pb-3">
       <div class="d-flex justify-flex-start d-block align-center">
         <div>
           <h5 class="v-card-title">Evènements en cours ( {{ events.length }} )</h5>
@@ -15,9 +15,15 @@
             @mouseenter="hoveredEvent = event.uuid"
             @mouseleave="hoveredEvent = null"
           >
-            <div>
+            <div style="width: 100%; height: 100%">
+              <div
+                :class="getServiceClass(event.name)"
+                class="current-events__event-service-bg"
+              ></div>
               <h4>{{ event.name }}</h4>
-              <h5>{{ event.date }}</h5>
+              <span v-if="Array.isArray(event.date)" style="font-size: 0.7rem"
+                >{{ formatDate(event.date)[0] }} - {{ formatDate(event.date)[1] }}</span
+              >
             </div>
             <v-btn
               v-if="hoveredEvent === event.uuid"
@@ -45,12 +51,14 @@
           </div>
         </div>
         <v-pagination
-          v-if="totalPages > 1 && events.length > 0"
           v-model="currentPage"
           :length="totalPages"
+          color="#5d79a4"
+          :activeColor="'var(--manie-primary)'"
           :total-visible="12"
-          class="mt-4 current-events__pagination"
+          class="mt-4"
           density="compact"
+          size="small"
         ></v-pagination>
       </div>
     </v-card-text>
@@ -78,7 +86,7 @@ const isEventDetailsOpen = ref(false);
 const isDialogOpen = ref(false);
 const hoveredEvent = ref<string | null>(null);
 const currentPage = ref(1);
-const itemsPerPage = 3;
+const itemsPerPage = 2;
 
 const selectedEvent = ref<eventModel | null>(null);
 const selectedEventUuid = ref('');
@@ -108,13 +116,15 @@ const openDialog = async (eventUuid: string) => {
   // isDialogOpen.value = true;
 };
 
+const getDate = computed(() => {});
+
 const getServiceClass = (serviceUuid: string) => {
   switch (serviceUuid) {
-    case '1007ecfb-913a-4e71-9252-1877c462d080':
+    case 'pacs':
       return 'food-truck-bg';
-    case '6c4974e6-409b-4277-997a-7aa2cd919502':
+    case 'mariage':
       return 'domaine-bg';
-    case '266da727-570b-4613-9ebf-02556a556080':
+    case 'baby_shower':
       return 'bg-light-yellow';
   }
 };
@@ -126,10 +136,10 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .current-events {
-  background: transparent;
+  background: var(--bg-color);
   &__container {
     position: relative;
-    height: 250px;
+    height: 270px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -142,37 +152,41 @@ onMounted(async () => {
   }
   &__card {
     position: relative;
-    width: 30%;
-    padding: 1rem 1.5rem;
+    width: 50%;
+    padding: 0.5rem;
     display: flex;
     border-radius: 8px;
     align-items: center;
+    background: white;
     justify-content: flex-start;
-    min-height: 150px;
+    height: 120px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  &__event-service-bg {
+    background: red;
+    width: 100%;
+    height: 80%;
+
     &.food-truck-bg {
       background: url('/public/images/backgrounds/test.jpg');
       background-size: cover;
       background-position: center;
+      border-radius: 10px;
+      height: 70%;
     }
     &.domaine-bg {
       background: url('/public/images/backgrounds/school.png');
       background-size: cover;
       background-position: center;
+      border-radius: 10px;
+      height: 70%;
     }
     &.bg-light-yellow {
       background: url('/public/images/backgrounds/profilebg.jpg');
       background-size: cover;
       background-position: center;
-    }
-
-    :deep(.v-pagination) {
-      font-size: 0.5rem;
-    }
-    :deep(.v-pagination__item) {
-      min-width: 32px;
-      height: 32px;
-      font-size: 0.75rem;
+      border-radius: 10px;
+      height: 70%;
     }
   }
   &__see-more {

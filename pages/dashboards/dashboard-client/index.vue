@@ -31,30 +31,32 @@ onMounted(async () => {
   <!-- Loader -->
   <!-- Loader -->
   <!-- Section principale si profil créé -->
-  <v-row v-if="isProfileCreated" class="dashboard-client">
-    <!-- Events et CurrentEvents sur la même ligne -->
-    <v-col cols="12">
-      <v-row>
-        <v-col cols="2">
-          <Events />
-        </v-col>
-        <v-col cols="6">
-          <div style="display: flex; flex-direction: column">
-            <CurrentEvents />
-          </div>
-        </v-col>
-        <v-col cols="4">
-          <ProjectLeap />
-        </v-col>
-      </v-row>
-    </v-col>
-    <v-col cols="12" sm="12" lg="12">
-      <PropositionsPresta />
-    </v-col>
-  </v-row>
+  <v-card v-if="isProfileCreated">
+    <v-row class="dashboard-client">
+      <!-- Events et CurrentEvents sur la même ligne -->
+      <v-col cols="12">
+        <v-row>
+          <v-col cols="2">
+            <Events />
+          </v-col>
+          <v-col cols="6">
+            <div style="display: flex; flex-direction: column">
+              <CurrentEvents />
+            </div>
+          </v-col>
+          <v-col cols="4">
+            <ProjectLeap />
+          </v-col>
+        </v-row>
+      </v-col>
+      <v-col cols="12" sm="12" lg="12">
+        <PropositionsPresta />
+      </v-col>
+    </v-row>
+  </v-card>
 
   <!-- Section alternative si profil non créé -->
-  <v-row v-else>
+  <v-row v-if="!isProfileCreated">
     <v-col cols="12">
       <BaseEmptyState>
         <template #image>
@@ -74,5 +76,7 @@ onMounted(async () => {
 .dashboard-client {
   max-width: 1280px;
   margin: 2rem auto;
+  background: white;
+  padding: 10px 15px;
 }
 </style>

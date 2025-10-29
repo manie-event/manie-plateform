@@ -101,8 +101,6 @@ export const useUserStore = defineStore('userStore', () => {
   };
 
   const sendProfessionalProfileForCustomer = (profile: ProfessionalProfile) => {
-    console.log(profile, 'profile');
-
     professionalProfileForCustomer.value = profile;
   };
 

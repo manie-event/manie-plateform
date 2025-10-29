@@ -1,5 +1,5 @@
 <template>
-  <VCard elevation="10" class="mb-16 proposition-presta">
+  <VCard elevation="10" class="proposition-presta">
     <v-card-text>
       <div class="d-flex align-center justify-space-between">
         <div>
@@ -58,7 +58,7 @@
                 </td>
                 <td>
                   <v-tooltip
-                    :text="item.professionalMessage.split('fourchette basse')[0].trim()"
+                    :text="getTooltipText(item.professionalMessage)"
                     interactive
                     content-class="tooltip-custom"
                     target="cursor"
@@ -95,6 +95,9 @@
                   @click="confirmedProposition(item.eventServiceUuid)"
                 >
                   <v-btn color="primary">Voir le profil du prestataire</v-btn>
+                </td>
+                <td v-else-if="item.propositionStatus === 'pending'">
+                  En attente de la réponse du prestataire
                 </td>
                 <td v-else>
                   <div class="d-flex align-center gap-4">
@@ -222,32 +225,30 @@ const svgColor = computed(() => {
   return customizer.actTheme === 'DARK_BLUE_THEME' ? '#FFFFFF' : '#000000';
 });
 
-const getProfessionalMessage = (message: string) => {
+const getProfessionalMessage = (message?: string) => {
+  if (!message) return 'Aucune proposition reçue';
   const cleanMessage = message.split('fourchette basse')[0].trim();
-
-  if (cleanMessage.length <= 30) {
-    return cleanMessage;
-  } else {
-    return cleanMessage.substring(0, 30) + '...';
-  }
+  return cleanMessage.length <= 30 ? cleanMessage : cleanMessage.substring(0, 30) + '...';
 };
 
-const getPriceFromMessage = (message: string) => {
+const getTooltipText = (message?: string) => {
+  if (!message || typeof message !== 'string') return 'Aucune proposition reçue';
+  const part = message.split('fourchette basse')[0]?.trim();
+  return part || message;
+};
+
+const getPriceFromMessage = (message?: string) => {
+  if (!message) return 'A définir par le prestataire'; // ou "En attente"
   const fourchetteBasse = message
     .split('fourchette basse')[1]
     ?.split('fourchette haute')[0]
     ?.trim();
-
   const fourchetteHaute = message.split('fourchette haute')[1]?.trim();
-  if (!fourchetteHaute) {
-    return `À partir de ${fourchetteBasse}`;
-  } else {
-    return `Entre ${fourchetteBasse}€ et ${fourchetteHaute}€`;
-  }
+  if (!fourchetteHaute) return `À partir de ${fourchetteBasse}`;
+  return `Entre ${fourchetteBasse}€ et ${fourchetteHaute}€`;
 };
 
 const confirmedProposition = async (eventServiceUuid: string) => {
-  console.log((isAcceptedByClient.value = true));
   ((isAcceptedByClient.value = true), await getProfessionalProfileForCustomer(eventServiceUuid));
 };
 
@@ -257,7 +258,7 @@ onMounted(() => {
 </script>
 <style lang="scss" scoped>
 .proposition-presta {
-  background: transparent;
+  background: var(--bg-color);
 
   &__table {
     background: transparent;

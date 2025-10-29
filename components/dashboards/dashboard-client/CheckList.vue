@@ -70,7 +70,6 @@ onMounted(() => {
 // Récupérer les tâches de cet événement
 const currentTasks = computed(() => {
   if (!props.event?.uuid) return [];
-  console.log('Fetching tasks for event:', props.event.uuid);
 
   return getTasksByEvent(props.event.uuid);
 });
@@ -80,8 +79,6 @@ const completedTasks = computed(() => currentTasks.value.filter((t) => t.done).l
 
 // Handlers
 const handleAddTask = () => {
-  console.log('Adding task');
-
   if (props.event?.uuid) {
     addTask(props.event.uuid);
   }

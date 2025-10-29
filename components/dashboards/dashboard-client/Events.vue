@@ -7,7 +7,7 @@
         </div>
       </div>
 
-      <button @click="openModal = !openModal" class="events__add-button">+</button>
+      <v-btn @click="openModal = !openModal" class="default" style="height: 100px">+</v-btn>
       <!-- <client-questionnaire v-if="openModal" v-model:open-modal="openModal"></client-questionnaire> -->
       <!-- <DynamicFormDialog
         v-if="openModal"
@@ -44,10 +44,10 @@ const onSubmit = (payload: EventCreatePayload) => {
 </script>
 <style lang="scss" scoped>
 .events {
-  background: transparent;
+  background: var(--bg-color);
   &__container {
     position: relative;
-    height: 250px;
+    height: 270px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
