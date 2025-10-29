@@ -77,4 +77,3 @@ const setHoverState = (key: string, value: boolean) => {
   <NuxtLink class="nuxt-link" to="/front-pages/pricing">Formules</NuxtLink>
   <NuxtLink class="nuxt-link" to="/front-pages/Contact-us">Contact</NuxtLink>
 </template>
-<script setup lang="ts"></script>

@@ -98,9 +98,6 @@
                 >
                   <v-btn color="primary">Voir le profil du prestataire</v-btn>
                 </td>
-                <td v-else-if="item.propositionStatus === 'pending'">
-                  En attente de la réponse du prestataire
-                </td>
                 <td v-else>
                   <div class="d-flex align-center gap-4">
                     <v-btn
