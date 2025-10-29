@@ -7,7 +7,7 @@
         </div>
       </div>
       <div>
-        <div class="current-events__cards" v-if="events.length > 0">
+        <div class="current-events__cards-container" v-if="events.length > 0">
           <div
             v-for="event in paginatedEvents"
             class="current-events__card"
@@ -40,17 +40,16 @@
             :answers="formAnswers"
           ></EventDetails>
         </div>
-        <div v-else class="d-flex flex-column align-center justify-center mb-6">
-          <Img :src="emptyCart" width="100" height="100" class="mb-6"></Img>
-          <div class="text-center">
+        <div v-else class="current-events__empty mb-6">
+          <div>
             <h4 class="text-h4 font-weight-semibold">Aucun évènement en cours</h4>
             <p class="text-subtitle-2">
-              Vous n'avez pas encore d'évènement en cours. Créez un évènement pour commencer à
-              recevoir des demandes de services.
+              Créez un évènement pour commencer à recevoir des demandes de services.
             </p>
           </div>
         </div>
         <v-pagination
+          v-if="paginatedEvents.length > 0"
           v-model="currentPage"
           :length="totalPages"
           color="#5d79a4"
@@ -69,7 +68,6 @@
 </template>
 
 <script setup lang="ts">
-import emptyCart from '@/public/images/svgs/empty-cart.svg';
 import { eventsStore } from '@/stores/events';
 import { storeToRefs } from 'pinia';
 import { computed, onMounted, ref } from 'vue';
@@ -82,6 +80,7 @@ import EventDetails from './EventDetails.vue';
 const { events } = storeToRefs(eventsStore());
 const { getEventsPerOrganisator, getEventsInstance } = useEventService();
 
+const customizer = useCustomizerStore();
 const isEventDetailsOpen = ref(false);
 const isDialogOpen = ref(false);
 const hoveredEvent = ref<string | null>(null);
@@ -137,6 +136,7 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .current-events {
   background: rgb(var(--v-theme-background));
+
   &__container {
     position: relative;
     height: 270px;
@@ -145,7 +145,24 @@ onMounted(async () => {
     justify-content: space-between;
     padding: 1.5rem;
   }
-  &__cards {
+  &__empty {
+    display: flex;
+    padding-bottom: 30px;
+    flex-direction: column;
+    justify-content: center; /* centre verticalement */
+    align-items: center; /* centre horizontalement */
+    height: 100%; /* prend toute la hauteur de la card */
+    text-align: center;
+
+    h4 {
+      color: rgb(var(--v-theme-textPrimary));
+    }
+
+    p {
+      color: rgb(var(--v-theme-textSecondary));
+    }
+  }
+  &__cards-container {
     display: flex;
     gap: 2rem;
     width: 100%;
@@ -153,7 +170,7 @@ onMounted(async () => {
   &__card {
     position: relative;
     width: 50%;
-    padding: 0.5rem;
+    padding: 0.5rem 0.5rem 1rem;
     display: flex;
     border-radius: 8px;
     align-items: center;

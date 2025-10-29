@@ -6,7 +6,7 @@
           <h5 class="v-card-title">Vos propositions en cours</h5>
         </div>
       </div>
-      <div class="month-table" v-if="professionalResponseProposition.length > 0">
+      <div class="month-table" v-if="filteredPropositionByStatus.length > 0">
         <v-table class="mt-5 mb-0 proposition-presta__table">
           <template v-slot:default>
             <thead>
@@ -34,7 +34,7 @@
             </thead>
             <tbody>
               <tr
-                v-for="item in professionalResponseProposition"
+                v-for="item in filteredPropositionByStatus"
                 :key="item.id"
                 class="month-item"
                 style="border: 2px solid black"
@@ -98,9 +98,6 @@
                 >
                   <v-btn color="primary">Voir le profil du prestataire</v-btn>
                 </td>
-                <td v-else-if="item.propositionStatus === 'pending'">
-                  En attente de la réponse du prestataire
-                </td>
                 <td v-else>
                   <div class="d-flex align-center gap-4">
                     <v-btn
@@ -138,19 +135,15 @@
             }"
           >
             <template #image>
-              <img
-                :src="
-                  customizer.actTheme === 'DARK_BLUE_THEME'
-                    ? '/images/empty-state-dark.svg'
-                    : '/images/empty-state-light.svg'
-                "
-                alt="No data"
-                style="width: 150px; height: auto; margin-bottom: 16px"
+              <LigthIcon
+                v-if="customizer.actTheme !== 'DARK_BLUE_THEME'"
+                style="width: 150px; height: auto; margin-bottom: 10px"
               />
+              <DarkIcon v-else style="width: 150px; height: auto; margin-bottom: 10px" />
             </template>
             <template #description>
               <p class="text-subtitle-1">
-                Veuillez vous positionner sur au moins une proposition pour accéder à cette section
+                Aucun prestataire n'a, pour l'instant, répondu à votre annonce.
               </p>
             </template>
           </BaseEmptyState>
@@ -175,12 +168,15 @@
 <script setup lang="ts">
 import BaseEmptyState from '@/components/common/BaseEmptyState.vue';
 import errorToaster from '@/components/common/errorToaster.vue';
+import DarkIcon from '@/public/images/empty-state/dark-profil-vide.svg';
+import LigthIcon from '@/public/images/empty-state/profil-vide.svg';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { computed, ref, Teleport } from 'vue';
 import { useEventServiceProposition } from '~/composables/event-service-propositions/UseEventServiceProposition';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
+import type { ClientServiceProposition } from '~/models/propositions/client-service-proposition';
 import { useCustomizerStore } from '../../../stores/customizer';
 import PropositionDetails from '../dashboard2/PropositionDetails.vue';
 import ProfessionalProfil from './ProfessionalProfil.vue';
@@ -240,7 +236,7 @@ const getTooltipText = (message?: string) => {
 };
 
 const getPriceFromMessage = (message?: string) => {
-  if (!message) return 'A définir par le prestataire'; // ou "En attente"
+  if (!message) return 'A définir par le prestataire';
   const fourchetteBasse = message
     .split('fourchette basse')[1]
     ?.split('fourchette haute')[0]
@@ -253,6 +249,12 @@ const getPriceFromMessage = (message?: string) => {
 const confirmedProposition = async (eventServiceUuid: string) => {
   ((isAcceptedByClient.value = true), await getProfessionalProfileForCustomer(eventServiceUuid));
 };
+
+const filteredPropositionByStatus = computed<ClientServiceProposition[]>(() => {
+  return professionalResponseProposition.value.filter(
+    (professionalProposition) => professionalProposition.propositionStatus === 'reviewing'
+  );
+});
 
 onMounted(() => {
   getServicePropositionForClient();

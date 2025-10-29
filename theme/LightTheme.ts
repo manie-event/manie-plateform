@@ -46,7 +46,7 @@ const AQUA_THEME: ThemeTypes = {
     'border-opacity': 1,
   },
   colors: {
-    primary: '#0074BA',
+    primary: '#5d79a4',
     secondary: '#47D7BC',
     info: '#46caeb',
     success: '#4bd08b',
@@ -61,7 +61,7 @@ const AQUA_THEME: ThemeTypes = {
     lightwarning: '#fff6ea',
     lightindigo: '#f1ebff',
     textPrimary: '#2A3547',
-    textSecondary: '#2A3547',
+    textSecondary: '#5d79a4',
     borderColor: '#e5eaef',
     inputBorder: '#DFE5EF',
     containerBg: '#ffffff',
@@ -72,7 +72,7 @@ const AQUA_THEME: ThemeTypes = {
     grey200: '#111c2d',
     darkbg: '#2a3447',
     bglight: '#f5f8fb',
-    bgdark: '#111c2d',
+    bgdark: '#293b57',
   },
 };
 

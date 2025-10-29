@@ -2,11 +2,11 @@
   <VCard elevation="10" class="project-leap">
     <v-card-text class="d-flex flex-column justify-space-between pb-0">
       <div class="d-flex justify-flex-start d-block align-center mb-4">
-        <h5 class="v-card-title">Progression de vos events</h5>
+        <h5 class="v-card-title">Progression de vos évènements</h5>
       </div>
 
       <!-- Liste paginée -->
-      <div v-for="event in paginatedEvents" :key="event.uuid">
+      <div v-for="event in paginatedEvents" :key="event.uuid" v-if="paginatedEvents.length > 0">
         <div class="progress-section">
           <div class="progress-info">
             <span>{{ event.eventTitleCroped }}</span>
@@ -21,8 +21,16 @@
           />
         </div>
       </div>
-
+      <div v-else class="d-flex flex-column align-center justify-center mb-6">
+        <div class="text-center">
+          <h4 class="text-h4 font-weight-semibold">Ca arrive bientôt..</h4>
+          <p class="text-subtitle-2">
+            Créez un évènement pour commencer à recevoir des demandes de services.
+          </p>
+        </div>
+      </div>
       <v-pagination
+        v-if="paginatedEvents.length > 0"
         v-model="currentPage"
         :length="totalPages"
         color="#5d79a4"

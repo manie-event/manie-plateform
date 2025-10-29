@@ -27,7 +27,9 @@ const setHoverState = (key: string, value: boolean) => {
     <template v-slot:activator="{ props }">
       <div class="d-flex align-center">
         <NuxtLink class="nuxt-link" v-bind="props">A propos </NuxtLink>
-        <ChevronDownIcon class="nuxt-link ml-1" size="18" />
+        <i class="ddIcon me-3 z-index-1 d-flex align-center">
+          <ChevronDownIcon size="15" />
+        </i>
       </div>
     </template>
     <v-sheet
@@ -57,7 +59,7 @@ const setHoverState = (key: string, value: boolean) => {
                   scrim="rgba(55, 114, 255, 0.5)"
                   contained
                 >
-                  <NuxtLink color="primary" size="small" rounded="pill" flat :href="demo.link"
+                  <NuxtLink class="nuxt-link" size="small" rounded="pill" flat :href="demo.link"
                     >En savoir +</NuxtLink
                   >
                 </v-overlay>
@@ -75,4 +77,3 @@ const setHoverState = (key: string, value: boolean) => {
   <NuxtLink class="nuxt-link" to="/front-pages/pricing">Formules</NuxtLink>
   <NuxtLink class="nuxt-link" to="/front-pages/Contact-us">Contact</NuxtLink>
 </template>
-<script setup lang="ts"></script>

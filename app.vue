@@ -18,7 +18,7 @@
   &:hover {
     background: #fde3ae;
     padding: 0px 10px;
-    border-radius: 5px;
+    border-radius: 15px;
     transition: all 0.4s ease-out;
   }
 }
