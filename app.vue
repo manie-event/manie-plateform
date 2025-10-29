@@ -12,5 +12,14 @@
   margin-left: 15px;
   font-weight: 600;
   color: var(--manie-thirdy);
+  transition: all 0.4s ease-in;
+  background: none;
+
+  &:hover {
+    background: #fde3ae;
+    padding: 0px 10px;
+    border-radius: 5px;
+    transition: all 0.4s ease-out;
+  }
 }
 </style>

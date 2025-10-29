@@ -76,7 +76,7 @@ onMounted(async () => {
 .dashboard-client {
   max-width: 1280px;
   margin: 2rem auto;
-  background: white;
+  background: rgb(var(--v-theme-containerBg));
   padding: 10px 15px;
 }
 </style>

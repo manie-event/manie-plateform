@@ -3,10 +3,9 @@ html {
 }
 
 .v-main {
-  min-height: calc(100vh - 175px);
-  background: var(--bg-color);
-  position: relative;
-  top: -75px;
+  min-height: 100vh;
+  margin: unset !important;
+  background: rgb(var(--v-theme-background));
 }
 
 .v-application {

@@ -1,6 +1,6 @@
 <template>
   <VCard elevation="10" class="project-leap">
-    <v-card-text class="d-flex flex-column pb-0">
+    <v-card-text class="d-flex flex-column justify-space-between pb-0">
       <div class="d-flex justify-flex-start d-block align-center mb-4">
         <h5 class="v-card-title">Progression de vos events</h5>
       </div>
@@ -98,10 +98,10 @@ const paginatedEvents = computed(() => {
 
 <style lang="scss" scoped>
 .project-leap {
-  background: var(--bg-color);
+  background: rgb(var(--v-theme-background));
   min-height: 270px;
   padding-bottom: 1rem;
-
+  display: flex;
   &__pagination {
     .v-pagination {
       button {
@@ -128,16 +128,16 @@ const paginatedEvents = computed(() => {
   justify-content: space-between;
   margin-bottom: 8px;
   font-size: 14px;
-  color: #666;
+  color: rgb(var(--v-theme-textPrimary));
 }
 
 .progress-percentage {
   font-weight: 600;
-  color: #333;
+  color: rgb(var(--v-theme-textPrimary));
 }
 
 .text-caption {
   font-size: 13px;
-  color: #888;
+  color: rgb(var(--v-theme-textPrimary));
 }
 </style>

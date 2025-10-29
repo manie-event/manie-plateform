@@ -42,7 +42,7 @@ onMounted(async () => {
       </ClientOnly>
       <v-main>
         <div class="rtl-lyt">
-          <v-container fluid class="px-sm-5 px-4 rounded-xl">
+          <v-container fluid class="px-sm-5 px-4">
             <div class="">
               <div :class="customizer.boxed ? 'maxWidth' : ''">
                 <NuxtPage />
@@ -84,7 +84,7 @@ onMounted(async () => {
             <div class="">
               <div :class="customizer.boxed ? 'maxWidth' : ''">
                 <NuxtPage />
-                <v-btn
+                <!-- <v-btn
                   class="customizer-btn"
                   size="large"
                   icon
@@ -93,7 +93,7 @@ onMounted(async () => {
                   @click.stop="customizer.SET_CUSTOMIZER_DRAWER(!customizer.Customizer_drawer)"
                 >
                   <SettingsIcon />
-                </v-btn>
+                </v-btn> -->
               </div>
             </div>
           </v-container>
@@ -105,7 +105,9 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .dashboard-position {
   display: flex;
-  height: 100vh;
-  align-items: center;
+  width: 100vw;
+  justify-content: center;
+  top: -40px;
+  position: relative;
 }
 </style>

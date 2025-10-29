@@ -136,7 +136,7 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .current-events {
-  background: var(--bg-color);
+  background: rgb(var(--v-theme-background));
   &__container {
     position: relative;
     height: 270px;
@@ -157,7 +157,8 @@ onMounted(async () => {
     display: flex;
     border-radius: 8px;
     align-items: center;
-    background: white;
+    background: rgb(var(--v-theme-containerBg));
+    box-shadow: 5px 5px 15px 5px rgb(var(--v-theme-textSecondary));
     justify-content: flex-start;
     height: 120px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);

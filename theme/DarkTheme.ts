@@ -10,6 +10,7 @@ const DARK_BLUE_THEME: ThemeTypes = {
   colors: {
     primary: '#0085db',
     secondary: '#7C8FAC',
+    thirdy: '#5d79a4',
     info: '#5AC8FA',
     success: '#09C97F',
     warning: '#F8B15D',
@@ -229,10 +230,10 @@ const DARK_ORANGE_THEME: ThemeTypes = {
 };
 
 export {
-  DARK_BLUE_THEME,
   DARK_AQUA_THEME,
+  DARK_BLUE_THEME,
+  DARK_CYAN_THEME,
+  DARK_GREEN_THEME,
   DARK_ORANGE_THEME,
   DARK_PURPLE_THEME,
-  DARK_GREEN_THEME,
-  DARK_CYAN_THEME,
 };

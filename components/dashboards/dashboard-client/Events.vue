@@ -44,7 +44,7 @@ const onSubmit = (payload: EventCreatePayload) => {
 </script>
 <style lang="scss" scoped>
 .events {
-  background: var(--bg-color);
+  background: rgb(var(--v-theme-background));
   &__container {
     position: relative;
     height: 270px;

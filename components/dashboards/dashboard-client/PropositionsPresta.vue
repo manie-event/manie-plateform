@@ -6,11 +6,8 @@
           <h5 class="v-card-title">Vos propositions en cours</h5>
         </div>
       </div>
-      <div
-        class="month-table proposition-presta__table"
-        v-if="professionalResponseProposition.length > 0"
-      >
-        <v-table class="mt-5 mb-0">
+      <div class="month-table" v-if="professionalResponseProposition.length > 0">
+        <v-table class="mt-5 mb-0 proposition-presta__table">
           <template v-slot:default>
             <thead>
               <tr>
@@ -36,7 +33,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in professionalResponseProposition" :key="item.id" class="month-item">
+              <tr
+                v-for="item in professionalResponseProposition"
+                :key="item.id"
+                class="month-item"
+                style="border: 2px solid black"
+              >
                 <td>
                   <div class="d-flex align-center">
                     <div class="mr-4">
@@ -258,10 +260,10 @@ onMounted(() => {
 </script>
 <style lang="scss" scoped>
 .proposition-presta {
-  background: var(--bg-color);
+  background: rgb(var(--v-theme-background));
 
   &__table {
-    background: transparent;
+    background: rgb(var(--v-theme-background));
   }
 }
 :deep(.tooltip-custom) {

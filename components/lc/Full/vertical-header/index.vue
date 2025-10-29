@@ -185,7 +185,7 @@ onBeforeMount(() => {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    background: var(--bg-color);
+    background: rgb(var(--v-theme-background));
   }
   &__navigation {
     display: flex;
