@@ -98,6 +98,9 @@
                 >
                   <v-btn color="primary">Voir le profil du prestataire</v-btn>
                 </td>
+                <td v-else-if="item.propositionStatus === 'pending'">
+                  En attente de la réponse du prestataire
+                </td>
                 <td v-else>
                   <div class="d-flex align-center gap-4">
                     <v-btn
@@ -241,7 +244,6 @@ const getPriceFromMessage = (message?: string) => {
     .split('fourchette basse')[1]
     ?.split('fourchette haute')[0]
     ?.trim();
-
   const fourchetteHaute = message.split('fourchette haute')[1]?.trim();
   if (!fourchetteHaute) return `À partir de ${fourchetteBasse}`;
   return `Entre ${fourchetteBasse}€ et ${fourchetteHaute}€`;
