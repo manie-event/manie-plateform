@@ -1,6 +1,7 @@
 <script setup>
-import { searchSugg } from '@/_mockApis/headerData';
 import { Icon } from '@iconify/vue';
+
+const searchSugg = ref([]);
 </script>
 
 <template>

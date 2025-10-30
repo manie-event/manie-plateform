@@ -10,7 +10,7 @@
   </v-dialog>
 </template>
 <script setup lang="ts">
-import redirectionImg from '@/public/images/profile/handshake.png';
+import redirectionImg from '@/public/images/profil/handshake.webp';
 
 defineProps<{
   redirection: string;

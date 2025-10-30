@@ -25,9 +25,6 @@ const handleScroll = () => {
 onBeforeMount(() => {
   window.addEventListener('scroll', handleScroll);
 });
-// watch(jetonAmount, (newJetonAmount) => {
-//   setJetonAmount(newJetonAmount);
-// });
 </script>
 
 <template>

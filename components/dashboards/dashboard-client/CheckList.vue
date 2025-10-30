@@ -1,13 +1,19 @@
 <template>
   <v-card class="position-relative">
-    <v-btn color="primary" class="checklist-btn" variant="flat" @click="handleAddTask()">
-      <v-icon center>mdi-plus</v-icon>
-    </v-btn>
-    <v-card-title class="text-h5 font-weight-bold"> 🧾 Liste des tâches </v-card-title>
+    <div class="d-flex flex-row-reverse justify-space-between">
+      <v-btn color="primary" class="checklist-btn" variant="flat" @click="handleAddTask()">
+        <v-icon center>mdi-plus</v-icon>
+      </v-btn>
+      <div>
+        <v-card-subtitle class="text-subtitle-1 font-weight-bold pt-5">
+          Votre liste des tâches
+        </v-card-subtitle>
 
-    <v-card-subtitle class="text-body-2 mb-4">
-      {{ completedTasks }}/{{ currentTasks.length }} tâche(s) complétée(s)
-    </v-card-subtitle>
+        <v-card-subtitle class="text-body-2 mb-4">
+          {{ completedTasks }}/{{ currentTasks.length }} tâche(s) complétée(s)
+        </v-card-subtitle>
+      </div>
+    </div>
 
     <transition-group name="fade" tag="div">
       <v-list-item
@@ -108,9 +114,9 @@ const handleUpdateTask = (taskId: number, updates: Partial<Task>) => {
 }
 
 .checklist-btn {
-  position: absolute;
+  position: relative;
   top: 20px;
-  right: 50px;
+  right: 20px;
   z-index: 1;
   display: flex;
   align-items: center;

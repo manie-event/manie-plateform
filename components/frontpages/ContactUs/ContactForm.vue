@@ -6,7 +6,6 @@ import { ref } from 'vue';
 
 const { sendContactForm } = useContactService();
 
-const select = ref();
 const items = ref(['Question générale', 'Demande de rendez-vous', 'option 3', 'option 4']);
 
 const message = ref<ContactMessage>({
@@ -26,10 +25,6 @@ const message = ref<ContactMessage>({
           <div
             class="bg-primary rounded-lg pa-7 position-relative overflow-hidden mt-md-0 mt-6 position-relative"
           >
-            <img
-              src="/images/front-pages/background/contact-icon.png"
-              class="position-absolute end-0 top-0 rtlImg"
-            />
             <h4 class="text-18 font-weight-bold mb-4">A votre service</h4>
             <p class="text-16 font-weight-regular position-relative z-1">
               Vous avez des questions ou souhaitez en savoir plus sur nos services ? N'hésitez pas à

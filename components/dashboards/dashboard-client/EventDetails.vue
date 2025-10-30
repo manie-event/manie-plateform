@@ -4,7 +4,7 @@
       <div class="d-flex flex-row" style="height: 100%">
         <!-- Colonne gauche : Liste des services -->
         <div class="flex-grow-1 pa-8" style="max-width: 60%">
-          <h3 class="mb-4">Services de l'événement</h3>
+          <h3 class="mb-4"></h3>
           <v-row>
             <div class="d-flex">
               <v-col
@@ -103,7 +103,7 @@
   <Teleport to="body">
     <CustomerForm v-model:open-customer-form="isEventModificationOpen" :answers />
     <AddEventService v-model:add-service-open="isAddingServiceOpen" :answers />
-    <PricingChoice v-model:test="openPricingModal" :selectedEventUuid="event.uuid" />
+    <PricingChoice v-model:test="openPricingModal" :selectedEventUuid="event.uuid" :event />
   </Teleport>
 </template>
 <script setup lang="ts">

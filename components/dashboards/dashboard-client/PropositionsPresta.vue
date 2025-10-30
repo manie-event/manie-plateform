@@ -240,6 +240,12 @@ const confirmedProposition = async (eventServiceUuid: string) => {
   ((isAcceptedByClient.value = true), await getProfessionalProfileForCustomer(eventServiceUuid));
 };
 
+const filteredPropositionByStatus = computed<ClientServiceProposition[]>(() => {
+  return professionalResponseProposition.value.filter(
+    (professionalProposition) => professionalProposition.propositionStatus === 'pending'
+  );
+});
+
 onMounted(() => {
   getServicePropositionForClient();
 });

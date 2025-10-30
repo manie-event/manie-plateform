@@ -27,7 +27,7 @@ const handleSelectNote = (noteId: number) => {
   <!-- ---------------------------------------------------- -->
   <div class="pa-6">
     <div class="d-flex mb-6 align-center justify-lg-space-between">
-      <h4 class="text-h6 mb-4 font-weight-semibold">All Notes</h4>
+      <h4 class="text-subtitle-1 mb-4 font-weight-semibold">Carnet de brouillon</h4>
       <addNote :event />
     </div>
     <!-- <div class="mb-5">

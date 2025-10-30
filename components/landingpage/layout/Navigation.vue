@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { appsMegamenu, demosMegamenu, FrontPageMenu } from '@/_mockApis/landingpage/lpPage';
+import { demosMegamenu, FrontPageMenu } from '@/_mockApis/landingpage/lpPage';
 import { ref } from 'vue';
-import { ChevronDownIcon } from 'vue-tabler-icons';
 // Create a hover state object keyed by unique identifiers
 const hoverStates = ref<Record<string, boolean>>(
   demosMegamenu.reduce(
@@ -23,50 +22,11 @@ const setHoverState = (key: string, value: boolean) => {
   <!-- ---------------------------------------------- -->
   <!-- mega menu DD -->
   <!-- ---------------------------------------------- -->
-  <v-menu
-    open-on-hover
-    open-delay="1"
-    :close-on-content-click="false"
-    class="lp_wrapper position-relative"
-  >
-    <v-sheet>
-      <div class="mt-8">
-        <h5 class="text-h5">Different Apps</h5>
-        <div class="v-row mt-3">
-          <v-col v-for="demo in appsMegamenu" :key="demo.img">
-            <v-sheet class="text-center position-relative">
-              <div class="overflow-hidden rounded-md border">
-                <v-card
-                  class="mx-auto"
-                  rounded="0"
-                  @mouseenter="setHoverState(demo.img, true)"
-                  @mouseleave="setHoverState(demo.img, false)"
-                >
-                  <img :src="demo.img" :alt="demo.img" class="w-100" />
-                  <v-overlay
-                    :model-value="hoverStates[demo.img]"
-                    class="align-center justify-center"
-                    scrim="rgba(55, 114, 255, 0.5)"
-                    contained
-                  >
-                    <v-btn
-                      color="primary"
-                      size="small"
-                      rounded="pill"
-                      flat
-                      target="_blank"
-                      :href="demo.link"
-                      >Live Preview</v-btn
-                    >
-                  </v-overlay>
-                </v-card>
-              </div>
-            </v-sheet>
-            <p class="text-body-1 font-weight-semibold text-grey200 text-center mt-1">
-              {{ demo.name }}
-            </p>
-          </v-col>
-        </div>
+  <v-menu open-on-hover :close-on-content-click="false" class="position-relative">
+    <template v-slot:activator="{ props }">
+      <div class="d-flex align-center">
+        <NuxtLink class="nuxt-link" v-bind="props">A propos </NuxtLink>
+        <i class="ddIcon me-3 z-index-1 d-flex align-center"> </i>
       </div>
     </v-sheet>
   </v-menu>
