@@ -79,8 +79,7 @@
           opacity: 0;
         }
 
-        background-color: var(--manie-secondary) !important;
-        color: var(--bg-color) !important;
+        background-color: rgb(var(--v-theme-bglight)) !important;
       }
     }
   }

@@ -31,41 +31,24 @@ export const useEventService = () => {
   const getEventsPerOrganisator = async () => {
     try {
       if (!api) return;
-
       const uuid = localStorage.getItem('client-uuid');
+      const page = ref(1);
+      const allEvents: any[] = [];
       const { mapDtoToEvent } = eventsMapper();
 
-      const allEvents: any[] = [];
-      let page = 1;
-      const limit = 10; // même limite que ton back
-      let hasMore = true;
-
-      while (hasMore) {
-        const { data } = await api.get(
-          `/event/list-by-organisator/${uuid}?page=${page}&limit=${limit}`
-        );
-
-        // Vérifie que data existe et que c’est bien un tableau
-        if (!data || !Array.isArray(data.data)) break;
+      while (true) {
+        const { data } = await api.get(`/event/list-by-organisator/${uuid}?page=${page.value}`);
+        if (!data.data?.length) break;
 
         const events = data.data.map((e: eventModelDto) => mapDtoToEvent(e));
         allEvents.push(...events);
-        setEventsByOrganisator(allEvents);
-
-        // Récupération sécurisée de la pagination
-        const current = data?.meta?.current_page ?? page;
-        const last = data?.meta?.last_page ?? page;
-
-        if (current >= last) {
-          hasMore = false; // 🚫 Stop la boucle
-        } else {
-          page++;
-        }
+        setEventsByOrganisator(events);
+        page.value++;
       }
 
       return allEvents;
     } catch (error) {
-      console.error('❌ Erreur dans getEventsPerOrganisator:', error);
+      console.error(error);
       addError({ message: 'Erreur lors de la récupération des événements.' });
     }
   };

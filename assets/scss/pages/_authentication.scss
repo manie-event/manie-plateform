@@ -41,7 +41,7 @@
       right: -104px;
       width: 200px;
       height: 207px;
-      background: url('@/public/images/backgrounds/flutter.png');
+      background: url('/images/backgrounds/shap-login.png');
       background-repeat: no-repeat;
       background-size: contain;
       z-index: 0;
@@ -123,21 +123,20 @@
     height: 100%;
     display: flex;
     justify-content: center;
+    overflow: hidden;
   }
 
   .auth-login {
-    margin: 0 auto;
+    max-width: 1600px;
+    margin: 10px auto;
     width: 100%;
     display: flex !important;
-    overflow: hidden;
     justify-content: center;
-    background-color: var(--bg-color);
-    padding: 0 !important;
-    border-radius: unset !important;
 
     .auth-login-wrapper {
       box-shadow: 0 2px 30px 15px rgba(37, 83, 185, 0.1);
       z-index: 2;
+      max-width: 1200px;
 
       &::before {
         content: '';
@@ -147,20 +146,19 @@
         width: 427px;
         height: 417px;
         border-radius: 100%;
-        background-color: var(--manie-primary);
+        background-color: rgb(var(--v-theme-error));
       }
 
       &::after {
         content: '';
         position: absolute;
-        z-index: 999;
-        top: -70px;
+        top: -100px;
         right: -75px;
-        width: 404px;
-        height: 405px;
-        background-color: var(--manie-thirdy);
+        width: 304px;
+        height: 315px;
+        background: url('/images/backgrounds/shap-login.png');
+        background-repeat: no-repeat;
         z-index: -1;
-        border-radius: 100%;
       }
     }
   }

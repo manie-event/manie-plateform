@@ -16,6 +16,14 @@ export function useFormNavigation(sections: SectionSchema[]) {
 
     const pagesData = [{ sections: [first] }, ...paired.map((pair) => ({ sections: pair }))];
 
+    console.log(
+      'Pages générées:',
+      pagesData.map((p, i) => ({
+        page: i,
+        sections: p.sections.map((s) => s.id),
+      }))
+    );
+
     return pagesData;
   });
 

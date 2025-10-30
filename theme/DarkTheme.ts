@@ -10,7 +10,6 @@ const DARK_BLUE_THEME: ThemeTypes = {
   colors: {
     primary: '#0085db',
     secondary: '#7C8FAC',
-    thirdy: '#5d79a4',
     info: '#5AC8FA',
     success: '#09C97F',
     warning: '#F8B15D',
@@ -23,7 +22,7 @@ const DARK_BLUE_THEME: ThemeTypes = {
     lighterror: '#72483d',
     lightwarning: '#282b32',
     textPrimary: '#EAEFF4',
-    textSecondary: '#ffff',
+    textSecondary: '#fff',
     lightindigo: '#1d233e',
     borderColor: '#182D41',
     inputBorder: '#465670',
@@ -33,8 +32,8 @@ const DARK_BLUE_THEME: ThemeTypes = {
     surface: '#111C2D',
     grey100: '#7C8FAC',
     grey200: '#EAEFF4',
-    darkbg: '#fff5eb',
-    bglight: '#293b57',
+    darkbg: '#111936',
+    bglight: '#16293e',
     bgdark: '#16293e',
   },
 };
@@ -230,10 +229,10 @@ const DARK_ORANGE_THEME: ThemeTypes = {
 };
 
 export {
-  DARK_AQUA_THEME,
   DARK_BLUE_THEME,
-  DARK_CYAN_THEME,
-  DARK_GREEN_THEME,
+  DARK_AQUA_THEME,
   DARK_ORANGE_THEME,
   DARK_PURPLE_THEME,
+  DARK_GREEN_THEME,
+  DARK_CYAN_THEME,
 };

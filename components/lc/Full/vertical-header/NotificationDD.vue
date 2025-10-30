@@ -1,7 +1,6 @@
 <script setup lang="ts">
-// import { notifications } from '@/_mockApis/headerData';
+import { notifications } from '@/_mockApis/headerData';
 import { Icon } from '@iconify/vue';
-const notifications = ref([]);
 </script>
 <template>
   <!-- ---------------------------------------------- -->

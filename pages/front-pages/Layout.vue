@@ -1,7 +1,5 @@
 <script setup lang="ts">
-definePageMeta({
-  layout: 'blank',
-});
+import Footer from '@/components/frontpages/layout/Footer.vue';
 </script>
 <template>
   <div class="front-wraper bg-surface">
@@ -11,5 +9,6 @@ definePageMeta({
       <slot></slot>
       <!-- This slot will be replaced with page-specific content -->
     </main>
+    <Footer />
   </div>
 </template>

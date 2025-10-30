@@ -1,0 +1,337 @@
+{
+  "version": 3,
+  "overrides": {
+    "index.html": {
+      "path": ""
+    },
+    "auth/404/index.html": {
+      "path": "auth/404"
+    },
+    "icons/Solar/index.html": {
+      "path": "icons/Solar"
+    },
+    "payment/cancel/index.html": {
+      "path": "payment/cancel"
+    },
+    "apps/notes/index.html": {
+      "path": "apps/notes"
+    },
+    "forms/Form-Custom/index.html": {
+      "path": "forms/Form-Custom"
+    },
+    "front-pages/Layout/index.html": {
+      "path": "front-pages/Layout"
+    },
+    "ui-components/Chip/index.html": {
+      "path": "ui-components/Chip"
+    },
+    "auth/Register/index.html": {
+      "path": "auth/Register"
+    },
+    "datatables/Basic/index.html": {
+      "path": "datatables/Basic"
+    },
+    "icons/Tabler/index.html": {
+      "path": "icons/Tabler"
+    },
+    "auth/Login/index.html": {
+      "path": "auth/Login"
+    },
+    "apps/calendar/Events/index.html": {
+      "path": "apps/calendar/Events"
+    },
+    "auth/Two-Step/index.html": {
+      "path": "auth/Two-Step"
+    },
+    "charts/Area-Chart/index.html": {
+      "path": "charts/Area-Chart"
+    },
+    "juridique/CGV/index.html": {
+      "path": "juridique/CGV"
+    },
+    "auth/Maintenance/index.html": {
+      "path": "auth/Maintenance"
+    },
+    "juridique/cgu/index.html": {
+      "path": "juridique/cgu"
+    },
+    "payment/success/index.html": {
+      "path": "payment/success"
+    },
+    "datatables/Slots/index.html": {
+      "path": "datatables/Slots"
+    },
+    "datatables/Sorting/index.html": {
+      "path": "datatables/Sorting"
+    },
+    "charts/Line-Chart/index.html": {
+      "path": "charts/Line-Chart"
+    },
+    "forms/editor/index.html": {
+      "path": "forms/editor"
+    },
+    "ui-components/List/index.html": {
+      "path": "ui-components/List"
+    },
+    "ui-components/Tabs/index.html": {
+      "path": "ui-components/Tabs"
+    },
+    "juridique/cookies/index.html": {
+      "path": "juridique/cookies"
+    },
+    "datatables/Headers/index.html": {
+      "path": "datatables/Headers"
+    },
+    "forms/Form-Layouts/index.html": {
+      "path": "forms/Form-Layouts"
+    },
+    "datatables/Grouping/index.html": {
+      "path": "datatables/Grouping"
+    },
+    "charts/Column-Chart/index.html": {
+      "path": "charts/Column-Chart"
+    },
+    "forms/Form-Vertical/index.html": {
+      "path": "forms/Form-Vertical"
+    },
+    "apps/calendar/index.html": {
+      "path": "apps/calendar"
+    },
+    "front-pages/Constat/index.html": {
+      "path": "front-pages/Constat"
+    },
+    "front-pages/Pricing/index.html": {
+      "path": "front-pages/Pricing"
+    },
+    "ui-components/Menus/index.html": {
+      "path": "ui-components/Menus"
+    },
+    "ui-components/Alert/index.html": {
+      "path": "ui-components/Alert"
+    },
+    "datatables/Filtering/index.html": {
+      "path": "datatables/Filtering"
+    },
+    "datatables/Selection/index.html": {
+      "path": "datatables/Selection"
+    },
+    "front-pages/About-us/index.html": {
+      "path": "front-pages/About-us"
+    },
+    "reset-password/index.html": {
+      "path": "reset-password"
+    },
+    "auth/Forgot-Password/index.html": {
+      "path": "auth/Forgot-Password"
+    },
+    "front-pages/Homepage/index.html": {
+      "path": "front-pages/Homepage"
+    },
+    "datatables/CrudTable/index.html": {
+      "path": "datatables/CrudTable"
+    },
+    "charts/Gredient-Chart/index.html": {
+      "path": "charts/Gredient-Chart"
+    },
+    "ui-components/Rating/index.html": {
+      "path": "ui-components/Rating"
+    },
+    "ui-components/Avatar/index.html": {
+      "path": "ui-components/Avatar"
+    },
+    "datatables/Pagination/index.html": {
+      "path": "datatables/Pagination"
+    },
+    "forms/Form-Validation/index.html": {
+      "path": "forms/Form-Validation"
+    },
+    "forms/Form-Horizontal/index.html": {
+      "path": "forms/Form-Horizontal"
+    },
+    "front-pages/Ccm-presta/index.html": {
+      "path": "front-pages/Ccm-presta"
+    },
+    "front-pages/Contact-us/index.html": {
+      "path": "front-pages/Contact-us"
+    },
+    "ui-components/Dialogs/index.html": {
+      "path": "ui-components/Dialogs"
+    },
+    "front-pages/Faq-client/index.html": {
+      "path": "front-pages/Faq-client"
+    },
+    "charts/Candlestick-Chart/index.html": {
+      "path": "charts/Candlestick-Chart"
+    },
+    "ui-components/Accordion/index.html": {
+      "path": "ui-components/Accordion"
+    },
+    "ui-components/Tooltip/index.html": {
+      "path": "ui-components/Tooltip"
+    },
+    "charts/Radialbar-Chart/index.html": {
+      "path": "charts/Radialbar-Chart"
+    },
+    "front-pages/Ccm-client/index.html": {
+      "path": "front-pages/Ccm-client"
+    },
+    "widgets/banners/index.html": {
+      "path": "widgets/banners"
+    },
+    "ui-components/Typography/index.html": {
+      "path": "ui-components/Typography"
+    },
+    "widgets/cards/index.html": {
+      "path": "widgets/cards"
+    },
+    "charts/Doughnut-Pie-Chart/index.html": {
+      "path": "charts/Doughnut-Pie-Chart"
+    },
+    "widgets/charts/index.html": {
+      "path": "widgets/charts"
+    },
+    "theme-pages/faq/index.html": {
+      "path": "theme-pages/faq"
+    },
+    "theme-pages/pricing/index.html": {
+      "path": "theme-pages/pricing"
+    },
+    "apps/calendar/FullCalender/index.html": {
+      "path": "apps/calendar/FullCalender"
+    },
+    "front-pages/Notre-histoire/index.html": {
+      "path": "front-pages/Notre-histoire"
+    },
+    "front-pages/Pourquoi-manie/index.html": {
+      "path": "front-pages/Pourquoi-manie"
+    },
+    "juridique/mentions-legales/index.html": {
+      "path": "juridique/mentions-legales"
+    },
+    "forms/form-elements/Stepper/index.html": {
+      "path": "forms/form-elements/Stepper"
+    },
+    "front-pages/Nos-engagements/index.html": {
+      "path": "front-pages/Nos-engagements"
+    },
+    "forms/form-elements/Checkbox/index.html": {
+      "path": "forms/form-elements/Checkbox"
+    },
+    "forms/form-elements/TextField/index.html": {
+      "path": "forms/form-elements/TextField"
+    },
+    "front-pages/Notre-zone-de-jeu/index.html": {
+      "path": "front-pages/Notre-zone-de-jeu"
+    },
+    "juridique/charteBonneConduite/index.html": {
+      "path": "juridique/charteBonneConduite"
+    },
+    "theme-pages/landingpage/index.html": {
+      "path": "theme-pages/landingpage"
+    },
+    "front-pages/Faq-prestataire/index.html": {
+      "path": "front-pages/Faq-prestataire"
+    },
+    "forms/form-elements/Date-Time/index.html": {
+      "path": "forms/form-elements/Date-Time"
+    },
+    "theme-pages/treeview/index.html": {
+      "path": "theme-pages/treeview"
+    },
+    "forms/form-elements/Combobox/index.html": {
+      "path": "forms/form-elements/Combobox"
+    },
+    "forms/form-elements/FileInputs/index.html": {
+      "path": "forms/form-elements/FileInputs"
+    },
+    "forms/form-elements/TimePicker/index.html": {
+      "path": "forms/form-elements/TimePicker"
+    },
+    "forms/form-elements/Radio/index.html": {
+      "path": "forms/form-elements/Radio"
+    },
+    "apps/userprofile/one/index.html": {
+      "path": "apps/userprofile/one"
+    },
+    "forms/form-elements/Autocomplete/index.html": {
+      "path": "forms/form-elements/Autocomplete"
+    },
+    "forms/form-elements/CustomInputs/index.html": {
+      "path": "forms/form-elements/CustomInputs"
+    },
+    "theme-pages/search-results/index.html": {
+      "path": "theme-pages/search-results"
+    },
+    "forms/form-elements/Button/index.html": {
+      "path": "forms/form-elements/Button"
+    },
+    "forms/form-elements/Slider/index.html": {
+      "path": "forms/form-elements/Slider"
+    },
+    "apps/userprofile/two/index.html": {
+      "path": "apps/userprofile/two"
+    },
+    "forms/form-elements/Select/index.html": {
+      "path": "forms/form-elements/Select"
+    },
+    "dashboards/dashboard2/index.html": {
+      "path": "dashboards/dashboard2"
+    },
+    "dashboards/dashboard-client/index.html": {
+      "path": "dashboards/dashboard-client"
+    },
+    "forms/form-elements/Switch/index.html": {
+      "path": "forms/form-elements/Switch"
+    },
+    "theme-pages/account-settings/index.html": {
+      "path": "theme-pages/account-settings"
+    },
+    "juridique/politique-de-confidentialite/index.html": {
+      "path": "juridique/politique-de-confidentialite"
+    }
+  },
+  "routes": [
+    {
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      },
+      "src": "/_nuxt/builds/meta/(.*)"
+    },
+    {
+      "headers": {
+        "cache-control": "public, max-age=1, immutable"
+      },
+      "src": "/_nuxt/builds/(.*)"
+    },
+    {
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      },
+      "src": "/_nuxt/(.*)"
+    },
+    {
+      "src": "/_nuxt/builds/meta(.*)",
+      "headers": {
+        "cache-control": "public,max-age=31536000,immutable"
+      },
+      "continue": true
+    },
+    {
+      "src": "/_nuxt/builds(.*)",
+      "headers": {
+        "cache-control": "public,max-age=31536000,immutable"
+      },
+      "continue": true
+    },
+    {
+      "src": "/_nuxt(.*)",
+      "headers": {
+        "cache-control": "public,max-age=31536000,immutable"
+      },
+      "continue": true
+    },
+    {
+      "handle": "filesystem"
+    }
+  ]
+}

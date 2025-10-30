@@ -21,7 +21,7 @@ definePageMeta({
 </script>
 
 <template>
-  <div>
+  <div class="lp-wraper">
     <!--Header-->
     <!----------->
     <!--Content-->

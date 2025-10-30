@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { useCustomizerStore } from '@/stores/customizer';
 import { ref } from 'vue';
 import { useTheme } from 'vuetify';
+import { useCustomizerStore } from '@/stores/customizer';
+import { CheckIcon } from 'vue-tabler-icons';
 
 import { Icon } from '@iconify/vue';
 
@@ -13,6 +14,26 @@ const themeColors = ref([
   {
     name: 'BLUE_THEME',
     bg: 'themeBlue',
+  },
+  {
+    name: 'AQUA_THEME',
+    bg: 'themeAqua',
+  },
+  {
+    name: 'PURPLE_THEME',
+    bg: 'themePurple',
+  },
+  {
+    name: 'GREEN_THEME',
+    bg: 'themeGreen',
+  },
+  {
+    name: 'CYAN_THEME',
+    bg: 'themeCyan',
+  },
+  {
+    name: 'ORANGE_THEME',
+    bg: 'themeOrange',
   },
 ]);
 
@@ -102,6 +123,9 @@ const DarkthemeColors = ref([
               elevation="10"
               @click="toggle"
             >
+              <v-avatar :class="theme.bg" size="25">
+                <CheckIcon color="white" size="18" v-if="isSelected" />
+              </v-avatar>
             </v-sheet>
           </v-item>
         </v-col>
@@ -116,6 +140,9 @@ const DarkthemeColors = ref([
               elevation="10"
               @click="toggle"
             >
+              <v-avatar :class="theme.bg" size="25">
+                <CheckIcon color="white" size="18" v-if="isSelected" />
+              </v-avatar>
             </v-sheet>
           </v-item>
         </v-col>

@@ -2,15 +2,16 @@
 import { ref } from 'vue';
 // common components
 import BaseBreadcrumb from '@/components/shared/BaseBreadcrumb.vue';
-import UiChildCard from '@/components/shared/UiChildCard.vue';
 import UiParentCard from '@/components/shared/UiParentCard.vue';
+import UiChildCard from '@/components/shared/UiChildCard.vue';
 
 // icons
-import IconAvatar from '@/components/ui-components/avatar/IconAvatar.vue';
+import { UserIcon, SearchIcon, FolderIcon, ContrastIcon } from 'vue-tabler-icons';
 import ImageAvatar from '@/components/ui-components/avatar/ImageAvatar.vue';
 import LetterAvatar from '@/components/ui-components/avatar/LetterAvatar.vue';
-import SizeAvatar from '@/components/ui-components/avatar/SizeAvatar.vue';
+import IconAvatar from '@/components/ui-components/avatar/IconAvatar.vue';
 import VariantAvatar from '@/components/ui-components/avatar/VariantAvatar.vue';
+import SizeAvatar from '@/components/ui-components/avatar/SizeAvatar.vue';
 
 // theme breadcrumb
 const page = ref({ title: 'Avatar' });

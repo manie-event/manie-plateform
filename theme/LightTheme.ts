@@ -27,7 +27,7 @@ const BLUE_THEME: ThemeTypes = {
     borderColor: '#e5eaef',
     inputBorder: '#DFE5EF',
     containerBg: '#ffffff',
-    background: '#fff5eb',
+    background: '#f0f5f9',
     hoverColor: '#f6f9fc',
     surface: '#fff',
     grey100: '#707a82',
@@ -46,9 +46,8 @@ const AQUA_THEME: ThemeTypes = {
     'border-opacity': 1,
   },
   colors: {
-    primary: '#5d79a4',
+    primary: '#0074BA',
     secondary: '#47D7BC',
-    thirdy: '#f39454',
     info: '#46caeb',
     success: '#4bd08b',
     warning: '#f8c076',
@@ -62,7 +61,7 @@ const AQUA_THEME: ThemeTypes = {
     lightwarning: '#fff6ea',
     lightindigo: '#f1ebff',
     textPrimary: '#2A3547',
-    textSecondary: '#5d79a4',
+    textSecondary: '#2A3547',
     borderColor: '#e5eaef',
     inputBorder: '#DFE5EF',
     containerBg: '#ffffff',
@@ -73,7 +72,7 @@ const AQUA_THEME: ThemeTypes = {
     grey200: '#111c2d',
     darkbg: '#2a3447',
     bglight: '#f5f8fb',
-    bgdark: '#293b57',
+    bgdark: '#111c2d',
   },
 };
 
@@ -229,4 +228,4 @@ const ORANGE_THEME: ThemeTypes = {
   },
 };
 
-export { AQUA_THEME, BLUE_THEME, CYAN_THEME, GREEN_THEME, ORANGE_THEME, PURPLE_THEME };
+export { BLUE_THEME, AQUA_THEME, ORANGE_THEME, PURPLE_THEME, GREEN_THEME, CYAN_THEME };

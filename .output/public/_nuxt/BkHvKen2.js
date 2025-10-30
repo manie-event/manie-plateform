@@ -1,0 +1,1 @@
+import{bs as u,k as o,bV as l,z as n}from"./Y2cM3ybq.js";const g=u("cartStore",()=>{const e=o(0),t=l("jeton-quantity",0),a=o([]),r=n(()=>9*t.value),c=n(()=>t.value);return{cartQuantity:t,addresses:a,getCart:c,userTokenBalance:e,getTotalPrice:r,setBillingInfo:s=>{a.value.push(s)},creditTokensAfterPayment:s=>{e.value=e.value+s}}});export{g as u};

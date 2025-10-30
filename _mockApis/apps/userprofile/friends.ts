@@ -2,14 +2,12 @@
 import { Chance } from 'chance';
 import mock from '../../mockAdapter';
 
-import {
-  default as user1,
-  default as user2,
-  default as user3,
-  default as user4,
-  default as user5,
-  default as user6,
-} from '@/public/images/backgrounds/flutter.png';
+import user1 from '/images/profile/1.jpg';
+import user2 from '/images/profile/2.jpg';
+import user3 from '/images/profile/3.jpg';
+import user4 from '/images/profile/4.jpg';
+import user5 from '/images/profile/5.jpg';
+import user6 from '/images/profile/6.jpg';
 
 const chance = new Chance();
 

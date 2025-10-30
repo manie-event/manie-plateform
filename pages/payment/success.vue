@@ -38,6 +38,8 @@ const userStore = useUserStore();
 const { ProfessionalProfile } = storeToRefs(userStore);
 
 const sessionId = computed(() => route.query.session_id);
+console.log(sessionId, 'sessionId');
+console.log(route.query.session_id, 'route.query.session_id');
 
 // Fonctions utilitaires
 const formatAmount = (amount, currency) => {
@@ -63,6 +65,7 @@ onMounted(async () => {
     setTimeout(() => {
       navigateTo('/dashboards/dashboard2', { replace: true });
     }, 3000);
+    console.log('Paiement validé:', result);
   }
 });
 </script>

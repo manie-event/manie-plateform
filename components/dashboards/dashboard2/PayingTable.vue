@@ -3,7 +3,7 @@
     <v-card-text>
       <div class="d-flex align-center justify-space-between">
         <div>
-          <h5 class="text-h5 mb-1 font-weight-semibold">Vos propositions en cours</h5>
+          <h5 class="v-card-title">Vos propositions en cours</h5>
         </div>
       </div>
       <div class="month-table" v-if="selectedProposition.length > 0">
@@ -113,7 +113,7 @@
 <script setup lang="ts">
 import BaseEmptyState from '@/components/common/BaseEmptyState.vue';
 import errorToaster from '@/components/common/errorToaster.vue';
-import EmptyState from '@/public/images/empty-state/no-proposition-presta.svg';
+import EmptyState from '@/public/images/empty-state/profil-vides.svg';
 import { Teleport } from 'vue';
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
 import { usePropositionStore } from '~/stores/propositionStore';

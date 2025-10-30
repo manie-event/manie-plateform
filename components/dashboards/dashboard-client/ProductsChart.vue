@@ -3,20 +3,18 @@
     <v-card-text class="position-relative">
       <div class="d-flex justify-space-between d-block align-center">
         <div>
-          <h5 class="text-subtitle-1 mb-1 font-weight-semibold">Votre gestion budget</h5>
-          <div class="d-flex justify-start align-center gap-6 w-100">
-            <div class="text-right mr-6">
-              <v-btn @click="openExpenseModal = true" color="primary">+</v-btn>
-            </div>
-            <div class="text-right">
-              <v-btn
-                @click="removeExpenseModal = true"
-                color="error"
-                variant="tonal"
-                icon="mdi-delete"
-              ></v-btn>
-            </div>
-          </div>
+          <h5 class="text-h5 mb-1 font-weight-semibold">Products</h5>
+        </div>
+        <div class="text-right">
+          <v-btn @click="openExpenseModal = true" color="primary">+</v-btn>
+        </div>
+        <div class="text-right">
+          <v-btn
+            @click="removeExpenseModal = true"
+            color="error"
+            variant="tonal"
+            icon="mdi-delete"
+          ></v-btn>
         </div>
       </div>
       <div class="chart-container relative my-6">
@@ -38,7 +36,12 @@
 
   <v-dialog v-model="openExpenseModal" max-width="420" transition="dialog-bottom-transition">
     <v-card class="rounded-xl">
-      <v-card-title class="text-h6 font-weight-bold py-4 px-6"> Nouvelle dépense </v-card-title>
+      <v-card-title
+        class="text-h6 font-weight-bold py-4 px-6"
+        style="background: linear-gradient(90deg, #5d79a4, #293b57); color: white"
+      >
+        💸 Nouvelle dépense
+      </v-card-title>
 
       <v-card-text class="pt-6 pb-4 px-6">
         <p class="text-body-2 mb-4 text-medium-emphasis">
@@ -68,7 +71,7 @@
           <v-btn
             class="mt-4 text-none"
             block
-            color="#293b57"
+            color="primary"
             variant="flat"
             size="large"
             @click="addDepense"
@@ -193,6 +196,7 @@ const addDepense = () => {
 const budgetSavings = computed(() => {
   const totalExpense = series.value.reduce((acc, val) => acc + val, 0);
   const totalExpenseInEuro = props.event.budget * (totalExpense / 100);
+  console.log(totalExpense);
 
   if (totalExpense > 100) {
     return `Vous avez dépassé le budget de ${totalExpense - 100} % soit ${totalExpenseInEuro}`;

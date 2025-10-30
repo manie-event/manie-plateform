@@ -1,20 +1,18 @@
 // project imports
 import mock from '../../mockAdapter';
 // assets
-import {
-  default as image1,
-  default as image10,
-  default as image11,
-  default as image12,
-  default as image2,
-  default as image3,
-  default as image4,
-  default as image5,
-  default as image6,
-  default as image7,
-  default as image8,
-  default as image9,
-} from '/images/profile/user-5.jpg';
+import image1 from '/images/products/s1.jpg';
+import image2 from '/images/products/s2.jpg';
+import image3 from '/images/products/s3.jpg';
+import image4 from '/images/products/s4.jpg';
+import image5 from '/images/products/s5.jpg';
+import image6 from '/images/products/s6.jpg';
+import image7 from '/images/products/s7.jpg';
+import image8 from '/images/products/s8.jpg';
+import image9 from '/images/products/s9.jpg';
+import image10 from '/images/products/s10.jpg';
+import image11 from '/images/products/s11.jpg';
+import image12 from '/images/products/s12.jpg';
 
 // types
 export interface KeyedObject {

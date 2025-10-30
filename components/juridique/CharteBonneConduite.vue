@@ -9,7 +9,9 @@
         <h3>{{ section.subtitle }}</h3>
         <p>{{ section.description }}</p>
       </div>
-      <v-btn class="bg-btn px-6 py-3" @click="validatingConditions">Je valide la charte</v-btn>
+      <button class="bg-success px-6 py-3" @click="validatingConditions">
+        Je valide la charte
+      </button>
     </template>
   </BaseModal>
 </template>

@@ -62,6 +62,7 @@ export const usePaiementJeton = () => {
     try {
       if (!api) return;
       const { data } = await api.get(`/payments/session-status/${sessionId}`);
+      console.log('[verifyStripeSession]', data);
       return data;
     } catch (err: any) {
       console.error('Erreur vérification session:', err);

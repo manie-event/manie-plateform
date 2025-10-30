@@ -1,59 +1,41 @@
 <template>
   <VCard elevation="10" class="project-leap">
-    <v-card-text class="d-flex flex-column justify-space-between pb-0">
-      <div class="d-flex justify-flex-start d-block align-center mb-4">
-        <h5 class="v-card-title">Progression de vos évènements</h5>
+    <v-card-text>
+      <div class="d-flex justify-flex-start d-block align-center">
+        <div>
+          <h5 class="v-card-title">Progression de vos events</h5>
+        </div>
       </div>
-
-      <!-- Liste paginée -->
-      <div v-for="event in paginatedEvents" :key="event.uuid" v-if="paginatedEvents.length > 0">
+      <div v-for="event in eventsLeap" :key="event.uuid">
+        <!-- Barre de progression -->
         <div class="progress-section">
           <div class="progress-info">
             <span>{{ event.eventTitleCroped }}</span>
             <span class="progress-percentage">{{ event.progressPercentage }}%</span>
           </div>
 
-          <v-progress-linear
-            :model-value="event.progressPercentage"
-            :color="getProgressColor(event.progressPercentage)"
-            height="5"
-            rounded
-          />
+          <div class="d-flex align-center justify-space-between">
+            <v-progress-linear
+              :model-value="event.progressPercentage"
+              :color="getProgressColor(event.progressPercentage)"
+              height="5"
+              rounded
+            />
+          </div>
         </div>
       </div>
-      <div v-else class="d-flex flex-column align-center justify-center mb-6">
-        <div class="text-center">
-          <h4 class="text-h4 font-weight-semibold">Ca arrive bientôt..</h4>
-          <p class="text-subtitle-2">
-            Créez un évènement pour commencer à recevoir des demandes de services.
-          </p>
-        </div>
-      </div>
-      <v-pagination
-        v-if="paginatedEvents.length > 0"
-        v-model="currentPage"
-        :length="totalPages"
-        color="#5d79a4"
-        :active-color="'var(--manie-primary)'"
-        :total-visible="12"
-        density="compact"
-        size="small"
-      ></v-pagination>
     </v-card-text>
   </VCard>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { storeToRefs } from 'pinia';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 
 const { events } = storeToRefs(eventsStore());
 const { professionalResponseProposition } = storeToRefs(usePropositionStore());
 
-const itemsPerPage = 2;
-const currentPage = ref(1);
-
-const getProgressColor = (percentage: number) => {
+const getProgressColor = (percentage) => {
   if (percentage === 100) return 'success';
   if (percentage >= 50) return 'info';
   if (percentage > 0) return 'warning';
@@ -62,19 +44,33 @@ const getProgressColor = (percentage: number) => {
 
 const eventsLeap = computed(() => {
   return events.value.map((event) => {
+    // On filtre les services uniques de l'event
     const uniqueEventServices = event.eventServices.reduce((acc, current) => {
       const existing = acc.find((es) => es.serviceUuid === current.serviceUuid);
-      if (!existing) acc.push(current);
-      else if (current.status === 'completed' && existing.status !== 'completed') {
+
+      if (!existing) {
+        acc.push(current);
+      } else if (current.status === 'completed' && existing.status !== 'completed') {
         const index = acc.indexOf(existing);
         acc[index] = current;
       }
+
       return acc;
     }, []);
 
     const eventTitleCroped = event.name.length > 20 ? event.name.slice(0, 20) + '...' : event.name;
 
+    // Total de services dans l’event
     const totalServices = uniqueEventServices.length;
+
+    // On filtre les propositions liées à CET event
+    // const eventPropositions = professionalResponseProposition.value.filter(
+    //   (p) => {
+    //     (console.log(p.eventServiceUuid, 'professionalResponsePropositionUuid'),
+    //       console.log(event.eventServices[0].eventUuid, 'EVENTUuid'));
+    //   } // <-- condition essentielle
+    // );
+
     const eventPropositions = professionalResponseProposition.value.filter(
       (p) => p.uuid === event.eventServices[0].eventUuid
     );
@@ -94,37 +90,18 @@ const eventsLeap = computed(() => {
     };
   });
 });
-
-const totalPages = computed(() => Math.ceil(eventsLeap.value.length / itemsPerPage));
-
-const paginatedEvents = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage;
-  const end = start + itemsPerPage;
-  return eventsLeap.value.slice(start, end);
-});
 </script>
 
 <style lang="scss" scoped>
 .project-leap {
-  background: rgb(var(--v-theme-background));
-  min-height: 270px;
-  padding-bottom: 1rem;
-  display: flex;
-  &__pagination {
-    .v-pagination {
-      button {
-        background: transparent;
-        color: #5d79a4;
-        transition: all 0.3s ease;
+  height: 250px;
+}
 
-        &.v-pagination__item--is-active {
-          background-color: var(--manie-primary) !important;
-          color: white !important;
-          font-weight: 600;
-        }
-      }
-    }
-  }
+.event-card {
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
 }
 
 .progress-section {
@@ -136,16 +113,27 @@ const paginatedEvents = computed(() => {
   justify-content: space-between;
   margin-bottom: 8px;
   font-size: 14px;
-  color: rgb(var(--v-theme-textPrimary));
+  color: #666;
 }
 
 .progress-percentage {
   font-weight: 600;
-  color: rgb(var(--v-theme-textPrimary));
+  color: #333;
 }
 
-.text-caption {
-  font-size: 13px;
-  color: rgb(var(--v-theme-textPrimary));
+.services-list {
+  margin-top: 16px;
+}
+
+.service-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.service-item:last-child {
+  border-bottom: none;
 }
 </style>

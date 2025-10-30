@@ -5,7 +5,6 @@ export interface ThemeTypes {
   colors: {
     primary?: string;
     secondary?: string;
-    thirdy?: string;
     info?: string;
     success?: string;
     warning?: string;

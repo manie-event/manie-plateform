@@ -1,19 +1,13 @@
 <template>
   <v-card class="position-relative">
-    <div class="d-flex flex-row-reverse justify-space-between">
-      <v-btn color="primary" class="checklist-btn" variant="flat" @click="handleAddTask()">
-        <v-icon center>mdi-plus</v-icon>
-      </v-btn>
-      <div>
-        <v-card-subtitle class="text-subtitle-1 font-weight-bold pt-5">
-          Votre liste des tâches
-        </v-card-subtitle>
+    <v-btn color="primary" class="checklist-btn" variant="flat" @click="handleAddTask()">
+      <v-icon center>mdi-plus</v-icon>
+    </v-btn>
+    <v-card-title class="text-h5 font-weight-bold"> 🧾 Liste des tâches </v-card-title>
 
-        <v-card-subtitle class="text-body-2 mb-4">
-          {{ completedTasks }}/{{ currentTasks.length }} tâche(s) complétée(s)
-        </v-card-subtitle>
-      </div>
-    </div>
+    <v-card-subtitle class="text-body-2 mb-4">
+      {{ completedTasks }}/{{ currentTasks.length }} tâche(s) complétée(s)
+    </v-card-subtitle>
 
     <transition-group name="fade" tag="div">
       <v-list-item
@@ -76,6 +70,7 @@ onMounted(() => {
 // Récupérer les tâches de cet événement
 const currentTasks = computed(() => {
   if (!props.event?.uuid) return [];
+  console.log('Fetching tasks for event:', props.event.uuid);
 
   return getTasksByEvent(props.event.uuid);
 });
@@ -85,6 +80,8 @@ const completedTasks = computed(() => currentTasks.value.filter((t) => t.done).l
 
 // Handlers
 const handleAddTask = () => {
+  console.log('Adding task');
+
   if (props.event?.uuid) {
     addTask(props.event.uuid);
   }
@@ -111,9 +108,9 @@ const handleUpdateTask = (taskId: number, updates: Partial<Task>) => {
 }
 
 .checklist-btn {
-  position: relative;
+  position: absolute;
   top: 20px;
-  right: 20px;
+  right: 50px;
   z-index: 1;
   display: flex;
   align-items: center;
