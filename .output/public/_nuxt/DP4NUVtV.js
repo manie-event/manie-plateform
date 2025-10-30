@@ -1,1 +1,0 @@
-import{bs as c,k as s}from"./Y2cM3ybq.js";const S=c("eventsStore",()=>{const t=s([]),r=s(),n=s([]),o=s([]);return{events:t,answers:r,sectors:n,servicesFiltered:o,setEventsByOrganisator:e=>{t.value=e},setSectors:e=>{n.value.push(...e)},setServicesFiltered:e=>{o.value.push(...e)},setQuestionnaireAnswers:e=>{r.value=e}}});export{S as e};
