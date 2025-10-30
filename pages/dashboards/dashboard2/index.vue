@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import BaseEmptyState from '@/components/common/BaseEmptyState.vue';
 import PayingTable from '@/components/dashboards/dashboard2/PayingTable.vue';
-import TextCards from '@/components/dashboards/dashboard2/TextCards.vue';
+import TextCards from '@/components/dashboards/dashboard2/TextCard.vue';
 import WelcomeCard from '@/components/dashboards/dashboard2/WelcomeCard.vue';
 import Footer from '@/components/frontpages/layout/Footer.vue';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';

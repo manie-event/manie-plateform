@@ -10,9 +10,5 @@ definePageMeta({
 <template>
   <DefaultLayout>
     <Packages />
-    <div class="sm:pb-14 pb-8">
-      <!-- <SecurePayment /> -->
-    </div>
-    <!-- <PurchaseTemplate /> -->
   </DefaultLayout>
 </template>
