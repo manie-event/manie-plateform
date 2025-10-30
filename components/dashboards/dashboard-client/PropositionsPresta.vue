@@ -172,6 +172,7 @@ import { Teleport } from 'vue';
 import { useEventServiceProposition } from '~/composables/event-service-propositions/UseEventServiceProposition';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
+import type { ClientServiceProposition } from '~/models/propositions/client-service-proposition';
 import PropositionDetails from '../dashboard2/PropositionDetails.vue';
 import ProfessionalProfil from './ProfessionalProfil.vue';
 
@@ -242,7 +243,7 @@ const confirmedProposition = async (eventServiceUuid: string) => {
 
 const filteredPropositionByStatus = computed<ClientServiceProposition[]>(() => {
   return professionalResponseProposition.value.filter(
-    (professionalProposition) => professionalProposition.propositionStatus === 'pending'
+    (professionalProposition) => professionalProposition.propositionStatus === 'reviewing'
   );
 });
 
