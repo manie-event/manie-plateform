@@ -1,8 +1,7 @@
 <template>
-  <VCard elevation="10" class="roun- progression" v-if="props.event">
-    <v-card-title class="text-h5 font-weight-bold"> Progression: </v-card-title>
-
-    <div class="mb-6 pa-6">
+  <VCard elevation="10" class="roun-" v-if="props.event">
+    <v-card-text class="text-subtitle-1 font-weight-bold"> Votre progression : </v-card-text>
+    <div class="pa-6">
       <div class="d-flex justify-space-between mb-2">
         <span class="text-caption"
           >{{ props.event.completedServices }} / {{ props.event.totalServices }} prestataire
@@ -12,7 +11,7 @@
       </div>
       <v-progress-linear
         :model-value="props.event.progression"
-        color="success"
+        color="#293b57"
         height="5"
         rounded
       />

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { HelpIcon, ChevronDownIcon } from 'vue-tabler-icons';
+import { Icon } from '@iconify/vue';
 </script>
 
 <template>
@@ -9,7 +9,7 @@ import { HelpIcon, ChevronDownIcon } from 'vue-tabler-icons';
   <v-menu open-on-hover :close-on-content-click="false">
     <template v-slot:activator="{ props }">
       <v-btn class="hidden-sm-and-down" rounded="sm" variant="text" color="primary" v-bind="props">
-        Apps <ChevronDownIcon size="16" class="mt-1 ml-1" />
+        Apps <Icon icon="ant-design:instagram-outlined" size="16" class="mt-1 ml-1" />
       </v-btn>
     </template>
     <v-sheet width="900" height="382" elevation="10" rounded="md" class="pa-4 pb-0">

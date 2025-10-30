@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { demosMegamenu, FrontPageMenu } from '@/_mockApis/landingpage/lpPage';
 import { ref } from 'vue';
-import { ChevronDownIcon } from 'vue-tabler-icons';
 // Create a hover state object keyed by unique identifiers
 const hoverStates = ref<Record<string, boolean>>(
   demosMegamenu.reduce(
@@ -27,9 +26,7 @@ const setHoverState = (key: string, value: boolean) => {
     <template v-slot:activator="{ props }">
       <div class="d-flex align-center">
         <NuxtLink class="nuxt-link" v-bind="props">A propos </NuxtLink>
-        <i class="ddIcon me-3 z-index-1 d-flex align-center">
-          <ChevronDownIcon size="15" />
-        </i>
+        <i class="ddIcon me-3 z-index-1 d-flex align-center"> </i>
       </div>
     </template>
     <v-sheet

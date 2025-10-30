@@ -2,15 +2,15 @@
 import { ref } from 'vue';
 // common components
 import BaseBreadcrumb from '@/components/shared/BaseBreadcrumb.vue';
-import UiParentCard from '@/components/shared/UiParentCard.vue';
 import UiChildCard from '@/components/shared/UiChildCard.vue';
+import UiParentCard from '@/components/shared/UiParentCard.vue';
 
+import Advance from '@/components/ui-components/expansionpanel/Advance.vue';
 import Basic from '@/components/ui-components/expansionpanel/Basic.vue';
+import CustomizedIcon from '@/components/ui-components/expansionpanel/CustomizedIcon.vue';
 import DefaultExpand from '@/components/ui-components/expansionpanel/DefaultExpand.vue';
 import Inset from '@/components/ui-components/expansionpanel/Inset.vue';
 import Popout from '@/components/ui-components/expansionpanel/Popout.vue';
-import CustomizedIcon from '@/components/ui-components/expansionpanel/CustomizedIcon.vue';
-import Advance from '@/components/ui-components/expansionpanel/Advance.vue';
 // theme breadcrumb
 const page = ref({ title: 'Accordian' });
 const breadcrumbs = ref([
