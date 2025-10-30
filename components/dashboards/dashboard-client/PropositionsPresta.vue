@@ -169,7 +169,7 @@
 import BaseEmptyState from '@/components/common/BaseEmptyState.vue';
 import errorToaster from '@/components/common/errorToaster.vue';
 import DarkIcon from '@/public/images/empty-state/dark-profil-vide.svg';
-import LigthIcon from '@/public/images/empty-state/profil-vide.svg';
+import LigthIcon from '@/public/images/empty-state/no-proposition-presta.svg';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { computed, ref, Teleport } from 'vue';
