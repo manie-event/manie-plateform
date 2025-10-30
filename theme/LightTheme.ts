@@ -48,6 +48,7 @@ const AQUA_THEME: ThemeTypes = {
   colors: {
     primary: '#5d79a4',
     secondary: '#47D7BC',
+    thirdy: '#f39454',
     info: '#46caeb',
     success: '#4bd08b',
     warning: '#f8c076',
