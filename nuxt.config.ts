@@ -10,6 +10,11 @@ export default defineNuxtConfig({
     },
   },
 
+  css: css: [
+    '@/assets/scss/style.scss', // 👉 ton fichier principal de style
+    'vuetify/styles' // si tu utilises Vuetify
+  ],
+
   nitro: {
     preset: 'vercel',
   },
