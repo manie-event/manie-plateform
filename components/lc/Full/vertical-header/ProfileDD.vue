@@ -2,7 +2,6 @@
 import { clientMenu, professionalProfile } from '@/_mockApis/headerData';
 import { UserCategory } from '@/models/enums/userCategoryEnums';
 import { Icon } from '@iconify/vue';
-import { CircleXIcon } from 'vue-tabler-icons';
 import { useClientProfil } from '~/composables/client-user/UseClientProfil';
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
@@ -91,7 +90,11 @@ onMounted(async () => {
       <div class="px-8 pt-6">
         <div class="d-flex align-center justify-space-between">
           <h6 class="text-h5 font-weight-semibold">Votre profil</h6>
-          <CircleXIcon size="22" class="text-grey100 cursor-pointer opacity-50" />
+          <Icon
+            icon="ant-design:instagram-outlined"
+            size="22"
+            class="text-grey100 cursor-pointer opacity-50"
+          />
         </div>
 
         <div class="d-flex align-center mt-5 pb-6">
