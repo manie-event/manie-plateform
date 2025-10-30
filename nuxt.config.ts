@@ -10,9 +10,9 @@ export default defineNuxtConfig({
     },
   },
 
-  css: css: [
+  css: [
     '@/assets/scss/style.scss', // 👉 ton fichier principal de style
-    'vuetify/styles' // si tu utilises Vuetify
+    'vuetify/styles', // si tu utilises Vuetify
   ],
 
   nitro: {
