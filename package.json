@@ -41,13 +41,15 @@
     "vue3-apexcharts": "1.5.2",
     "vuetify": "3.8.0",
     "yup": "1.4.0",
-    "ofetch": "1.4.1"
+    "ofetch": "1.4.1",
+    "confbox": "0.2.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.27.0",
     "@types/chance": "^1.1.7",
     "@types/lodash": "^4.17.20",
     "@types/node": "^24.9.2",
+    "@types/eslint": "^8.56.10",
     "eslint": "^9.38.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
@@ -55,6 +57,7 @@
     "eslint-plugin-unused-imports": "^4.3.0",
     "prettier": "^3.6.2",
     "typescript": "^5.9.3",
+    "webpack-plugin-vuetify": "3.1.0",
     "typescript-eslint": "^8.46.2"
   }
 }
