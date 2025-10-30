@@ -1,7 +1,7 @@
 <template>
   <v-card elevation="10" class="mt-6">
     <v-card-item class="text-center">
-      <img src="/images/backgrounds/maintenance.svg" width="200" alt="image" />
+      <img src="@/public/images/backgrounds/flutter.png" width="200" alt="image" />
       <h5 class="text-h5 pt-3 font-weight-semibold">Oops something went wrong!</h5>
       <h6 class="text-subtitle-1 text-13 mt-2 mb-4 text-grey100">
         Trying again to bypasses these<br />

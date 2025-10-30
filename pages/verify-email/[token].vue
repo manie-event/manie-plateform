@@ -34,9 +34,9 @@
 </template>
 <script setup lang="ts">
 import BaseSidePicture from '@/components/common/BaseSidePicture.vue';
+import goodVerification from '@/public/images/backgrounds/flutter.png';
 import logoManie from '@/public/images/logos/logo-manie-creme.svg';
 import checkEmailPicture from '@/public/images/side-picture/check-email.jpg';
-import goodVerification from '@/public/images/svgs/good-verification.svg';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import Loader from '~/components/common/Loader.vue';

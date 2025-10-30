@@ -1,10 +1,7 @@
 <template>
   <v-card elevation="10" class="bg-lightprimary">
     <v-card-item class="">
-      <img src="/images/svgs/info-shap.svg" alt="shape" class="shape" />
-      <v-avatar class="bg-info mb-8" size="48">
-        <img src="/images/svgs/idea.svg" height="24" width="24" />
-      </v-avatar>
+      <v-avatar class="bg-info mb-8" size="48"> </v-avatar>
       <div class="d-flex align-center justify-space-between mb-4">
         <h5 class="text-h6 font-weight-semibold">New Goals</h5>
         <div class="text-subtitle-1 text-grey200 font-weight-medium">83%</div>

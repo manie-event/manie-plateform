@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import StripeLogo from '@/public/images/panier/stripe_logo.svg';
+import StripeLogo from '@/public/images/backgrounds/flutter.png';
 import { ref } from 'vue';
 import OrderSummaryVue from './OrderSummary.vue';
 

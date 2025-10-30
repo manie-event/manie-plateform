@@ -12,7 +12,7 @@
         <v-col cols="12" sm="5">
           <div class="px-11 pt-5 pb-7">
             <img
-              src="/images/backgrounds/login-bg.svg"
+              src="/images/backgrounds/flutter.png"
               height="215"
               class="mb-n12 ml-sm-5"
               alt="image"

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // assets
-import imageEmpty from '/images/products/empty-shopping-cart.svg';
+import imageEmpty from '@/public/images/backgrounds/flutter.png';
 //import imageDarkEmpty from '/images/e-commerce/empty-dark.svg';
 </script>
 

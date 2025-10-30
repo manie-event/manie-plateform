@@ -186,21 +186,21 @@ onMounted(async () => {
     height: 80%;
 
     &.food-truck-bg {
-      background: url('/public/images/backgrounds/test.jpg');
+      background: url('@/public/images/backgrounds/flutter.png');
       background-size: cover;
       background-position: center;
       border-radius: 10px;
       height: 70%;
     }
     &.domaine-bg {
-      background: url('/public/images/backgrounds/school.png');
+      background: url('@/public/images/backgrounds/flutter.png');
       background-size: cover;
       background-position: center;
       border-radius: 10px;
       height: 70%;
     }
     &.bg-light-yellow {
-      background: url('/public/images/backgrounds/profilebg.jpg');
+      background: url('@/public/images/backgrounds/flutter.png');
       background-size: cover;
       background-position: center;
       border-radius: 10px;

@@ -12,7 +12,7 @@
               class="bg-lightsuccess p-7 me-4 rounded-circle d-flex align-items-center justify-content-center"
               size="48"
             >
-              <img src="/images/svgs/basket.svg" alt="" />
+              <img src="@/public/images/backgrounds/flutter.png" alt="" />
             </v-avatar>
             <div>
               <h6 class="mb-1 text-h6 font-weight-semibold">64 new orders</h6>
@@ -24,7 +24,7 @@
               class="bg-lightwarning p-7 me-4 rounded-circle d-flex align-items-center justify-content-center"
               size="48"
             >
-              <img src="/images/svgs/player-pause.svg" alt="" />
+              <img src="@/public/images/backgrounds/flutter.png" alt="" />
             </v-avatar>
             <div>
               <h6 class="mb-1 text-h6 font-weight-semibold">4 orders</h6>
@@ -36,7 +36,7 @@
               class="bg-lightindigo p-7 me-4 rounded-circle d-flex align-items-center justify-content-center"
               size="48"
             >
-              <img src="/images/svgs/truck.svg" alt="" />
+              <img src="@/public/images/backgrounds/flutter.png alt="" />
             </v-avatar>
             <div>
               <h6 class="mb-1 text-h6 font-weight-semibold">12 orders</h6>
@@ -48,7 +48,7 @@
               class="bg-lightwarning p-7 me-4 rounded-circle d-flex align-items-center justify-content-center"
               size="48"
             >
-              <img src="/images/svgs/player-pause.svg" alt="" />
+              <img src="@/public/images/backgrounds/flutter.png" alt="" />
             </v-avatar>
             <div>
               <h6 class="mb-1 text-h6 font-weight-semibold">8 orders</h6>
@@ -57,7 +57,7 @@
           </li>
         </ul>
         <div class="man-working-on-laptop ml-auto mt-16 mb-n3">
-          <img src="/images/backgrounds/man-working-on-laptop.png" class="w-100" alt="" />
+          <img src="@/public/images/backgrounds/flutter.png" class="w-100" alt="" />
         </div>
       </div>
     </v-card-text>

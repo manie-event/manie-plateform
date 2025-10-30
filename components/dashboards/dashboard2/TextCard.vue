@@ -28,8 +28,6 @@
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
-import shape2 from '/images/svgs/danger-shap.svg';
-import shape1 from '/images/svgs/warning-shap.svg';
 
 const { serviceEventProposition, professionalServices } = storeToRefs(usePropositionStore());
 
@@ -180,7 +178,6 @@ const statistiques = computed(() => [
     icon: 'ruble-linear',
     // percent: totalSelectedEvent.value.percent,
     // diff: totalSelectedEvent.value.diff,
-    shape: shape1,
   },
   {
     num: totalEventSigned.value.length,
@@ -188,7 +185,6 @@ const statistiques = computed(() => [
     icon: 'ruble-linear',
     // percent: signedStats.value.percent,
     // diff: signedStats.value.diff,
-    shape: shape2,
   },
 ]);
 </script>

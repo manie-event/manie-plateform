@@ -4,7 +4,7 @@
       <h5 class="text-h5 mb-6 font-weight-semibold">Mutual Friend Revealed</h5>
       <v-badge content="1" color="error" offset-x="18" offset-y="18">
         <v-avatar size="140">
-          <img src="/images/profile/user1.jpg" height="140" alt="image" />
+          <img src="@/public/images/backgrounds/flutter.png" height="140" alt="image" />
         </v-avatar>
       </v-badge>
 

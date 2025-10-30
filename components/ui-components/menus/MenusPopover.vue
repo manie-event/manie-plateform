@@ -16,7 +16,7 @@ const hints = ref(true);
       <v-card min-width="300">
         <v-list>
           <v-list-item
-            prepend-avatar="https://cdn.vuetifyjs.com/images/john.jpg"
+            prepend-avatar="@/public/images/backgrounds/flutter.png"
             title="John Leider"
             subtitle="Founder of Vuetify"
           >

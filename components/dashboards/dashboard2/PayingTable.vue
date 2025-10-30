@@ -113,7 +113,7 @@
 <script setup lang="ts">
 import BaseEmptyState from '@/components/common/BaseEmptyState.vue';
 import errorToaster from '@/components/common/errorToaster.vue';
-import EmptyState from '@/public/images/empty-state/profil-vides.svg';
+import EmptyState from '@/public/images/empty-state/no-proposition-presta.svg';
 import { Teleport } from 'vue';
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
 import { usePropositionStore } from '~/stores/propositionStore';
