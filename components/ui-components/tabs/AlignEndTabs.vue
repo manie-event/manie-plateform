@@ -1,21 +1,25 @@
 <script setup lang="ts">
+import {
+  default as img1,
+  default as img2,
+  default as img3,
+  default as img4,
+  default as img5,
+} from '@/public/images/backgrounds/flutter.png';
 import { ref } from 'vue';
-import img1 from '/images/blog/blog-img1.jpg';
-import img2 from '/images/blog/blog-img2.jpg';
-import img3 from '/images/blog/blog-img3.jpg';
-import img4 from '/images/blog/blog-img4.jpg';
-import img5 from '/images/blog/blog-img5.jpg';
 
-import img6 from '/images/products/s3.jpg';
-import img7 from '/images/products/s4.jpg';
-import img8 from '/images/products/s5.jpg';
-import img9 from '/images/products/s6.jpg';
-import img10 from '/images/products/s7.jpg';
-import img11 from '/images/products/s8.jpg';
-import img12 from '/images/products/s9.jpg';
-import img13 from '/images/products/s10.jpg';
-import img14 from '/images/products/s11.jpg';
-import img15 from '/images/products/s12.jpg';
+import {
+  default as img10,
+  default as img11,
+  default as img12,
+  default as img13,
+  default as img14,
+  default as img15,
+  default as img6,
+  default as img7,
+  default as img8,
+  default as img9,
+} from '@/public/images/backgrounds/flutter.png';
 
 const tab = ref(null);
 const tab1 = ref([

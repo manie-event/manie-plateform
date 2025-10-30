@@ -25,11 +25,10 @@
 </template>
 
 <script setup lang="ts">
+import { default as shape1, default as shape2 } from '@/public/images/backgrounds/flutter.png';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
-import shape2 from '/images/svgs/danger-shap.svg';
-import shape1 from '/images/svgs/warning-shap.svg';
 
 const { serviceEventProposition, professionalServices } = storeToRefs(usePropositionStore());
 

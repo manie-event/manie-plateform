@@ -89,7 +89,7 @@
     width: 302px;
     height: 269px;
     z-index: -1;
-    background-image: url('/images/landingpage/background/shape-3.png');
+    background-image: url('@/public/images/backgrounds/flutter.png');
     background-repeat: no-repeat;
   }
 
@@ -101,7 +101,7 @@
     width: 302px;
     height: 269px;
     z-index: -1;
-    background-image: url('/images/landingpage/background/shape-3.png');
+    background-image: url('@/public/images/backgrounds/flutter.png');
     background-repeat: no-repeat;
   }
 }
@@ -236,7 +236,7 @@
     right: -20px;
     bottom: 0;
     top: -70px;
-    background-image: url('/images/landingpage/background/school.png');
+    background-image: url('@/public/images/backgrounds/flutter.png');
     background-repeat: no-repeat;
     width: 100%;
     max-width: 600px;
