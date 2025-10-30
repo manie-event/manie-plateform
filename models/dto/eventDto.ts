@@ -5,6 +5,7 @@ export interface eventModelDto {
   status: string;
   budget: number;
   location: string;
+  formule: string;
   people: string;
   createdAt: string;
   updatedAt: string;

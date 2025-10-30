@@ -5,6 +5,7 @@ export interface eventModel {
   status: string;
   date: string[];
   budget: number;
+  formule: string;
   location: string;
   name: string;
   people: string;

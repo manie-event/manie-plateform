@@ -9,8 +9,7 @@ const props = defineProps<{
 }>();
 
 const store = useNotesStore();
-const { selectedNote, notes } = storeToRefs(store);
-const { updateNote, getNotesByEvent, addNote } = store;
+const { addNote } = store;
 
 // common components
 const dialog = ref(false);
@@ -41,7 +40,7 @@ const handleAddNote = () => {
   <!-- ---------------------------------------------------- -->
 
   <v-sheet>
-    <v-btn color="primary" @click="dialog = true" rounded="pill">+</v-btn>
+    <v-btn color="primary" @click="dialog = true">+</v-btn>
 
     <v-dialog v-model="dialog" max-width="500">
       <v-card>
@@ -63,8 +62,8 @@ const handleAddNote = () => {
           </div>
 
           <div class="pt-6 pb-3 d-flex gap-2">
-            <v-btn color="primary" @click="handleAddNote" rounded="pill">Enregistrer</v-btn>
-            <v-btn color="error" @click="dialog = false" rounded="pill">Fermer</v-btn>
+            <v-btn color="primary" @click="handleAddNote" class="pa-3">Enregistrer</v-btn>
+            <v-btn color="error" @click="dialog = false" class="pa-3">Fermer</v-btn>
           </div>
         </v-card-text>
       </v-card>

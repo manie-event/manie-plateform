@@ -8,6 +8,7 @@ export const eventsMapper = () => {
       organisatorUuid: event.organisatorUuid,
       isAlreadyCreated: true,
       status: event.status,
+      formule: event.formule,
       budget: event.budget,
       location: event.location,
       people: event.people,
