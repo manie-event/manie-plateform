@@ -28,7 +28,7 @@
         <div class="home-description__section3">
           <Img :src="section1Img" class="home-description__section3__image"></Img>
           <div class="home-description__section3__right-side">
-            <h2 class="home-description__section3__big-title">Entreprises</h2>
+            <h2 class="home-description__section3__big-title">Professionels</h2>
             <div class="home-description__section1__description">
               <h3>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</h3>
               <p>
@@ -202,7 +202,7 @@ onMounted(() => {
     justify-content: center;
     width: 70vw;
     z-index: 99;
-    transform: translate(80px, -200px);
+    transform: translate(8vw, -200px);
     position: relative;
     &__image {
       position: relative;
