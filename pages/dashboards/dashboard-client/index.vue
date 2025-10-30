@@ -2,7 +2,6 @@
 import CurrentEvents from '@/components/dashboards/dashboard-client/CurrentEvents.vue';
 import Events from '@/components/dashboards/dashboard-client/Events.vue';
 import ProjectLeap from '@/components/dashboards/dashboard-client/ProjectLeap.vue';
-import EmptyState from '@/public/images/empty-state/profil-vide.svg';
 import { storeToRefs } from 'pinia';
 import { onMounted } from 'vue';
 import BaseEmptyState from '~/components/common/BaseEmptyState.vue';
@@ -59,9 +58,9 @@ onMounted(async () => {
   <v-row v-if="!isProfileCreated">
     <v-col cols="12">
       <BaseEmptyState>
-        <template #image>
+        <!-- <template #image>
           <img :src="EmptyState" alt="Empty State" />
-        </template>
+        </template> -->
         <template #description>
           <h2 class="text-h5">Bienvenue sur Manie</h2>
           <p class="text-subtitle-1">

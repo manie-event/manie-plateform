@@ -3,8 +3,6 @@ import LogoManie from '@/public/images/svgs/logo-manie-nav.svg';
 import { ref } from 'vue';
 // import RtlLogo from '@/layouts/full/logo/RtlLogo.vue';
 import Navigations from '@/components/landingpage/layout/Navigation.vue';
-/*Mobile Sidebar*/
-import MobileSidebar from '@/components/landingpage/layout/MobileSidebar.vue';
 /*import tabler icons*/
 import { Menu2Icon } from 'vue-tabler-icons';
 
