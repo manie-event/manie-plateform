@@ -2,7 +2,6 @@
 import { colorVariation } from '@/_mockApis/components/notes';
 import { useNotesStore } from '@/stores/notesStore';
 import { storeToRefs } from 'pinia';
-import { CheckIcon } from 'vue-tabler-icons';
 import type { eventModel } from '~/models/events/eventModel';
 const store = useNotesStore();
 const { selectedNote } = storeToRefs(store);

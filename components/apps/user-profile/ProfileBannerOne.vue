@@ -112,7 +112,6 @@
 import EditerProfessionalProfile from '@/components/apps/user-profile/EditProfessionalProfil.vue';
 import UserImage from '@/public/images/backgrounds/flutter.png';
 import { ref, shallowRef, Teleport } from 'vue';
-import { IdIcon, Layout2Icon, PlusIcon, UserCircleIcon, UsersIcon } from 'vue-tabler-icons';
 import ServicesPrestataire from '~/components/questionnaires/ServicesPrestataire.vue';
 import { useKeywords } from '~/composables/professional-user/UseKeywords';
 import { useProfessionalProfile } from '../../../composables/professional-user/UseProfessionalProfile';

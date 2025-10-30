@@ -1,5 +1,3 @@
-import type { TablerIconComponent } from 'vue-tabler-icons';
-
 /*Basic table 1 types*/
 interface teamGroupType {
   id: string;
@@ -52,7 +50,6 @@ interface basicTable4 {
   invoice: string;
   status: string;
   statuscolor: string;
-  statusicon: TablerIconComponent;
   avatar: string;
   name: string;
   handle: string;
@@ -135,7 +132,6 @@ interface heightTable {
 
 /*Table Action*/
 interface tableAction {
-  icon: TablerIconComponent;
   listtitle: string;
 }
 
@@ -145,9 +141,9 @@ export type {
   basicTable3,
   basicTable4,
   basicTable5,
+  heightTable,
+  tableAction,
   tableDark,
   tableDensity,
   tableFixedHeader,
-  heightTable,
-  tableAction,
 };

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { BasketIcon } from 'vue-tabler-icons';
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 import StepFirst from './steps/StepFirst.vue';
 

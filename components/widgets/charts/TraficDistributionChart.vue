@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { computed } from 'vue';
-import { getPrimary, getLight100, getWarning, getError } from '@/utils/UpdateColors';
-import { CircleIcon, DotsVerticalIcon } from 'vue-tabler-icons';
+import { getError, getLight100, getPrimary, getWarning } from '@/utils/UpdateColors';
+import { computed, ref } from 'vue';
 const items = ref([
   { title: 'Action' },
   { title: 'Another action' },

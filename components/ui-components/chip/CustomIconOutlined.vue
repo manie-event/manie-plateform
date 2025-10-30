@@ -1,7 +1,4 @@
-<script setup lang="ts">
-import { ref } from 'vue';
-import { MoodSmileIcon, ChecksIcon, UserCircleIcon } from 'vue-tabler-icons';
-</script>
+<script setup lang="ts"></script>
 <template>
   <div class="d-flex flex-column flex-sm-row flex-wrap flex-xl-nowrap align-center gap-3">
     <v-chip color="primary" variant="outlined">

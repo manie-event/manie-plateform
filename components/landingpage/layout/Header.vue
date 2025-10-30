@@ -4,7 +4,6 @@ import { ref } from 'vue';
 // import RtlLogo from '@/layouts/full/logo/RtlLogo.vue';
 import Navigations from '@/components/landingpage/layout/Navigation.vue';
 /*import tabler icons*/
-import { Menu2Icon } from 'vue-tabler-icons';
 
 const appsdrawer = ref(false);
 const isAlreadyConnected = localStorage.getItem('pp-created');

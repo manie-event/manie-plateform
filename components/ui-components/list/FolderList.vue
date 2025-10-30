@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { shallowRef } from 'vue';
-import { FolderIcon, BriefcaseIcon, BeachIcon } from 'vue-tabler-icons';
 const props = defineProps(['icon']);
 const folders = shallowRef([
   {

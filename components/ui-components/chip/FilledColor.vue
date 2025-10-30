@@ -1,6 +1,4 @@
-<script setup lang="ts">
-import { CircleXIcon, MoodSmileIcon } from 'vue-tabler-icons';
-</script>
+<script setup lang="ts"></script>
 <template>
   <div class="d-flex flex-wrap align-center gap-3">
     <v-chip class="text-body-2">

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { shallowRef } from 'vue';
-import { ChevronUpIcon } from 'vue-tabler-icons';
-import { ChevronDownIcon } from 'vue-tabler-icons';
+
 const props = defineProps(['icon']);
 const component = props.icon;
 // custom list data

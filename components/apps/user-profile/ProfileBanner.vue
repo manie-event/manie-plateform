@@ -44,7 +44,6 @@
 import profileBg from '@/public/images/backgrounds/profilebg.jpg';
 import UserImage from '@/public/images/side-picture/charlesdeluvio-rRWiVQzLm7k-unsplash.jpg';
 import { ref, shallowRef } from 'vue';
-import { HeartIcon, PhotoIcon, UserCircleIcon, UsersIcon } from 'vue-tabler-icons';
 import EditClientProfil from './EditClientProfil.vue';
 import ModalRedirection from './ModalRedirection.vue';
 

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { CircleIcon } from 'vue-tabler-icons';
 import { recentTransaction } from '@/_mockApis/components/widget/card';
 </script>
 <template>

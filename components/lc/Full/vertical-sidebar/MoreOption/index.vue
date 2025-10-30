@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { optionIconData } from '@/_mockApis/headerData';
-import { CircleIcon } from 'vue-tabler-icons';
 </script>
 <template>
   <v-list-subheader class="smallCap text-capitalize text-subtitle-1 mt-7 d-flex align-items-center">

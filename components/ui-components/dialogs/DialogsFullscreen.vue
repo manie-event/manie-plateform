@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { XIcon } from 'vue-tabler-icons';
 const dialog = ref(false);
 const notifications = ref(false);
 const sound = ref(true);

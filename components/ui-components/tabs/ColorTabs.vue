@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { HeartIcon, PhoneIcon, UserIcon } from 'vue-tabler-icons';
 const tab6 = ref(null);
 </script>
 <template>

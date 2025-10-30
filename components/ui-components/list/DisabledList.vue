@@ -1,13 +1,6 @@
 <script setup lang="ts">
 import { shallowRef } from 'vue';
-import {
-  AppsIcon,
-  CircleDotIcon,
-  DragDropIcon,
-  FolderIcon,
-  ChevronUpIcon,
-  ChevronDownIcon,
-} from 'vue-tabler-icons';
+
 const props = defineProps(['icon']);
 const component = props.icon;
 // List 1,3 Data

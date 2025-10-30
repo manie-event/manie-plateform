@@ -5,7 +5,6 @@ import { ref } from 'vue';
 import Navigations from './Navigation.vue';
 /*Mobile Sidebar*/
 /*import tabler icons*/
-import { Menu2Icon } from 'vue-tabler-icons';
 const appsdrawer = ref(false);
 const customizer = useCustomizerStore();
 </script>

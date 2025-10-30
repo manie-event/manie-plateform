@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { CircleDotIcon, DragDropIcon, InboxIcon, MailIcon, SendIcon } from 'vue-tabler-icons';
 const props = defineProps(['icon']);
 // List 2 data
 const open = ref(['Users']);

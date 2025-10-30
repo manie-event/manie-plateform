@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 // icons
-import { MoodSmileIcon } from 'vue-tabler-icons';
 </script>
 <template>
   <div class="d-flex align-center gap-2 justify-center">

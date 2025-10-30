@@ -2,29 +2,19 @@
 import { ref } from 'vue';
 // common components
 import BaseBreadcrumb from '@/components/shared/BaseBreadcrumb.vue';
-import UiParentCard from '@/components/shared/UiParentCard.vue';
 import UiChildCard from '@/components/shared/UiChildCard.vue';
+import UiParentCard from '@/components/shared/UiParentCard.vue';
 // icons
-import {
-  UserIcon,
-  UserPlusIcon,
-  UsersIcon,
-  PhotoIcon,
-  StarIcon,
-  FileDescriptionIcon,
-  CreditCardIcon,
-  KeyIcon,
-} from 'vue-tabler-icons';
 
+import AlignCenterTabs from '@/components/ui-components/tabs/AlignCenterTabs.vue';
+import AlignEndTabs from '@/components/ui-components/tabs/AlignEndTabs.vue';
 import BasicTabs from '@/components/ui-components/tabs/BasicTabs.vue';
 import CenterTabs from '@/components/ui-components/tabs/CenterTabs.vue';
 import ColorTabs from '@/components/ui-components/tabs/ColorTabs.vue';
+import CustomIcons from '@/components/ui-components/tabs/CustomIcons.vue';
 import DisableTabs from '@/components/ui-components/tabs/DisableTabs.vue';
 import IconsWithLabelTabs from '@/components/ui-components/tabs/IconsWithLabelTabs.vue';
 import IconTabs from '@/components/ui-components/tabs/IconTabs.vue';
-import CustomIcons from '@/components/ui-components/tabs/CustomIcons.vue';
-import AlignCenterTabs from '@/components/ui-components/tabs/AlignCenterTabs.vue';
-import AlignEndTabs from '@/components/ui-components/tabs/AlignEndTabs.vue';
 // theme breadcrumb
 const page = ref({ title: 'Tabs' });
 const breadcrumbs = ref([

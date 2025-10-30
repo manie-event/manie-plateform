@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { WifiIcon, BluetoothIcon } from 'vue-tabler-icons';
 // List 4 data
 const swt1 = ref(true);
 const swt2 = ref(false);

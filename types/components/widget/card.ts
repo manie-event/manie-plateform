@@ -1,5 +1,3 @@
-import type { TablerIconComponent } from 'vue-tabler-icons';
-
 /*Card types*/
 interface cardsType {
   avatar: string;
@@ -41,7 +39,6 @@ interface productsCards {
 /*Social Icon card types*/
 interface socialiconCards {
   name: string;
-  icon: TablerIconComponent;
   color: string;
 }
 
@@ -54,7 +51,6 @@ interface profileCard {
 
 /*Upcomming List card types*/
 interface upcommingLists {
-  icon: TablerIconComponent;
   title: string;
   subtitle: string;
   rank: string;
@@ -96,7 +92,6 @@ interface recentTrans {
 /*background icon  card*/
 interface backIcon {
   color: string;
-  icon: TablerIconComponent;
   title: string;
   subtitle: string;
 }
@@ -118,17 +113,17 @@ interface topCards {
 }
 
 export type {
+  backIcon,
   cardsType,
   followCard,
+  imgCard,
   musicCards,
+  paymentGateway,
   productsCards,
-  socialiconCards,
   profileCard,
+  recentTrans,
+  socialiconCards,
+  topCards,
   upcommingLists,
   userCard,
-  paymentGateway,
-  recentTrans,
-  backIcon,
-  imgCard,
-  topCards,
 };

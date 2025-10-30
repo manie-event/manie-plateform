@@ -1,5 +1,3 @@
-import type { TablerIconComponent } from 'vue-tabler-icons';
-
 interface textCards {
   icon: string;
   num: string;
@@ -36,7 +34,6 @@ interface ProductTable {
 
 /*Table Action*/
 interface tableAction {
-  icon: TablerIconComponent;
   listtitle: string;
 }
 
@@ -53,4 +50,4 @@ interface LatestReview {
   time: string;
 }
 
-export type { textCards, profileImg, projectTable, ProductTable, tableAction, LatestReview };
+export type { LatestReview, ProductTable, profileImg, projectTable, tableAction, textCards };

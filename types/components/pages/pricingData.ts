@@ -1,4 +1,3 @@
-import type { TablerIconComponent } from 'vue-tabler-icons';
 interface listPriceType {
   icon: TablerIconComponent;
   iconcolor: string;
