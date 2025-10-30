@@ -252,7 +252,7 @@ const confirmedProposition = async (eventServiceUuid: string) => {
 
 const filteredPropositionByStatus = computed<ClientServiceProposition[]>(() => {
   return professionalResponseProposition.value.filter(
-    (professionalProposition) => professionalProposition.propositionStatus === 'reviewing'
+    (professionalProposition) => professionalProposition.propositionStatus === 'pending'
   );
 });
 
