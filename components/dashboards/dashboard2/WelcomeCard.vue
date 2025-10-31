@@ -47,16 +47,10 @@ const propositionFiltered = ref<EventModelForProposition[]>([]);
 const isPropositionStillAvailable = () => {
   propositionFiltered.value = serviceEventProposition.value
     .filter((proposition) => !proposition.proposition.professionalMessage)
-    .filter((proposition: EventModelForProposition) => {
-      const { date } = proposition;
+    .filter((proposition) => isEventDone(proposition.date[0]));
 
-      // Si c’est pas un tableau, on garde (ex: "À définir")
-      if (!Array.isArray(date)) return true;
-
-      // Si c’est un tableau, on vérifie que ce n’est pas dépassé
-      const endDate = date[1] ?? date[0]; // on prend la fin si dispo
-      return !isEventDone(endDate); // on garde si pas fini
-    });
+  console.log(propositionFiltered.value, 'PROPOSITION FILTERED');
+  return propositionFiltered.value;
 };
 
 watch(

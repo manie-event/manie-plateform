@@ -46,7 +46,8 @@
                     class="text-subtitle-1 font-weight-medium text-no-wrap text-grey200"
                     v-if="Array.isArray(item.date) && item.date.length"
                   >
-                    Du <b>{{ getDate(item.date)[0] }}</b> au <b>{{ getDate(item.date)[1] }}</b>
+                    Du <b>{{ formatDate(item.date)[0] }}</b> au
+                    <b>{{ formatDate(item.date)[1] }}</b>
                   </h5>
                   <h5 class="text-subtitle-1 font-weight-medium text-no-wrap text-grey200" v-else>
                     {{ item.date ? `Plutôt en ${item.date}` : 'A définir' }}
@@ -89,7 +90,12 @@
             }"
           >
             <template #image>
-              <EmptyState :style="{ color: svgColor }" class="transition-colors duration-300" />
+              <EmptyState
+                :style="{ color: svgColor }"
+                height="150"
+                width="150"
+                class="transition-colors duration-300 pb-6"
+              />
             </template>
             <template #description>
               <p class="text-subtitle-1">

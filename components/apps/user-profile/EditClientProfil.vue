@@ -1,9 +1,5 @@
 <template>
   <BaseModal v-model="openModal" fullscreen transition="dialog-bottom-transition">
-    <template #title>{{
-      !isProfileCreated ? 'Renseignez votre profil' : 'Modifier votre profil'
-    }}</template>
-
     <template #content>
       <v-form class="px-4">
         <v-divider class="mt-6">
@@ -13,7 +9,9 @@
 
         <v-checkbox
           label="Êtes-vous une entreprise ?"
+          class="custom-checkbox"
           v-model="profile.isBusiness"
+          color="rgb(var(--v-theme-darkbg))"
           :error-messages="showErrors ? errors.isBusiness : undefined"
         />
 
@@ -84,7 +82,15 @@
           :error-messages="showErrors ? errors.country : undefined"
         />
 
-        <v-btn color="primary" @click="onSubmit(profile)" :loading="isSubmitting" block>
+        <v-btn
+          :style="{
+            background: 'rgb(var(--v-theme-darkbg))',
+            color: 'rgb(var(--v-theme-background))',
+          }"
+          @click="onSubmit(profile)"
+          :loading="isSubmitting"
+          block
+        >
           Valider le profil
         </v-btn>
       </v-form>
@@ -191,3 +197,20 @@ const onSubmit = async (profile: ClientModel) => {
   }
 };
 </script>
+<style lang="scss" scoped>
+.custom-checkbox {
+  .v-selection-control__input {
+    border: 2px solid rgb(var(--v-theme-darkbg));
+    background-color: rgb(var(--v-theme-background));
+    border-radius: 4px;
+  }
+
+  .v-selection-control__wrapper:hover .v-selection-control__input {
+    border-color: rgb(var(--v-theme-primary));
+  }
+
+  .v-label {
+    color: rgb(var(--v-theme-textPrimary));
+  }
+}
+</style>

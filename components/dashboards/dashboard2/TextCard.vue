@@ -3,11 +3,11 @@
     <v-col v-for="item in statistiques" :key="item.title" class="d-flex">
       <v-card elevation="10" color="primary">
         <v-card-text class="pl-5 pr-7">
-          <img :src="item.shape" alt="shape" class="shape" />
+          <span class="shape" :style="{ backgroundColor: item.color }"></span>
           <Icon :icon="'solar:' + item.icon" width="30" height="30" class="mb-6" />
           <h3 class="text-h3 font-weight-semibold mb-2 text-white">
             {{ item.num }}
-            <span
+            <!-- <span
               class="text-subtitle-2 pl-1"
               :class="{
                 'text-green-500': item.diff >= 0,
@@ -15,7 +15,7 @@
               }"
             >
               {{ item.percent }}
-            </span>
+            </span> -->
           </h3>
           <p class="text-subtitle-1 opacity-50 font-weight-medium">{{ item.title }}</p>
         </v-card-text>
@@ -175,14 +175,16 @@ const statistiques = computed(() => [
   {
     num: totalSelectedEvent.value.length,
     title: 'Presta proposée(s)',
-    icon: 'ruble-linear',
+    icon: 'hand-shake-broken',
+    color: '#f39454',
     // percent: totalSelectedEvent.value.percent,
     // diff: totalSelectedEvent.value.diff,
   },
   {
     num: totalEventSigned.value.length,
     title: 'Presta signée(s)',
-    icon: 'ruble-linear',
+    icon: 'chat-round-money-line-duotone',
+    color: '#fabe4a',
     // percent: signedStats.value.percent,
     // diff: signedStats.value.diff,
   },
@@ -192,7 +194,10 @@ const statistiques = computed(() => [
 <style scoped>
 .shape {
   position: absolute;
-  right: 0;
-  top: 0px;
+  right: -30px;
+  top: -30px;
+  width: 150px;
+  height: 150px;
+  border-bottom-left-radius: 50%;
 }
 </style>

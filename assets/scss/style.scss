@@ -11,7 +11,6 @@
 @import './layout/horizontal';
 @import './layout/dark';
 @import './layout/customizer';
-
 @import './components/VBreadcrumb';
 @import './components/VAlert';
 @import './components/VButtons';
@@ -34,8 +33,8 @@
 @import './components/VTooltip';
 @import './components/VStepper';
 @import './components/VLabs';
-
-/*Landing page css*/
+@import './components/VCheckbox';
+@import './components/VRadio'; /*Landing page css*/
 @import 'landingpage/header';
 @import 'landingpage/general';
 
