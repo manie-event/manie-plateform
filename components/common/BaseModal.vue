@@ -18,7 +18,7 @@
 
       <!-- Bouton de fermeture -->
       <v-btn class="modal-close-button" icon @click="model = false">
-        <v-icon>mdi-close</v-icon>
+        <Icon icon="ri:close-fill" color="red" height="24" width="24" />
       </v-btn>
     </v-card>
   </v-dialog>
@@ -31,6 +31,7 @@
 </template>
 
 <script setup lang="ts">
+import { Icon } from '@iconify/vue';
 const model = defineModel<boolean>();
 
 const props = withDefaults(

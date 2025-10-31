@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="serviceModal" fullscreen transition="dialog-bottom-transition">
+  <v-dialog v-model="serviceModal" width="800" transition="dialog-bottom-transition">
     <v-card v-if="professionalUser?.uuid" width="800">
       <div class="questionnaires-container">
         <div
@@ -7,6 +7,22 @@
           :key="questionnaire.id"
           class="questionnaire-section mb-8"
         >
+          <div class="d-flex justify-space-between align-center mb-2">
+            <h3 class="text-subtitle1 font-weight-medium">
+              Quelle est votre Activité N°{{ index + 1 }}?
+            </h3>
+
+            <v-btn
+              v-if="questionnaires.length > 1"
+              icon
+              variant="text"
+              color="error"
+              @click="removeQuestionnaire(index)"
+            >
+              <Icon icon="mdi:close" width="20" height="20" />
+            </v-btn>
+          </div>
+
           <!-- Sélection du secteur pour les questionnaires supplémentaires -->
           <div v-if="index > 0" class="mb-6">
             <v-select
@@ -140,20 +156,25 @@
           </div>
         </div>
 
-        <!-- Bouton d'ajout -->
-        <div class="mt-6 text-center d-flex justify-space-between">
-          <v-btn
-            v-if="questionnaires.length < 3"
-            @click="addNewQuestionnaire"
-            color="primary"
-            variant="outlined"
-            prepend-icon="mdi-plus"
-          >
-            Ajouter une nouvelle activité
-          </v-btn>
-        </div>
-        <div>
-          <v-btn color="primary" @click="submitAllQuestionnaires()">Valider ma selection</v-btn>
+        <div class="d-flex align-center justify-lg-space-between">
+          <!-- Bouton d'ajout -->
+          <div class="d-flex justify-space-between align-center px-4 py-3">
+            <v-btn
+              v-if="questionnaires.length < 3"
+              @click="addNewQuestionnaire"
+              color="primary"
+              variant="outlined"
+              class="px-4 py-3"
+            >
+              <span>Ajouter une nouvelle activité</span>
+            </v-btn>
+          </div>
+          <div>
+            <Icon icon="ri:add-fill" width="20" height="20" />
+            <v-btn color="primary" class="px-4 py-3" @click="submitAllQuestionnaires()"
+              >Valider ma selection</v-btn
+            >
+          </div>
         </div>
       </div>
     </v-card>
@@ -166,6 +187,7 @@
 
 <script setup lang="ts">
 import questionnairePresta from '@/data/questionnaire-presta.json';
+import { Icon } from '@iconify/vue';
 import { ref, Teleport, watch } from 'vue';
 import { useKeywords } from '~/composables/professional-user/UseKeywords';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
@@ -183,7 +205,7 @@ const userStore = useUserStore();
 const { professionnalServices, keywords, professionalUser } = storeToRefs(userStore);
 const { getSectors, loading, sendProfessionalServices } = useKeywords();
 const { addSuccess, addError } = useToaster();
-const { patchProfessionnalProfileDetails } = useProfessionalProfile();
+const { patchProfessionalProfileDetails } = useProfessionalProfile();
 
 const questionnaires = ref<QuestionnaireItem[]>([]);
 const activityItems = ref(ACTIVITY_ITEMS);
@@ -226,6 +248,10 @@ const calculateKeywordsByCategory = (
   });
 
   return grouped;
+};
+
+const removeQuestionnaire = (index: number) => {
+  questionnaires.value.splice(index, 1);
 };
 
 const createQuestionnaire = (sector: string): QuestionnaireItem => {
@@ -348,7 +374,7 @@ const submitAllQuestionnaires = async () => {
       .map((q) => q.sector);
 
     // Mettre à jour le profil professionnel avec les activités secondaires
-    await patchProfessionnalProfileDetails({
+    await patchProfessionalProfileDetails({
       ...professionalUser.value,
       faq:
         typeof professionalUser.value?.faq === 'string'
@@ -405,28 +431,142 @@ watch([professionnalServices, keywords], ([newServices, newKeywords]) => {
 });
 </script>
 
-<style scoped>
-.questionnaire-section {
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 20px;
-  background-color: #fafafa;
+<style lang="scss" scoped>
+.questionnaires-container {
+  margin: 0 auto;
+  padding: 2rem 2.5rem;
+  background: rgb(var(--v-theme-background));
+  border-radius: 16px;
+
+  @media (max-width: 960px) {
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 600px) {
+    padding: 1rem;
+  }
 }
 
+/* --- SECTIONS --- */
+.questionnaire-section {
+  background: rgb(var(--v-theme-surface));
+  border: 1px solid rgba(93, 121, 164, 0.15);
+  border-radius: 12px;
+  padding: 1.75rem;
+  margin-bottom: 2.5rem;
+  transition:
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+
+  &:hover {
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+    transform: translateY(-1px);
+  }
+
+  .v-divider {
+    border-color: rgba(93, 121, 164, 0.15);
+    margin: 1.5rem 0;
+    span {
+      font-weight: 600;
+      font-size: 1rem;
+      color: rgb(var(--v-theme-darkbg));
+      letter-spacing: 0.2px;
+    }
+  }
+}
+
+/* --- CHIPS --- */
 .service-chips,
 .keyword-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 0.5rem;
+}
+
+.v-chip {
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: 0.2px;
+  transition: all 0.2s ease-in-out;
+  padding: 0.35rem 0.75rem;
+
+  &:hover {
+    background-color: rgba(var(--v-theme-darkbg), 0.08);
+    transform: translateY(-1px);
+  }
 }
 
 .selected-chip {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  transform: translateY(-1px);
+  background-color: rgba(var(--v-theme-primary), 0.12) !important;
+  color: rgb(var(--v-theme-primary)) !important;
+  box-shadow: 0 2px 10px rgba(var(--v-theme-primary), 0.2);
 }
 
-.questionnaires-container {
-  max-width: 1200px;
-  margin: 0 auto;
+/* --- BOUTONS --- */
+.v-btn {
+  border-radius: 10px !important;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0.2px;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
+  padding: 0.8rem 1.6rem;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+
+  &.v-btn--variant-outlined {
+    border-color: rgba(var(--v-theme-darkbg), 0.3);
+    color: rgb(var(--v-theme-darkbg)) !important;
+
+    &:hover {
+      background-color: rgba(var(--v-theme-darkbg), 0.05);
+    }
+  }
+
+  &.v-btn--variant-contained {
+    background-color: rgb(var(--v-theme-darkbg)) !important;
+    color: rgb(var(--v-theme-background)) !important;
+
+    &:hover {
+      background-color: rgba(var(--v-theme-darkbg), 0.9) !important;
+    }
+  }
+}
+
+/* --- ZONES D’INTERACTION --- */
+.text-center {
+  text-align: center;
+}
+
+.mt-6 {
+  margin-top: 2rem !important;
+}
+
+.mb-6 {
+  margin-bottom: 2rem !important;
+}
+
+.py-8 {
+  padding: 3rem 0 !important;
+}
+
+.text-grey {
+  color: rgba(var(--v-theme-on-surface), 0.6);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  .questionnaire-section {
+    padding: 1.25rem;
+  }
+
+  .v-chip {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.6rem;
+  }
 }
 </style>

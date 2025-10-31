@@ -101,16 +101,16 @@
           v-model="theme"
           label="Thème de l'événement"
           prepend-inner-icon="mdi-palette-outline"
-          variant="outlined"
+          control-variant="hidden"
           class="mb-4"
         />
 
         <v-number-input
           v-model="people"
           type="number"
+          control-variant="hidden"
           label="Nombre d'invités"
           prepend-inner-icon="mdi-account-group-outline"
-          variant="outlined"
           class="mb-4"
         />
 

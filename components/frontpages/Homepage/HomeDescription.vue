@@ -2,7 +2,7 @@
   <div class="home-description">
     <div class="home-description__container">
       <h2 class="home-description__title">
-        Notre mission ? Permettre à n'importe qui d'organiser n'importe quoi !
+        Notre mission : permettre à n'importe qui d'organiser n'importe quoi !
       </h2>
       <div>
         <div class="home-description__section1">
@@ -10,14 +10,18 @@
             <h2 class="home-description__section1__big-title">Particuliers</h2>
           </div>
           <div class="home-description__section1__description">
-            <h3>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</h3>
             <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure officia facere sit sint
-              voluptatem error tempore reprehenderit ex, praesentium similique mollitia minima
-              veritatis nesciunt perspiciatis molestiae sapiente impedit repellat architecto.
+              En famille, entre amis, ou les deux : célébrez la vie ! <br />
+              <br />
+              Qu’il s’agisse d’honorer l’amour, de rassembler vos proches, de marquer une étape
+              importante dans votre carrière ou d’accueillir le changement, chaque moment mérite
+              d’être vécu pleinement. <br />
+              <br />
+              Manie, c’est la promesse d’une organisation simple, fluide et sans pression, pour que
+              vous puissiez profiter de chaque instant et le transformer en un souvenir précieux.
             </p>
             <NuxtLink to="/auth/login" class="home-description__section1__description__link"
-              >Je crée mon évènement</NuxtLink
+              >Je crée mon évènement !</NuxtLink
             >
           </div>
           <Img :src="section1Img" class="home-description__section1__image"></Img>
@@ -30,17 +34,40 @@
           <div class="home-description__section3__right-side">
             <h2 class="home-description__section3__big-title">Entreprises</h2>
             <div class="home-description__section1__description">
-              <h3>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</h3>
               <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure officia facere sit
-                sint voluptatem error tempore reprehenderit ex, praesentium similique mollitia
-                minima veritatis nesciunt perspiciatis molestiae sapiente impedit repellat
-                architecto.
+                Entreprises, collectivités et institutions : <br />
+                valorisez vos équipes, vos clients et vos partenaires ! <br />
+                <br />
+                Qu’il s’agisse d’un séminaire, d’un lancement, d’une inauguration ou d’un simple
+                cocktail, chaque événement mérite d’être impactant et à votre image. <br />
+                <br />
+                Manie, c’est la promesse d’une organisation simple, claire et réactive, pour que
+                vous puissiez vous concentrer sur l’essentiel : vos invités, vos objectifs, vos
+                réussites.
               </p>
               <NuxtLink to="/auth/login" class="home-description__section1__description__link"
-                >Je crée mon évènement</NuxtLink
+                >Je crée mon évènement !</NuxtLink
               >
             </div>
+          </div>
+        </div>
+        <div>
+          <h2 class="home-description__section4__big-title text-h2 font-weight-bold">
+            Prestataires
+          </h2>
+          <div class="home-description__section4__description">
+            <p>
+              Tu fais partie de la team lieux, food, boissons, musique, audiovisuel, déco, location
+              de matériel animation ou logistique ? Bienvenue ! <br />
+              <br />
+              Rejoins un écosystème local de professionnels sélectionnés pour leur talent, leurs
+              valeurs et leur ancrage territorial ! <br />
+              <br />
+              Unissons nos talents pour faire vibrer l’Auvergne-Rhône-Alpes.
+            </p>
+            <NuxtLink to="/auth/login" class="home-description__section4__description__link"
+              >Je crée mon évènement !</NuxtLink
+            >
           </div>
         </div>
       </div>
@@ -212,6 +239,21 @@ onMounted(() => {
       object-fit: cover;
       border-radius: 10px;
       box-shadow: -10px 10px 0 10px var(--bg-color);
+    }
+  }
+  &__section4 {
+    &__big-title {
+      text-align: center;
+      font-size: 2vw;
+      font-family: 'Poppins';
+      font-weight: 500;
+      margin: 50px auto 170px;
+      position: relative;
+      z-index: 3;
+      background: rgb(var(--v-theme-thirdy));
+      width: fit-content;
+      color: white;
+      padding: 10px;
     }
   }
 }

@@ -5,7 +5,7 @@
     <img
       :src="professionalUser?.picture ? professionalUser?.picture : bgPicture"
       alt="profile"
-      class="w-100 max-h-400 rounded-md obj-cover"
+      class="w-100 profile-banner__image rounded-md obj-cover"
     />
     <button @click="triggerClickFileInput" class="profile-banner__change-image">+</button>
     <input
@@ -23,26 +23,25 @@
           <v-col cols="12" md="6" sm="9" class="pt-0">
             <div class="d-sm-flex align-center justify-sm-start justify-center">
               <div class="text-sm-left text-center">
-                <v-avatar size="100" class="userImage position-relative overflow-visible">
-                  <img :src="UserImage" width="100" alt="Mathew" class="rounded-circle" />
-                  <v-avatar size="26" class="bg-primary position-absolute plus">
-                    <PlusIcon size="16" stroke-width="2" />
-                  </v-avatar>
+                <v-avatar size="100" class="userImage position-relative overflow-visible rounded">
+                  {{ initials }}
                 </v-avatar>
               </div>
               <div class="ml-sm-4 text-sm-left text-center">
-                <h5 class="text-h3 font-weight-semibold mb-1 my-sm-0 my-2">
-                  {{ user?.username ?? 'Définir votre nom complet' }}
+                <h6 class="text-subtitle-1 font-weight-semibold mb-1 my-sm-0 my-2">
+                  {{ professionalUser.name ? professionalUser.name : user.username }}
                   <v-chip
                     color="primary"
                     class="bg-lightprimary font-weight-semibold ml-2 mt-n1"
                     variant="outlined"
                     size="x-small"
-                    >Admin</v-chip
+                    >Prestataire</v-chip
                   >
-                </h5>
+                </h6>
                 <span class="text-h6 font-weight-medium text-grey100">{{
-                  user?.category ?? 'Aucune phrase inspirante définie'
+                  professionalUser.telephone
+                    ? professionalUser.telephone
+                    : 'Définissez votre téléphone'
                 }}</span>
               </div>
             </div>
@@ -79,29 +78,14 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col md="12" class="profile-one">
-            <v-tabs v-model="tab" color="primary" dark class="profiletab">
-              <v-tab
-                v-for="item in items"
-                :key="item.tab"
-                :to="item.href"
-                class="text-grey100 mr-sm-3"
-              >
-                <component
-                  :is="item.icon"
-                  size="20"
-                  stroke-width="1.5"
-                  class="mr-sm-2 text-h6 text-grey100 icon"
-                >
-                </component>
-                <span class="d-sm-flex d-none">{{ item.tab }}</span>
-              </v-tab>
-            </v-tabs>
-          </v-col>
+          <v-col md="12" class="profile-one"> </v-col>
         </v-row>
       </v-card-item>
     </v-card>
   </div>
+  <v-card class="w-100 profile-banner">
+    <p>Test</p>
+  </v-card>
   <Teleport to="body">
     <EditerProfessionalProfile v-model:openModal="openModal" />
     <services-prestataire class="mt-6" v-model:pageActuelle="openServiceModal" />
@@ -110,8 +94,7 @@
 
 <script setup lang="ts">
 import EditerProfessionalProfile from '@/components/apps/user-profile/EditProfessionalProfil.vue';
-import UserImage from '@/public/images/backgrounds/flutter.png';
-import { ref, shallowRef, Teleport } from 'vue';
+import { ref, Teleport } from 'vue';
 import ServicesPrestataire from '~/components/questionnaires/ServicesPrestataire.vue';
 import { useKeywords } from '~/composables/professional-user/UseKeywords';
 import { useProfessionalProfile } from '../../../composables/professional-user/UseProfessionalProfile';
@@ -122,6 +105,7 @@ const tab = ref(null);
 const openModal = ref(false);
 const openServiceModal = ref(false);
 const fileInput = ref(null);
+const initials = ref('');
 
 const { user, isProfileCreated, professionalUser } = storeToRefs(useUserStore());
 const { getKeywords } = useKeywords();
@@ -137,24 +121,36 @@ const changeBannerPhoto = async (e: Event) => {
   await changeProfessionalBannerPicture(picture);
 };
 
-const items = shallowRef([
-  { tab: 'My Profile', icon: UserCircleIcon, href: '/apps/userprofile/one' },
-  { tab: 'Teams', icon: UsersIcon, href: '/apps/userprofile/one/teams' },
-  { tab: 'Projects', icon: Layout2Icon, href: '/apps/userprofile/one/projects' },
-  { tab: 'Connection', icon: IdIcon, href: '/apps/userprofile/one/connection' },
-]);
-
 const openEditProfilModal = () => {
   openModal.value = !openModal.value;
 };
 
+const getInitials = (name?: string) => {
+  if (!name) return '';
+
+  const parts = name.trim().toUpperCase().replace(/\s+/g, ' ');
+
+  if (parts.length === 1) {
+    return parts[0].substring(0, 1);
+  }
+
+  return parts[0][0];
+};
+
 onMounted(() => {
   getProfessionalProfileDetails();
+
+  initials.value = professionalUser.value
+    ? getInitials(professionalUser.value.name)
+    : getInitials(user.value?.username);
 });
 </script>
 
 <style lang="scss" scoped>
 .profile-banner {
+  &__image {
+    max-height: 250px;
+  }
   &__change-image {
     position: absolute;
     display: flex;
