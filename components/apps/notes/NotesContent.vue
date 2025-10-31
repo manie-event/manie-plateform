@@ -32,7 +32,7 @@ const updateTitle = () => {
 </script>
 
 <template>
-  <v-dialog max-width="600" width="100%" v-model="openContentModal">
+  <v-dialog max-width="600" width="100%" elevation="3" v-model="openContentModal">
     <v-sheet>
       <v-sheet class="py-3 pl-6 pr-4 d-flex align-center">
         <h4 class="text-h6 font-weight-semibold">Edit Notes</h4>

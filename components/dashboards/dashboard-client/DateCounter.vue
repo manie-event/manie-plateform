@@ -1,5 +1,5 @@
 <template>
-  <VCard class="date-counter" elevation="10">
+  <VCard class="date-counter" elevation="5">
     <v-card-text class="pa-0">
       <div class="d-flex flex-column justify-content-center pa-4">
         <h5 class="text-subtitle-1 font-weight-semibold mb-2">Votre compte à rebours</h5>

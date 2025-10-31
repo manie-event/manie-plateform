@@ -1,38 +1,45 @@
 <template>
-  <v-card elevation="10" class="overflow-hidden">
+  <v-card elevation="5" class="overflow-hidden profile-banner">
     <img :src="profileBg" alt="profile" class="w-100" />
-    <div>
-      <v-row class="mt-1">
-        <v-col cols="12" lg="4" sm="12" class="d-flex justify-center order-sml-first">
-          <div class="text-center top-spacer">
-            <div class="avatar-border">
-              <v-avatar size="100" class="userImage">
-                <img :src="UserImage" width="100" alt="Mathew" />
-              </v-avatar>
-            </div>
-            <h5 class="text-h5 mt-3 font-weight-semibold">Mike Nielsen</h5>
-            <span class="text-h6 font-weight-regular">Designer</span>
+    <div class="mt-1 d-flex justify-center">
+      <v-col cols="4" class="d-flex gap-2 align-center flex-column justify-center">
+        <h6 class="text-subtitle-1 d-flex align-center gap-2">
+          <Icon icon="ci:paper-plane" height="24" width="24"></Icon>{{ clientProfile?.email }}
+        </h6>
+        <h6 class="text-subtitle-1 d-flex align-center gap-2">
+          <Icon icon="ci:phone" height="24" width="24"></Icon> {{ clientProfile?.phoneNumber }}
+        </h6>
+      </v-col>
+      <v-col cols="4" class="d-flex justify-center order-sml-first">
+        <div class="text-center top-spacer">
+          <div class="avatar-border">
+            <v-avatar size="100" class="userImage">
+              <img :src="UserImage" width="100" alt="Mathew" />
+            </v-avatar>
           </div>
-        </v-col>
-        <v-col
-          cols="12"
-          lg="4"
-          class="d-flex align-center justify-center justify-lg-end order-sm-third text-sm-right text-center"
+          <h5 class="text-h5 mt-3 font-weight-semibold">
+            {{ userName ? userName : clientName }}
+          </h5>
+          <span class="text-h6 font-weight-regular">Chercheur de bonheur</span>
+        </div>
+      </v-col>
+      <v-col
+        cols="4"
+        class="d-flex align-center justify-center justify-lg-end order-sm-third text-sm-right text-center"
+      >
+        <div
+          class="d-flex d-column align-center justify-sm-space-between justify-center px-sm-10 py-1 gap-3"
         >
-          <div
-            class="d-sm-flex flex-column align-center justify-sm-space-between justify-center px-sm-10 py-1 gap-3"
+          <v-btn color="primary" size="large" class="pa-3" @click="openEditProfilModal()"
+            >Editez votre profil</v-btn
           >
-            <v-btn color="primary" size="large" class="w-100" @click="openEditProfilModal()"
-              >Editez votre profil</v-btn
-            >
-            <NuxtLink to="/dashboards/dashboard-client"
-              ><v-btn color="success" size="large" class="w-100">
-                Revenir au dashboard</v-btn
-              ></NuxtLink
-            >
-          </div>
-        </v-col>
-      </v-row>
+          <NuxtLink to="/dashboards/dashboard-client"
+            ><v-btn color="success" size="large" class="pa-3">
+              Revenir au dashboard</v-btn
+            ></NuxtLink
+          >
+        </div>
+      </v-col>
     </div>
   </v-card>
   <Teleport to="body">
@@ -43,27 +50,25 @@
 <script setup lang="ts">
 import profileBg from '@/public/images/backgrounds/profilebg.jpg';
 import UserImage from '@/public/images/side-picture/charlesdeluvio-rRWiVQzLm7k-unsplash.jpg';
-import { ref, shallowRef } from 'vue';
+import { Icon } from '@iconify/vue';
+import { ref } from 'vue';
 import EditClientProfil from './EditClientProfil.vue';
 import ModalRedirection from './ModalRedirection.vue';
 
-const tab = ref(null);
+const { isProfilUpdate, clientProfile } = storeToRefs(useUserStore());
+
 const openModal = ref(false);
-
-const items = shallowRef([
-  { tab: 'Profile', icon: UserCircleIcon, href: '/apps/userprofile/two' },
-  { tab: 'Followers', icon: HeartIcon, href: '/apps/userprofile/two/followers' },
-  { tab: 'Friends', icon: UsersIcon, href: '/apps/userprofile/two/friends' },
-  { tab: 'Gallery', icon: PhotoIcon, href: '/apps/userprofile/two/gallery' },
-]);
-
-const { isProfilUpdate } = storeToRefs(useUserStore());
+const clientName = localStorage.getItem('client-name');
+const userName = localStorage.getItem('username');
 const openEditProfilModal = () => {
   openModal.value = !openModal.value;
 };
 </script>
 
 <style lang="scss">
+.profile-banner {
+  padding-bottom: 50px;
+}
 .avatar-border {
   background-image: linear-gradient(rgb(80, 178, 252), rgb(244, 76, 102));
   border-radius: 50%;

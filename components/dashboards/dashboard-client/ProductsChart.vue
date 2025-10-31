@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="10" class="roun-">
+  <v-card elevation="5" class="roun-">
     <v-card-text class="position-relative">
       <div class="d-flex justify-space-between d-block align-center">
         <div>

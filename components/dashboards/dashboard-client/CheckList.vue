@@ -1,5 +1,5 @@
 <template>
-  <v-card class="position-relative">
+  <v-card class="position-relative" elevation="5">
     <div class="d-flex flex-row-reverse justify-space-between">
       <v-btn color="primary" class="checklist-btn" variant="flat" @click="handleAddTask()">
         <v-icon center>mdi-plus</v-icon>

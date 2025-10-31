@@ -11,12 +11,7 @@ export const useContactService = () => {
     try {
       if (!api) return;
 
-      const { data } = await api.post(`${config.public.apiUrl}/contact`, contactData, {
-        headers: {
-          Authorization: `Bearer ${token.value}`,
-          'Content-Type': 'application/json',
-        },
-      });
+      const { data } = await api.post(`${config.public.apiUrl}/contact`, contactData);
       if (data) {
         addSuccess('Votre message a été envoyé avec succès.');
         return data;

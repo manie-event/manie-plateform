@@ -15,10 +15,10 @@ definePageMeta({
         <v-card elevation="0" class="overflow-hidden px-sm-3">
           <v-card-item class="px-sm-8 px-3">
             <v-row class="justify-md-space-around align-center py-md-8">
-              <v-col cols="12" lg="5" md="6" class="d-md-flex d-none">
+              <v-col cols="12" lg="5" md="6" class="d-md-flex justify-center d-none">
                 <img
-                  src="@/public/images/backgrounds/flutter.png"
-                  class="w-100"
+                  src="@/public/images/mascotte/manie-login.png"
+                  class="w-75"
                   alt="login-background"
                 />
               </v-col>
