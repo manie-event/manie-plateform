@@ -1,4 +1,4 @@
-import { PRICE_PER_TOKEN } from '~/constants/prixeToken';
+import { PRICE_PER_TOKEN } from '~/constants/prixToken';
 
 export const usePaiementJeton = () => {
   const route = useRoute();

@@ -206,27 +206,27 @@ const FAQData: TemplateType[] = [
 const footerContact: FooterType[] = [
   {
     titre: "Conditions Générales d'utilisation",
-    description: 'Manie Event',
+    description: '',
     link: '/juridique/cgu',
   },
   {
     titre: 'Conditions Générales de Ventes',
-    description: '84933539300013',
+    description: '',
     link: '/juridique/cgv',
   },
   {
     titre: 'Mentions légales',
-    description: '69007 Lyon, France',
+    description: '',
     link: '/juridique/mentions-legales',
   },
   {
     titre: 'Politique de confidentialité',
-    description: '69007 Lyon, France',
+    description: '',
     link: '/juridique/politique-de-confidentialite',
   },
   {
     titre: 'Cookies',
-    description: '69007 Lyon, France',
+    description: '',
     link: '/juridique/cookies',
   },
 ];

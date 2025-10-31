@@ -1,7 +1,7 @@
 <template>
   <v-card elevation="10" class="overflow-visible">
     <v-card-text class="position-relative pb-5">
-      <h5 class="text-h5 mb-1 font-weight-semibold">
+      <h5 class="text-h6 mb-1 font-weight-semibold">
         {{ `${proName ? proName : professionalUser?.name}, content de vous voir ici,` }}
       </h5>
       <div class="text-subtitle-1 text-grey100 pb-1">Un coup d'oeil sur les annonces du jour ?</div>
@@ -18,7 +18,7 @@
       <v-btn color="primary" class="mt-4 mb-2 px-7" rounded="pill" size="large" v-else>
         <Loader class="w-2 h-2 animate-spin" />
       </v-btn>
-      <img :src="PhotoAModifier" class="bg-img-1 mt-sm-0 mt-sm-n10" />
+      <!-- <img :src="PhotoAModifier" class="bg-img-1 mt-sm-0 mt-sm-n10" /> -->
     </v-card-text>
   </v-card>
   <Teleport to="body">
@@ -30,7 +30,6 @@
 </template>
 <script setup lang="ts">
 import { useEventServiceProposition } from '@/composables/event-service-propositions/UseEventServiceProposition';
-import PhotoAModifier from '@/public/images/backgrounds/school.png';
 import Loader from '@/public/images/svgs/minimal-spinner.svg';
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
 import ProfessionalMarketPlace from './ProfessionalMarketPlace.vue';
@@ -47,16 +46,9 @@ const propositionFiltered = ref<EventModelForProposition[]>([]);
 const isPropositionStillAvailable = () => {
   propositionFiltered.value = serviceEventProposition.value
     .filter((proposition) => !proposition.proposition.professionalMessage)
-    .filter((proposition: EventModelForProposition) => {
-      const { date } = proposition;
+    .filter((proposition) => isEventDone(proposition.date[0]));
 
-      // Si c’est pas un tableau, on garde (ex: "À définir")
-      if (!Array.isArray(date)) return true;
-
-      // Si c’est un tableau, on vérifie que ce n’est pas dépassé
-      const endDate = date[1] ?? date[0]; // on prend la fin si dispo
-      return !isEventDone(endDate); // on garde si pas fini
-    });
+  return propositionFiltered.value;
 };
 
 watch(

@@ -19,7 +19,7 @@ import manieFooterDroits from '/images/logos/logo-footer-droits.png';
               <div class="d-flex flex-column ga-4">
                 <div v-for="item in footerContact" :key="item.titre">
                   <h4 class="footer-title">
-                    <a :href="item.link"> {{ `${item.titre}: ` }}</a>
+                    <a :href="item.link"> {{ `${item.titre} ` }}</a>
                   </h4>
                   <h5>{{ item.description }}</h5>
                 </div>
@@ -40,10 +40,8 @@ import manieFooterDroits from '/images/logos/logo-footer-droits.png';
               </div>
               <div>
                 <h5 class="text-17 mb-sm-8">Notre FAQ</h5>
-                <NuxtLink to="/front-pages/Faq-client"><p>FAQ spécial client</p></NuxtLink>
-                <NuxtLink to="/front-pages/Faq-prestataire"
-                  ><p>FAQ spécial Prestataire</p></NuxtLink
-                >
+                <NuxtLink to="/front-pages/Faq-client"><p>FAQ client</p></NuxtLink>
+                <NuxtLink to="/front-pages/Faq-prestataire"><p>FAQ Prestataire</p></NuxtLink>
               </div>
             </div>
           </v-col>
@@ -52,7 +50,7 @@ import manieFooterDroits from '/images/logos/logo-footer-droits.png';
             <h5 class="text-17 mb-sm-8 mb-6">Suivez-nous</h5>
             <div class="contact-form__contact">
               <div class="contact-form__reseaux">
-                <NuxtLink to="https://www.instagram.com/manie_event/" target="_blank"
+                <NuxtLink to="https://www.instagram.com/manie.event/" target="_blank"
                   ><Icon icon="ant-design:instagram-outlined" height="22" width="22"></Icon
                 ></NuxtLink>
                 <NuxtLink to="https://www.linkedin.com/company/manie-event/" target="_blank"

@@ -51,7 +51,7 @@
           <v-number-input
             label="Depuis combien d'année exercez-vous cette activité ?"
             v-model="profile.experience"
-            variant="solo"
+            control-variant="hidden"
             :min="0"
             :error-messages="showErrors ? errors.experience : undefined"
           />
@@ -94,13 +94,13 @@
             </div>
 
             <!-- Bouton d’ajout -->
-            <v-btn color="primary" class="mt-2" @click="addCertification">
+            <v-btn color="primary" class="mb-5" @click="addCertification">
               Ajouter une certification
             </v-btn>
           </div>
 
           <v-number-input
-            variant="solo"
+            control-variant="hidden"
             :min="0"
             label="Votre délai de réservation minimum (en semaine) ?"
             v-model="reservationDelay"
@@ -113,7 +113,7 @@
           />
           <v-number-input
             v-if="profile.deposit"
-            variant="solo"
+            control-variant="hidden"
             :min="0"
             :max="100"
             :step="5"
@@ -465,3 +465,161 @@ onMounted(() => {
   }
 });
 </script>
+
+<style lang="scss" scoped>
+.v-form {
+  padding: 2rem 2.5rem;
+  border-radius: 16px;
+  max-width: 850px;
+  margin: 0 auto;
+  font-family: 'Inter', sans-serif;
+
+  @media (max-width: 960px) {
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 600px) {
+    padding: 1rem;
+  }
+}
+
+/* --- DIVIDERS --- */
+.v-divider {
+  margin: 2.5rem 0 1.5rem;
+  border-color: rgba(93, 121, 164, 0.25) !important;
+  font-weight: 600;
+  color: rgb(var(--v-theme-darkbg));
+
+  p {
+    color: rgb(var(--v-theme-darkbg));
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.95rem;
+  }
+}
+
+/* --- CHAMPS DE FORMULAIRE --- */
+.v-text-field,
+.v-select,
+.v-number-input {
+  margin-bottom: 1.25rem;
+  background: rgb(var(--v-theme-surface));
+  border-radius: 10px;
+  box-shadow: 0 0 0 1px rgba(93, 121, 164, 0.08);
+  transition: box-shadow 0.2s ease-in-out;
+
+  .v-field__input,
+  .v-input__control {
+    font-size: 0.95rem;
+    color: rgb(var(--v-theme-on-surface));
+  }
+
+  .v-label {
+    color: rgba(93, 121, 164, 0.9) !important;
+    font-weight: 500;
+  }
+}
+
+/* --- CHECKBOX & SWITCH --- */
+.v-checkbox,
+.v-switch {
+  margin: 1rem 0;
+
+  .v-label {
+    color: rgb(var(--v-theme-textSecondary)) !important;
+    font-weight: 500;
+  }
+}
+
+/* --- CHAMPS DYNAMIQUES (FAQ, liens, certifs) --- */
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.gap-2 {
+  gap: 0.75rem;
+}
+
+.mb-3 {
+  margin-bottom: 1.25rem !important;
+}
+
+.mt-2 {
+  margin-top: 0.75rem !important;
+}
+
+.my-8 {
+  margin-top: 3rem !important;
+  margin-bottom: 3rem !important;
+}
+
+.mt-4 {
+  margin-top: 1.5rem !important;
+}
+
+/* --- BOUTONS --- */
+.v-btn {
+  border-radius: 10px !important;
+  font-weight: 500;
+  text-transform: none;
+  padding: 0.8rem 1.5rem;
+  letter-spacing: 0.2px;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
+
+  &.v-btn--variant-text {
+    color: rgb(var(--v-theme-darkbg)) !important;
+  }
+
+  &.v-btn--variant-contained {
+    background-color: rgb(var(--v-theme-darkbg)) !important;
+    color: rgb(var(--v-theme-background)) !important;
+  }
+
+  &.error {
+    background-color: rgb(var(--v-theme-error)) !important;
+    color: white !important;
+  }
+
+  &.primary {
+    background-color: rgb(var(--v-theme-darkbg)) !important;
+    color: rgb(var(--v-theme-background)) !important;
+  }
+}
+
+/* --- ZONE DE VALIDATION / ACTIONS --- */
+.d-flex.justify-space-between {
+  border-top: 1px solid rgba(93, 121, 164, 0.15);
+  padding-top: 1.5rem;
+  margin-top: 3rem;
+  gap: 1rem;
+
+  .v-btn {
+    min-width: 150px;
+  }
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* --- HIERARCHIE VISUELLE --- */
+.text-subtitle-1 {
+  color: rgba(93, 121, 164, 0.9);
+}
+
+.font-weight-medium {
+  font-weight: 500;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 1024px) {
+  .v-form {
+    max-width: 95%;
+  }
+}
+</style>
