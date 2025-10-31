@@ -17,7 +17,7 @@
               <img :src="UserImage" width="100" alt="Mathew" />
             </v-avatar>
           </div>
-          <h5 class="text-h5 mt-3 font-weight-semibold">
+          <h5 class="text-h4 mt-3 font-weight-bold">
             {{ userName ? userName : clientName }}
           </h5>
           <span class="text-h6 font-weight-regular">Chercheur de bonheur</span>

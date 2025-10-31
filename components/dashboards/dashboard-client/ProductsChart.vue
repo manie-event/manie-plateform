@@ -9,11 +9,8 @@
               <v-btn @click="openExpenseModal = true" color="primary">+</v-btn>
             </div>
             <div class="text-right">
-              <v-btn
-                @click="removeExpenseModal = true"
-                color="error"
-                variant="tonal"
-                icon="mdi-delete"
+              <v-btn @click="removeExpenseModal = true" color="error" variant="tonal"
+                ><Icon icon="ci:trash-full" height="24" width="24"></Icon
               ></v-btn>
             </div>
           </div>
@@ -125,6 +122,7 @@
 </template>
 
 <script setup lang="ts">
+import { Icon } from '@iconify/vue';
 import { computed } from 'vue';
 import type { eventModel } from '~/models/events/eventModel';
 /* Chart */

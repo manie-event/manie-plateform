@@ -145,10 +145,7 @@ const register = async () => {
             >En savoir plus ici</span
           >
         </p>
-        <v-checkbox
-          style="border: rgb(var(--v-theme-background))"
-          v-model="isCharteBonneConduite"
-        ></v-checkbox>
+        <VCheckbox v-model="isCharteBonneConduite"></VCheckbox>
       </div>
     </div>
     <div v-else>

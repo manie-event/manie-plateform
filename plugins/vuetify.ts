@@ -1,6 +1,5 @@
 import { defineNuxtPlugin } from 'nuxt/app';
 import { createVuetify } from 'vuetify';
-import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
 //Mock Api data
 // VLabs Components
@@ -13,6 +12,7 @@ import * as directives from 'vuetify/directives';
 //i18
 import { DARK_BLUE_THEME } from '@/theme/DarkTheme';
 import { BLUE_THEME } from '@/theme/LightTheme';
+import * as components from 'vuetify/components';
 
 export default defineNuxtPlugin((nuxtApp) => {
   const vuetify = createVuetify({
