@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import addNote from '@/components/apps/notes/AddNote.vue';
 import { useNotesStore } from '@/stores/notesStore';
-import { Icon } from '@iconify/vue';
 import { computed, ref, Teleport } from 'vue';
 import type { eventModel } from '~/models/events/eventModel';
 import NotesContent from '~~/components/apps/notes/NotesContent.vue';
@@ -73,20 +72,7 @@ const handleSelectNote = (noteId: number) => {
       </v-sheet>
     </div>
     <v-sheet v-if="currentEventNotes.length === 0" class="pa-6">
-      <div
-        style="background: rgb(var(--v-theme-darkbg))"
-        class="d-flex justify-center align-center gap-4 pa-5 rounded"
-      >
-        <Icon
-          icon="ci:edit-pencil-line-01"
-          height="24"
-          width="24"
-          style="color: rgb(var(--v-theme-background))"
-        ></Icon>
-        <h5 style="color: rgb(var(--v-theme-background))">
-          Il est temps de créer votre première note
-        </h5>
-      </div>
+      <v-alert type="error" text="Il est temps de créer votre première note"></v-alert>
     </v-sheet>
   </div>
 

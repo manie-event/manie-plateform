@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="5" class="roun-">
+  <v-card elevation="10" class="roun-">
     <v-card-text class="position-relative">
       <div class="d-flex justify-space-between d-block align-center">
         <div>
@@ -9,8 +9,11 @@
               <v-btn @click="openExpenseModal = true" color="primary">+</v-btn>
             </div>
             <div class="text-right">
-              <v-btn @click="removeExpenseModal = true" color="error" variant="tonal"
-                ><Icon icon="ci:trash-full" height="24" width="24"></Icon
+              <v-btn
+                @click="removeExpenseModal = true"
+                color="error"
+                variant="tonal"
+                icon="mdi-delete"
               ></v-btn>
             </div>
           </div>
@@ -122,7 +125,6 @@
 </template>
 
 <script setup lang="ts">
-import { Icon } from '@iconify/vue';
 import { computed } from 'vue';
 import type { eventModel } from '~/models/events/eventModel';
 /* Chart */

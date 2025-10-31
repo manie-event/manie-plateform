@@ -32,16 +32,16 @@ const updateTitle = () => {
 </script>
 
 <template>
-  <v-dialog max-width="600" width="100%" elevation="3" v-model="openContentModal">
+  <v-dialog max-width="600" width="100%" v-model="openContentModal">
     <v-sheet>
       <v-sheet class="py-3 pl-6 pr-4 d-flex align-center">
-        <h4 class="text-h6 font-weight-semibold">Editez votre Notes</h4>
+        <h4 class="text-h6 font-weight-semibold">Edit Notes</h4>
       </v-sheet>
       <v-divider></v-divider>
 
       <!-- Si une note est sélectionnée -->
       <v-sheet v-if="selectedNote" class="pa-6">
-        <h4 class="text-h6 mb-4">Changez votre contenu</h4>
+        <h4 class="text-h6 mb-4">Change Title</h4>
         <v-textarea
           outlined
           name="Note"

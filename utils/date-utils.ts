@@ -3,7 +3,6 @@ import { fr } from 'date-fns/locale';
 
 export const isEventDone = (date: string) => {
   if (!date) return false;
-  console.log(date, 'date', typeof date);
 
   const today = format(new Date(), 'yyyy-MM-dd');
   const isEventAlreadyPast = isBefore(today, date);

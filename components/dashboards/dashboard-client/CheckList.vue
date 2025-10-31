@@ -1,8 +1,8 @@
 <template>
-  <v-card class="position-relative" elevation="5">
+  <v-card class="position-relative">
     <div class="d-flex flex-row-reverse justify-space-between">
       <v-btn color="primary" class="checklist-btn" variant="flat" @click="handleAddTask()">
-        +
+        <v-icon center>mdi-plus</v-icon>
       </v-btn>
       <div>
         <v-card-subtitle class="text-subtitle-1 font-weight-bold pt-5">
@@ -24,13 +24,12 @@
       >
         <v-row class="align-center" no-gutters>
           <v-col cols="auto">
-            <v-checkbox-btn
-              style="border: '1px solid rbg(var(--v-theme-darkbg))'"
+            <v-checkbox
               v-model="task.done"
               color="primary"
               hide-details
               @update:model-value="handleUpdateTask(task.id, { done: task.done })"
-            ></v-checkbox-btn>
+            ></v-checkbox>
           </v-col>
 
           <v-col class="flex-grow-1">
@@ -46,15 +45,9 @@
           </v-col>
 
           <v-col cols="auto">
-            <Icon
-              icon="ci:trash-full"
-              style="color: red"
-              height="24"
-              width="24"
-              class="cursor-pointer"
-              @click="handleRemoveTask(index)"
-            >
-            </Icon>
+            <v-icon color="error" class="cursor-pointer" @click="handleRemoveTask(index)">
+              mdi-delete
+            </v-icon>
           </v-col>
         </v-row>
       </v-list-item>
@@ -64,10 +57,10 @@
 
 <script setup lang="ts">
 import { useTasksStore } from '@/stores/taskStore';
-import { Icon } from '@iconify/vue';
 import { computed, onMounted } from 'vue';
 import type { eventModel } from '~/models/events/eventModel';
 import type { Task } from '~/models/tasks/eventTasks';
+
 const props = defineProps<{
   event?: eventModel;
 }>();

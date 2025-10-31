@@ -45,7 +45,6 @@ export interface ProfessionalProfile {
   geographicArea: string;
   picture: string;
   faq: Faq;
-  picture: string;
   minimumReservationPeriod: number;
   deposit: boolean;
   depositAmount?: number;

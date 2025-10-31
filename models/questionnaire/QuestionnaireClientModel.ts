@@ -6,7 +6,6 @@ export interface QuestionnaireClient {
   duration: string;
   invites: string;
   name: string;
-  keywordsUuid: string[];
   isAlreadyCreated?: boolean;
   organisation: string;
   people: number;

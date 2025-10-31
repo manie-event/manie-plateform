@@ -50,7 +50,6 @@
           :items="questionnaire.general[1].reponses"
           item-title="label"
           item-value="value"
-          :default="questionnaire.general[1].reponses[0]"
           v-model="location"
           label="Localisation souhaitée"
           variant="outlined"

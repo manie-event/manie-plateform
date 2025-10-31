@@ -1,5 +1,5 @@
 <template>
-  <VCard elevation="5" class="project-leap">
+  <VCard elevation="10" class="project-leap">
     <v-card-text class="d-flex flex-column justify-space-between pb-0">
       <div class="d-flex justify-flex-start d-block align-center mb-4">
         <h5 class="v-card-title">Progression de vos évènements</h5>

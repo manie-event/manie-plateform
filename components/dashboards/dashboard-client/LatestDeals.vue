@@ -1,5 +1,5 @@
 <template>
-  <VCard elevation="5" class="roun-" v-if="props.event">
+  <VCard elevation="10" class="roun-" v-if="props.event">
     <v-card-text class="text-subtitle-1 font-weight-bold"> Votre progression : </v-card-text>
     <div class="pa-6">
       <div class="d-flex justify-space-between mb-2">

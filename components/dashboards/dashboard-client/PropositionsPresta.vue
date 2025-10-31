@@ -1,5 +1,5 @@
 <template>
-  <VCard elevation="5" class="proposition-presta">
+  <VCard elevation="10" class="proposition-presta">
     <v-card-text>
       <div class="d-flex align-center justify-space-between">
         <div>
@@ -12,22 +12,22 @@
             <thead>
               <tr>
                 <!-- A voir pour changer avec nom de la personne -->
-                <th class="text-subtitle-2 font-weight-semibold text-grey200 text-no-wrap">
+                <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
                   Nom de l'évènement
                 </th>
-                <th class="text-subtitle-2 font-weight-semibold text-grey200 text-no-wrap">
+                <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
                   Service engagé
                 </th>
-                <th class="text-subtitle-2 font-weight-semibold text-grey200 text-no-wrap">
+                <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
                   Proposition commerciale
                 </th>
-                <th class="text-subtitle-2 font-weight-semibold text-grey200 text-no-wrap">
+                <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
                   Prix de la prestation
                 </th>
-                <th class="text-subtitle-2 font-weight-semibold text-grey200 text-no-wrap">
+                <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
                   Status de la demande
                 </th>
-                <th class="text-subtitle-2 font-weight-semibold text-grey200 text-no-wrap">
+                <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
                   J'accepte/Refuse la proposition
                 </th>
               </tr>
@@ -42,7 +42,7 @@
                 <td>
                   <div class="d-flex align-center">
                     <div class="mr-4">
-                      <h4 class="text-subtitle-2 font-weight-bold text-no-wrap text-grey200">
+                      <h4 class="text-subtitle-1 font-weight-bold text-no-wrap text-grey200">
                         {{ item.name }}
                       </h4>
                     </div>
@@ -53,7 +53,7 @@
                     variant="outlined"
                     color="primary"
                     size="x-small"
-                    :class="'text-subtitle-2 font-weight-medium bg-light'"
+                    :class="'text-subtitle-1 font-weight-medium bg-light'"
                   >
                     <h4>{{ item.serviceEngage }}</h4></v-chip
                   >
@@ -68,7 +68,7 @@
                   >
                     <template v-slot:activator="{ props: activatorProps }">
                       <h4
-                        class="text-subtitle-2 text-no-wrap font-weight-medium text-center text-grey200"
+                        class="text-subtitle-1 text-no-wrap font-weight-medium text-grey200"
                         v-bind="activatorProps"
                       >
                         <span
@@ -79,15 +79,13 @@
                   </v-tooltip>
                 </td>
                 <td>
-                  <h5
-                    class="text-subtitle-2 font-weight-medium text-no-wrap text-center text-grey200"
-                  >
+                  <h5 class="text-subtitle-1 font-weight-medium text-no-wrap text-grey200">
                     <b>{{ getPriceFromMessage(item.professionalMessage) }}</b>
                   </h5>
                 </td>
                 <td>
                   <v-chip
-                    :class="'text-subtitle-2 font-weight-medium text-center bg-light'"
+                    :class="'text-subtitle-1 font-weight-medium bg-light'"
                     variant="outlined"
                     size="x-small"
                     :color="getStatusColor(item.propositionStatus)"
@@ -101,7 +99,7 @@
                   <v-btn color="primary">Voir le profil du prestataire</v-btn>
                 </td>
                 <td v-else>
-                  <div class="d-flex text-center align-center gap-4">
+                  <div class="d-flex align-center gap-4">
                     <v-btn
                       variant="outlined"
                       color="success"
@@ -110,13 +108,17 @@
                           propositionAcceptedByClient(item.propositionUuid);
                         }
                       "
-                      ><Icon icon="ci:check" height="24" width="24" class="text-success"
+                      ><Icon
+                        icon="material-symbols-light:check-rounded"
+                        height="24"
+                        width="24"
+                        class="text-success"
                     /></v-btn>
                     <v-btn
                       variant="outlined"
                       color="error"
                       @click="propositionDeclinedByClient(item.propositionUuid)"
-                      ><Icon icon="ci:close-sm" height="24" width="24" class="text-error"
+                      ><Icon icon="iconoir:cancel" height="24" width="24" class="text-error"
                     /></v-btn>
                   </div>
                 </td>
@@ -222,7 +224,7 @@ const svgColor = computed(() => {
 });
 
 const getProfessionalMessage = (message?: string) => {
-  if (!message) return ' - ';
+  if (!message) return 'Aucune proposition reçue';
   const cleanMessage = message.split('fourchette basse')[0].trim();
   return cleanMessage.length <= 30 ? cleanMessage : cleanMessage.substring(0, 30) + '...';
 };
@@ -234,7 +236,7 @@ const getTooltipText = (message?: string) => {
 };
 
 const getPriceFromMessage = (message?: string) => {
-  if (!message) return ' - ';
+  if (!message) return 'A définir par le prestataire';
   const fourchetteBasse = message
     .split('fourchette basse')[1]
     ?.split('fourchette haute')[0]
@@ -259,9 +261,6 @@ onMounted(() => {
 });
 </script>
 <style lang="scss" scoped>
-th {
-  font-size: 0.5rem;
-}
 .proposition-presta {
   background: rgb(var(--v-theme-background));
 

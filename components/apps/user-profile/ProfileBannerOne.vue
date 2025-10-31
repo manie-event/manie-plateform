@@ -79,7 +79,25 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col md="12" class="profile-one"> </v-col>
+          <v-col md="12" class="profile-one">
+            <v-tabs v-model="tab" color="primary" dark class="profiletab">
+              <v-tab
+                v-for="item in items"
+                :key="item.tab"
+                :to="item.href"
+                class="text-grey100 mr-sm-3"
+              >
+                <component
+                  :is="item.icon"
+                  size="20"
+                  stroke-width="1.5"
+                  class="mr-sm-2 text-h6 text-grey100 icon"
+                >
+                </component>
+                <span class="d-sm-flex d-none">{{ item.tab }}</span>
+              </v-tab>
+            </v-tabs>
+          </v-col>
         </v-row>
       </v-card-item>
     </v-card>
@@ -93,7 +111,7 @@
 <script setup lang="ts">
 import EditerProfessionalProfile from '@/components/apps/user-profile/EditProfessionalProfil.vue';
 import UserImage from '@/public/images/backgrounds/flutter.png';
-import { ref, Teleport } from 'vue';
+import { ref, shallowRef, Teleport } from 'vue';
 import ServicesPrestataire from '~/components/questionnaires/ServicesPrestataire.vue';
 import { useKeywords } from '~/composables/professional-user/UseKeywords';
 import { useProfessionalProfile } from '../../../composables/professional-user/UseProfessionalProfile';
@@ -118,6 +136,13 @@ const changeBannerPhoto = async (e: Event) => {
   const picture = input.files[0];
   await changeProfessionalBannerPicture(picture);
 };
+
+const items = shallowRef([
+  { tab: 'My Profile', icon: UserCircleIcon, href: '/apps/userprofile/one' },
+  { tab: 'Teams', icon: UsersIcon, href: '/apps/userprofile/one/teams' },
+  { tab: 'Projects', icon: Layout2Icon, href: '/apps/userprofile/one/projects' },
+  { tab: 'Connection', icon: IdIcon, href: '/apps/userprofile/one/connection' },
+]);
 
 const openEditProfilModal = () => {
   openModal.value = !openModal.value;

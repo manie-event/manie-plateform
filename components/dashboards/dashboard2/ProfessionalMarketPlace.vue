@@ -1,42 +1,15 @@
 <template>
   <v-dialog v-model="openPropositionPro" max-width="800">
     <v-card>
-      <v-divider class="mx-6"><p class="text-h6 py-6">Le coin des bonnes affaires</p></v-divider>
+      <v-card-title class="text-h5">Professional Market Place</v-card-title>
       <v-card-text>
         <div v-if="props.propositionFiltered.length > 0 && paginatedEvents.length > 0">
-          <v-card v-for="proposition in paginatedEvents" class="d-flex proposition__card">
-            <div :style="getBackgroundStyle(proposition.name)" alt="" />
-            <v-card-text class="w-50">
-              <p><b>Type d'évènement:</b> {{ proposition.name }}</p>
-              <p>
-                <b>Type de prestation:</b>
-                {{ getPropositionServiceValue(proposition.professionalServiceUuid) }}
-              </p>
-
-              <p><b>Nombre de convives:</b> {{ proposition.people }} personnes</p>
-              <p><b>Dans quel département:</b> {{ proposition.location }}</p>
-
-              <p>
-                <b>Du </b>{{ formatDate(proposition.date)[0] }} <b>au</b>
-                {{ formatDate(proposition.date)[1] }}
-              </p>
-              <p><b>Le budget:</b> {{ proposition.budget }}€</p>
-              <v-chip
-                v-for="word in getKeywordValues(proposition.keywordsUuid)"
-                :key="word"
-                class="ma-1"
-              >
-                {{ word }}
-              </v-chip>
-
+          <v-card v-for="proposition in paginatedEvents">
+            <v-card-text>
+              {{ proposition }}
               <v-btn
-                class="mt-3"
-                @click="
-                  openPropositionAcceptedModal(
-                    proposition.proposition.uuid,
-                    proposition.proposition.tokens
-                  )
-                "
+                color="success"
+                @click="openPropositionAcceptedModal(proposition.proposition.uuid)"
                 >Je souhaite me positionner sur cette annonce</v-btn
               >
             </v-card-text>
@@ -75,18 +48,13 @@
     </v-card>
   </v-dialog>
   <Teleport to="body">
-    <PropositionAccepted
-      v-model:is-proposition-accepted="isAccepted"
-      :uuid="propositionUuid"
-      :token
-    />
+    <PropositionAccepted v-model:is-proposition-accepted="isAccepted" :uuid="propositionUuid" />
   </Teleport>
 </template>
 
 <script setup lang="ts">
 import BaseEmptyState from '@/components/common/BaseEmptyState.vue';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
-import { getEventBackground } from '@/utils/background-event';
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
 import { usePropositionStore } from '~/stores/propositionStore';
 import PropositionAccepted from './PropositionAccepted.vue';
@@ -94,39 +62,15 @@ import PropositionAccepted from './PropositionAccepted.vue';
 const props = defineProps<{ propositionFiltered: EventModelForProposition[] }>();
 const openPropositionPro = defineModel<boolean>('openPropositionPro', { default: false });
 
-const { serviceEventProposition, professionalServices } = storeToRefs(usePropositionStore());
-const { keywords } = storeToRefs(useUserStore());
+const { serviceEventProposition } = storeToRefs(usePropositionStore());
 const propositionUuid = ref('');
 const isAccepted = ref(false);
 const currentPage = ref(1);
 const itemsPerPage = ref(3);
-const token = ref(0);
 
 const getPropositionBy3 = computed(() =>
   Math.ceil(props.propositionFiltered.length / itemsPerPage.value)
 );
-
-const getKeywordValues = (keywordUuids: string[]) => {
-  if (!keywordUuids?.length) return [];
-
-  return keywords.value
-    .filter((stored) => keywordUuids.includes(stored.uuid))
-    .map((match) => match.value);
-};
-
-const getBackgroundStyle = (eventName: string) => {
-  const imageUrl = getEventBackground(eventName as any);
-  console.log('Resolved image URL:', imageUrl);
-
-  return {
-    backgroundImage: `url(${imageUrl})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    borderRadius: '8px',
-    width: '100%',
-    margin: '15px',
-  };
-};
 
 const paginatedEvents = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage.value;
@@ -136,31 +80,8 @@ const paginatedEvents = computed(() => {
   return props.propositionFiltered.slice(start, end);
 });
 
-const getPropositionServiceValue = (serviceUuid: string) => {
-  return professionalServices.value.find((service) => service.uuid === serviceUuid)?.name;
-};
-
-const openPropositionAcceptedModal = (uuid: string, tokens: number) => {
+const openPropositionAcceptedModal = (uuid: string) => {
   propositionUuid.value = uuid;
   isAccepted.value = true;
-  token.value = tokens;
 };
 </script>
-<style lang="scss" scoped>
-.proposition {
-  background: red;
-  width: 100%;
-  &__image {
-    width: 30%;
-    height: auto;
-  }
-  &__card {
-    max-height: 250px;
-
-    .v-btn {
-      background: rgb(var(--v-theme-darkbg));
-      color: rgb(var(--v-theme-background));
-    }
-  }
-}
-</style>

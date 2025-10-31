@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="5" class="events">
+  <v-card elevation="10" class="events">
     <v-card-text class="position-relative events__container">
       <div class="d-flex justify-start">
         <div class="mb-6">

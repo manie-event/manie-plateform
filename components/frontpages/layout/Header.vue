@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import Navigation from '@/components/landingpage/layout/Navigation.vue';
 import Logo from '@/public/images/logos/logo-manie.png';
 import { useCustomizerStore } from '@/stores/customizer';
 import { ref } from 'vue';
+import Navigations from './Navigation.vue';
 /*Mobile Sidebar*/
 /*import tabler icons*/
 const appsdrawer = ref(false);
@@ -23,7 +23,7 @@ const customizer = useCustomizerStore();
 
       <!-- Desktop view Navigation -->
       <div class="navigation mx-auto d-lg-flex d-none">
-        <Navigation />
+        <Navigations />
       </div>
       <div class="d-flex ms-xl-0 ms-auto">
         <v-btn
