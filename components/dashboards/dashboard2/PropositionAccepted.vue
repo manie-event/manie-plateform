@@ -9,6 +9,7 @@
             label="Votre offre ici"
             placeholder="Veuillez renseigner votre offre et votre proposition de prix"
           ></v-textarea>
+          <p>{{ props.uuid }}</p>
           <p>
             Votre fourchette de prix se trouve entre
             <v-number-input
@@ -28,12 +29,17 @@
             ></v-number-input>
           </p>
           <div class="p-3">
-            <v-alert density="compact" border-color="warning" color="warning" elevation="2"
-              ><b>1 jeton(s)</b> est mis en jeu pour cette annonce. Il sera débité si vous gagné,
-              remboursé si ce n'est pas le cas.
+            <v-alert
+              density="compact"
+              border-color="warning"
+              color="rgb(var(--v-theme-thirdy))"
+              style="color: rgb(var(--v-theme-background))"
+              elevation="2"
+              ><b>{{ props.token }} jetons</b> sont mis en jeu pour cette annonce. Ils seront
+              débités si vous gagné, remboursé si ce n'est pas le cas.
             </v-alert>
           </div>
-          <v-btn class="mt-2" color="primary" type="submit" block @click="sendMessage()"
+          <v-btn class="mt-2 propoposition__btn" type="submit" block @click="sendMessage()"
             >Présenter mon offre</v-btn
           >
         </v-form>
@@ -46,6 +52,7 @@ import { useEventServiceProposition } from '~/composables/event-service-proposit
 import { useProfessionalProposition } from '~/services/UseProfessionalProposition';
 
 const props = defineProps<{
+  token: number;
   uuid: string;
 }>();
 
@@ -77,3 +84,11 @@ const sendMessage = async () => {
   }
 };
 </script>
+<style lang="scss" scoped>
+.propoposition {
+  &__btn {
+    background: rgb(var(--v-theme-darkbg));
+    color: rgb(var(--v-theme-background));
+  }
+}
+</style>

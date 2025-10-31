@@ -43,7 +43,7 @@ onBeforeMount(() => {
     <!-- <div class="hidden-md-and-up me-md-4 me-0">
       <LcFullVerticalHeaderSearchbar />
     </div> -->
-    <div class="menu-dashboard__container">
+    <div class="menu-dashboard__container pt-6">
       <div>
         <NuxtLink to="/">
           <Logo width="150" height="100" />
@@ -64,7 +64,7 @@ onBeforeMount(() => {
       <!-- ---------------------------------------------- -->
       <!-- ShoppingCart -->
       <!-- ---------------------------------------------- -->
-      <div class="menu-dashboard__right-part">
+      <div class="menu-dashboard__right-part d-flex align-center">
         <LcFullVerticalHeaderThemeToggler />
 
         <v-menu :close-on-content-click="false" class="notification_popup" v-if="isProfessional">
@@ -175,22 +175,102 @@ onBeforeMount(() => {
   all: unset;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.15s ease;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
 }
+
 .menu-dashboard {
+  position: relative;
+  z-index: 100;
+  transition:
+    box-shadow 0.3s ease,
+    background-color 0.3s ease;
+
+  &.sticky {
+    position: sticky;
+    top: 0;
+    background: rgb(var(--v-theme-background));
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
   &__container {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
     background: rgb(var(--v-theme-background));
+    padding: 0 1.25rem;
   }
+
   &__navigation {
     display: flex;
+    align-items: center;
+    gap: 1.5rem;
   }
+
   &__right-part {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 1rem;
+
+    .v-btn {
+      position: relative;
+
+      /* ✅ Stabilise le badge */
+      .v-badge {
+        position: absolute !important;
+        top: -4px !important;
+        right: -6px !important;
+        transform: none !important;
+        height: 45px;
+        width: 15px;
+        border-radius: 5px;
+        transition: none !important;
+      }
+
+      /* ✅ Ne bouge pas au hover */
+      &:hover .v-badge {
+        transform: none !important;
+      }
+
+      /* Empêche le "clignotement" de l’icône */
+      .v-icon {
+        transition: color 0.2s ease;
+      }
+
+      &:hover .v-icon {
+        color: rgb(var(--v-theme-primary));
+      }
+    }
+  }
+
+  /* ✅ Dropdown du panier propre */
+  .dropdown-box {
+    background: rgb(var(--v-theme-surface));
+    border-radius: 12px;
+    border: 1px solid rgba(var(--v-theme-darkbg), 0.1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-color: rgba(var(--v-theme-primary), 0.2);
+    }
+
+    img {
+      user-select: none;
+    }
   }
 }
 </style>

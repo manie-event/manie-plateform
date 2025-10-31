@@ -7,6 +7,7 @@ export interface EventModelForProposition {
   location: string;
   people: string;
   name: string;
+  keywordsUuid: string[];
   date: string[];
   theme: string;
   group_type: string;
