@@ -11,7 +11,7 @@ import { useKeywords } from '~/composables/professional-user/UseKeywords';
 import { useProfessionalService } from '~/services/UseProfessionalService';
 
 const userStore = useUserStore();
-const { isProfileCreated, user } = storeToRefs(userStore);
+const { isProfileCreated } = storeToRefs(userStore);
 const { getClientProfil } = useClientProfil();
 const { getProfessionalService } = useProfessionalService();
 const { getAllSectors, getKeywords } = useKeywords();
