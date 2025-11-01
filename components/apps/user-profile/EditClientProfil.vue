@@ -177,7 +177,6 @@ const onSubmit = async (profile: ClientModel) => {
   try {
     isSubmitting.value = true;
     showErrors.value = true;
-
     // Appel de votre fonction de patch
     await patchClientProfil(profile);
 

@@ -27,9 +27,7 @@
                 <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
                   Status de la demande
                 </th>
-                <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
-                  J'accepte/Refuse la proposition
-                </th>
+                <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap"></th>
               </tr>
             </thead>
             <tbody>
@@ -67,10 +65,7 @@
                     class="max-w-50"
                   >
                     <template v-slot:activator="{ props: activatorProps }">
-                      <h4
-                        class="text-subtitle-1 text-no-wrap font-weight-medium text-grey200"
-                        v-bind="activatorProps"
-                      >
+                      <h4 class="text-subtitle-1 text-no-wrap text-grey200" v-bind="activatorProps">
                         <span
                           ><b>{{ getProfessionalMessage(item.professionalMessage) }}</b></span
                         >
@@ -79,7 +74,7 @@
                   </v-tooltip>
                 </td>
                 <td>
-                  <h5 class="text-subtitle-1 font-weight-medium text-no-wrap text-grey200">
+                  <h5 class="text-subtitle-1 text-no-wrap text-grey200">
                     <b>{{ getPriceFromMessage(item.professionalMessage) }}</b>
                   </h5>
                 </td>
@@ -252,7 +247,7 @@ const confirmedProposition = async (eventServiceUuid: string) => {
 
 const filteredPropositionByStatus = computed<ClientServiceProposition[]>(() => {
   return professionalResponseProposition.value.filter(
-    (professionalProposition) => professionalProposition.propositionStatus === 'pending'
+    (professionalProposition) => professionalProposition.propositionStatus !== 'pending'
   );
 });
 
@@ -263,17 +258,65 @@ onMounted(() => {
 <style lang="scss" scoped>
 .proposition-presta {
   background: rgb(var(--v-theme-background));
+  padding: 1rem 1.2rem !important;
 
   &__table {
     background: rgb(var(--v-theme-background));
+    font-size: 0.85rem;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  :deep(th),
+  :deep(td) {
+    padding: 6px 10px !important;
+    vertical-align: middle !important;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  :deep(th) {
+    font-weight: 600;
+    color: #6c6c6c;
+  }
+
+  :deep(tr) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  :deep(.v-chip) {
+    font-size: 0.75rem !important;
+    height: 24px !important;
+  }
+
+  :deep(.v-btn) {
+    min-width: 28px !important;
+    height: 28px !important;
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .month-table {
+    margin-top: 0.5rem;
+    overflow-x: auto;
+  }
+
+  .month-item:hover {
+    background-color: rgba(var(--v-theme-primary), 0.05);
+    transition: background-color 0.2s ease;
   }
 }
-:deep(.tooltip-custom) {
-  max-width: 450px !important;
-  white-space: normal !important;
-  word-wrap: break-word !important;
-  text-align: left !important;
-  line-height: 1.4 !important;
-  padding: 8px 12px !important;
+
+/* Supprime les marges inutiles des cartes parentes */
+.v-card-text {
+  padding: 1rem 1rem !important;
+}
+
+h4,
+h5 {
+  margin: 0 !important;
+  line-height: 1.3 !important;
 }
 </style>

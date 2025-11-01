@@ -1,4 +1,8 @@
+import { storeToRefs } from 'pinia';
 import type { ClientModel } from '~/models/user/ClientModel';
+import { useUserStore } from '~/stores/userStore';
+import { useToaster } from '~/utils/toaster';
+import { useApi } from '../UseApi';
 
 export const useClientProfil = () => {
   const { addError, addSuccess } = useToaster();

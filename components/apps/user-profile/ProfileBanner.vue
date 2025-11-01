@@ -51,6 +51,7 @@
 import profileBg from '@/public/images/backgrounds/profilebg.jpg';
 import UserImage from '@/public/images/side-picture/charlesdeluvio-rRWiVQzLm7k-unsplash.jpg';
 import { Icon } from '@iconify/vue';
+import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 import EditClientProfil from './EditClientProfil.vue';
 import ModalRedirection from './ModalRedirection.vue';

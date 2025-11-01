@@ -252,7 +252,7 @@ const { submitEvent, isLoading, error } = UseEvent();
 //ref generale
 const eventType = ref<'particulier' | 'professionnel'>('particulier');
 const name = ref('');
-const location = ref('');
+const location = ref('Veuillez choisir un département');
 const duration = ref('');
 const group_type = ref('');
 const theme = ref('');
@@ -438,7 +438,7 @@ const mapSectionsWithServices = (selectedSector?: string | SectorsDto) => {
 };
 
 const getQuestionOptions = (sectionIndex: number) => {
-  const eventTypeValue = clientProfile.value.isBusiness ? 'professionnel' : 'particulier';
+  const eventTypeValue = clientProfile.value?.isBusiness ? 'professionnel' : 'particulier';
 
   if (sectionIndex === 0) {
     // Pour la première question, filtrer selon le profil client automatiquement

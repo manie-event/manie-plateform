@@ -76,6 +76,8 @@ watchEffect(async () => {
       const cli = await getClientProfil();
       usernameLS.value = cli?.username || usernameLS.value;
       localStorage.setItem('client-name', usernameLS.value || '');
+    } else {
+      await getClientProfil();
     }
   } catch (e) {
     console.warn('Chargement profil/jetons:', e);
