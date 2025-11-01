@@ -37,7 +37,6 @@ export const useUserStore = defineStore('userStore', () => {
   const isStoringUserAccepeted = ref(false);
   const professionnalServices = ref<Services[]>([]);
   const keywords = ref<Keywords[]>([]);
-  const bgPicture = ref();
   const professionalProfileForCustomer = ref<ProfessionalProfile>();
 
   // setters
@@ -96,17 +95,12 @@ export const useUserStore = defineStore('userStore', () => {
     keywords.value.push(...newKeywords);
   };
 
-  const sendNewPhotoOnProfile = (newPicture: string) => {
-    bgPicture.value = newPicture;
-  };
-
   const sendProfessionalProfileForCustomer = (profile: ProfessionalProfile) => {
     professionalProfileForCustomer.value = profile;
   };
 
   return {
     user,
-    bgPicture,
     professionalUser,
     clientProfile,
     isProfileCreated,
@@ -121,7 +115,6 @@ export const useUserStore = defineStore('userStore', () => {
     setProfessionalServices,
     setClientProfile,
     setKeywords,
-    sendNewPhotoOnProfile,
     setUpdateProfile,
     updateClientProfile,
     sendProfessionalProfileForCustomer,

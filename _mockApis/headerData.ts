@@ -4,7 +4,7 @@ import type { profileType } from '@/types/HeaderTypes';
 
 const professionalProfile: profileType[] = [
   {
-    avatar: 'wallet-2-line-duotone',
+    avatar: 'meditation-round-bold-duotone',
     bgcolor: 'info',
     title: 'Mon Profil',
     subtitle: 'Votre page de profil',
