@@ -170,7 +170,6 @@
             </v-btn>
           </div>
           <div>
-            <Icon icon="ri:add-fill" width="20" height="20" />
             <v-btn color="primary" class="px-4 py-3" @click="submitAllQuestionnaires()"
               >Valider ma selection</v-btn
             >
@@ -402,11 +401,18 @@ const submitAllQuestionnaires = async () => {
 watch(
   () => professionalUser.value,
   async (user) => {
-    if (user?.mainActivity && user?.uuid && questionnaires.value.length === 0) {
+    // 🧩 Vérifie qu'on n'a pas déjà créé le premier questionnaire
+    if (questionnaires.value.length > 0) return;
+
+    if (user?.mainActivity && user?.uuid) {
       try {
         await getSectors(user.mainActivity);
-        const firstQuestionnaire = createQuestionnaire(user.mainActivity);
-        questionnaires.value.push(firstQuestionnaire);
+
+        // 🧩 Recheck juste après la promesse, au cas où un autre watcher s'est déclenché
+        if (questionnaires.value.length === 0) {
+          const firstQuestionnaire = createQuestionnaire(user.mainActivity);
+          questionnaires.value.push(firstQuestionnaire);
+        }
       } catch (error) {
         console.error('Erreur lors du chargement initial:', error);
         addError({ message: 'Erreur lors du chargement des données' });
@@ -508,12 +514,10 @@ watch([professionnalServices, keywords], ([newServices, newKeywords]) => {
   border-radius: 10px !important;
   font-weight: 500;
   text-transform: none;
-  letter-spacing: 0.2px;
+  display: flex;
   transition:
     background-color 0.2s ease,
     transform 0.1s ease;
-  padding: 0.8rem 1.6rem;
-
   &:hover {
     transform: translateY(-1px);
   }

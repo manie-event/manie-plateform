@@ -28,6 +28,7 @@ const { setUpdateProfile } = useUserStore();
   &__container {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     gap: 1rem;
     background: white;
@@ -40,9 +41,10 @@ const { setUpdateProfile } = useUserStore();
     padding: 5rem 2rem;
     border-radius: 0.5rem;
     width: 60vw;
+    text-align: center;
     img {
-      width: 50px;
-      height: 50px;
+      width: 150px;
+      height: 150px;
     }
   }
 }
