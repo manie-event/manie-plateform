@@ -37,7 +37,7 @@
           v-for="question in getFilteredQuestionsForService(service.selectedSector)"
           :key="question.sector + question.category"
           v-if="service.selectedSector"
-          class="mt-4"
+          class="m-4"
         >
           <h4>{{ question.question }}</h4>
           <div v-if="question.isService">
@@ -49,11 +49,6 @@
               clickable
               @click="selectServiceForIndex(serviceIndex, answer.uuid)"
             >
-              <v-icon
-                v-if="service.selectedServiceId === answer.uuid"
-                start
-                icon="mdi-check"
-              ></v-icon>
               {{ answer.name }}
             </v-btn>
           </div>
@@ -73,7 +68,7 @@
       </div>
 
       <div class="mt-4">
-        <v-btn color="primary" variant="outlined" @click="addNewService" prepend-icon="mdi-plus">
+        <v-btn color="primary" variant="outlined" @click="addNewService">
           Ajouter un nouveau service
         </v-btn>
       </div>

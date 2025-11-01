@@ -100,7 +100,6 @@
         <v-text-field
           v-model="theme"
           label="Thème de l'événement"
-          prepend-inner-icon="mdi-palette-outline"
           control-variant="hidden"
           class="mb-4"
         />
@@ -110,7 +109,6 @@
           type="number"
           control-variant="hidden"
           label="Nombre d'invités"
-          prepend-inner-icon="mdi-account-group-outline"
           class="mb-4"
         />
 
@@ -123,8 +121,8 @@
         <v-number-input
           v-model="budgetInput"
           label="Montant"
+          control-variant="hidden"
           color="primary"
-          prepend-inner-icon="mdi-cash"
           variant="outlined"
         />
       </div>
@@ -132,7 +130,11 @@
       <!-- PAGE 3 -->
 
       <div v-if="currentPage === 3" key="page3">
-        <v-alert color="warning" class="mb-6">
+        <v-alert
+          color="rgb(var(--v-theme-darkbg))"
+          style="color: rgb(var(--v-theme-background))"
+          class="mb-6"
+        >
           ⚠️ Chaque secteur sélectionné ne pourra pas être modifié une fois la mise en relation
           commencée.
         </v-alert>
@@ -177,7 +179,7 @@
                 :key="answer.uuid"
                 :color="baseColor"
                 :variant="service.selectedServiceId === answer.uuid ? 'flat' : 'outlined'"
-                class="ma-1 transition-all pa-3"
+                class="transition-all"
                 @click="selectServiceForIndex(serviceIndex, answer.uuid)"
               >
                 {{ answer.name }}
@@ -197,21 +199,14 @@
             </div>
           </div>
         </div>
-
-        <v-btn
-          color="#293b57"
-          variant="outlined"
-          prepend-icon="mdi-plus"
-          class="pa-3"
-          @click="addNewService"
-        >
-          Ajouter un nouveau service
-        </v-btn>
       </div>
 
       <!-- Navigation -->
       <div class="d-flex justify-space-between mt-8">
-        <v-btn v-if="currentPage > 1" variant="text" @click="currentPage--"> Précédent</v-btn>
+        <v-btn v-if="currentPage === 3" color="#293b57" variant="outlined" @click="addNewService">
+          Ajouter un nouveau service
+        </v-btn>
+        <v-btn v-if="currentPage === 2" variant="text" @click="currentPage--"> Précédent</v-btn>
 
         <v-btn v-if="currentPage < 3" color="primary" variant="flat" @click="nextPage">
           Suivant
@@ -221,7 +216,6 @@
           v-if="currentPage === 3"
           color="#f39454"
           style="color: white"
-          class="pa-3"
           variant="flat"
           @click="handleSubmit"
         >

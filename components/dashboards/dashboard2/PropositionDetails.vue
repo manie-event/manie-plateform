@@ -39,6 +39,7 @@
 </template>
 <script setup lang="ts">
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
+import { getEventBackground } from '~/utils/card-utils';
 
 const props = defineProps<{
   selectedProposition: EventModelForProposition;
