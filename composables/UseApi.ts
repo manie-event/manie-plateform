@@ -21,8 +21,14 @@ export const useApi = (): AxiosInstance | null => {
 
     // ✅ Interceptor REQUEST — lit toujours le cookie le plus à jour
     apiInstance.interceptors.request.use(
-      (config) => {
-        const { token } = useAuthCookies(); // ← lu dynamiquement à chaque requête
+      async (config) => {
+        const { token } = useAuthCookies();
+
+        if (process.client && !token.value) {
+          await new Promise((resolve) => setTimeout(resolve, 150));
+        }
+
+        // ← lu dynamiquement à chaque requête
         if (token.value) {
           config.headers = config.headers || {};
           config.headers.Authorization = `Bearer ${token.value}`;
