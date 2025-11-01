@@ -71,21 +71,17 @@ export const useUserStore = defineStore('userStore', () => {
 
   // professional setters
   const setProfessionalUser = (newProfessionalUser: ProfessionalProfile) => {
-    const current = professionalUser.value || {};
-
     professionalUser.value = {
-      ...current,
       ...newProfessionalUser,
       email: user.value?.email || '',
       uuid: newProfessionalUser.uuid?.replace(/[""]/g, '') || '',
       category: 'professional',
     };
-
-    console.log(professionalUser.value, 'const current = professionalUser.value || {};');
+    console.log(professionalUser.value, 'PROFESSIONAL USER VALUE');
 
     localStorage.setItem('professional-uuid', professionalUser.value.uuid || '');
     localStorage.setItem('is-profile-verified', JSON.stringify(true));
-    localStorage.setItem('pro-name', professionalUser.value.name || '');
+    localStorage.setItem('pro-name', newProfessionalUser.name);
     isProfileCreated.value = true;
   };
 
