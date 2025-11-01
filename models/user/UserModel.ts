@@ -1,3 +1,5 @@
+import type { Services } from '../professionalService/Services';
+
 export interface User {
   username: string;
   email: string;
@@ -45,6 +47,7 @@ export interface ProfessionalProfile {
   category?: string;
   geographicArea: string;
   picture: string;
+  professionalServices: Services[];
   faq: Faq;
   minimumReservationPeriod: number;
   deposit: boolean;

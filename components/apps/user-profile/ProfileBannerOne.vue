@@ -10,6 +10,9 @@
         <Icon icon="solar:camera-outline" width="20" height="20" />
       </button>
       <input type="file" ref="fileInput" @change="changeBannerPhoto" accept="image/*" hidden />
+      <NuxtLink to="/dashboards/dashboard2" color="primary" class="profile-header__redirect-btn">
+        Retour au tableau de bord
+      </NuxtLink>
     </div>
 
     <v-card elevation="8" class="profile-header__card">
@@ -21,9 +24,13 @@
           </v-avatar>
 
           <div class="profile-header__info">
+            <div class="d-flex flex-row gap-2">
+              <div v-for="service in getServiceValues">
+                <v-chip color="primary" variant="outlined" size="x-small">{{ service }}</v-chip>
+              </div>
+            </div>
             <h2 class="profile-header__name">
               {{ professionalUser?.name || user?.username }}
-              <v-chip color="primary" variant="outlined" size="x-small">Prestataire</v-chip>
             </h2>
             <div class="d-flex align-center">
               <Icon icon="ci:phone" height="18" width="18" class="mr-1" />
@@ -31,12 +38,12 @@
                 {{ professionalUser?.telephone || 'Définissez votre téléphone' }}
               </p>
             </div>
-            <div class="d-flex align-center">
-              <Icon icon="ci:phone" height="18" width="18" class="mr-1" />
+            <!-- <div class="d-flex align-center">
+              <Icon icon="ci:mail" height="18" width="18" class="mr-1" />
               <p class="profile-header__phone">
-                {{ professionalUser?.email || 'Définissez votre téléphone' }}
+                {{ professionalUser?.email || 'Définissez votre email' }}
               </p>
-            </div>
+            </div> -->
           </div>
         </div>
 
@@ -70,6 +77,7 @@
 </template>
 
 <script setup lang="ts">
+import { NuxtLink } from '#components';
 import EditerProfessionalProfile from '@/components/apps/user-profile/EditProfessionalProfil.vue';
 import { Icon } from '@iconify/vue';
 import { onMounted, ref } from 'vue';
@@ -93,7 +101,20 @@ const changeBannerPhoto = async (e: Event) => {
   await changeProfessionalBannerPicture(picture);
 };
 
+const getServiceValues = computed(
+  () => professionalUser.value?.professionalServices?.map((s) => s.name) ?? []
+);
+
 const getInitials = (name?: string) => (name ? name.trim().charAt(0).toUpperCase() : '?');
+
+watch(
+  professionalUser,
+  (newVal) => {
+    const name = newVal?.name || user.value?.username || '';
+    initials.value = getInitials(name);
+  },
+  { immediate: true }
+);
 
 onMounted(async () => {
   const name = professionalUser.value?.name || user.value?.username || '';
@@ -109,6 +130,19 @@ onMounted(async () => {
     position: relative;
     overflow: hidden;
     border-radius: 12px;
+  }
+  &__redirect-btn {
+    top: 20px;
+    right: 20px;
+    position: absolute;
+    z-index: 9;
+    background: rgb(var(--v-theme-background));
+    color: rgb(var(--v-theme-primary));
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    padding: 9px 20px;
+    text-decoration: none;
+    border-radius: 5px;
   }
 
   &__image {
