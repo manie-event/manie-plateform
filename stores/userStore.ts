@@ -66,7 +66,8 @@ export const useUserStore = defineStore('userStore', () => {
   };
 
   const updateClientProfile = (updatedProfile: clientProfile) => {
-    clientProfile.value = updatedProfile;
+    clientProfile.value = clientProfile.value || ({} as clientProfile);
+    Object.assign(clientProfile.value, updatedProfile);
   };
 
   // professional setters

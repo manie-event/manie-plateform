@@ -1,22 +1,21 @@
 <template>
   <BaseModal v-model="openModal" fullscreen transition="dialog-bottom-transition">
-    <template #title>{{
-      !isProfileCreated ? 'Renseignez votre profil' : 'Modifier votre profil'
-    }}</template>
-
     <template #content>
       <v-form class="px-4">
         <v-divider class="mt-6">
           <p class="mt-6"></p>
           A propos de vous
         </v-divider>
-
-        <input
-          type="checkbox"
-          label="Êtes-vous une entreprise ?"
-          v-model="profile.isBusiness"
-          :error-messages="showErrors ? errors.isBusiness : undefined"
-        />
+        <div class="d-flex align-center my-4">
+          <input
+            type="checkbox"
+            class="mr-3"
+            label="Êtes-vous une entreprise ?"
+            v-model="profile.isBusiness"
+            :error-messages="showErrors ? errors.isBusiness : undefined"
+          />
+          <p>Êtes-vous une entreprise ?</p>
+        </div>
 
         <template v-if="profile.isBusiness">
           <v-text-field
@@ -56,9 +55,8 @@
           :error-messages="showErrors ? errors.phoneNumber : undefined"
         />
 
-        <v-divider class="mt-6">
-          <p class="mt-6"></p>
-          A propos de votre adresse
+        <v-divider class="my-6">
+          <p>A propos de votre adresse</p>
         </v-divider>
 
         <v-text-field
