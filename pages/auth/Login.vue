@@ -34,7 +34,7 @@
     </div>
   </div>
 </template>
-<script lang="ts">
+<script setup lang="ts">
 import AuthLoginForm from '@/components/auth/LoginForm.vue';
 
 definePageMeta({
