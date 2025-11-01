@@ -106,12 +106,14 @@
             v-model="reservationDelay"
             :error-messages="showErrors ? errors.minimumReservationPeriod : undefined"
           />
-          <input
-            type="checkbox"
-            label="Doit-on vous faire un accompte avant prestation"
-            v-model="profile.deposit"
-            :error-messages="showErrors ? errors.deposit : undefined"
-          />
+          <div class="d-flex gap-2 text-subtitle-1 mb-3">
+            <input
+              type="checkbox"
+              v-model="profile.deposit"
+              :error-messages="showErrors ? errors.deposit : undefined"
+            />
+            <p>Doit-on vous faire un accompte avant prestation</p>
+          </div>
           <v-number-input
             v-if="profile.deposit"
             control-variant="hidden"
@@ -123,10 +125,10 @@
             :error-messages="showErrors ? errors.depositAmount : undefined"
           />
           <div class="d-flex gap-2 flex-column justify-start align-items-start">
-            <v-label class="text-subtitle-1 font-weight-medium"
-              >Vous souhaitez être payer avant l'évènement ?</v-label
+            <v-divider class="text-subtitle-1 font-weight-medium"
+              >Vous souhaitez être payer avant l'évènement ?</v-divider
             >
-            <div class="d-flex align-center gap-2">
+            <div class="d-flex align-center justify-center gap-2">
               <v-label class="text-subtitle-1 font-weight-medium">Avant la prestation</v-label>
               <v-switch
                 v-model="profile.billingPeriod"
@@ -162,10 +164,10 @@
               <v-btn
                 @click="removeLink(index)"
                 :disabled="profile.links.length <= 0"
-                color="error"
-                prepend-icon="mdi-delete"
+                color="rgb(var(--v-theme-error))"
                 size="small"
-                class="mb-4"
+                style="color: rgb(var(--v-theme-background))"
+                class="mb-4 text-center"
               >
                 Supprimer
               </v-btn>
@@ -237,12 +239,12 @@ import { useKeywords } from '~/composables/professional-user/UseKeywords';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import { GEOGRAPHIC_ACTIVITY } from '~/constants/geographicActivity';
-import type { Faq, Link, ProfessionalProfile } from '~/models/user/UserModel';
+import type { Faq, ProfessionalProfile } from '~/models/user/UserModel';
 import ModalRedirection from './ModalRedirection.vue';
 
 const userStore = useUserStore();
 const { professionalUser } = storeToRefs(userStore);
-const { createProfessionalProfile, patchProfessionnalProfileDetails } = useProfessionalProfile();
+const { createProfessionalProfile, patchProfessionalProfileDetails } = useProfessionalProfile();
 const { getSectors } = useKeywords();
 const openModal = defineModel<boolean>('openModal');
 
@@ -326,7 +328,7 @@ const {
     deposit: false,
     depositAmount: 0,
     billingPeriod: 'beforeEvent',
-    links: [] as Link[] as [{ type: string; value: string }],
+    links: [{ type: 'Facebook', value: '' }] as [{ type: string; value: string }],
   },
   validateOnMount: false,
   keepValuesOnUnmount: true,
@@ -405,7 +407,7 @@ const modifyProfile = async (newValues: ProfessionalProfile) => {
       links: profile.links.filter((link) => link.type.trim() && link.value.trim()),
       certification: profile.certification.filter((c) => c.trim()),
     };
-    const response = await patchProfessionnalProfileDetails(payload);
+    const response = await patchProfessionalProfileDetails(payload);
 
     if (response.message === 'Professional updated') {
       const professional = response.newPro || response.data?.professional;

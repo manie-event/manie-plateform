@@ -73,6 +73,7 @@ export const useUserStore = defineStore('userStore', () => {
   const setProfessionalUser = (newProfessionalUser: ProfessionalProfile) => {
     professionalUser.value = {
       ...newProfessionalUser,
+      email: user.value?.email || '',
       uuid: newProfessionalUser.uuid?.replace(/[""]/g, '') || '',
       category: 'professional',
     };

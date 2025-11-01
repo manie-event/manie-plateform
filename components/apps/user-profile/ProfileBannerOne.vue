@@ -25,9 +25,18 @@
               {{ professionalUser?.name || user?.username }}
               <v-chip color="primary" variant="outlined" size="x-small">Prestataire</v-chip>
             </h2>
-            <p class="profile-header__phone">
-              {{ professionalUser?.telephone || 'Définissez votre téléphone' }}
-            </p>
+            <div class="d-flex align-center">
+              <Icon icon="ci:phone" height="18" width="18" class="mr-1" />
+              <p class="profile-header__phone">
+                {{ professionalUser?.telephone || 'Définissez votre téléphone' }}
+              </p>
+            </div>
+            <div class="d-flex align-center">
+              <Icon icon="ci:phone" height="18" width="18" class="mr-1" />
+              <p class="profile-header__phone">
+                {{ professionalUser?.email || 'Définissez votre téléphone' }}
+              </p>
+            </div>
           </div>
         </div>
 
@@ -84,14 +93,12 @@ const changeBannerPhoto = async (e: Event) => {
   await changeProfessionalBannerPicture(picture);
 };
 
-const getInitials = (name?: string) =>
-  name ? name.trim().charAt(0).toUpperCase() : user.value?.username?.charAt(0).toUpperCase();
+const getInitials = (name?: string) => (name ? name.trim().charAt(0).toUpperCase() : '?');
 
 onMounted(async () => {
+  const name = professionalUser.value?.name || user.value?.username || '';
   await getProfessionalProfileDetails();
-  initials.value = professionalUser.value
-    ? getInitials(professionalUser.value.name)
-    : getInitials(user.value?.username);
+  initials.value = getInitials(name);
 });
 </script>
 

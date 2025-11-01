@@ -31,6 +31,7 @@ export interface clientProfile {
 export interface ProfessionalProfile {
   name: string;
   uuid?: string;
+  email: string;
   userUuid?: string;
   siret: string;
   telephone: string;
