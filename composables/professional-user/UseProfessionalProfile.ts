@@ -41,9 +41,20 @@ export const useProfessionalProfile = () => {
   const getProfessionalProfileDetails = async () => {
     try {
       if (!api || !professionalUuid) return;
+
       const { data } = await api.get(`/professional/${professionalUuid}`);
-      setProfessionalUser(data);
-      return data;
+
+      // 🧩 Compatibilité avec anciens retours { newPro: {...} }
+      const profile = data.newPro || data;
+
+      // 🧩 On s'assure que les relations et champs essentiels existent
+      if (profile && profile.uuid) {
+        setProfessionalUser(profile);
+      } else {
+        console.warn('⚠️ Réponse incomplète du profil professionnel:', data);
+      }
+
+      return profile;
     } catch (error) {
       addError({ message: 'Erreur lors de la récupération des détails du profil.' });
     }
@@ -53,18 +64,25 @@ export const useProfessionalProfile = () => {
     try {
       if (!api || !professionalUuid) return;
 
-      // 🧩 Fusionne l'ancien profil avec la mise à jour avant l'envoi
+      // 🧩 On fusionne sans écraser les champs backend (comme picture)
       const mergedProfile = {
         ...professionalUser.value,
         ...newProfile,
       };
 
       const { data } = await api.patch(`/professional/${professionalUuid}`, mergedProfile);
+      const updatedProfile = data.newPro || data;
 
-      setProfessionalUser(data);
-      addSuccess('Profil professionnel mis à jour !');
-      return data;
+      if (updatedProfile && updatedProfile.uuid) {
+        setProfessionalUser(updatedProfile);
+        addSuccess('Profil professionnel mis à jour !');
+      } else {
+        console.warn('⚠️ Réponse incomplète après mise à jour du profil:', data);
+      }
+
+      return updatedProfile;
     } catch (error) {
+      console.error('❌ Erreur patchProfessionalProfileDetails:', error);
       addError({ message: 'Erreur lors de la mise à jour du profil professionnel.' });
     }
   };
