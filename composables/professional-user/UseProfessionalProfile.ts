@@ -5,6 +5,7 @@ export const useProfessionalProfile = () => {
   const { addError, addSuccess } = useToaster();
   const userStore = useUserStore();
   const { setProfessionalUser, sendProfessionalProfileForCustomer } = userStore;
+  const { professionalUser } = storeToRefs(userStore);
   const config = useRuntimeConfig();
   const api = useApi(); // ✅ instance sécurisée
   const professionalUuid = localStorage.getItem('professional-uuid');
@@ -51,7 +52,15 @@ export const useProfessionalProfile = () => {
   const patchProfessionalProfileDetails = async (newProfile: ProfessionalProfile) => {
     try {
       if (!api || !professionalUuid) return;
-      const { data } = await api.patch(`/professional/${professionalUuid}`, newProfile);
+
+      // 🧩 Fusionne l'ancien profil avec la mise à jour avant l'envoi
+      const mergedProfile = {
+        ...professionalUser.value,
+        ...newProfile,
+      };
+
+      const { data } = await api.patch(`/professional/${professionalUuid}`, mergedProfile);
+
       setProfessionalUser(data);
       addSuccess('Profil professionnel mis à jour !');
       return data;
