@@ -76,7 +76,7 @@ onBeforeMount(() => {
               size="small"
               class="custom-hover-primary no-global-style"
             >
-              <div class="position-realtive">
+              <div class="d-flex align-center justify-center">
                 <Icon icon="solar:cart-3-outline" height="24" width="24" />
               </div>
               <v-badge
@@ -176,6 +176,8 @@ onBeforeMount(() => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
   transition:
     background-color 0.2s ease,
@@ -231,8 +233,8 @@ onBeforeMount(() => {
       /* ✅ Stabilise le badge */
       .v-badge {
         position: absolute !important;
-        top: -4px !important;
-        right: -6px !important;
+        top: 4px !important;
+        right: 4px !important;
         transform: none !important;
         height: 45px;
         width: 15px;

@@ -4,8 +4,7 @@ import type { ProfessionalProfile } from '~/models/user/UserModel';
 export const useProfessionalProfile = () => {
   const { addError, addSuccess } = useToaster();
   const userStore = useUserStore();
-  const { setProfessionalUser, sendNewPhotoOnProfile, sendProfessionalProfileForCustomer } =
-    userStore;
+  const { setProfessionalUser, sendProfessionalProfileForCustomer } = userStore;
   const config = useRuntimeConfig();
   const api = useApi(); // ✅ instance sécurisée
   const professionalUuid = localStorage.getItem('professional-uuid');
@@ -72,7 +71,13 @@ export const useProfessionalProfile = () => {
         headers: { 'Content-Type': 'multipart/form-data' }, // seul cas où on garde un header manuel
       });
 
-      if (data?.imageUrl) sendNewPhotoOnProfile(data.imageUrl);
+      if (data?.imageUrl) {
+        const normalizedData = {
+          ...data,
+          picture: data.imageUrl || data.picture || null,
+        };
+        setProfessionalUser(normalizedData);
+      }
       return data;
     } catch (error) {
       console.error(error);

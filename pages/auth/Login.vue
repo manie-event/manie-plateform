@@ -1,9 +1,3 @@
-<script setup lang="ts">
-definePageMeta({
-  layout: 'blank',
-});
-</script>
-
 <template>
   <div class="login-app-wrapper">
     <div
@@ -15,7 +9,7 @@ definePageMeta({
             <v-row class="justify-md-space-around align-center py-md-8">
               <v-col cols="12" lg="5" md="6" class="d-md-flex d-none">
                 <img
-                  src="@/public/images/backgrounds/flutter.png"
+                  src="@/public/images/masquotte/masquotte-login.png"
                   class="w-100"
                   alt="login-background"
                 />
@@ -40,3 +34,10 @@ definePageMeta({
     </div>
   </div>
 </template>
+<script setup lang="ts">
+import AuthLoginForm from '@/components/auth/LoginForm.vue';
+
+definePageMeta({
+  layout: 'blank',
+});
+</script>

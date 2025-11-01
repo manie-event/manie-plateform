@@ -11,12 +11,8 @@
         rounded="pill"
         size="large"
         @click="openMarketModal = true"
-        v-if="servicePropositionAvailable"
       >
         Découvrir les annonces
-      </v-btn>
-      <v-btn color="primary" class="mt-4 mb-2 px-7" rounded="pill" size="large" v-else>
-        <Loader class="w-2 h-2 animate-spin" />
       </v-btn>
       <!-- <img :src="PhotoAModifier" class="bg-img-1 mt-sm-0 mt-sm-n10" /> -->
     </v-card-text>
@@ -30,7 +26,6 @@
 </template>
 <script setup lang="ts">
 import { useEventServiceProposition } from '@/composables/event-service-propositions/UseEventServiceProposition';
-import Loader from '@/public/images/svgs/minimal-spinner.svg';
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
 import ProfessionalMarketPlace from './ProfessionalMarketPlace.vue';
 

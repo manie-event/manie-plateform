@@ -105,9 +105,11 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .dashboard-position {
   display: flex;
+  height: calc(100vh - 150px);
   width: 100vw;
   justify-content: center;
   top: -40px;
   position: relative;
+  align-items: center;
 }
 </style>

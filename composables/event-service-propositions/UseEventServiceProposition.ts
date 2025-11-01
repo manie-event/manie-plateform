@@ -82,12 +82,22 @@ export const useEventServiceProposition = () => {
     try {
       const professionalServices = await getListProfessionalServiceByProfessional();
 
+      // ✅ On s'assure d'avoir un tableau
+      const servicesArray = Array.isArray(professionalServices)
+        ? professionalServices
+        : (professionalServices?.data ?? []);
+
+      if (servicesArray.length === 0) {
+        console.warn('Aucun service professionnel trouvé pour ce profil.');
+        return [];
+      }
+
       const allPropositions = await Promise.all(
-        professionalServices.map(async (service: ProfessionalServiceUuid) => {
+        servicesArray.map(async (service: ProfessionalServiceUuid) => {
           const propositionList = await getListProfessionalProposition(service.uuid);
 
           const propositionsWithEvents = await Promise.all(
-            propositionList.map(async (prop) => {
+            (propositionList ?? []).map(async (prop) => {
               try {
                 const event = await getListEventServiceProposition(prop.uuid);
 
@@ -115,17 +125,15 @@ export const useEventServiceProposition = () => {
               }
             })
           );
+
           return propositionsWithEvents.filter(Boolean);
         })
       );
 
-      const flattenedList = allPropositions.flat();
-
-      servicePropositionAvailable.value = flattenedList.length > 0;
-      setServiceEventPropositionForPresta(flattenedList);
+      return allPropositions.flat(); // ✅ utile pour aplatir le tableau final
     } catch (error) {
-      console.error('❌ Erreur getServicePropositionForProfessional:', error);
-      servicePropositionAvailable.value = false;
+      console.error('Erreur getServicePropositionForProfessional:', error);
+      return [];
     }
   };
 

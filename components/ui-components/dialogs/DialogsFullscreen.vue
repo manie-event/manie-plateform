@@ -45,7 +45,7 @@ const widgets = ref(false);
               subtitle="Notify me about updates to apps or games that I downloaded"
             >
               <template v-slot:prepend>
-                <v-checkbox v-model="notifications"></v-checkbox>
+                <input type="checkbox" v-model="notifications" />
               </template>
             </v-list-item>
             <v-list-item
@@ -53,12 +53,12 @@ const widgets = ref(false);
               subtitle="Auto-update apps at any time. Data charges may apply"
             >
               <template v-slot:prepend>
-                <v-checkbox v-model="sound"></v-checkbox>
+                <input type="checkbox" v-model="sound" />
               </template>
             </v-list-item>
             <v-list-item title="Auto-add widgets" subtitle="Automatically add home screen widgets">
               <template v-slot:prepend>
-                <v-checkbox v-model="widgets"></v-checkbox>
+                <input type="checkbox" v-model="widgets" />
               </template>
             </v-list-item>
           </v-list>
