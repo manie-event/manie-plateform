@@ -77,6 +77,7 @@ onMounted(() => {
       :rules="emailRules"
       class="mb-8"
       placeholder="info@manie.com"
+      autocomplete="email"
       required
       hide-details="auto"
     ></VTextField>
@@ -85,22 +86,13 @@ onMounted(() => {
       v-model="authentification.password"
       :rules="passwordRules"
       required
+      autocomplete="current-password"
       hide-details="auto"
       placeholder="**********"
       type="password"
       class="pwdInput"
     ></VTextField>
     <div class="d-flex flex-wrap align-center my-3 ml-n2">
-      <v-checkbox
-        v-model="checkbox"
-        :rules="[(v: any) => !!v || 'You must agree to continue!']"
-        required
-        hide-details
-        color="primary"
-        @change="isMemoryUser()"
-      >
-        <template v-slot:label>Se souvenir de mes infos</template>
-      </v-checkbox>
       <div class="ml-sm-auto">
         <NuxtLink
           to="/auth/forgot-password"

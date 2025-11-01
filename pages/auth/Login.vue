@@ -1,9 +1,3 @@
-<script setup lang="ts">
-definePageMeta({
-  layout: 'blank',
-});
-</script>
-
 <template>
   <div class="login-app-wrapper">
     <div
@@ -40,3 +34,10 @@ definePageMeta({
     </div>
   </div>
 </template>
+<script lang="ts">
+import AuthLoginForm from '@/components/auth/LoginForm.vue';
+
+definePageMeta({
+  layout: 'blank',
+});
+</script>

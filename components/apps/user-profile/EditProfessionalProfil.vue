@@ -106,7 +106,8 @@
             v-model="reservationDelay"
             :error-messages="showErrors ? errors.minimumReservationPeriod : undefined"
           />
-          <v-checkbox
+          <input
+            type="checkbox"
             label="Doit-on vous faire un accompte avant prestation"
             v-model="profile.deposit"
             :error-messages="showErrors ? errors.deposit : undefined"

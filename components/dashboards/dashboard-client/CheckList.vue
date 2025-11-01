@@ -24,12 +24,13 @@
       >
         <v-row class="align-center" no-gutters>
           <v-col cols="auto">
-            <v-checkbox
+            <input
+              type="checkbox"
               v-model="task.done"
               color="primary"
               hide-details
               @update:model-value="handleUpdateTask(task.id, { done: task.done })"
-            ></v-checkbox>
+            />
           </v-col>
 
           <v-col class="flex-grow-1">

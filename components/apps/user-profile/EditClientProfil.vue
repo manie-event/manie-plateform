@@ -11,7 +11,8 @@
           A propos de vous
         </v-divider>
 
-        <v-checkbox
+        <input
+          type="checkbox"
           label="Êtes-vous une entreprise ?"
           v-model="profile.isBusiness"
           :error-messages="showErrors ? errors.isBusiness : undefined"
