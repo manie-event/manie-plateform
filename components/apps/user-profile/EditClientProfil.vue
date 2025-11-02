@@ -83,7 +83,7 @@
           :error-messages="showErrors ? errors.country : undefined"
         />
 
-        <v-btn color="primary" @click="onSubmit(profile)" :loading="isSubmitting" block>
+        <v-btn color="primary" @click="onSubmit" :loading="isSubmitting" block>
           Valider le profil
         </v-btn>
       </v-form>
@@ -171,7 +171,7 @@ const {
 });
 
 // Fonction de soumission corrigée
-const onSubmit = async (profile: ClientModel) => {
+const onSubmit = handleSubmit(async (profile: ClientModel) => {
   try {
     isSubmitting.value = true;
     showErrors.value = true;
@@ -187,5 +187,5 @@ const onSubmit = async (profile: ClientModel) => {
   } finally {
     isSubmitting.value = false;
   }
-};
+});
 </script>

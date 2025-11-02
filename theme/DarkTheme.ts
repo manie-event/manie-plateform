@@ -180,7 +180,7 @@ const DARK_CYAN_THEME: ThemeTypes = {
     borderColor: '#182D41',
     inputBorder: '#465670',
     containerBg: '#111C2D',
-    background: '#16293e',
+    background: '#111936',
     hoverColor: '#333f55',
     surface: '#111C2D',
     grey100: '#7C8FAC',

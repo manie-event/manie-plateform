@@ -11,7 +11,7 @@
       <v-list class="bg-transparent">
         <v-list-item v-for="(formule, index) in Packages" :key="index" class="pa-0 mb-4">
           <v-card
-            class="pricing-choice__card d-flex flex-column flex-md-row align-center justify-between pa-6 border rounded-12 hover:elevate"
+            class="pricing-choice__card d-flex flex-column flex-md-row align-center justify-between pa-6 rounded-12"
             :class="{
               'pricing-choice__card--selected': props.event.formule === formule.subCaption,
             }"
@@ -52,7 +52,6 @@
               <v-btn
                 color="primary"
                 size="small"
-                class="pa-3"
                 :class="{
                   'pricing-choice__card--selected': props.event.formule === formule.subCaption,
                 }"
@@ -132,17 +131,16 @@ const openDetails = (formule: any) => {
 
   &__card {
     min-height: 160px;
-    border: 1px solid rgba(0, 0, 0, 0.08);
     background-color: rgb(var(--v-theme-surface));
     color: rgb(var(--v-theme-textPrimary));
     border-radius: 12px;
     transition: all 0.3s ease;
     width: 90%;
+    box-shadow: unset !important;
     margin: 0 auto;
     cursor: pointer;
 
     &:hover {
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
       border-color: rgb(var(--v-theme-primary));
     }
 

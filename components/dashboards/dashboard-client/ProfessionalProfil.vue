@@ -3,7 +3,7 @@
     <v-card max-width="600">
       <v-card-text>
         <div>
-          <!-- <Img :src="props.pprofile.picture" height="200" class="pp-couverture"></Img> -->
+          <Img :src="props.pprofile.picture" height="200" class="pp-couverture"></Img>
         </div>
         {{ props.pprofile }}
       </v-card-text>

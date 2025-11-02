@@ -67,10 +67,6 @@ const openEditProfilModal = () => {
   width: 80vw;
   padding-bottom: 60px;
 
-  &:hover {
-    transform: translateY(-3px);
-  }
-
   img {
     object-fit: cover;
     height: 180px;
