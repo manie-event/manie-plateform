@@ -31,9 +31,8 @@ export const useAuthentification = () => {
         );
         await router.push('/auth/login');
       }
-    } catch {
-      // message dédié si SIRET invalide (tu pourras affiner selon status backend)
-      addError({ message: 'Veuillez vérifier que le SIRET soit valide.' });
+    } catch (error: unknown) {
+      addError(error as errorModel);
     }
   };
 

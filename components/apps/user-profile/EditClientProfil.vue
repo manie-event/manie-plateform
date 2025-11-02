@@ -91,6 +91,7 @@
   </BaseModal>
   <Teleport to="body">
     <error-toaster></error-toaster>
+    <SuccessToaster></SuccessToaster>
   </Teleport>
 </template>
 
@@ -100,6 +101,7 @@ import { useForm } from 'vee-validate';
 import { ref, Teleport } from 'vue';
 import * as yup from 'yup';
 import errorToaster from '~/components/common/errorToaster.vue';
+import SuccessToaster from '~/components/common/successToaster.vue';
 import { useClientProfil } from '~/composables/client-user/UseClientProfil';
 import type { ClientModel } from '~/models/user/ClientModel';
 
@@ -178,6 +180,9 @@ const onSubmit = handleSubmit(async (profile: ClientModel) => {
     // Appel de votre fonction de patch
     await patchClientProfil(profile);
 
+    if (isProfileCreated.value) {
+      SuccessToaster.show('Profil mis à jour avec succès !');
+    }
     // Fermer le modal en cas de succès
     openModal.value = false;
     showErrors.value = false;

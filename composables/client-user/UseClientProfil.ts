@@ -35,7 +35,10 @@ export const useClientProfil = () => {
 
       updateClientProfile(profileUpdated?.data);
       isProfileCreated.value = true;
+      addSuccess('Profil mis à jour avec succès.');
       return response.data;
+    } else {
+      addError({ message: 'Une erreur est survenue lors de la mise à jour du profil.' });
     }
   };
   return {

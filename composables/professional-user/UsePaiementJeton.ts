@@ -6,7 +6,7 @@ export const usePaiementJeton = () => {
   const { professionalUser } = storeToRefs(userStore);
   const cartStore = useCartStore();
   const { initializeTokenBalance } = cartStore;
-
+  const { addSuccess, addError } = useToaster();
   const api = useApi(); // ✅ instance sécurisée
   const isProcessing = ref(false);
   const error = ref<string | null>(null);
@@ -90,8 +90,10 @@ export const usePaiementJeton = () => {
       const currentBalance = await getJetonQuantity();
       initializeTokenBalance(currentBalance);
 
+      addSuccess('Paiement réussi ! Votre solde de jetons a été mis à jour.');
       return { success: true, quantity, sessionData };
     } catch (err: any) {
+      addError({ message: err.message || 'Erreur lors du traitement du paiement.' });
       error.value = err.message;
       return { success: false, message: error.value };
     } finally {
