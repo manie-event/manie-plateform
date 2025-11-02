@@ -45,9 +45,12 @@ export const useProfessionalProfile = () => {
 
       // 🧩 Compatibilité avec anciens retours { newPro: {...} }
       const profile = data.newPro || data;
+      console.log(data, data.newPro, 'PROFILEDETAILS');
 
       // 🧩 On s'assure que les relations et champs essentiels existent
       if (profile && profile.uuid) {
+        console.log(profile, profile.uuid, 'PROFILEDETAILS');
+
         setProfessionalUser(profile);
       } else {
         console.warn('⚠️ Réponse incomplète du profil professionnel:', data);
