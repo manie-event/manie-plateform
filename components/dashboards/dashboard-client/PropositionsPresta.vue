@@ -89,7 +89,12 @@
                   v-if="item.propositionStatus === 'completed'"
                   @click="confirmedProposition(item.eventServiceUuid)"
                 >
-                  <v-btn color="primary" class="pa-3">Profil du prestataire</v-btn>
+                  <v-btn
+                    color="rgb(var(--v-theme-darkbg))"
+                    class="pa-3"
+                    style="color: rgb(var(--v-theme-background))"
+                    >Profil du prestataire</v-btn
+                  >
                 </td>
                 <td v-else>
                   <div class="d-flex align-center gap-4">

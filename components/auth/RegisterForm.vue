@@ -163,6 +163,8 @@ const register = async () => {
     <v-btn
       size="large"
       class="mt-2"
+      style="color: white"
+      color="rgb(var(--v-theme-darkbg))"
       block
       submit
       rounded="pill"

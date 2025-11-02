@@ -29,15 +29,24 @@ export const useEventService = () => {
   };
 
   const getEventsPerOrganisator = async () => {
+    const { addError } = useToaster();
+    const userStore = useUserStore();
+    const { clientProfile } = storeToRefs(userStore);
+
     try {
       if (!api) return;
 
-      const uuid = localStorage.getItem('client-uuid');
-      const { mapDtoToEvent } = eventsMapper();
+      // ✅ Récupération du bon uuid depuis le store
+      const uuid = clientProfile.value?.uuid || userStore.user?.uuid;
+      if (!uuid) {
+        console.warn('Aucun UUID client trouvé dans le store');
+        return;
+      }
 
+      const { mapDtoToEvent } = eventsMapper();
       const allEvents: any[] = [];
       let page = 1;
-      const limit = 10; // même limite que ton back
+      const limit = 10;
       let hasMore = true;
 
       while (hasMore) {
@@ -45,22 +54,18 @@ export const useEventService = () => {
           `/event/list-by-organisator/${uuid}?page=${page}&limit=${limit}`
         );
 
-        // Vérifie que data existe et que c’est bien un tableau
+        // Sécurité : on vérifie la structure
         if (!data || !Array.isArray(data.data)) break;
 
         const events = data.data.map((e: eventModelDto) => mapDtoToEvent(e));
         allEvents.push(...events);
         setEventsByOrganisator(allEvents);
 
-        // Récupération sécurisée de la pagination
         const current = data?.meta?.current_page ?? page;
         const last = data?.meta?.last_page ?? page;
 
-        if (current >= last) {
-          hasMore = false; // 🚫 Stop la boucle
-        } else {
-          page++;
-        }
+        hasMore = current < last;
+        page++;
       }
 
       return allEvents;
