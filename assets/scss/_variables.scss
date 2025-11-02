@@ -6,10 +6,66 @@ $manie-secondary: #5d79a4;
 $manie-thirdy: #f39454;
 $bg-color: #fff5eb;
 
+/* ============================
+   📘 Poppins – Regular & Medium
+   ============================ */
+@font-face {
+  font-family: 'Poppins';
+  src:
+    url('../fonts/Poppins-Regular.woff2') format('woff2'),
+    url('../fonts/Poppins-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src:
+    url('../fonts/Poppins-Medium.woff2') format('woff2'),
+    url('../fonts/Poppins-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============================
+   💛 Margarine – Regular
+   ============================ */
+@font-face {
+  font-family: 'Margarine';
+  src:
+    url('../fonts/Margarine-Regular.woff2') format('woff2'),
+    url('../fonts/Margarine-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============================
+   🖋️ Parkinsans – SemiBold
+   ============================ */
+@font-face {
+  font-family: 'Parkinsans';
+  src:
+    url('../fonts/Parkinsans-SemiBold.woff2') format('woff2'),
+    url('../fonts/Parkinsans-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============================
+   💅 Fallback global
+   ============================ */
+body {
+  font-family: 'Poppins', 'Parkinsans', 'Margarine', sans-serif;
+}
+
 // cards
 $card-title-size: 18px !default;
 
-$body-font-family: 'Plus Jakarta Sans' !default;
+$body-font-family: 'Poppins' !default;
 $border-radius-root: 7px;
 $btn-font-weight: 400 !default;
 $btn-letter-spacing: 0 !default;
