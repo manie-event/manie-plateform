@@ -296,7 +296,7 @@ const chooseEventTypeDependingOnUserCategory = computed(() => {
 
 const customerResponse = computed(() => {
   return {
-    organisatorUuid: localStorage.getItem('client-uuid'),
+    organisatorUuid: clientProfile.value?.uuid,
     event_type: chooseEventTypeDependingOnUserCategory.value,
     name: name.value,
     date: finalDateSelection.value,

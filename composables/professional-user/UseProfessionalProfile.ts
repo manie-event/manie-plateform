@@ -7,8 +7,7 @@ export const useProfessionalProfile = () => {
   const { setProfessionalUser, sendProfessionalProfileForCustomer } = userStore;
   const { professionalUser } = storeToRefs(userStore);
   const config = useRuntimeConfig();
-  const api = useApi(); // ✅ instance sécurisée
-  const professionalUuid = localStorage.getItem('professional-uuid');
+  const api = useApi();
 
   const createProfessionalProfile = async (professionalProfil: ProfessionalProfile) => {
     try {
@@ -40,9 +39,9 @@ export const useProfessionalProfile = () => {
 
   const getProfessionalProfileDetails = async () => {
     try {
-      if (!api || !professionalUuid) return;
+      if (!api || !professionalUser.value?.uuid) return;
 
-      const { data } = await api.get(`/professional/${professionalUuid}`);
+      const { data } = await api.get(`/professional/${professionalUser.value?.uuid}`);
 
       // 🧩 Compatibilité avec anciens retours { newPro: {...} }
       const profile = data.newPro || data;
@@ -62,7 +61,7 @@ export const useProfessionalProfile = () => {
 
   const patchProfessionalProfileDetails = async (newProfile: ProfessionalProfile) => {
     try {
-      if (!api || !professionalUuid) return;
+      if (!api || !professionalUser.value?.uuid) return;
 
       // 🧩 On fusionne sans écraser les champs backend (comme picture)
       const mergedProfile = {
@@ -70,7 +69,10 @@ export const useProfessionalProfile = () => {
         ...newProfile,
       };
 
-      const { data } = await api.patch(`/professional/${professionalUuid}`, mergedProfile);
+      const { data } = await api.patch(
+        `/professional/${professionalUser.value?.uuid}`,
+        mergedProfile
+      );
       const updatedProfile = data.newPro || data;
 
       if (updatedProfile && updatedProfile.uuid) {
@@ -88,15 +90,19 @@ export const useProfessionalProfile = () => {
   };
 
   const changeProfessionalBannerPicture = async (file: File) => {
-    if (!api || !professionalUuid) return;
+    if (!api || !professionalUser.value?.uuid) return;
 
     const formData = new FormData();
     formData.append('file', file);
 
     try {
-      const { data } = await api.patch(`/professional/${professionalUuid}/picture`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }, // seul cas où on garde un header manuel
-      });
+      const { data } = await api.patch(
+        `/professional/${professionalUser.value?.uuid}/picture`,
+        formData,
+        {
+          headers: { 'Content-Type': 'multipart/form-data' }, // seul cas où on garde un header manuel
+        }
+      );
 
       if (data?.imageUrl) {
         const normalizedData = {

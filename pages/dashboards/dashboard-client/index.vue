@@ -66,8 +66,9 @@ onMounted(async () => {
         <template #description>
           <h2 class="text-h5">Bienvenue sur Manie</h2>
           <p class="text-subtitle-1">
-            Veuillez compléter votre profil client pour accéder à toutes les fonctionnalités.
+            Veuillez compléter votre profil client pour accéder à toutes les fonctionnalités
           </p>
+          <v-btn><NuxtLink to="/apps/userprofile/two">Créer mon profil Client</NuxtLink></v-btn>
         </template>
       </BaseEmptyState>
     </v-col>
@@ -77,7 +78,7 @@ onMounted(async () => {
 .dashboard-client {
   max-width: 1280px;
   margin: 2rem auto;
-  background: rgb(var(--v-theme-containerBg));
+  background-color: transparent;
   padding: 10px 15px;
 }
 </style>

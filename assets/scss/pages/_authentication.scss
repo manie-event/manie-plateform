@@ -153,9 +153,8 @@
       &::after {
         content: '';
         position: absolute;
-        z-index: 999;
-        top: -70px;
-        right: -75px;
+        right: -65px;
+        top: -50px;
         width: 404px;
         height: 405px;
         background-color: var(--manie-thirdy);

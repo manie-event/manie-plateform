@@ -66,12 +66,6 @@
             <span class="pp-label">Paiement du dépot:</span>
             <p class="pp-value">{{ getBilingPeriod }}</p>
           </div>
-          <div>
-            <span class="pp-label">Période de validation minimum:</span>
-            <p class="pp-value">
-              {{ props.pprofile.minimumReservationPeriod }} semaines avant le début de l'évènement
-            </p>
-          </div>
         </div>
 
         <v-divider class="my-4"></v-divider>
@@ -253,7 +247,7 @@ const linksList = computed(() => {
 
 .pp-info-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 16px;
 
   @media (max-width: 600px) {

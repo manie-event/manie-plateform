@@ -220,7 +220,11 @@ onMounted(async () => {
     }
 
     const profileData = clientProfile.value;
+
     if (profileData) {
+      const formattedBirthDate = profileData.birthDate
+        ? new Date(profileData.birthDate).toISOString().split('T')[0]
+        : '';
       setValues({
         businessName: profileData.businessName || '',
         businessSiret: profileData.businessSiret || '',
@@ -229,7 +233,7 @@ onMounted(async () => {
         zipCode: profileData.zipCode || '',
         city: profileData.city || '',
         country: profileData.country || 'France',
-        birthDate: profileData.birthDate || '',
+        birthDate: formattedBirthDate || '',
         username: profileData.username || '',
         phoneNumber: profileData.phoneNumber || '',
         isBusiness: profileData.isBusiness || false,
