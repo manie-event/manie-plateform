@@ -16,7 +16,7 @@ const DARK_BLUE_THEME: ThemeTypes = {
     warning: '#F8B15D',
     error: '#FB977D',
     indigo: '#8763DA',
-    lightprimary: '#1b394f',
+    lightprimary: '#f39454',
     lightinfo: '#1a3247',
     lightsecondary: '#2f3f4c',
     lightsuccess: '#102d35',

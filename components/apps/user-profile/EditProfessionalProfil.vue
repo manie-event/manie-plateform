@@ -150,7 +150,7 @@
               <v-select
                 v-model="link.type"
                 label="Renseignez le réseau social ou le site web"
-                :items="['Facebook', 'Instagram', 'LinkedIn', 'Twitter', 'Site Web']"
+                :items="['Facebook', 'Instagram', 'LinkedIn', 'Youtube', 'Twitter', 'Site Web']"
                 item-title="label"
                 item-value="value"
               />

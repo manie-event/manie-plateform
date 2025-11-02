@@ -11,7 +11,7 @@
   text-decoration: unset;
   margin-left: 15px;
   font-weight: 600;
-  color: var(--manie-thirdy);
+  color: rgb(var(--v-theme-lightprimary));
   transition: all 0.4s ease-in;
   background: none;
 

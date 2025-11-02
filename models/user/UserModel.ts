@@ -44,6 +44,7 @@ export interface ProfessionalProfile {
   thirdActivity?: string;
   mainInterlocutor: string;
   experience: number;
+  certification: string[];
   category?: string;
   geographicArea: string;
   picture: string;

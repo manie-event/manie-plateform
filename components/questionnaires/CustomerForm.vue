@@ -129,7 +129,7 @@
 
       <!-- PAGE 3 -->
 
-      <div v-if="currentPage === 3" key="page3">
+      <div v-if="currentPage === 3" key="page3" class="pa-3">
         <v-alert
           color="rgb(var(--v-theme-darkbg))"
           style="color: rgb(var(--v-theme-background))"
@@ -142,15 +142,16 @@
         <div
           v-for="(service, serviceIndex) in selectedServices"
           :key="serviceIndex"
-          class="mb-8 p-4 bg-white rounded-xl shadow-sm"
+          class="mb-8 pa-6 bg-white rounded-xl shadow-sm"
         >
           <div class="d-flex justify-space-between align-center mb-3">
             <h3 class="font-weight-bold">Choisissez un univers</h3>
-            <v-btn
+            <Icon
+              icon="solar:trash-bin-trash-line-duotone"
+              height="24"
+              style="cursor: pointer"
+              class="me-2"
               v-if="selectedServices.length > 1"
-              color="error"
-              variant="text"
-              icon="mdi-delete-outline"
               @click="removeService(serviceIndex)"
             />
           </div>
@@ -229,6 +230,7 @@
 <script setup lang="ts">
 import questionnaire from '@/data/questionnaire-client-refonte.json';
 import { eventsStore } from '@/stores/events';
+import { Icon } from '@iconify/vue';
 import { UseEvent } from '~/composables/event/UseEvent';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { SectorsDto } from '~/models/dto/sectorsDto';

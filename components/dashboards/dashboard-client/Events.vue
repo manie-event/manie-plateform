@@ -7,10 +7,7 @@
         </div>
       </div>
 
-      <v-btn
-        @click="openModal = !openModal"
-        class="default events__add-button"
-        style="height: 100px"
+      <v-btn @click="openModal = !openModal" class="events__add-button" style="height: 100px"
         >+</v-btn
       >
       <CustomerForm v-if="openModal" v-model:open-customer-form="openModal" />
@@ -40,8 +37,11 @@ const openModal = ref(false);
     width: 70px;
     height: 70px !important;
     position: relative;
-    background: var(--manie-thirdy);
+    background: rgb(var(--v-theme-lightprimary));
     border-radius: 50% !important;
+    color: rgb(var(--v-theme-background));
+    font-size: 1rem;
+    font-weight: 700;
     top: 30px;
   }
 }
