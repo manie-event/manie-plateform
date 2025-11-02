@@ -1,13 +1,11 @@
 <template>
   <v-card class="position-relative">
-    <div class="d-flex flex-row-reverse justify-space-between">
+    <div class="d-flex flex-row-reverse justify-space-between pa-4">
       <v-btn color="primary" class="checklist-btn" variant="flat" @click="handleAddTask()">
-        <v-icon center>mdi-plus</v-icon>
+        <icon icon="mdi-plus" />
       </v-btn>
-      <div>
-        <v-card-subtitle class="text-subtitle-1 font-weight-bold pt-5">
-          Votre liste des tâches
-        </v-card-subtitle>
+      <div class="pl-2">
+        <v-card-subtitle class="text-subtitle-1 pt-5"> Votre liste des tâches </v-card-subtitle>
 
         <v-card-subtitle class="text-body-2 mb-4">
           {{ completedTasks }}/{{ currentTasks.length }} tâche(s) complétée(s)
@@ -19,7 +17,7 @@
       <v-list-item
         v-for="(task, index) in currentTasks"
         :key="task.id"
-        class="py-2"
+        class="pa-2"
         :class="task.done ? 'task-done' : 'task-pending'"
       >
         <v-row class="align-center" no-gutters>
@@ -27,6 +25,7 @@
             <input
               type="checkbox"
               v-model="task.done"
+              class="mx-4"
               color="primary"
               hide-details
               @update:model-value="handleUpdateTask(task.id, { done: task.done })"
@@ -46,9 +45,15 @@
           </v-col>
 
           <v-col cols="auto">
-            <v-icon color="error" class="cursor-pointer" @click="handleRemoveTask(index)">
-              mdi-delete
-            </v-icon>
+            <Icon
+              color="error"
+              width="24"
+              height="24"
+              icon="solar:trash-bin-trash-line-duotone"
+              class="cursor-pointer"
+              @click="handleRemoveTask(index)"
+            >
+            </Icon>
           </v-col>
         </v-row>
       </v-list-item>
@@ -58,6 +63,7 @@
 
 <script setup lang="ts">
 import { useTasksStore } from '@/stores/taskStore';
+import { Icon } from '@iconify/vue';
 import { computed, onMounted } from 'vue';
 import type { eventModel } from '~/models/events/eventModel';
 import type { Task } from '~/models/tasks/eventTasks';

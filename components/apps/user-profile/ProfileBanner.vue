@@ -16,7 +16,7 @@
       <div class="user-details">
         <div class="avatar-border">
           <v-avatar size="100" class="userImage">
-            <img :src="UserImage" alt="photo de profil" />
+            <h3>{{ initials }}</h3>
           </v-avatar>
         </div>
         <h5>{{ clientProfile?.username || user?.username }}</h5>
@@ -24,9 +24,11 @@
       </div>
 
       <div class="actions">
-        <v-btn color="primary" @click="openEditProfilModal()">Éditer votre profil</v-btn>
+        <v-btn color="primary" @click="openEditProfilModal()" class="pa-3"
+          >Éditer votre profil</v-btn
+        >
         <NuxtLink to="/dashboards/dashboard-client">
-          <v-btn color="success">Revenir au dashboard</v-btn>
+          <v-btn color="success" class="pa-3">Revenir au dashboard</v-btn>
         </NuxtLink>
       </div>
     </div>
@@ -39,7 +41,6 @@
 </template>
 <script setup lang="ts">
 import profileBg from '@/public/images/backgrounds/profilebg.jpg';
-import UserImage from '@/public/images/side-picture/charlesdeluvio-rRWiVQzLm7k-unsplash.jpg';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
@@ -47,7 +48,7 @@ import { useUserStore } from '~/stores/userStore';
 import EditClientProfil from './EditClientProfil.vue';
 import ModalRedirection from './ModalRedirection.vue';
 
-const { isProfilUpdate, clientProfile, user } = storeToRefs(useUserStore());
+const { isProfilUpdate, clientProfile, user, initials } = storeToRefs(useUserStore());
 
 const openModal = ref(false);
 const openEditProfilModal = () => {
@@ -93,13 +94,15 @@ const openEditProfilModal = () => {
   .avatar-border {
     .userImage {
       border-radius: 50%;
+      background: rgb(var(--v-theme-darkbg));
+      width: 110px;
+      height: 110px;
       border: 3px solid rgb(var(--v-theme-surface));
       overflow: hidden;
-      img {
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-      }
+    }
+    h3 {
+      color: rgb(var(--v-theme-background));
+      font-size: 2.5rem;
     }
   }
 

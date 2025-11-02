@@ -6,7 +6,6 @@
       class="alert-card"
       type="error"
       :text="error.message"
-      dismissible
     >
       <div class="progress-bar" />
     </v-alert>
@@ -27,9 +26,12 @@ const { errorMessageArray } = useToaster();
 }
 
 .alert-card {
-  max-width: 500px;
+  width: 100%;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .progress-bar {

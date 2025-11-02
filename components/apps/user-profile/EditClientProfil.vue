@@ -97,41 +97,42 @@
 
 <script setup lang="ts">
 import BaseModal from '@/components/common/BaseModal.vue';
+import { useToaster } from '@/utils/toaster';
 import { useForm } from 'vee-validate';
-import { ref, Teleport } from 'vue';
+import { onMounted, ref, Teleport } from 'vue';
 import * as yup from 'yup';
 import errorToaster from '~/components/common/errorToaster.vue';
 import SuccessToaster from '~/components/common/successToaster.vue';
 import { useClientProfil } from '~/composables/client-user/UseClientProfil';
 import type { ClientModel } from '~/models/user/ClientModel';
+import { useUserStore } from '~/stores/userStore';
 
 const userStore = useUserStore();
-const { isProfileCreated } = storeToRefs(userStore);
-const { patchClientProfil } = useClientProfil();
+const { clientProfile, isProfileCreated } = storeToRefs(userStore);
+const { patchClientProfil, getClientProfil } = useClientProfil();
+const { addSuccess, addError } = useToaster();
+
 const openModal = defineModel<boolean>('openModal');
 const showErrors = ref(false);
 const isSubmitting = ref(false);
 
-// Validation conditionnelle basée sur isBusiness
+// ✅ Schéma de validation
 const validationSchema = yup.object({
   isBusiness: yup.boolean(),
   businessName: yup.string().when('isBusiness', {
     is: true,
     then: (schema) => schema.min(2).required('La raison sociale est requise'),
-    otherwise: (schema) => schema.optional(),
   }),
   businessSiret: yup.string().when('isBusiness', {
     is: true,
     then: (schema) =>
       schema
-        .required('Le numéro de siret est requis')
+        .required('Le numéro de SIRET est requis')
         .matches(/^\d{14}$/, 'Le SIRET doit contenir 14 chiffres'),
-    otherwise: (schema) => schema.optional(),
   }),
   businessLeader: yup.string().when('isBusiness', {
     is: true,
     then: (schema) => schema.min(2).required('Le nom du dirigeant est requis'),
-    otherwise: (schema) => schema.optional(),
   }),
   username: yup.string().min(2).required('Le nom est requis'),
   birthDate: yup.date().required('La date de naissance est requise'),
@@ -153,6 +154,7 @@ const {
   errors,
   handleSubmit,
   resetForm,
+  setValues,
 } = useForm({
   validationSchema,
   initialValues: {
@@ -162,7 +164,7 @@ const {
     address: '',
     zipCode: '',
     city: '',
-    country: 'France', // Valeur par défaut
+    country: 'France',
     birthDate: null,
     username: '',
     phoneNumber: '',
@@ -172,25 +174,69 @@ const {
   keepValuesOnUnmount: true,
 });
 
-// Fonction de soumission corrigée
-const onSubmit = handleSubmit(async (profile: ClientModel) => {
+// ✅ Pré-remplir les champs à l’ouverture
+
+// ✅ Soumission
+const onSubmit = handleSubmit(async (values) => {
   try {
     isSubmitting.value = true;
     showErrors.value = true;
-    // Appel de votre fonction de patch
-    await patchClientProfil(profile);
+
+    const profilePayload: ClientModel = {
+      businessName: values.businessName,
+      businessSiret: values.businessSiret,
+      businessLeader: values.businessLeader,
+      address: values.address,
+      zipCode: values.zipCode,
+      city: values.city,
+      country: values.country,
+      birthDate: values.birthDate ?? null,
+      username: values.username,
+      phoneNumber: values.phoneNumber,
+      isBusiness: values.isBusiness,
+    };
+
+    await patchClientProfil(profilePayload);
 
     if (isProfileCreated.value) {
-      SuccessToaster.show('Profil mis à jour avec succès !');
+      addSuccess('Profil mis à jour avec succès !');
+      openModal.value = false;
+      showErrors.value = false;
     }
-    // Fermer le modal en cas de succès
-    openModal.value = false;
-    showErrors.value = false;
   } catch (error) {
-    console.error('Erreur lors de la mise à jour du profil:', error);
-    // L'erreur sera affichée par le errorToaster
+    addError({
+      message: 'Une erreur est survenue lors de la mise à jour du profil.',
+    });
   } finally {
     isSubmitting.value = false;
+  }
+});
+
+onMounted(async () => {
+  try {
+    // On recharge les infos si le store est vide (sécurité)
+    if (!clientProfile.value?.uuid) {
+      await getClientProfil();
+    }
+
+    const profileData = clientProfile.value;
+    if (profileData) {
+      setValues({
+        businessName: profileData.businessName || '',
+        businessSiret: profileData.businessSiret || '',
+        businessLeader: profileData.businessLeader || '',
+        address: profileData.address || '',
+        zipCode: profileData.zipCode || '',
+        city: profileData.city || '',
+        country: profileData.country || 'France',
+        birthDate: profileData.birthDate || '',
+        username: profileData.username || '',
+        phoneNumber: profileData.phoneNumber || '',
+        isBusiness: profileData.isBusiness || false,
+      });
+    }
+  } catch (error) {
+    addError({ message: 'Erreur lors du chargement du profil.' });
   }
 });
 </script>
