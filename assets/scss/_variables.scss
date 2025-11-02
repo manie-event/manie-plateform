@@ -1,19 +1,115 @@
-// Custom Variables
-// colors
+// ========================================================
+//  ✅ VARIABLES PRINCIPALES – version ordonnée correctement
+// ========================================================
+
+// --- Import Sass modules et Vuetify d’abord
+@use 'sass:math';
+@use 'sass:map';
+@use 'sass:meta';
+@use 'vuetify/lib/styles/tools/functions' as *;
+
+// --- Forward Vuetify settings AVANT tout le reste
+@forward 'vuetify/settings' with (
+  $color-pack: false !default,
+  $font-size-root: 1rem,
+  $border-radius-root: 7px,
+  $body-font-family: 'Poppins',
+  $heading-font-family: 'Poppins',
+  $typography: (
+    'h1': (
+      'size': 8.25rem,
+      'weight': 600,
+      'line-height': 2.75rem,
+      'font-family': 'Parkinsans',
+    ),
+    'h2': (
+      'size': 1.875rem,
+      'weight': 600,
+      'line-height': 2.25rem,
+      'font-family': 'Poppins',
+    ),
+    'h3': (
+      'size': 1.5rem,
+      'weight': 600,
+      'line-height': 2rem,
+      'font-family': 'Poppins',
+    ),
+    'h4': (
+      'size': 1.25rem,
+      'weight': 600,
+      'line-height': 1.6rem,
+      'font-family': 'Poppins',
+    ),
+    'h5': (
+      'size': 1.125rem,
+      'weight': 600,
+      'line-height': 1.6rem,
+      'font-family': 'Poppins',
+    ),
+    'h6': (
+      'size': 1rem,
+      'weight': 500,
+      'line-height': 1.2rem,
+      'font-family': 'Poppins',
+    ),
+    'subtitle-1': (
+      'size': 0.875rem,
+      'weight': 400,
+      'line-height': 1.1rem,
+      'font-family': 'Poppins',
+    ),
+    'subtitle-2': (
+      'size': 0.75rem,
+      'weight': 400,
+      'line-height': 1rem,
+      'font-family': 'Poppins',
+    ),
+    'body-1': (
+      'size': 0.875rem,
+      'weight': 400,
+      'font-family': inherit,
+    ),
+    'body-2': (
+      'size': 0.75rem,
+      'weight': 400,
+      'font-family': inherit,
+    ),
+    'button': (
+      'size': 0.875rem,
+      'weight': 500,
+      'font-family': inherit,
+      'text-transform': capitalize,
+    ),
+    'caption': (
+      'size': 0.75rem,
+      'weight': 400,
+      'font-family': inherit,
+    ),
+    'overline': (
+      'size': 0.75rem,
+      'weight': 500,
+      'font-family': inherit,
+      'text-transform': uppercase,
+    ),
+  )
+);
+
+// ========================================================
+//  🎨 Tes variables et déclarations perso ensuite
+// ========================================================
+
 $white: #fff !default;
 $manie-primary: #293b57;
 $manie-secondary: #5d79a4;
 $manie-thirdy: #f39454;
 $bg-color: #fff5eb;
 
-/* ============================
-   📘 Poppins – Regular & Medium
-   ============================ */
+// --- Fonts
 @font-face {
   font-family: 'Poppins';
   src:
-    url('../fonts/Poppins-Regular.woff2') format('woff2'),
-    url('../fonts/Poppins-Regular.woff') format('woff');
+    url('/fonts/Poppins-Regular.woff2') format('woff2'),
+    url('/fonts/Poppins-Regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -22,166 +118,29 @@ $bg-color: #fff5eb;
 @font-face {
   font-family: 'Poppins';
   src:
-    url('../fonts/Poppins-Medium.woff2') format('woff2'),
-    url('../fonts/Poppins-Medium.woff') format('woff');
+    url('/fonts/Poppins-Medium.woff2') format('woff2'),
+    url('/fonts/Poppins-Medium.woff') format('woff');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
-/* ============================
-   💛 Margarine – Regular
-   ============================ */
 @font-face {
   font-family: 'Margarine';
   src:
-    url('../fonts/Margarine-Regular.woff2') format('woff2'),
-    url('../fonts/Margarine-Regular.woff') format('woff');
+    url('/fonts/Margarine-Regular.woff2') format('woff2'),
+    url('/fonts/Margarine-Regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
-/* ============================
-   🖋️ Parkinsans – SemiBold
-   ============================ */
 @font-face {
   font-family: 'Parkinsans';
   src:
-    url('../fonts/Parkinsans-SemiBold.woff2') format('woff2'),
-    url('../fonts/Parkinsans-SemiBold.woff') format('woff');
+    url('/fonts/Parkinsans-SemiBold.woff2') format('woff2'),
+    url('/fonts/Parkinsans-SemiBold.woff') format('woff');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
-}
-
-/* ============================
-   💅 Fallback global
-   ============================ */
-body {
-  font-family: 'Poppins', 'Parkinsans', 'Margarine', sans-serif;
-}
-
-// cards
-$card-title-size: 18px !default;
-
-$body-font-family: 'Poppins' !default;
-$border-radius-root: 7px;
-$btn-font-weight: 400 !default;
-$btn-letter-spacing: 0 !default;
-
-// Global Shadow
-$box-shadow: 0 2px 6px rgba(37, 83, 185, 0.1);
-
-// Global Radius as per breakeven point
-@forward 'vuetify/settings' with (
-  $color-pack: false !default,
-  // Global font size and border radius
-  $font-size-root: 1rem,
-  $border-radius-root: $border-radius-root,
-  $body-font-family: $body-font-family,
-  $heading-font-family: $body-font-family !default,
-  // 👉 Typography
-  $typography: (
-      'h1': (
-        'size': 8.25rem,
-        'weight': 600,
-        'line-height': 2.75rem,
-        'font-family': 'Parkinsans',
-      ),
-      'h2': (
-        'size': 1.875rem,
-        'weight': 600,
-        'line-height': 2.25rem,
-        'font-family': 'Poppins',
-      ),
-      'h3': (
-        'size': 1.5rem,
-        'weight': 600,
-        'line-height': 2rem,
-        'font-family': 'Poppins',
-      ),
-      'h4': (
-        'size': 1.25rem,
-        'weight': 600,
-        'line-height': 1.6rem,
-        'font-family': 'Poppins',
-      ),
-      'h5': (
-        'size': 1.125rem,
-        'weight': 600,
-        'line-height': 1.6rem,
-        'font-family': 'Poppins',
-      ),
-      'h6': (
-        'size': 1rem,
-        'weight': 500,
-        'line-height': 1.2rem,
-        'font-family': 'Poppins',
-      ),
-      'subtitle-1': (
-        'size': 0.875rem,
-        'weight': 400,
-        'line-height': 1.1rem,
-        'font-family': 'Poppins',
-      ),
-      'subtitle-2': (
-        'size': 0.75rem,
-        'weight': 400,
-        'line-height': 1rem,
-        'font-family': 'Poppins',
-      ),
-      'body-1': (
-        'size': 0.875rem,
-        'weight': 400,
-        'font-family': inherit,
-      ),
-      'body-2': (
-        'size': 0.75rem,
-        'weight': 400,
-        'font-family': inherit,
-      ),
-      'button': (
-        'size': 0.875rem,
-        'weight': 500,
-        'font-family': inherit,
-        'text-transform': capitalize,
-      ),
-      'caption': (
-        'size': 0.75rem,
-        'weight': 400,
-        'font-family': inherit,
-      ),
-      'overline': (
-        'size': 0.75rem,
-        'weight': 500,
-        'font-family': inherit,
-        'text-transform': uppercase,
-      ),
-    )
-    !default,
-
-  // 👉 Rounded
-  $rounded: (
-      0: 0,
-      'sm': $border-radius-root * 0.5,
-      null: $border-radius-root,
-      'md': $border-radius-root * 1,
-      'lg': $border-radius-root + 3,
-      'xl': $border-radius-root + 11,
-      'pill': 9999px,
-      'circle': 50%,
-    )
-);
-
-@use 'sass:math';
-@use 'sass:map';
-@use 'sass:meta';
-@use 'vuetify/lib/styles/tools/functions' as *;
-
-:root {
-  --manie-primary: #{$manie-primary};
-  --manie-secondary: #{$manie-secondary};
-  --manie-thirdy: #{$manie-thirdy};
-  --bg-color: #{$bg-color};
 }

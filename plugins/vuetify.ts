@@ -1,4 +1,4 @@
-import '@/assets/styles/variables.scss';
+// import '@/assets/scss/_variables.scss';
 import { defineNuxtPlugin } from 'nuxt/app';
 import { createVuetify } from 'vuetify';
 import * as components from 'vuetify/components';
