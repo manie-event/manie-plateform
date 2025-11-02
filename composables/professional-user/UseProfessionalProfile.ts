@@ -104,6 +104,7 @@ export const useProfessionalProfile = () => {
           picture: data.imageUrl || data.picture || null,
         };
         setProfessionalUser(normalizedData);
+        addSuccess('Bannière changée avec succès !');
       }
       return data;
     } catch (error) {

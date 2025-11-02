@@ -13,8 +13,10 @@
                 @click="removeExpenseModal = true"
                 color="error"
                 variant="tonal"
-                icon="mdi-delete"
-              ></v-btn>
+                class="position-relative"
+              >
+                <Icon icon="solar:trash-bin-trash-line-duotone" width="18" height="18" />
+              </v-btn>
             </div>
           </div>
         </div>
@@ -125,7 +127,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { Icon } from '@iconify/vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import type { eventModel } from '~/models/events/eventModel';
 /* Chart */
 const props = defineProps<{
@@ -195,9 +198,9 @@ const budgetSavings = computed(() => {
   const totalExpenseInEuro = props.event.budget * (totalExpense / 100);
 
   if (totalExpense > 100) {
-    return `Vous avez dépassé le budget de ${totalExpense - 100} % soit ${totalExpenseInEuro}`;
+    return `Vous avez dépassé le budget de ${Math.ceil(totalExpense - 100)} % soit ${Math.ceil(totalExpenseInEuro)}`;
   } else {
-    return `Vous avez dépensé ${totalExpense} % de votre budget soit ${totalExpenseInEuro} €`;
+    return `Vous avez dépensé ${Math.ceil(totalExpense)} % de votre budget soit ${Math.ceil(totalExpenseInEuro)} €`;
   }
 });
 

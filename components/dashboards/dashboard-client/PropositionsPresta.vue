@@ -7,29 +7,21 @@
         </div>
       </div>
       <div class="month-table" v-if="filteredPropositionByStatus.length > 0">
-        <v-table class="mt-5 mb-0 proposition-presta__table">
+        <v-table class="mt-5 mb-0 proposition-presta__table gap-2">
           <template v-slot:default>
             <thead>
               <tr>
                 <!-- A voir pour changer avec nom de la personne -->
-                <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
-                  Nom de l'évènement
-                </th>
-                <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
-                  Service engagé
-                </th>
-                <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
+                <th class="text-subtitle-1 text-grey200 text-no-wrap pa-0">Type de l'évènement</th>
+                <th class="text-subtitle-1 text-grey200 text-no-wrap">Service engagé</th>
+                <th class="text-subtitle-1 text-grey200 text-no-wrap pa-0 text-center">
                   Proposition commerciale
                 </th>
-                <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
+                <th class="text-subtitle-1 text-grey200 text-no-wrap pa-0 text-center">
                   Prix de la prestation
                 </th>
-                <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
-                  Status de la demande
-                </th>
-                <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
-                  J'accepte/Refuse la proposition
-                </th>
+                <th class="text-subtitle-1 text-grey200 text-no-wrap pa-0 text-center">Status</th>
+                <th class="text-subtitle-1 text-grey200 text-no-wrap pa-0 text-center"></th>
               </tr>
             </thead>
             <tbody>
@@ -39,10 +31,12 @@
                 class="month-item"
                 style="border: 2px solid black"
               >
-                <td>
+                <td class="pa-0">
                   <div class="d-flex align-center">
                     <div class="mr-4">
-                      <h4 class="text-subtitle-1 font-weight-bold text-no-wrap text-grey200">
+                      <h4
+                        class="text-subtitle-1 font-weight-bold text-no-wrap text-grey200 pa-0 text-center"
+                      >
                         {{ item.name }}
                       </h4>
                     </div>
@@ -58,32 +52,31 @@
                     <h4>{{ item.serviceEngage }}</h4></v-chip
                   >
                 </td>
-                <td>
+                <td class="pa-0 text-center">
                   <v-tooltip
                     :text="getTooltipText(item.professionalMessage)"
                     interactive
-                    content-class="tooltip-custom"
-                    target="cursor"
-                    class="max-w-50"
+                    location="top"
+                    transition="fade-transition"
+                    content-class="tooltip-modern"
+                    open-delay="100"
+                    close-delay="50"
                   >
                     <template v-slot:activator="{ props: activatorProps }">
-                      <h4
-                        class="text-subtitle-1 text-no-wrap font-weight-medium text-grey200"
-                        v-bind="activatorProps"
-                      >
-                        <span
-                          ><b>{{ getProfessionalMessage(item.professionalMessage) }}</b></span
-                        >
+                      <h4 class="text-subtitle-1 text-no-wrap text-grey200" v-bind="activatorProps">
+                        <span style="cursor: pointer">{{
+                          getProfessionalMessage(item.professionalMessage)
+                        }}</span>
                       </h4>
                     </template>
                   </v-tooltip>
                 </td>
-                <td>
-                  <h5 class="text-subtitle-1 font-weight-medium text-no-wrap text-grey200">
-                    <b>{{ getPriceFromMessage(item.professionalMessage) }}</b>
+                <td class="pa-0 text-center">
+                  <h5 class="text-subtitle-1 text-no-wrap text-grey200">
+                    {{ getPriceFromMessage(item.professionalMessage) }}
                   </h5>
                 </td>
-                <td>
+                <td class="pa-0 text-center">
                   <v-chip
                     :class="'text-subtitle-1 font-weight-medium bg-light'"
                     variant="outlined"
@@ -96,7 +89,7 @@
                   v-if="item.propositionStatus === 'completed'"
                   @click="confirmedProposition(item.eventServiceUuid)"
                 >
-                  <v-btn color="primary">Voir le profil du prestataire</v-btn>
+                  <v-btn color="primary" class="pa-3">Profil du prestataire</v-btn>
                 </td>
                 <td v-else>
                   <div class="d-flex align-center gap-4">
@@ -252,7 +245,7 @@ const confirmedProposition = async (eventServiceUuid: string) => {
 
 const filteredPropositionByStatus = computed<ClientServiceProposition[]>(() => {
   return professionalResponseProposition.value.filter(
-    (professionalProposition) => professionalProposition.propositionStatus === 'pending'
+    (professionalProposition) => professionalProposition.propositionStatus !== 'pending'
   );
 });
 
@@ -263,17 +256,61 @@ onMounted(() => {
 <style lang="scss" scoped>
 .proposition-presta {
   background: rgb(var(--v-theme-background));
+  padding: 1rem 1.2rem !important;
 
   &__table {
     background: rgb(var(--v-theme-background));
+    font-size: 0.85rem;
+    border-collapse: collapse;
+    width: 100%;
   }
 }
-:deep(.tooltip-custom) {
-  max-width: 450px !important;
-  white-space: normal !important;
-  word-wrap: break-word !important;
-  text-align: left !important;
-  line-height: 1.4 !important;
-  padding: 8px 12px !important;
+
+/* Supprime les marges inutiles des cartes parentes */
+.v-card-text {
+  padding: 1rem 0rem !important;
+}
+
+h4,
+h5 {
+  margin: 0 !important;
+  line-height: 1.3 !important;
+}
+
+:deep(.tooltip-modern) {
+  background: linear-gradient(145deg, #2b3a55, #1f2a3d);
+  color: #ffffff;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  border-radius: 10px;
+  padding: 10px 14px;
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.25),
+    0 2px 6px rgba(0, 0, 0, 0.2);
+  width: 320px;
+  white-space: normal;
+  word-wrap: break-word;
+  text-align: left;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  animation: tooltipFade 0.15s ease-out;
+}
+
+/* Ce bloc n’a pas besoin de :deep(), car il cible ton contenu interne */
+.tooltip-modern__content {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+@keyframes tooltipFade {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

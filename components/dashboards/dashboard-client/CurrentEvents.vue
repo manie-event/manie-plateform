@@ -17,7 +17,7 @@
           >
             <div style="width: 100%; height: 100%">
               <div
-                :class="getServiceClass(event.name)"
+                :style="getBackgroundStyle(event.name)"
                 class="current-events__event-service-bg"
               ></div>
               <h4>{{ event.name }}</h4>
@@ -75,6 +75,7 @@ import CustomerForm from '~/components/questionnaires/CustomerForm.vue';
 import type { eventModel } from '~/models/events/eventModel';
 import type { QuestionnaireClient } from '~/models/questionnaire/QuestionnaireClientModel';
 import { useEventService } from '~/services/UseEventService';
+import { getEventBackground } from '~/utils/card-utils';
 import EventDetails from './EventDetails.vue';
 
 const { events } = storeToRefs(eventsStore());
@@ -115,17 +116,18 @@ const openDialog = async (eventUuid: string) => {
   // isDialogOpen.value = true;
 };
 
-const getDate = computed(() => {});
+const getBackgroundStyle = (eventName: string) => {
+  const imageUrl = getEventBackground(eventName as any);
+  console.log('Resolved image URL:', imageUrl);
 
-const getServiceClass = (serviceUuid: string) => {
-  switch (serviceUuid) {
-    case 'pacs':
-      return 'food-truck-bg';
-    case 'mariage':
-      return 'domaine-bg';
-    case 'baby_shower':
-      return 'bg-light-yellow';
-  }
+  return {
+    backgroundImage: `url(${imageUrl})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    borderRadius: '8px',
+    width: '100%',
+    height: '70px',
+  };
 };
 
 onMounted(async () => {
@@ -179,33 +181,6 @@ onMounted(async () => {
     justify-content: flex-start;
     height: 120px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  }
-  &__event-service-bg {
-    background: red;
-    width: 100%;
-    height: 80%;
-
-    &.food-truck-bg {
-      background: url('@/public/images/backgrounds/flutter.png');
-      background-size: cover;
-      background-position: center;
-      border-radius: 10px;
-      height: 70%;
-    }
-    &.domaine-bg {
-      background: url('@/public/images/backgrounds/flutter.png');
-      background-size: cover;
-      background-position: center;
-      border-radius: 10px;
-      height: 70%;
-    }
-    &.bg-light-yellow {
-      background: url('@/public/images/backgrounds/flutter.png');
-      background-size: cover;
-      background-position: center;
-      border-radius: 10px;
-      height: 70%;
-    }
   }
   &__see-more {
     position: absolute;

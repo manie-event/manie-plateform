@@ -1,6 +1,6 @@
 <template>
   <TransitionGroup name="fade" tag="div" class="alerts-wrapper" v-if="sucessToaster">
-    <v-alert class="success-card" type="success" :text="sucessToaster" dismissible>
+    <v-alert class="success-card" type="success" :text="sucessToaster">
       <div class="progress-bar" />
     </v-alert>
   </TransitionGroup>
@@ -13,14 +13,16 @@ const { sucessToaster } = useToaster();
   position: fixed;
   top: 20px;
   right: 20px;
-  z-index: 1000;
+  z-index: 9999;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 12px;
 }
 
 .alert-card {
-  max-width: 500px;
+  width: 100%;
   position: relative;
   overflow: hidden;
 }

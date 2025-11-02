@@ -19,6 +19,8 @@ export const useEventServiceProposition = () => {
   const { setServiceEventPropositionForPresta, setServiceEventPropositionForClient } =
     usePropositionStore();
 
+  const { addSuccess, addError } = useToaster();
+
   const getServicePropositionForClient = async () => {
     try {
       const allEvents = await getEventsPerOrganisator();
@@ -70,9 +72,10 @@ export const useEventServiceProposition = () => {
       const cleanList = propositionList.filter(Boolean);
 
       setServiceEventPropositionForClient(cleanList);
-
+      addSuccess('Propositions de services récupérées avec succès.');
       return cleanList;
     } catch (error) {
+      addError({ message: 'Une erreur est survenue lors de la récupération des propositions.' });
       console.error('❌ Erreur getServicePropositionForClient:', error);
       throw error;
     }
@@ -117,10 +120,9 @@ export const useEventServiceProposition = () => {
                   },
                 };
               } catch (error) {
-                console.error(
-                  `❌ Erreur lors de la récupération de l'événement pour ${prop.uuid}:`,
-                  error
-                );
+                addError({
+                  message: `Une erreur est survenue lors de la récupération de l'événement pour une proposition.`,
+                });
                 return null;
               }
             })
@@ -130,9 +132,12 @@ export const useEventServiceProposition = () => {
         })
       );
 
+      addSuccess('Événement créé avec succès.');
       return allPropositions.flat(); // ✅ utile pour aplatir le tableau final
     } catch (error) {
-      console.error('Erreur getServicePropositionForProfessional:', error);
+      addError({
+        message: `Une erreur est survenue lors de la récupération de l'événement pour une proposition.`,
+      });
       return [];
     }
   };
@@ -142,7 +147,9 @@ export const useEventServiceProposition = () => {
       // Appeler une méthode du service pour accepter la proposition
       await acceptedByClient(propositionUuid);
       // Mettre à jour la liste des propositions après l'acceptation
+      addSuccess('Proposition acceptée avec succès.');
     } catch (error) {
+      addError({ message: "Une erreur est survenue lors de l'acceptation de la proposition." });
       console.error('❌ Erreur propositionAcceptedByClient:', error);
     }
   };
@@ -152,7 +159,9 @@ export const useEventServiceProposition = () => {
       // Appeler une méthode du service pour refuser la proposition
       await declinedByClient(propositionUuid);
       // Mettre à jour la liste des propositions après le refus
+      addSuccess('Proposition refusée avec succès.');
     } catch (error) {
+      addError({ message: 'Une erreur est survenue lors du refus de la proposition.' });
       console.error('❌ Erreur propositionDeclinedByClient:', error);
     }
   };

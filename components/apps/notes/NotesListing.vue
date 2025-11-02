@@ -1,26 +1,3 @@
-<script setup lang="ts">
-import addNote from '@/components/apps/notes/AddNote.vue';
-import { useNotesStore } from '@/stores/notesStore';
-import { computed, ref, Teleport } from 'vue';
-import type { eventModel } from '~/models/events/eventModel';
-import NotesContent from '~~/components/apps/notes/NotesContent.vue';
-
-const props = defineProps<{
-  event?: eventModel;
-}>();
-
-const store = useNotesStore();
-const { deleteNote, getNotesByEvent, selectNote } = store;
-
-const currentEventNotes = computed(() => getNotesByEvent(props.event?.uuid || ''));
-
-const openContentModal = ref(false);
-
-const handleSelectNote = (noteId: number) => {
-  selectNote(props.event?.uuid || '', noteId);
-};
-</script>
-
 <template>
   <!-- ---------------------------------------------------- -->
   <!-- Table Basic -->
@@ -72,7 +49,12 @@ const handleSelectNote = (noteId: number) => {
       </v-sheet>
     </div>
     <v-sheet v-if="currentEventNotes.length === 0" class="pa-6">
-      <v-alert type="error" text="Il est temps de créer votre première note"></v-alert>
+      <v-alert type="error">
+        <div class="d-flex gap-3">
+          <Icon icon="solar:pen-broken" width="24" height="24" />
+          <p>Il est temps de créer votre première note</p>
+        </div>
+      </v-alert>
     </v-sheet>
   </div>
 
@@ -80,6 +62,29 @@ const handleSelectNote = (noteId: number) => {
     <NotesContent v-model:open-content-modal="openContentModal" :event />
   </Teleport>
 </template>
+<script setup lang="ts">
+import addNote from '@/components/apps/notes/AddNote.vue';
+import { useNotesStore } from '@/stores/notesStore';
+import { Icon } from '@iconify/vue';
+import { computed, ref, Teleport } from 'vue';
+import type { eventModel } from '~/models/events/eventModel';
+import NotesContent from '~~/components/apps/notes/NotesContent.vue';
+
+const props = defineProps<{
+  event?: eventModel;
+}>();
+
+const store = useNotesStore();
+const { deleteNote, getNotesByEvent, selectNote } = store;
+
+const currentEventNotes = computed(() => getNotesByEvent(props.event?.uuid || ''));
+
+const openContentModal = ref(false);
+
+const handleSelectNote = (noteId: number) => {
+  selectNote(props.event?.uuid || '', noteId);
+};
+</script>
 <style lang="scss">
 .note-sheet {
   transition: 0.1s ease-in;
