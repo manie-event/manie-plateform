@@ -6,9 +6,7 @@ import Navigations from '@/components/landingpage/layout/Navigation.vue';
 /*import tabler icons*/
 
 const appsdrawer = ref(false);
-const isAlreadyConnected = localStorage.getItem('pp-created');
-const clientProfile = localStorage.getItem('client-uuid');
-const professionalProfile = localStorage.getItem('professional-uuid');
+const { clientProfile, professionalUser, isProfileCreated } = storeToRefs(useUserStore());
 </script>
 <template>
   <div>
@@ -27,21 +25,21 @@ const professionalProfile = localStorage.getItem('professional-uuid');
       </div>
       <!-- Login  -->
       <v-btn
-        v-if="isAlreadyConnected === 'false'"
+        v-if="!isProfileCreated"
         class="custom-hover-primary header__btn d-lg-flex d-none px-8 align-center login-shadow"
         rounded="pill"
         to="/auth/login"
         ><span class="text-white">Se connecter</span></v-btn
       >
       <v-btn
-        v-else-if="isAlreadyConnected && clientProfile"
+        v-else-if="isProfileCreated && clientProfile"
         class="custom-hover-primary header__btn d-lg-flex d-none px-8 align-center login-shadow"
         rounded="pill"
         to="/dashboards/dashboard-client"
         ><span class="text-white">Mon tableau de bord</span></v-btn
       >
       <v-btn
-        v-else-if="isAlreadyConnected && professionalProfile"
+        v-else-if="isProfileCreated && professionalUser"
         class="custom-hover-primary header__btn d-lg-flex d-none px-8 align-center login-shadow"
         rounded="pill"
         to="/dashboards/dashboard2"

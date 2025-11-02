@@ -213,10 +213,10 @@
 
         <div v-if="currentPage === 1" class="d-flex justify-space-between">
           <v-btn @click="openModal = false">Annuler</v-btn>
-          <v-btn v-if="!isProfileVerified" color="primary" @click="createProfile(profile)">
+          <v-btn v-if="isProfilUpdate" color="primary" @click="createProfile(profile)">
             Valider mon profil
           </v-btn>
-          <div v-if="isProfileVerified">
+          <div else>
             <v-btn color="primary" @click="modifyProfile(profile)"> Modifier mon profil </v-btn>
           </div>
         </div>
@@ -231,6 +231,8 @@
 </template>
 <script setup lang="ts">
 import BaseModal from '@/components/common/BaseModal.vue';
+import { useUserStore } from '@/stores/userStore';
+import { storeToRefs } from 'pinia';
 import { useForm } from 'vee-validate';
 import { ref, Teleport } from 'vue';
 import * as yup from 'yup';
@@ -243,9 +245,10 @@ import type { Faq, ProfessionalProfile } from '~/models/user/UserModel';
 import ModalRedirection from './ModalRedirection.vue';
 
 const userStore = useUserStore();
-const { professionalUser } = storeToRefs(userStore);
-const { createProfessionalProfile, patchProfessionalProfileDetails } = useProfessionalProfile();
+const { professionalUser, isProfilUpdate } = storeToRefs(userStore);
+const { setProfessionalUser } = userStore;
 const { getSectors } = useKeywords();
+const { createProfessionalProfile, patchProfessionalProfileDetails } = useProfessionalProfile();
 const openModal = defineModel<boolean>('openModal');
 
 const faqArray = ref<Faq[]>([]);
@@ -254,9 +257,7 @@ const { addError, addSuccess } = useToaster();
 const currentPage = ref(1);
 const activityItems = ref(ACTIVITY_ITEMS);
 const geographicActivity = ref(GEOGRAPHIC_ACTIVITY);
-const isProfileVerified = localStorage.getItem('is-profile-verified');
 const reservationDelay = ref(0);
-const isProfilUpdate = ref(false);
 
 const minimumDaysReservation = computed(() => reservationDelay.value * 7);
 
@@ -378,23 +379,23 @@ const createProfile = async (values: ProfessionalProfile) => {
       links: profile.links.filter((link) => link.type.trim() && link.value.trim()),
       certification: profile.certification.filter((c) => c.trim()),
     };
+
     const response = await createProfessionalProfile(payload);
 
     if (response.message === 'Professional updated') {
-      if (professionalUser.value?.uuid) {
-        localStorage.setItem('professional-uuid', professionalUser.value?.uuid);
+      // 🧠 On met directement à jour le store
+      if (response.data?.professional) {
+        setProfessionalUser(response.data.professional);
       }
-      if (professionalUser.value?.name) {
-        localStorage.setItem('pro-name', professionalUser.value?.name);
-      }
-      addSuccess('Votre profil a été modifié avec success');
+
+      addSuccess('Votre profil a été créé avec succès');
       openModal.value = false;
       isProfilUpdate.value = true;
     } else {
-      addError({ message: 'La mise à jour du profil a échoué.' });
+      addError({ message: 'La création du profil a échoué.' });
     }
   } catch (error) {
-    addError({ message: 'Erreur lors de la mise à jour du profil.' });
+    addError({ message: 'Erreur lors de la création du profil.' });
   }
 };
 
@@ -407,18 +408,18 @@ const modifyProfile = async (newValues: ProfessionalProfile) => {
       links: profile.links.filter((link) => link.type.trim() && link.value.trim()),
       certification: profile.certification.filter((c) => c.trim()),
     };
+
     const response = await patchProfessionalProfileDetails(payload);
 
     if (response.message === 'Professional updated') {
-      const professional = response.newPro || response.data?.professional;
-      if (professional?.uuid) {
-        localStorage.setItem('professional-uuid', professional.uuid);
+      const updatedProfessional = response.newPro || response.data?.professional;
+
+      if (updatedProfessional) {
+        // ✅ On met à jour le store, pas le localStorage
+        setProfessionalUser(updatedProfessional);
       }
 
-      if (professional?.name) {
-        localStorage.setItem('pro-name', professional.name);
-      }
-      addSuccess('Votre profil a été modifié avec success');
+      addSuccess('Votre profil a été modifié avec succès');
       openModal.value = false;
       isProfilUpdate.value = true;
     } else {

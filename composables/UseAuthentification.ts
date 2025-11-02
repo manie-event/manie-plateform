@@ -11,11 +11,10 @@ export const useAuthentification = () => {
   const { addError, addSuccess } = useToaster();
   const userStore = useUserStore();
   const { setUser } = userStore;
+  const { isProfessional } = storeToRefs(userStore);
 
   const { token } = useAuthCookies(); // access token (15 min)
   const { refreshToken } = useRefreshToken(); // refresh token (7 jours)
-
-  const isProfessional = process.client ? localStorage.getItem('is-professional') : null;
 
   // Instance Axios authentifiée (interceptors + refresh)
   const api = useApi();
@@ -137,9 +136,7 @@ export const useAuthentification = () => {
       token.value = null;
       refreshToken.value = null;
 
-      if (process.client) {
-        localStorage.clear();
-      }
+      userStore.resetUserStore();
 
       await router.push('/');
       addSuccess('Déconnexion réussie.');

@@ -5,10 +5,10 @@ import { Icon } from '@iconify/vue';
 import Navigation from '~/components/landingpage/layout/Navigation.vue';
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 
+const { isProfessional } = storeToRefs(useUserStore());
 const { createTokenSession } = usePaiementJeton();
 const jetonAmount = ref(0);
 const stickyHeader = ref(false);
-const isProfessional = localStorage.getItem('is-professional');
 
 const totalPriceJeton = computed(() => {
   return `${jetonAmount.value * 9} €`;
