@@ -206,6 +206,8 @@ const { getSectors, loading, sendProfessionalServices } = useKeywords();
 const { addSuccess, addError } = useToaster();
 const { patchProfessionalProfileDetails } = useProfessionalProfile();
 
+let sectorsLoaded = false;
+
 const questionnaires = ref<QuestionnaireItem[]>([]);
 const activityItems = ref(ACTIVITY_ITEMS);
 const payloadArray = ref<ProfessionalServiceUuid[]>([]);
@@ -401,25 +403,25 @@ const submitAllQuestionnaires = async () => {
 watch(
   () => professionalUser.value,
   async (user) => {
-    // 🧩 Vérifie qu'on n'a pas déjà créé le premier questionnaire
-    if (questionnaires.value.length > 0) return;
+    if (!user?.mainActivity || !user?.uuid) return;
 
-    if (user?.mainActivity && user?.uuid) {
-      try {
-        await getSectors(user.mainActivity);
+    // stop si déjà chargé
+    if (sectorsLoaded || questionnaires.value.length > 0) return;
+    sectorsLoaded = true;
 
-        // 🧩 Recheck juste après la promesse, au cas où un autre watcher s'est déclenché
-        if (questionnaires.value.length === 0) {
-          const firstQuestionnaire = createQuestionnaire(user.mainActivity);
-          questionnaires.value.push(firstQuestionnaire);
-        }
-      } catch (error) {
-        console.error('Erreur lors du chargement initial:', error);
-        addError({ message: 'Erreur lors du chargement des données' });
+    try {
+      await getSectors(user.mainActivity);
+
+      if (questionnaires.value.length === 0) {
+        const firstQuestionnaire = createQuestionnaire(user.mainActivity);
+        questionnaires.value.push(firstQuestionnaire);
       }
+    } catch (error) {
+      console.error('Erreur lors du chargement initial:', error);
+      addError({ message: 'Erreur lors du chargement des données' });
     }
   },
-  { immediate: true, deep: true }
+  { immediate: true } // pas de deep
 );
 
 // Watcher pour mettre à jour le premier questionnaire quand les données sont chargées

@@ -1,10 +1,16 @@
 import type { ProfessionalProfile, User, clientProfile } from '@/models/user/UserModel';
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
+import { useClientProfil } from '~/composables/client-user/UseClientProfil';
+import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import type { Keywords } from '~/models/professionalService/Keywords';
 import type { Services } from '~/models/professionalService/Services';
 
 export const useUserStore = defineStore('userStore', () => {
+  const api = useApi();
+  const { getProfessionalProfile } = useProfessionalProfile();
+  const { getClientProfil } = useClientProfil();
+
   /** 👤 Base user data */
   const user = ref<User | null>(null);
   const isProfilUpdate = ref(false);
@@ -25,6 +31,8 @@ export const useUserStore = defineStore('userStore', () => {
   const category = computed(() => (isProfessional.value ? 'Prestataire' : 'Client'));
 
   const displayName = computed(() => {
+    console.log(isProfessional.value, 'ISPROFESSIONAL COMPUTED');
+
     if (isProfessional.value) {
       return professionalUser.value?.name || user.value?.username || '';
     }
@@ -36,6 +44,10 @@ export const useUserStore = defineStore('userStore', () => {
   /** 🧩 Mutations (setters) */
   const setUser = (userData: User) => {
     user.value = userData;
+    localStorage.setItem('profil-created', 'true');
+    if (user.value.category === 'professional') {
+      localStorage.setItem('is-professional', 'true');
+    }
   };
 
   const setUpdateProfile = (status: boolean) => {

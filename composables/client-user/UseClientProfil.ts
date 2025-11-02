@@ -14,6 +14,8 @@ export const useClientProfil = () => {
   const api = useApi();
 
   const getClientProfil = async () => {
+    console.log('getClientProfil called');
+
     const response = await api?.get(`${config.public.apiUrl}/organisator`);
 
     if (response) {

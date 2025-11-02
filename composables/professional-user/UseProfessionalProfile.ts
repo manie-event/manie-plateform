@@ -10,6 +10,8 @@ export const useProfessionalProfile = () => {
   const api = useApi();
 
   const createProfessionalProfile = async (professionalProfil: ProfessionalProfile) => {
+    console.log('ICI');
+
     try {
       if (!api) return;
       const { data } = await api.post('/professional/create', professionalProfil);
@@ -39,6 +41,7 @@ export const useProfessionalProfile = () => {
 
   const getProfessionalProfileDetails = async () => {
     try {
+      console.log(professionalUser.value?.uuid, 'professionalUser.value?.uuid');
       if (!api || !professionalUser.value?.uuid) return;
 
       const { data } = await api.get(`/professional/${professionalUser.value?.uuid}`);
@@ -50,6 +53,7 @@ export const useProfessionalProfile = () => {
       // 🧩 On s'assure que les relations et champs essentiels existent
       if (profile && profile.uuid) {
         console.log(profile, profile.uuid, 'PROFILEDETAILS');
+        console.log(profile, 'profile');
 
         setProfessionalUser(profile);
       } else {

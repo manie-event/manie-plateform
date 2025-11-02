@@ -8,11 +8,13 @@ import { useProfessionalProfile } from '~/composables/professional-user/UseProfe
 import { UserCategory } from '~/models/enums/userCategoryEnums';
 
 const userStore = useUserStore();
-const { isProfileCreated, user } = storeToRefs(userStore);
+const { isProfileCreated, user, isProfessional } = storeToRefs(userStore);
 const { getProfessionalProfileDetails } = useProfessionalProfile();
 
 onMounted(async () => {
-  if (!isProfileCreated.value && user.value?.category == UserCategory.PRESTA) {
+  console.log(isProfileCreated.value, 'ISPROFILECREATED');
+  console.log(isProfessional.value, 'USERCATEGORY');
+  if (isProfileCreated.value && user.value?.category == UserCategory.PRESTA) {
     await getProfessionalProfileDetails();
   }
 });

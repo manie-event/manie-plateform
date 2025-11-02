@@ -213,10 +213,10 @@
 
         <div v-if="currentPage === 1" class="d-flex justify-space-between">
           <v-btn @click="openModal = false">Annuler</v-btn>
-          <v-btn v-if="isProfilUpdate" color="primary" @click="createProfile(profile)">
+          <v-btn v-if="!isProfilUpdate" color="primary" @click="createProfile(profile)">
             Valider mon profil
           </v-btn>
-          <div else>
+          <div v-else>
             <v-btn color="primary" @click="modifyProfile(profile)"> Modifier mon profil </v-btn>
           </div>
         </div>
@@ -262,12 +262,15 @@ const reservationDelay = ref(0);
 const minimumDaysReservation = computed(() => reservationDelay.value * 7);
 
 const mergedFaq = computed(() => {
-  return faqArray.value.reduce((acc, faq) => {
-    if (faq.question && faq.reponse) {
-      acc[faq.question] = faq.reponse;
-    }
-    return acc;
-  }, null);
+  return faqArray.value.reduce(
+    (acc, faq) => {
+      if (faq.question && faq.reponse) {
+        acc[faq.question] = faq.reponse;
+      }
+      return acc;
+    },
+    {} as Record<string, string>
+  );
 });
 
 const validationSchema = yup.object({
@@ -371,6 +374,8 @@ const setSector = () => {
 };
 
 const createProfile = async (values: ProfessionalProfile) => {
+  console.log('createProfile');
+
   try {
     const payload = {
       ...values,
@@ -386,20 +391,22 @@ const createProfile = async (values: ProfessionalProfile) => {
       // 🧠 On met directement à jour le store
       if (response.data?.professional) {
         setProfessionalUser(response.data.professional);
+        addSuccess('Votre profil a été créé avec succès');
+        openModal.value = false;
+        isProfilUpdate.value = true;
       }
-
-      addSuccess('Votre profil a été créé avec succès');
-      openModal.value = false;
-      isProfilUpdate.value = true;
     } else {
       addError({ message: 'La création du profil a échoué.' });
     }
-  } catch (error) {
-    addError({ message: 'Erreur lors de la création du profil.' });
+  } catch (error: any) {
+    console.error('❌ Erreur complète dans createProfile :', error);
+    addError({ message: error });
   }
 };
 
 const modifyProfile = async (newValues: ProfessionalProfile) => {
+  console.log('modifyProfile');
+
   try {
     const payload = {
       ...newValues,
@@ -415,13 +422,11 @@ const modifyProfile = async (newValues: ProfessionalProfile) => {
       const updatedProfessional = response.newPro || response.data?.professional;
 
       if (updatedProfessional) {
-        // ✅ On met à jour le store, pas le localStorage
         setProfessionalUser(updatedProfessional);
+        addSuccess('Votre profil a été modifié avec succès');
+        openModal.value = false;
+        isProfilUpdate.value = true;
       }
-
-      addSuccess('Votre profil a été modifié avec succès');
-      openModal.value = false;
-      isProfilUpdate.value = true;
     } else {
       addError({ message: 'La mise à jour du profil a échoué.' });
     }

@@ -4,13 +4,15 @@ import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { useAuthentification } from '~/composables/UseAuthentification';
 import { useClientProfil } from '~/composables/client-user/UseClientProfil';
+import { useEventServiceProposition } from '~/composables/event-service-propositions/UseEventServiceProposition';
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { useUserStore } from '~/stores/userStore';
 
 const { sendLogout } = useAuthentification();
 const { getJetonQuantity } = usePaiementJeton();
-const { getProfessionalProfileDetails } = useProfessionalProfile();
+const { getProfessionalProfileDetails, getProfessionalProfile } = useProfessionalProfile();
+const { getServicePropositionForClient } = useEventServiceProposition();
 const { getClientProfil } = useClientProfil();
 
 const userStore = useUserStore();
@@ -25,16 +27,21 @@ const {
   isProfileCreated,
 } = storeToRefs(userStore);
 
+const professionalProfil = localStorage.getItem('is-professional') === 'true';
 const jetonBalance = ref(0);
 
-/** 🎯 Charger les infos nécessaires selon le type de profil */
 onMounted(async () => {
   try {
-    if (isProfessional.value) {
+    console.log(professionalProfile, 'TEST PROFILDD');
+
+    if (professionalProfil) {
+      console.log(isProfessional.value, 'ISPROFESSIONAL');
+      await getProfessionalProfile();
       await getProfessionalProfileDetails();
       jetonBalance.value = await getJetonQuantity();
     } else {
       await getClientProfil();
+      await getServicePropositionForClient();
     }
   } catch (e) {
     console.warn('Erreur chargement profil header:', e);

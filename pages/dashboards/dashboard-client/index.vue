@@ -3,7 +3,6 @@ import CurrentEvents from '@/components/dashboards/dashboard-client/CurrentEvent
 import Events from '@/components/dashboards/dashboard-client/Events.vue';
 import ProjectLeap from '@/components/dashboards/dashboard-client/ProjectLeap.vue';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
-import { storeToRefs } from 'pinia';
 import { onMounted } from 'vue';
 import BaseEmptyState from '~/components/common/BaseEmptyState.vue';
 import PropositionsPresta from '~/components/dashboards/dashboard-client/PropositionsPresta.vue';
@@ -13,15 +12,17 @@ import { useProfessionalService } from '~/services/UseProfessionalService';
 import { useUserStore } from '~/stores/userStore';
 
 const userStore = useUserStore();
-const { isProfileCreated } = storeToRefs(userStore);
 const { getClientProfil } = useClientProfil();
 const { getProfessionalService } = useProfessionalService();
 const { getAllSectors, getKeywords } = useKeywords();
 
+const isProfileCreated = localStorage.getItem('profil-created') === 'true';
 onMounted(async () => {
   // if (user.value?.category == UserCategory.CONSUMER) {
   //   await getClientProfil();
   // }
+  console.log(isProfileCreated, 'ISPROFILECREATED');
+
   await getProfessionalService();
   await getAllSectors();
   await getKeywords();

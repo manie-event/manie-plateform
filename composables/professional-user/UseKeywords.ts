@@ -50,12 +50,15 @@ export const useKeywords = () => {
   const getSectors = async (sector: string) => {
     try {
       loading.value = true;
-      const response = await api?.get(`${config.public.apiUrl}/sector`);
+      const response = await api?.get('/sector', { params: { limit: 30 } });
+
+      console.log(response, 'RESPONSE');
 
       if (response) {
         const sectorFiltered = response.data.data.filter(
           (sectorItem: Sectors) => sectorItem.name.toLowerCase() === sector.toLowerCase()
         );
+        console.log(sectorFiltered, 'sectorFiltered');
 
         await Promise.all([
           getServices(sectorFiltered[0].uuid),
@@ -69,7 +72,7 @@ export const useKeywords = () => {
         };
       }
     } catch (error: unknown) {
-      throw new Error('No data received from API');
+      throw new Error('No data received from API for sectors');
     }
   };
 
@@ -78,6 +81,8 @@ export const useKeywords = () => {
       const response = await api?.get(`${config.public.apiUrl}/service`, {
         params: { q: sectorUuid, limit: 100 },
       });
+      console.log(response, 'SERVICES RESPONSE');
+
       if (response) {
         const serviceFiltered = response.data.data.filter(
           (serviceItem: Services) =>
@@ -87,30 +92,32 @@ export const useKeywords = () => {
         setProfessionalServices(serviceFiltered);
       }
     } catch (error: unknown) {
-      console.error('No data received from API');
+      console.error('No data received from API for services:', error);
     }
   };
 
   const getKeywords = async (query?: string) => {
     loading.value = true;
     try {
-      const response = await api?.get(`${config.public.apiUrl}/keyword`, {
+      const { data } = await api.get(`${config.public.apiUrl}/keyword`, {
         params: { q: query, limit: 1500 },
       });
-      if (response && query) {
-        const keyWordFilter = response.data.data
-          .filter((keyword: Keywords) => keyword.sector.toLowerCase() == query.toLowerCase())
-          .slice(0, 100)
-          .map((keyword: KeywordsDto) => keyWordsDtoToKeywords(keyword));
 
-        setKeywords(keyWordFilter);
+      if (!data?.data) throw new Error('Aucune donnée reçue pour les mots-clés.');
 
-        loading.value = false;
-      }
-      setKeywords(response?.data.data);
-      return;
-    } catch (error: unknown) {
-      console.error('Error fetching keywords:', error);
+      const filtered = query
+        ? data.data
+            .filter((k: Keywords) => k.sector.toLowerCase() === query.toLowerCase())
+            .map((k: KeywordsDto) => keyWordsDtoToKeywords(k))
+        : data.data;
+
+      setKeywords(filtered);
+      console.log(`✅ ${filtered.length} mots-clés chargés pour "${query ?? 'tous secteurs'}"`);
+      return filtered;
+    } catch (error) {
+      console.error('Erreur lors de getKeywords:', error);
+    } finally {
+      loading.value = false;
     }
   };
 

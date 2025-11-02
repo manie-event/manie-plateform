@@ -37,7 +37,9 @@ export const useEventService = () => {
       if (!api) return;
 
       // ✅ Récupération du bon uuid depuis le store
-      const uuid = clientProfile.value?.uuid || userStore.user?.uuid;
+      const uuid = clientProfile.value?.uuid;
+      console.log(uuid, 'UUID');
+
       if (!uuid) {
         console.warn('Aucun UUID client trouvé dans le store');
         return;
