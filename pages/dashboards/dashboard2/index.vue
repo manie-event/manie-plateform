@@ -5,21 +5,25 @@ import TextCards from '@/components/dashboards/dashboard2/TextCard.vue';
 import WelcomeCard from '@/components/dashboards/dashboard2/WelcomeCard.vue';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
 import { storeToRefs } from 'pinia';
+import { useEventServiceProposition } from '~/composables/event-service-propositions/UseEventServiceProposition';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { useUserStore } from '~/stores/userStore';
 
 const userStore = useUserStore();
-const { user, isProfileCreated } = storeToRefs(userStore);
+const { user } = storeToRefs(userStore);
 const { getProfessionalProfileDetails } = useProfessionalProfile();
+const { getServicePropositionForProfessional } = useEventServiceProposition();
 
-// const isProfileCreated = ref(localStorage.getItem('profil-created') === 'true');
+const isProfileCreated = ref(localStorage.getItem('pp-created') === 'true');
 const isProfessional = ref(localStorage.getItem('is-professional') === 'true');
 
 onMounted(async () => {
-  console.log(isProfileCreated.value, 'ISPROFILECREATED');
-  console.log(isProfessional.value, 'USERCATEGORY');
+  console.log(isProfileCreated.value, 'isProfileCreated.value');
+  console.log(isProfessional.value, ' isProfessional.value');
+
   if (isProfileCreated.value && isProfessional.value) {
     await getProfessionalProfileDetails();
+    await getServicePropositionForProfessional();
   }
 });
 </script>

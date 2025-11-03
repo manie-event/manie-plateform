@@ -15,8 +15,6 @@ export const useClientProfil = () => {
   const isProfileCreated = ref(localStorage.getItem('profil-created') === 'true');
 
   const getClientProfil = async () => {
-    console.log('getClientProfil called');
-
     const response = await api?.get(`${config.public.apiUrl}/organisator`);
 
     if (response) {
@@ -36,7 +34,7 @@ export const useClientProfil = () => {
     if (response?.data) {
       const profileUpdated = await getClientProfil();
 
-      updateClientProfile(profileUpdated?.data);
+      updateClientProfile(profileUpdated);
       isProfileCreated.value = true;
       addSuccess('Profil mis à jour avec succès.');
       return response.data;

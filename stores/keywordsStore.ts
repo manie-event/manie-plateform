@@ -51,7 +51,6 @@ export const useKeywordsStore = defineStore('keywords', () => {
   };
 
   const getSectors = async (sector: string) => {
-    console.log('[getSectors]', sector);
     try {
       if (!api) throw new Error('API non initialisée');
 
@@ -81,7 +80,6 @@ export const useKeywordsStore = defineStore('keywords', () => {
   };
 
   const getServices = async (sectorUuid: string) => {
-    console.log('[getServices]', sectorUuid);
     try {
       if (!api) throw new Error('API non initialisée');
 
@@ -102,7 +100,6 @@ export const useKeywordsStore = defineStore('keywords', () => {
   };
 
   const getKeywords = async (query?: string) => {
-    console.log('[getKeywords]', query);
     loading.value = true;
     try {
       if (!api) throw new Error('API non initialisée');
@@ -120,7 +117,6 @@ export const useKeywordsStore = defineStore('keywords', () => {
         : data.data;
 
       keywords.value = filtered;
-      console.log(`✅ ${filtered.length} mots-clés chargés pour "${query ?? 'tous secteurs'}"`);
       return filtered;
     } catch (error) {
       console.error('❌ Erreur lors de getKeywords :', error);
@@ -139,7 +135,6 @@ export const useKeywordsStore = defineStore('keywords', () => {
       );
 
       services.value = response.data;
-      console.log('✅ Services professionnels envoyés avec succès');
       return response.data;
     } catch (error) {
       console.error('❌ Erreur lors de sendProfessionalServices :', error);

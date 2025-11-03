@@ -12,13 +12,9 @@ export const useProfessionalProfile = () => {
   const professionalUuid = ref(localStorage.getItem('professional-uuid') || '');
 
   const createProfessionalProfile = async (professionalProfil: ProfessionalProfile) => {
-    console.log('ICI');
-
     try {
       if (!api) return;
       const { data } = await api.post('/professional/create', professionalProfil);
-
-      console.log(data, 'DATA PRO PROFIL');
 
       addSuccess('Profil professionnel créé avec succès !');
       await getProfessionalProfile(); // rafraîchit les infos locales
@@ -45,20 +41,15 @@ export const useProfessionalProfile = () => {
 
   const getProfessionalProfileDetails = async () => {
     try {
-      console.log(professionalUser.value?.uuid, 'professionalUser.value?.uuid');
       if (!api || !professionalUuid.value) return;
 
       const { data } = await api.get(`/professional/${professionalUuid.value}`);
 
       // 🧩 Compatibilité avec anciens retours { newPro: {...} }
       const profile = data.newPro || data;
-      console.log(data, data.newPro, 'PROFILEDETAILS');
 
       // 🧩 On s'assure que les relations et champs essentiels existent
       if (profile && profile.uuid) {
-        console.log(profile, profile.uuid, 'PROFILEDETAILS');
-        console.log(profile, 'profile');
-
         setProfessionalUser(profile);
       } else {
         console.warn('⚠️ Réponse incomplète du profil professionnel:', data);

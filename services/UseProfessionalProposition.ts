@@ -1,6 +1,6 @@
 export const useProfessionalProposition = () => {
   const { addSuccess, addError } = useToaster();
-  const api = useApi(); // ✅ instance avec interceptors et refresh auto
+  const api = useApi();
 
   const getListEventServiceProposition = async (professionalServiceUuid: string) => {
     try {

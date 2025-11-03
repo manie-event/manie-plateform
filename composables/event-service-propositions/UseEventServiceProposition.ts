@@ -81,9 +81,12 @@ export const useEventServiceProposition = () => {
     }
   };
 
+  //Pour récupérer les propositions dans le dashboard prestataire
   const getServicePropositionForProfessional = async () => {
     try {
       const professionalServices = await getListProfessionalServiceByProfessional();
+
+      console.log(professionalServices, 'professionalServices');
 
       // ✅ On s'assure d'avoir un tableau
       const servicesArray = Array.isArray(professionalServices)
@@ -98,6 +101,8 @@ export const useEventServiceProposition = () => {
       const allPropositions = await Promise.all(
         servicesArray.map(async (service: ProfessionalServiceUuid) => {
           const propositionList = await getListProfessionalProposition(service.uuid);
+
+          console.log(propositionList, 'propositionList');
 
           const propositionsWithEvents = await Promise.all(
             (propositionList ?? []).map(async (prop) => {
@@ -128,6 +133,8 @@ export const useEventServiceProposition = () => {
             })
           );
 
+          console.log(propositionsWithEvents, 'propositionsWithEvents');
+          setServiceEventPropositionForPresta(propositionsWithEvents);
           return propositionsWithEvents.filter(Boolean);
         })
       );

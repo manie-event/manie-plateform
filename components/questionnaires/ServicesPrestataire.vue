@@ -374,8 +374,6 @@ watch(
   },
   { immediate: true }
 );
-
-console.log('ServicesPresta mounted');
 </script>
 
 <style scoped lang="scss">

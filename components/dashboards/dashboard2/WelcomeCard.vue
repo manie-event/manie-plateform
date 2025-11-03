@@ -44,6 +44,9 @@ const isPropositionStillAvailable = () => {
     .filter((proposition) => !proposition.proposition.professionalMessage)
     .filter((proposition) => isEventDone(proposition.date[0]));
 
+  console.log(serviceEventProposition.value, ' serviceEventProposition.value');
+  console.log(propositionFiltered.value, ' propositionFiltered.value');
+
   return propositionFiltered.value;
 };
 

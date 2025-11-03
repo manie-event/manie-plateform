@@ -382,17 +382,11 @@ const getFilteredQuestionsForService = (selectedSector: any) => {
   return mapSectionsWithServices(selectedSector);
 };
 
-watchEffect(() => {
-  console.log('🧩 sectors', sectors.value.length);
-  console.log('🧩 servicesFiltered', servicesFiltered.value.length);
-});
-
 const sectorFiltered = computed(() => {
+  // servicesFiltered =
+  // sectors =
   const servicefiltered = servicesFiltered.value.map((s) => s.sectorUuid);
-  console.log(servicesFiltered, 'SERVICE FILTERED');
-
   const sector = sectors.value.filter((sector) => servicefiltered.includes(sector.uuid));
-  console.log(sectors, 'SECTOR');
 
   const activityAvailable = ACTIVITY_ITEMS.map((activity) => {
     const matchingSector = sector.find((s) => s.name === activity.value);

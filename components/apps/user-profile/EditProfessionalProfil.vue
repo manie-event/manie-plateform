@@ -213,7 +213,7 @@
 
         <div v-if="currentPage === 1" class="d-flex justify-space-between">
           <v-btn @click="openModal = false">Annuler</v-btn>
-          <v-btn v-if="!isProfilUpdate" color="primary" @click="createProfile(profile)">
+          <v-btn v-if="!profileCreated" color="primary" @click="createProfile(profile)">
             Valider mon profil
           </v-btn>
           <div v-else>
@@ -258,6 +258,7 @@ const currentPage = ref(1);
 const activityItems = ref(ACTIVITY_ITEMS);
 const geographicActivity = ref(GEOGRAPHIC_ACTIVITY);
 const reservationDelay = ref(0);
+const profileCreated = localStorage.getItem('pp-created') === 'true';
 
 const minimumDaysReservation = computed(() => reservationDelay.value * 7);
 
@@ -272,8 +273,6 @@ const mergedFaq = computed(() => {
     {} as Record<string, string>
   );
 });
-
-console.log('editProfesional mounted');
 
 const validationSchema = yup.object({
   name: yup.string().min(2).required('Le nom est requis'),
@@ -376,8 +375,6 @@ const setSector = () => {
 };
 
 const createProfile = async (values: ProfessionalProfile) => {
-  console.log('createProfile');
-
   try {
     const payload = {
       ...values,
@@ -404,8 +401,6 @@ const createProfile = async (values: ProfessionalProfile) => {
 };
 
 const modifyProfile = async (newValues: ProfessionalProfile) => {
-  console.log('modifyProfile');
-
   try {
     const payload = {
       ...newValues,
@@ -422,16 +417,23 @@ const modifyProfile = async (newValues: ProfessionalProfile) => {
 
       if (updatedProfessional) {
         setProfessionalUser(updatedProfessional);
+
+        await handleClose();
+
         addSuccess('Votre profil a été modifié avec succès');
-        openModal.value = false;
-        isProfilUpdate.value = true;
+      } else {
+        addError({ message: 'La mise à jour du profil a échoué.' });
       }
-    } else {
-      addError({ message: 'La mise à jour du profil a échoué.' });
     }
   } catch (error) {
-    addError({ message: 'Erreur lors de la mise à jour du profil.' });
+    addError({ message: error as any });
   }
+};
+
+const handleClose = async () => {
+  openModal.value = false;
+  await nextTick(); // on attend que le parent ait reçu l’événement et que le DOM se mette à jour
+  console.log('Modal fermée :', openModal.value);
 };
 
 onMounted(() => {

@@ -136,6 +136,7 @@ export const useAuthentification = () => {
       token.value = null;
       refreshToken.value = null;
 
+      localStorage.clear();
       userStore.resetUserStore();
 
       await router.push('/');

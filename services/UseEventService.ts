@@ -5,10 +5,12 @@ import type { QuestionnaireClient } from '~/models/questionnaire/QuestionnaireCl
 
 export const useEventService = () => {
   const { addError, addSuccess } = useToaster();
-  const api = useApi(); // ✅ instance sécurisée avec refresh
+  const api = useApi();
   const eventStore = eventsStore();
   const { clientProfile } = storeToRefs(useUserStore());
   const { setEventsByOrganisator, setQuestionnaireAnswers } = eventStore;
+
+  const uuid = localStorage.getItem('client-uuid');
 
   const createEventService = async (payload: QuestionnaireClient) => {
     try {
@@ -35,10 +37,6 @@ export const useEventService = () => {
 
     try {
       if (!api) return;
-
-      // ✅ Récupération du bon uuid depuis le store
-      const uuid = clientProfile.value?.uuid;
-      console.log(uuid, 'UUID');
 
       if (!uuid) {
         console.warn('Aucun UUID client trouvé dans le store');

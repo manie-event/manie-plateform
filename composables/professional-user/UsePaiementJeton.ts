@@ -7,7 +7,7 @@ export const usePaiementJeton = () => {
   const cartStore = useCartStore();
   const { initializeTokenBalance } = cartStore;
   const { addSuccess, addError } = useToaster();
-  const api = useApi(); // ✅ instance sécurisée
+  const api = useApi();
   const isProcessing = ref(false);
   const error = ref<string | null>(null);
 

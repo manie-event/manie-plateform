@@ -94,8 +94,6 @@ export const useUserStore = defineStore('userStore', () => {
       category: 'professional',
     };
 
-    console.log(professionalUser.value, 'const current = professionalUser.value || {};');
-
     localStorage.setItem('professional-uuid', professionalUser.value.uuid || '');
     localStorage.setItem('pro-name', professionalUser.value.name || '');
     isProfileCreated.value = true;

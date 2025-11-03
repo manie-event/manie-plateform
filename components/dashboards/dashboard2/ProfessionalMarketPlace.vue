@@ -116,7 +116,6 @@ const getKeywordValues = (keywordUuids: string[]) => {
 
 const getBackgroundStyle = (eventName: string) => {
   const imageUrl = getEventBackground(eventName as any);
-  console.log('Resolved image URL:', imageUrl);
 
   return {
     backgroundImage: `url(${imageUrl})`,
