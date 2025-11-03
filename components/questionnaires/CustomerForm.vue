@@ -243,7 +243,8 @@ const props = defineProps<{
 const openCustomerForm = defineModel<boolean>('openCustomerForm', { default: false });
 
 const { sectors, servicesFiltered } = storeToRefs(eventsStore());
-const { keywords, clientProfile } = storeToRefs(useUserStore());
+const { clientProfile } = storeToRefs(useUserStore());
+const { keywords } = stroreToRefs(useKeywordsStore());
 const { submitEvent, isLoading, error } = UseEvent();
 //ref generale
 const eventType = ref<'particulier' | 'professionnel'>('particulier');

@@ -4,17 +4,21 @@ import PayingTable from '@/components/dashboards/dashboard2/PayingTable.vue';
 import TextCards from '@/components/dashboards/dashboard2/TextCard.vue';
 import WelcomeCard from '@/components/dashboards/dashboard2/WelcomeCard.vue';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
+import { storeToRefs } from 'pinia';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
-import { UserCategory } from '~/models/enums/userCategoryEnums';
+import { useUserStore } from '~/stores/userStore';
 
 const userStore = useUserStore();
-const { isProfileCreated, user, isProfessional } = storeToRefs(userStore);
+const { user } = storeToRefs(userStore);
 const { getProfessionalProfileDetails } = useProfessionalProfile();
+
+const isProfileCreated = ref(localStorage.getItem('profil-created') === 'true');
+const isProfessional = ref(localStorage.getItem('is-professional') === 'true');
 
 onMounted(async () => {
   console.log(isProfileCreated.value, 'ISPROFILECREATED');
   console.log(isProfessional.value, 'USERCATEGORY');
-  if (isProfileCreated.value && user.value?.category == UserCategory.PRESTA) {
+  if (isProfileCreated.value && isProfessional.value) {
     await getProfessionalProfileDetails();
   }
 });

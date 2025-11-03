@@ -11,7 +11,8 @@ export const useAuthentification = () => {
   const { addError, addSuccess } = useToaster();
   const userStore = useUserStore();
   const { setUser } = userStore;
-  const { isProfessional } = storeToRefs(userStore);
+
+  const isProfessional = ref(localStorage.getItem('is-professional') === 'true');
 
   const { token } = useAuthCookies(); // access token (15 min)
   const { refreshToken } = useRefreshToken(); // refresh token (7 jours)

@@ -1,142 +1,133 @@
 import type { ProfessionalProfile, User, clientProfile } from '@/models/user/UserModel';
 import { defineStore } from 'pinia';
-import { computed, ref } from 'vue';
-import { useClientProfil } from '~/composables/client-user/UseClientProfil';
-import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
-import type { Keywords } from '~/models/professionalService/Keywords';
-import type { Services } from '~/models/professionalService/Services';
+import { computed, ref, watch } from 'vue';
 
-export const useUserStore = defineStore('userStore', () => {
-  const api = useApi();
-  const { getProfessionalProfile } = useProfessionalProfile();
-  const { getClientProfil } = useClientProfil();
+export const useUserStore = defineStore(
+  'userStore',
+  () => {
+    /** 👤 Base user data */
+    const user = ref<User | null>(null);
+    const isProfilUpdate = ref(false);
+    const isStoringUserAccepted = ref(false);
 
-  /** 👤 Base user data */
-  const user = ref<User | null>(null);
-  const isProfilUpdate = ref(false);
-  const isProfileCreated = ref(false);
-  const isStoringUserAccepted = ref(false);
+    /** 👥 Client profile */
+    const clientProfile = ref<clientProfile | null>(null);
 
-  /** 👥 Client profile */
-  const clientProfile = ref<clientProfile | null>(null);
+    /** 🧑‍🔧 Professional profile */
+    const professionalUser = ref<ProfessionalProfile | null>(null);
+    const professionalProfileForCustomer = ref<ProfessionalProfile | null>(null);
 
-  /** 🧑‍🔧 Professional profile */
-  const professionalUser = ref<ProfessionalProfile | null>(null);
-  const professionalServices = ref<Services[]>([]);
-  const keywords = ref<Keywords[]>([]);
-  const professionalProfileForCustomer = ref<ProfessionalProfile | null>(null);
+    /** 🧠 Derived state */
+    const isProfessional = computed(() => user.value?.category === 'professional');
+    const isProfileCreated = computed(() => !!(clientProfile.value || professionalUser.value));
 
-  /** 🧠 Derived state (computed) */
-  const isProfessional = computed(() => user.value?.category === 'professional');
-  const category = computed(() => (isProfessional.value ? 'Prestataire' : 'Client'));
+    const displayName = computed(() => {
+      if (isProfessional.value && professionalUser.value?.name) return professionalUser.value.name;
+      if (!isProfessional.value && clientProfile.value?.username)
+        return clientProfile.value.username;
+      return user.value?.username || '';
+    });
 
-  const displayName = computed(() => {
-    console.log(isProfessional.value, 'ISPROFESSIONAL COMPUTED');
+    const category = computed(() => user.value?.category);
 
-    if (isProfessional.value) {
-      return professionalUser.value?.name || user.value?.username || '';
-    }
-    return clientProfile.value?.username || user.value?.username || '';
-  });
+    const initials = computed(() => displayName.value?.charAt(0).toUpperCase() || '?');
 
-  const initials = computed(() => displayName.value?.charAt(0).toUpperCase() || '?');
-
-  /** 🧩 Mutations (setters) */
-  const setUser = (userData: User) => {
-    user.value = userData;
-    localStorage.setItem('profil-created', 'true');
-    if (user.value.category === 'professional') {
-      localStorage.setItem('is-professional', 'true');
-    }
-  };
-
-  const setUpdateProfile = (status: boolean) => {
-    isProfilUpdate.value = status;
-  };
-
-  /** Client */
-  const setClientProfile = (profile: clientProfile) => {
-    clientProfile.value = { ...profile };
-    isProfileCreated.value = true;
-  };
-
-  const updateClientProfile = (updatedProfile: Partial<clientProfile>) => {
-    if (!clientProfile.value) clientProfile.value = {} as clientProfile;
-    Object.assign(clientProfile.value, updatedProfile);
-  };
-
-  /** Professional */
-  const setProfessionalUser = (profile: ProfessionalProfile) => {
-    professionalUser.value = {
-      ...profile,
-      email: user.value?.email || '',
-      uuid: profile.uuid?.replace(/[""]/g, '') || '',
-      category: 'professional',
+    /** 🧩 Mutations */
+    const setUser = (userData: User) => {
+      user.value = userData;
     };
-    isProfileCreated.value = true;
-  };
 
-  const setProfessionalServices = (services: Services[]) => {
-    professionalServices.value = [...services];
-  };
+    const setUpdateProfile = (status: boolean) => {
+      isProfilUpdate.value = status;
+    };
 
-  const setKeywords = (newKeywords: Keywords[]) => {
-    keywords.value = [...newKeywords];
-  };
+    /** Client */
+    const setClientProfile = (profile: clientProfile) => {
+      clientProfile.value = { ...profile };
+    };
 
-  const sendProfessionalProfileForCustomer = (profile: ProfessionalProfile) => {
-    professionalProfileForCustomer.value = profile;
-  };
+    const updateClientProfile = (updated: Partial<clientProfile>) => {
+      if (!clientProfile.value) clientProfile.value = {} as clientProfile;
+      Object.assign(clientProfile.value, updated);
+    };
 
-  const setUserAccepted = (accepted: boolean) => {
-    isStoringUserAccepted.value = accepted;
-  };
+    /** Professional */
+    const setProfessionalUser = (profile: ProfessionalProfile) => {
+      professionalUser.value = {
+        ...profile,
+        email: user.value?.email || '',
+        uuid: profile.uuid?.replace(/[""]/g, '') || '',
+        category: 'professional',
+      };
+    };
 
-  /** 🔁 Reset global state (utile pour logout) */
-  const resetUserStore = () => {
-    user.value = null;
-    clientProfile.value = null;
-    professionalUser.value = null;
-    professionalServices.value = [];
-    keywords.value = [];
-    professionalProfileForCustomer.value = null;
-    isProfileCreated.value = false;
-    isProfilUpdate.value = false;
-    isStoringUserAccepted.value = false;
-  };
+    const sendProfessionalProfileForCustomer = (profile: ProfessionalProfile) => {
+      professionalProfileForCustomer.value = profile;
+    };
 
-  return {
-    // 🔹 State
-    user,
-    clientProfile,
-    professionalUser,
-    professionalServices,
-    professionalProfileForCustomer,
-    keywords,
+    const setUserAccepted = (accepted: boolean) => {
+      isStoringUserAccepted.value = accepted;
+    };
 
-    // 🔹 Flags
-    isProfessional,
-    isProfileCreated,
-    isProfilUpdate,
-    isStoringUserAccepted,
+    /** 🔁 Reset global state */
+    const resetUserStore = () => {
+      user.value = null;
+      clientProfile.value = null;
+      professionalUser.value = null;
+      professionalProfileForCustomer.value = null;
+      isProfilUpdate.value = false;
+      isStoringUserAccepted.value = false;
+    };
 
-    // 🔹 Computed
-    displayName,
-    initials,
-    category,
+    // Debug utile
+    watch(
+      [user, professionalUser, clientProfile],
+      ([u, p, c]) => {
+        console.log('💾 userStore updated:', {
+          user: !!u,
+          professionalUser: !!p,
+          clientProfile: !!c,
+        });
+      },
+      { deep: true }
+    );
 
-    // 🔹 Setters
-    setUser,
-    setClientProfile,
-    updateClientProfile,
-    setProfessionalUser,
-    setProfessionalServices,
-    setKeywords,
-    setUserAccepted,
-    setUpdateProfile,
-    sendProfessionalProfileForCustomer,
+    return {
+      // State
+      user,
+      clientProfile,
+      professionalUser,
+      professionalProfileForCustomer,
 
-    // 🔹 Utils
-    resetUserStore,
-  };
-});
+      // Flags
+      isProfessional,
+      isProfilUpdate,
+      isStoringUserAccepted,
+
+      // Computed
+      displayName,
+      initials,
+      isProfileCreated,
+      category,
+
+      // Setters
+      setUser,
+      setClientProfile,
+      updateClientProfile,
+      setProfessionalUser,
+      setUserAccepted,
+      setUpdateProfile,
+      sendProfessionalProfileForCustomer,
+
+      // Utils
+      resetUserStore,
+    };
+  },
+  {
+    persist: {
+      key: 'manie-user',
+      storage: localStorage, // ici on met directement l’objet Storage
+      pick: ['user', 'professionalUser', 'clientProfile', 'isProfilUpdate'],
+    },
+  }
+);

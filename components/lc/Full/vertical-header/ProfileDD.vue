@@ -4,44 +4,30 @@ import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { useAuthentification } from '~/composables/UseAuthentification';
 import { useClientProfil } from '~/composables/client-user/UseClientProfil';
-import { useEventServiceProposition } from '~/composables/event-service-propositions/UseEventServiceProposition';
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { useUserStore } from '~/stores/userStore';
 
 const { sendLogout } = useAuthentification();
 const { getJetonQuantity } = usePaiementJeton();
-const { getProfessionalProfileDetails, getProfessionalProfile } = useProfessionalProfile();
-const { getServicePropositionForClient } = useEventServiceProposition();
+const { getProfessionalProfileDetails } = useProfessionalProfile();
 const { getClientProfil } = useClientProfil();
 
 const userStore = useUserStore();
-const {
-  user,
-  professionalUser,
-  clientProfile,
-  category,
-  displayName,
-  initials,
-  isProfessional,
-  isProfileCreated,
-} = storeToRefs(userStore);
+const { user, professionalUser, clientProfile, displayName, initials } = storeToRefs(userStore);
 
-const professionalProfil = localStorage.getItem('is-professional') === 'true';
 const jetonBalance = ref(0);
+const isProfileCreated = ref(localStorage.getItem('profil-created') === 'true');
+const isProfessional = ref(localStorage.getItem('is-professional') === 'true');
 
+/** 🎯 Charger les infos nécessaires selon le type de profil */
 onMounted(async () => {
   try {
-    console.log(professionalProfile, 'TEST PROFILDD');
-
-    if (professionalProfil) {
-      console.log(isProfessional.value, 'ISPROFESSIONAL');
-      await getProfessionalProfile();
+    if (isProfessional.value) {
       await getProfessionalProfileDetails();
       jetonBalance.value = await getJetonQuantity();
     } else {
       await getClientProfil();
-      await getServicePropositionForClient();
     }
   } catch (e) {
     console.warn('Erreur chargement profil header:', e);

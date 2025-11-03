@@ -54,6 +54,10 @@ const openModal = ref(false);
 const openEditProfilModal = () => {
   openModal.value = !openModal.value;
 };
+
+onMounted(() => {
+  console.log('Client Profile:', clientProfile.value);
+});
 </script>
 
 <style lang="scss">

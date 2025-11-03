@@ -19,8 +19,8 @@
       <div class="profile-header__content">
         <div class="profile-header__identity">
           <v-avatar size="100" class="profile-header__avatar">
-            <img v-if="professionalUser?.avatar" :src="professionalUser.avatar" alt="Avatar" />
-            <span v-else>{{ initials }}</span>
+            <!-- <img v-if="professionalUser?.avatar" :src="professionalUser.avatar" alt="Avatar" /> -->
+            <span>{{ initials }}</span>
           </v-avatar>
 
           <div class="profile-header__info">
@@ -85,13 +85,14 @@ import ServicesPrestataire from '~/components/questionnaires/ServicesPrestataire
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { useUserStore } from '~/stores/userStore';
 
-const { professionalUser, user, isProfileCreated } = storeToRefs(useUserStore());
+const { professionalUser, user } = storeToRefs(useUserStore());
 const { changeProfessionalBannerPicture, getProfessionalProfileDetails } = useProfessionalProfile();
 
 const openModal = ref(false);
 const openServiceModal = ref(false);
 const fileInput = ref<HTMLInputElement | null>(null);
 const initials = ref('');
+const isProfileCreated = ref(localStorage.getItem('profil-created') === 'true');
 
 const triggerClickFileInput = () => fileInput.value?.click();
 const changeBannerPhoto = async (e: Event) => {

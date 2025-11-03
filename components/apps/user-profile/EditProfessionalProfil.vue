@@ -237,17 +237,17 @@ import { useForm } from 'vee-validate';
 import { ref, Teleport } from 'vue';
 import * as yup from 'yup';
 import errorToaster from '~/components/common/errorToaster.vue';
-import { useKeywords } from '~/composables/professional-user/UseKeywords';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import { GEOGRAPHIC_ACTIVITY } from '~/constants/geographicActivity';
 import type { Faq, ProfessionalProfile } from '~/models/user/UserModel';
+import { useToaster } from '~/utils/toaster';
 import ModalRedirection from './ModalRedirection.vue';
 
 const userStore = useUserStore();
 const { professionalUser, isProfilUpdate } = storeToRefs(userStore);
 const { setProfessionalUser } = userStore;
-const { getSectors } = useKeywords();
+const { getSectors } = useKeywordsStore();
 const { createProfessionalProfile, patchProfessionalProfileDetails } = useProfessionalProfile();
 const openModal = defineModel<boolean>('openModal');
 
@@ -272,6 +272,8 @@ const mergedFaq = computed(() => {
     {} as Record<string, string>
   );
 });
+
+console.log('editProfesional mounted');
 
 const validationSchema = yup.object({
   name: yup.string().min(2).required('Le nom est requis'),
@@ -387,14 +389,11 @@ const createProfile = async (values: ProfessionalProfile) => {
 
     const response = await createProfessionalProfile(payload);
 
-    if (response.message === 'Professional updated') {
+    if (response.message === 'Professional created') {
       // 🧠 On met directement à jour le store
-      if (response.data?.professional) {
-        setProfessionalUser(response.data.professional);
-        addSuccess('Votre profil a été créé avec succès');
-        openModal.value = false;
-        isProfilUpdate.value = true;
-      }
+      addSuccess('Votre profil a été créé avec succès');
+      openModal.value = false;
+      isProfilUpdate.value = true;
     } else {
       addError({ message: 'La création du profil a échoué.' });
     }

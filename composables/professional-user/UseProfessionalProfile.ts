@@ -9,12 +9,16 @@ export const useProfessionalProfile = () => {
   const config = useRuntimeConfig();
   const api = useApi();
 
+  const professionalUuid = ref(localStorage.getItem('professional-uuid') || '');
+
   const createProfessionalProfile = async (professionalProfil: ProfessionalProfile) => {
     console.log('ICI');
 
     try {
       if (!api) return;
       const { data } = await api.post('/professional/create', professionalProfil);
+
+      console.log(data, 'DATA PRO PROFIL');
 
       addSuccess('Profil professionnel créé avec succès !');
       await getProfessionalProfile(); // rafraîchit les infos locales
@@ -42,9 +46,9 @@ export const useProfessionalProfile = () => {
   const getProfessionalProfileDetails = async () => {
     try {
       console.log(professionalUser.value?.uuid, 'professionalUser.value?.uuid');
-      if (!api || !professionalUser.value?.uuid) return;
+      if (!api || !professionalUuid.value) return;
 
-      const { data } = await api.get(`/professional/${professionalUser.value?.uuid}`);
+      const { data } = await api.get(`/professional/${professionalUuid.value}`);
 
       // 🧩 Compatibilité avec anciens retours { newPro: {...} }
       const profile = data.newPro || data;
@@ -68,7 +72,7 @@ export const useProfessionalProfile = () => {
 
   const patchProfessionalProfileDetails = async (newProfile: ProfessionalProfile) => {
     try {
-      if (!api || !professionalUser.value?.uuid) return;
+      if (!api || !professionalUuid) return;
 
       // 🧩 On fusionne sans écraser les champs backend (comme picture)
       const mergedProfile = {
@@ -76,10 +80,7 @@ export const useProfessionalProfile = () => {
         ...newProfile,
       };
 
-      const { data } = await api.patch(
-        `/professional/${professionalUser.value?.uuid}`,
-        mergedProfile
-      );
+      const { data } = await api.patch(`/professional/${professionalUuid.value}`, mergedProfile);
       const updatedProfile = data.newPro || data;
 
       if (updatedProfile && updatedProfile.uuid) {
@@ -97,14 +98,14 @@ export const useProfessionalProfile = () => {
   };
 
   const changeProfessionalBannerPicture = async (file: File) => {
-    if (!api || !professionalUser.value?.uuid) return;
+    if (!api) return;
 
     const formData = new FormData();
     formData.append('file', file);
 
     try {
       const { data } = await api.patch(
-        `/professional/${professionalUser.value?.uuid}/picture`,
+        `/professional/${professionalUuid.value}/picture`,
         formData,
         {
           headers: { 'Content-Type': 'multipart/form-data' }, // seul cas où on garde un header manuel
