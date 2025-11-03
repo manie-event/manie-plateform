@@ -45,9 +45,9 @@ export const useUserStore = defineStore('userStore', () => {
 
   const displayName = computed(() => {
     if (isProfessional) {
-      return professionalUser.value?.name || user.value?.username || '';
+      return localStorage.getItem('pro-name') ?? user.value?.username;
     }
-    return clientProfile.value?.username || user.value?.username || '';
+    return localStorage.getItem('client-name') ?? user.value?.username;
   });
 
   const initials = computed(() => displayName.value?.charAt(0).toUpperCase() || '?');

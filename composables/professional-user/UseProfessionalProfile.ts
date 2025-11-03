@@ -9,7 +9,7 @@ export const useProfessionalProfile = () => {
   const config = useRuntimeConfig();
   const api = useApi();
 
-  const professionalUuid = ref(localStorage.getItem('professional-uuid') || '');
+  const professionalUuid = ref(localStorage.getItem('professional-uuid'));
 
   const createProfessionalProfile = async (professionalProfil: ProfessionalProfile) => {
     try {
@@ -63,7 +63,7 @@ export const useProfessionalProfile = () => {
 
   const patchProfessionalProfileDetails = async (newProfile: ProfessionalProfile) => {
     try {
-      if (!api || !professionalUuid) return;
+      if (!api || !professionalUuid.value) return;
 
       // 🧩 On fusionne sans écraser les champs backend (comme picture)
       const mergedProfile = {
@@ -88,7 +88,7 @@ export const useProfessionalProfile = () => {
     }
   };
   const changeProfessionalBannerPicture = async (file: File) => {
-    if (!api || !professionalUuid) return;
+    if (!api || !professionalUuid.value) return;
 
     if (!import.meta.client) return;
 
@@ -96,9 +96,13 @@ export const useProfessionalProfile = () => {
       const formData = new FormData();
       formData.append('file', file);
 
-      const { data } = await api.patch(`/professional/${professionalUuid}/picture`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+      const { data } = await api.patch(
+        `/professional/${professionalUuid.value}/picture`,
+        formData,
+        {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        }
+      );
 
       if (data?.imageUrl) {
         const normalizedData = {

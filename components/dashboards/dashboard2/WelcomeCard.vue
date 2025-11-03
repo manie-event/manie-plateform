@@ -34,7 +34,7 @@ const { serviceEventProposition } = storeToRefs(usePropositionStore());
 const { getServicePropositionForProfessional } = useEventServiceProposition();
 const { servicePropositionAvailable } = useEventServiceProposition();
 
-const proName = localStorage.getItem('professional-name');
+const proName = localStorage.getItem('pro-name');
 
 const openMarketModal = ref(false);
 const propositionFiltered = ref<EventModelForProposition[]>([]);
