@@ -19,7 +19,7 @@ const { isProfileCreated } = userStore;
 // ✅ Nouveau store unifié pour secteurs et mots-clés
 const keywordsStore = useKeywordsStore();
 const { getAllSectors, getKeywords } = keywordsStore;
-const localProfilCreated = localStorage.getItem('pp-created');
+
 onMounted(async () => {
   try {
     // Chargement des services et infos pro
@@ -34,7 +34,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <v-card v-if="isProfileCreated || localProfilCreated">
+  <v-card v-if="isProfileCreated">
     <v-row class="dashboard-client">
       <v-col cols="12">
         <v-row>

@@ -29,12 +29,10 @@ import { useEventServiceProposition } from '@/composables/event-service-proposit
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
 import ProfessionalMarketPlace from './ProfessionalMarketPlace.vue';
 
-const { professionalUser } = storeToRefs(useUserStore());
+const { professionalUser, proName } = storeToRefs(useUserStore());
 const { serviceEventProposition } = storeToRefs(usePropositionStore());
 const { getServicePropositionForProfessional } = useEventServiceProposition();
 const { servicePropositionAvailable } = useEventServiceProposition();
-
-const proName = localStorage.getItem('pro-name');
 
 const openMarketModal = ref(false);
 const propositionFiltered = ref<EventModelForProposition[]>([]);
@@ -43,9 +41,6 @@ const isPropositionStillAvailable = () => {
   propositionFiltered.value = serviceEventProposition.value
     .filter((proposition) => !proposition.proposition.professionalMessage)
     .filter((proposition) => isEventDone(proposition.date[0]));
-
-  console.log(serviceEventProposition.value, ' serviceEventProposition.value');
-  console.log(propositionFiltered.value, ' propositionFiltered.value');
 
   return propositionFiltered.value;
 };

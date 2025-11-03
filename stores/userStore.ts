@@ -1,56 +1,42 @@
 import type { ProfessionalProfile, User, clientProfile } from '@/models/user/UserModel';
-import { useLocalStorage } from '@vueuse/core';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import type { Keywords } from '~/models/professionalService/Keywords';
 import type { Services } from '~/models/professionalService/Services';
 
 export const useUserStore = defineStore('userStore', () => {
+  //persistance
+  const isProfileCreated = ref(false);
+  const isProfessional = ref(false);
+  const proName = ref<string | null>(null);
+  const clientName = ref<string | null>(null);
+  const clientUuid = ref<string | null>(null);
+  const professionalUuid = ref<string | null>(null);
+
   // refs
   const user = ref<User>();
-  const isProfilUpdate = ref(false);
-
-  //client Ref
-  const clientProfile = ref<clientProfile>({
-    address: '',
-    birthDate: '',
-    businessLeader: '',
-    businessName: '',
-    businessSiret: '',
-    city: '',
-    country: '',
-    createdAt: '',
-    email: '',
-    id: 0,
-    isBusiness: false,
-    phoneNumber: '',
-    updatedAt: '',
-    userUuid: '',
-    username: '',
-    uuid: '',
-    zipCode: '',
-  });
-
-  //professional Ref
   const professionalUser = ref<ProfessionalProfile>();
-  const isProfileCreated = useLocalStorage('pp-created', false);
+  const clientProfile = ref<clientProfile>();
+  const isProfilUpdate = ref(false);
   const isStoringUserAccepeted = ref(false);
   const professionnalServices = ref<Services[]>([]);
   const keywords = ref<Keywords[]>([]);
   const professionalProfileForCustomer = ref<ProfessionalProfile>();
 
-  const isProfessional = localStorage.getItem('is-professional') === 'true';
-
-  const category = computed(() => (isProfessional ? 'Prestataire' : 'Client'));
+  const category = computed(() => (isProfessional.value ? 'Prestataire' : 'Client'));
 
   const displayName = computed(() => {
-    if (isProfessional) {
-      return localStorage.getItem('pro-name') ?? user.value?.username;
+    if (isProfessional.value) {
+      return proName.value ?? user.value?.username;
     }
-    return localStorage.getItem('client-name') ?? user.value?.username;
+    return clientName.value ?? user.value?.username;
   });
 
-  const initials = computed(() => displayName.value?.charAt(0).toUpperCase() || '?');
+  const initials = computed(() => {
+    const name = String(displayName.value || '');
+    console.log(name, 'NAME');
+    return name.charAt(0).toUpperCase() || '?';
+  });
 
   // setters
   const setUser = (userData: User) => {
@@ -66,16 +52,16 @@ export const useUserStore = defineStore('userStore', () => {
   };
 
   // client setters
-  const setClientProfile = (newProfile: clientProfile) => {
-    clientProfile.value = newProfile;
+  const setClientProfile = (profile: clientProfile) => {
+    clientProfile.value = profile;
+    clientName.value = profile.username ?? null;
     isProfileCreated.value = true;
-    localStorage.setItem('client-uuid', newProfile.uuid);
-    localStorage.setItem('client-name', newProfile.username);
-    localStorage.setItem(
-      'client-profile',
-      JSON.stringify({ ...clientProfile.value, email: null, phoneNumber: null, address: null })
-    );
-    isProfileCreated.value = true;
+    isProfessional.value = false;
+
+    localStorage.setItem('client-name', profile.username || '');
+    localStorage.setItem('pp-created', 'true');
+    localStorage.setItem('is-professional', 'false');
+    localStorage.setItem('client-uuid', profile.uuid || '');
   };
 
   const updateClientProfile = (updatedProfile: clientProfile) => {
@@ -94,9 +80,14 @@ export const useUserStore = defineStore('userStore', () => {
       category: 'professional',
     };
 
-    localStorage.setItem('professional-uuid', professionalUser.value.uuid || '');
-    localStorage.setItem('pro-name', professionalUser.value.name || '');
+    proName.value = professionalUser.value.name ?? null;
     isProfileCreated.value = true;
+    isProfessional.value = true;
+
+    localStorage.setItem('pro-name', professionalUser.value.name || '');
+    localStorage.setItem('pp-created', 'true');
+    localStorage.setItem('is-professional', 'true');
+    localStorage.setItem('professional-uuid', professionalUser.value.uuid || '');
   };
 
   const setUserAccepted = (accepted: boolean) => {
@@ -137,7 +128,6 @@ export const useUserStore = defineStore('userStore', () => {
       uuid: '',
       zipCode: '',
     };
-    isProfileCreated.value = false;
     isStoringUserAccepeted.value = false;
     professionnalServices.value = [];
     professionalProfileForCustomer.value = undefined;
@@ -145,6 +135,13 @@ export const useUserStore = defineStore('userStore', () => {
   };
 
   return {
+    //persistate
+    proName,
+    clientName,
+    isProfessional,
+    clientUuid,
+    professionalUuid,
+    //refs
     user,
     professionalUser,
     clientProfile,
@@ -153,10 +150,14 @@ export const useUserStore = defineStore('userStore', () => {
     professionnalServices,
     professionalProfileForCustomer,
     isProfilUpdate,
+    keywords,
+
+    // getters
     category,
     displayName,
     initials,
-    keywords,
+
+    //setters
     setUserAccepted,
     setUser,
     setProfessionalUser,

@@ -50,6 +50,7 @@ export const useAuthentification = () => {
       if (!tokenValue || !newRefresh || !user) {
         throw new Error('Réponse de login invalide (token/refresh/user manquant).');
       }
+      userStore.resetUserStore();
 
       // Persist tokens avant navigation
       refreshToken.value = newRefresh;
@@ -136,7 +137,16 @@ export const useAuthentification = () => {
       token.value = null;
       refreshToken.value = null;
 
-      localStorage.clear();
+      const keysToRemove = [
+        'username',
+        'is-professional',
+        'pp-created',
+        'pro-name',
+        'client-name',
+        'client-uuid',
+        'professional-uuid',
+      ];
+      keysToRemove.forEach((key) => localStorage.removeItem(key));
       userStore.resetUserStore();
 
       await router.push('/');

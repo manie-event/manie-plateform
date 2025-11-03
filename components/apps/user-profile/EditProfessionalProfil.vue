@@ -213,7 +213,7 @@
 
         <div v-if="currentPage === 1" class="d-flex justify-space-between">
           <v-btn @click="openModal = false">Annuler</v-btn>
-          <v-btn v-if="!profileCreated" color="primary" @click="createProfile(profile)">
+          <v-btn v-if="!isProfileCreated" color="primary" @click="createProfile(profile)">
             Valider mon profil
           </v-btn>
           <div v-else>
@@ -245,7 +245,7 @@ import { useToaster } from '~/utils/toaster';
 import ModalRedirection from './ModalRedirection.vue';
 
 const userStore = useUserStore();
-const { professionalUser, isProfilUpdate } = storeToRefs(userStore);
+const { professionalUser, isProfilUpdate, isProfileCreated } = storeToRefs(userStore);
 const { setProfessionalUser } = userStore;
 const { getSectors } = useKeywordsStore();
 const { createProfessionalProfile, patchProfessionalProfileDetails } = useProfessionalProfile();
@@ -258,7 +258,6 @@ const currentPage = ref(1);
 const activityItems = ref(ACTIVITY_ITEMS);
 const geographicActivity = ref(GEOGRAPHIC_ACTIVITY);
 const reservationDelay = ref(0);
-const profileCreated = localStorage.getItem('pp-created') === 'true';
 
 const minimumDaysReservation = computed(() => reservationDelay.value * 7);
 

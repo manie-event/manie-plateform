@@ -14,16 +14,15 @@ const { getProfessionalProfileDetails } = useProfessionalProfile();
 const { getClientProfil } = useClientProfil();
 
 const userStore = useUserStore();
-const { user, professionalUser, clientProfile, category, displayName, initials } =
-  storeToRefs(userStore);
+const { isProfessional, category, displayName, initials } = storeToRefs(userStore);
 
 const jetonBalance = ref(0);
-const isProfileCreated = ref(localStorage.getItem('profil-created') === 'true');
-const isProfessional = ref(localStorage.getItem('is-professional') === 'true');
 
 /** 🎯 Charger les infos nécessaires selon le type de profil */
 onMounted(async () => {
   try {
+    console.log(isProfessional.value, 'IS PROFESSIONAL');
+
     if (isProfessional.value) {
       await getProfessionalProfileDetails();
       jetonBalance.value = await getJetonQuantity();

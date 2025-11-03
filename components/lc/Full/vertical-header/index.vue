@@ -6,10 +6,9 @@ import Navigation from '~/components/landingpage/layout/Navigation.vue';
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 
 const { createTokenSession } = usePaiementJeton();
+const { isProfessional } = storeToRefs(useUserStore());
 const jetonAmount = ref(0);
 const stickyHeader = ref(false);
-
-const isProfessional = ref(localStorage.getItem('is-professional') === 'true');
 
 const totalPriceJeton = computed(() => {
   return `${jetonAmount.value * 9} €`;

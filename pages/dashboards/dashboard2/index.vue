@@ -10,17 +10,13 @@ import { useProfessionalProfile } from '~/composables/professional-user/UseProfe
 import { useUserStore } from '~/stores/userStore';
 
 const userStore = useUserStore();
-const { user } = storeToRefs(userStore);
+const { user, isProfileCreated, isProfessional } = storeToRefs(userStore);
 const { getProfessionalProfileDetails } = useProfessionalProfile();
 const { getServicePropositionForProfessional } = useEventServiceProposition();
-
-const isProfileCreated = ref(localStorage.getItem('pp-created') === 'true');
-const isProfessional = ref(localStorage.getItem('is-professional') === 'true');
 
 onMounted(async () => {
   console.log(isProfileCreated.value, 'isProfileCreated.value');
   console.log(isProfessional.value, ' isProfessional.value');
-
   if (isProfileCreated.value && isProfessional.value) {
     await getProfessionalProfileDetails();
     await getServicePropositionForProfessional();

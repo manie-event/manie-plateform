@@ -5,11 +5,8 @@ export const useProfessionalProfile = () => {
   const { addError, addSuccess } = useToaster();
   const userStore = useUserStore();
   const { setProfessionalUser, sendProfessionalProfileForCustomer } = userStore;
-  const { professionalUser } = storeToRefs(userStore);
-  const config = useRuntimeConfig();
+  const { professionalUser, professionalUuid } = storeToRefs(userStore);
   const api = useApi();
-
-  const professionalUuid = ref(localStorage.getItem('professional-uuid'));
 
   const createProfessionalProfile = async (professionalProfil: ProfessionalProfile) => {
     try {
