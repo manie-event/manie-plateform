@@ -14,12 +14,11 @@ import { useUserStore } from '~/stores/userStore';
 const userStore = useUserStore();
 const { getClientProfil } = useClientProfil();
 const { getProfessionalService } = useProfessionalService();
+const { isProfileCreated } = userStore;
 
 // ✅ Nouveau store unifié pour secteurs et mots-clés
 const keywordsStore = useKeywordsStore();
 const { getAllSectors, getKeywords } = keywordsStore;
-
-const isProfileCreated = localStorage.getItem('profil-created') === 'true';
 
 onMounted(async () => {
   console.log('Dashboard mounted');
@@ -33,6 +32,25 @@ onMounted(async () => {
     await Promise.all([getAllSectors(), getKeywords()]);
   } catch (error) {
     console.error('Erreur lors du chargement du dashboard:', error);
+  }
+});
+
+watchEffect(() => {
+  // on lit directement la valeur réactive
+  if (isProfileCreated) {
+    console.log('🟢 Profil créé, chargement des services…');
+
+    // exécuter les appels asynchrones sans bloquer la réactivité
+    (async () => {
+      try {
+        await getProfessionalService();
+        await Promise.all([getAllSectors(), getKeywords()]);
+      } catch (err) {
+        console.error('Erreur lors du chargement des données du profil :', err);
+      }
+    })();
+  } else {
+    console.log('🔴 Profil non créé — affichage du empty state');
   }
 });
 </script>

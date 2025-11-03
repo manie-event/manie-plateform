@@ -14,7 +14,8 @@ const { getProfessionalProfileDetails } = useProfessionalProfile();
 const { getClientProfil } = useClientProfil();
 
 const userStore = useUserStore();
-const { user, professionalUser, clientProfile, displayName, initials } = storeToRefs(userStore);
+const { user, professionalUser, clientProfile, category, displayName, initials } =
+  storeToRefs(userStore);
 
 const jetonBalance = ref(0);
 const isProfileCreated = ref(localStorage.getItem('profil-created') === 'true');
@@ -57,7 +58,7 @@ onMounted(async () => {
         </div>
 
         <div class="d-flex align-center mt-5 pb-6">
-          <div class="avatar" :class="{ 'profile-not-defined': !isProfileCreated }">
+          <div class="avatar">
             {{ initials }}
           </div>
           <div class="ml-5">
@@ -140,20 +141,5 @@ onMounted(async () => {
   justify-content: center;
   border-radius: 50%;
   border: 1px solid rgb(213, 213, 213);
-}
-.profile-not-defined {
-  border: 2px solid rgba(245, 0, 0, 100);
-  animation: clignotementAvatar 1s infinite;
-}
-@keyframes clignotementAvatar {
-  0% {
-    border-color: rgba(245, 0, 0, 100);
-  }
-  50% {
-    border-color: rgba(245, 0, 0, 0);
-  }
-  100% {
-    border-color: rgba(245, 0, 0, 100);
-  }
 }
 </style>

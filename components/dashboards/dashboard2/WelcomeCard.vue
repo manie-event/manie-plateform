@@ -2,7 +2,7 @@
   <v-card elevation="10" class="overflow-visible">
     <v-card-text class="position-relative pb-5">
       <h5 class="text-h6 mb-1 font-weight-semibold">
-        {{ `${proName}, content de vous voir ici,` }}
+        {{ professionalUser?.name ? professionalUser?.name : proName }}, content de vous voir ici,
       </h5>
       <div class="text-subtitle-1 text-grey100 pb-1">Un coup d'oeil sur les annonces du jour ?</div>
       <v-btn
@@ -34,10 +34,10 @@ const { serviceEventProposition } = storeToRefs(usePropositionStore());
 const { getServicePropositionForProfessional } = useEventServiceProposition();
 const { servicePropositionAvailable } = useEventServiceProposition();
 
+const proName = localStorage.getItem('professional-name');
+
 const openMarketModal = ref(false);
 const propositionFiltered = ref<EventModelForProposition[]>([]);
-
-const proName = ref(localStorage.getItem('professional-name') || '');
 
 const isPropositionStillAvailable = () => {
   propositionFiltered.value = serviceEventProposition.value

@@ -85,14 +85,13 @@ import ServicesPrestataire from '~/components/questionnaires/ServicesPrestataire
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { useUserStore } from '~/stores/userStore';
 
-const { professionalUser, user } = storeToRefs(useUserStore());
+const { professionalUser, user, isProfileCreated } = storeToRefs(useUserStore());
 const { changeProfessionalBannerPicture, getProfessionalProfileDetails } = useProfessionalProfile();
 
 const openModal = ref(false);
 const openServiceModal = ref(false);
 const fileInput = ref<HTMLInputElement | null>(null);
 const initials = ref('');
-const isProfileCreated = ref(localStorage.getItem('profil-created') === 'true');
 
 const triggerClickFileInput = () => fileInput.value?.click();
 const changeBannerPhoto = async (e: Event) => {

@@ -244,7 +244,7 @@ const openCustomerForm = defineModel<boolean>('openCustomerForm', { default: fal
 
 const { sectors, servicesFiltered } = storeToRefs(eventsStore());
 const { clientProfile } = storeToRefs(useUserStore());
-const { keywords } = stroreToRefs(useKeywordsStore());
+const { keywords } = storeToRefs(useKeywordsStore());
 const { submitEvent, isLoading, error } = UseEvent();
 //ref generale
 const eventType = ref<'particulier' | 'professionnel'>('particulier');
@@ -382,10 +382,17 @@ const getFilteredQuestionsForService = (selectedSector: any) => {
   return mapSectionsWithServices(selectedSector);
 };
 
+watchEffect(() => {
+  console.log('🧩 sectors', sectors.value.length);
+  console.log('🧩 servicesFiltered', servicesFiltered.value.length);
+});
+
 const sectorFiltered = computed(() => {
   const servicefiltered = servicesFiltered.value.map((s) => s.sectorUuid);
+  console.log(servicesFiltered, 'SERVICE FILTERED');
 
   const sector = sectors.value.filter((sector) => servicefiltered.includes(sector.uuid));
+  console.log(sectors, 'SECTOR');
 
   const activityAvailable = ACTIVITY_ITEMS.map((activity) => {
     const matchingSector = sector.find((s) => s.name === activity.value);

@@ -96,33 +96,32 @@ export const useProfessionalProfile = () => {
       addError({ message: 'Erreur lors de la mise à jour du profil professionnel.' });
     }
   };
-
   const changeProfessionalBannerPicture = async (file: File) => {
-    if (!api) return;
+    if (!api || !professionalUuid) return;
 
-    const formData = new FormData();
-    formData.append('file', file);
+    if (!import.meta.client) return;
 
     try {
-      const { data } = await api.patch(
-        `/professional/${professionalUuid.value}/picture`,
-        formData,
-        {
-          headers: { 'Content-Type': 'multipart/form-data' }, // seul cas où on garde un header manuel
-        }
-      );
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const { data } = await api.patch(`/professional/${professionalUuid}/picture`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
 
       if (data?.imageUrl) {
         const normalizedData = {
           ...data,
           picture: data.imageUrl || data.picture || null,
         };
+
         setProfessionalUser(normalizedData);
         addSuccess('Bannière changée avec succès !');
       }
+
       return data;
     } catch (error) {
-      console.error(error);
+      console.error('Erreur changement bannière:', error);
       addError({ message: 'Erreur lors du changement de la bannière.' });
     }
   };

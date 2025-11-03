@@ -27,7 +27,7 @@ export default defineNuxtConfig({
     plugins: [svgLoader()],
   },
 
-  modules: ['@pinia/nuxt', 'pinia-plugin-persistedstate/nuxt'],
+  modules: ['@pinia/nuxt'],
 
   app: {
     head: {

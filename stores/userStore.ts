@@ -1,133 +1,173 @@
 import type { ProfessionalProfile, User, clientProfile } from '@/models/user/UserModel';
+import { useLocalStorage } from '@vueuse/core';
 import { defineStore } from 'pinia';
-import { computed, ref, watch } from 'vue';
+import { ref } from 'vue';
+import type { Keywords } from '~/models/professionalService/Keywords';
+import type { Services } from '~/models/professionalService/Services';
 
-export const useUserStore = defineStore(
-  'userStore',
-  () => {
-    /** 👤 Base user data */
-    const user = ref<User | null>(null);
-    const isProfilUpdate = ref(false);
-    const isStoringUserAccepted = ref(false);
+export const useUserStore = defineStore('userStore', () => {
+  // refs
+  const user = ref<User>();
+  const isProfilUpdate = ref(false);
 
-    /** 👥 Client profile */
-    const clientProfile = ref<clientProfile | null>(null);
+  //client Ref
+  const clientProfile = ref<clientProfile>({
+    address: '',
+    birthDate: '',
+    businessLeader: '',
+    businessName: '',
+    businessSiret: '',
+    city: '',
+    country: '',
+    createdAt: '',
+    email: '',
+    id: 0,
+    isBusiness: false,
+    phoneNumber: '',
+    updatedAt: '',
+    userUuid: '',
+    username: '',
+    uuid: '',
+    zipCode: '',
+  });
 
-    /** 🧑‍🔧 Professional profile */
-    const professionalUser = ref<ProfessionalProfile | null>(null);
-    const professionalProfileForCustomer = ref<ProfessionalProfile | null>(null);
+  //professional Ref
+  const professionalUser = ref<ProfessionalProfile>();
+  const isProfileCreated = useLocalStorage('pp-created', false);
+  const isStoringUserAccepeted = ref(false);
+  const professionnalServices = ref<Services[]>([]);
+  const keywords = ref<Keywords[]>([]);
+  const professionalProfileForCustomer = ref<ProfessionalProfile>();
 
-    /** 🧠 Derived state */
-    const isProfessional = computed(() => user.value?.category === 'professional');
-    const isProfileCreated = computed(() => !!(clientProfile.value || professionalUser.value));
+  const isProfessional = localStorage.getItem('is-professional') === 'true';
 
-    const displayName = computed(() => {
-      if (isProfessional.value && professionalUser.value?.name) return professionalUser.value.name;
-      if (!isProfessional.value && clientProfile.value?.username)
-        return clientProfile.value.username;
-      return user.value?.username || '';
-    });
+  const category = computed(() => (isProfessional ? 'Prestataire' : 'Client'));
 
-    const category = computed(() => user.value?.category);
+  const displayName = computed(() => {
+    if (isProfessional) {
+      return professionalUser.value?.name || user.value?.username || '';
+    }
+    return clientProfile.value?.username || user.value?.username || '';
+  });
 
-    const initials = computed(() => displayName.value?.charAt(0).toUpperCase() || '?');
+  const initials = computed(() => displayName.value?.charAt(0).toUpperCase() || '?');
 
-    /** 🧩 Mutations */
-    const setUser = (userData: User) => {
-      user.value = userData;
-    };
+  // setters
+  const setUser = (userData: User) => {
+    user.value = userData;
+    localStorage.setItem('username', userData.username);
+    if (userData.category === 'professional') {
+      localStorage.setItem('is-professional', JSON.stringify(true));
+    }
+  };
 
-    const setUpdateProfile = (status: boolean) => {
-      isProfilUpdate.value = status;
-    };
+  const setUpdateProfile = (newStatus: boolean) => {
+    isProfilUpdate.value = newStatus;
+  };
 
-    /** Client */
-    const setClientProfile = (profile: clientProfile) => {
-      clientProfile.value = { ...profile };
-    };
-
-    const updateClientProfile = (updated: Partial<clientProfile>) => {
-      if (!clientProfile.value) clientProfile.value = {} as clientProfile;
-      Object.assign(clientProfile.value, updated);
-    };
-
-    /** Professional */
-    const setProfessionalUser = (profile: ProfessionalProfile) => {
-      professionalUser.value = {
-        ...profile,
-        email: user.value?.email || '',
-        uuid: profile.uuid?.replace(/[""]/g, '') || '',
-        category: 'professional',
-      };
-    };
-
-    const sendProfessionalProfileForCustomer = (profile: ProfessionalProfile) => {
-      professionalProfileForCustomer.value = profile;
-    };
-
-    const setUserAccepted = (accepted: boolean) => {
-      isStoringUserAccepted.value = accepted;
-    };
-
-    /** 🔁 Reset global state */
-    const resetUserStore = () => {
-      user.value = null;
-      clientProfile.value = null;
-      professionalUser.value = null;
-      professionalProfileForCustomer.value = null;
-      isProfilUpdate.value = false;
-      isStoringUserAccepted.value = false;
-    };
-
-    // Debug utile
-    watch(
-      [user, professionalUser, clientProfile],
-      ([u, p, c]) => {
-        console.log('💾 userStore updated:', {
-          user: !!u,
-          professionalUser: !!p,
-          clientProfile: !!c,
-        });
-      },
-      { deep: true }
+  // client setters
+  const setClientProfile = (newProfile: clientProfile) => {
+    clientProfile.value = newProfile;
+    isProfileCreated.value = true;
+    localStorage.setItem('client-uuid', newProfile.uuid);
+    localStorage.setItem('client-name', newProfile.username);
+    localStorage.setItem(
+      'client-profile',
+      JSON.stringify({ ...clientProfile.value, email: null, phoneNumber: null, address: null })
     );
+    isProfileCreated.value = true;
+  };
 
-    return {
-      // State
-      user,
-      clientProfile,
-      professionalUser,
-      professionalProfileForCustomer,
+  const updateClientProfile = (updatedProfile: clientProfile) => {
+    clientProfile.value = updatedProfile;
+  };
 
-      // Flags
-      isProfessional,
-      isProfilUpdate,
-      isStoringUserAccepted,
+  // professional setters
+  const setProfessionalUser = (newProfessionalUser: ProfessionalProfile) => {
+    const current = professionalUser.value || {};
 
-      // Computed
-      displayName,
-      initials,
-      isProfileCreated,
-      category,
-
-      // Setters
-      setUser,
-      setClientProfile,
-      updateClientProfile,
-      setProfessionalUser,
-      setUserAccepted,
-      setUpdateProfile,
-      sendProfessionalProfileForCustomer,
-
-      // Utils
-      resetUserStore,
+    professionalUser.value = {
+      ...current,
+      ...newProfessionalUser,
+      email: user.value?.email || '',
+      uuid: newProfessionalUser.uuid?.replace(/[""]/g, '') || '',
+      category: 'professional',
     };
-  },
-  {
-    persist: {
-      key: 'manie-user',
-      storage: localStorage, // ici on met directement l’objet Storage
-      pick: ['user', 'professionalUser', 'clientProfile', 'isProfilUpdate'],
-    },
-  }
-);
+
+    console.log(professionalUser.value, 'const current = professionalUser.value || {};');
+
+    localStorage.setItem('professional-uuid', professionalUser.value.uuid || '');
+    localStorage.setItem('pro-name', professionalUser.value.name || '');
+    isProfileCreated.value = true;
+  };
+
+  const setUserAccepted = (accepted: boolean) => {
+    isStoringUserAccepeted.value = accepted;
+  };
+
+  const setProfessionalServices = (services: Services[]) => {
+    professionnalServices.value = services;
+  };
+
+  const setKeywords = (newKeywords: Keywords[]) => {
+    keywords.value.push(...newKeywords);
+  };
+
+  const sendProfessionalProfileForCustomer = (profile: ProfessionalProfile) => {
+    professionalProfileForCustomer.value = profile;
+  };
+
+  const resetUserStore = () => {
+    user.value = undefined;
+    professionalUser.value = undefined;
+    clientProfile.value = {
+      address: '',
+      birthDate: '',
+      businessLeader: '',
+      businessName: '',
+      businessSiret: '',
+      city: '',
+      country: '',
+      createdAt: '',
+      email: '',
+      id: 0,
+      isBusiness: false,
+      phoneNumber: '',
+      updatedAt: '',
+      userUuid: '',
+      username: '',
+      uuid: '',
+      zipCode: '',
+    };
+    isProfileCreated.value = false;
+    isStoringUserAccepeted.value = false;
+    professionnalServices.value = [];
+    professionalProfileForCustomer.value = undefined;
+    keywords.value = [];
+  };
+
+  return {
+    user,
+    professionalUser,
+    clientProfile,
+    isProfileCreated,
+    isStoringUserAccepeted,
+    professionnalServices,
+    professionalProfileForCustomer,
+    isProfilUpdate,
+    category,
+    displayName,
+    initials,
+    keywords,
+    setUserAccepted,
+    setUser,
+    setProfessionalUser,
+    setProfessionalServices,
+    setClientProfile,
+    setKeywords,
+    setUpdateProfile,
+    updateClientProfile,
+    sendProfessionalProfileForCustomer,
+    resetUserStore,
+  };
+});

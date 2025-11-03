@@ -9,10 +9,10 @@ import { useProfessionalProfile } from '~/composables/professional-user/UseProfe
 import { useUserStore } from '~/stores/userStore';
 
 const userStore = useUserStore();
-const { user } = storeToRefs(userStore);
+const { user, isProfileCreated } = storeToRefs(userStore);
 const { getProfessionalProfileDetails } = useProfessionalProfile();
 
-const isProfileCreated = ref(localStorage.getItem('profil-created') === 'true');
+// const isProfileCreated = ref(localStorage.getItem('profil-created') === 'true');
 const isProfessional = ref(localStorage.getItem('is-professional') === 'true');
 
 onMounted(async () => {
