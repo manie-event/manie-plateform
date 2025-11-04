@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import Event from '@/components/dashboards/dashboard-client/Events.vue';
 import { useCustomizerStore } from '@/stores/customizer';
-
 // 🧠 Valeur réactive pour le titre
 const title = ref('Manie');
 
@@ -74,17 +74,8 @@ useHead({
           <v-container class="dashboard-position">
             <div class="">
               <div :class="customizer.boxed ? 'maxWidth' : ''">
+                <Event />
                 <NuxtPage />
-                <!-- <v-btn
-                  class="customizer-btn"
-                  size="large"
-                  icon
-                  variant="flat"
-                  color="primary"
-                  @click.stop="customizer.SET_CUSTOMIZER_DRAWER(!customizer.Customizer_drawer)"
-                >
-                  <SettingsIcon />
-                </v-btn> -->
               </div>
             </div>
           </v-container>

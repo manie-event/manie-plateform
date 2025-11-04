@@ -1,11 +1,11 @@
 // Outline Card
 .v-card--variant-outlined {
-  border-color: rgba(var(--v-theme-borderColor)) !important;
+  border-color: rgba(var(--v-theme-background)) !important;
 }
 
 .v-card--variant-elevated,
 .v-card--variant-flat {
-  color: rgb(var(--v-theme-textPrimary));
+  color: rgb(var(--v-theme-background));
 }
 
 .card-hover {

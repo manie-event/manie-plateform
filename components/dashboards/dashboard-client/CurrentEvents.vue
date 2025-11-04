@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="10" class="current-events">
+  <v-card elevation="0" class="current-events">
     <v-card-text class="position-relative current-events__container pb-3">
       <div class="d-flex justify-flex-start d-block align-center">
         <div>
@@ -86,7 +86,7 @@ const isEventDetailsOpen = ref(false);
 const isDialogOpen = ref(false);
 const hoveredEvent = ref<string | null>(null);
 const currentPage = ref(1);
-const itemsPerPage = 2;
+const itemsPerPage = 3;
 
 const selectedEvent = ref<eventModel | null>(null);
 const selectedEventUuid = ref('');
@@ -136,7 +136,7 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .current-events {
-  background: rgb(var(--v-theme-background));
+  background: rgb(var(--v-theme-containerBg));
 
   &__container {
     position: relative;

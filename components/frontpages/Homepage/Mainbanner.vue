@@ -100,7 +100,7 @@ onMounted(() => {
     right: 8vw;
     font-weight: 600;
     color: white;
-    height: 100px;
+    // height: 100px;
     width: 100px;
     border-radius: 50% !important;
   }

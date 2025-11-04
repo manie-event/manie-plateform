@@ -1,5 +1,5 @@
 <template>
-  <VCard elevation="10" class="proposition-presta">
+  <VCard elevation="2" class="proposition-presta">
     <v-card-text>
       <div class="d-flex align-center justify-space-between">
         <div>
@@ -205,7 +205,7 @@ const getStatusName = (status: string) => {
     case 'pending':
       return 'En attente';
     case 'reviewing':
-      return "Dans l'attente de votre réponse";
+      return 'En attente de votre réponse';
     case 'completed':
       return 'Accepté';
     case 'cancelled':
@@ -260,11 +260,11 @@ onMounted(() => {
 </script>
 <style lang="scss" scoped>
 .proposition-presta {
-  background: rgb(var(--v-theme-background));
+  background: rgb(var(--v-theme-containerBg));
   padding: 1rem 1.2rem !important;
 
   &__table {
-    background: rgb(var(--v-theme-background));
+    background: rgb(var(--v-theme-containerBg));
     font-size: 0.85rem;
     border-collapse: collapse;
     width: 100%;

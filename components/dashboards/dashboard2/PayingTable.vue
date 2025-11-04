@@ -1,5 +1,5 @@
 <template>
-  <VCard elevation="10" class="mb-16">
+  <VCard elevation="2" class="mb-16">
     <v-card-text>
       <div class="d-flex align-center justify-space-between">
         <div>

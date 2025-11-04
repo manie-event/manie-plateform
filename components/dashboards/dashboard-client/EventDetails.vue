@@ -137,11 +137,9 @@ const openPricingModal = ref(false);
 const getEventProgression = computed(() => {
   // Les propositions complété vs. le total de services engagés
 
-  //Récupérer l'event
-  // Regarder combien
-
-  console.log(props.event, 'EVENT');
-
+  // On récupére l'event
+  // On regarde combien de eventService il a ( = Total eventService)
+  // On récupère les propositions
   const uniqueEventServices = props.event.eventServices.reduce((acc: eventService[], current) => {
     const existing = acc.find((es: eventService) => es.serviceUuid === current.serviceUuid);
 
@@ -163,11 +161,14 @@ const getEventProgression = computed(() => {
 
   // const getCompletedProposition = async () => serviceEventProposition
 
-  const getProfesionalProposition = () => {
-    professionalResponseProposition.value.filter(
-      (response) => response.uuid === props.event.eventServices
-    );
-  };
+  // Je dois comparer toutes les propositions reçus au total avec les propositions qui ont le
+  // même uuid que l'event
+
+  // const getProfesionalProposition = () => {
+  //   professionalResponseProposition.value.filter(
+  //     (response) => response.uuid === props.event.eventServices
+  //   );
+  // };
   console.log(professionalResponseProposition.value, 'serviceEventProposition');
 
   const completedServices = props.event.eventServices.filter(

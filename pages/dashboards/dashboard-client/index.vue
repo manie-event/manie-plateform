@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import CurrentEvents from '@/components/dashboards/dashboard-client/CurrentEvents.vue';
-import Events from '@/components/dashboards/dashboard-client/Events.vue';
-import ProjectLeap from '@/components/dashboards/dashboard-client/ProjectLeap.vue';
 import PropositionsPresta from '@/components/dashboards/dashboard-client/PropositionsPresta.vue';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
 import { onMounted } from 'vue';
@@ -34,29 +32,21 @@ onMounted(async () => {
 </script>
 
 <template>
-  <v-card v-if="isProfileCreated">
-    <v-row class="dashboard-client">
-      <v-col cols="12">
-        <v-row>
-          <v-col cols="2">
-            <Events />
-          </v-col>
-          <v-col cols="6">
-            <div style="display: flex; flex-direction: column">
-              <CurrentEvents />
-            </div>
-          </v-col>
-          <v-col cols="4">
-            <ProjectLeap />
-          </v-col>
-        </v-row>
-      </v-col>
+  <v-row class="dashboard-client" v-if="isProfileCreated">
+    <v-col cols="12">
+      <v-row>
+        <v-col cols="9">
+          <div style="display: flex; flex-direction: column">
+            <CurrentEvents />
+          </div>
+        </v-col>
+      </v-row>
+    </v-col>
 
-      <v-col cols="12" sm="12" lg="12">
-        <PropositionsPresta />
-      </v-col>
-    </v-row>
-  </v-card>
+    <v-col cols="12" sm="12" lg="12">
+      <PropositionsPresta />
+    </v-col>
+  </v-row>
 
   <v-row v-else>
     <v-col cols="12">
@@ -82,7 +72,6 @@ onMounted(async () => {
 .dashboard-client {
   max-width: 1280px;
   margin: 2rem auto;
-  background-color: transparent;
   padding: 10px 15px;
 }
 </style>
