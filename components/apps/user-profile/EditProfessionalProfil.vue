@@ -1,7 +1,14 @@
 <template>
-  <BaseModal v-model="openModal" fullscreen transition="dialog-bottom-transition">
-    <template #content>
-      <v-form class="px-4">
+  <v-dialog v-model="openModal" max-width="600" transition="dialog-bottom-transition">
+    <v-card max-width="600" class="rounded edit-professional">
+      <Icon
+        icon="ri:close-fill"
+        size="22"
+        class="text-grey100 cursor-pointer"
+        :style="{ position: 'absolute', right: '20px', top: '20px' }"
+        @click="openModal = false"
+      />
+      <v-form class="edit-professional__formulaire">
         <div v-show="currentPage === 1">
           <v-divider class="mt-6"
             ><p class="mt-6"></p>
@@ -83,11 +90,12 @@
                 class="flex-1"
               />
 
-              <v-btn
+              <Icon
+                width="24"
+                height="24"
+                icon="solar:trash-bin-trash-line-duotone"
                 v-if="profile.certification.length > 1"
-                icon="mdi-delete"
                 color="error"
-                variant="text"
                 size="small"
                 @click="removeCertification(index)"
               />
@@ -198,7 +206,6 @@
                 @click="removeFaq(index)"
                 :disabled="faqArray.length === 0"
                 color="error"
-                prepend-icon="mdi-delete"
                 size="small"
                 class="my-2"
               >
@@ -221,8 +228,8 @@
           </div>
         </div>
       </v-form>
-    </template>
-  </BaseModal>
+    </v-card>
+  </v-dialog>
   <Teleport to="body">
     <ModalRedirection :redirection="'dashboard2'" v-model="isProfilUpdate" />
     <CommonSuccessToaster></CommonSuccessToaster>
@@ -230,11 +237,11 @@
   </Teleport>
 </template>
 <script setup lang="ts">
-import BaseModal from '@/components/common/BaseModal.vue';
 import { useUserStore } from '@/stores/userStore';
+import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { useForm } from 'vee-validate';
-import { ref, Teleport } from 'vue';
+import { ref } from 'vue';
 import * as yup from 'yup';
 import errorToaster from '~/components/common/errorToaster.vue';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
@@ -477,11 +484,8 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .v-form {
-  padding: 2rem 2.5rem;
+  padding: 2rem 3.5rem;
   border-radius: 16px;
-  max-width: 850px;
-  margin: 0 auto;
-  font-family: 'Inter', sans-serif;
 
   @media (max-width: 960px) {
     padding: 1.5rem;
@@ -512,7 +516,6 @@ onMounted(() => {
 .v-text-field,
 .v-select,
 .v-number-input {
-  margin-bottom: 1.25rem;
   background: rgb(var(--v-theme-surface));
   border-radius: 10px;
   box-shadow: 0 0 0 1px rgba(93, 121, 164, 0.08);

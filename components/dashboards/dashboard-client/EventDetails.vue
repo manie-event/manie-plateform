@@ -116,24 +116,36 @@ import CustomerForm from '~/components/questionnaires/CustomerForm.vue';
 import type { eventModel, eventService } from '~/models/events/eventModel';
 import type { EventModelForProposition } from '~/models/events/eventModelForProgression';
 import type { QuestionnaireClient } from '~/models/questionnaire/QuestionnaireClientModel';
+import { usePropositionStore } from '../../../stores/propositionStore';
 import AddEventService from './AddEventService.vue';
 import CheckList from './CheckList.vue';
 import DateCounter from './DateCounter.vue';
 
-const isEventModificationOpen = ref(false);
-const isAddingServiceOpen = ref(false);
 const props = defineProps<{
   event: eventModel;
   answers: QuestionnaireClient;
 }>();
+
+const { professionalResponseProposition } = storeToRefs(usePropositionStore());
+const isEventModificationOpen = ref(false);
+const isAddingServiceOpen = ref(false);
 
 const openEventDetails = defineModel<boolean>('modelValue', { default: false });
 
 const openPricingModal = ref(false);
 
 const getEventProgression = computed(() => {
+  // Les propositions complété vs. le total de services engagés
+
+  //Récupérer l'event
+  // Regarder combien
+
+  console.log(props.event, 'EVENT');
+
   const uniqueEventServices = props.event.eventServices.reduce((acc: eventService[], current) => {
     const existing = acc.find((es: eventService) => es.serviceUuid === current.serviceUuid);
+
+    console.log(current, 'current');
 
     if (!existing) {
       acc.push(current);
@@ -142,10 +154,21 @@ const getEventProgression = computed(() => {
       acc[index] = current;
     }
 
+    console.log(acc, 'ACC');
+
     return acc;
   }, [] as eventService[]);
 
   const totalServices = uniqueEventServices.length;
+
+  // const getCompletedProposition = async () => serviceEventProposition
+
+  const getProfesionalProposition = () => {
+    professionalResponseProposition.value.filter(
+      (response) => response.uuid === props.event.eventServices
+    );
+  };
+  console.log(professionalResponseProposition.value, 'serviceEventProposition');
 
   const completedServices = props.event.eventServices.filter(
     (es) => es.status === 'completed'
