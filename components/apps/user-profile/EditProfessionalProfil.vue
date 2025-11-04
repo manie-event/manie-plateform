@@ -401,8 +401,7 @@ const createProfile = async (values: ProfessionalProfile) => {
       addError({ message: 'La création du profil a échoué.' });
     }
   } catch (error: any) {
-    console.error('❌ Erreur complète dans createProfile :', error);
-    addError({ message: error });
+    addError({ message: error.response.data.message });
   }
 };
 
@@ -431,8 +430,8 @@ const modifyProfile = async (newValues: ProfessionalProfile) => {
         addError({ message: 'La mise à jour du profil a échoué.' });
       }
     }
-  } catch (error) {
-    addError({ message: error as any });
+  } catch (error: any) {
+    addError({ message: error.response.data.message as any });
   }
 };
 
