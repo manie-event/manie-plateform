@@ -108,32 +108,42 @@
 </template>
 <script setup lang="ts">
 import PricingChoice from '@/components/dashboards/dashboard-client/PricingChoice.vue';
-import Product from '@/components/dashboards/dashboard-client/ProductsChart.vue';
 import Notes from '@/pages/apps/notes/index.vue';
 import { Teleport } from 'vue';
+import Product from '~/components/dashboards/dashboard-client/EventBudget.vue';
 import LatestDeals from '~/components/dashboards/dashboard-client/LatestDeals.vue';
 import CustomerForm from '~/components/questionnaires/CustomerForm.vue';
 import type { eventModel, eventService } from '~/models/events/eventModel';
 import type { EventModelForProposition } from '~/models/events/eventModelForProgression';
 import type { QuestionnaireClient } from '~/models/questionnaire/QuestionnaireClientModel';
+import { usePropositionStore } from '../../../stores/propositionStore';
 import AddEventService from './AddEventService.vue';
 import CheckList from './CheckList.vue';
 import DateCounter from './DateCounter.vue';
 
-const isEventModificationOpen = ref(false);
-const isAddingServiceOpen = ref(false);
 const props = defineProps<{
   event: eventModel;
   answers: QuestionnaireClient;
 }>();
+
+const { professionalResponseProposition } = storeToRefs(usePropositionStore());
+const isEventModificationOpen = ref(false);
+const isAddingServiceOpen = ref(false);
 
 const openEventDetails = defineModel<boolean>('modelValue', { default: false });
 
 const openPricingModal = ref(false);
 
 const getEventProgression = computed(() => {
+  // Les propositions complété vs. le total de services engagés
+
+  // On récupére l'event
+  // On regarde combien de eventService il a ( = Total eventService)
+  // On récupère les propositions
   const uniqueEventServices = props.event.eventServices.reduce((acc: eventService[], current) => {
     const existing = acc.find((es: eventService) => es.serviceUuid === current.serviceUuid);
+
+    console.log(current, 'current');
 
     if (!existing) {
       acc.push(current);
@@ -142,10 +152,24 @@ const getEventProgression = computed(() => {
       acc[index] = current;
     }
 
+    console.log(acc, 'ACC');
+
     return acc;
   }, [] as eventService[]);
 
   const totalServices = uniqueEventServices.length;
+
+  // const getCompletedProposition = async () => serviceEventProposition
+
+  // Je dois comparer toutes les propositions reçus au total avec les propositions qui ont le
+  // même uuid que l'event
+
+  // const getProfesionalProposition = () => {
+  //   professionalResponseProposition.value.filter(
+  //     (response) => response.uuid === props.event.eventServices
+  //   );
+  // };
+  console.log(professionalResponseProposition.value, 'serviceEventProposition');
 
   const completedServices = props.event.eventServices.filter(
     (es) => es.status === 'completed'

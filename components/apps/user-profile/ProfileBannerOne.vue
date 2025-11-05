@@ -19,8 +19,8 @@
       <div class="profile-header__content">
         <div class="profile-header__identity">
           <v-avatar size="100" class="profile-header__avatar">
-            <img v-if="professionalUser?.avatar" :src="professionalUser.avatar" alt="Avatar" />
-            <span v-else>{{ initials }}</span>
+            <!-- <img v-if="professionalUser?.avatar" :src="professionalUser.avatar" alt="Avatar" /> -->
+            <span>{{ initials }}</span>
           </v-avatar>
 
           <div class="profile-header__info">

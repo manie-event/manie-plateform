@@ -1,15 +1,14 @@
 <template>
-  <v-card class="position-relative">
-    <div class="d-flex flex-row-reverse justify-space-between pa-4">
+  <div class="position-relative check-list">
+    <div class="d-flex flex-row-reverse justify-space-between">
       <v-btn color="primary" class="checklist-btn" variant="flat" @click="handleAddTask()">
         <icon icon="mdi-plus" />
       </v-btn>
-      <div class="pl-2">
-        <v-card-subtitle class="text-subtitle-1 pt-5"> Votre liste des tâches </v-card-subtitle>
-
-        <v-card-subtitle class="text-body-2 mb-4">
+      <div>
+        <h4 class="text-subtitle-1 font-weight-semibold">Votre liste des tâches</h4>
+        <p class="text-body-2 opacity-50">
           {{ completedTasks }}/{{ currentTasks.length }} tâche(s) complétée(s)
-        </v-card-subtitle>
+        </p>
       </div>
     </div>
 
@@ -17,7 +16,6 @@
       <v-list-item
         v-for="(task, index) in currentTasks"
         :key="task.id"
-        class="pa-2"
         :class="task.done ? 'task-done' : 'task-pending'"
       >
         <v-row class="align-center" no-gutters>
@@ -58,7 +56,7 @@
         </v-row>
       </v-list-item>
     </transition-group>
-  </v-card>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -110,7 +108,15 @@ const handleUpdateTask = (taskId: number, updates: Partial<Task>) => {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.check-list {
+  height: 230px;
+  border-radius: 15px;
+  box-shadow: 5px 5px 5px 5px rgb(var(--v-theme-darkBg));
+  padding: 1rem;
+  background: rgb(var(--v-theme-containerBg));
+}
+
 .task-done {
   text-decoration: line-through;
   opacity: 0.6;
@@ -119,8 +125,8 @@ const handleUpdateTask = (taskId: number, updates: Partial<Task>) => {
 
 .checklist-btn {
   position: relative;
-  top: 20px;
-  right: 20px;
+  top: 0px;
+  right: 0px;
   z-index: 1;
   display: flex;
   align-items: center;

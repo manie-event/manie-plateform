@@ -3,7 +3,7 @@ export const useProfessionalService = () => {
   const { setServicesFiltered } = eventsStore();
   const { setProfessionalServices } = usePropositionStore();
   const { professionalUser } = storeToRefs(useUserStore());
-  const api = useApi(); // ✅ instance Axios avec interceptors
+  const api = useApi();
 
   /**
    * Récupère les services sélectionnés du professionnel
@@ -14,6 +14,7 @@ export const useProfessionalService = () => {
       const { data } = await api.get(
         '/professional-service/show-selected-services-for-professional'
       );
+
       setServicesFiltered(data);
       return data ?? [];
     } catch (error: any) {

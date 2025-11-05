@@ -1,27 +1,17 @@
 <script setup lang="ts">
 import { useCustomizerStore } from '@/stores/customizer';
-import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
-import { UserCategory } from '~/models/enums/userCategoryEnums';
-
+// 🧠 Valeur réactive pour le titre
 const title = ref('Manie');
 
+// 🧰 Store Pinia (aucun souci, il est toujours dispo ici)
 const customizer = useCustomizerStore();
-const { getProfessionalProfileDetails } = useProfessionalProfile();
-const { user } = storeToRefs(useUserStore());
 
+// 🏷️ Gestion du head SEO
 useHead({
-  meta: [{ content: title }],
-  titleTemplate: (titleChunk) => {
-    return titleChunk
-      ? `${titleChunk} - Nuxt3 Typescript based Admin Dashboard Template`
-      : 'Spikeadmin - Nuxt3 Typescript based Admin Dashboard Template';
-  },
-});
-
-onMounted(async () => {
-  if (user.value?.category === UserCategory.PRESTA) {
-    await getProfessionalProfileDetails();
-  }
+  title: title.value,
+  meta: [{ name: 'description', content: 'Manie - Facilite vos événements' }],
+  titleTemplate: (titleChunk) =>
+    titleChunk ? `${titleChunk} - Manie Dashboard` : 'Manie - Facilite vos événements',
 });
 </script>
 
@@ -84,16 +74,6 @@ onMounted(async () => {
             <div class="">
               <div :class="customizer.boxed ? 'maxWidth' : ''">
                 <NuxtPage />
-                <!-- <v-btn
-                  class="customizer-btn"
-                  size="large"
-                  icon
-                  variant="flat"
-                  color="primary"
-                  @click.stop="customizer.SET_CUSTOMIZER_DRAWER(!customizer.Customizer_drawer)"
-                >
-                  <SettingsIcon />
-                </v-btn> -->
               </div>
             </div>
           </v-container>
@@ -105,7 +85,6 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .dashboard-position {
   display: flex;
-  height: calc(100vh - 150px);
   width: 100vw;
   justify-content: center;
   top: -40px;

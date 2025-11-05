@@ -1,6 +1,6 @@
 <template>
-  <VCard elevation="10" class="proposition-presta">
-    <v-card-text>
+  <div class="proposition-presta">
+    <div>
       <div class="d-flex align-center justify-space-between">
         <div>
           <h5 class="v-card-title">Vos propositions en cours</h5>
@@ -26,8 +26,8 @@
             </thead>
             <tbody>
               <tr
-                v-for="item in filteredPropositionByStatus"
-                :key="item.id"
+                v-for="(item, index) in filteredPropositionByStatus"
+                :key="index"
                 class="month-item"
                 style="border: 2px solid black"
               >
@@ -147,8 +147,8 @@
           </BaseEmptyState>
         </v-col>
       </div>
-    </v-card-text>
-  </VCard>
+    </div>
+  </div>
   <Teleport to="body">
     <PropositionDetails
       v-if="selectedPropositionInformation"
@@ -179,6 +179,10 @@ import { useCustomizerStore } from '../../../stores/customizer';
 import PropositionDetails from '../dashboard2/PropositionDetails.vue';
 import ProfessionalProfil from './ProfessionalProfil.vue';
 
+const props = defineProps<{
+  currentPropositions: ClientServiceProposition[];
+}>();
+
 const { getServicePropositionForClient, propositionAcceptedByClient, propositionDeclinedByClient } =
   useEventServiceProposition();
 const { getProfessionalProfileForCustomer } = useProfessionalProfile();
@@ -205,7 +209,7 @@ const getStatusName = (status: string) => {
     case 'pending':
       return 'En attente';
     case 'reviewing':
-      return "Dans l'attente de votre réponse";
+      return 'En attente de votre réponse';
     case 'completed':
       return 'Accepté';
     case 'cancelled':
@@ -249,7 +253,7 @@ const confirmedProposition = async (eventServiceUuid: string) => {
 };
 
 const filteredPropositionByStatus = computed<ClientServiceProposition[]>(() => {
-  return professionalResponseProposition.value.filter(
+  return props.currentPropositions.filter(
     (professionalProposition) => professionalProposition.propositionStatus !== 'pending'
   );
 });
@@ -260,11 +264,13 @@ onMounted(() => {
 </script>
 <style lang="scss" scoped>
 .proposition-presta {
-  background: rgb(var(--v-theme-background));
-  padding: 1rem 1.2rem !important;
+  border-radius: 15px;
+  box-shadow: 5px 5px 5px 5px rgb(var(--v-theme-darkBg));
+  padding: 1rem;
+  background: rgb(var(--v-theme-containerBg));
 
   &__table {
-    background: rgb(var(--v-theme-background));
+    background: rgb(var(--v-theme-containerBg));
     font-size: 0.85rem;
     border-collapse: collapse;
     width: 100%;

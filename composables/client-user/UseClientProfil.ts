@@ -9,9 +9,10 @@ export const useClientProfil = () => {
   const token = useCookie('token');
   const userStore = useUserStore();
   const { setClientProfile, updateClientProfile } = userStore;
-  const { clientProfile, isProfileCreated } = storeToRefs(userStore);
+  const { clientProfile } = storeToRefs(userStore);
   const config = useRuntimeConfig();
   const api = useApi();
+  const isProfileCreated = ref(localStorage.getItem('profil-created') === 'true');
 
   const getClientProfil = async () => {
     const response = await api?.get(`${config.public.apiUrl}/organisator`);
@@ -33,7 +34,7 @@ export const useClientProfil = () => {
     if (response?.data) {
       const profileUpdated = await getClientProfil();
 
-      updateClientProfile(profileUpdated?.data);
+      updateClientProfile(profileUpdated);
       isProfileCreated.value = true;
       addSuccess('Profil mis à jour avec succès.');
       return response.data;

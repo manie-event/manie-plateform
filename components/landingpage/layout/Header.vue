@@ -6,7 +6,9 @@ import Navigations from '@/components/landingpage/layout/Navigation.vue';
 /*import tabler icons*/
 
 const appsdrawer = ref(false);
-const { clientProfile, professionalUser, isProfileCreated } = storeToRefs(useUserStore());
+const { clientProfile, professionalUser } = storeToRefs(useUserStore());
+
+const isProfileCreated = ref(localStorage.getItem('profil-created') === 'true');
 </script>
 <template>
   <div>

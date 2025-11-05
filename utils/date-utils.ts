@@ -17,6 +17,8 @@ export const formatDate = (date: string[]) => {
 
 export const dateCounter = (date: string) => {
   const today = new Date();
+  console.log(date, 'DATE');
+
   const targetDate = new Date(date);
   const timeDiff = targetDate.getTime() - today.getTime();
   const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));

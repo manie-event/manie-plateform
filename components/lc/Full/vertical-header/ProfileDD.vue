@@ -14,22 +14,15 @@ const { getProfessionalProfileDetails } = useProfessionalProfile();
 const { getClientProfil } = useClientProfil();
 
 const userStore = useUserStore();
-const {
-  user,
-  professionalUser,
-  clientProfile,
-  category,
-  displayName,
-  initials,
-  isProfessional,
-  isProfileCreated,
-} = storeToRefs(userStore);
+const { isProfessional, category, displayName, initials } = storeToRefs(userStore);
 
 const jetonBalance = ref(0);
 
 /** 🎯 Charger les infos nécessaires selon le type de profil */
 onMounted(async () => {
   try {
+    console.log(isProfessional.value, 'IS PROFESSIONAL');
+
     if (isProfessional.value) {
       await getProfessionalProfileDetails();
       jetonBalance.value = await getJetonQuantity();
@@ -64,7 +57,7 @@ onMounted(async () => {
         </div>
 
         <div class="d-flex align-center mt-5 pb-6">
-          <div class="avatar" :class="{ 'profile-not-defined': !isProfileCreated }">
+          <div class="avatar">
             {{ initials }}
           </div>
           <div class="ml-5">
@@ -147,20 +140,5 @@ onMounted(async () => {
   justify-content: center;
   border-radius: 50%;
   border: 1px solid rgb(213, 213, 213);
-}
-.profile-not-defined {
-  border: 2px solid rgba(245, 0, 0, 100);
-  animation: clignotementAvatar 1s infinite;
-}
-@keyframes clignotementAvatar {
-  0% {
-    border-color: rgba(245, 0, 0, 100);
-  }
-  50% {
-    border-color: rgba(245, 0, 0, 0);
-  }
-  100% {
-    border-color: rgba(245, 0, 0, 100);
-  }
 }
 </style>

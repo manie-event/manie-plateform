@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 /*Call Components*/
-import Products from '@/components/dashboards/dashboard-client/ProductsChart.vue';
+import Products from '~/components/dashboards/dashboard-client/EventBudget.vue';
 // common components
 import BaseBreadcrumb from '@/components/shared/BaseBreadcrumb.vue';
 // theme breadcrumb

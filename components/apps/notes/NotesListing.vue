@@ -2,8 +2,8 @@
   <!-- ---------------------------------------------------- -->
   <!-- Table Basic -->
   <!-- ---------------------------------------------------- -->
-  <div class="pa-6">
-    <div class="d-flex mb-6 align-center justify-lg-space-between">
+  <div>
+    <div class="d-flex mb-6 align-center justify-space-between">
       <h4 class="text-subtitle-1 mb-4 font-weight-semibold">Carnet de brouillon</h4>
       <addNote :event />
     </div>

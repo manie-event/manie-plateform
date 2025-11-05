@@ -12,18 +12,20 @@ defineProps<{
   <!-- ---------------------------------------------------- -->
   <!-- Table Basic -->
   <!-- ---------------------------------------------------- -->
-  <v-card elevation="10">
+  <div class="notes">
     <NotesListing :event />
     <!-- <template v-slot:rightpart><NotesContent /> </template> -->
 
     <!-- <template v-slot:mobileLeftContent><NotesListing /> </template> -->
-  </v-card>
+  </div>
 </template>
 
 <style scoped lang="scss">
-@media (max-width: 1279px) {
-  .v-card {
-    position: unset;
-  }
+.notes {
+  height: 230px;
+  border-radius: 15px;
+  box-shadow: 5px 5px 5px 5px rgb(var(--v-theme-darkBg));
+  padding: 1rem;
+  background: rgb(var(--v-theme-containerBg));
 }
 </style>

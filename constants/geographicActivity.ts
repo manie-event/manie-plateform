@@ -1,5 +1,5 @@
 export const GEOGRAPHIC_ACTIVITY = [
-  { label: 'Auvergne Rhône-Alpes', value: 'Auvergne-Rhône-Alpes' },
+  { label: 'Auvergne-Rhône-Alpes', value: 'Auvergne-Rhône-Alpes' },
   { label: 'Ain', value: 'Ain' },
   { label: 'Allier', value: 'Allier' },
   { label: 'Ardèche', value: 'Ardèche' },

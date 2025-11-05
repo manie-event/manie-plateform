@@ -17,8 +17,11 @@ export interface ClientServiceProposition {
   people: string;
   name: string;
   date: string;
-  eventServices: [
-    {
+  eventServices: eventService[];
+  serviceEngage: string;
+}
+
+export interface eventService   {
       id: number;
       uuid: string;
       eventUuid: string;
@@ -29,6 +32,3 @@ export interface ClientServiceProposition {
       updatedAt: string;
       keywordsUuid: [string];
     },
-  ];
-  serviceEngage: string;
-}

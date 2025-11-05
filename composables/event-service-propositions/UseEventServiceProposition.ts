@@ -81,6 +81,7 @@ export const useEventServiceProposition = () => {
     }
   };
 
+  //Pour récupérer les propositions dans le dashboard prestataire
   const getServicePropositionForProfessional = async () => {
     try {
       const professionalServices = await getListProfessionalServiceByProfessional();
@@ -128,6 +129,7 @@ export const useEventServiceProposition = () => {
             })
           );
 
+          setServiceEventPropositionForPresta(propositionsWithEvents);
           return propositionsWithEvents.filter(Boolean);
         })
       );

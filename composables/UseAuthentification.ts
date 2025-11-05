@@ -4,6 +4,8 @@ import type { AuthentificationModel } from '~/models/authentification/authentifi
 import type { RegisterModel } from '~/models/authentification/registerModel';
 import type { registerNewPasswordModel } from '~/models/authentification/registerNewPasswordModel';
 import type { errorModel } from '~/models/errorModel';
+import { useClientProfil } from './client-user/UseClientProfil';
+import { useProfessionalProfile } from './professional-user/UseProfessionalProfile';
 
 export const useAuthentification = () => {
   const config = useRuntimeConfig();
@@ -11,7 +13,8 @@ export const useAuthentification = () => {
   const { addError, addSuccess } = useToaster();
   const userStore = useUserStore();
   const { setUser } = userStore;
-  const { isProfessional } = storeToRefs(userStore);
+  const { getProfessionalProfile } = useProfessionalProfile();
+  const { getClientProfil } = useClientProfil();
 
   const { token } = useAuthCookies(); // access token (15 min)
   const { refreshToken } = useRefreshToken(); // refresh token (7 jours)
@@ -47,6 +50,7 @@ export const useAuthentification = () => {
       if (!tokenValue || !newRefresh || !user) {
         throw new Error('Réponse de login invalide (token/refresh/user manquant).');
       }
+      userStore.resetUserStore();
 
       // Persist tokens avant navigation
       refreshToken.value = newRefresh;
@@ -57,16 +61,13 @@ export const useAuthentification = () => {
 
       addSuccess('Connexion réussie.');
 
-      // Debug gentil si besoin
-      if (process.dev) {
-        console.info('[auth] isProfessional:', isProfessional);
-      }
-
       // Redirection par rôle
       if (user.category === 'consumer') {
         await router.push({ path: '/dashboards/dashboard-client' });
+        await getClientProfil();
       } else {
         await router.push({ path: '/dashboards/dashboard2' });
+        await getProfessionalProfile();
       }
     } catch (error: unknown) {
       console.error('Login error:', error);
@@ -136,6 +137,16 @@ export const useAuthentification = () => {
       token.value = null;
       refreshToken.value = null;
 
+      const keysToRemove = [
+        'username',
+        'is-professional',
+        'pp-created',
+        'pro-name',
+        'client-name',
+        'client-uuid',
+        'professional-uuid',
+      ];
+      keysToRemove.forEach((key) => localStorage.removeItem(key));
       userStore.resetUserStore();
 
       await router.push('/');
