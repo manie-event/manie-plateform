@@ -5,6 +5,7 @@ import type { RegisterModel } from '~/models/authentification/registerModel';
 import type { registerNewPasswordModel } from '~/models/authentification/registerNewPasswordModel';
 import type { errorModel } from '~/models/errorModel';
 import { useEventService } from '~/services/UseEventService';
+import { useProfessionalService } from '~/services/UseProfessionalService';
 import { useClientProfil } from './client-user/UseClientProfil';
 import { useEventServiceProposition } from './event-service-propositions/UseEventServiceProposition';
 import { useProfessionalProfile } from './professional-user/UseProfessionalProfile';
@@ -19,6 +20,8 @@ export const useAuthentification = () => {
   const { getClientProfil } = useClientProfil();
   const { getServicePropositionForProfessional } = useEventServiceProposition();
   const { getEventsPerOrganisator } = useEventService();
+  const { getAllSectors, getKeywords } = useKeywordsStore();
+  const { getProfessionalService } = useProfessionalService();
 
   const { token } = useAuthCookies(); // access token (15 min)
   const { refreshToken } = useRefreshToken(); // refresh token (7 jours)
@@ -66,8 +69,14 @@ export const useAuthentification = () => {
 
       // Redirection par rôle
       if (user.category === 'consumer') {
-        await getClientProfil();
-        await getEventsPerOrganisator();
+        await Promise.all([
+          getAllSectors(),
+          getKeywords(),
+          getProfessionalService(),
+          await getClientProfil(),
+          await getEventsPerOrganisator(),
+        ]);
+
         await router.push({ path: '/dashboards/dashboard-client' });
       } else {
         await Promise.all([

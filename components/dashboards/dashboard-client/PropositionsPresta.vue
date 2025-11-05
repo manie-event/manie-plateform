@@ -3,7 +3,7 @@
     <div>
       <div class="d-flex align-center justify-space-between">
         <div>
-          <h5 class="v-card-title">Vos propositions en cours</h5>
+          <h4 class="text-subtitle-1 font-weight-semibold">Vos propositions en cours</h4>
         </div>
       </div>
       <div class="month-table" v-if="filteredPropositionByStatus.length > 0">
@@ -12,16 +12,27 @@
             <thead>
               <tr>
                 <!-- A voir pour changer avec nom de la personne -->
-                <th class="text-subtitle-1 text-grey200 text-no-wrap pa-0">Type de l'évènement</th>
-                <th class="text-subtitle-1 text-grey200 text-no-wrap">Service engagé</th>
+                <th class="text-subtitle-1 text-grey200 text-no-wrap pa-0">Nom</th>
+                <th class="text-subtitle-1 text-grey200 text-no-wrap" v-if="!isMobile">Service</th>
                 <th class="text-subtitle-1 text-grey200 text-no-wrap pa-0 text-center">
                   Proposition commerciale
                 </th>
-                <th class="text-subtitle-1 text-grey200 text-no-wrap pa-0 text-center">
-                  Prix de la prestation
+                <th
+                  class="text-subtitle-1 text-grey200 text-no-wrap pa-0 text-center"
+                  v-if="!isMobile"
+                >
+                  Prix
                 </th>
-                <th class="text-subtitle-1 text-grey200 text-no-wrap pa-0 text-center">Status</th>
-                <th class="text-subtitle-1 text-grey200 text-no-wrap pa-0 text-center"></th>
+                <th
+                  class="text-subtitle-1 text-grey200 text-no-wrap pa-0 text-center"
+                  v-if="!isMobile"
+                >
+                  Status
+                </th>
+                <th
+                  class="text-subtitle-1 text-grey200 text-no-wrap pa-0 text-center"
+                  v-if="!isMobile"
+                ></th>
               </tr>
             </thead>
             <tbody>
@@ -42,17 +53,20 @@
                     </div>
                   </div>
                 </td>
-                <td>
+
+                <td v-if="!isMobile">
                   <v-chip
                     variant="outlined"
                     color="primary"
                     size="x-small"
-                    :class="'text-subtitle-1 font-weight-medium bg-light'"
+                    class="text-subtitle-1 font-weight-medium bg-light"
                   >
-                    <h4>{{ item.serviceEngage }}</h4></v-chip
-                  >
+                    <h4>{{ item.serviceEngage }}</h4>
+                  </v-chip>
                 </td>
-                <td class="pa-0 text-center">
+
+                <!-- 💡 Proposition commerciale -->
+                <td class="pa-0 text-center" v-if="!isMobile">
                   <v-tooltip
                     :text="getTooltipText(item.professionalMessage)"
                     interactive
@@ -62,62 +76,79 @@
                     open-delay="100"
                     close-delay="50"
                   >
-                    <template v-slot:activator="{ props: activatorProps }">
+                    <template #activator="{ props: activatorProps }">
                       <h4 class="text-subtitle-1 text-no-wrap text-grey200" v-bind="activatorProps">
-                        <span style="cursor: pointer">{{
-                          getProfessionalMessage(item.professionalMessage)
-                        }}</span>
+                        <span style="cursor: pointer">
+                          {{ getProfessionalMessage(item.professionalMessage) }}
+                        </span>
                       </h4>
                     </template>
                   </v-tooltip>
                 </td>
-                <td class="pa-0 text-center">
+
+                <!-- 💡 Bouton "Voir plus de détails" en mobile -->
+                <td v-else class="text-center">
+                  <v-btn
+                    color="primary"
+                    variant="outlined"
+                    size="small"
+                    @click="openPropositionDetail(item)"
+                  >
+                    Voir plus de détails
+                  </v-btn>
+                </td>
+
+                <td class="pa-0 text-center" v-if="!isMobile">
                   <h5 class="text-subtitle-1 text-no-wrap text-grey200">
                     {{ getPriceFromMessage(item.professionalMessage) }}
                   </h5>
                 </td>
-                <td class="pa-0 text-center">
+
+                <td class="pa-0 text-center" v-if="!isMobile">
                   <v-chip
-                    :class="'text-subtitle-1 font-weight-medium bg-light'"
+                    class="text-subtitle-1 font-weight-medium bg-light"
                     variant="outlined"
                     size="x-small"
                     :color="getStatusColor(item.propositionStatus)"
-                    >{{ getStatusName(item.propositionStatus) }}</v-chip
                   >
+                    {{ getStatusName(item.propositionStatus) }}
+                  </v-chip>
                 </td>
+
                 <td
-                  v-if="item.propositionStatus === 'completed'"
+                  v-if="item.propositionStatus === 'completed' && !isMobile"
                   @click="confirmedProposition(item.eventServiceUuid)"
                 >
                   <v-btn
                     color="rgb(var(--v-theme-darkbg))"
                     class="pa-3"
                     style="color: rgb(var(--v-theme-background))"
-                    >Profil du prestataire</v-btn
                   >
+                    Profil du prestataire
+                  </v-btn>
                 </td>
-                <td v-else>
+
+                <td v-else-if="item.propositionStatus !== 'completed' && !isMobile">
                   <div class="d-flex align-center gap-4">
                     <v-btn
                       variant="outlined"
                       color="success"
-                      @click="
-                        {
-                          propositionAcceptedByClient(item.propositionUuid);
-                        }
-                      "
-                      ><Icon
+                      @click="propositionAcceptedByClient(item.propositionUuid)"
+                    >
+                      <Icon
                         icon="material-symbols-light:check-rounded"
                         height="24"
                         width="24"
                         class="text-success"
-                    /></v-btn>
+                      />
+                    </v-btn>
                     <v-btn
                       variant="outlined"
                       color="error"
                       @click="propositionDeclinedByClient(item.propositionUuid)"
-                      ><Icon icon="iconoir:cancel" height="24" width="24" class="text-error"
-                    /></v-btn>
+                    >
+                      <Icon icon="iconoir:cancel" height="24" width="24" class="text-error" />
+                    </v-btn>
                   </div>
                 </td>
               </tr>
@@ -182,11 +213,12 @@ import ProfessionalProfil from './ProfessionalProfil.vue';
 const props = defineProps<{
   currentPropositions: ClientServiceProposition[];
 }>();
+const windowWidth = ref(window.innerWidth);
+const isMobile = ref(window.innerWidth < 1280);
 
 const { getServicePropositionForClient, propositionAcceptedByClient, propositionDeclinedByClient } =
   useEventServiceProposition();
 const { getProfessionalProfileForCustomer } = useProfessionalProfile();
-const { professionalResponseProposition } = storeToRefs(usePropositionStore());
 const { professionalProfileForCustomer } = storeToRefs(useUserStore());
 
 const isAcceptedByClient = ref(false);
@@ -221,10 +253,6 @@ const customizer = useCustomizerStore();
 const selectedPropositionInformation = ref<EventModelForProposition>();
 const openMarketModal = ref(false);
 
-const svgColor = computed(() => {
-  return customizer.actTheme === 'DARK_BLUE_THEME' ? '#FFFFFF' : '#000000';
-});
-
 const getProfessionalMessage = (message?: string) => {
   if (!message) return 'Aucune proposition reçue';
   const cleanMessage = message.split('fourchette basse')[0].trim();
@@ -258,8 +286,18 @@ const filteredPropositionByStatus = computed<ClientServiceProposition[]>(() => {
   );
 });
 
+const handleResize = () => {
+  isMobile.value = window.innerWidth < 1280;
+};
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize);
+});
+
 onMounted(() => {
   getServicePropositionForClient();
+  handleResize();
+  window.addEventListener('resize', handleResize);
 });
 </script>
 <style lang="scss" scoped>

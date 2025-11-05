@@ -21,8 +21,8 @@ await getClientProfil();
         <Event />
       </v-col>
     </v-row>
-    <v-row>
-      <v-col cols="12">
+    <v-row class="d-flex flex-column align-center justify-center w-100">
+      <v-col cols="12" class="w-100">
         <EventDashboardContainer />
       </v-col>
     </v-row>

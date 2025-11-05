@@ -502,7 +502,5 @@ onMounted(async () => {
       };
     });
   }
-
-  await Promise.all([getAllSectors(), getKeywords(), getProfessionalService()]);
 });
 </script>
