@@ -393,7 +393,6 @@ const createProfile = async (values: ProfessionalProfile) => {
     const response = await createProfessionalProfile(payload);
 
     if (response.message === 'Professional created') {
-      // 🧠 On met directement à jour le store
       addSuccess('Votre profil a été créé avec succès');
       openModal.value = false;
       isProfilUpdate.value = true;
@@ -438,7 +437,6 @@ const modifyProfile = async (newValues: ProfessionalProfile) => {
 const handleClose = async () => {
   openModal.value = false;
   await nextTick(); // on attend que le parent ait reçu l’événement et que le DOM se mette à jour
-  console.log('Modal fermée :', openModal.value);
 };
 
 onMounted(() => {

@@ -5,6 +5,7 @@ import { Icon } from '@iconify/vue';
 import Navigation from '~/components/landingpage/layout/Navigation.vue';
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 
+const { isProfessional } = storeToRefs(useUserStore());
 const { createTokenSession } = usePaiementJeton();
 const { isProfessional } = storeToRefs(useUserStore());
 const jetonAmount = ref(0);
