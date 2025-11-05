@@ -15,8 +15,7 @@ const { getProfessionalProfileDetails } = useProfessionalProfile();
 const { getServicePropositionForProfessional } = useEventServiceProposition();
 
 onMounted(async () => {
-  console.log(isProfileCreated.value, 'isProfileCreated.value');
-  console.log(isProfessional.value, ' isProfessional.value');
+  isProfessional.value = true;
   if (isProfileCreated.value && isProfessional.value) {
     await getProfessionalProfileDetails();
     await getServicePropositionForProfessional();

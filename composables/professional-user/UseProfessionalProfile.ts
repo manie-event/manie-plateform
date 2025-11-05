@@ -33,6 +33,8 @@ export const useProfessionalProfile = () => {
   };
 
   const getProfessionalProfileDetails = async () => {
+    console.log(professionalUuid.value, 'PROFESSIONALUUID');
+
     try {
       if (!api || !professionalUuid.value) return;
 
@@ -81,8 +83,6 @@ export const useProfessionalProfile = () => {
   };
   const changeProfessionalBannerPicture = async (file: File) => {
     if (!api || !professionalUuid.value) return;
-
-    if (!import.meta.client) return;
 
     try {
       const formData = new FormData();

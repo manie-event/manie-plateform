@@ -7,10 +7,8 @@ export const useEventService = () => {
   const { addError, addSuccess } = useToaster();
   const api = useApi();
   const eventStore = eventsStore();
-  const { clientProfile } = storeToRefs(useUserStore());
+  const { clientProfile, clientUuid } = storeToRefs(useUserStore());
   const { setEventsByOrganisator, setQuestionnaireAnswers } = eventStore;
-
-  const uuid = localStorage.getItem('client-uuid');
 
   const createEventService = async (payload: QuestionnaireClient) => {
     try {
@@ -31,14 +29,10 @@ export const useEventService = () => {
   };
 
   const getEventsPerOrganisator = async () => {
-    const { addError } = useToaster();
-    const userStore = useUserStore();
-    const { clientProfile } = storeToRefs(userStore);
-
     try {
       if (!api) return;
 
-      if (!uuid) {
+      if (!clientUuid.value) {
         console.warn('Aucun UUID client trouvé dans le store');
         return;
       }
@@ -51,7 +45,7 @@ export const useEventService = () => {
 
       while (hasMore) {
         const { data } = await api.get(
-          `/event/list-by-organisator/${uuid}?page=${page}&limit=${limit}`
+          `/event/list-by-organisator/${clientUuid.value}?page=${page}&limit=${limit}`
         );
 
         // Sécurité : on vérifie la structure
