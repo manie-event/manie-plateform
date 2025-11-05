@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Event from '@/components/dashboards/dashboard-client/Events.vue';
 import { useCustomizerStore } from '@/stores/customizer';
 // 🧠 Valeur réactive pour le titre
 const title = ref('Manie');
@@ -74,7 +73,6 @@ useHead({
           <v-container class="dashboard-position">
             <div class="">
               <div :class="customizer.boxed ? 'maxWidth' : ''">
-                <Event />
                 <NuxtPage />
               </div>
             </div>
@@ -87,7 +85,6 @@ useHead({
 <style lang="scss" scoped>
 .dashboard-position {
   display: flex;
-  height: calc(100vh - 150px);
   width: 100vw;
   justify-content: center;
   top: -40px;

@@ -266,7 +266,7 @@ const activityItems = ref(ACTIVITY_ITEMS);
 const geographicActivity = ref(GEOGRAPHIC_ACTIVITY);
 const reservationDelay = ref(0);
 
-const minimumDaysReservation = computed(() => reservationDelay.value * 7);
+const minimumDaysReservation = computed(() => reservationDelay.value);
 
 const mergedFaq = computed(() => {
   return faqArray.value.reduce(

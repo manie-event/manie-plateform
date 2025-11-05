@@ -1,23 +1,23 @@
 <template>
-  <v-card elevation="10" class="roun-">
-    <v-card-text class="position-relative">
+  <div elevation="10" class="event-budget">
+    <div class="position-relative">
       <div class="d-flex justify-space-between d-block align-center">
         <div>
           <h5 class="text-subtitle-1 mb-1 font-weight-semibold">Votre gestion budget</h5>
-          <div class="d-flex justify-start align-center gap-6 w-100">
-            <div class="text-right mr-6">
-              <v-btn @click="openExpenseModal = true" color="primary">+</v-btn>
-            </div>
-            <div class="text-right">
-              <v-btn
-                @click="removeExpenseModal = true"
-                color="error"
-                variant="tonal"
-                class="position-relative"
-              >
-                <Icon icon="solar:trash-bin-trash-line-duotone" width="18" height="18" />
-              </v-btn>
-            </div>
+        </div>
+        <div class="d-flex justify-end align-center gap-6">
+          <div class="text-right mr-6">
+            <v-btn @click="openExpenseModal = true" color="primary">+</v-btn>
+          </div>
+          <div class="text-right">
+            <v-btn
+              @click="removeExpenseModal = true"
+              color="error"
+              variant="tonal"
+              class="position-relative"
+            >
+              <Icon icon="solar:trash-bin-trash-line-duotone" width="18" height="18" />
+            </v-btn>
           </div>
         </div>
       </div>
@@ -26,17 +26,17 @@
           <apexchart
             type="donut"
             class="paymentchart"
-            height="150"
+            height="110"
             :options="chartOptions"
             :series="chartOptions.series"
           />
         </ClientOnly>
       </div>
-      <p>
+      <span class="event-budget__info">
         <i>{{ budgetSavings }}</i>
-      </p>
-    </v-card-text>
-  </v-card>
+      </span>
+    </div>
+  </div>
 
   <v-dialog v-model="openExpenseModal" max-width="420" transition="dialog-bottom-transition">
     <v-card class="rounded-xl">
@@ -132,7 +132,7 @@ import { computed, onMounted, ref, watch } from 'vue';
 import type { eventModel } from '~/models/events/eventModel';
 /* Chart */
 const props = defineProps<{
-  event: eventModel;
+  currentEvent: eventModel;
 }>();
 const openExpenseModal = ref(false);
 const removeExpenseModal = ref(false);
@@ -143,7 +143,7 @@ const prix = ref('');
 const series = ref<number[]>([]);
 const labels = ref<string[]>([]);
 
-const storageKey = computed(() => `event-expenses-${props.event.uuid}`);
+const storageKey = computed(() => `event-expenses-${props.currentEvent.uuid}`);
 
 const resetRemoveForm = () => {
   removeExpenseTitle.value = null;
@@ -173,7 +173,7 @@ const removeDepenseByTitle = () => {
 const addDepense = () => {
   const expensePourcentage = Math.max(
     0,
-    Math.min(100, (Number(prix.value) / props.event.budget) * 100)
+    Math.min(100, (Number(prix.value) / props.currentEvent.budget) * 100)
   );
 
   if (selectedIndex.value !== null) {
@@ -195,7 +195,7 @@ const addDepense = () => {
 
 const budgetSavings = computed(() => {
   const totalExpense = series.value.reduce((acc, val) => acc + val, 0);
-  const totalExpenseInEuro = props.event.budget * (totalExpense / 100);
+  const totalExpenseInEuro = props.currentEvent.budget * (totalExpense / 100);
 
   if (totalExpense > 100) {
     return `Vous avez dépassé le budget de ${Math.ceil(totalExpense - 100)} % soit ${Math.ceil(totalExpenseInEuro)}`;
@@ -215,7 +215,7 @@ const chartOptions = computed(() => {
     series: displaySeries,
     labels: displayLabels,
     chart: {
-      height: 170,
+      height: 120,
       type: 'donut',
       fontFamily: `inherit`,
       foreColor: '#adb0bb',
@@ -226,7 +226,7 @@ const chartOptions = computed(() => {
           if (index >= 0 && hasData) {
             selectedIndex.value = index;
             prestataire.value = labels.value[index];
-            prix.value = ((series.value[index] / 100) * props.event.budget).toFixed(2);
+            prix.value = ((series.value[index] / 100) * props.currentEvent.budget).toFixed(2);
             openExpenseModal.value = true;
           }
         },
@@ -268,3 +268,18 @@ onMounted(() => {
   }
 });
 </script>
+<style lang="scss" scoped>
+.event-budget {
+  height: 230px;
+  border-radius: 15px;
+  box-shadow: 5px 5px 5px 5px rgb(var(--v-theme-darkBg));
+  padding: 1rem;
+  background: rgb(var(--v-theme-containerBg));
+
+  &__info {
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: center;
+  }
+}
+</style>

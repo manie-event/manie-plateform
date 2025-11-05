@@ -235,6 +235,7 @@ import { UseEvent } from '~/composables/event/UseEvent';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { SectorsDto } from '~/models/dto/sectorsDto';
 import type { QuestionnaireClient } from '~/models/questionnaire/QuestionnaireClientModel';
+import { useProfessionalService } from '~/services/UseProfessionalService';
 
 const props = defineProps<{
   answers?: QuestionnaireClient;
@@ -245,6 +246,8 @@ const openCustomerForm = defineModel<boolean>('openCustomerForm', { default: fal
 const { sectors, servicesFiltered } = storeToRefs(eventsStore());
 const { clientProfile } = storeToRefs(useUserStore());
 const { keywords } = storeToRefs(useKeywordsStore());
+const { getAllSectors, getKeywords } = useKeywordsStore();
+const { getProfessionalService } = useProfessionalService();
 const { submitEvent, isLoading, error } = UseEvent();
 //ref generale
 const eventType = ref<'particulier' | 'professionnel'>('particulier');
@@ -469,7 +472,7 @@ const handleSubmit = async () => {
   }
 };
 
-onMounted(() => {
+onMounted(async () => {
   if (!props.answers) return;
 
   const normalizedAnswer = props.answers.$attributes;
@@ -499,5 +502,7 @@ onMounted(() => {
       };
     });
   }
+
+  await Promise.all([getAllSectors(), getKeywords(), getProfessionalService()]);
 });
 </script>

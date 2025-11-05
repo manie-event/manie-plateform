@@ -173,7 +173,7 @@ onMounted(async () => {
     width: 50%;
     padding: 0.5rem 0.5rem 1rem;
     display: flex;
-    border-radius: 8px;
+    border-radius: 2px;
     align-items: center;
     background: rgb(var(--v-theme-containerBg));
     box-shadow: 5px 5px 15px 5px rgb(var(--v-theme-textSecondary));

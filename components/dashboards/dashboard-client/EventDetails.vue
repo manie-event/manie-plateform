@@ -108,9 +108,9 @@
 </template>
 <script setup lang="ts">
 import PricingChoice from '@/components/dashboards/dashboard-client/PricingChoice.vue';
-import Product from '@/components/dashboards/dashboard-client/ProductsChart.vue';
 import Notes from '@/pages/apps/notes/index.vue';
 import { Teleport } from 'vue';
+import Product from '~/components/dashboards/dashboard-client/EventBudget.vue';
 import LatestDeals from '~/components/dashboards/dashboard-client/LatestDeals.vue';
 import CustomerForm from '~/components/questionnaires/CustomerForm.vue';
 import type { eventModel, eventService } from '~/models/events/eventModel';
