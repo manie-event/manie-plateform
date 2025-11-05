@@ -7,7 +7,6 @@ import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJet
 
 const { isProfessional } = storeToRefs(useUserStore());
 const { createTokenSession } = usePaiementJeton();
-const { isProfessional } = storeToRefs(useUserStore());
 const jetonAmount = ref(0);
 const stickyHeader = ref(false);
 
