@@ -1,80 +1,122 @@
 <script setup lang="ts">
-import LogoManie from '@/public/images/svgs/logo-manie-nav.svg';
-import { ref } from 'vue';
-// import RtlLogo from '@/layouts/full/logo/RtlLogo.vue';
 import Navigations from '@/components/landingpage/layout/Navigation.vue';
-/*import tabler icons*/
+import LogoManie from '@/public/images/svgs/logo-manie-nav.svg';
+import { storeToRefs } from 'pinia';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
+import { useUserStore } from '~/stores/userStore';
 
 const appsdrawer = ref(false);
+const isMobile = ref(window.innerWidth < 600);
+
 const { clientProfile, professionalUser } = storeToRefs(useUserStore());
 
 const isProfileCreated = ref(localStorage.getItem('profil-created') === 'true');
+
+// ⚡ Gestion auto du resize
+const handleResize = () => {
+  isMobile.value = window.innerWidth < 600;
+};
+
+onMounted(() => window.addEventListener('resize', handleResize));
+onBeforeUnmount(() => window.removeEventListener('resize', handleResize));
 </script>
+
 <template>
-  <div>
-    <div class="original-position">
-      <!-- -----------------------------------------------
-                            Start Header
-                            ----------------------------------------------- -->
-      <div>
-        <NuxtLink to="/">
-          <LogoManie width="100" class="mt-3" />
-        </NuxtLink>
-      </div>
-      <!-- Desktop view Navigation -->
-      <div class="d-lg-flex d-none ga-3">
-        <Navigations />
-      </div>
-      <!-- Login  -->
-      <v-btn
-        v-if="!isProfileCreated"
-        class="custom-hover-primary header__btn d-lg-flex d-none px-8 align-center login-shadow"
-        rounded="pill"
-        to="/auth/login"
-        ><span class="text-white">Se connecter</span></v-btn
-      >
-      <v-btn
-        v-else-if="isProfileCreated && clientProfile"
-        class="custom-hover-primary header__btn d-lg-flex d-none px-8 align-center login-shadow"
-        rounded="pill"
-        to="/dashboards/dashboard-client"
-        ><span class="text-white">Mon tableau de bord</span></v-btn
-      >
-      <v-btn
-        v-else-if="isProfileCreated && professionalUser"
-        class="custom-hover-primary header__btn d-lg-flex d-none px-8 align-center login-shadow"
-        rounded="pill"
-        to="/dashboards/dashboard2"
-        ><span class="text-white">Mon tableau de bord</span></v-btn
-      >
-      <!-- Mobile Toggle Button -->
-      <v-btn variant="text" class="hidden-lg-and-up" icon @click.stop="appsdrawer = !appsdrawer">
-        <Menu2Icon size="22" stroke-width="1.5" />
-      </v-btn>
-      <!-- -----------------------------------------------
-                            End Header
-                            ----------------------------------------------- -->
+  <header class="header">
+    <!-- Logo -->
+    <NuxtLink to="/" class="header__logo">
+      <LogoManie width="100" />
+    </NuxtLink>
+
+    <!-- Navigation desktop -->
+    <div class="header__nav d-none d-md-flex">
+      <Navigations />
     </div>
 
-    <!----sidebar menu drawer start----->
-    <v-navigation-drawer v-model="appsdrawer" location="left" temporary>
-      <MobileSidebar />
+    <!-- Boutons login/dashboard desktop -->
+    <div class="d-none d-md-flex align-center">
+      <v-btn v-if="!isProfileCreated" class="header__btn" rounded="pill" to="/auth/login">
+        Se connecter
+      </v-btn>
+
+      <v-btn
+        v-else-if="isProfileCreated && clientProfile"
+        class="header__btn"
+        rounded="pill"
+        to="/dashboards/dashboard-client"
+      >
+        Mon tableau de bord
+      </v-btn>
+
+      <v-btn
+        v-else-if="isProfileCreated && professionalUser"
+        class="header__btn"
+        rounded="pill"
+        to="/dashboards/dashboard2"
+      >
+        Mon tableau de bord
+      </v-btn>
+    </div>
+
+    <!-- Burger mobile -->
+    <v-btn
+      v-if="isMobile"
+      variant="text"
+      icon
+      @click.stop="appsdrawer = !appsdrawer"
+      class="d-md-none"
+    >
+      <Menu2Icon size="24" />
+    </v-btn>
+
+    <!-- Drawer mobile -->
+    <v-navigation-drawer v-model="appsdrawer" location="left" temporary class="drawer-menu">
+      <div class="pa-4">
+        <div class="d-flex justify-space-between align-center mb-4">
+          <LogoManie width="100" />
+          <v-btn icon variant="text" @click="appsdrawer = false">
+            <Menu2Icon size="24" />
+          </v-btn>
+        </div>
+        <Navigations />
+        <v-divider class="my-4" />
+        <v-btn
+          v-if="!isProfileCreated"
+          class="header__btn w-100"
+          rounded="pill"
+          to="/auth/login"
+          @click="appsdrawer = false"
+        >
+          Se connecter
+        </v-btn>
+        <v-btn
+          v-else
+          class="header__btn w-100"
+          rounded="pill"
+          :to="clientProfile ? '/dashboards/dashboard-client' : '/dashboards/dashboard2'"
+          @click="appsdrawer = false"
+        >
+          Mon tableau de bord
+        </v-btn>
+      </div>
     </v-navigation-drawer>
-  </div>
+  </header>
 </template>
+
 <style lang="scss" scoped>
-.original-position {
+.header {
   position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: var(--bg-color);
-  width: 100vw;
+  width: 100%;
+  padding: 0.5rem 1rem;
   z-index: 10;
-  padding: 0 2vw;
-}
 
-.header__btn {
-  background: var(--manie-primary);
+  &__logo {
+    display: flex;
+    align-items: center;
+  }
 }
 </style>

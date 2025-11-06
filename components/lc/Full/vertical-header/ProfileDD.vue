@@ -22,8 +22,6 @@ const jetonBalance = ref(0);
 onMounted(async () => {
   try {
     if (isProfessional.value) {
-      console.log('JE SUIS PASSE DANS LE PROFESSIONAL');
-
       await getProfessionalProfileDetails();
       jetonBalance.value = await getJetonQuantity();
     } else {

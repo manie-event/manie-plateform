@@ -8,6 +8,7 @@ import { useEventService } from '~/services/UseEventService';
 import { useProfessionalService } from '~/services/UseProfessionalService';
 import { useClientProfil } from './client-user/UseClientProfil';
 import { useEventServiceProposition } from './event-service-propositions/UseEventServiceProposition';
+import { usePaiementJeton } from './professional-user/UsePaiementJeton';
 import { useProfessionalProfile } from './professional-user/UseProfessionalProfile';
 
 export const useAuthentification = () => {
@@ -22,7 +23,7 @@ export const useAuthentification = () => {
   const { getEventsPerOrganisator } = useEventService();
   const { getAllSectors, getKeywords } = useKeywordsStore();
   const { getProfessionalService } = useProfessionalService();
-
+  const { getJetonQuantity } = usePaiementJeton();
   const { token } = useAuthCookies(); // access token (15 min)
   const { refreshToken } = useRefreshToken(); // refresh token (7 jours)
 
@@ -83,6 +84,7 @@ export const useAuthentification = () => {
           getProfessionalProfile(),
           getProfessionalProfileDetails(),
           getServicePropositionForProfessional(),
+          getJetonQuantity(),
           router.push({ path: '/dashboards/dashboard2' }),
         ]);
       }

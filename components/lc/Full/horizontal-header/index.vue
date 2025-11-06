@@ -59,9 +59,9 @@ watch(priority, (newPriority) => {
       <!-- Search part -->
       <!-- ------------------------------------------------>
 
-      <div class="hidden-sm-and-down me-sm-4 me-4">
+      <!-- <div class="hidden-sm-and-down me-sm-4 me-4">
         <LcFullVerticalHeaderSearchbar />
-      </div>
+      </div> -->
 
       <div class="me-sm-4 me-0">
         <LcFullVerticalHeaderThemeToggler />
@@ -105,7 +105,7 @@ watch(priority, (newPriority) => {
       </div>
 
       <!-----Mobile header------>
-      <v-menu :close-on-content-click="false" class="mobile_popup">
+      <!-- <v-menu :close-on-content-click="false" class="mobile_popup">
         <template v-slot:activator="{ props }">
           <v-btn
             icon
@@ -116,13 +116,13 @@ watch(priority, (newPriority) => {
           >
             <DotsIcon stroke-width="2" size="24" class="text-primary" />
           </v-btn>
-        </template>
-        <v-sheet rounded="lg" elevation="10" class="mt-5 dropdown-box px-4 py-6">
+        </template> -->
+      <!-- <v-sheet rounded="lg" elevation="10" class="mt-5 dropdown-box px-4 py-6">
           <div class="d-flex justify-space-between align-center">
             <div class="mr-sm-3 mr-2">
               <LcFullVerticalHeaderSearchbar />
             </div>
-            <!-- <v-btn
+ <v-btn
               icon
               variant="text"
               class="mr-sm-3 mr-2 custom-hover-primary"
@@ -133,11 +133,11 @@ watch(priority, (newPriority) => {
                 <Icon icon="solar:cart-3-line-duotone" height="24" width="24" />
               </v-badge>
             </v-btn> -->
-            <!-- <LcFullVerticalHeaderNotificationDD /> -->
-            <LcFullVerticalHeaderProfileDD />
-          </div>
-        </v-sheet>
-      </v-menu>
+      <!-- <LcFullVerticalHeaderNotificationDD /> -->
+      <!-- <LcFullVerticalHeaderProfileDD /> -->
+      <!-- </div> -->
+      <!-- </v-sheet> -->
+      <!-- </v-menu> -->
     </div>
   </v-app-bar>
 </template>
