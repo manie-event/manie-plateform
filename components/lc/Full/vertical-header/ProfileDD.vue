@@ -18,7 +18,6 @@ const { isProfessional, category, displayName, initials } = storeToRefs(userStor
 
 const jetonBalance = ref(0);
 
-/** 🎯 Charger les infos nécessaires selon le type de profil */
 onMounted(async () => {
   try {
     if (isProfessional.value) {

@@ -71,6 +71,6 @@ const setHoverState = (key: string, value: boolean) => {
     </v-sheet>
   </v-menu>
 
-  <NuxtLink class="nuxt-link" to="/front-pages/pricing">Formules</NuxtLink>
-  <NuxtLink class="nuxt-link" to="/front-pages/Contact-us">Contact</NuxtLink>
+  <NuxtLink class="nuxt-link mr-lg-0" to="/front-pages/pricing">Formules</NuxtLink>
+  <NuxtLink class="nuxt-link mr-lg-0" to="/front-pages/Contact-us">Contact</NuxtLink>
 </template>

@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import Navigations from '@/components/landingpage/layout/Navigation.vue';
 import JetonImg from '@/public/images/panier/jeton.png';
-import { default as Logo, default as LogoManie } from '@/public/images/svgs/logo-manie-nav.svg';
+import { default as Logo } from '@/public/images/svgs/logo-manie-nav.svg';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
@@ -14,16 +13,10 @@ const { createTokenSession } = usePaiementJeton();
 const jetonAmount = ref(0);
 const stickyHeader = ref(false);
 const appsdrawer = ref(false);
-const isMobile = ref(window.innerWidth < 600);
-const { clientProfile, professionalUser } = storeToRefs(useUserStore());
-const isProfileCreated = ref(localStorage.getItem('profil-created') === 'true');
+const isMobile = ref(window.innerWidth < 960);
+const { clientProfile, professionalUser, isProfileCreated } = storeToRefs(useUserStore());
 
 const totalPriceJeton = computed(() => `${jetonAmount.value * 9} €`);
-
-// Scroll sticky
-const handleScroll = () => {
-  stickyHeader.value = window.scrollY > 0;
-};
 
 // Resize responsive
 const handleResize = () => {
@@ -33,24 +26,15 @@ const handleResize = () => {
 // Mount / Unmount events
 onMounted(() => {
   window.addEventListener('resize', handleResize);
-  window.addEventListener('scroll', handleScroll);
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener('resize', handleResize);
-  window.removeEventListener('scroll', handleScroll);
 });
 </script>
 
 <template>
-  <v-app-bar
-    elevation="0"
-    height="75"
-    color="containerBg"
-    id="top"
-    class="menu-dashboard"
-    :class="{ sticky: stickyHeader }"
-  >
+  <v-app-bar elevation="0" height="75" color="containerBg" id="top" class="menu-dashboard">
     <div class="menu-dashboard__container">
       <!-- Logo -->
       <NuxtLink to="/">
@@ -114,42 +98,42 @@ onBeforeUnmount(() => {
       <v-btn v-if="isMobile" variant="text" @click.stop="appsdrawer = !appsdrawer">
         <Icon icon="material-symbols:menu-rounded" size="24" height="24" />
       </v-btn>
-
-      <!-- Drawer mobile -->
-      <v-navigation-drawer v-model="appsdrawer" location="left" class="drawer-menu">
-        <div class="pa-4">
-          <div class="d-flex justify-space-between align-center mb-4">
-            <LogoManie width="100" />
-            <v-btn icon variant="text" @click="appsdrawer = false">
-              <Icon icon="ci:close-big" size="24" />
-            </v-btn>
-          </div>
-
-          <Navigations />
-          <v-divider class="my-4" />
-
-          <v-btn
-            v-if="!isProfileCreated"
-            class="header__btn w-100"
-            rounded="pill"
-            to="/auth/login"
-            @click="appsdrawer = false"
-          >
-            Se connecter
-          </v-btn>
-          <v-btn
-            v-else
-            class="header__btn w-100"
-            rounded="pill"
-            :to="clientProfile ? '/dashboards/dashboard-client' : '/dashboards/dashboard2'"
-            @click="appsdrawer = false"
-          >
-            Mon tableau de bord
-          </v-btn>
-        </div>
-      </v-navigation-drawer>
     </div>
   </v-app-bar>
+
+  <!-- Drawer mobile -->
+  <v-navigation-drawer v-model="appsdrawer" location="left" class="drawer-menu">
+    <div class="pa-4">
+      <div class="d-flex justify-space-between align-center mb-4">
+        <div class="d-flex">
+          <LcFullVerticalHeaderThemeToggler />
+          <LcFullVerticalHeaderProfileDD />
+        </div>
+        <v-btn icon variant="text" @click="appsdrawer = false" class="drawer-menu__skip-btn">
+          <Icon icon="ci:close-big" size="24" />
+        </v-btn>
+      </div>
+      <div class="d-flex flex-column align-center justify-center" style="height: 200px">
+        <Navigation />
+      </div>
+
+      <v-divider class="my-4" />
+      <v-btn
+        class="header__btn w-100"
+        rounded="pill"
+        :to="
+          isProfileCreated
+            ? !isProfessional
+              ? '/dashboards/dashboard-client'
+              : '/dashboards/dashboard2'
+            : '/auth/login'
+        "
+        @click="appsdrawer = false"
+      >
+        {{ isProfileCreated ? ' Mon tableau de bord' : 'Se connecter' }}
+      </v-btn>
+    </div>
+  </v-navigation-drawer>
 </template>
 
 <style scoped lang="scss">
@@ -178,11 +162,25 @@ onBeforeUnmount(() => {
 }
 
 .drawer-menu {
-  background: rgb(var(--v-theme-containerBg));
+  background: rgb(var(--v-theme-background));
   top: 115px;
   position: fixed;
+  top: 0;
+  left: 0;
   height: 100vh;
   width: 100vw;
+  &__skip-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+}
+.header {
+  &__btn {
+    background: rgb(var(--v-theme-darkbg));
+    color: rgb(var(--v-theme-background));
+    font-weight: bold;
+  }
 }
 
 @media (min-width: 900px) {
