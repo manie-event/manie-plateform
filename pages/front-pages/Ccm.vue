@@ -65,7 +65,7 @@
 import { NuxtLink } from '#components';
 import CcmClient from '@/data/ccm-client.json';
 import CcmPresta from '@/data/ccm-presta.json';
-import SidePicture from '@/public/images/backgrounds/commentçamarche.jpg';
+import SidePicture from '@/public/images/backgrounds/commentcamarche.jpg';
 import LogoManie from '@/public/images/logos/logo-manie-creme.svg';
 import BaseSidePicture from '~/components/common/BaseSidePicture.vue';
 
