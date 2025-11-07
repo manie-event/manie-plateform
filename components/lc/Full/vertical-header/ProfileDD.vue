@@ -14,21 +14,15 @@ const { getProfessionalProfileDetails, getProfessionalProfile } = useProfessiona
 const { getClientProfil } = useClientProfil();
 
 const userStore = useUserStore();
-const { isProfessional, category, displayName, initials, professionalUuid } =
-  storeToRefs(userStore);
-
-const jetonBalance = ref(0);
+const { isProfessional, category, displayName, initials } = storeToRefs(userStore);
+const { cartQuantity } = storeToRefs(useCartStore());
 
 onMounted(async () => {
-  console.log(professionalUuid.value, 'professionalUuid.value from DD');
-  console.log(isProfessional.value, 'isProfessional');
-
   try {
     if (isProfessional.value) {
-      console.log('JE SUIS PRO');
       await getProfessionalProfile();
       await getProfessionalProfileDetails();
-      jetonBalance.value = await getJetonQuantity();
+      await getJetonQuantity();
     } else {
       await getClientProfil();
     }
@@ -95,7 +89,7 @@ onMounted(async () => {
               <h6 class="text-h6 font-weight-medium mb-1">{{ item.title }}</h6>
             </div>
             <p class="text-subtitle-1 font-weight-regular text-grey100">
-              <b>{{ item.requiresProfile ? jetonBalance : '' }}</b> {{ item.subtitle }}
+              <b>{{ item.requiresProfile ? cartQuantity : '' }}</b> {{ item.subtitle }}
             </p>
           </v-list-item>
         </v-list>

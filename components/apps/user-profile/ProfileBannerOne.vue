@@ -82,12 +82,14 @@ import EditerProfessionalProfile from '@/components/apps/user-profile/EditProfes
 import { Icon } from '@iconify/vue';
 import { onMounted, ref } from 'vue';
 import ServicesPrestataire from '~/components/questionnaires/ServicesPrestataire.vue';
+import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { useUserStore } from '~/stores/userStore';
 
 const { professionalUser, user, isProfileCreated, initials } = storeToRefs(useUserStore());
 const { changeProfessionalBannerPicture, getProfessionalProfileDetails, getProfessionalProfile } =
   useProfessionalProfile();
+const { getJetonQuantity } = usePaiementJeton();
 
 const openModal = ref(false);
 const openServiceModal = ref(false);
@@ -108,6 +110,7 @@ const getServiceValues = computed(
 onMounted(async () => {
   const name = professionalUser.value?.name || user.value?.username || '';
   await getProfessionalProfile();
+  await getJetonQuantity();
 });
 </script>
 

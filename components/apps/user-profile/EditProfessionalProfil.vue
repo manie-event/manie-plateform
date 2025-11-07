@@ -218,13 +218,19 @@
           </div>
         </div>
 
-        <div v-if="currentPage === 1" class="d-flex justify-space-between">
+        <div v-if="currentPage === 1" class="d-flex justify-space-between edit-professional__btn">
           <v-btn @click="openModal = false">Annuler</v-btn>
           <v-btn v-if="!isProfileCreated" color="primary" @click="createProfile(profile)">
             Valider mon profil
           </v-btn>
           <div v-else>
-            <v-btn color="primary" @click="modifyProfile(profile)"> Modifier mon profil </v-btn>
+            <v-btn
+              class="edit-professional__btn-width"
+              color="primary"
+              @click="modifyProfile(profile)"
+            >
+              Modifier mon profil
+            </v-btn>
           </div>
         </div>
       </v-form>
@@ -608,11 +614,6 @@ onMounted(() => {
   .v-btn {
     min-width: 150px;
   }
-
-  @media (max-width: 600px) {
-    flex-direction: column;
-    align-items: stretch;
-  }
 }
 
 /* --- HIERARCHIE VISUELLE --- */
@@ -626,8 +627,22 @@ onMounted(() => {
 
 /* --- RESPONSIVE --- */
 @media (max-width: 1024px) {
-  .v-form {
-    max-width: 95%;
+  .edit-professional {
+    .v-form {
+      max-width: 95%;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .edit-professional {
+    &__btn {
+      display: flex;
+      flex-direction: column-reverse;
+      &-width {
+        width: 100%;
+      }
+    }
   }
 }
 </style>

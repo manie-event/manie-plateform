@@ -5,7 +5,7 @@ export const usePaiementJeton = () => {
   const userStore = useUserStore();
   const { professionalUser, professionalUuid } = storeToRefs(userStore);
   const cartStore = useCartStore();
-  const { initializeTokenBalance } = cartStore;
+  const { initializeTokenBalance, setJetonQuantity } = cartStore;
   const { addSuccess, addError } = useToaster();
   const api = useApi();
   const isProcessing = ref(false);
@@ -47,6 +47,7 @@ export const usePaiementJeton = () => {
     try {
       if (!api) return;
       const { data } = await api.get(`/credit/${currentProfile.uuid}`);
+      setJetonQuantity(data.quantity);
       return data.quantity;
     } catch (err: any) {
       console.error(err.response.data.message);

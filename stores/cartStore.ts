@@ -14,6 +14,10 @@ export const useCartStore = defineStore('cartStore', () => {
     userTokenBalance.value = Number(balance) || 0;
   };
 
+  const setJetonQuantity = (newJetonQuantity: number) => {
+    cartQuantity.value = newJetonQuantity;
+  };
+
   const setBillingInfo = (billingInfo: BillingInfo) => {
     addresses.value.push(billingInfo);
   };
@@ -25,6 +29,7 @@ export const useCartStore = defineStore('cartStore', () => {
     userTokenBalance,
     getTotalPrice,
     setBillingInfo,
+    setJetonQuantity,
     initializeTokenBalance,
   };
 });
