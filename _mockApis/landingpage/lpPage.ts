@@ -11,11 +11,9 @@ import {
 /*Feature Section*/
 /*import tabler icons*/
 import {
-  default as frnt1,
   default as frnt2,
   default as frnt3,
   default as frnt4,
-  default as frnt5,
 } from '@/public/images/backgrounds/flutter.png';
 
 /*Demos Megamenu*/
@@ -49,11 +47,6 @@ const demosMegamenu: DemosMegaMenuTypes[] = [
 
 const FrontPageMenu: DemosMegaMenuTypes[] = [
   {
-    img: frnt1,
-    name: 'Notre Constat',
-    link: '/front-pages/Constat',
-  },
-  {
     img: frnt2,
     name: 'Notre Histoire',
     link: '/front-pages/Notre-histoire',
@@ -68,11 +61,6 @@ const FrontPageMenu: DemosMegaMenuTypes[] = [
     img: frnt4,
     name: 'Notre terrain De Jeu',
     link: '/front-pages/Notre-zone-de-jeu',
-  },
-  {
-    img: frnt5,
-    name: 'Pourquoi Manie',
-    link: '/front-pages/Pourquoi-manie',
   },
 ];
 

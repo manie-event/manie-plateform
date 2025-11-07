@@ -205,6 +205,11 @@ const FAQData: TemplateType[] = [
 
 const footerContact: FooterType[] = [
   {
+    titre: 'Manie Coop - SASU',
+    description: '',
+    link: undefined,
+  },
+  {
     titre: "Conditions Générales d'utilisation",
     description: '',
     link: '/juridique/cgu',

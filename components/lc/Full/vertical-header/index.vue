@@ -111,17 +111,12 @@ onBeforeUnmount(() => {
       </div>
 
       <!-- Burger mobile -->
-      <v-btn
-        v-if="isMobile"
-        variant="text"
-        @click.stop="appsdrawer = !appsdrawer"
-        class="d-lg-none"
-      >
+      <v-btn v-if="isMobile" variant="text" @click.stop="appsdrawer = !appsdrawer">
         <Icon icon="material-symbols:menu-rounded" size="24" height="24" />
       </v-btn>
 
       <!-- Drawer mobile -->
-      <v-navigation-drawer v-model="appsdrawer" location="left" temporary class="drawer-menu">
+      <v-navigation-drawer v-model="appsdrawer" location="left" class="drawer-menu">
         <div class="pa-4">
           <div class="d-flex justify-space-between align-center mb-4">
             <LogoManie width="100" />
@@ -184,14 +179,10 @@ onBeforeUnmount(() => {
 
 .drawer-menu {
   background: rgb(var(--v-theme-containerBg));
-  width: 80vw;
+  top: 115px;
+  position: fixed;
   height: 100vh;
-  position: absolute;
-  top: 0;
-  left: 0;
-  max-width: 320px;
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  width: 100vw;
 }
 
 @media (min-width: 900px) {
