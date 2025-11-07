@@ -26,6 +26,9 @@
                 :style="{
                   backgroundColor: 'rgb(var(--v-theme-darkbg))',
                   color: 'rgb(var(--v-theme-background))',
+                  position: 'absolute',
+                  bottom: '20px',
+                  right: '20px',
                 }"
                 @click="openPropositionDetail = false"
                 >Fermer</v-btn
@@ -57,7 +60,6 @@ const getBackgroundStyle = (eventName: string) => {
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     borderRadius: '8px',
-    width: '96%',
     margin: '15px',
     height: '700px',
   };

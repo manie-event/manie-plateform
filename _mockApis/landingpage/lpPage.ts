@@ -10,11 +10,11 @@ import {
 
 /*Feature Section*/
 /*import tabler icons*/
-import {
-  default as frnt2,
-  default as frnt3,
-  default as frnt4,
-} from '@/public/images/backgrounds/flutter.png';
+
+import frnt1 from '@/public/images/backgrounds/CCM.jpg';
+import frnt2 from '@/public/images/backgrounds/NOTRE HISTOIRE.jpg';
+import frnt3 from '@/public/images/backgrounds/VALEURS.png';
+import frnt4 from '@/public/images/backgrounds/terrainjeu.jpg';
 
 /*Demos Megamenu*/
 const demosMegamenu: DemosMegaMenuTypes[] = [
@@ -47,11 +47,15 @@ const demosMegamenu: DemosMegaMenuTypes[] = [
 
 const FrontPageMenu: DemosMegaMenuTypes[] = [
   {
+    img: frnt1,
+    name: 'Comment ça marche ? ',
+    link: '/front-pages/Notre-histoire',
+  },
+  {
     img: frnt2,
     name: 'Notre Histoire',
     link: '/front-pages/Notre-histoire',
   },
-
   {
     img: frnt3,
     name: 'Nos Engagements',

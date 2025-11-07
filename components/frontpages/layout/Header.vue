@@ -20,7 +20,7 @@ const totalPriceJeton = computed(() => `${jetonAmount.value * 9} €`);
 
 // Resize responsive
 const handleResize = () => {
-  isMobile.value = window.innerWidth < 600;
+  isMobile.value = window.innerWidth < 960;
 };
 
 // Mount / Unmount events
@@ -34,7 +34,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <v-app-bar elevation="0" height="75" color="containerBg" id="top" class="menu-dashboard">
+  <v-app-bar elevation="0" height="105" relative color="containerBg" class="menu-dashboard">
     <div class="menu-dashboard__container">
       <!-- Logo -->
       <NuxtLink to="/">
@@ -105,7 +105,7 @@ onBeforeUnmount(() => {
   <v-navigation-drawer v-model="appsdrawer" location="left" class="drawer-menu">
     <div class="pa-4">
       <div class="d-flex justify-space-between align-center mb-4">
-        <div class="d-flex">
+        <div class="d-flex" v-if="isProfileCreated">
           <!-- <LcFullVerticalHeaderThemeToggler /> -->
           <LcFullVerticalHeaderProfileDD />
         </div>
@@ -138,12 +138,7 @@ onBeforeUnmount(() => {
 
 <style scoped lang="scss">
 .menu-dashboard {
-  &.sticky {
-    position: sticky;
-    top: 0;
-    background: rgb(var(--v-theme-background));
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  }
+  position: relative !important;
 
   &__container {
     display: flex;
@@ -177,6 +172,7 @@ onBeforeUnmount(() => {
 }
 .header {
   position: relative;
+
   &__btn {
     background: rgb(var(--v-theme-darkbg));
     color: rgb(var(--v-theme-background));

@@ -13,10 +13,10 @@
         <v-col cols="12">
           <v-card
             elevation="0"
-            class="packages__card rounded-16 pa-10 border packages__pricing-card text-center transition-all"
+            class="rounded-16 pa-10 border pricing-free-card text-center transition-all"
           >
             <v-row>
-              <v-col cols="6">
+              <v-col cols="12" md="6" class="d-flex align-center flex-column justify-center">
                 <div class="pb-4">
                   <h4 class="text-22 font-weight-bold textPrimary mb-2">LIBERTE</h4>
                   <p class="text-15 text-grey100 font-weight-medium mb-0">
@@ -30,9 +30,9 @@
                   <div class="separator my-3"></div>
                 </div>
               </v-col>
-              <v-col cols="6"
+              <v-col cols="12" md="6"
                 ><v-list
-                  class="mb-0 pl-0 pt-0 d-flex flex-column flex-wrap justify-center gap-2 packages__features-list"
+                  class="mb-0 pl-0 pt-0 d-flex flex-column flex-wrap justify-center align-center gap-2 packages__features-list"
                 >
                   <v-list-item
                     v-for="desc in firstPlanList"
@@ -197,10 +197,12 @@ const selectedFormule = (index: number) => {
 
 <style lang="scss" scoped>
 .packages {
+  position: relative;
   background: rgb(var(--v-theme-background));
 
   &__text-wrap {
     white-space: normal;
+    padding-top: 105px;
     word-break: break-word;
   }
 
@@ -272,6 +274,10 @@ const selectedFormule = (index: number) => {
   }
 }
 
+.pricing-free-card {
+  height: 310px;
+}
+
 /* ✅ Le point reste aligné avec la première ligne du texte */
 .bullet-line {
   display: flex;
@@ -326,6 +332,10 @@ const selectedFormule = (index: number) => {
   }
   .divider {
     display: none;
+  }
+  .pricing-free-card {
+    max-height: none;
+    height: auto;
   }
 }
 </style>

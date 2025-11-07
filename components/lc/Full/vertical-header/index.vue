@@ -20,7 +20,7 @@ const totalPriceJeton = computed(() => `${jetonAmount.value * 9} €`);
 
 // Resize responsive
 const handleResize = () => {
-  isMobile.value = window.innerWidth < 600;
+  isMobile.value = window.innerWidth < 960;
 };
 
 // Mount / Unmount events
@@ -34,7 +34,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <v-app-bar elevation="0" height="75" color="containerBg" id="top" class="menu-dashboard">
+  <v-app-bar elevation="0" height="105" color="containerBg" id="top" class="menu-dashboard">
     <div class="menu-dashboard__container">
       <!-- Logo -->
       <NuxtLink to="/">
@@ -47,7 +47,7 @@ onBeforeUnmount(() => {
       </div>
 
       <!-- Actions desktop -->
-      <div class="menu-dashboard__right-part d-none d-md-flex">
+      <div class="menu-dashboard__right-part d-none d-md-flex align-center">
         <LcFullVerticalHeaderThemeToggler />
         <v-menu v-if="isProfessional" :close-on-content-click="false" class="notification_popup">
           <template #activator="{ props }">
