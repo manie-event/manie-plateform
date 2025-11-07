@@ -20,27 +20,27 @@
             v-model="profile.name"
             :error-messages="showErrors ? errors.name : undefined"
           />
+          <v-text-field
+            label="Le nom complet de l'interlocuteur principal ?"
+            v-model="profile.mainInterlocutor"
+            :error-messages="showErrors ? errors.mainInterlocutor : undefined"
+          />
 
           <v-text-field
             label="Votre Numéro De Siret ?"
             v-model="profile.siret"
             :error-messages="showErrors ? errors.siret : undefined"
           />
-          <v-text-field
-            label="Votre numéro de téléphone ?"
-            v-model="profile.telephone"
-            :error-messages="showErrors ? errors.siret : undefined"
-          />
+
           <v-text-field
             label="L'adresse complète du siège social ?"
             v-model="profile.address"
             :error-messages="showErrors ? errors.address : undefined"
           />
-          <v-text-field
-            label="Une courte description de votre activité ?"
-            v-model="profile.bio"
-            :error-messages="showErrors ? errors.bio : undefined"
-          />
+
+          <v-divider class="border-opacity-50 mb-6"
+            ><p class="mb-6">A propos de votre activité</p></v-divider
+          >
           <v-select
             label="Votre activité principale ?"
             v-model="profile.mainActivity"
@@ -50,21 +50,20 @@
             @update:model-value="setSector"
             :error-messages="showErrors ? errors.mainActivity : undefined"
           />
+
           <v-text-field
-            label="Le nom complet de l'interlocuteur principal ?"
-            v-model="profile.mainInterlocutor"
-            :error-messages="showErrors ? errors.mainInterlocutor : undefined"
+            label="Une courte description de votre activité ?"
+            v-model="profile.bio"
+            :error-messages="showErrors ? errors.bio : undefined"
           />
+
           <v-number-input
-            label="Depuis combien d'année exercez-vous cette activité ?"
+            label="Depuis quelle année exercez-vous cette activité ?"
             v-model="profile.experience"
             control-variant="hidden"
             :min="0"
             :error-messages="showErrors ? errors.experience : undefined"
           />
-          <v-divider class="border-opacity-50 mb-6"
-            ><p class="mb-6">A propos de votre activité</p></v-divider
-          >
 
           <v-select
             label="Votre secteur géographique ?"
@@ -115,12 +114,7 @@
             :error-messages="showErrors ? errors.minimumReservationPeriod : undefined"
           />
           <div class="d-flex gap-2 text-subtitle-1 mb-3">
-            <input
-              type="checkbox"
-              v-model="profile.deposit"
-              :error-messages="showErrors ? errors.deposit : undefined"
-            />
-            <p>Doit-on vous faire un accompte avant prestation</p>
+            <p>Un acompte est nécessaire à la réservation d’une prestation</p>
           </div>
           <v-number-input
             v-if="profile.deposit"
@@ -134,7 +128,7 @@
           />
           <div class="d-flex gap-2 flex-column justify-start align-items-start">
             <v-divider class="text-subtitle-1 font-weight-medium"
-              >Vous souhaitez être payer avant l'évènement ?</v-divider
+              >Vous souhaitez être payé (restant dû) ?</v-divider
             >
             <div class="d-flex align-center justify-center gap-2">
               <v-label class="text-subtitle-1 font-weight-medium">Avant la prestation</v-label>
@@ -152,6 +146,12 @@
           </div>
 
           <v-divider class="mb-6"> <p class="mb-6">A propos de votre communication</p></v-divider>
+
+          <v-text-field
+            label="Votre numéro de téléphone ?"
+            v-model="profile.telephone"
+            :error-messages="showErrors ? errors.siret : undefined"
+          />
 
           <div class="mt-4">
             <div v-for="(link, index) in profile.links" :key="index">
@@ -218,13 +218,19 @@
           </div>
         </div>
 
-        <div v-if="currentPage === 1" class="d-flex justify-space-between">
+        <div v-if="currentPage === 1" class="d-flex justify-space-between edit-professional__btn">
           <v-btn @click="openModal = false">Annuler</v-btn>
           <v-btn v-if="!isProfileCreated" color="primary" @click="createProfile(profile)">
             Valider mon profil
           </v-btn>
           <div v-else>
-            <v-btn color="primary" @click="modifyProfile(profile)"> Modifier mon profil </v-btn>
+            <v-btn
+              class="edit-professional__btn-width"
+              color="primary"
+              @click="modifyProfile(profile)"
+            >
+              Modifier mon profil
+            </v-btn>
           </div>
         </div>
       </v-form>
@@ -336,7 +342,7 @@ const {
     faq: {},
     minimumReservationPeriod: 0,
     certification: [''],
-    deposit: false,
+    deposit: true,
     depositAmount: 0,
     billingPeriod: 'beforeEvent',
     links: [{ type: 'Facebook', value: '' }] as [{ type: string; value: string }],
@@ -608,11 +614,6 @@ onMounted(() => {
   .v-btn {
     min-width: 150px;
   }
-
-  @media (max-width: 600px) {
-    flex-direction: column;
-    align-items: stretch;
-  }
 }
 
 /* --- HIERARCHIE VISUELLE --- */
@@ -626,8 +627,22 @@ onMounted(() => {
 
 /* --- RESPONSIVE --- */
 @media (max-width: 1024px) {
-  .v-form {
-    max-width: 95%;
+  .edit-professional {
+    .v-form {
+      max-width: 95%;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .edit-professional {
+    &__btn {
+      display: flex;
+      flex-direction: column-reverse;
+      &-width {
+        width: 100%;
+      }
+    }
   }
 }
 </style>

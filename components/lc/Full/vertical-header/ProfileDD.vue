@@ -10,22 +10,19 @@ import { useUserStore } from '~/stores/userStore';
 
 const { sendLogout } = useAuthentification();
 const { getJetonQuantity } = usePaiementJeton();
-const { getProfessionalProfileDetails } = useProfessionalProfile();
+const { getProfessionalProfileDetails, getProfessionalProfile } = useProfessionalProfile();
 const { getClientProfil } = useClientProfil();
 
 const userStore = useUserStore();
 const { isProfessional, category, displayName, initials } = storeToRefs(userStore);
+const { cartQuantity } = storeToRefs(useCartStore());
 
-const jetonBalance = ref(0);
-
-/** 🎯 Charger les infos nécessaires selon le type de profil */
 onMounted(async () => {
   try {
-    console.log(isProfessional.value, 'IS PROFESSIONAL');
-
     if (isProfessional.value) {
+      await getProfessionalProfile();
       await getProfessionalProfileDetails();
-      jetonBalance.value = await getJetonQuantity();
+      await getJetonQuantity();
     } else {
       await getClientProfil();
     }
@@ -92,7 +89,7 @@ onMounted(async () => {
               <h6 class="text-h6 font-weight-medium mb-1">{{ item.title }}</h6>
             </div>
             <p class="text-subtitle-1 font-weight-regular text-grey100">
-              <b>{{ item.requiresProfile ? jetonBalance : '' }}</b> {{ item.subtitle }}
+              <b>{{ item.requiresProfile ? cartQuantity : '' }}</b> {{ item.subtitle }}
             </p>
           </v-list-item>
         </v-list>

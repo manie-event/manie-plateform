@@ -134,7 +134,6 @@ export const useEventServiceProposition = () => {
         })
       );
 
-      addSuccess('Événement créé avec succès.');
       return allPropositions.flat(); // ✅ utile pour aplatir le tableau final
     } catch (error) {
       addError({

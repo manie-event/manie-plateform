@@ -1,20 +1,33 @@
 <template>
-  <div class="d-flex justify-space-between align-center">
-    <div class="d-flex flex-column">
+  <v-row class="d-flex justify-space-between align-center">
+    <v-col cols="12" lg="6" class="d-flex flex-column">
       <h1 class="text-h3">Bienvenue,</h1>
       <h5 class="text-h6">{{ clientName ?? user?.username }}, voici un résumé de vos activités</h5>
-    </div>
-    <v-btn @click="openModal = !openModal" class="events__add-button">Créer un évènement</v-btn>
+    </v-col>
+    <v-col cols="12" lg="6" class="events__cta">
+      <v-btn @click="eventCreation()" class="events__add-button">Créer un évènement</v-btn>
+    </v-col>
     <CustomerForm v-if="openModal" v-model:open-customer-form="openModal" />
-  </div>
+  </v-row>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import CustomerForm from '~/components/questionnaires/CustomerForm.vue';
+import { useProfessionalService } from '~/services/UseProfessionalService';
 
 const { clientName, user } = storeToRefs(useUserStore());
 const openModal = ref(false);
+
+const { getAllSectors, getKeywords } = useKeywordsStore();
+const { getProfessionalService } = useProfessionalService();
+
+const eventCreation = async () => {
+  console.log('eventCreation');
+
+  openModal.value = !openModal.value;
+  await Promise.all([getAllSectors(), getKeywords(), getProfessionalService()]);
+};
 </script>
 <style lang="scss" scoped>
 .events {
@@ -25,6 +38,15 @@ const openModal = ref(false);
     flex-direction: column;
     justify-content: start;
     align-items: center;
+  }
+  &__cta {
+    display: flex;
+    justify-content: flex-end;
+
+    @media (max-width: 1250px) {
+      display: flex;
+      justify-content: flex-start;
+    }
   }
   &__add-button {
     position: relative;

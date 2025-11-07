@@ -25,6 +25,10 @@ export const useProfessionalProfile = () => {
     try {
       if (!api) return;
       const { data } = await api.get('/professional');
+      console.log(data, 'getProfessionalProfile.value');
+
+      console.log(data, 'getProfessionalProfile');
+
       setProfessionalUser(data);
       return data;
     } catch (err: any) {
@@ -33,6 +37,8 @@ export const useProfessionalProfile = () => {
   };
 
   const getProfessionalProfileDetails = async () => {
+    console.log(professionalUuid.value, 'PROFESSIONALUUID');
+
     try {
       if (!api || !professionalUuid.value) return;
 
@@ -81,8 +87,6 @@ export const useProfessionalProfile = () => {
   };
   const changeProfessionalBannerPicture = async (file: File) => {
     if (!api || !professionalUuid.value) return;
-
-    if (!import.meta.client) return;
 
     try {
       const formData = new FormData();

@@ -9,28 +9,21 @@
           style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px"
         />
       </template>
-      <template #logo>
-        <img :src="LogoManie" alt="" class="manie-logo" />
-      </template>
+      <template #logo> <LogoManie alt="" class="manie-logo" /> </template>
     </base-side-picture>
     <div class="notre-histoire__descriptif">
-      <h1>Notre Histoire</h1>
-      <h3>
-        Je m’appelle Léonore et j’ai toujours eu un faible pour les moments qui rassemblent. Les
-        éclats de rire autour d’une table, l’odeur du plat familial, la petite émotion avant que
-        tout commence…
-      </h3>
+      <h1>NOTRE HISTOIRE ?</h1>
       <div class="notre-histoire__sous-titre">
         <v-expansion-panels>
-          <v-expansion-panel
-            v-for="(panel, index) in histoireData"
-            :key="index"
-            :title="panel.titre"
-            :text="panel.description"
-          >
+          <v-expansion-panel v-for="(panel, index) in histoireData" :key="index">
+            <v-expansion-panel-title> {{ panel.titre }} </v-expansion-panel-title>
+            <v-expansion-panel-text>
+              <div v-html="panel.description"></div>
+            </v-expansion-panel-text>
           </v-expansion-panel>
         </v-expansion-panels>
       </div>
+      <NuxtLink class="nuxt-link mt-6" to="/auth/login">Ca me plait !</NuxtLink>
     </div>
   </div>
 </template>
@@ -57,6 +50,10 @@ definePageMeta({
   &__descriptif {
     width: 50vw;
     padding: 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     h1 {
       margin-bottom: 1rem;
     }

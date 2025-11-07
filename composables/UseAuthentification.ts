@@ -4,7 +4,11 @@ import type { AuthentificationModel } from '~/models/authentification/authentifi
 import type { RegisterModel } from '~/models/authentification/registerModel';
 import type { registerNewPasswordModel } from '~/models/authentification/registerNewPasswordModel';
 import type { errorModel } from '~/models/errorModel';
+import { useEventService } from '~/services/UseEventService';
+import { useProfessionalService } from '~/services/UseProfessionalService';
 import { useClientProfil } from './client-user/UseClientProfil';
+import { useEventServiceProposition } from './event-service-propositions/UseEventServiceProposition';
+import { usePaiementJeton } from './professional-user/UsePaiementJeton';
 import { useProfessionalProfile } from './professional-user/UseProfessionalProfile';
 
 export const useAuthentification = () => {
@@ -13,9 +17,13 @@ export const useAuthentification = () => {
   const { addError, addSuccess } = useToaster();
   const userStore = useUserStore();
   const { setUser } = userStore;
-  const { getProfessionalProfile } = useProfessionalProfile();
+  const { getProfessionalProfile, getProfessionalProfileDetails } = useProfessionalProfile();
   const { getClientProfil } = useClientProfil();
-
+  const { getServicePropositionForProfessional } = useEventServiceProposition();
+  const { getEventsPerOrganisator } = useEventService();
+  const { getAllSectors, getKeywords } = useKeywordsStore();
+  const { getProfessionalService } = useProfessionalService();
+  const { getJetonQuantity } = usePaiementJeton();
   const { token } = useAuthCookies(); // access token (15 min)
   const { refreshToken } = useRefreshToken(); // refresh token (7 jours)
 
@@ -50,7 +58,6 @@ export const useAuthentification = () => {
       if (!tokenValue || !newRefresh || !user) {
         throw new Error('Réponse de login invalide (token/refresh/user manquant).');
       }
-      userStore.resetUserStore();
 
       // Persist tokens avant navigation
       refreshToken.value = newRefresh;
@@ -63,11 +70,20 @@ export const useAuthentification = () => {
 
       // Redirection par rôle
       if (user.category === 'consumer') {
+        await Promise.all([
+          getAllSectors(),
+          getKeywords(),
+          getProfessionalService(),
+          await getClientProfil(),
+          await getEventsPerOrganisator(),
+        ]);
+
         await router.push({ path: '/dashboards/dashboard-client' });
-        await getClientProfil();
       } else {
-        await router.push({ path: '/dashboards/dashboard2' });
-        await getProfessionalProfile();
+        (await getProfessionalProfile(),
+          await getServicePropositionForProfessional(),
+          await getJetonQuantity(),
+          router.push({ path: '/dashboards/dashboard2' }));
       }
     } catch (error: unknown) {
       console.error('Login error:', error);
@@ -145,6 +161,8 @@ export const useAuthentification = () => {
         'client-name',
         'client-uuid',
         'professional-uuid',
+        'notesByEvent',
+        'tasksByEvent',
       ];
       keysToRemove.forEach((key) => localStorage.removeItem(key));
       userStore.resetUserStore();

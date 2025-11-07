@@ -17,6 +17,7 @@
         v-for="(task, index) in currentTasks"
         :key="task.id"
         :class="task.done ? 'task-done' : 'task-pending'"
+        class="list-to-do"
       >
         <v-row class="align-center" no-gutters>
           <v-col cols="auto">
@@ -115,12 +116,16 @@ const handleUpdateTask = (taskId: number, updates: Partial<Task>) => {
   box-shadow: 5px 5px 5px 5px rgb(var(--v-theme-darkBg));
   padding: 1rem;
   background: rgb(var(--v-theme-containerBg));
+  overflow-y: scroll;
 }
 
 .task-done {
   text-decoration: line-through;
   opacity: 0.6;
   transition: all 0.25s ease;
+}
+
+.list-to-do {
 }
 
 .checklist-btn {

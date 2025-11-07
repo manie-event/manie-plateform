@@ -17,7 +17,7 @@
         density="compact"
       ></v-text-field>
     </div> -->
-    <div class="d-flex gap-4">
+    <div class="d-flex gap-4 notes__container">
       <v-sheet
         :class="'note-sheet pa-6 pb-4 rounded-md cursor-pointer mb-4  bg-light' + note.color"
         v-for="note in currentEventNotes"
@@ -86,6 +86,11 @@ const handleSelectNote = (noteId: number) => {
 };
 </script>
 <style lang="scss">
+.notes {
+  &__container {
+    overflow-x: scroll;
+  }
+}
 .note-sheet {
   transition: 0.1s ease-in;
   &:hover {

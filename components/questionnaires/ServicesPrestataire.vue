@@ -1,6 +1,13 @@
 <template>
-  <v-dialog v-model="serviceModal" width="800" transition="dialog-bottom-transition">
-    <v-card v-if="professionalUser?.uuid" width="800">
+  <v-dialog v-model="serviceModal" max-width="800" transition="dialog-bottom-transition">
+    <v-card
+      v-if="professionalUser?.uuid"
+      max-width="800"
+      style="padding: 35px; background: rgb(var(--v-theme-background))"
+    >
+      <v-btn icon class="close-btn" @click="serviceModal = false" variant="text">
+        <Icon icon="mdi:close" width="20" height="20" />
+      </v-btn>
       <div class="questionnaires-container">
         <div
           v-for="(questionnaire, index) in questionnaires"
@@ -30,6 +37,7 @@
               :items="activityItems"
               item-title="label"
               item-value="value"
+              style="background: rgb(var(--v-theme-background))"
               @update:model-value="updateQuestionnaireSector(questionnaire, $event)"
               variant="outlined"
             />
@@ -47,7 +55,7 @@
                 v-for="service in questionnaire.services"
                 :key="service.uuid"
                 variant="outlined"
-                :color="questionnaire.selectedServiceUuid === service.uuid ? 'primary' : 'default'"
+                :color="questionnaire.selectedServiceUuid === service.uuid ? '#5d79a4' : 'default'"
                 class="ma-1"
                 @click="selectService(service, questionnaire)"
                 :class="{ 'selected-chip': questionnaire.selectedServiceUuid === service.uuid }"
@@ -83,7 +91,7 @@
                           variant="outlined"
                           class="ma-1"
                           :color="
-                            questionnaire.selectedKeywords.has(keyword.uuid) ? 'success' : 'default'
+                            questionnaire.selectedKeywords.has(keyword.uuid) ? '#f39454' : 'default'
                           "
                           @click="selectKeyword(keyword, questionnaire)"
                           :class="{
@@ -154,20 +162,27 @@
           </div>
         </div>
 
-        <div class="d-flex align-center justify-lg-space-between">
-          <div class="d-flex justify-space-between align-center px-4 py-3">
+        <div class="d-flex align-center justify-space-between w-100">
+          <div class="d-flex justify-space-between align-center py-3">
             <v-btn
               v-if="questionnaires.length < 3"
               @click="addNewQuestionnaire"
-              color="primary"
               variant="outlined"
-              class="px-4 py-3"
+              style="
+                border: 1px solid rgb(var(--v-theme-darkbg));
+                color: rgb(var(--v-theme-darkbg));
+              "
+              class="px-4"
             >
               <span>Ajouter une nouvelle activité</span>
             </v-btn>
           </div>
           <div>
-            <v-btn color="primary" class="px-4 py-3" @click="submitAllQuestionnaires()">
+            <v-btn
+              style="background: rgb(var(--v-theme-darkbg)); color: white"
+              class="px-4"
+              @click="submitAllQuestionnaires()"
+            >
               Valider ma sélection
             </v-btn>
           </div>
@@ -377,5 +392,16 @@ watch(
 </script>
 
 <style scoped lang="scss">
-/* même style que ta version précédente */
+.v-expansion-panel {
+  background: rgb(var(--v-theme-background));
+  border-bottom: 1px solid rgb(var(--v-theme-background));
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: rgba(0, 0, 0, 0.54); /* adapte la couleur selon ton thème */
+  z-index: 1;
+}
 </style>

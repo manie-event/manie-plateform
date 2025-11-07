@@ -164,6 +164,13 @@
   }
 }
 
+@media screen and (max-width: 900px) {
+  .auth-login {
+    position: relative;
+    top: 50px;
+  }
+}
+
 .nopage {
   backface-visibility: hidden;
   display: flex;

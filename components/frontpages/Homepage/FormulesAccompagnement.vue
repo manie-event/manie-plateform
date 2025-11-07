@@ -1,11 +1,11 @@
 <template>
-  <div class="pt-96 packages">
+  <div class="packages">
     <v-container class="max-width-1218 package py-0" id="pricing">
-      <div class="pb-12 text-center">
-        <h2 class="display-1 font-weight-bold textPrimary">Fair pricing for everyone.</h2>
+      <div class="pb-6 text-center">
+        <h2 class="display-1 font-weight-bold textPrimary">Votre formule sera la nôtre.</h2>
         <p class="text-grey100 pt-4 text-17 lh-32">
-          Our robust analytics offer rich insights into the information buyers want, informing where
-          teams.
+          Que vous souhaitiez organiser votre événement en autonomie ou être accompagné(e), vous
+          trouverez chaussure à votre pied !
         </p>
       </div>
 
@@ -13,50 +13,54 @@
         <v-col cols="12">
           <v-card
             elevation="0"
-            class="rounded-16 pa-10 border packages__pricing-card text-center transition-all"
+            class="rounded-16 pa-10 border pricing-free-card text-center transition-all"
           >
-            <!-- Titre & sous-texte -->
-            <div class="pb-4">
-              <h4 class="text-22 font-weight-bold textPrimary mb-2">Liberté</h4>
-              <p class="text-15 text-grey100 font-weight-medium mb-0">
-                Tu souhaites organiser ton événement seul(e), comme un(e) grand(e) !
-              </p>
-            </div>
+            <v-row>
+              <v-col cols="12" md="6" class="d-flex align-center flex-column justify-center">
+                <div class="pb-4">
+                  <h4 class="text-22 font-weight-bold textPrimary mb-2">LIBERTE</h4>
+                  <p class="text-15 text-grey100 font-weight-medium mb-0">
+                    Vous souhaitez planifier votre événement en autonomie
+                  </p>
+                </div>
 
-            <!-- Prix -->
-            <div class="d-flex align-center justify-center flex-column mt-6 mb-8">
-              <h2 class="display-2 text-primary font-weight-bold mb-1">Gratuit</h2>
-              <div class="separator my-3"></div>
-            </div>
-
-            <!-- Liste des avantages -->
-            <v-list
-              class="mb-0 pl-0 pt-0 d-flex flex-wrap justify-center gap-4 packages__features-list"
-            >
-              <v-list-item
-                v-for="desc in firstPlanList"
-                :key="desc.listtitle"
-                class="pa-0 packages__feature-item"
-              >
-                <v-list-item-title
-                  class="text-15 font-weight-medium text-grey-dark d-flex align-center"
+                <!-- Prix -->
+                <div class="d-flex align-center justify-center flex-column">
+                  <h2 class="display-2 text-primary font-weight-bold mb-1">GRATUIT</h2>
+                  <div class="separator my-3"></div>
+                </div>
+              </v-col>
+              <v-col cols="12" md="6"
+                ><v-list
+                  class="mb-0 pl-0 pt-0 d-flex flex-column flex-wrap justify-center align-center gap-2 packages__features-list"
                 >
-                  <span class="divider">|</span>
-                  <span v-html="desc.listtitle" class="pl-2"></span>
-                </v-list-item-title>
-              </v-list-item>
-            </v-list>
+                  <v-list-item
+                    v-for="desc in firstPlanList"
+                    :key="desc.listtitle"
+                    class="pa-0 packages__feature-item"
+                  >
+                    <v-list-item-title
+                      class="text-15 font-weight-medium text-grey-dark d-flex align-center"
+                    >
+                      <span class="divider">|</span>
+                      <span v-html="desc.listtitle" class="pl-2"></span>
+                    </v-list-item-title>
+                  </v-list-item> </v-list
+              ></v-col>
+            </v-row>
           </v-card>
         </v-col>
       </v-row>
 
-      <v-divider class="my-10 opacity-60"> Nos offres d'accompagnement personnalisées</v-divider>
+      <v-divider class="my-6 opacity-60"> Pour aller plus loin</v-divider>
       <v-row class="d-flex justify-center">
         <v-col cols="12" lg="3" sm="6" v-for="card in Packages" :key="card.caption">
-          <v-card elevation="0" class="rounded-16 pa-6 border card">
+          <v-card elevation="0" class="rounded-16 pa-6 border card packages__card">
             <div class="pb-4">
               <div class="d-flex ga-2 align-center">
-                <h4 class="text-20 font-weight-semibold textPrimary mb-4">{{ card.caption }}</h4>
+                <h4 class="text-20 w-100 font-weight-semibold textPrimary mb-4 text-center">
+                  {{ card.caption.toUpperCase() }}
+                </h4>
                 <v-chip
                   v-if="card.tagtext"
                   size="small"
@@ -81,7 +85,12 @@
             </div>
 
             <div class="d-flex align-center mt-3 flex-column">
-              <h2 class="display-2 text-primary font-weight-bold">{{ card.price }}</h2>
+              <h2
+                class="display-2 text-primary font-weight-bold position-relative"
+                style="z-index: 10"
+              >
+                {{ card.price }}
+              </h2>
               <span class="text-h6 font-weight-thin opacity-60 text-center">{{
                 card.subprice
               }}</span>
@@ -128,6 +137,11 @@
           <p class="text-14 text-grey-dark mb-0" v-html="desc.listtitle"></p>
         </div>
 
+        <span class="custom-alert"
+          >Pour choisir votre formule, rendez-vous sur votre événement, dans votre tableau de
+          bord</span
+        >
+
         <div class="text-end mt-6">
           <v-btn color="primary" variant="text" @click="detailsDialog = false"> Fermer </v-btn>
         </div>
@@ -142,7 +156,7 @@ import type { PackageType } from '~/types/components/front-pages';
 
 const firstPlanList = [
   {
-    listtitle: 'Création espace client',
+    listtitle: 'Création de votre compte et votre tableau de bord ',
     status: false,
     icon: true,
     disable: false,
@@ -154,7 +168,7 @@ const firstPlanList = [
     disable: false,
   },
   {
-    listtitle: 'Mise en relation prestataire',
+    listtitle: 'Mise en relation avec vos futurs prestataires',
     status: false,
     icon: true,
     disable: false,
@@ -183,10 +197,12 @@ const selectedFormule = (index: number) => {
 
 <style lang="scss" scoped>
 .packages {
+  position: relative;
   background: rgb(var(--v-theme-background));
 
   &__text-wrap {
     white-space: normal;
+    padding-top: 105px;
     word-break: break-word;
   }
 
@@ -238,6 +254,7 @@ const selectedFormule = (index: number) => {
     background: linear-gradient(0deg, rgba(255, 255, 255, 1) 50%, rgba(237, 221, 83, 0) 100%);
     height: 200px;
     width: 100%;
+    z-index: 3;
     display: flex;
     justify-content: center; /* centre horizontalement */
     align-items: flex-end; /* colle le bouton en bas */
@@ -249,6 +266,16 @@ const selectedFormule = (index: number) => {
     bottom: 20px;
     width: 80%;
   }
+  &__card {
+    max-height: 310px;
+    h2 {
+      color: rgb(var(--v-theme-textSecondary));
+    }
+  }
+}
+
+.pricing-free-card {
+  height: 310px;
 }
 
 /* ✅ Le point reste aligné avec la première ligne du texte */
@@ -277,14 +304,6 @@ const selectedFormule = (index: number) => {
   background-color: #007bff;
 }
 
-.v-card {
-  border: 3px solid rgb(var(--v-theme-darkbg));
-  max-height: 600px;
-  h2 {
-    color: rgb(var(--v-theme-textSecondary));
-  }
-}
-
 :deep(.custom-tooltip) {
   max-width: 250px !important;
   background-color: rgba(30, 30, 30, 0.9) !important;
@@ -297,6 +316,15 @@ const selectedFormule = (index: number) => {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
+.custom-alert {
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  text-align: center;
+  border-radius: 5px;
+  background-color: rgb(var(--v-theme-darkbg)) !important;
+  color: rgb(var(--v-theme-background)) !important; // pour le texte
+}
+
 @media (max-width: 960px) {
   .feature-item {
     min-width: 100%;
@@ -304,6 +332,10 @@ const selectedFormule = (index: number) => {
   }
   .divider {
     display: none;
+  }
+  .pricing-free-card {
+    max-height: none;
+    height: auto;
   }
 }
 </style>

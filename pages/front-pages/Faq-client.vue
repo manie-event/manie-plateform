@@ -1,40 +1,43 @@
 <template>
-  <div class="faq-client__container">
-    <base-side-picture>
-      <template #bg-image>
-        <img
-          :src="SidePicture"
-          alt=""
-          class="faq-client__bg-image"
-          style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px"
-        />
-      </template>
-      <template #logo>
-        <img :src="LogoManie" alt="" class="manie-logo" />
-      </template>
-    </base-side-picture>
-    <div class="faq-client__descriptif">
-      <h1>FAQ Client</h1>
+  <v-row>
+    <v-col cols="6">
+      <base-side-picture>
+        <template #bg-image>
+          <img
+            :src="SidePicture"
+            alt=""
+            class="faq-client__bg-image"
+            style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px; z-index: 3"
+          />
+        </template>
+        <template #logo>
+          <LogoManie alt="" class="manie-logo" />
+        </template>
+      </base-side-picture>
+    </v-col>
+    <v-col class="faq-client__descriptif">
+      <h1>FAQ CLIENT</h1>
 
-      <div class="faq-client__sous-titre">
-        <v-expansion-panels>
-          <v-expansion-panel
-            v-for="(panel, index) in FaqClient"
-            :key="index"
-            :title="panel.titre"
-            :text="panel.description"
-          >
-          </v-expansion-panel>
-        </v-expansion-panels>
-      </div>
-    </div>
-  </div>
+      <v-expansion-panels>
+        <v-expansion-panel v-for="(panel, index) in FaqClient" :key="index">
+          <v-expansion-panel-title>
+            {{ panel.titre }}
+          </v-expansion-panel-title>
+
+          <v-expansion-panel-text>
+            <div v-html="panel.description"></div>
+          </v-expansion-panel-text>
+        </v-expansion-panel>
+      </v-expansion-panels>
+    </v-col>
+    <NuxtLink class="nuxt-link" to="/auth/login">Ca me plait !</NuxtLink>
+  </v-row>
 </template>
 <script setup lang="ts">
 import BaseSidePicture from '@/components/common/BaseSidePicture.vue';
 import FaqClient from '@/data/faq-client.json';
 import LogoManie from '@/public/images/logos/logo-manie-creme.svg';
-import SidePicture from '@/public/images/side-picture/tai-ngo-N79dTlEtq8A-unsplash.jpg';
+import SidePicture from '@/public/images/side-picture/faq-client.jpg';
 
 definePageMeta({
   layout: 'blank',
@@ -51,7 +54,11 @@ definePageMeta({
     position: relative;
   }
   &__descriptif {
-    width: 50vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 49vw;
     padding: 4rem;
     h1 {
       margin-bottom: 1rem;
@@ -68,6 +75,6 @@ definePageMeta({
   position: absolute;
   top: 40px;
   left: 40px;
-  width: 80px;
+  z-index: 999;
 }
 </style>

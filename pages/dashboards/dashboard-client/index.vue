@@ -4,23 +4,25 @@ import Event from '@/components/dashboards/dashboard-client/Events.vue';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
 import BaseEmptyState from '~/components/common/BaseEmptyState.vue';
 import { useClientProfil } from '~/composables/client-user/UseClientProfil';
-import { useProfessionalService } from '~/services/UseProfessionalService';
 import { useUserStore } from '~/stores/userStore';
+
 const userStore = useUserStore();
+const { isProfileCreated, isProfessional } = storeToRefs(userStore);
 const { getClientProfil } = useClientProfil();
-const { getProfessionalService } = useProfessionalService();
-const { isProfileCreated } = userStore;
+
+isProfessional.value = false;
+await getClientProfil();
 </script>
 
 <template>
   <v-row class="dashboard-client" v-if="isProfileCreated">
-    <v-row>
-      <v-col cols="12">
+    <v-row class="d-flex flex-column align-center justify-center w-100">
+      <v-col cols="12" class="w-100">
         <Event />
       </v-col>
     </v-row>
-    <v-row>
-      <v-col cols="12">
+    <v-row class="d-flex flex-column align-center justify-center w-100">
+      <v-col cols="12" class="w-100">
         <EventDashboardContainer />
       </v-col>
     </v-row>
@@ -52,5 +54,7 @@ const { isProfileCreated } = userStore;
   position: relative;
   margin: 2rem auto;
   padding: 10px 15px;
+  display: flex;
+  flex-direction: column;
 }
 </style>

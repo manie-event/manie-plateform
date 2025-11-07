@@ -9,22 +9,22 @@
 
   <div v-if="currentEvent">
     <v-row>
-      <v-col cols="4" xs="12" sm="12" lg="4">
+      <v-col cols="12" lg="4">
         <DateCounter :event-date="currentEvent.date[0]" />
       </v-col>
-      <v-col cols="4" xs="12" sm="12" lg="4">
+      <v-col cols="12" lg="4">
         <LatestDeals
           :proposition="getPropositionsByEvent"
           :current-event-service="currentEvent.eventServices"
         />
       </v-col>
-      <v-col cols="4" xs="12" sm="12" lg="4">
+      <v-col cols="12" lg="4">
         <Product :current-event="currentEvent" />
       </v-col>
-      <v-col cols="" xs="12" sm="12" lg="6">
+      <v-col cols="12" lg="6">
         <Notes :event="currentEvent" />
       </v-col>
-      <v-col cols="6" xs="12" sm="12" lg="6">
+      <v-col cols="12" lg="6">
         <CheckList :event="currentEvent" />
       </v-col>
     </v-row>
@@ -51,7 +51,6 @@ const { professionalResponseProposition } = storeToRefs(usePropositionStore());
 const { getEventsPerOrganisator } = useEventService();
 const { getServicePropositionForClient } = useEventServiceProposition();
 const currentEvent = ref<eventModel>();
-const currentPropositions = ref();
 const selectedEvent = (uuid: string) => {
   currentEvent.value = events.value.find((event) => event.uuid === uuid);
 };
@@ -67,11 +66,11 @@ const getPropositionsByEvent = computed(() => {
 });
 
 onMounted(async () => {
+  await getEventsPerOrganisator();
+  await getServicePropositionForClient();
   if (events.value.length > 0) {
     currentEvent.value = events.value[0];
   }
-  await getEventsPerOrganisator();
-  await getServicePropositionForClient();
 });
 </script>
 <style lang="scss" scoped>
