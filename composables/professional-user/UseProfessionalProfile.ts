@@ -25,6 +25,10 @@ export const useProfessionalProfile = () => {
     try {
       if (!api) return;
       const { data } = await api.get('/professional');
+      console.log(data, 'getProfessionalProfile.value');
+
+      console.log(data, 'getProfessionalProfile');
+
       setProfessionalUser(data);
       return data;
     } catch (err: any) {

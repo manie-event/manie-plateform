@@ -1,6 +1,6 @@
 <template>
   <v-row class="home">
-    <v-col cols="6" class="home__container" style="background: rgb(var(--v-theme-thirdy))">
+    <v-col cols="12" md="6" class="home__container" style="background: rgb(var(--v-theme-thirdy))">
       <h2 class="font-weight-bold text-uppercase text-left">Particuliers</h2>
       <h5 class="text-subtitle1 font-weight-medium">
         En famille, entre amis, ou les deux : célébrez la vie ! Qu’il s’agisse d’honorer l’amour, de
@@ -11,22 +11,20 @@
       </h5>
       <NuxtLink class="cta" to="/auth/login"> Je crée mon événement !</NuxtLink>
     </v-col>
-    <v-col cols="6" style="height: calc(100vh - 115px); padding: 0">
+    <v-col cols="12" md="6" style="height: calc(100vh - 115px); padding: 0">
       <div style="background: var(--manie-secondary); height: 100%">
         <img :src="homePerso" alt="" class="home__image" />
       </div>
     </v-col>
   </v-row>
   <v-row>
-    <v-col cols="6" style="height: calc(100vh - 115px); padding: 0">
+    <v-col cols="12" md="6" style="height: calc(100vh - 115px); padding: 0">
       <div style="height: 100%">
         <img :src="homePro" alt="" class="home__image" />
       </div>
     </v-col>
-    <v-col cols="6" class="home__container" style="background: #f39454">
-      <h2 class="text-h2 font-weight-bold text-uppercase" style="background: #f39454">
-        Professionnels
-      </h2>
+    <v-col cols="12" md="6" class="home__container" style="background: #f39454">
+      <h2 class="font-weight-bold text-uppercase" style="background: #f39454">Professionnels</h2>
       <h5 class="text-subtitle1 font-weight-medium">
         Entreprises, collectivités et institutions : valorisez vos équipes, vos clients et vos
         partenaires ! Qu’il s’agisse d’un séminaire, d’un lancement, d’une inauguration ou d’un
@@ -46,9 +44,9 @@
       style="height: 700px; gap: 40px"
       class="d-flex justify-center align-center flex-column"
     >
-      <h5 class="text-h4 font-weight-bold text-uppercase" style="color: rgb(var(--v-theme-darkbg))">
+      <h2 class="font-weight-bold text-uppercase" style="color: rgb(var(--v-theme-darkbg))">
         Prestataires
-      </h5>
+      </h2>
       <h5 class="text-subtitle1 font-weight-medium w-100" style="color: rgb(var(--v-theme-darkbg))">
         Vous faites partie de la team lieux, food, boissons, musique, audiovisuel, déco, location de
         matériel animation ou logistique ? <b>Bienvenue chez Manie !</b> Rejoins un écosystème local
@@ -162,6 +160,11 @@ h5 {
     padding: 0px 10px;
     border-radius: 15px;
     transition: all 0.4s ease-out;
+  }
+}
+@media screen and (max-width: 900px) {
+  h2 {
+    font-size: 2rem;
   }
 }
 </style>

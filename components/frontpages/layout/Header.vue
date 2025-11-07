@@ -106,7 +106,7 @@ onBeforeUnmount(() => {
     <div class="pa-4">
       <div class="d-flex justify-space-between align-center mb-4">
         <div class="d-flex">
-          <LcFullVerticalHeaderThemeToggler />
+          <!-- <LcFullVerticalHeaderThemeToggler /> -->
           <LcFullVerticalHeaderProfileDD />
         </div>
         <v-btn icon variant="text" @click="appsdrawer = false" class="drawer-menu__skip-btn">
@@ -164,7 +164,7 @@ onBeforeUnmount(() => {
 .drawer-menu {
   background: rgb(var(--v-theme-background));
   top: 115px;
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0;
   height: 100vh;
@@ -176,6 +176,7 @@ onBeforeUnmount(() => {
   }
 }
 .header {
+  position: relative;
   &__btn {
     background: rgb(var(--v-theme-darkbg));
     color: rgb(var(--v-theme-background));

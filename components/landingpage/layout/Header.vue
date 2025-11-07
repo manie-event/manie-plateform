@@ -14,7 +14,7 @@ const jetonAmount = ref(0);
 const stickyHeader = ref(false);
 const appsdrawer = ref(false);
 const isMobile = ref(window.innerWidth < 960);
-const { clientProfile, professionalUser, isProfileCreated } = storeToRefs(useUserStore());
+const { isProfileCreated } = storeToRefs(useUserStore());
 
 const totalPriceJeton = computed(() => `${jetonAmount.value * 9} €`);
 
@@ -48,50 +48,66 @@ onBeforeUnmount(() => {
 
       <!-- Actions desktop -->
       <div class="menu-dashboard__right-part d-none d-md-flex">
-        <LcFullVerticalHeaderThemeToggler />
-        <v-menu v-if="isProfessional" :close-on-content-click="false" class="notification_popup">
-          <template #activator="{ props }">
-            <v-btn icon flat size="small" class="custom-hover-primary" v-bind="props">
-              <Icon icon="solar:cart-3-outline" height="24" width="24" />
-              <v-badge
-                color="primary"
-                :content="jetonAmount"
-                variant="flat"
-                size="x-small"
-                class="text-white ml-4 position-absolute top-0 end-0"
-              />
-            </v-btn>
-          </template>
-          <v-sheet rounded="lg" width="385" elevation="10" class="mt-5 dropdown-box">
-            <div class="px-8 pb-4 pt-6">
-              <h6 class="text-h5 font-weight-semibold">Besoin de jeton(s) ?</h6>
-              <div class="d-flex align-center justify-space-between mt-4">
-                <img :src="JetonImg" alt="Jeton" height="36" />
-                <div class="d-flex align-center">
-                  <v-btn variant="text" @click="jetonAmount--" :disabled="jetonAmount <= 0"
-                    >-</v-btn
-                  >
-                  <p class="px-4">{{ jetonAmount > 0 ? jetonAmount : 0 }}</p>
-                  <v-btn variant="text" @click="jetonAmount++">+</v-btn>
-                </div>
-                <p class="px-4">
-                  <b>{{ totalPriceJeton }}</b>
-                </p>
-              </div>
-              <v-btn
-                v-if="jetonAmount > 0"
-                color="primary"
-                size="small"
-                rounded="pill"
-                block
-                @click="createTokenSession(jetonAmount)"
-              >
-                Acheter
+        <div v-if="isProfileCreated">
+          <LcFullVerticalHeaderThemeToggler />
+          <v-menu v-if="isProfessional" :close-on-content-click="false" class="notification_popup">
+            <template #activator="{ props }">
+              <v-btn icon flat size="small" class="custom-hover-primary" v-bind="props">
+                <Icon icon="solar:cart-3-outline" height="24" width="24" />
+                <v-badge
+                  color="primary"
+                  :content="jetonAmount"
+                  variant="flat"
+                  size="x-small"
+                  class="text-white ml-4 position-absolute top-0 end-0"
+                />
               </v-btn>
-            </div>
-          </v-sheet>
-        </v-menu>
-        <LcFullVerticalHeaderProfileDD />
+            </template>
+            <v-sheet rounded="lg" width="385" elevation="10" class="mt-5 dropdown-box">
+              <div class="px-8 pb-4 pt-6">
+                <h6 class="text-h5 font-weight-semibold">Besoin de jeton(s) ?</h6>
+                <div class="d-flex align-center justify-space-between mt-4">
+                  <img :src="JetonImg" alt="Jeton" height="36" />
+                  <div class="d-flex align-center">
+                    <v-btn variant="text" @click="jetonAmount--" :disabled="jetonAmount <= 0"
+                      >-</v-btn
+                    >
+                    <p class="px-4">{{ jetonAmount > 0 ? jetonAmount : 0 }}</p>
+                    <v-btn variant="text" @click="jetonAmount++">+</v-btn>
+                  </div>
+                  <p class="px-4">
+                    <b>{{ totalPriceJeton }}</b>
+                  </p>
+                </div>
+                <v-btn
+                  v-if="jetonAmount > 0"
+                  color="primary"
+                  size="small"
+                  rounded="pill"
+                  block
+                  @click="createTokenSession(jetonAmount)"
+                >
+                  Acheter
+                </v-btn>
+              </div>
+            </v-sheet>
+          </v-menu>
+          <LcFullVerticalHeaderProfileDD />
+        </div>
+        <v-btn
+          class="header__btn w-100"
+          rounded="pill"
+          :to="
+            isProfileCreated
+              ? !isProfessional
+                ? '/dashboards/dashboard-client'
+                : '/dashboards/dashboard2'
+              : '/auth/login'
+          "
+          @click="appsdrawer = false"
+        >
+          {{ isProfileCreated ? ' Mon tableau de bord' : 'Se connecter' }}
+        </v-btn>
       </div>
 
       <!-- Burger mobile -->
@@ -106,7 +122,7 @@ onBeforeUnmount(() => {
     <div class="pa-4">
       <div class="d-flex justify-space-between align-center mb-4">
         <div class="d-flex">
-          <LcFullVerticalHeaderThemeToggler />
+          <!-- <LcFullVerticalHeaderThemeToggler /> -->
           <LcFullVerticalHeaderProfileDD />
         </div>
         <v-btn icon variant="text" @click="appsdrawer = false" class="drawer-menu__skip-btn">
@@ -164,7 +180,7 @@ onBeforeUnmount(() => {
 .drawer-menu {
   background: rgb(var(--v-theme-background));
   top: 115px;
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0;
   height: 100vh;

@@ -60,6 +60,8 @@ export const useUserStore = defineStore(
         category: 'professional',
       };
 
+      console.log(professionalUser.value, 'setProfessionalUser');
+
       proName.value = professionalUser.value.name ?? null;
       professionalUuid.value = professionalUser.value.uuid ?? null;
       isProfileCreated.value = true;
@@ -127,7 +129,7 @@ export const useUserStore = defineStore(
   },
   {
     persist: {
-      storage: localStorage, // 👈 ici le plugin va sauver/restaurer ton store
+      storage: localStorage,
     },
   }
 );

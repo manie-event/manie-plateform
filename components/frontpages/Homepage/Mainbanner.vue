@@ -33,7 +33,7 @@
           class="text-align-start text-center d-flex flex-row justify-center align-center ga-8 w-33"
         >
           <div class="main-banner__titre-container">
-            <div>
+            <div class="main-banner__titre-position">
               <h1 class="d-flex justify-center font-weight-medium">
                 <p>Manie,</p>
                 <p>simplifie</p>
@@ -93,6 +93,7 @@ const { $gsap, $ScrollTrigger } = useNuxtApp();
     position: relative;
     z-index: 3;
   }
+
   &__titre-container {
     position: relative;
     h1 {
@@ -157,6 +158,26 @@ const { $gsap, $ScrollTrigger } = useNuxtApp();
       left: -5px;
       border-radius: 50%;
       border: 3px solid rgb(var(--v-theme-background));
+    }
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .main-banner {
+    height: 400px;
+
+    &__titre-position {
+      position: relative;
+      top: 20px;
+    }
+    &__party-picture {
+      height: 50vh;
+    }
+    h1 {
+      position: relative;
+      p {
+        font-size: 3rem;
+      }
     }
   }
 }

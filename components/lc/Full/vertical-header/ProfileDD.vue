@@ -10,17 +10,23 @@ import { useUserStore } from '~/stores/userStore';
 
 const { sendLogout } = useAuthentification();
 const { getJetonQuantity } = usePaiementJeton();
-const { getProfessionalProfileDetails } = useProfessionalProfile();
+const { getProfessionalProfileDetails, getProfessionalProfile } = useProfessionalProfile();
 const { getClientProfil } = useClientProfil();
 
 const userStore = useUserStore();
-const { isProfessional, category, displayName, initials } = storeToRefs(userStore);
+const { isProfessional, category, displayName, initials, professionalUuid } =
+  storeToRefs(userStore);
 
 const jetonBalance = ref(0);
 
 onMounted(async () => {
+  console.log(professionalUuid.value, 'professionalUuid.value from DD');
+  console.log(isProfessional.value, 'isProfessional');
+
   try {
     if (isProfessional.value) {
+      console.log('JE SUIS PRO');
+      await getProfessionalProfile();
       await getProfessionalProfileDetails();
       jetonBalance.value = await getJetonQuantity();
     } else {

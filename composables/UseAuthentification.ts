@@ -80,13 +80,10 @@ export const useAuthentification = () => {
 
         await router.push({ path: '/dashboards/dashboard-client' });
       } else {
-        await Promise.all([
-          getProfessionalProfile(),
-          getProfessionalProfileDetails(),
-          getServicePropositionForProfessional(),
-          getJetonQuantity(),
-          router.push({ path: '/dashboards/dashboard2' }),
-        ]);
+        (await getProfessionalProfile(),
+          await getServicePropositionForProfessional(),
+          await getJetonQuantity(),
+          router.push({ path: '/dashboards/dashboard2' }));
       }
     } catch (error: unknown) {
       console.error('Login error:', error);

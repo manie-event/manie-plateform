@@ -85,13 +85,13 @@ import ServicesPrestataire from '~/components/questionnaires/ServicesPrestataire
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { useUserStore } from '~/stores/userStore';
 
-const { professionalUser, user, isProfileCreated } = storeToRefs(useUserStore());
-const { changeProfessionalBannerPicture, getProfessionalProfileDetails } = useProfessionalProfile();
+const { professionalUser, user, isProfileCreated, initials } = storeToRefs(useUserStore());
+const { changeProfessionalBannerPicture, getProfessionalProfileDetails, getProfessionalProfile } =
+  useProfessionalProfile();
 
 const openModal = ref(false);
 const openServiceModal = ref(false);
 const fileInput = ref<HTMLInputElement | null>(null);
-const initials = ref('');
 
 const triggerClickFileInput = () => fileInput.value?.click();
 const changeBannerPhoto = async (e: Event) => {
@@ -105,21 +105,9 @@ const getServiceValues = computed(
   () => professionalUser.value?.professionalServices?.map((s) => s.name) ?? []
 );
 
-const getInitials = (name?: string) => (name ? name.trim().charAt(0).toUpperCase() : '?');
-
-watch(
-  professionalUser,
-  (newVal) => {
-    const name = newVal?.name || user.value?.username || '';
-    initials.value = getInitials(name);
-  },
-  { immediate: true }
-);
-
 onMounted(async () => {
   const name = professionalUser.value?.name || user.value?.username || '';
-  await getProfessionalProfileDetails();
-  initials.value = getInitials(name);
+  await getProfessionalProfile();
 });
 </script>
 
@@ -217,6 +205,17 @@ onMounted(async () => {
     border-radius: 12px;
     font-weight: 500;
     letter-spacing: 0.3px;
+  }
+}
+@media screen and (max-width: 900px) {
+  .profile-header {
+    width: 90vw;
+    margin: 0 auto;
+
+    &__actions {
+      width: 100%;
+      margin-top: 30px;
+    }
   }
 }
 </style>

@@ -3,7 +3,7 @@ import { PRICE_PER_TOKEN } from '~/constants/prixToken';
 export const usePaiementJeton = () => {
   const route = useRoute();
   const userStore = useUserStore();
-  const { professionalUser } = storeToRefs(userStore);
+  const { professionalUser, professionalUuid } = storeToRefs(userStore);
   const cartStore = useCartStore();
   const { initializeTokenBalance } = cartStore;
   const { addSuccess, addError } = useToaster();
@@ -15,15 +15,14 @@ export const usePaiementJeton = () => {
    * Crée une session de paiement Stripe
    */
   const createTokenSession = async (amount: number) => {
-    const currentProfile = professionalUser.value;
-    if (!currentProfile?.uuid) throw new Error('Profil professionnel non trouvé');
+    if (!professionalUuid) throw new Error('Profil professionnel non trouvé');
 
     try {
       if (!api) return;
 
-      const { data } = await api.post(`/payments/token/${currentProfile.uuid}`, {
+      const { data } = await api.post(`/payments/token/${professionalUuid}`, {
         quantity: amount,
-        professional_uuid: currentProfile.uuid,
+        professional_uuid: professionalUuid,
       });
 
       if (data?.url) {
