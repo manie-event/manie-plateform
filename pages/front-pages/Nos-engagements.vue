@@ -14,15 +14,12 @@
       </template>
     </base-side-picture>
     <div class="nos-engagements__descriptif">
-      <h1>Nos engagements</h1>
+      <h1>Valeurs et engagements</h1>
 
-      <v-expansion-panels>
-        <v-expansion-panel
-          v-for="(panel, index) in engagementsData"
-          :key="index"
-          :title="panel.titre"
-          :text="panel.description"
-        >
+      <v-expansion-panels class="mt-6">
+        <v-expansion-panel v-for="(panel, index) in engagementsData" :key="index">
+          <v-expansion-panel-title> {{ panel.titre }} </v-expansion-panel-title>
+          <v-expansion-panel-text> <div v-html="panel.description"></div> </v-expansion-panel-text>
         </v-expansion-panel>
       </v-expansion-panels>
     </div>

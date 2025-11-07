@@ -6,7 +6,7 @@ import { ref } from 'vue';
 
 const { sendContactForm } = useContactService();
 
-const items = ref(['Question générale', 'Demande de rendez-vous', 'option 3', 'option 4']);
+const items = ref(['Question générale', 'Demande de rendez-vous',  'Au sujet des formules', 'Partenariat et collaboration']);
 
 const message = ref<ContactMessage>({
   firstName: '',
@@ -18,26 +18,36 @@ const message = ref<ContactMessage>({
 });
 </script>
 <template>
-  <div class="pt-3 bg-background pb-14">
-    <v-container class="max-width-1218">
+  <div class="pt-3 pb-14">
+    <v-container class="max-width-1218 ">
       <v-row>
         <v-col cols="12" lg="4">
           <div
-            class="bg-primary rounded-lg pa-7 position-relative overflow-hidden mt-md-0 mt-6 position-relative"
+            class="contact-form rounded-lg pa-7 position-relative overflow-hidden mt-md-0 mt-6 position-relative"
           >
-            <h4 class="text-18 font-weight-bold mb-4">A votre service</h4>
-            <p class="text-16 font-weight-regular position-relative z-1">
-              Vous avez des questions ou souhaitez en savoir plus sur nos services ? N'hésitez pas à
-              nous contacter.
+            <h4 class="text-18 font-weight-bold mb-4 text-white">On vous écoute !</h4>
+            <p class="text-16 font-weight-regular position-relative z-1 text-white">
+              Vous avez des questions ou souhaitez en savoir plus sur nos services ? <br />
+              N'hésitez pas à nous contacter.
             </p>
-            <v-divider class="my-10 opacity-20"></v-divider>
-            <h4 class="text-18 font-weight-bold mb-4">
-              Basé à Lyon disponible en <br />
-              Rhône-Alpes
+            <v-divider class="my-10 opacity-20 text-white"></v-divider>
+            <p>
+              <b class="text-white"
+                >Avant toute chose, avez-vous pensé à regarder si votre question figure dans le FAQ
+                ?</b
+              >
+              <div class="d-flex justify-space-between">
+  <v-btn class="contact-form__btn" to="/front-pages/Faq-client">FAQ Client</v-btn>
+  <v-btn class="contact-form__btn" to="/front-pages/Faq-prestataire">FAQ Presta</v-btn>
+</div>
+            </p>
+            <v-divider class="mb-10 opacity-20"></v-divider>
+            <h4 class="text-18 font-weight-bold mb-4 text-white">
+              Basé à Lyon disponible en Rhône-Alpes
             </h4>
             <v-divider class="my-10 opacity-20"></v-divider>
             <div class="contact-form__reseaux">
-              <NuxtLink to="https://www.instagram.com/manie_event/" target="_blank"
+              <NuxtLink to="https://www.instagram.com/manie.event/" target="_blank"
                 ><Icon icon="ant-design:instagram-outlined" height="22" width="22"></Icon
               ></NuxtLink>
               <NuxtLink to="https://www.linkedin.com/company/manie-event/" target="_blank"
@@ -48,8 +58,14 @@ const message = ref<ContactMessage>({
                 target="_blank"
                 ><Icon icon="ant-design:facebook-outlined" height="22" width="22"></Icon
               ></NuxtLink>
-              <p>/</p>
-              <p>contact@manie-events.fr</p>
+            </div>
+            <div class="mt-4">
+              <div class="d-flex">
+                <Icon icon="iconamoon:email-light" width="24" height="24" style="color: white; stroke-width: 0.3;"></Icon><p class="text-white ml-3">contact@manie-event.fr</p>
+              </div>
+              <div class="d-flex">
+                <Icon icon="iconamoon:location-pin-light" width="24" height="24" style="color: white; stroke-width: 0.3;"></Icon><p class="text-white ml-3">Rue de Gerland 69007 LYON</p>
+              </div>
             </div>
           </div>
         </v-col>
@@ -149,14 +165,26 @@ const message = ref<ContactMessage>({
 </template>
 <style lang="scss" scoped>
 .contact-form {
+  background: rgb(var(--v-theme-darkbg));
   &__reseaux {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     gap: 0.8rem;
     a {
       color: white;
       height: 22px;
+      text-decoration: none;
+    }
+  }
+  &__btn{
+  font-weight: bold;
+  margin: 20px 0;
+  background: transparent;
+  border: 1px solid white;
+  color: rgb(var(--v-theme-background));
+  a {
+      text-decoration: none;
     }
   }
 }
