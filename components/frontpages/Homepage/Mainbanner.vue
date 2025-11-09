@@ -165,6 +165,7 @@ const { $gsap, $ScrollTrigger } = useNuxtApp();
 @media screen and (max-width: 900px) {
   .main-banner {
     height: 400px;
+    width: 103vw;
     &__titre-position {
       position: relative;
       top: 20px;
