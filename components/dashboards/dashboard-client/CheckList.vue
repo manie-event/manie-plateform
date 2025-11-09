@@ -1,7 +1,12 @@
 <template>
   <div class="position-relative check-list">
     <div class="d-flex flex-row-reverse justify-space-between">
-      <v-btn color="primary" class="checklist-btn" variant="flat" @click="handleAddTask()">
+      <v-btn
+        style="background: rgb(var(--v-theme-thirdy)); color: white; text-decoration: none"
+        class="checklist-btn"
+        variant="flat"
+        @click="handleAddTask()"
+      >
         <icon icon="mdi-plus" />
       </v-btn>
       <div>

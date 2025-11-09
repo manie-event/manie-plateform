@@ -7,7 +7,11 @@
         </div>
         <div class="d-flex justify-end align-center gap-6">
           <div class="text-right mr-6">
-            <v-btn @click="openExpenseModal = true" color="primary">+</v-btn>
+            <v-btn
+              @click="openExpenseModal = true"
+              style="background: rgb(var(--v-theme-thirdy)); color: white; text-decoration: none"
+              >+</v-btn
+            >
           </div>
           <div class="text-right">
             <v-btn

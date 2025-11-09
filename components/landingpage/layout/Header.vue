@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { FrontPageMenu } from '@/_mockApis/landingpage/lpPage';
 import JetonImg from '@/public/images/panier/jeton.png';
 import { default as Logo } from '@/public/images/svgs/logo-manie-nav.svg';
 import { Icon } from '@iconify/vue';
@@ -11,7 +12,6 @@ import { useUserStore } from '~/stores/userStore';
 const { isProfessional } = storeToRefs(useUserStore());
 const { createTokenSession } = usePaiementJeton();
 const jetonAmount = ref(0);
-const stickyHeader = ref(false);
 const appsdrawer = ref(false);
 const isMobile = ref(window.innerWidth < 960);
 const { isProfileCreated } = storeToRefs(useUserStore());
@@ -118,7 +118,7 @@ onBeforeUnmount(() => {
   </v-app-bar>
 
   <!-- Drawer mobile -->
-  <v-navigation-drawer v-model="appsdrawer" location="left" class="drawer-menu">
+  <v-navigation-drawer v-model="appsdrawer" location="left" color="containerBg" class="mt-6">
     <div class="pa-4">
       <div class="d-flex justify-space-between align-center mb-4">
         <div class="d-flex" v-if="isProfileCreated">
@@ -129,8 +129,18 @@ onBeforeUnmount(() => {
           <Icon icon="ci:close-big" size="24" />
         </v-btn>
       </div>
-      <div class="d-flex flex-column align-center justify-center" style="height: 200px">
-        <Navigation />
+      <div class="d-flex flex-column align-center justify-center">
+        <v-col v-for="demo in FrontPageMenu.slice(0, 5)" :key="demo.img">
+          <NuxtLink class="nuxt-link" size="small" rounded="pill" flat :href="demo.link">
+            {{ demo.name }}
+          </NuxtLink>
+        </v-col>
+        <v-col>
+          <NuxtLink class="nuxt-link mr-lg-0" to="/front-pages/pricing">Formules</NuxtLink>
+        </v-col>
+        <v-col>
+          <NuxtLink class="nuxt-link mr-lg-0" to="/front-pages/Contact-us">Contact</NuxtLink>
+        </v-col>
       </div>
 
       <v-divider class="my-4" />
@@ -175,13 +185,12 @@ header {
 }
 
 .drawer-menu {
+  position: absolute;
   background: rgb(var(--v-theme-background));
-  top: 115px;
-  position: relative;
   top: 0;
   left: 0;
   height: 100vh;
-  width: 100vw;
+  width: 100vw !important;
   &__skip-btn {
     position: absolute;
     top: 10px;

@@ -71,4 +71,26 @@ definePageMeta({
   left: 20px;
   width: 150px;
 }
+
+@media screen and (max-width: 960px) {
+  .notre-histoire {
+    &__container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: column;
+    }
+    &__descriptif {
+      width: 100vw;
+      padding: 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      h1 {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}
 </style>

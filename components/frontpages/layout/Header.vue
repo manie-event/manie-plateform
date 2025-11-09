@@ -102,7 +102,7 @@ onBeforeUnmount(() => {
   </v-app-bar>
 
   <!-- Drawer mobile -->
-  <v-navigation-drawer v-model="appsdrawer" location="left" class="drawer-menu">
+  <v-navigation-drawer v-model="appsdrawer" color="containerBg" location="left" class="drawer-menu">
     <div class="pa-4">
       <div class="d-flex justify-space-between align-center mb-4">
         <div class="d-flex" v-if="isProfileCreated">
@@ -157,9 +157,8 @@ onBeforeUnmount(() => {
 }
 
 .drawer-menu {
+  position: absolute;
   background: rgb(var(--v-theme-background));
-  top: 115px;
-  position: relative;
   top: 0;
   left: 0;
   height: 100vh;

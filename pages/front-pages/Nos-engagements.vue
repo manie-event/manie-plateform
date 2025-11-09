@@ -64,4 +64,19 @@ definePageMeta({
   left: 40px;
   width: 90px;
 }
+
+@media screen and (max-width: 960px) {
+  .nos-engagements {
+    &__container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: column;
+    }
+    &__descriptif {
+      width: 100vw;
+      padding: 4rem;
+    }
+  }
+}
 </style>

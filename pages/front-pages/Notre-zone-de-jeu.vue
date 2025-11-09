@@ -69,4 +69,29 @@ definePageMeta({
   left: 40px;
   width: 80px;
 }
+
+@media screen and (max-width: 960px) {
+  .notre-zone-de-jeu {
+    &__container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 20px;
+      width: 90vw;
+      margin: 0 auto;
+    }
+    &__bg-image {
+      position: relative;
+      display: none;
+    }
+    &__descriptif {
+      width: 50vw;
+      padding: 4rem;
+      h1 {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}
 </style>

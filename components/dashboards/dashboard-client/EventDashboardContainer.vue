@@ -7,22 +7,30 @@
         </v-btn>
       </div>
     </div>
-    <div class="d-flex align-center justify-center flex-column">
-      <v-btn @click="openPricingModal = true" color="primary" class="w-100 mb-4" variant="tonal">
-        <v-icon start>mdi-page-last</v-icon>
+    <div class="d-flex flex-column flex-md-row align-center justify-space-between gap-3 w-100 my-6">
+      <v-btn
+        @click="openPricingModal = true"
+        class="flex-grow-1"
+        variant="flat"
+        style="background: rgb(var(--v-theme-darkbg)); color: white; text-decoration: none"
+      >
         Me faire accompagner
       </v-btn>
+
       <v-btn
         @click="isEventModificationOpen = true"
-        color="primary"
-        class="w-100 mb-4"
-        variant="tonal"
+        class="flex-grow-1"
+        variant="flat"
+        style="background: rgb(var(--v-theme-darkbg)); color: white; text-decoration: none"
       >
-        <v-icon start>mdi-pencil</v-icon>
         Modifier l'événement
       </v-btn>
-      <v-btn @click="isAddingServiceOpen = true" color="success" class="w-100" variant="flat">
-        <v-icon start>mdi-plus</v-icon>
+      <v-btn
+        @click="isAddingServiceOpen = true"
+        class="flex-grow-1"
+        variant="flat"
+        style="background: rgb(var(--v-theme-darkbg)); color: white; text-decoration: none"
+      >
         Ajouter des services
       </v-btn>
     </div>
@@ -156,6 +164,11 @@ onMounted(async () => {
   &__btn {
     width: fit-content;
     padding: 0.2rem 1.5rem;
+  }
+}
+@media (max-width: 959px) {
+  .v-btn {
+    width: 100%;
   }
 }
 </style>
