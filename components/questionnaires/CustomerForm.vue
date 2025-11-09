@@ -234,11 +234,12 @@ import { Icon } from '@iconify/vue';
 import { UseEvent } from '~/composables/event/UseEvent';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { SectorsDto } from '~/models/dto/sectorsDto';
-import type { QuestionnaireClient } from '~/models/questionnaire/QuestionnaireClientModel';
+import type { eventModel } from '~/models/events/eventModel';
+import { useEventService } from '~/services/UseEventService';
 import { useProfessionalService } from '~/services/UseProfessionalService';
 
 const props = defineProps<{
-  answers?: QuestionnaireClient;
+  event: eventModel;
 }>();
 
 const openCustomerForm = defineModel<boolean>('openCustomerForm', { default: false });
@@ -270,6 +271,7 @@ const dateStart = ref('');
 const dateEnd = ref('');
 
 const baseColor = '#5d79a4';
+const { getEventsInstance } = useEventService();
 
 const selectedServices = ref([
   {
@@ -473,32 +475,34 @@ const handleSubmit = async () => {
 };
 
 onMounted(async () => {
-  if (!props.answers) return;
+  // Récupère l'instance complète de l'événement
+  const responses = await getEventsInstance(props.event.uuid);
 
-  const normalizedAnswer = props.answers.$attributes;
+  // Données normalisées du questionnaire
+  const normalizedAnswer = responses.$attributes;
+  console.log('normalizedAnswer', normalizedAnswer);
 
-  eventType.value = normalizedAnswer.event_type || '';
-  name.value = normalizedAnswer.name || '';
-  location.value = normalizedAnswer.location || '';
-  duration.value = normalizedAnswer.duration || '';
-  group_type.value = normalizedAnswer.group_type || '';
-  theme.value = normalizedAnswer.theme || '';
-  organized_for.value = normalizedAnswer.organized_for || '';
+  // Pré-remplir les champs
+  eventType.value = normalizedAnswer.event_type ?? '';
+  name.value = normalizedAnswer.name ?? '';
+  location.value = normalizedAnswer.location ?? '';
+  duration.value = normalizedAnswer.duration ?? '';
+  group_type.value = normalizedAnswer.group_type ?? '';
+  theme.value = normalizedAnswer.theme ?? '';
+  organized_for.value = normalizedAnswer.organized_for ?? '';
   people.value = Number(normalizedAnswer.people) || 0;
-  budgetInput.value = normalizedAnswer.budget || 0;
-  dateStart.value = normalizedAnswer.date[0] || '';
-  dateEnd.value = normalizedAnswer.date[1] || '';
+  budgetInput.value = normalizedAnswer.budget ?? 0;
+  [dateStart.value, dateEnd.value] = normalizedAnswer.date ?? ['', ''];
 
-  if (props.answers.$preloaded?.eventServices?.length > 0) {
-    selectedServices.value = props.answers.$preloaded.eventServices.map((srv: any) => {
+  // Pré-remplir les services sélectionnés
+  if (responses.$preloaded?.eventServices?.length) {
+    selectedServices.value = responses.$preloaded.eventServices.map((srv) => {
       const service = servicesFiltered.value.find((s) => s.uuid === srv.serviceUuid);
       const sector = sectors.value.find((sect) => sect.uuid === service?.sectorUuid);
-
       return {
         selectedSector: sector?.name ?? undefined,
         selectedServiceId: srv.serviceUuid,
-        selectedKeywords:
-          srv.keywordsUuid?.map((k: any) => (typeof k === 'string' ? k : k.uuid)) || [],
+        selectedKeywords: srv.keywordsUuid?.map((k) => (typeof k === 'string' ? k : k.uuid)) || [],
       };
     });
   }
