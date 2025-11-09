@@ -126,6 +126,15 @@ export const useKeywordsStore = defineStore('keywords', () => {
     }
   };
 
+  const preloadServices = async () => {
+    if (!api) throw new Error('API non initialisée');
+
+    if (services.value.length === 0) {
+      const response = await api.get('/service', { params: { limit: 1000 } });
+      services.value = response.data.data;
+    }
+  };
+
   const sendProfessionalServices = async (servicesPayload: ProfessionalServiceUuid) => {
     try {
       if (!api) throw new Error('API non initialisée');
@@ -155,6 +164,7 @@ export const useKeywordsStore = defineStore('keywords', () => {
     getSectors,
     getServices,
     getKeywords,
+    preloadServices,
     sendProfessionalServices,
   };
 });

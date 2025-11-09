@@ -77,8 +77,6 @@ const sendMessage = async () => {
 
   const response = await updateProfessionalMessage(props.uuid, messageAllTogether);
 
-  console.log(response, 'sendMessage');
-
   if (response) {
     emit('message-sent', props.uuid);
     await getServicePropositionForProfessional();

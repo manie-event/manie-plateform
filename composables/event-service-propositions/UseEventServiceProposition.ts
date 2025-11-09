@@ -14,6 +14,7 @@ export const useEventServiceProposition = () => {
     acceptedByClient,
     declinedByClient,
   } = useProfessionalProposition();
+  const { services } = storeToRefs(useKeywordsStore());
   const { servicesFiltered } = storeToRefs(eventsStore());
   const { getEventsPerOrganisator, getEventServiceList } = useEventService();
   const { setServiceEventPropositionForPresta, setServiceEventPropositionForClient } =
@@ -24,59 +25,54 @@ export const useEventServiceProposition = () => {
   const getServicePropositionForClient = async () => {
     try {
       const allEvents = await getEventsPerOrganisator();
-
       if (!Array.isArray(allEvents) || allEvents.length === 0) {
         console.warn('⚠️ Aucun événement trouvé.');
         return [];
       }
 
-      const propositionList = await Promise.all(
+      const allPropositions = await Promise.all(
         allEvents.map(async (event) => {
-          try {
-            // Vérifie la structure
-            if (!event?.eventServices?.length) {
-              console.warn(`⚠️ Aucun service trouvé pour l'événement ${event.uuid}`);
-              return null;
-            }
+          if (!event?.eventServices?.length) return [];
 
-            const firstService = event.eventServices[0];
-            if (!firstService?.uuid) {
-              console.warn(`⚠️ Service sans UUID pour l'événement ${event.uuid}`);
-              return null;
-            }
+          // Pour chaque service de l'événement
+          const allServicePropositions = await Promise.all(
+            event.eventServices.map(async (service) => {
+              const propositions = await getListPropositionByEventService(service.uuid);
 
-            // Appel API sécurisé
-            const serviceList = await getListPropositionByEventService(firstService.uuid);
+              // On cherche le nom du service via service.serviceUuid
+              const engagedService = services.value.find((s) => s.uuid === service.serviceUuid);
+              const serviceName = engagedService ? engagedService.name : 'Service inconnu';
 
-            if (!Array.isArray(serviceList) || serviceList.length === 0) {
-              console.warn(`⚠️ Aucune proposition trouvée pour service ${firstService.uuid}`);
-              return null;
-            }
+              // Chaque prestataire ayant fait une proposition sur ce service
+              return propositions.map((proposition) => ({
+                ...event,
+                ...proposition,
+                propositionUuid: proposition.uuid,
+                propositionStatus: proposition.status,
+                eventUuid: event.uuid,
+                eventName: event.name,
+                // on ajoute le nom du service engagé
+                serviceEngage: serviceName,
+              }));
+            })
+          );
 
-            const serviceEngage = servicesFiltered.value?.[0]?.name ?? 'Service inconnu';
-
-            return {
-              ...serviceList[0],
-              propositionUuid: serviceList[0].uuid,
-              propositionStatus: serviceList[0].status,
-              ...event,
-              serviceEngage,
-            };
-          } catch (innerError) {
-            console.error(`❌ Erreur sur event ${event.uuid}:`, innerError);
-            return null;
-          }
+          // aplatissement : [[...], [...]] → [...]
+          return allServicePropositions.flat();
         })
       );
 
-      const cleanList = propositionList.filter(Boolean);
+      // Nettoyage : suppression des valeurs null
+      const cleanList = allPropositions.flat().filter(Boolean);
 
       setServiceEventPropositionForClient(cleanList);
       addSuccess('Propositions de services récupérées avec succès.');
       return cleanList;
     } catch (error) {
-      addError({ message: 'Une erreur est survenue lors de la récupération des propositions.' });
       console.error('❌ Erreur getServicePropositionForClient:', error);
+      addError({
+        message: 'Une erreur est survenue lors de la récupération des propositions.',
+      });
       throw error;
     }
   };

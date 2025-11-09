@@ -23,8 +23,6 @@ const { getAllSectors, getKeywords } = useKeywordsStore();
 const { getProfessionalService } = useProfessionalService();
 
 const eventCreation = async () => {
-  console.log('eventCreation');
-
   openModal.value = !openModal.value;
   await Promise.all([getAllSectors(), getKeywords(), getProfessionalService()]);
 };

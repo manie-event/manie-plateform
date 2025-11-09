@@ -4,14 +4,23 @@ import Event from '@/components/dashboards/dashboard-client/Events.vue';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
 import BaseEmptyState from '~/components/common/BaseEmptyState.vue';
 import { useClientProfil } from '~/composables/client-user/UseClientProfil';
+import { useEventServiceProposition } from '~/composables/event-service-propositions/UseEventServiceProposition';
+import { useEventService } from '~/services/UseEventService';
 import { useUserStore } from '~/stores/userStore';
 
 const userStore = useUserStore();
 const { isProfileCreated, isProfessional } = storeToRefs(userStore);
 const { getClientProfil } = useClientProfil();
+const { events } = storeToRefs(eventsStore());
+const { getEventsPerOrganisator } = useEventService();
+const { getServicePropositionForClient } = useEventServiceProposition();
+
+const isEventPast = computed(() => events.value.filter((event) => isEventDone(event.date[0])));
 
 isProfessional.value = false;
 await getClientProfil();
+await getEventsPerOrganisator();
+await getServicePropositionForClient();
 </script>
 
 <template>
@@ -23,7 +32,7 @@ await getClientProfil();
     </v-row>
     <v-row class="d-flex flex-column align-center justify-center w-100">
       <v-col cols="12" class="w-100">
-        <EventDashboardContainer />
+        <EventDashboardContainer :events="isEventPast" />
       </v-col>
     </v-row>
   </v-row>

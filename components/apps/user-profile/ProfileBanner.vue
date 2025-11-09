@@ -1,39 +1,58 @@
 <template>
   <v-card elevation="5" class="profile-banner">
     <img :src="profileBg" alt="profile background" />
-    <div class="info-section">
-      <div class="contact-info">
-        <h6>
-          <Icon icon="ci:paper-plane" height="20" />
-          {{ clientProfile?.email ?? 'Veuillez renseigner un email' }}
-        </h6>
-        <h6>
-          <Icon icon="ci:phone" height="20" />
-          {{ clientProfile?.phoneNumber ?? 'Veuillez renseigner un téléphone' }}
-        </h6>
-      </div>
-
-      <div class="user-details">
-        <div class="avatar-border">
-          <v-avatar size="100" class="userImage">
-            <h3>{{ initials }}</h3>
-          </v-avatar>
+    <v-row>
+      <v-col cols="12" md="5" order="2" order-md="1" class="profile-banner__card">
+        <div class="info-section">
+          <div class="contact-info">
+            <h6>
+              <Icon icon="ci:paper-plane" height="20" />
+              {{ clientProfile?.email ?? 'Veuillez renseigner un email' }}
+            </h6>
+            <h6>
+              <Icon icon="ci:phone" height="20" />
+              <span style="text-align: center">{{
+                clientProfile?.phoneNumber ?? 'Veuillez renseigner un téléphone'
+              }}</span>
+            </h6>
+          </div>
         </div>
-        <h5>{{ clientProfile?.username || user?.username }}</h5>
-        <span>Chercheur de bonheur</span>
-      </div>
-
-      <div class="actions">
-        <v-btn color="primary" @click="openEditProfilModal()" class="pa-3"
-          >Éditer votre profil</v-btn
-        >
-        <NuxtLink to="/dashboards/dashboard-client">
-          <v-btn color="success" class="pa-3">Revenir au dashboard</v-btn>
-        </NuxtLink>
-      </div>
-    </div>
+      </v-col>
+      <v-col
+        cols="12"
+        md="3"
+        order="1"
+        order-md="2"
+        class="profile-banner__card"
+        style="position: relative; top: -55px"
+      >
+        <div class="user-details">
+          <div class="avatar-border">
+            <v-avatar size="100" class="userImage">
+              <h3>{{ initials }}</h3>
+            </v-avatar>
+          </div>
+          <h5>{{ clientProfile?.username || user?.username }}</h5>
+          <span>Chercheur de bonheur</span>
+        </div>
+      </v-col>
+      <v-col
+        cols="12"
+        md="4"
+        order="3"
+        style="display: flex; align-items: center; justify-content: center"
+      >
+        <div class="actions">
+          <v-btn color="primary" @click="openEditProfilModal()" class="pa-3"
+            >Éditer votre profil</v-btn
+          >
+          <NuxtLink to="/dashboards/dashboard-client">
+            <v-btn color="success" class="pa-3">Revenir au dashboard</v-btn>
+          </NuxtLink>
+        </div>
+      </v-col>
+    </v-row>
   </v-card>
-
   <Teleport to="body">
     <EditClientProfil v-model:openModal="openModal" />
     <ModalRedirection :redirection="'dashboard-client'" v-model="isProfilUpdate" />
@@ -67,6 +86,9 @@ const openEditProfilModal = () => {
   margin-bottom: 2rem;
   width: 80vw;
   padding-bottom: 60px;
+  @media screen and (max-width: 960px) {
+    width: 100%;
+  }
 
   img {
     object-fit: cover;
@@ -74,15 +96,25 @@ const openEditProfilModal = () => {
     width: 100%;
     filter: brightness(0.8);
   }
+  &__card {
+    display: flex;
+    align-items: center;
+    @media screen and (max-width: 960px) {
+      position: relative;
+      top: -30px;
+      display: flex;
+      justify-content: center;
+    }
+  }
 
   .info-section {
     display: flex;
     flex-wrap: wrap;
-    align-items: end;
+    align-items: center;
     justify-content: space-around;
     gap: 1.5rem;
-    margin-top: -70px;
     padding: 1rem 2rem;
+    height: 100%;
 
     @media (max-width: 768px) {
       flex-direction: column;

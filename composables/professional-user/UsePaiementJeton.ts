@@ -1,10 +1,12 @@
 import { PRICE_PER_TOKEN } from '~/constants/prixToken';
+import { useProfessionalProfile } from './UseProfessionalProfile';
 
 export const usePaiementJeton = () => {
   const route = useRoute();
   const userStore = useUserStore();
   const { professionalUser, professionalUuid } = storeToRefs(userStore);
   const cartStore = useCartStore();
+  const { getProfessionalProfile } = useProfessionalProfile();
   const { initializeTokenBalance, setJetonQuantity } = cartStore;
   const { addSuccess, addError } = useToaster();
   const api = useApi();
@@ -15,14 +17,14 @@ export const usePaiementJeton = () => {
    * Crée une session de paiement Stripe
    */
   const createTokenSession = async (amount: number) => {
-    if (!professionalUuid) throw new Error('Profil professionnel non trouvé');
+    if (!professionalUuid.value) throw new Error('Profil professionnel non trouvé');
 
     try {
       if (!api) return;
 
-      const { data } = await api.post(`/payments/token/${professionalUuid}`, {
+      const { data } = await api.post(`/payments/token/${professionalUuid.value}`, {
         quantity: amount,
-        professional_uuid: professionalUuid,
+        professional_uuid: professionalUuid.value,
       });
 
       if (data?.url) {
@@ -75,7 +77,7 @@ export const usePaiementJeton = () => {
   const processStripeReturn = async (sessionId: string) => {
     if (isProcessing.value) return { success: false, message: 'Traitement en cours...' };
     isProcessing.value = true;
-
+    await getProfessionalProfile();
     try {
       const response = await verifyStripeSession(sessionId);
       const sessionData = response.session;

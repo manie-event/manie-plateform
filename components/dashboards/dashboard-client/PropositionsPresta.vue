@@ -48,7 +48,7 @@
                       <h4
                         class="text-subtitle-1 font-weight-bold text-no-wrap text-grey200 pa-0 text-center"
                       >
-                        {{ item.name }}
+                        {{ item.eventName }}
                       </h4>
                     </div>
                   </div>
@@ -182,9 +182,9 @@
   </div>
   <Teleport to="body">
     <PropositionDetails
-      v-if="selectedPropositionInformation"
+      v-if="selectedPropositionDetail"
       v-model:open-proposition-detail="openMarketModal"
-      :selectedProposition="selectedPropositionInformation!"
+      :selectedProposition="selectedPropositionDetail"
     />
     <ProfessionalProfil
       v-if="professionalProfileForCustomer"
@@ -218,6 +218,7 @@ const isMobile = ref(window.innerWidth < 1280);
 
 const { getServicePropositionForClient, propositionAcceptedByClient, propositionDeclinedByClient } =
   useEventServiceProposition();
+const { preloadServices } = useKeywordsStore();
 const { getProfessionalProfileForCustomer } = useProfessionalProfile();
 const { professionalProfileForCustomer } = storeToRefs(useUserStore());
 
@@ -252,6 +253,7 @@ const getStatusName = (status: string) => {
 const customizer = useCustomizerStore();
 const selectedPropositionInformation = ref<EventModelForProposition>();
 const openMarketModal = ref(false);
+const selectedPropositionDetail = ref<ClientServiceProposition>();
 
 const getProfessionalMessage = (message?: string) => {
   if (!message) return 'Aucune proposition reçue';
@@ -280,6 +282,13 @@ const confirmedProposition = async (eventServiceUuid: string) => {
   ((isAcceptedByClient.value = true), await getProfessionalProfileForCustomer(eventServiceUuid));
 };
 
+const openPropositionDetail = (item: ClientServiceProposition) => {
+  openMarketModal.value = true;
+  selectedPropositionDetail.value = props.currentPropositions.find(
+    (proposition) => proposition.id === item.id
+  );
+};
+
 const filteredPropositionByStatus = computed<ClientServiceProposition[]>(() => {
   return props.currentPropositions.filter(
     (professionalProposition) => professionalProposition.propositionStatus !== 'pending'
@@ -294,7 +303,8 @@ onBeforeUnmount(() => {
   window.removeEventListener('resize', handleResize);
 });
 
-onMounted(() => {
+onMounted(async () => {
+  await preloadServices();
   getServicePropositionForClient();
   handleResize();
   window.addEventListener('resize', handleResize);

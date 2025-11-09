@@ -21,6 +21,7 @@ export const useProfessionalProposition = () => {
       const { data } = await api.get(
         `/event-service-proposition/list-by-event-service/${professionalServiceUuid}`
       );
+
       return data?.data ?? [];
     } catch (error) {
       console.error('❌ Erreur getListPropositionByEventService:', error);

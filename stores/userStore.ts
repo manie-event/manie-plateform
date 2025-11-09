@@ -60,8 +60,6 @@ export const useUserStore = defineStore(
         category: 'professional',
       };
 
-      console.log(professionalUser.value, 'setProfessionalUser');
-
       proName.value = professionalUser.value.name ?? null;
       professionalUuid.value = professionalUser.value.uuid ?? null;
       isProfileCreated.value = true;

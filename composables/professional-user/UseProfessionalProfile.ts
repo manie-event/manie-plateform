@@ -25,9 +25,6 @@ export const useProfessionalProfile = () => {
     try {
       if (!api) return;
       const { data } = await api.get('/professional');
-      console.log(data, 'getProfessionalProfile.value');
-
-      console.log(data, 'getProfessionalProfile');
 
       setProfessionalUser(data);
       return data;
@@ -37,8 +34,6 @@ export const useProfessionalProfile = () => {
   };
 
   const getProfessionalProfileDetails = async () => {
-    console.log(professionalUuid.value, 'PROFESSIONALUUID');
-
     try {
       if (!api || !professionalUuid.value) return;
 

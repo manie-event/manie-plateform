@@ -41,7 +41,7 @@
           <v-divider class="border-opacity-50 mb-6"
             ><p class="mb-6">A propos de votre activité</p></v-divider
           >
-          <v-select
+          <!-- <v-select
             label="Votre activité principale ?"
             v-model="profile.mainActivity"
             :items="activityItems"
@@ -49,7 +49,7 @@
             item-value="value"
             @update:model-value="setSector"
             :error-messages="showErrors ? errors.mainActivity : undefined"
-          />
+          /> -->
 
           <v-text-field
             label="Une courte description de votre activité ?"
@@ -304,7 +304,7 @@ const validationSchema = yup.object({
     .number()
     .min(0, "L'expérience doit être positive")
     .required("L'expérience est requise"),
-  geographicArea: yup.string().required('La zone géographique est requise'),
+  // geographicArea: yup.string().required('La zone géographique est requise'),
   certification: yup.string(),
   minimumReservationPeriod: yup.number().min(0, 'La période de réservation doit être positive'),
   deposit: yup.boolean(),
@@ -338,7 +338,7 @@ const {
     mainActivity: 'Veuillez choisir votre activité',
     mainInterlocutor: '',
     experience: 0,
-    geographicArea: geographicActivity.value[0]?.label ?? '',
+    geographicArea: 'Auvergne-Rhône-Alpes',
     faq: {},
     minimumReservationPeriod: 0,
     certification: [''],
