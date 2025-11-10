@@ -7,22 +7,30 @@
         </v-btn>
       </div>
     </div>
-    <div class="d-flex align-center justify-center flex-column">
-      <v-btn @click="openPricingModal = true" color="primary" class="w-100 mb-4" variant="tonal">
-        <v-icon start>mdi-page-last</v-icon>
+    <div class="d-flex flex-column flex-md-row align-center justify-space-between gap-3 w-100 my-6">
+      <v-btn
+        @click="openPricingModal = true"
+        class="flex-grow-1"
+        variant="flat"
+        style="background: rgb(var(--v-theme-darkbg)); color: white; text-decoration: none"
+      >
         Me faire accompagner
       </v-btn>
+
       <v-btn
         @click="isEventModificationOpen = true"
-        color="primary"
-        class="w-100 mb-4"
-        variant="tonal"
+        class="flex-grow-1"
+        variant="flat"
+        style="background: rgb(var(--v-theme-darkbg)); color: white; text-decoration: none"
       >
-        <v-icon start>mdi-pencil</v-icon>
         Modifier l'événement
       </v-btn>
-      <v-btn @click="isAddingServiceOpen = true" color="success" class="w-100" variant="flat">
-        <v-icon start>mdi-plus</v-icon>
+      <v-btn
+        @click="isAddingServiceOpen = true"
+        class="flex-grow-1"
+        variant="flat"
+        style="background: rgb(var(--v-theme-darkbg)); color: white; text-decoration: none"
+      >
         Ajouter des services
       </v-btn>
     </div>
@@ -73,12 +81,14 @@
   </div>
   <Teleport to="body">
     <CustomerForm
+      v-if="currentEvent"
       v-model:open-customer-form="isEventModificationOpen"
-      :answers="formAnswersForEvent"
+      :event="currentEvent"
     />
     <AddEventService
+      v-if="currentEvent"
       v-model:add-service-open="isAddingServiceOpen"
-      :answers="formAnswersForServices"
+      :event="currentEvent"
     />
     <PricingChoice
       v-if="currentEvent"
@@ -90,6 +100,7 @@
 </template>
 <script setup lang="ts">
 import BaseEmptyState from '@/components/common/BaseEmptyState.vue';
+import AddEventService from '@/components/dashboards/dashboard-client/AddEventService.vue';
 import CheckList from '@/components/dashboards/dashboard-client/CheckList.vue';
 import DateCounter from '@/components/dashboards/dashboard-client/DateCounter.vue';
 import LatestDeals from '@/components/dashboards/dashboard-client/LatestDeals.vue';
@@ -99,10 +110,8 @@ import LightEmptyState from '@/public/images/svgs/empty-state.svg';
 import Product from '~/components/dashboards/dashboard-client/EventBudget.vue';
 import CustomerForm from '~/components/questionnaires/CustomerForm.vue';
 import type { eventModel } from '~/models/events/eventModel';
-import { useEventService } from '~/services/UseEventService';
-import AddEventService from './AddEventService.vue';
+import { useProfessionalService } from '~/services/UseProfessionalService';
 import PricingChoice from './PricingChoice.vue';
-
 const props = defineProps<{
   events: eventModel[];
 }>();
@@ -110,37 +119,44 @@ const props = defineProps<{
 const isEventModificationOpen = ref(false);
 const isAddingServiceOpen = ref(false);
 const openPricingModal = ref(false);
-const formAnswersForEvent = ref();
-const formAnswersForServices = ref();
 const { professionalResponseProposition } = storeToRefs(usePropositionStore());
-const { getEventsInstance } = useEventService();
+const { getAllSectors, getKeywords } = useKeywordsStore();
+const { getProfessionalService } = useProfessionalService();
 
 const currentEvent = ref<eventModel>();
 
 const selectedEvent = (uuid: string) => {
   currentEvent.value = props.events.find((event) => event.uuid === uuid);
-  if (currentEvent.value?.uuid) {
-    getAnswers(currentEvent.value.uuid);
-  }
 };
 
 const getPropositionsByEvent = computed(() => {
   if (!currentEvent.value) return [];
 
-  return professionalResponseProposition.value.filter(
-    (proposition) => proposition.eventUuid === currentEvent.value?.uuid
-  );
+  const eventUuid = currentEvent.value.uuid;
+
+  return professionalResponseProposition.value.filter((proposition) => {
+    const p = proposition as unknown as Record<string, any>;
+
+    // If proposition explicitly references the event UUID
+    if ('eventUuid' in p) {
+      return p.eventUuid === eventUuid;
+    }
+
+    // Otherwise, if proposition references an event service, match against current event's services
+    if ('eventServiceUuid' in p && Array.isArray(currentEvent.value?.eventServices)) {
+      return currentEvent.value?.eventServices.some((es: any) => es.uuid === p.eventServiceUuid);
+    }
+
+    return false;
+  });
 });
 
-const getAnswers = async (uuid: string) => {
-  const responses = await getEventsInstance(uuid);
+onMounted(async () => {
+  await Promise.all([getAllSectors(), getKeywords(), getProfessionalService()]);
 
-  formAnswersForEvent.value = responses.$original;
-  formAnswersForServices.value = responses.$preloaded;
-};
-
-onMounted(() => {
-  getAnswers(props.events[0].uuid);
+  if (props.events.length > 0) {
+    selectedEvent(props.events[0].uuid);
+  }
 });
 </script>
 <style lang="scss" scoped>
@@ -148,6 +164,11 @@ onMounted(() => {
   &__btn {
     width: fit-content;
     padding: 0.2rem 1.5rem;
+  }
+}
+@media (max-width: 959px) {
+  .v-btn {
+    width: 100%;
   }
 }
 </style>

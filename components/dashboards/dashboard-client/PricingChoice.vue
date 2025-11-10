@@ -1,5 +1,4 @@
 <template>
-  <!-- 🔹 Modale principale -->
   <v-dialog v-model="openPricingChoice" max-width="900">
     <v-card class="pricing-choice pa-6 rounded-16">
       <h3 class="text-center textPrimary font-weight-bold mb-8">Choisis ta formule</h3>

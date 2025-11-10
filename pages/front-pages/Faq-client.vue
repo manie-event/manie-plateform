@@ -1,6 +1,6 @@
 <template>
-  <v-row>
-    <v-col cols="6">
+  <v-row class="faq-client">
+    <v-col cols="6" class="faq-client__image-container">
       <base-side-picture>
         <template #bg-image>
           <img
@@ -23,14 +23,13 @@
           <v-expansion-panel-title>
             {{ panel.titre }}
           </v-expansion-panel-title>
-
           <v-expansion-panel-text>
             <div v-html="panel.description"></div>
           </v-expansion-panel-text>
         </v-expansion-panel>
       </v-expansion-panels>
+      <NuxtLink class="nuxt-link" to="/auth/login">Ca me plait !</NuxtLink>
     </v-col>
-    <NuxtLink class="nuxt-link" to="/auth/login">Ca me plait !</NuxtLink>
   </v-row>
 </template>
 <script setup lang="ts">
@@ -71,10 +70,30 @@ definePageMeta({
     }
   }
 }
+.nuxt-link {
+  margin: 15px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .manie-logo {
   position: absolute;
   top: 40px;
   left: 40px;
   z-index: 999;
+}
+@media screen and (max-width: 960px) {
+  .faq-client {
+    margin: 0 !important;
+    display: flex;
+    flex-direction: column;
+    &__image-container {
+      display: none;
+    }
+    &__descriptif {
+      width: 100vw;
+      padding: 1rem;
+    }
+  }
 }
 </style>

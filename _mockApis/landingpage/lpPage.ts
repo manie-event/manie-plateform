@@ -48,7 +48,7 @@ const demosMegamenu: DemosMegaMenuTypes[] = [
 const FrontPageMenu: DemosMegaMenuTypes[] = [
   {
     img: frnt1,
-    name: 'Comment ça marche ? ',
+    name: 'Comment ça marche',
     link: '/front-pages/Ccm',
   },
   {

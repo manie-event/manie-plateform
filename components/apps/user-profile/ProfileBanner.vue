@@ -33,7 +33,7 @@
             </v-avatar>
           </div>
           <h5>{{ clientProfile?.username || user?.username }}</h5>
-          <span>Chercheur de bonheur</span>
+          <span>Organisateur</span>
         </div>
       </v-col>
       <v-col
@@ -43,11 +43,25 @@
         style="display: flex; align-items: center; justify-content: center"
       >
         <div class="actions">
-          <v-btn color="primary" @click="openEditProfilModal()" class="pa-3"
+          <v-btn
+            variant="flat"
+            style="background: rgb(var(--v-theme-thirdy)); color: white; text-decoration: none"
+            @click="openEditProfilModal()"
+            class="px-7 py-0"
             >Éditer votre profil</v-btn
           >
+
           <NuxtLink to="/dashboards/dashboard-client">
-            <v-btn color="success" class="pa-3">Revenir au dashboard</v-btn>
+            <v-btn
+              style="
+                background: rgb(var(--v-theme-lightprimary));
+                color: white;
+                text-decoration: none;
+              "
+              variant="flat"
+              class="pa-3 py-0"
+              >Revenir au dashboard</v-btn
+            >
           </NuxtLink>
         </div>
       </v-col>
@@ -59,7 +73,7 @@
   </Teleport>
 </template>
 <script setup lang="ts">
-import profileBg from '@/public/images/backgrounds/profilebg.jpg';
+import profileBg from '@/public/images/backgrounds/client-profil-bg.png';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';

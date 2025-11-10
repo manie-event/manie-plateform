@@ -41,10 +41,6 @@ const message = ref<ContactMessage>({
   <v-btn class="contact-form__btn" to="/front-pages/Faq-prestataire">FAQ Presta</v-btn>
 </div>
             </p>
-            <v-divider class="mb-10 opacity-20"></v-divider>
-            <h4 class="text-18 font-weight-bold mb-4 text-white">
-              Basé à Lyon disponible en Rhône-Alpes
-            </h4>
             <v-divider class="my-10 opacity-20"></v-divider>
             <div class="contact-form__reseaux">
               <NuxtLink to="https://www.instagram.com/manie.event/" target="_blank"
@@ -140,7 +136,8 @@ const message = ref<ContactMessage>({
                 </v-col>
                 <v-col cols="12" class="text-md-end">
                   <v-btn
-                    color="primary"
+                    color="rgb(var(--v-theme-lightprimary))"
+                    style="color: rgb(var(--v-theme-background)) "
                     class="px-5"
                     rounded="pill"
                     size="large"

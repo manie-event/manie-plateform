@@ -47,7 +47,10 @@
       <h2 class="font-weight-bold text-uppercase" style="color: rgb(var(--v-theme-darkbg))">
         Prestataires
       </h2>
-      <h5 class="text-subtitle1 font-weight-medium w-100" style="color: rgb(var(--v-theme-darkbg))">
+      <h5
+        class="text-subtitle1 font-weight-medium w-100 px-6"
+        style="color: rgb(var(--v-theme-darkbg))"
+      >
         Vous faites partie de la team lieux, food, boissons, musique, audiovisuel, déco, location de
         matériel animation ou logistique ? <b>Bienvenue chez Manie !</b> Rejoins un écosystème local
         de professionnels sélectionnés pour leur talent, leurs valeurs et leur ancrage territorial !
@@ -165,6 +168,9 @@ h5 {
 @media screen and (max-width: 900px) {
   h2 {
     font-size: 2rem;
+  }
+  h5 {
+    font-size: 0.8rem;
   }
 }
 </style>

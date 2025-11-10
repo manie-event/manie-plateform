@@ -40,8 +40,8 @@
                 <p>l'événementiel.<span style="color: #f39454; margin: 0; padding: 0">*</span></p>
               </h1>
               <h2 class="main-banner__title">
-                <span style="color: #f39454">* </span>Notre mission : permettre à n'importe qui
-                d'organiser n'importe quoi !
+                <span style="color: #f39454; font-size: 1.2rem">* </span>Notre mission : permettre à
+                n'importe qui d'organiser n'importe quoi !
               </h2>
             </div>
 
@@ -126,12 +126,10 @@ const { $gsap, $ScrollTrigger } = useNuxtApp();
     height: 100vh;
     z-index: -1;
     border-radius: 10px;
-    filter: grayscale(0.5);
     -o-object-fit: cover;
     object-fit: cover;
     z-index: 1;
     border-radius: 10px;
-    filter: grayscale(0.1);
     position: absolute;
     top: 10vh;
     right: -3vw;
@@ -165,13 +163,16 @@ const { $gsap, $ScrollTrigger } = useNuxtApp();
 @media screen and (max-width: 900px) {
   .main-banner {
     height: 400px;
-
+    width: 103vw;
     &__titre-position {
       position: relative;
       top: 20px;
     }
     &__party-picture {
       height: 50vh;
+    }
+    h2 {
+      font-size: 0.8rem;
     }
     h1 {
       position: relative;

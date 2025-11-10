@@ -18,7 +18,7 @@
             <v-row>
               <v-col cols="12" md="6" class="d-flex align-center flex-column justify-center">
                 <div class="pb-4">
-                  <h4 class="text-22 font-weight-bold textPrimary mb-2">LIBERTE</h4>
+                  <h4 class="text-22 font-weight-bold mb-2">LIBERTE</h4>
                   <p class="text-15 text-grey100 font-weight-medium mb-0">
                     Vous souhaitez planifier votre événement en autonomie
                   </p>
@@ -26,8 +26,16 @@
 
                 <!-- Prix -->
                 <div class="d-flex align-center justify-center flex-column">
-                  <h2 class="display-2 text-primary font-weight-bold mb-1">GRATUIT</h2>
-                  <div class="separator my-3"></div>
+                  <h2
+                    class="display-2 font-weight-bold mb-1"
+                    style="color: rgb(var(--v-theme-lightprimary))"
+                  >
+                    GRATUIT
+                  </h2>
+                  <div
+                    class="separator my-3"
+                    style="background: rgb(var(--v-theme-lightprimary))"
+                  ></div>
                 </div>
               </v-col>
               <v-col cols="12" md="6"
@@ -42,7 +50,7 @@
                     <v-list-item-title
                       class="text-15 font-weight-medium text-grey-dark d-flex align-center"
                     >
-                      <span class="divider">|</span>
+                      <span class="divider" style="color: rgb(var(--v-theme-darkbg))">|</span>
                       <span v-html="desc.listtitle" class="pl-2"></span>
                     </v-list-item-title>
                   </v-list-item> </v-list
@@ -86,8 +94,8 @@
 
             <div class="d-flex align-center mt-3 flex-column">
               <h2
-                class="display-2 text-primary font-weight-bold position-relative"
-                style="z-index: 10"
+                class="display-2 font-weight-bold position-relative"
+                style="z-index: 10; color: rgb(var(--v-theme-lightprimary))"
               >
                 {{ card.price }}
               </h2>
@@ -109,7 +117,8 @@
             </v-list>
             <div class="packages__background-shaded">
               <v-btn
-                color="primary"
+                color="rgb(var(--v-theme-thirdy))"
+                style="color: rgb(var(--v-theme-background))"
                 class="font-weight-medium packages__more"
                 target="_blank"
                 flat
@@ -125,7 +134,10 @@
 
     <v-dialog v-model="detailsDialog" max-width="700">
       <v-card class="pa-6 rounded-16">
-        <h3 class="text-primary font-weight-bold mb-4 text-center">
+        <h3
+          class="font-weight-bold mb-4 text-center"
+          style="color: rgb(var(--v-theme-lightprimary))"
+        >
           {{ formule?.caption }}
         </h3>
         <h5 class="text-center">{{ formule?.subtext }}</h5>
@@ -133,7 +145,12 @@
         <v-divider class="my-4" />
 
         <div v-for="(desc, i) in formule?.list" :key="i" class="mb-3 d-flex align-start">
-          <v-icon icon="mdi-check-circle-outline" color="primary" size="18" class="me-2 mt-1" />
+          <v-icon
+            icon="mdi-check-circle-outline"
+            color="rgb(var(--v-theme-darkbg))"
+            size="18"
+            class="me-2 mt-1"
+          />
           <p class="text-14 text-grey-dark mb-0" v-html="desc.listtitle"></p>
         </div>
 
@@ -143,7 +160,9 @@
         >
 
         <div class="text-end mt-6">
-          <v-btn color="primary" variant="text" @click="detailsDialog = false"> Fermer </v-btn>
+          <v-btn color="rgb(var(--v-theme-darkbg))" variant="text" @click="detailsDialog = false">
+            Fermer
+          </v-btn>
         </div>
       </v-card>
     </v-dialog>
@@ -185,7 +204,7 @@ const detailsDialog = ref(false);
 const formule = ref<PackageType>();
 
 const troncateDescription = (desc: string) => {
-  const shortDescription = desc.slice(0, 60);
+  const shortDescription = desc.slice(0, 50);
   return `${shortDescription} ...`;
 };
 

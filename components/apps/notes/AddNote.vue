@@ -40,7 +40,11 @@ const handleAddNote = () => {
   <!-- ---------------------------------------------------- -->
 
   <v-sheet>
-    <v-btn color="primary" @click="dialog = true">+</v-btn>
+    <v-btn
+      style="background: rgb(var(--v-theme-thirdy)); color: white; text-decoration: none"
+      @click="dialog = true"
+      >+</v-btn
+    >
 
     <v-dialog v-model="dialog" max-width="500">
       <v-card>
