@@ -9,7 +9,7 @@
         <h3 class="text-green-600">Ton email est maintenant vérifié !</h3>
         <h3 class="mt-1 text-gray-500 text-sm">L'aventure commence ici 🚀</h3>
         <p class="mt-6 text-gray-400 text-sm">
-          Vous allez être redirigé vers la page d'identification dans {{ counter }} secondes...
+          Vous allez être redirigé.e vers la page d'identification dans {{ counter }} secondes...
         </p>
       </div>
     </div>
