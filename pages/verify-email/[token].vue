@@ -3,11 +3,7 @@
     <div class="verify-email__card">
       <logoManie alt="Logo" class="verify-email__logo" />
 
-      <div v-if="loading" class="verify-email__loader">
-        <Loader />
-      </div>
-
-      <div v-else-if="success" class="verify-email__success">
+      <div class="verify-email__success">
         <img :src="goodVerification" alt="Succès" width="70" class="mb-4" />
         <h1 class="text-2xl font-bold mb-2">Bonjour à toi 👋</h1>
         <h3 class="text-green-600">Ton email est maintenant vérifié !</h3>
@@ -15,11 +11,6 @@
         <p class="mt-6 text-gray-400 text-sm">
           Vous allez être redirigé vers la page d'identification dans {{ counter }} secondes...
         </p>
-      </div>
-
-      <div v-else-if="error" class="verify-email__error">
-        <h1 class="text-xl font-bold mb-2 text-red-500">Une erreur est survenue</h1>
-        <p class="text-gray-500 text-sm">{{ error }}</p>
       </div>
     </div>
   </div>
@@ -31,7 +22,6 @@ import goodVerification from '@/public/images/backgrounds/flutter.png';
 import logoManie from '@/public/images/logos/logo-manie-creme.svg';
 import { onMounted, onUnmounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import Loader from '~/components/common/Loader.vue';
 
 definePageMeta({
   layout: 'blank',
