@@ -4,7 +4,6 @@
       <logoManie alt="Logo" class="verify-email__logo" />
 
       <div class="verify-email__success">
-        <img :src="goodVerification" alt="Succès" width="70" class="mb-4" />
         <h1 class="text-2xl font-bold mb-2">Bonjour à toi 👋</h1>
         <h3 class="text-green-600">Ton email est maintenant vérifié !</h3>
         <h3 class="mt-1 text-gray-500 text-sm">L'aventure commence ici 🚀</h3>
@@ -18,7 +17,6 @@
 
 <script setup lang="ts">
 import { useAuthentification } from '@/composables/UseAuthentification';
-import goodVerification from '@/public/images/backgrounds/flutter.png';
 import logoManie from '@/public/images/logos/logo-manie-creme.svg';
 import { onMounted, onUnmounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
