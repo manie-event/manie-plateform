@@ -95,8 +95,6 @@ onBeforeUnmount(() => {
         <LcFullVerticalHeaderProfileDD />
       </div>
 
-      <!-- Burger mobile -->
-
       <div class="d-flex" v-if="isMobile">
         <LcFullVerticalHeaderThemeToggler />
         <v-menu v-if="isProfessional" :close-on-content-click="false" class="notification_popup">

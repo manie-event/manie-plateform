@@ -94,20 +94,34 @@ onBeforeUnmount(() => {
           </v-menu>
           <LcFullVerticalHeaderProfileDD />
         </div>
-        <v-btn
-          class="header__btn w-100"
-          rounded="pill"
-          :to="
-            isProfileCreated
-              ? !isProfessional
-                ? '/dashboards/dashboard-client'
-                : '/dashboards/dashboard2'
-              : '/auth/login'
-          "
-          @click="appsdrawer = false"
-        >
-          {{ isProfileCreated ? ' Mon tableau de bord' : 'Se connecter' }}
-        </v-btn>
+        <div class="d-flex gap-3">
+          <v-btn
+            v-if="!isProfileCreated"
+            rounded="pill"
+            to="/auth/register"
+            style="
+              border: 1px solid rgb(var(--v-theme-lightprimary));
+              color: rgb(var(--v-theme-lightprimary));
+              font-weight: 600;
+            "
+          >
+            Devenir prestataire
+          </v-btn>
+          <v-btn
+            class="header__btn"
+            rounded="pill"
+            :to="
+              isProfileCreated
+                ? !isProfessional
+                  ? '/dashboards/dashboard-client'
+                  : '/dashboards/dashboard2'
+                : '/auth/login'
+            "
+            @click="appsdrawer = false"
+          >
+            {{ isProfileCreated ? ' Mon tableau de bord' : 'Se connecter' }}
+          </v-btn>
+        </div>
       </div>
 
       <!-- Burger mobile -->
@@ -131,33 +145,64 @@ onBeforeUnmount(() => {
       </div>
       <div class="d-flex flex-column align-center justify-center">
         <v-col v-for="demo in FrontPageMenu.slice(0, 5)" :key="demo.img">
-          <NuxtLink class="nuxt-link" size="small" rounded="pill" flat :href="demo.link">
+          <NuxtLink
+            class="nuxt-link"
+            size="small"
+            flat
+            :href="demo.link"
+            style="color: rgb(var(--v-theme-thirdy)); font-weight: 400"
+          >
             {{ demo.name }}
           </NuxtLink>
         </v-col>
         <v-col>
-          <NuxtLink class="nuxt-link mr-lg-0" to="/front-pages/pricing">Formules</NuxtLink>
+          <NuxtLink
+            class="nuxt-link mr-lg-0"
+            to="/front-pages/pricing"
+            style="color: rgb(var(--v-theme-thirdy)); font-weight: 400"
+            >Formules</NuxtLink
+          >
         </v-col>
         <v-col>
-          <NuxtLink class="nuxt-link mr-lg-0" to="/front-pages/Contact-us">Contact</NuxtLink>
+          <NuxtLink
+            class="nuxt-link mr-lg-0"
+            to="/front-pages/Contact-us"
+            style="color: rgb(var(--v-theme-thirdy)); font-weight: 400"
+            >Contact</NuxtLink
+          >
         </v-col>
       </div>
 
       <v-divider class="my-4" />
-      <v-btn
-        class="header__btn w-100"
-        rounded="pill"
-        :to="
-          isProfileCreated
-            ? !isProfessional
-              ? '/dashboards/dashboard-client'
-              : '/dashboards/dashboard2'
-            : '/auth/login'
-        "
-        @click="appsdrawer = false"
-      >
-        {{ isProfileCreated ? ' Mon tableau de bord' : 'Se connecter' }}
-      </v-btn>
+      <div class="d-flex gap-3 flex-column">
+        <v-btn
+          v-if="!isProfileCreated"
+          rounded="pill"
+          class="w-100"
+          to="/auth/register"
+          style="
+            border: 1px solid rgb(var(--v-theme-lightprimary));
+            color: rgb(var(--v-theme-lightprimary));
+            font-weight: 600;
+          "
+        >
+          Devenir prestataire
+        </v-btn>
+        <v-btn
+          class="header__btn w-100"
+          rounded="pill"
+          :to="
+            isProfileCreated
+              ? !isProfessional
+                ? '/dashboards/dashboard-client'
+                : '/dashboards/dashboard2'
+              : '/auth/login'
+          "
+          @click="appsdrawer = false"
+        >
+          {{ isProfileCreated ? ' Mon tableau de bord' : 'Se connecter' }}
+        </v-btn>
+      </div>
     </div>
   </v-navigation-drawer>
 </template>
