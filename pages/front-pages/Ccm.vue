@@ -2,7 +2,7 @@
   <div class="ccm__container">
     <v-row>
       <v-col cols="12" md="6">
-        <base-side-picture>
+        <base-side-picture class="ccm__image-container">
           <template #bg-image>
             <img
               :src="SidePicture"
@@ -153,5 +153,13 @@ definePageMeta({
   position: absolute;
   top: 40px;
   left: 40px;
+}
+
+@media screen and (max-width: 960px) {
+  .ccm {
+    &__image-container {
+      display: none;
+    }
+  }
 }
 </style>

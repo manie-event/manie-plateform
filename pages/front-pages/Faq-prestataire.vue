@@ -1,6 +1,6 @@
 <template>
-  <v-row>
-    <v-col cols="6">
+  <v-row class="faq-prestataire">
+    <v-col cols="6" class="faq-prestataire__image-container">
       <base-side-picture>
         <template #bg-image>
           <img
@@ -74,5 +74,16 @@ definePageMeta({
   position: absolute;
   top: 40px;
   left: 40px;
+}
+
+@media screen and (max-width: 960px) {
+  .faq-prestataire {
+    &__image-container {
+      display: none;
+    }
+    &__descriptif {
+      width: 100vw;
+    }
+  }
 }
 </style>

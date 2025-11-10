@@ -1,6 +1,6 @@
 <template>
   <div class="nos-engagements__container">
-    <base-side-picture>
+    <base-side-picture class="nos-engagements__image-container">
       <template #bg-image>
         <img
           :src="nosEngagements"
@@ -22,6 +22,9 @@
           <v-expansion-panel-text> <div v-html="panel.description"></div> </v-expansion-panel-text>
         </v-expansion-panel>
       </v-expansion-panels>
+      <NuxtLink :href="'/auth/login'" class="nuxt-link mt-6 d-flex justify-center"
+        >Je me lance !</NuxtLink
+      >
     </div>
   </div>
 </template>
@@ -76,6 +79,9 @@ definePageMeta({
     &__descriptif {
       width: 100vw;
       padding: 4rem;
+    }
+    &__image-container {
+      display: none;
     }
   }
 }

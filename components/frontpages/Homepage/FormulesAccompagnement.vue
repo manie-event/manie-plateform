@@ -18,7 +18,7 @@
             <v-row>
               <v-col cols="12" md="6" class="d-flex align-center flex-column justify-center">
                 <div class="pb-4">
-                  <h4 class="text-22 font-weight-bold textPrimary mb-2">LIBERTE</h4>
+                  <h4 class="text-22 font-weight-bold mb-2">LIBERTE</h4>
                   <p class="text-15 text-grey100 font-weight-medium mb-0">
                     Vous souhaitez planifier votre événement en autonomie
                   </p>
@@ -26,8 +26,13 @@
 
                 <!-- Prix -->
                 <div class="d-flex align-center justify-center flex-column">
-                  <h2 class="display-2 text-primary font-weight-bold mb-1">GRATUIT</h2>
-                  <div class="separator my-3"></div>
+                  <h2
+                    class="display-2 font-weight-bold mb-1"
+                    style="color: rgb(var(--v-theme-darkbg))"
+                  >
+                    GRATUIT
+                  </h2>
+                  <div class="separator my-3" style="background: rgb(var(--v-theme-darkbg))"></div>
                 </div>
               </v-col>
               <v-col cols="12" md="6"
@@ -86,8 +91,8 @@
 
             <div class="d-flex align-center mt-3 flex-column">
               <h2
-                class="display-2 text-primary font-weight-bold position-relative"
-                style="z-index: 10"
+                class="display-2 font-weight-bold position-relative"
+                style="z-index: 10; color: rgb(var(--v-theme-darkbg))"
               >
                 {{ card.price }}
               </h2>
@@ -109,7 +114,8 @@
             </v-list>
             <div class="packages__background-shaded">
               <v-btn
-                color="primary"
+                color="rgb(var(--v-theme-darkbg))"
+                style="color: rgb(var(--v-theme-background))"
                 class="font-weight-medium packages__more"
                 target="_blank"
                 flat
@@ -133,7 +139,12 @@
         <v-divider class="my-4" />
 
         <div v-for="(desc, i) in formule?.list" :key="i" class="mb-3 d-flex align-start">
-          <v-icon icon="mdi-check-circle-outline" color="primary" size="18" class="me-2 mt-1" />
+          <v-icon
+            icon="mdi-check-circle-outline"
+            color="rgb(var(--v-theme-darkbg))"
+            size="18"
+            class="me-2 mt-1"
+          />
           <p class="text-14 text-grey-dark mb-0" v-html="desc.listtitle"></p>
         </div>
 
@@ -143,7 +154,9 @@
         >
 
         <div class="text-end mt-6">
-          <v-btn color="primary" variant="text" @click="detailsDialog = false"> Fermer </v-btn>
+          <v-btn color="rgb(var(--v-theme-darkbg))" variant="text" @click="detailsDialog = false">
+            Fermer
+          </v-btn>
         </div>
       </v-card>
     </v-dialog>

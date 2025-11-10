@@ -1,6 +1,6 @@
 <template>
   <div class="notre-histoire__container">
-    <base-side-picture>
+    <base-side-picture class="notre-histoire__bg-image-container">
       <template #bg-image>
         <img
           :src="notreHistoire"
@@ -79,6 +79,9 @@ definePageMeta({
       align-items: center;
       justify-content: space-between;
       flex-direction: column;
+    }
+    &__bg-image-container {
+      display: none;
     }
     &__descriptif {
       width: 100vw;
