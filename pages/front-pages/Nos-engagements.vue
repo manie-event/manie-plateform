@@ -14,8 +14,16 @@
       </template>
     </base-side-picture>
     <div class="nos-engagements__descriptif">
-      <h1>Valeurs et engagements</h1>
+      <h2 class="text-h4 text-uppercase">Nos valeurs</h2>
 
+      <v-expansion-panels class="mt-6">
+        <v-expansion-panel v-for="(panel, index) in valeurData" :key="index">
+          <v-expansion-panel-title> {{ panel.titre }} </v-expansion-panel-title>
+          <v-expansion-panel-text> <div v-html="panel.description"></div> </v-expansion-panel-text>
+        </v-expansion-panel>
+      </v-expansion-panels>
+
+      <h2 class="text-h4 text-uppercase mt-11">Nos engagements</h2>
       <v-expansion-panels class="mt-6">
         <v-expansion-panel v-for="(panel, index) in engagementsData" :key="index">
           <v-expansion-panel-title> {{ panel.titre }} </v-expansion-panel-title>
@@ -31,8 +39,9 @@
 <script setup lang="ts">
 import BaseSidePicture from '@/components/common/BaseSidePicture.vue';
 import engagementsData from '@/data/nos-engagements.json';
+import valeurData from '@/data/valeurs.json';
 import LogoManie from '@/public/images/logos/logo-manie-creme.svg';
-import nosEngagements from '@/public/images/side-picture/kit-formerly-convertkit-tkXJoA_sn78-unsplash.jpg';
+import nosEngagements from '@/public/images/side-picture/valeurs.jpg';
 definePageMeta({
   layout: 'blank',
 });

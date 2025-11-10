@@ -28,11 +28,14 @@
                 <div class="d-flex align-center justify-center flex-column">
                   <h2
                     class="display-2 font-weight-bold mb-1"
-                    style="color: rgb(var(--v-theme-darkbg))"
+                    style="color: rgb(var(--v-theme-lightprimary))"
                   >
                     GRATUIT
                   </h2>
-                  <div class="separator my-3" style="background: rgb(var(--v-theme-darkbg))"></div>
+                  <div
+                    class="separator my-3"
+                    style="background: rgb(var(--v-theme-lightprimary))"
+                  ></div>
                 </div>
               </v-col>
               <v-col cols="12" md="6"
@@ -47,7 +50,7 @@
                     <v-list-item-title
                       class="text-15 font-weight-medium text-grey-dark d-flex align-center"
                     >
-                      <span class="divider">|</span>
+                      <span class="divider" style="color: rgb(var(--v-theme-darkbg))">|</span>
                       <span v-html="desc.listtitle" class="pl-2"></span>
                     </v-list-item-title>
                   </v-list-item> </v-list
@@ -92,7 +95,7 @@
             <div class="d-flex align-center mt-3 flex-column">
               <h2
                 class="display-2 font-weight-bold position-relative"
-                style="z-index: 10; color: rgb(var(--v-theme-darkbg))"
+                style="z-index: 10; color: rgb(var(--v-theme-lightprimary))"
               >
                 {{ card.price }}
               </h2>
@@ -114,7 +117,7 @@
             </v-list>
             <div class="packages__background-shaded">
               <v-btn
-                color="rgb(var(--v-theme-darkbg))"
+                color="rgb(var(--v-theme-thirdy))"
                 style="color: rgb(var(--v-theme-background))"
                 class="font-weight-medium packages__more"
                 target="_blank"
@@ -131,7 +134,10 @@
 
     <v-dialog v-model="detailsDialog" max-width="700">
       <v-card class="pa-6 rounded-16">
-        <h3 class="text-primary font-weight-bold mb-4 text-center">
+        <h3
+          class="font-weight-bold mb-4 text-center"
+          style="color: rgb(var(--v-theme-lightprimary))"
+        >
           {{ formule?.caption }}
         </h3>
         <h5 class="text-center">{{ formule?.subtext }}</h5>
@@ -198,7 +204,7 @@ const detailsDialog = ref(false);
 const formule = ref<PackageType>();
 
 const troncateDescription = (desc: string) => {
-  const shortDescription = desc.slice(0, 60);
+  const shortDescription = desc.slice(0, 50);
   return `${shortDescription} ...`;
 };
 

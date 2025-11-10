@@ -28,7 +28,7 @@
             Je suis prestataire
           </span>
         </div>
-        <h1>Comment ça fonctionne pour les {{ isPrestataire ? 'prestataire' : 'clients' }}</h1>
+        <h1>Comment ça fonctionne pour les {{ isPrestataire ? 'prestataire' : 'clients' }} ?</h1>
 
         <div class="ccm__sous-titre" v-if="!isPrestataire">
           <v-expansion-panels>

@@ -11,12 +11,12 @@
     </div>
     <div class="notre-zone-de-jeu__content">
       <h1>Notre Terrain de Jeu</h1>
-      <h4>
+      <p>
         Nous mettons à l’honneur notre belle région Auvergne Rhône-Alpes et les prestataires qui y
         sont installés ! Un mariage au cœur des montagnes ou au bord d’un lac, un séjour en famille
         dans un domaine viticole, une fête champêtre en pleine nature ou une soirée en ville : tout
         est possible !
-      </h4>
+      </p>
       <!-- Liste des départements -->
       <v-expansion-panels class="mt-6">
         <v-expansion-panel v-for="(panel, index) in notreTerrain.departements" :key="index">

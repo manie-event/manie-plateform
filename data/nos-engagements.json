@@ -1,29 +1,5 @@
 [
   {
-    "titre": "Joie de vivre",
-    "description": "Chaque événement est une occasion de célébrer la vie pleinement, de créer des moments de bonheur et de rassembler les gens autour d'une énergie positive."
-  },
-  {
-    "titre": "Authenticité",
-    "description": "L'IA ne remplacera pas l'échange humain, c'est pourquoi Manie propose des offres personnalisables. Notre but ? Créer des connexions sincères et durables avec nos partenaires."
-  },
-  {
-    "titre": "Transparence",
-    "description": "Un projet fondé sur la confiance ; une clarté de nos offres et une communication fluide et réactive avec nos clients et nos partenaires. Du vrai, du spontané, du palpable et une amélioration continue."
-  },
-  {
-    "titre": "Bienveillance",
-    "description": "Manie est un environnement sain et sécurisé où chacun se sent respecté, écouté et développe des relations professionnelles saines, grâce notamment à notre <a href='juridique/charte-de-bonne-conduite'> charte de bonne conduite.</a>"
-  },
-  {
-    "titre": "Échange et partage",
-    "description": " Nous croyons en la synergie des talents, c'est pourquoi nous instaurons un écosystème de partenaires vivant, afin d’assurer une relation de confiance."
-  },
-  {
-    "titre": "Éco-responsabilité",
-    "description": "Consommer local, vivre responsable. Pour cela, nous sélectionnons pour vous des prestataires locaux et priorisons les prestataires engagés. Nos offres sont flexibles afin de vous permettre de ne consommer que ce dont vous avez besoin."
-  },
-  {
     "titre": "Santé et bien-être",
     "description": "Parce qu’un esprit apaisé et un corps en mouvement font partie des plus belles célébrations de la vie, Manie développe son réseau de partenaires bien-être : activités sportives, yoga, méditation, relaxation et toute activité autour de la santé du corps et de l’esprit."
   },
@@ -32,8 +8,8 @@
     "description": "L’éco-responsabilité, ou responsabilité écologique, n'est pas un slogan chez Manie, ni un argument marketing. C’est une valeur ancrée dans nos choix et nos collaborations. Nos partenaires partagent cette exigence, marque de respect et de bon sens. On ne le revendique pas pour se distinguer, on le fait, tout simplement. C’est une conviction."
   },
   {
-    "titre": "Digitalisation",
-    "description": "La digitalisation de nos outils permet de mieux vous projeter dans votre événement (plan de table, agencement, scénographie) et vivre une expérience unique. Une messagerie instantanée permet de vous accompagner tout au long de votre organisation."
+    "titre": "Dématérialisation",
+    "description": "La transformation des documents papier en format électronique est une priorité chez Manie. Résultat ? Économie de papier, meilleure organisation (stockage centralisé et sécurisé), un gain de temps et une marge d’erreurs réduite!"
   },
   {
     "titre": "Sécurité et gestion des risques",
