@@ -1,7 +1,9 @@
+// import '@/assets/scss/_variables.scss';
+import { defineNuxtPlugin } from 'nuxt/app';
 import { createVuetify } from 'vuetify';
-import {defineNuxtPlugin} from 'nuxt/app';
 import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
+
 //Mock Api data
 // VLabs Components
 //DragScroll
@@ -11,12 +13,8 @@ import * as directives from 'vuetify/directives';
 //ScrollTop
 
 //i18
-import {
-  DARK_BLUE_THEME,
-} from '@/theme/DarkTheme';
-import {
-  BLUE_THEME,
-} from '@/theme/LightTheme';
+import { DARK_BLUE_THEME } from '@/theme/DarkTheme';
+import { BLUE_THEME } from '@/theme/LightTheme';
 
 export default defineNuxtPlugin((nuxtApp) => {
   const vuetify = createVuetify({
@@ -28,6 +26,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       defaultTheme: 'BLUE_THEME',
       themes: {
         BLUE_THEME,
+        DARK_BLUE_THEME,
       },
     },
     defaults: {

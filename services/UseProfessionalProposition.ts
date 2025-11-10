@@ -1,6 +1,6 @@
 export const useProfessionalProposition = () => {
   const { addSuccess, addError } = useToaster();
-  const api = useApi(); // ✅ instance avec interceptors et refresh auto
+  const api = useApi();
 
   const getListEventServiceProposition = async (professionalServiceUuid: string) => {
     try {
@@ -21,6 +21,7 @@ export const useProfessionalProposition = () => {
       const { data } = await api.get(
         `/event-service-proposition/list-by-event-service/${professionalServiceUuid}`
       );
+
       return data?.data ?? [];
     } catch (error) {
       console.error('❌ Erreur getListPropositionByEventService:', error);
@@ -51,8 +52,11 @@ export const useProfessionalProposition = () => {
       addSuccess('Félicitations, vous vous êtes positionné sur cet évènement 🎉');
       return data;
     } catch (error: any) {
-      addError({ message: error.message || 'Erreur lors de la mise à jour du message.' });
-      console.error('❌ Erreur updateProfessionalMessage:', error);
+      console.log(error, 'updateProfessionalMessage');
+
+      addError({
+        message: error.response.data.message || 'Erreur lors de la mise à jour du message.',
+      });
       return null;
     }
   };
@@ -66,7 +70,7 @@ export const useProfessionalProposition = () => {
       addSuccess("Félicitations 🎊 Vous venez d'avoir accès au profil prestataire !");
       return data;
     } catch (error: any) {
-      addError({ message: error.message || "Erreur lors de l'acceptation." });
+      addError({ message: error.response.data.message || "Erreur lors de l'acceptation." });
       console.error('❌ Erreur acceptedByClient:', error);
       return null;
     }
@@ -81,7 +85,9 @@ export const useProfessionalProposition = () => {
       addSuccess('Vous avez décliné cette proposition 🙅‍♂️');
       return data;
     } catch (error: any) {
-      addError({ message: error.message || 'Erreur lors du refus de la proposition.' });
+      addError({
+        message: error.response.data.message || 'Erreur lors du refus de la proposition.',
+      });
       console.error('❌ Erreur declinedByClient:', error);
       return null;
     }

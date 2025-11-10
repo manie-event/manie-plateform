@@ -1,256 +1,224 @@
 <template>
-  <v-btn>Revenir à votre Dashboard</v-btn>
+  <section class="profile-header">
+    <div class="profile-header__cover">
+      <img
+        :src="professionalUser?.picture || '/images/backgrounds/profilebg-2.jpg'"
+        alt="Bannière du profil"
+        class="profile-header__image"
+      />
+      <button @click="triggerClickFileInput" class="profile-header__edit">
+        <Icon icon="solar:camera-outline" width="20" height="20" />
+      </button>
+      <input type="file" ref="fileInput" @change="changeBannerPhoto" accept="image/*" hidden />
+      <NuxtLink to="/dashboards/dashboard2" color="primary" class="profile-header__redirect-btn">
+        Retour au tableau de bord
+      </NuxtLink>
+    </div>
 
-  <div class="position-relative">
-    <img
-      :src="professionalUser?.picture ? professionalUser?.picture : bgPicture"
-      alt="profile"
-      class="w-100 profile-banner__image rounded-md obj-cover"
-    />
-    <button @click="triggerClickFileInput" class="profile-banner__change-image">+</button>
-    <input
-      type="file"
-      ref="fileInput"
-      @change="changeBannerPhoto"
-      accept="image/*"
-      style="display: none"
-    />
-  </div>
-  <div class="mx-sm-5">
-    <v-card elevation="10" class="overflow-hidden mt-sm-n13 mt-n5">
-      <v-card-item class="pb-0">
-        <v-row class="mt-1 justify-space-between">
-          <v-col cols="12" md="6" sm="9" class="pt-0">
-            <div class="d-sm-flex align-center justify-sm-start justify-center">
-              <div class="text-sm-left text-center">
-                <v-avatar size="100" class="userImage position-relative overflow-visible rounded">
-                  {{ initials }}
-                </v-avatar>
-              </div>
-              <div class="ml-sm-4 text-sm-left text-center">
-                <h6 class="text-subtitle-1 font-weight-semibold mb-1 my-sm-0 my-2">
-                  {{ professionalUser.name ? professionalUser.name : user.username }}
-                  <v-chip
-                    color="primary"
-                    class="bg-lightprimary font-weight-semibold ml-2 mt-n1"
-                    variant="outlined"
-                    size="x-small"
-                    >Prestataire</v-chip
-                  >
-                </h6>
-                <span class="text-h6 font-weight-medium text-grey100">{{
-                  professionalUser.telephone
-                    ? professionalUser.telephone
-                    : 'Définissez votre téléphone'
-                }}</span>
+    <v-card elevation="8" class="profile-header__card">
+      <div class="profile-header__content">
+        <div class="profile-header__identity">
+          <v-avatar size="100" class="profile-header__avatar">
+            <!-- <img v-if="professionalUser?.avatar" :src="professionalUser.avatar" alt="Avatar" /> -->
+            <span>{{ initials }}</span>
+          </v-avatar>
+
+          <div class="profile-header__info">
+            <div class="d-flex flex-row gap-2">
+              <div v-for="service in getServiceValues">
+                <v-chip color="primary" variant="outlined" size="x-small">{{ service }}</v-chip>
               </div>
             </div>
-          </v-col>
-          <v-col
-            cols="12"
-            md="6"
-            sm="3"
-            class="d-flex align-center justify-center justify-sm-end order-sm-third"
-          >
-            <div class="d-flex flex-column justify-center align-center gap-4">
-              <div>
-                <v-btn
-                  v-if="!isProfileCreated"
-                  color="primary"
-                  size="large"
-                  class="w-100"
-                  @click="openEditProfilModal()"
-                  >Editez votre profil</v-btn
-                >
-                <div v-if="isProfileCreated && isProfileVerified">
-                  <v-btn color="primary" size="large" class="w-100" @click="openEditProfilModal()"
-                    >Modifier votre profil</v-btn
-                  >
-                  <v-btn color="success" size="large" class="w-100" @click="openServiceModal = true"
-                    >Ajouter votre secteur d'activité</v-btn
-                  >
-                </div>
-              </div>
-              <p v-if="isProfileCreated && !isProfileVerified">
-                <span :style="{ fontSize: '14px' }"> Nous reviendrons dans les 48heures...</span>
+            <h2 class="profile-header__name">
+              {{ professionalUser?.name || user?.username }}
+            </h2>
+            <div class="d-flex align-center">
+              <Icon icon="ci:phone" height="18" width="18" class="mr-1" />
+              <p class="profile-header__phone">
+                {{ professionalUser?.telephone || 'Définissez votre téléphone' }}
               </p>
             </div>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col md="12" class="profile-one"> </v-col>
-        </v-row>
-      </v-card-item>
+            <!-- <div class="d-flex align-center">
+              <Icon icon="ci:mail" height="18" width="18" class="mr-1" />
+              <p class="profile-header__phone">
+                {{ professionalUser?.email || 'Définissez votre email' }}
+              </p>
+            </div> -->
+          </div>
+        </div>
+
+        <div class="profile-header__actions">
+          <v-btn
+            v-if="!isProfileCreated"
+            color="primary"
+            class="profile-header__btn"
+            @click="openModal = true"
+          >
+            Créer mon profil
+          </v-btn>
+
+          <template v-else>
+            <v-btn color="primary" class="profile-header__btn" @click="openModal = true">
+              Modifier le profil
+            </v-btn>
+            <v-btn color="success" class="profile-header__btn" @click="openServiceModal = true">
+              Ajouter un secteur d'activité
+            </v-btn>
+          </template>
+        </div>
+      </div>
     </v-card>
-  </div>
-  <v-card class="w-100 profile-banner">
-    <p>Test</p>
-  </v-card>
-  <Teleport to="body">
-    <EditerProfessionalProfile v-model:openModal="openModal" />
-    <services-prestataire class="mt-6" v-model:pageActuelle="openServiceModal" />
-  </Teleport>
+
+    <Teleport to="body">
+      <EditerProfessionalProfile v-model:openModal="openModal" />
+      <services-prestataire class="mt-6" v-model:pageActuelle="openServiceModal" />
+    </Teleport>
+  </section>
 </template>
 
 <script setup lang="ts">
+import { NuxtLink } from '#components';
 import EditerProfessionalProfile from '@/components/apps/user-profile/EditProfessionalProfil.vue';
-import { ref, Teleport } from 'vue';
+import { Icon } from '@iconify/vue';
+import { onMounted, ref } from 'vue';
 import ServicesPrestataire from '~/components/questionnaires/ServicesPrestataire.vue';
-import { useKeywords } from '~/composables/professional-user/UseKeywords';
-import { useProfessionalProfile } from '../../../composables/professional-user/UseProfessionalProfile';
+import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
+import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
+import { useUserStore } from '~/stores/userStore';
 
-const { bgPicture } = storeToRefs(useUserStore());
+const { professionalUser, user, isProfileCreated, initials } = storeToRefs(useUserStore());
+const { changeProfessionalBannerPicture, getProfessionalProfileDetails, getProfessionalProfile } =
+  useProfessionalProfile();
+const { getJetonQuantity } = usePaiementJeton();
 
-const tab = ref(null);
 const openModal = ref(false);
 const openServiceModal = ref(false);
-const fileInput = ref(null);
-const initials = ref('');
-
-const { user, isProfileCreated, professionalUser } = storeToRefs(useUserStore());
-const { getKeywords } = useKeywords();
-const { changeProfessionalBannerPicture, getProfessionalProfileDetails } = useProfessionalProfile();
-const isProfileVerified = localStorage.getItem('is-profile-verified');
+const fileInput = ref<HTMLInputElement | null>(null);
 
 const triggerClickFileInput = () => fileInput.value?.click();
 const changeBannerPhoto = async (e: Event) => {
   const input = e.target as HTMLInputElement;
   if (!input.files?.length) return;
-
   const picture = input.files[0];
   await changeProfessionalBannerPicture(picture);
 };
 
-const openEditProfilModal = () => {
-  openModal.value = !openModal.value;
-};
+const getServiceValues = computed(
+  () => professionalUser.value?.professionalServices?.map((s) => s.name) ?? []
+);
 
-const getInitials = (name?: string) => {
-  if (!name) return '';
-
-  const parts = name.trim().toUpperCase().replace(/\s+/g, ' ');
-
-  if (parts.length === 1) {
-    return parts[0].substring(0, 1);
-  }
-
-  return parts[0][0];
-};
-
-onMounted(() => {
-  getProfessionalProfileDetails();
-
-  initials.value = professionalUser.value
-    ? getInitials(professionalUser.value.name)
-    : getInitials(user.value?.username);
+onMounted(async () => {
+  const name = professionalUser.value?.name || user.value?.username || '';
+  await getProfessionalProfile();
+  await getJetonQuantity();
 });
 </script>
 
-<style lang="scss" scoped>
-.profile-banner {
-  &__image {
-    max-height: 250px;
+<style scoped lang="scss">
+.profile-header {
+  width: 80vw;
+  &__cover {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
   }
-  &__change-image {
+  &__redirect-btn {
+    top: 20px;
+    right: 20px;
     position: absolute;
-    display: flex;
-    height: 50px;
-    width: 50px;
-    top: 10px;
-    left: 10px;
-    /* background: white; */
-    padding: 0.5rem;
+    z-index: 9;
+    background: rgb(var(--v-theme-background));
+    color: rgb(var(--v-theme-primary));
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    padding: 9px 20px;
+    text-decoration: none;
     border-radius: 5px;
-    font-weight: 900;
-    font-size: 1rem;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid white;
-    color: white;
-    transition: all 0.4s ease-in-out;
+  }
+
+  &__image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    filter: brightness(0.9);
+  }
+
+  &__edit {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    transition: all 0.3s ease;
     &:hover {
       background: white;
-      color: black;
-      transition: all 0.4s ease-in-out;
-    }
-  }
-}
-
-.avatar-border {
-  background-image: linear-gradient(rgb(80, 178, 252), rgb(244, 76, 102));
-  border-radius: 50%;
-  width: 110px;
-  height: 110px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-
-  .userImage {
-    border: 4px solid rgb(var(--v-theme-surface));
-  }
-}
-
-.top-spacer {
-  margin-top: -95px;
-}
-
-.profile-one {
-  .profiletab .v-slide-group__content {
-    justify-content: start;
-
-    .v-btn--variant-text .v-btn__overlay {
-      background: transparent;
+      transform: scale(1.05);
     }
   }
 
-  .v-btn {
-    &.v-tab-item--selected {
-      color: rgb(var(--v-theme-primary)) !important;
-      .icon {
-        color: rgb(var(--v-theme-primary)) !important;
-      }
+  &__card {
+    margin-top: -70px;
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+  }
+
+  &__content {
+    padding: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__identity {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  &__avatar {
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+  }
+
+  &__name {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  &__phone {
+    font-size: 0.95rem;
+    color: #777;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  &__btn {
+    border-radius: 12px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+  }
+}
+@media screen and (max-width: 900px) {
+  .profile-header {
+    width: 90vw;
+    margin: 0 auto;
+
+    &__actions {
+      width: 100%;
+      margin-top: 30px;
     }
-  }
-}
-
-.profiletab {
-  .v-btn {
-    &.v-tab-item--selected {
-      color: rgb(var(--v-theme-primary)) !important;
-      .icon {
-        color: rgb(var(--v-theme-primary)) !important;
-      }
-    }
-  }
-}
-
-.profile-banner-redirection-bouton {
-  background: rgb(59, 182, 150);
-  color: white;
-}
-
-.plus {
-  bottom: 0;
-  right: 0;
-  border: 2px solid #fff;
-}
-
-@media (max-width: 1023px) {
-  .order-sm-second {
-    order: 2;
-  }
-
-  .order-sml-first {
-    order: 1;
-  }
-
-  .order-sm-third {
-    order: 3;
-  }
-
-  .order-sm-last {
-    order: 4;
   }
 }
 </style>

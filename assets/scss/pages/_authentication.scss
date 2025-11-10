@@ -153,16 +153,21 @@
       &::after {
         content: '';
         position: absolute;
-        z-index: 999;
-        top: -70px;
-        right: -75px;
+        right: -65px;
+        top: -50px;
         width: 404px;
         height: 405px;
         background-color: var(--manie-thirdy);
-        z-index: -1;
         border-radius: 100%;
       }
     }
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .auth-login {
+    position: relative;
+    top: 50px;
   }
 }
 

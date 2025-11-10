@@ -55,6 +55,8 @@ const props = defineProps<{
   uuid: string;
 }>();
 
+const { addSuccess } = useToaster();
+
 const emit = defineEmits(['message-sent']);
 
 const isOpen = defineModel<boolean>('is-proposition-accepted', { default: false });
@@ -75,10 +77,11 @@ const sendMessage = async () => {
 
   const response = await updateProfessionalMessage(props.uuid, messageAllTogether);
 
-  if (response?.status === 200) {
+  if (response) {
     emit('message-sent', props.uuid);
     await getServicePropositionForProfessional();
 
+    addSuccess('Félications, vous venez de vous positionner sur une offre');
     isOpen.value = false;
   }
 };

@@ -1,32 +1,9 @@
-<script setup lang="ts">
-import addNote from '@/components/apps/notes/AddNote.vue';
-import { useNotesStore } from '@/stores/notesStore';
-import { computed, ref, Teleport } from 'vue';
-import type { eventModel } from '~/models/events/eventModel';
-import NotesContent from '~~/components/apps/notes/NotesContent.vue';
-
-const props = defineProps<{
-  event?: eventModel;
-}>();
-
-const store = useNotesStore();
-const { deleteNote, getNotesByEvent, selectNote } = store;
-
-const currentEventNotes = computed(() => getNotesByEvent(props.event?.uuid || ''));
-
-const openContentModal = ref(false);
-
-const handleSelectNote = (noteId: number) => {
-  selectNote(props.event?.uuid || '', noteId);
-};
-</script>
-
 <template>
   <!-- ---------------------------------------------------- -->
   <!-- Table Basic -->
   <!-- ---------------------------------------------------- -->
-  <div class="pa-6">
-    <div class="d-flex mb-6 align-center justify-lg-space-between">
+  <div>
+    <div class="d-flex mb-6 align-center justify-space-between">
       <h4 class="text-subtitle-1 mb-4 font-weight-semibold">Carnet de brouillon</h4>
       <addNote :event />
     </div>
@@ -40,7 +17,7 @@ const handleSelectNote = (noteId: number) => {
         density="compact"
       ></v-text-field>
     </div> -->
-    <div class="d-flex gap-4">
+    <div class="d-flex gap-4 notes__container">
       <v-sheet
         :class="'note-sheet pa-6 pb-4 rounded-md cursor-pointer mb-4  bg-light' + note.color"
         v-for="note in currentEventNotes"
@@ -72,7 +49,12 @@ const handleSelectNote = (noteId: number) => {
       </v-sheet>
     </div>
     <v-sheet v-if="currentEventNotes.length === 0" class="pa-6">
-      <v-alert type="error" text="Il est temps de créer votre première note"></v-alert>
+      <v-alert style="background: rgb(var(--v-theme-thirdy)); color: white; text-decoration: none">
+        <div class="d-flex gap-3">
+          <Icon icon="solar:pen-broken" width="24" height="24" />
+          <p>Il est temps de créer votre première note</p>
+        </div>
+      </v-alert>
     </v-sheet>
   </div>
 
@@ -80,7 +62,35 @@ const handleSelectNote = (noteId: number) => {
     <NotesContent v-model:open-content-modal="openContentModal" :event />
   </Teleport>
 </template>
+<script setup lang="ts">
+import addNote from '@/components/apps/notes/AddNote.vue';
+import { useNotesStore } from '@/stores/notesStore';
+import { Icon } from '@iconify/vue';
+import { computed, ref, Teleport } from 'vue';
+import type { eventModel } from '~/models/events/eventModel';
+import NotesContent from '~~/components/apps/notes/NotesContent.vue';
+
+const props = defineProps<{
+  event?: eventModel;
+}>();
+
+const store = useNotesStore();
+const { deleteNote, getNotesByEvent, selectNote } = store;
+
+const currentEventNotes = computed(() => getNotesByEvent(props.event?.uuid || ''));
+
+const openContentModal = ref(false);
+
+const handleSelectNote = (noteId: number) => {
+  selectNote(props.event?.uuid || '', noteId);
+};
+</script>
 <style lang="scss">
+.notes {
+  &__container {
+    overflow-x: scroll;
+  }
+}
 .note-sheet {
   transition: 0.1s ease-in;
   &:hover {

@@ -1,3 +1,5 @@
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
 import type { EventTasks, Task } from '~/models/tasks/eventTasks';
 
 export const useTasksStore = defineStore('tasks', () => {
@@ -18,7 +20,13 @@ export const useTasksStore = defineStore('tasks', () => {
     localStorage.setItem('tasksByEvent', JSON.stringify(tasksByEvent.value));
   };
 
+  /** 👉 Juste lire les tâches, ne rien créer ici */
   const getTasksByEvent = (eventUuid: string): Task[] => {
+    return tasksByEvent.value[eventUuid] || [];
+  };
+
+  /** Crée les tâches de démo uniquement s’il n’y a rien */
+  const ensureTasksExistForEvent = (eventUuid: string) => {
     if (!tasksByEvent.value[eventUuid]) {
       tasksByEvent.value[eventUuid] = [
         { id: Date.now(), text: 'Apprendre Vuetify 3', done: false },
@@ -26,7 +34,6 @@ export const useTasksStore = defineStore('tasks', () => {
       ];
       saveTasksToStorage();
     }
-    return tasksByEvent.value[eventUuid];
   };
 
   const addTask = (eventUuid: string) => {
@@ -38,9 +45,6 @@ export const useTasksStore = defineStore('tasks', () => {
       text: '',
       done: false,
     });
-
-    tasksByEvent.value = { ...tasksByEvent.value };
-
     saveTasksToStorage();
   };
 
@@ -52,26 +56,20 @@ export const useTasksStore = defineStore('tasks', () => {
   };
 
   const updateTask = (eventUuid: string, taskId: number, updates: Partial<Task>) => {
-    if (tasksByEvent.value[eventUuid]) {
-      const task = tasksByEvent.value[eventUuid].find((t) => t.id === taskId);
-      if (task) {
-        Object.assign(task, updates);
-        saveTasksToStorage();
-      }
+    const task = tasksByEvent.value[eventUuid]?.find((t) => t.id === taskId);
+    if (task) {
+      Object.assign(task, updates);
+      saveTasksToStorage();
     }
-  };
-
-  const saveTasks = (eventUuid: string) => {
-    saveTasksToStorage();
   };
 
   return {
     tasksByEvent,
     loadTasksFromStorage,
     getTasksByEvent,
+    ensureTasksExistForEvent,
     addTask,
     removeTask,
     updateTask,
-    saveTasks,
   };
 });

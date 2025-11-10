@@ -14,80 +14,90 @@ export const useEventServiceProposition = () => {
     acceptedByClient,
     declinedByClient,
   } = useProfessionalProposition();
+  const { services } = storeToRefs(useKeywordsStore());
   const { servicesFiltered } = storeToRefs(eventsStore());
   const { getEventsPerOrganisator, getEventServiceList } = useEventService();
   const { setServiceEventPropositionForPresta, setServiceEventPropositionForClient } =
     usePropositionStore();
 
+  const { addSuccess, addError } = useToaster();
+
   const getServicePropositionForClient = async () => {
     try {
       const allEvents = await getEventsPerOrganisator();
-
       if (!Array.isArray(allEvents) || allEvents.length === 0) {
         console.warn('⚠️ Aucun événement trouvé.');
         return [];
       }
 
-      const propositionList = await Promise.all(
+      const allPropositions = await Promise.all(
         allEvents.map(async (event) => {
-          try {
-            // Vérifie la structure
-            if (!event?.eventServices?.length) {
-              console.warn(`⚠️ Aucun service trouvé pour l'événement ${event.uuid}`);
-              return null;
-            }
+          if (!event?.eventServices?.length) return [];
 
-            const firstService = event.eventServices[0];
-            if (!firstService?.uuid) {
-              console.warn(`⚠️ Service sans UUID pour l'événement ${event.uuid}`);
-              return null;
-            }
+          // Pour chaque service de l'événement
+          const allServicePropositions = await Promise.all(
+            event.eventServices.map(async (service) => {
+              const propositions = await getListPropositionByEventService(service.uuid);
 
-            // Appel API sécurisé
-            const serviceList = await getListPropositionByEventService(firstService.uuid);
+              // On cherche le nom du service via service.serviceUuid
+              const engagedService = services.value.find((s) => s.uuid === service.serviceUuid);
+              const serviceName = engagedService ? engagedService.name : 'Service inconnu';
 
-            if (!Array.isArray(serviceList) || serviceList.length === 0) {
-              console.warn(`⚠️ Aucune proposition trouvée pour service ${firstService.uuid}`);
-              return null;
-            }
+              // Chaque prestataire ayant fait une proposition sur ce service
+              return propositions.map((proposition) => ({
+                ...event,
+                ...proposition,
+                propositionUuid: proposition.uuid,
+                propositionStatus: proposition.status,
+                eventUuid: event.uuid,
+                eventName: event.name,
+                // on ajoute le nom du service engagé
+                serviceEngage: serviceName,
+              }));
+            })
+          );
 
-            const serviceEngage = servicesFiltered.value?.[0]?.name ?? 'Service inconnu';
-
-            return {
-              ...serviceList[0],
-              propositionUuid: serviceList[0].uuid,
-              propositionStatus: serviceList[0].status,
-              ...event,
-              serviceEngage,
-            };
-          } catch (innerError) {
-            console.error(`❌ Erreur sur event ${event.uuid}:`, innerError);
-            return null;
-          }
+          // aplatissement : [[...], [...]] → [...]
+          return allServicePropositions.flat();
         })
       );
 
-      const cleanList = propositionList.filter(Boolean);
+      // Nettoyage : suppression des valeurs null
+      const cleanList = allPropositions.flat().filter(Boolean);
 
       setServiceEventPropositionForClient(cleanList);
-
+      addSuccess('Propositions de services récupérées avec succès.');
       return cleanList;
     } catch (error) {
       console.error('❌ Erreur getServicePropositionForClient:', error);
+      addError({
+        message: 'Une erreur est survenue lors de la récupération des propositions.',
+      });
       throw error;
     }
   };
 
+  //Pour récupérer les propositions dans le dashboard prestataire
   const getServicePropositionForProfessional = async () => {
     try {
       const professionalServices = await getListProfessionalServiceByProfessional();
 
+      // ✅ On s'assure d'avoir un tableau
+      const servicesArray = Array.isArray(professionalServices)
+        ? professionalServices
+        : (professionalServices?.data ?? []);
+
+      if (servicesArray.length === 0) {
+        console.warn('Aucun service professionnel trouvé pour ce profil.');
+        return [];
+      }
+
       const allPropositions = await Promise.all(
-        professionalServices.map(async (service: ProfessionalServiceUuid) => {
+        servicesArray.map(async (service: ProfessionalServiceUuid) => {
           const propositionList = await getListProfessionalProposition(service.uuid);
 
           const propositionsWithEvents = await Promise.all(
-            propositionList.map(async (prop) => {
+            (propositionList ?? []).map(async (prop) => {
               try {
                 const event = await getListEventServiceProposition(prop.uuid);
 
@@ -107,25 +117,25 @@ export const useEventServiceProposition = () => {
                   },
                 };
               } catch (error) {
-                console.error(
-                  `❌ Erreur lors de la récupération de l'événement pour ${prop.uuid}:`,
-                  error
-                );
+                addError({
+                  message: `Une erreur est survenue lors de la récupération de l'événement pour une proposition.`,
+                });
                 return null;
               }
             })
           );
+
+          setServiceEventPropositionForPresta(propositionsWithEvents);
           return propositionsWithEvents.filter(Boolean);
         })
       );
 
-      const flattenedList = allPropositions.flat();
-
-      servicePropositionAvailable.value = flattenedList.length > 0;
-      setServiceEventPropositionForPresta(flattenedList);
+      return allPropositions.flat(); // ✅ utile pour aplatir le tableau final
     } catch (error) {
-      console.error('❌ Erreur getServicePropositionForProfessional:', error);
-      servicePropositionAvailable.value = false;
+      addError({
+        message: `Une erreur est survenue lors de la récupération de l'événement pour une proposition.`,
+      });
+      return [];
     }
   };
 
@@ -134,7 +144,9 @@ export const useEventServiceProposition = () => {
       // Appeler une méthode du service pour accepter la proposition
       await acceptedByClient(propositionUuid);
       // Mettre à jour la liste des propositions après l'acceptation
+      addSuccess('Proposition acceptée avec succès.');
     } catch (error) {
+      addError({ message: "Une erreur est survenue lors de l'acceptation de la proposition." });
       console.error('❌ Erreur propositionAcceptedByClient:', error);
     }
   };
@@ -144,7 +156,9 @@ export const useEventServiceProposition = () => {
       // Appeler une méthode du service pour refuser la proposition
       await declinedByClient(propositionUuid);
       // Mettre à jour la liste des propositions après le refus
+      addSuccess('Proposition refusée avec succès.');
     } catch (error) {
+      addError({ message: 'Une erreur est survenue lors du refus de la proposition.' });
       console.error('❌ Erreur propositionDeclinedByClient:', error);
     }
   };

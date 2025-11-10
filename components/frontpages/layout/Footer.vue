@@ -6,7 +6,7 @@ import manieFooterDroits from '/images/logos/logo-footer-droits.png';
 </script>
 
 <template>
-  <div class="bg-bgdark">
+  <div class="bg-bgdark footer">
     <v-container class="max-width-1218 py-0">
       <div class="space-p-96">
         <v-row>
@@ -86,6 +86,10 @@ import manieFooterDroits from '/images/logos/logo-footer-droits.png';
   </div>
 </template>
 <style lang="scss" scoped>
+.footer {
+  position: relative;
+  z-index: 10;
+}
 a {
   text-decoration: none;
   color: white;

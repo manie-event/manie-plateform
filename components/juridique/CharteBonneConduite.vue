@@ -1,20 +1,21 @@
 <template>
-  <BaseModal v-model="openModal" fullscreen transition="dialog-bottom-transition">
-    <template #content>
-      <div class="charte__title">
-        <h2>{{ CharteBonneConduite.title }}</h2>
-        <p>{{ CharteBonneConduite.description }}</p>
-      </div>
-      <div v-for="section in CharteBonneConduite.sections" class="charte__section">
-        <h3>{{ section.subtitle }}</h3>
-        <p>{{ section.description }}</p>
-      </div>
-      <v-btn class="bg-btn px-6 py-3" @click="validatingConditions">Je valide la charte</v-btn>
-    </template>
-  </BaseModal>
+  <v-dialog v-model="openModal" transition="dialog-bottom-transition" class="charte">
+    <v-card>
+      <v-card-text>
+        <div class="charte__title">
+          <h2>{{ CharteBonneConduite.title }}</h2>
+          <p>{{ CharteBonneConduite.description }}</p>
+        </div>
+        <div v-for="section in CharteBonneConduite.sections" class="charte__section">
+          <h3>{{ section.subtitle }}</h3>
+          <p>{{ section.description }}</p>
+        </div>
+        <v-btn class="bg-btn px-6 py-3" @click="validatingConditions">Je valide la charte</v-btn>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
 </template>
 <script setup lang="ts">
-import BaseModal from '@/components/common/BaseModal.vue';
 import CharteBonneConduite from '@/data/charte-bonne-conduite.json';
 
 const openModal = defineModel<boolean>('openModal');

@@ -139,13 +139,13 @@ const register = async () => {
     <div v-if="registerForm.category === 'professional'">
       <div class="d-flex gap-4 mt-3">
         <p style="font-size: small">
-          Je certifie avoir lu et accepté la charte de bonne conduite de MANIE. Je m’engage à
-          respecter les valeurs et engagements qui y figurent.
+           Je certifie avoir lu et accepté la charte de bonne conduite de MANIE.
+           Je m’engage à respecter les valeurs et engagements qui y figurent.
           <span @click="openModalCharte = true" style="opacity: 0.5; cursor: pointer"
             >En savoir plus ici</span
           >
         </p>
-        <v-checkbox v-model="isCharteBonneConduite"></v-checkbox>
+        <input type="checkbox" v-model="isCharteBonneConduite"></input>
       </div>
     </div>
     <div v-else>
@@ -157,12 +157,14 @@ const register = async () => {
             >En savoir plus ici</span
           >
         </p>
-        <v-checkbox v-model="isCharteBonneConduite"></v-checkbox>
+         <input type="checkbox" v-model="isCharteBonneConduite" />
       </div>
     </div>
     <v-btn
       size="large"
       class="mt-2"
+      style="color: white"
+      color="rgb(var(--v-theme-darkbg))"
       block
       submit
       rounded="pill"

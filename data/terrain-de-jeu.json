@@ -3,62 +3,62 @@
     {
       "code": "01",
       "titre": "L'Ain",
-      "description": "une belle diversité de paysages entre Bresse, Dombes et Pays de Gex ainsi qu'une proximité avec Genève, très pratique pour les événements transfrontaliers. Sa gastronomie est reconnue grâce à sa volaille et à ses nombreux fromages (bleu, comté, morbier, tomme)."
+      "description": "Une belle diversité de paysages entre la Bresse, les Dombes (étangs) et le Pays de Gex ainsi qu'une proximité avec Genève : très pratique pour les événements transfrontaliers.<br>Spécialités et produits locaux : volaille de Bresse AOP, crème et beurre de Bresse, comté et bleu de Gex ainsi que les vins du Bugey. Le gratin de cardon et la pôchouse de la Dombe (poisson d’étang) sont deux plats typiques."
     },
     {
       "code": "03",
       "titre": "L'Allier",
-      "description": "le pays des Bourbons est riche en patrimoine historique (Château des Ducs de Bourbon) et est réputé pour ses stations thermales (Vichy) et ses paysages vallonnés, idéals pour des événements en pleine nature."
+      "description": "Le pays des Bourbons est riche en patrimoine historique (Château des Ducs de Bourbon) et est réputé pour ses stations thermales (Vichy, Bourbon-l’Archambault) et ses paysages vallonnés, idéals pour des événements en pleine nature, paisibles et authentiques.<br>Spécialités et produits locaux : Vins de Saint-Pourçain AOC, charolais du Bourbonnais, moutarde de Charroux, pastilles de Vichy et brioche de Néris-les-Bains."
     },
     {
       "code": "07",
       "titre": "L'Ardèche",
-      "description": "terres de caractère avec ses gorges, grottes et villages de pierre, c'est une destination privilégiée pour les cérémonies bohèmes et champêtres en tout genre. L'éco-tourisme et le slow-event en nature y sont bien instaurés !"
+      "description": " Terres de caractère avec ses gorges, ses rivières, grottes et villages de pierre, c'est une destination privilégiée pour les événements champêtres en tout genre. L'écotourisme et le slow-event en nature y sont bien instaurés. Idéal pour les événements éco-responsables en pleine nature ! <br> Spécialités et produits locaux : Châtaigne d’Ardèche AOP et sa crème de marrons, fromages de chèvre picodon AOP, miel, olives, charcuteries comme la caillette et vins d’Ardèche."
     },
     {
       "code": "15",
       "titre": "Cantal",
-      "description": "ses paysages volcaniques spectaculaires et ses grands espaces font de ce département un lieu à l'atmosphère intimiste pour des événements chaleureux. Petit clin d'oeil à sa diversité de fromages AOP (Cantal, Salers, Bleu d'Auvergne)."
+      "description": "Ses paysages volcaniques spectaculaires et ses grands espaces (plateaux) en font un lieu à l'atmosphère intimiste, sauvage et profondément authentique. L’esprit auvergnat dans toute sa force : rude, sincère et chaleureux. Idéal pour des événements chaleureux ! <br> Spécialités et produits locaux : fromages AOP (Cantal, Salers, Bleu d'Auvergne), aligot, tripoux, pounti, lentilles, charcuteries artisanales, miel, liqueur de montagne, et vins d’Auvergne."
     },
     {
       "code": "26",
       "titre": "Drôme",
-      "description": "influence provençale avec ses champs de lavande, son climat ensoleillé et ses vignobles, idéal pour les réceptions en plein air."
+      "description": "On y trouve à la fois le Vercors sauvage, la Drôme provençale et les plaines viticoles. Ses champs de lavande, son climat ensoleillé, ses cigales chantantes et ses oliviers à perte de vue en font un lieu idéal pour des réceptions en plein air sur une large période de l’année ! <br> Spécialités et produits locaux  : truffe noire du Tricastin, nougat de Montélimar, miel, lavande, huile d’olive de Nyons, fromages de chèvre, clairette de Die et vins des Côtes-du-Rhône méridionales."
     },
     {
       "code": "38",
       "titre": "Isère",
-      "description": "entre Grenoble, les Alpes et la Chartreuse, elle offre une belle diversité de paysages. Cette destination est prisée pour tout type d'événements liés au sport de montagne du fait de sa nature omniprésente."
+      "description": "Des Alpes aux plaines dauphinoises, entre Grenoble, les Alpes et la Chartreuse, elle offre une belle diversité de paysages et de forts contrastes. Cette destination est le haut lieu de l’événementiel sportif corporate du fait de sa nature omniprésente. <br> Spécialités et produits locaux : Gratin dauphinois, noix de Grenoble AOP, murçon, chartreuse, fromages de montagne (Saint-Marcellin, Bleu du Vercors) et vins de savoie (Grésivaudan). "
     },
     {
       "code": "42",
       "titre": "Loire",
-      "description": "patrimoine industriel et culturel autour de Saint-Etienne, campagne vallonnée idéale pour des événements bucoliques et une gastronomie locale connue pour son fromage (fourme de Montbrison) et sa charcuterie."
+      "description": "Son patrimoine industriel est connu pour sa culture du design et de l’innovation autour de Saint-Etienne. Sa campagne est vallonnée entre le Pays du Forez, les Monts de la Madeleine et les Gorges de la Loire, ce qui en fait un lieu idéal pour des événements bucoliques. <br> Spécialités et produits locaux : Fourme de Montbrison AOP, charcuteries foréziennes, brioche de Saint-Genest, ses Côtes-du-Forez et son vin rouge pétillant."
     },
     {
       "code": "43",
       "titre": "Haute-Loire",
-      "description": "un environnement champêtre et une ambiance authentique grâce à ses gorges, volcans et rivières. Idéale pour les retraites bien-être et les évènements nature en petit comités."
+      "description": "Région du Puy-en-Velay, terre de savoir-faire artisanal, sa nature est préservée et son patrimoine religieux est riche. Son environnement champêtre crée une ambiance authentique grâce à ses gorges, ses volcans et ses rivières. Idéale pour les retraites bien-être et les événements nature en petit comité. <br> Spécialités et produits locaux : Lentille verte du Puy AOP, fromage artisanal, charcuteries d’altitude, Verveine du Velay, aligot, fin gras du Mézenc (bœuf AOP)."
     },
     {
       "code": "63",
       "titre": "Puy-De-Dôme",
-      "description": "sa chaine des Puys classée à l'UNESCO offre un cadre naturel exceptionnel. La ville de Clermont-Ferrand contribue au dynamisme de ce département prisé pour ses événements sportifs en nature."
+      "description": "Sa chaîne des Puys classée à l'UNESCO et son massif du Sancy offrent un cadre naturel exceptionnel. La ville de Clermont-Ferrand contribue au dynamisme de ce département prisé pour ses événements sportifs en nature et bien être. <br> Spécialités et produits locaux : Saint-Nectaire AOP, Cantal, Bleu d’Auvergne, truffade, potée auvergnate, vins d’Auvergne, charcuteries fumées et pain de seigle."
     },
     {
       "code": "69",
       "titre": "Rhône",
-      "description": "Lyon, capitale gastronomique et culturelle de la région Auvergne Rhône-Alpes, permet un accès facile depuis toute la France et l'étranger et invite à tous types d'événements. Les vignobles du Beaujolais entre Lyon et le sud de la Bourgogne sont idéal pour des événements œnologiques, des mariages champêtres ou des séjours immersifs au cœur des vignes."
+      "description": "Il allie effervescence urbaine et douceur des Monts du Lyonnais, entre tradition et innovation. Les vignobles du Beaujolais entre Lyon et le sud de la Bourgogne sont idéal pour des événements œnologiques, des mariages champêtres ou des séjours immersifs au cœur des vignes. Lyon, capitale gastronomique et culturelle de la région Auvergne Rhône-Alpes, permet un accès facile depuis toute la France et l'étranger et invite à tous types d'événements. <br> Spécialités et produits locaux : cervelle de canut, quenelles, saucisson brioché ou au vin rouge, pralines roses, bugnes, côtes du rhône et vins du beaujolais."
     },
     {
       "code": "73",
       "titre": "Savoie",
-      "description": "sa montagne et ses stations de ski prestigieuses (Courchevel, Méribel, Val Thorens) en font une destination idéale pour des événements hivernaux ou montagnards. Entre lac et montagnes, ses événements sont dépaysants."
+      "description": "Sa montagne, ses lacs nous offrent des paysages grandioses. Ses stations de ski prestigieuses (Courchevel, Méribel, Val Thorens) en font une destination conviviale, idéale pour des événements hivernaux et montagnards dépaysants. <br> Spécialités et produits locaux : fondue, tartiflette, raclette, diots, crozets, chocolat de montagne et Génépi, vins de Savoie AOP, fromages (Beaufort, Abondance, Tomme de Savoie)."
     },
     {
       "code": "74",
       "titre": "Haute-Savoie",
-      "description": "Annecy et son lac offre un cadre idyllique de pleine nature et en font une destination très prisée. Stations de ski, villages de charme et bords de lac aux eaux turquoises, il y en a pour tous les goûts et tous les événements et ce durant toute l'année. Sa proximité avec la Suisse et l'Italie en font également un attrait international."
+      "description": "Entre le lac Léman et le Mont-Blanc, ce département est fait de paysages spéctaculaires. Annecy offre également un cadre idyllique de pleine nature au bord de son lac aux eaux turquoises. Les stations de ski et villages de charme en altitude en font une destination très prisée voir haut de gamme. Il y en a pour tous les goûts et tous les événements et ce durant toute l'année. Sa proximité avec la Suisse et l'Italie en font également un attrait international. <br> Spécialités et produits locaux : Reblochon AOP, Tomme de Savoie, Fondue savoyarde, Poêlon des alpages, charcuteries de montagne, tarte aux myrtilles, Génépi et vins de Savoie."
     }
   ]
 }

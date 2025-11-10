@@ -1,7 +1,7 @@
-import { computed } from 'vue';
-import * as themeColors from '@/theme/LightTheme';
-import * as DarkThemeColors from '@/theme/DarkTheme';
 import { useCustomizerStore } from '@/stores/customizer';
+import * as DarkThemeColors from '@/theme/DarkTheme';
+import * as themeColors from '@/theme/LightTheme';
+import { computed } from 'vue';
 
 export function customizer() {
   const cst = useCustomizerStore();
@@ -271,13 +271,13 @@ const getLight100 = computed(() => {
 });
 
 export {
-  getPrimary,
-  getSecondary,
-  getLightPrimary,
-  getLightSecondary,
+  getError,
   getLight100,
   getLightborder,
+  getLightPrimary,
+  getLightSecondary,
+  getPrimary,
+  getSecondary,
   getTextGrey100,
   getWarning,
-  getError,
 };

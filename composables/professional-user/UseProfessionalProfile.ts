@@ -4,11 +4,9 @@ import type { ProfessionalProfile } from '~/models/user/UserModel';
 export const useProfessionalProfile = () => {
   const { addError, addSuccess } = useToaster();
   const userStore = useUserStore();
-  const { setProfessionalUser, sendNewPhotoOnProfile, sendProfessionalProfileForCustomer } =
-    userStore;
-  const config = useRuntimeConfig();
-  const api = useApi(); // ✅ instance sécurisée
-  const professionalUuid = localStorage.getItem('professional-uuid');
+  const { setProfessionalUser, sendProfessionalProfileForCustomer } = userStore;
+  const { professionalUser, professionalUuid } = storeToRefs(userStore);
+  const api = useApi();
 
   const createProfessionalProfile = async (professionalProfil: ProfessionalProfile) => {
     try {
@@ -18,11 +16,8 @@ export const useProfessionalProfile = () => {
       addSuccess('Profil professionnel créé avec succès !');
       await getProfessionalProfile(); // rafraîchit les infos locales
       return data;
-    } catch (error: any) {
-      console.error(error);
-      addError(
-        (error.response?.data as errorModel) ?? { message: 'Erreur de création du profil.' }
-      );
+    } catch (err: any) {
+      addError((err.response?.data as errorModel) ?? { message: 'Erreur de création du profil.' });
     }
   };
 
@@ -30,53 +25,89 @@ export const useProfessionalProfile = () => {
     try {
       if (!api) return;
       const { data } = await api.get('/professional');
+
       setProfessionalUser(data);
       return data;
-    } catch (error) {
-      console.error(error);
-      addError({ message: 'Erreur lors de la récupération du profil professionnel.' });
+    } catch (err: any) {
+      addError({ message: err.response.data.message });
     }
   };
 
   const getProfessionalProfileDetails = async () => {
     try {
-      if (!api || !professionalUuid) return;
-      const { data } = await api.get(`/professional/${professionalUuid}`);
-      setProfessionalUser(data);
-      return data;
-    } catch (error) {
-      addError({ message: 'Erreur lors de la récupération des détails du profil.' });
+      if (!api || !professionalUuid.value) return;
+
+      const { data } = await api.get(`/professional/${professionalUuid.value}`);
+
+      // 🧩 Compatibilité avec anciens retours { newPro: {...} }
+      const profile = data.newPro || data;
+
+      // 🧩 On s'assure que les relations et champs essentiels existent
+      if (profile && profile.uuid) {
+        setProfessionalUser(profile);
+      } else {
+        console.warn('⚠️ Réponse incomplète du profil professionnel:', data);
+      }
+
+      return profile;
+    } catch (err: any) {
+      addError({ message: err.response.data.message });
     }
   };
 
   const patchProfessionalProfileDetails = async (newProfile: ProfessionalProfile) => {
     try {
-      if (!api || !professionalUuid) return;
-      const { data } = await api.patch(`/professional/${professionalUuid}`, newProfile);
-      setProfessionalUser(data);
-      addSuccess('Profil professionnel mis à jour !');
-      return data;
-    } catch (error) {
-      addError({ message: 'Erreur lors de la mise à jour du profil professionnel.' });
+      if (!api || !professionalUuid.value) return;
+
+      // 🧩 On fusionne sans écraser les champs backend (comme picture)
+      const mergedProfile = {
+        ...professionalUser.value,
+        ...newProfile,
+      };
+
+      const { data } = await api.patch(`/professional/${professionalUuid.value}`, mergedProfile);
+      const updatedProfile = data.newPro || data;
+
+      if (updatedProfile && updatedProfile.uuid) {
+        setProfessionalUser(updatedProfile);
+        addSuccess('Profil professionnel mis à jour !');
+      } else {
+        console.warn('⚠️ Réponse incomplète après mise à jour du profil:', data);
+      }
+
+      return updatedProfile;
+    } catch (err: any) {
+      addError({ message: err.response.data.message });
     }
   };
-
   const changeProfessionalBannerPicture = async (file: File) => {
-    if (!api || !professionalUuid) return;
-
-    const formData = new FormData();
-    formData.append('file', file);
+    if (!api || !professionalUuid.value) return;
 
     try {
-      const { data } = await api.patch(`/professional/${professionalUuid}/picture`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }, // seul cas où on garde un header manuel
-      });
+      const formData = new FormData();
+      formData.append('file', file);
 
-      if (data?.imageUrl) sendNewPhotoOnProfile(data.imageUrl);
+      const { data } = await api.patch(
+        `/professional/${professionalUuid.value}/picture`,
+        formData,
+        {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        }
+      );
+
+      if (data?.imageUrl) {
+        const normalizedData = {
+          ...data,
+          picture: data.imageUrl || data.picture || null,
+        };
+
+        setProfessionalUser(normalizedData);
+        addSuccess('Bannière changée avec succès !');
+      }
+
       return data;
-    } catch (error) {
-      console.error(error);
-      addError({ message: 'Erreur lors du changement de la bannière.' });
+    } catch (err: any) {
+      addError({ message: err.response.data.message });
     }
   };
 
@@ -88,8 +119,8 @@ export const useProfessionalProfile = () => {
       );
       sendProfessionalProfileForCustomer(data);
       return data;
-    } catch (error) {
-      addError({ message: 'Erreur lors de la récupération du profil pour le client.' });
+    } catch (err: any) {
+      addError({ message: err.response.data.message });
     }
   };
 

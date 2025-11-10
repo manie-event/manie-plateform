@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useTheme } from 'vuetify';
 import { useCustomizerStore } from '@/stores/customizer';
 import { Icon } from '@iconify/vue';
-import { string } from 'yup';
+import { ref } from 'vue';
+import { useTheme } from 'vuetify';
 const theme = useTheme();
 const customizer = useCustomizerStore();
 
@@ -21,7 +20,7 @@ const themeColors = ref([
 </script>
 
 <template>
-  <div class="position-relative">
+  <div class="position-relative d-flex align-center">
     <v-item-group mandatory v-model="customizer.actTheme" class="d-flex">
       <div v-for="theme in themeColors" :key="theme.name">
         <v-item v-slot="{ toggle }" :value="theme.name">

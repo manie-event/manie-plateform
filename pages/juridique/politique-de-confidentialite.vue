@@ -1,6 +1,6 @@
 <template>
   <h1>{{ politique[0].sectionTitle }}</h1>
-  <p>{{ politique[0].sectionDescription }}</p>
+  <p style="margin-bottom: 15px">{{ politique[0].sectionDescription }}</p>
   <v-expansion-panels>
     <v-expansion-panel v-for="(item, index) in politique[0].sections" :key="index">
       <v-expansion-panel-title>{{ item.title }}</v-expansion-panel-title>

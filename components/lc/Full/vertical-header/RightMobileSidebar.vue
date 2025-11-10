@@ -18,7 +18,7 @@ const open = ref(['Apps']);
         </template>
         <v-list-item class="pl-6 pb-6">
           <div>
-            <LcFullVerticalHeaderAppsLink />
+            <!-- <LcFullVerticalHeaderAppsLink /> -->
           </div>
         </v-list-item>
       </v-list-group>
@@ -43,7 +43,7 @@ const open = ref(['Apps']);
     </v-list>
     <div class="px-5">
       <h5 class="text-h5 my-4">Quick Links</h5>
-      <LcFullVerticalHeaderQuickLinks />
+      <!-- <LcFullVerticalHeaderQuickLinks /> -->
     </div>
   </div>
 </template>

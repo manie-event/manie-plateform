@@ -1,4 +1,6 @@
 /*This is for the logo*/
+@import '@/assets/scss/_variables.scss';
+
 .leftSidebar {
   border-radius: 18px;
   height: calc((100% - 40px)) !important;
@@ -442,7 +444,7 @@
     }
 
     .leftSidebar:hover {
-      box-shadow: $box-shadow !important;
+      // box-shadow: $box-shadow !important;
 
       .mini-icon {
         display: none;

@@ -1,48 +1,56 @@
 <template>
-  <v-card elevation="10" class="events">
-    <v-card-text class="position-relative events__container">
-      <div class="d-flex justify-start">
-        <div class="mb-6">
-          <h5 class="v-card-title">Créez un évenènement</h5>
-        </div>
-      </div>
-
-      <v-btn
-        @click="openModal = !openModal"
-        class="default events__add-button"
-        style="height: 100px"
-        >+</v-btn
-      >
-      <CustomerForm v-if="openModal" v-model:open-customer-form="openModal" />
-    </v-card-text>
-  </v-card>
+  <v-row class="d-flex justify-space-between align-center">
+    <v-col cols="12" lg="6" class="d-flex flex-column">
+      <h1 class="text-h3">Bienvenue,</h1>
+      <h5 class="text-h6">{{ clientName ?? user?.username }}, voici un résumé de vos activités</h5>
+    </v-col>
+    <v-col cols="12" lg="6" class="events__cta">
+      <v-btn @click="eventCreation()" class="events__add-button">Créer un évènement</v-btn>
+    </v-col>
+    <CustomerForm v-if="openModal" v-model:open-customer-form="openModal" />
+  </v-row>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import CustomerForm from '~/components/questionnaires/CustomerForm.vue';
+import { useProfessionalService } from '~/services/UseProfessionalService';
 
+const { clientName, user } = storeToRefs(useUserStore());
 const openModal = ref(false);
+
+const { getAllSectors, getKeywords } = useKeywordsStore();
+const { getProfessionalService } = useProfessionalService();
+
+const eventCreation = async () => {
+  openModal.value = !openModal.value;
+  await Promise.all([getAllSectors(), getKeywords(), getProfessionalService()]);
+};
 </script>
 <style lang="scss" scoped>
 .events {
-  background: rgb(var(--v-theme-background));
+  background: rgb(var(--v-theme-containerBg));
   &__container {
     position: relative;
-    height: 270px;
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: center;
-    padding: 1.5rem;
+  }
+  &__cta {
+    display: flex;
+    justify-content: flex-end;
+
+    @media (max-width: 1250px) {
+      display: flex;
+      justify-content: flex-start;
+    }
   }
   &__add-button {
-    width: 70px;
-    height: 70px !important;
     position: relative;
-    background: var(--manie-thirdy);
-    border-radius: 50% !important;
-    top: 30px;
+    background: rgb(var(--v-theme-lightprimary));
+    color: rgb(var(--v-theme-background));
+    font-weight: 700;
   }
 }
 </style>

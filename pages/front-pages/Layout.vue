@@ -4,7 +4,7 @@ definePageMeta({
 });
 </script>
 <template>
-  <div class="front-wraper bg-surface">
+  <div class="bg-surface">
     <!-- <AnnounceBar /> -->
     <!-- <Header /> -->
     <main>

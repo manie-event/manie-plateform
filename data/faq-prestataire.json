@@ -1,35 +1,35 @@
 [
   {
-    "titre": "Manie, qu'est-ce que c'est ?",
-    "description": "Manie est une plateforme qui sait vous cerner, vous et votre offre, et vous aide à étoffer votre portefeuille client sur la région Auvergne-Rhône-Alpes tout en vous faisant gagner du temps."
+    "titre": "Manie c’est quoi ? ",
+    "description": "Manie est une plateforme qui sait vous cerner, vous et votre offre. Elle vous aide à étoffer votre portefeuille client sur la région Auvergne-Rhône-Alpes tout en vous faisant gagner du temps grâce à des clients qualifiés !"
   },
   {
     "titre": "Pourquoi rejoindre Manie ?",
-    "description": "Vous êtes mis en relation avec des clients qualifiés, cohérents avec votre positionnement ; vous gagnez un temps précieux sur votre prospection ; vous vous positionnez sur les évènements de votre choix et choisissez vos clients ; vous serez mis en avant sur nos réseaux sociaux et bénéficiez d'une visibilité ; vous avez accès à une communauté bienveillante de partenaires locaux et engagés qui méritent d'être mis en avant à l'échelle régionale ; vous améliorerez votre pratique environnementale grâce à la synergie inter-partenaires et aux thématiques proposées lors d'apéro partenaires."
+    "description": "Vous êtes mis en relation avec des clients qualifiés, cohérents avec votre positionnement <ul><li>vous gagnez un temps précieux sur votre prospection</li> <li>vous vous positionnez sur les évènements de votre choix et choisissez vos clients</li> <li>vous avez accès à une communauté bienveillante de partenaires locaux</li> <li>vous améliorerez votre pratique environnementale grâce à la synergie inter-partenaires et aux thématiques proposées lors de nos évènements partenaires.</li></ul>"
   },
   {
     "titre": "Comment ça fonctionne ?",
-    "description": "Rendez-vous sur la page suivante : <a href=\"/front-pages/Ccm-presta\">Comment ça marche ?</a>, si vous souhaitez avoir plus d'informations sur l'ensemble des fonctionnalités de la plateforme ou contactez-nous à l'adresse <b>contact@manie-event.fr</b>."
+    "description": "Rendez-vous sur la page 'comment ça marche' ? si vous souhaitez avoir plus d'informations sur l'ensemble des fonctionnalités de la plateforme. Et si tout n’est pas assez clair, vous pouvez poser toutes vos questions à l'adresse <a :mailto='contact@manie-event.fr'>contact@manie-event.fr</a>."
   },
   {
-    "titre": "Comment m'inscrire en tant que partenaire ?",
-    "description": "Vous souhaitez faire partie de l'aventure ? Rien de plus simple ! Rendez-vous sur cette page : <a href=\"/auth/Register\"> A la page d'enregistrement Manie</a>. Nous prendrons connaissance de votre profil et vous ferons un retour par mail sous 48h."
+    "titre": "Comment m’inscrire sur Manie ? ",
+    "description": "Rien de plus simple ! Rendez-vous sur <a href='/auth/register'>cette page </a>.Nous prendrons connaissance de votre profil et vous ferons un retour sous 48h."
   },
   {
     "titre": "Quels sont les critères pour intégrer la plateforme ?",
-    "description": "Vous devez avoir une activité événementielle déclarée, proposer un service professionnel, respecter notre charte, partager nos valeurs, et être implanté en Auvergne-Rhône-Alpes."
+    "description": "Vous devez avoir une activité événementielle déclarée (micro-entreprise ou société), respecter notre <a href='/juridique/charteBonneConduite'> charte de bonne conduite</a> et être implanté en Auvergne-Rhône-Alpes."
   },
   {
     "titre": "L'inscription est-elle gratuite ?",
-    "description": "L'inscription est gratuite. Vous choisissez ensuite entre deux modèles de rémunération : <ul><li>une commission prélevée sur les devis validés</li> <li>ou un abonnement annuel fixe (tarif sur demande).</li></ul>"
+    "description": "Sur Manie, l’inscription, la création de votre identité ainsi que la consultation des offres événementielles sont gratuites."
   },
   {
     "titre": "Comment créer mon identité ?",
-    "description": "Une fois votre inscription validée, vous devrez créer votre identité, celle qui vous permet de vous présenter, de nous raconter votre histoire et votre activité. Pour cela, il vous suffit \"d'éditer votre profil\" et le questionnaire d'identité se lancera tout seul. La première partie est commune à tous les prestataires, la deuxième est liée à votre activité et sera basée sur les mots clés qui seront la base de notre système de match !"
+    "description": "Une fois votre inscription validée, vous devez « éditer votre profil ». Cela vous permet de vous présenter, de nous raconter votre histoire, votre activité et vos offres. La première partie du questionnaire est commune à tous les prestataires, la deuxième est liée à votre activité et sera basée sur les mots clés qui seront la base de notre système de match !"
   },
   {
     "titre": "J'ai deux activités, comment faire ?",
-    "description": "Vous avez la possibilité de créer plusieurs identités avec le même profil et donc la même adresse mail. Il vous suffit d'ajouter une activité sur votre profil."
+    "description": "Aucun souci ! Si vous avez une double (ou triple) activité, vous devrez créer plusieurs identités avec le même profil (et donc la même adresse mail). Il vous suffit d'ajouter une activité à la fin du process de votre activité principale. "
   },
   {
     "titre": "Comment fonctionne le système de jetons ?",
@@ -40,19 +40,23 @@
     "description": "Absolument. Vous êtes libre de ne répondre qu'aux projets qui vous correspondent. En revanche, dès lors qu'un premier devis a été transmis à un client, il est impératif de l'informer clairement et rapidement d'une décision de votre part de ne finalement pas donner suite à sa demande."
   },
   {
-    "titre": "Comment se passe la tarification ?",
-    "description": "Manie vous laisse le choix de deux tarifications différentes : <ul><li>une commission de 10% sur devis TTC / 12% sur devis HT</li> <li>ou un abonnement annuel calculé selon la taille de votre activité et des événements visés.</li></ul>"
+    "titre": "Comment Manie se rémunère ?",
+    "description": "La plateforme prend commission de 10% sur devis TTC (soit 12% sur devis HT).Au bout d’un an d’ancienneté, Manie fait le point sur votre profil. Selon votre récurrence de signature, on pourra vous proposer un abonnement annuel si et seulement si cela est plus avantageux pour le prestataire."
   },
   {
     "titre": "Que se passe-t-il en cas de litige avec un client ?",
-    "description": "Manie agit comme intermédiaire pour faciliter une résolution amiable. En cas de conflits répétés ou comportement non conforme à notre charte, un compte peut être suspendu."
+    "description": "Manie agit comme intermédiaire pour faciliter une résolution amiable.En cas de conflits répétés ou comportement non conforme à <a href='/juridique/charteBonneConduite'> notre charte </a>, le compte peut être suspendu pour une durée indéterminée. "
   },
   {
-    "titre": "Puis-je quitter la plateforme ?",
-    "description": "Si vous êtes sur une formule 'commission' vous pouvez quitter la plateforme à tout moment en nous envoyant un simple mail à l'adresse contact. Si vous êtes sur une formule \"abonnement annuel\" vous devez nous notifier de votre intention de résiliation 30 jours avant la date d'anniversaire de votre abonnement par mail avec suivi, à l'adresse contact de Manie."
+    "titre": "Mes données personnelles sont-elles sécurisées ?",
+    "description": "Affirmatif ! Elles seront uniquement utilisées dans le cadre de la mise en relation avec nos clients. Elles ne sont jamais revendues à un tiers. Vous pouvez consulter notre politique de confidentialité <a href='/juridique/politique-de-confidentialite'> juste ici </a> "
   },
   {
-    "titre": "Mes informations sont-elles partagées ?",
-    "description": "Vos données sont sécurisées et uniquement utilisées dans le cadre de la mise en relation avec les clients. Elles ne sont jamais vendues à des tiers. Vous pouvez consulter notre politique de confidentialité juste <a href=\"/juridique/politique-de-confidentialite\">ici</a>."
+    "titre": "Comment quitter Manie?",
+    "description": "Dans le cas d’une formule classique avec commission, vous pourrez quitter la plateforme à tout moment en nous envoyant un simple mail à l'adresse contact@manie-event.fr. Si vous êtes sur une formule avec abonnement, vous devrez nous notifier de votre intention de résiliation 30 jours avant la date d'anniversaire de votre abonnement."
+  },
+  {
+    "titre": "Vous n’avez pas trouvé la réponse à votre question ?",
+    "description": "<a href='/front-pages/Contact-us'>Ecrivez-nous !</a> "
   }
 ]

@@ -35,4 +35,9 @@ import manieLogo from '@/public/images/logos/logo-manie-creme.svg';
     }
   }
 }
+@media screen and (max-width: 960px) {
+  .base-component {
+    width: 100vw;
+  }
+}
 </style>

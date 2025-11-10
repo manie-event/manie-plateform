@@ -1,6 +1,6 @@
 <template>
   <div class="nos-engagements__container">
-    <base-side-picture>
+    <base-side-picture class="nos-engagements__image-container">
       <template #bg-image>
         <img
           :src="nosEngagements"
@@ -14,25 +14,34 @@
       </template>
     </base-side-picture>
     <div class="nos-engagements__descriptif">
-      <h1>Nos engagements</h1>
+      <h2 class="text-h4 text-uppercase">Nos valeurs</h2>
 
-      <v-expansion-panels>
-        <v-expansion-panel
-          v-for="(panel, index) in engagementsData"
-          :key="index"
-          :title="panel.titre"
-          :text="panel.description"
-        >
+      <v-expansion-panels class="mt-6">
+        <v-expansion-panel v-for="(panel, index) in valeurData" :key="index">
+          <v-expansion-panel-title> {{ panel.titre }} </v-expansion-panel-title>
+          <v-expansion-panel-text> <div v-html="panel.description"></div> </v-expansion-panel-text>
         </v-expansion-panel>
       </v-expansion-panels>
+
+      <h2 class="text-h4 text-uppercase mt-11">Nos engagements</h2>
+      <v-expansion-panels class="mt-6">
+        <v-expansion-panel v-for="(panel, index) in engagementsData" :key="index">
+          <v-expansion-panel-title> {{ panel.titre }} </v-expansion-panel-title>
+          <v-expansion-panel-text> <div v-html="panel.description"></div> </v-expansion-panel-text>
+        </v-expansion-panel>
+      </v-expansion-panels>
+      <NuxtLink :href="'/auth/login'" class="nuxt-link mt-6 d-flex justify-center"
+        >Je me lance !</NuxtLink
+      >
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import BaseSidePicture from '@/components/common/BaseSidePicture.vue';
 import engagementsData from '@/data/nos-engagements.json';
+import valeurData from '@/data/valeurs.json';
 import LogoManie from '@/public/images/logos/logo-manie-creme.svg';
-import nosEngagements from '@/public/images/side-picture/kit-formerly-convertkit-tkXJoA_sn78-unsplash.jpg';
+import nosEngagements from '@/public/images/side-picture/valeurs.jpg';
 definePageMeta({
   layout: 'blank',
 });
@@ -66,5 +75,23 @@ definePageMeta({
   top: 40px;
   left: 40px;
   width: 90px;
+}
+
+@media screen and (max-width: 960px) {
+  .nos-engagements {
+    &__container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: column;
+    }
+    &__descriptif {
+      width: 100vw;
+      padding: 4rem;
+    }
+    &__image-container {
+      display: none;
+    }
+  }
 }
 </style>

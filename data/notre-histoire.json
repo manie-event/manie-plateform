@@ -1,6 +1,10 @@
 [
   {
-    "titre": "Une bonne gestion des imprévus",
+    "titre": "Qui suis-je ?",
+    "description": "Je m’appelle Léonore et j’ai toujours eu un faible pour les moments qui rassemblent. Les éclats de rire autour d’une table, l’odeur du plat familial, la petite émotion avant que tout commence…"
+  },
+  {
+    "titre": "Une bonne gestion des aléas",
     "description": "Les plus beaux moments se trouvent dans la simplicité… et dans l'imprévu. Les jours de pluie ne sont pas synonymes d'ennui, mais d'aventure. C'est pourquoi j'aborde chaque événement avec ce même état d'esprit : peu importe la météo, il y aura toujours un moyen de transformer ce moment en un souvenir unique."
   },
   {
@@ -17,6 +21,15 @@
   },
   {
     "titre": "La naissance de Manie",
-    "description": "Après 7 ans à piloter des projets immobiliers, j'ai compris que mon vrai plaisir était de réunir les bonnes personnes au bon moment pour faire naître quelque chose de concret. De bâtir non plus des lieux, mais des moments de partage et des souvenirs indélébiles. Manie est née pour que chaque rencontre entre organisateur et prestataire soit simple et fluide. Pour que nos clients profitent pleinement de leur événement, avec la certitude que tout roule en coulisses. Et si, au passage, je construis une communauté de passionnés qui s'entraident… alors j'aurai réussi mon pari. Chaque événement se vit comme une histoire… la vôtre !"
+    "description": "Après 7 ans à piloter des projets immobiliers, j'ai compris que mon vrai plaisir était de réunir les bonnes personnes au bon moment pour faire naître quelque chose de concret. De bâtir non plus des lieux, mais des moments de partage et des souvenirs indélébiles. Manie est née pour que n’importe qui puisse organiser n’importe quoi, pour que tout soit simple et fluide. Pour que nos clients profitent pleinement de leur événement, avec la certitude que tout roule en coulisses. Et si, au passage, je construis une communauté de passionnés solidaires et bienveillants alors j'aurai réussi mon pari. Chaque événement se vit comme une histoire, celle-ci est la vôtre !"
+  },
+  {
+    "titre": "Mon constat",
+    "description": "L’idée de Manie est née d’un double constat : d’un côté, l’organisation d’un événement reste une démarche perçue comme complexe, stressante et chronophage ; de l’autre, la région Auvergne-Rhône-Alpes regorge de prestataires talentueux, souvent méconnus du grand public et ce, dû à une forte concurrence. L’ambition de Manie est de réconcilier les deux en simplifiant la planification d’événements tout en valorisant les acteurs locaux naissants qui en sont le cœur."
+  },
+
+  {
+    "titre": "Pourquoi “Manie” ?",
+    "description": "<b>Manier</b> :votre projet est entre de bonnes mains, vous pouvez nous faire confiance. <br><br> <b>Maniable</b> : une plateforme flexible, intuitive et facile d’utilisation. <br> Manifeste :  des engagements clairs et transparents. <br><br> <b>Many</b> :  autant d'offres que de projets, une richesse et une diversité de prestataires et de clients. <br><br> <b>Manny dans 'l’Age de Glace'</b> :  celui sur qui on peut compter, qui prend soin des gens qu’il aime. <br><br><b> Manny dans 'Scarface' </b>:  un bras droit, fidèle, dévoué et compétent. <br><br>  <b>Clin d'œil spirituel </b>: chez les indiens, le Grand Manitou est une figure de pouvoir et de bienveillance, qui aura une influence sur le futur ! <br><br> Parce que chaque événement est un moment unique, et qu’on a souvent “la manie” de vouloir que tout soit parfait... Ce nom reflète à la fois la passion et le souci du détail qui sont le moteur de notre projet."
   }
 ]

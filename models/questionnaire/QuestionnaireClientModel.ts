@@ -5,11 +5,14 @@ export interface QuestionnaireClient {
   location: string;
   duration: string;
   invites: string;
+  formule?: string;
   name: string;
   isAlreadyCreated?: boolean;
   organisation: string;
   people: number;
   budget: number;
+  status: string;
+  theme: string;
   services: Services[];
 }
 

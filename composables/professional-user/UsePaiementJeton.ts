@@ -1,13 +1,15 @@
 import { PRICE_PER_TOKEN } from '~/constants/prixToken';
+import { useProfessionalProfile } from './UseProfessionalProfile';
 
 export const usePaiementJeton = () => {
   const route = useRoute();
   const userStore = useUserStore();
-  const { professionalUser } = storeToRefs(userStore);
+  const { professionalUser, professionalUuid } = storeToRefs(userStore);
   const cartStore = useCartStore();
-  const { initializeTokenBalance } = cartStore;
-
-  const api = useApi(); // ✅ instance sécurisée
+  const { getProfessionalProfile } = useProfessionalProfile();
+  const { initializeTokenBalance, setJetonQuantity } = cartStore;
+  const { addSuccess, addError } = useToaster();
+  const api = useApi();
   const isProcessing = ref(false);
   const error = ref<string | null>(null);
 
@@ -15,15 +17,14 @@ export const usePaiementJeton = () => {
    * Crée une session de paiement Stripe
    */
   const createTokenSession = async (amount: number) => {
-    const currentProfile = professionalUser.value;
-    if (!currentProfile?.uuid) throw new Error('Profil professionnel non trouvé');
+    if (!professionalUuid.value) throw new Error('Profil professionnel non trouvé');
 
     try {
       if (!api) return;
 
-      const { data } = await api.post(`/payments/token/${currentProfile.uuid}`, {
+      const { data } = await api.post(`/payments/token/${professionalUuid.value}`, {
         quantity: amount,
-        professional_uuid: currentProfile.uuid,
+        professional_uuid: professionalUuid.value,
       });
 
       if (data?.url) {
@@ -48,9 +49,10 @@ export const usePaiementJeton = () => {
     try {
       if (!api) return;
       const { data } = await api.get(`/credit/${currentProfile.uuid}`);
+      setJetonQuantity(data.quantity);
       return data.quantity;
-    } catch (err) {
-      console.error('Erreur récupération crédits:', err);
+    } catch (err: any) {
+      console.error(err.response.data.message);
       throw new Error('Impossible de récupérer le solde de jetons.');
     }
   };
@@ -64,7 +66,7 @@ export const usePaiementJeton = () => {
       const { data } = await api.get(`/payments/session-status/${sessionId}`);
       return data;
     } catch (err: any) {
-      console.error('Erreur vérification session:', err);
+      console.error(err.response.data.message);
       throw new Error('Impossible de vérifier le paiement');
     }
   };
@@ -75,7 +77,7 @@ export const usePaiementJeton = () => {
   const processStripeReturn = async (sessionId: string) => {
     if (isProcessing.value) return { success: false, message: 'Traitement en cours...' };
     isProcessing.value = true;
-
+    await getProfessionalProfile();
     try {
       const response = await verifyStripeSession(sessionId);
       const sessionData = response.session;
@@ -90,10 +92,12 @@ export const usePaiementJeton = () => {
       const currentBalance = await getJetonQuantity();
       initializeTokenBalance(currentBalance);
 
+      addSuccess('Paiement réussi ! Votre solde de jetons a été mis à jour.');
       return { success: true, quantity, sessionData };
-    } catch (err: any) {
-      error.value = err.message;
-      return { success: false, message: error.value };
+    } catch (error: any) {
+      addError({
+        message: error.response.data.message || 'Erreur lors du traitement du paiement.',
+      });
     } finally {
       isProcessing.value = false;
     }

@@ -1,17 +1,19 @@
 <template>
-  <v-card class="position-relative">
+  <div class="position-relative check-list">
     <div class="d-flex flex-row-reverse justify-space-between">
-      <v-btn color="primary" class="checklist-btn" variant="flat" @click="handleAddTask()">
-        <v-icon center>mdi-plus</v-icon>
+      <v-btn
+        style="background: rgb(var(--v-theme-thirdy)); color: white; text-decoration: none"
+        class="checklist-btn"
+        variant="flat"
+        @click="handleAddTask()"
+      >
+        <icon icon="mdi-plus" />
       </v-btn>
       <div>
-        <v-card-subtitle class="text-subtitle-1 font-weight-bold pt-5">
-          Votre liste des tâches
-        </v-card-subtitle>
-
-        <v-card-subtitle class="text-body-2 mb-4">
+        <h4 class="text-subtitle-1 font-weight-semibold">Votre liste des tâches</h4>
+        <p class="text-body-2 opacity-50">
           {{ completedTasks }}/{{ currentTasks.length }} tâche(s) complétée(s)
-        </v-card-subtitle>
+        </p>
       </div>
     </div>
 
@@ -19,17 +21,19 @@
       <v-list-item
         v-for="(task, index) in currentTasks"
         :key="task.id"
-        class="py-2"
         :class="task.done ? 'task-done' : 'task-pending'"
+        class="list-to-do"
       >
         <v-row class="align-center" no-gutters>
           <v-col cols="auto">
-            <v-checkbox
+            <input
+              type="checkbox"
               v-model="task.done"
+              class="mx-4"
               color="primary"
               hide-details
               @update:model-value="handleUpdateTask(task.id, { done: task.done })"
-            ></v-checkbox>
+            />
           </v-col>
 
           <v-col class="flex-grow-1">
@@ -45,18 +49,25 @@
           </v-col>
 
           <v-col cols="auto">
-            <v-icon color="error" class="cursor-pointer" @click="handleRemoveTask(index)">
-              mdi-delete
-            </v-icon>
+            <Icon
+              color="error"
+              width="24"
+              height="24"
+              icon="solar:trash-bin-trash-line-duotone"
+              class="cursor-pointer"
+              @click="handleRemoveTask(index)"
+            >
+            </Icon>
           </v-col>
         </v-row>
       </v-list-item>
     </transition-group>
-  </v-card>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { useTasksStore } from '@/stores/taskStore';
+import { Icon } from '@iconify/vue';
 import { computed, onMounted } from 'vue';
 import type { eventModel } from '~/models/events/eventModel';
 import type { Task } from '~/models/tasks/eventTasks';
@@ -103,17 +114,29 @@ const handleUpdateTask = (taskId: number, updates: Partial<Task>) => {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.check-list {
+  height: 230px;
+  border-radius: 15px;
+  box-shadow: 5px 5px 5px 5px rgb(var(--v-theme-darkBg));
+  padding: 1rem;
+  background: rgb(var(--v-theme-containerBg));
+  overflow-y: scroll;
+}
+
 .task-done {
   text-decoration: line-through;
   opacity: 0.6;
   transition: all 0.25s ease;
 }
 
+.list-to-do {
+}
+
 .checklist-btn {
   position: relative;
-  top: 20px;
-  right: 20px;
+  top: 0px;
+  right: 0px;
   z-index: 1;
   display: flex;
   align-items: center;

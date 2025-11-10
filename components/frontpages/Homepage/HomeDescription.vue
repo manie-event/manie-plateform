@@ -1,260 +1,176 @@
 <template>
-  <div class="home-description">
-    <div class="home-description__container">
-      <h2 class="home-description__title">
-        Notre mission : permettre à n'importe qui d'organiser n'importe quoi !
-      </h2>
-      <div>
-        <div class="home-description__section1">
-          <div class="home-description__section1__left-side">
-            <h2 class="home-description__section1__big-title">Particuliers</h2>
-          </div>
-          <div class="home-description__section1__description">
-            <p>
-              En famille, entre amis, ou les deux : célébrez la vie ! <br />
-              <br />
-              Qu’il s’agisse d’honorer l’amour, de rassembler vos proches, de marquer une étape
-              importante dans votre carrière ou d’accueillir le changement, chaque moment mérite
-              d’être vécu pleinement. <br />
-              <br />
-              Manie, c’est la promesse d’une organisation simple, fluide et sans pression, pour que
-              vous puissiez profiter de chaque instant et le transformer en un souvenir précieux.
-            </p>
-            <NuxtLink to="/auth/login" class="home-description__section1__description__link"
-              >Je crée mon évènement !</NuxtLink
-            >
-          </div>
-          <Img :src="section1Img" class="home-description__section1__image"></Img>
-        </div>
-        <div class="home-description__section2">
-          <Img :src="section1Img" class="home-description__section2__image"></Img>
-        </div>
-        <div class="home-description__section3">
-          <Img :src="section1Img" class="home-description__section3__image"></Img>
-          <div class="home-description__section3__right-side">
-            <h2 class="home-description__section3__big-title">Entreprises</h2>
-            <div class="home-description__section1__description">
-              <p>
-                Entreprises, collectivités et institutions : <br />
-                valorisez vos équipes, vos clients et vos partenaires ! <br />
-                <br />
-                Qu’il s’agisse d’un séminaire, d’un lancement, d’une inauguration ou d’un simple
-                cocktail, chaque événement mérite d’être impactant et à votre image. <br />
-                <br />
-                Manie, c’est la promesse d’une organisation simple, claire et réactive, pour que
-                vous puissiez vous concentrer sur l’essentiel : vos invités, vos objectifs, vos
-                réussites.
-              </p>
-              <NuxtLink to="/auth/login" class="home-description__section1__description__link"
-                >Je crée mon évènement !</NuxtLink
-              >
-            </div>
-          </div>
-        </div>
-        <div>
-          <h2 class="home-description__section4__big-title text-h2 font-weight-bold">
-            Prestataires
-          </h2>
-          <div class="home-description__section4__description">
-            <p>
-              Tu fais partie de la team lieux, food, boissons, musique, audiovisuel, déco, location
-              de matériel animation ou logistique ? Bienvenue ! <br />
-              <br />
-              Rejoins un écosystème local de professionnels sélectionnés pour leur talent, leurs
-              valeurs et leur ancrage territorial ! <br />
-              <br />
-              Unissons nos talents pour faire vibrer l’Auvergne-Rhône-Alpes.
-            </p>
-            <NuxtLink to="/auth/login" class="home-description__section4__description__link"
-              >Je crée mon évènement !</NuxtLink
-            >
-          </div>
-        </div>
+  <v-row class="home">
+    <v-col cols="12" md="6" class="home__container" style="background: rgb(var(--v-theme-thirdy))">
+      <h2 class="font-weight-bold text-uppercase text-left">Particuliers</h2>
+      <h5 class="text-subtitle1 font-weight-medium">
+        En famille, entre amis, ou les deux : célébrez la vie ! Qu’il s’agisse d’honorer l’amour, de
+        rassembler vos proches, de marquer une étape importante dans votre carrière ou d’accueillir
+        le changement, chaque moment mérite d’être vécu pleinement. Manie, c’est la promesse d’une
+        organisation simple, fluide et sans pression, pour que vous puissiez profiter de chaque
+        instant et le transformer en un souvenir précieux.
+      </h5>
+      <NuxtLink class="cta" to="/auth/login"> Je crée mon événement !</NuxtLink>
+    </v-col>
+    <v-col cols="12" md="6" style="height: calc(100vh - 115px); padding: 0">
+      <div style="background: var(--manie-secondary); height: 100%">
+        <img :src="homePerso" alt="" class="home__image" />
       </div>
-    </div>
-  </div>
+    </v-col>
+  </v-row>
+  <v-row>
+    <v-col cols="12" md="6" style="height: calc(100vh - 115px); padding: 0">
+      <div style="height: 100%">
+        <img :src="homePro" alt="" class="home__image" />
+      </div>
+    </v-col>
+    <v-col cols="12" md="6" class="home__container" style="background: #f39454">
+      <h2 class="font-weight-bold text-uppercase" style="background: #f39454">Professionnels</h2>
+      <h5 class="text-subtitle1 font-weight-medium">
+        Entreprises, collectivités et institutions : valorisez vos équipes, vos clients et vos
+        partenaires ! Qu’il s’agisse d’un séminaire, d’un lancement, d’une inauguration ou d’un
+        simple cocktail, chaque événement mérite d’être impactant et à votre image. Manie, c’est la
+        promesse d’une organisation simple, claire et réactive, pour que vous puissiez vous
+        concentrer sur l’essentiel : vos invités, vos objectifs, vos réussites.
+      </h5>
+      <NuxtLink class="cta" to="/auth/login"> Je crée mon événement !</NuxtLink>
+    </v-col>
+  </v-row>
+  <v-row
+    class="d-flex justify-center align-center"
+    style="background: rgb(var(--v-theme-background))"
+  >
+    <v-col
+      cols="12"
+      style="height: 700px; gap: 40px"
+      class="d-flex justify-center align-center flex-column"
+    >
+      <h2 class="font-weight-bold text-uppercase" style="color: rgb(var(--v-theme-darkbg))">
+        Prestataires
+      </h2>
+      <h5
+        class="text-subtitle1 font-weight-medium w-100 px-6"
+        style="color: rgb(var(--v-theme-darkbg))"
+      >
+        Vous faites partie de la team lieux, food, boissons, musique, audiovisuel, déco, location de
+        matériel animation ou logistique ? <b>Bienvenue chez Manie !</b> Rejoins un écosystème local
+        de professionnels sélectionnés pour leur talent, leurs valeurs et leur ancrage territorial !
+        Unissons nos talents pour faire vibrer l’Auvergne-Rhône-Alpes.
+      </h5>
+      <NuxtLink class="nuxt-link" style="font-size: 1rem" to="/auth/login">
+        Devenir partenaire !</NuxtLink
+      >
+    </v-col>
+  </v-row>
+  <Teleport to="body">
+    <v-dialog v-model="greenModal" max-width="600">
+      <v-card max-width="600">
+        <v-card-text
+          style="
+            background: rgb(var(-v-theme-background));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 35px;
+          "
+        >
+          <Icon icon="teenyicons:plant-outline" height="40" width="40" color="#125605"></Icon>
+          <p>
+            L’éco-responsabilité n'est pas un slogan chez Manie, ni un argument marketing. C’est une
+            valeur ancrée dans nos choix et nos collaborations. Nos partenaires partagent cette
+            exigence, marque de respect et de bon sens. On ne le revendique pas pour se distinguer,
+            on le fait, tout simplement. C’est une conviction.
+          </p>
+
+          <v-btn @click="greenModal = false" color="#125605">Fermer </v-btn>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+  </Teleport>
 </template>
 <script setup lang="ts">
-import section1Img from '@/public/images/backgrounds/section1.jpg';
-const { $gsap, $ScrollTrigger } = useNuxtApp();
+import homePerso from '@/public/images/backgrounds/home_perso.jpg';
+import homePro from '@/public/images/backgrounds/home_pro.png';
+import { Icon } from '@iconify/vue';
+import { Teleport } from 'vue';
 
-onMounted(() => {
-  $gsap.to('.home-description__section1__big-title', {
-    left: '-10vw',
-    scrollTrigger: {
-      trigger: '.home-description__section1',
-      start: 'top 100%',
-      end: 'bottom 90%',
-      scrub: 1.5,
-    },
-  });
+const greenModal = ref(false);
 
-  $gsap.to('.home-description__section3__big-title', {
-    right: '-10vw',
-    scrollTrigger: {
-      trigger: '.home-description__section3',
-      start: 'top 50%',
-      end: 'bottom 70%',
-      scrub: 1.5,
-    },
-  });
-});
+const scrollTriggered = ref(false);
+const scrollThreshold = 1200;
+
+const handleScroll = () => {
+  if (scrollTriggered.value) return;
+
+  if (window.scrollY >= scrollThreshold) {
+    greenModal.value = true;
+    scrollTriggered.value = true;
+  }
+};
+onMounted(() => window.addEventListener('scroll', handleScroll));
+onBeforeUnmount(() => window.removeEventListener('scroll', handleScroll));
 </script>
 <style lang="scss" scoped>
-.home-description {
-  background: var(--bg-color);
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  margin: 0 auto;
+h2 {
+  font-family: var(--big-title);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgb(var(--v-theme-background));
+  font-size: 3.5rem;
+  line-height: 1.1;
+  z-index: 99;
+}
+
+h5 {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: rgb(var(--v-theme-background));
+  text-align: justify;
+  max-width: 45ch; // pour garder une bonne lisibilité
+}
+.home {
+  &__image {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
   &__container {
-    width: 90vw;
+    padding: 9vw;
     display: flex;
-    justify-content: center;
+    font-size: 1.3rem;
     flex-direction: column;
-    margin: 0 auto;
-  }
-  &__title {
-    text-align: center;
-    font-size: 2vw;
-    font-family: 'Poppins';
-    font-weight: 500;
-    margin: 50px auto 170px;
-    position: relative;
-    z-index: 3;
-  }
-  &__section1 {
-    // background: red;
-    display: flex;
-    align-items: center;
-    position: relative;
-    &__left-side {
-      position: relative;
-      z-index: 2; // au-dessus de l'image
-      z-index: 99;
-      height: 70vh;
-    }
-    &__big-title {
-      // background: purple;
-      position: absolute;
-      padding: 0;
-      margin: 0;
-      font-size: clamp(10vw, 15vw + 1rem, 25vw);
-      line-height: 0.5;
-      z-index: 4;
-      top: 0;
-      left: 0vw;
-      // background-color: purple;
-    }
-    &__description {
-      margin-top: 250px;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      &__link {
-        position: relative;
-        color: var(--manie-thirdy);
-        text-decoration: none;
-        font-family: 'Poppins';
-        font-weight: 600;
-        display: inline-block; // nécessaire pour que le ::after suive la largeur du texte
-
-        &::after {
-          content: '';
-          position: absolute;
-          bottom: -3px; // espace entre le texte et la ligne
-          left: 0;
-          width: 20%;
-          height: 2px;
-          background: var(--manie-thirdy);
-          transition: transform 0.3s ease;
-          transform: scaleX(0); // caché par défaut (effet animation)
-          transform-origin: right;
-        }
-
-        &:hover::after {
-          transform: scaleX(1); // se déploie au survol
-          transform-origin: left;
-        }
-      }
-    }
-    &__image {
-      position: relative;
-      right: -100px;
-      width: 100vw;
-      // background: red;
-      max-height: 900px;
-      object-fit: cover;
-      border-radius: 10px;
-    }
-  }
-  &__section3 {
-    display: flex;
-    align-items: center;
-    position: relative;
-    margin-top: -330px;
-    margin-bottom: 100px;
-    &__right-side {
-      position: relative;
-      z-index: 2; // au-dessus de l'image
-      z-index: 99;
-      height: 70vh;
-      width: 100vw;
-    }
-    &__big-title {
-      // background: purple;
-      position: absolute;
-      padding: 0;
-      margin: 0;
-      right: 0vw;
-      font-size: clamp(10vw, 15vw + 1rem, 25vw);
-      line-height: 0.5;
-      z-index: 4;
-      top: 0;
-      // background-color: purple;
-    }
-    &__image {
-      position: relative;
-      left: -100px;
-      width: 100vw;
-      // background: red;
-      max-height: 900px;
-      object-fit: cover;
-      border-radius: 10px;
-    }
-  }
-  &__section2 {
-    display: flex;
     justify-content: center;
-    width: 70vw;
-    z-index: 99;
-    transform: translate(80px, -200px);
-    position: relative;
-    &__image {
-      position: relative;
-      width: 350px;
-      height: 350px;
-      // background: red;
-      object-fit: cover;
-      border-radius: 10px;
-      box-shadow: -10px 10px 0 10px var(--bg-color);
-    }
+    gap: 3rem;
+    align-items: center;
   }
-  &__section4 {
-    &__big-title {
-      text-align: center;
-      font-size: 2vw;
-      font-family: 'Poppins';
-      font-weight: 500;
-      margin: 50px auto 170px;
-      position: relative;
-      z-index: 3;
-      background: rgb(var(--v-theme-thirdy));
-      width: fit-content;
-      color: white;
-      padding: 10px;
-    }
+}
+.cta {
+  font-family: 'Poppins';
+  text-decoration: unset;
+  margin-left: 15px;
+  font-weight: 600;
+  color: rgb(var(--v-theme-lightprimary));
+  transition: all 0.4s ease-in;
+  padding: 0px 10px;
+  border-radius: 15px;
+  background: rgb(var(--v-theme-background));
+  font-size: 1rem;
+  width: fit-content;
+  cursor: pointer;
+
+  &:hover {
+    background: rgb(var(--v-theme-background));
+    padding: 0px 10px;
+    border-radius: 15px;
+    transition: all 0.4s ease-out;
+  }
+}
+@media screen and (max-width: 900px) {
+  h2 {
+    font-size: 2rem;
+  }
+  h5 {
+    font-size: 0.8rem;
   }
 }
 </style>

@@ -1,7 +1,14 @@
 <template>
-  <BaseModal v-model="openModal" fullscreen transition="dialog-bottom-transition">
-    <template #content>
-      <v-form class="px-4">
+  <v-dialog v-model="openModal" max-width="600" transition="dialog-bottom-transition">
+    <v-card max-width="600" class="rounded edit-professional">
+      <Icon
+        icon="ri:close-fill"
+        size="22"
+        class="text-grey100 cursor-pointer"
+        :style="{ position: 'absolute', right: '20px', top: '20px' }"
+        @click="openModal = false"
+      />
+      <v-form class="edit-professional__formulaire">
         <div v-show="currentPage === 1">
           <v-divider class="mt-6"
             ><p class="mt-6"></p>
@@ -13,28 +20,28 @@
             v-model="profile.name"
             :error-messages="showErrors ? errors.name : undefined"
           />
+          <v-text-field
+            label="Le nom complet de l'interlocuteur principal ?"
+            v-model="profile.mainInterlocutor"
+            :error-messages="showErrors ? errors.mainInterlocutor : undefined"
+          />
 
           <v-text-field
             label="Votre Numéro De Siret ?"
             v-model="profile.siret"
             :error-messages="showErrors ? errors.siret : undefined"
           />
-          <v-text-field
-            label="Votre numéro de téléphone ?"
-            v-model="profile.telephone"
-            :error-messages="showErrors ? errors.siret : undefined"
-          />
+
           <v-text-field
             label="L'adresse complète du siège social ?"
             v-model="profile.address"
             :error-messages="showErrors ? errors.address : undefined"
           />
-          <v-text-field
-            label="Une courte description de votre activité ?"
-            v-model="profile.bio"
-            :error-messages="showErrors ? errors.bio : undefined"
-          />
-          <v-select
+
+          <v-divider class="border-opacity-50 mb-6"
+            ><p class="mb-6">A propos de votre activité</p></v-divider
+          >
+          <!-- <v-select
             label="Votre activité principale ?"
             v-model="profile.mainActivity"
             :items="activityItems"
@@ -42,22 +49,21 @@
             item-value="value"
             @update:model-value="setSector"
             :error-messages="showErrors ? errors.mainActivity : undefined"
-          />
+          /> -->
+
           <v-text-field
-            label="Le nom complet de l'interlocuteur principal ?"
-            v-model="profile.mainInterlocutor"
-            :error-messages="showErrors ? errors.mainInterlocutor : undefined"
+            label="Une courte description de votre activité ?"
+            v-model="profile.bio"
+            :error-messages="showErrors ? errors.bio : undefined"
           />
+
           <v-number-input
-            label="Depuis combien d'année exercez-vous cette activité ?"
+            label="Depuis quelle année exercez-vous cette activité ?"
             v-model="profile.experience"
             control-variant="hidden"
             :min="0"
             :error-messages="showErrors ? errors.experience : undefined"
           />
-          <v-divider class="border-opacity-50 mb-6"
-            ><p class="mb-6">A propos de votre activité</p></v-divider
-          >
 
           <v-select
             label="Votre secteur géographique ?"
@@ -83,11 +89,12 @@
                 class="flex-1"
               />
 
-              <v-btn
+              <Icon
+                width="24"
+                height="24"
+                icon="solar:trash-bin-trash-line-duotone"
                 v-if="profile.certification.length > 1"
-                icon="mdi-delete"
                 color="error"
-                variant="text"
                 size="small"
                 @click="removeCertification(index)"
               />
@@ -106,11 +113,9 @@
             v-model="reservationDelay"
             :error-messages="showErrors ? errors.minimumReservationPeriod : undefined"
           />
-          <v-checkbox
-            label="Doit-on vous faire un accompte avant prestation"
-            v-model="profile.deposit"
-            :error-messages="showErrors ? errors.deposit : undefined"
-          />
+          <div class="d-flex gap-2 text-subtitle-1 mb-3">
+            <p>Un acompte est nécessaire à la réservation d’une prestation</p>
+          </div>
           <v-number-input
             v-if="profile.deposit"
             control-variant="hidden"
@@ -122,10 +127,10 @@
             :error-messages="showErrors ? errors.depositAmount : undefined"
           />
           <div class="d-flex gap-2 flex-column justify-start align-items-start">
-            <v-label class="text-subtitle-1 font-weight-medium"
-              >Vous souhaitez être payer avant l'évènement ?</v-label
+            <v-divider class="text-subtitle-1 font-weight-medium"
+              >Vous souhaitez être payé (restant dû) ?</v-divider
             >
-            <div class="d-flex align-center gap-2">
+            <div class="d-flex align-center justify-center gap-2">
               <v-label class="text-subtitle-1 font-weight-medium">Avant la prestation</v-label>
               <v-switch
                 v-model="profile.billingPeriod"
@@ -142,12 +147,18 @@
 
           <v-divider class="mb-6"> <p class="mb-6">A propos de votre communication</p></v-divider>
 
+          <v-text-field
+            label="Votre numéro de téléphone ?"
+            v-model="profile.telephone"
+            :error-messages="showErrors ? errors.siret : undefined"
+          />
+
           <div class="mt-4">
             <div v-for="(link, index) in profile.links" :key="index">
               <v-select
                 v-model="link.type"
                 label="Renseignez le réseau social ou le site web"
-                :items="['Facebook', 'Instagram', 'LinkedIn', 'Twitter', 'Site Web']"
+                :items="['Facebook', 'Instagram', 'LinkedIn', 'Youtube', 'Twitter', 'Site Web']"
                 item-title="label"
                 item-value="value"
               />
@@ -161,10 +172,10 @@
               <v-btn
                 @click="removeLink(index)"
                 :disabled="profile.links.length <= 0"
-                color="error"
-                prepend-icon="mdi-delete"
+                color="rgb(var(--v-theme-error))"
                 size="small"
-                class="mb-4"
+                style="color: rgb(var(--v-theme-background))"
+                class="mb-4 text-center"
               >
                 Supprimer
               </v-btn>
@@ -195,7 +206,6 @@
                 @click="removeFaq(index)"
                 :disabled="faqArray.length === 0"
                 color="error"
-                prepend-icon="mdi-delete"
                 size="small"
                 class="my-2"
               >
@@ -208,18 +218,24 @@
           </div>
         </div>
 
-        <div v-if="currentPage === 1" class="d-flex justify-space-between">
+        <div v-if="currentPage === 1" class="d-flex justify-space-between edit-professional__btn">
           <v-btn @click="openModal = false">Annuler</v-btn>
-          <v-btn v-if="!isProfileVerified" color="primary" @click="createProfile(profile)">
+          <v-btn v-if="!isProfileCreated" color="primary" @click="createProfile(profile)">
             Valider mon profil
           </v-btn>
-          <div v-if="isProfileVerified">
-            <v-btn color="primary" @click="modifyProfile(profile)"> Modifier mon profil </v-btn>
+          <div v-else>
+            <v-btn
+              class="edit-professional__btn-width"
+              color="primary"
+              @click="modifyProfile(profile)"
+            >
+              Modifier mon profil
+            </v-btn>
           </div>
         </div>
       </v-form>
-    </template>
-  </BaseModal>
+    </v-card>
+  </v-dialog>
   <Teleport to="body">
     <ModalRedirection :redirection="'dashboard2'" v-model="isProfilUpdate" />
     <CommonSuccessToaster></CommonSuccessToaster>
@@ -227,22 +243,25 @@
   </Teleport>
 </template>
 <script setup lang="ts">
-import BaseModal from '@/components/common/BaseModal.vue';
+import { useUserStore } from '@/stores/userStore';
+import { Icon } from '@iconify/vue';
+import { storeToRefs } from 'pinia';
 import { useForm } from 'vee-validate';
-import { ref, Teleport } from 'vue';
+import { ref } from 'vue';
 import * as yup from 'yup';
 import errorToaster from '~/components/common/errorToaster.vue';
-import { useKeywords } from '~/composables/professional-user/UseKeywords';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import { GEOGRAPHIC_ACTIVITY } from '~/constants/geographicActivity';
-import type { Faq, Link, ProfessionalProfile } from '~/models/user/UserModel';
+import type { Faq, ProfessionalProfile } from '~/models/user/UserModel';
+import { useToaster } from '~/utils/toaster';
 import ModalRedirection from './ModalRedirection.vue';
 
 const userStore = useUserStore();
-const { professionalUser } = storeToRefs(userStore);
-const { createProfessionalProfile, patchProfessionnalProfileDetails } = useProfessionalProfile();
-const { getSectors } = useKeywords();
+const { professionalUser, isProfilUpdate, isProfileCreated } = storeToRefs(userStore);
+const { setProfessionalUser } = userStore;
+const { getSectors } = useKeywordsStore();
+const { createProfessionalProfile, patchProfessionalProfileDetails } = useProfessionalProfile();
 const openModal = defineModel<boolean>('openModal');
 
 const faqArray = ref<Faq[]>([]);
@@ -251,19 +270,20 @@ const { addError, addSuccess } = useToaster();
 const currentPage = ref(1);
 const activityItems = ref(ACTIVITY_ITEMS);
 const geographicActivity = ref(GEOGRAPHIC_ACTIVITY);
-const isProfileVerified = localStorage.getItem('is-profile-verified');
 const reservationDelay = ref(0);
-const isProfilUpdate = ref(false);
 
-const minimumDaysReservation = computed(() => reservationDelay.value * 7);
+const minimumDaysReservation = computed(() => reservationDelay.value);
 
 const mergedFaq = computed(() => {
-  return faqArray.value.reduce((acc, faq) => {
-    if (faq.question && faq.reponse) {
-      acc[faq.question] = faq.reponse;
-    }
-    return acc;
-  }, null);
+  return faqArray.value.reduce(
+    (acc, faq) => {
+      if (faq.question && faq.reponse) {
+        acc[faq.question] = faq.reponse;
+      }
+      return acc;
+    },
+    {} as Record<string, string>
+  );
 });
 
 const validationSchema = yup.object({
@@ -284,7 +304,7 @@ const validationSchema = yup.object({
     .number()
     .min(0, "L'expérience doit être positive")
     .required("L'expérience est requise"),
-  geographicArea: yup.string().required('La zone géographique est requise'),
+  // geographicArea: yup.string().required('La zone géographique est requise'),
   certification: yup.string(),
   minimumReservationPeriod: yup.number().min(0, 'La période de réservation doit être positive'),
   deposit: yup.boolean(),
@@ -318,14 +338,14 @@ const {
     mainActivity: 'Veuillez choisir votre activité',
     mainInterlocutor: '',
     experience: 0,
-    geographicArea: geographicActivity.value[0]?.label ?? '',
+    geographicArea: 'Auvergne-Rhône-Alpes',
     faq: {},
     minimumReservationPeriod: 0,
     certification: [''],
-    deposit: false,
+    deposit: true,
     depositAmount: 0,
     billingPeriod: 'beforeEvent',
-    links: [] as Link[] as [{ type: string; value: string }],
+    links: [{ type: 'Facebook', value: '' }] as [{ type: string; value: string }],
   },
   validateOnMount: false,
   keepValuesOnUnmount: true,
@@ -375,23 +395,18 @@ const createProfile = async (values: ProfessionalProfile) => {
       links: profile.links.filter((link) => link.type.trim() && link.value.trim()),
       certification: profile.certification.filter((c) => c.trim()),
     };
+
     const response = await createProfessionalProfile(payload);
 
-    if (response.message === 'Professional updated') {
-      if (professionalUser.value?.uuid) {
-        localStorage.setItem('professional-uuid', professionalUser.value?.uuid);
-      }
-      if (professionalUser.value?.name) {
-        localStorage.setItem('pro-name', professionalUser.value?.name);
-      }
-      addSuccess('Votre profil a été modifié avec success');
+    if (response.message === 'Professional created') {
+      addSuccess('Votre profil a été créé avec succès');
       openModal.value = false;
       isProfilUpdate.value = true;
     } else {
-      addError({ message: 'La mise à jour du profil a échoué.' });
+      addError({ message: 'La création du profil a échoué.' });
     }
-  } catch (error) {
-    addError({ message: 'Erreur lors de la mise à jour du profil.' });
+  } catch (error: any) {
+    addError({ message: error.response.data.message });
   }
 };
 
@@ -404,26 +419,30 @@ const modifyProfile = async (newValues: ProfessionalProfile) => {
       links: profile.links.filter((link) => link.type.trim() && link.value.trim()),
       certification: profile.certification.filter((c) => c.trim()),
     };
-    const response = await patchProfessionnalProfileDetails(payload);
+
+    const response = await patchProfessionalProfileDetails(payload);
 
     if (response.message === 'Professional updated') {
-      const professional = response.newPro || response.data?.professional;
-      if (professional?.uuid) {
-        localStorage.setItem('professional-uuid', professional.uuid);
-      }
+      const updatedProfessional = response.newPro || response.data?.professional;
 
-      if (professional?.name) {
-        localStorage.setItem('pro-name', professional.name);
+      if (updatedProfessional) {
+        setProfessionalUser(updatedProfessional);
+
+        await handleClose();
+
+        addSuccess('Votre profil a été modifié avec succès');
+      } else {
+        addError({ message: 'La mise à jour du profil a échoué.' });
       }
-      addSuccess('Votre profil a été modifié avec success');
-      openModal.value = false;
-      isProfilUpdate.value = true;
-    } else {
-      addError({ message: 'La mise à jour du profil a échoué.' });
     }
-  } catch (error) {
-    addError({ message: 'Erreur lors de la mise à jour du profil.' });
+  } catch (error: any) {
+    addError({ message: error.response.data.message as any });
   }
+};
+
+const handleClose = async () => {
+  openModal.value = false;
+  await nextTick(); // on attend que le parent ait reçu l’événement et que le DOM se mette à jour
 };
 
 onMounted(() => {
@@ -468,11 +487,8 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .v-form {
-  padding: 2rem 2.5rem;
+  padding: 2rem 3.5rem;
   border-radius: 16px;
-  max-width: 850px;
-  margin: 0 auto;
-  font-family: 'Inter', sans-serif;
 
   @media (max-width: 960px) {
     padding: 1.5rem;
@@ -503,7 +519,6 @@ onMounted(() => {
 .v-text-field,
 .v-select,
 .v-number-input {
-  margin-bottom: 1.25rem;
   background: rgb(var(--v-theme-surface));
   border-radius: 10px;
   box-shadow: 0 0 0 1px rgba(93, 121, 164, 0.08);
@@ -564,7 +579,6 @@ onMounted(() => {
   border-radius: 10px !important;
   font-weight: 500;
   text-transform: none;
-  padding: 0.8rem 1.5rem;
   letter-spacing: 0.2px;
   transition:
     background-color 0.2s ease,
@@ -600,11 +614,6 @@ onMounted(() => {
   .v-btn {
     min-width: 150px;
   }
-
-  @media (max-width: 600px) {
-    flex-direction: column;
-    align-items: stretch;
-  }
 }
 
 /* --- HIERARCHIE VISUELLE --- */
@@ -618,8 +627,22 @@ onMounted(() => {
 
 /* --- RESPONSIVE --- */
 @media (max-width: 1024px) {
-  .v-form {
-    max-width: 95%;
+  .edit-professional {
+    .v-form {
+      max-width: 95%;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .edit-professional {
+    &__btn {
+      display: flex;
+      flex-direction: column-reverse;
+      &-width {
+        width: 100%;
+      }
+    }
   }
 }
 </style>

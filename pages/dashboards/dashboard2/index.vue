@@ -3,18 +3,22 @@ import BaseEmptyState from '@/components/common/BaseEmptyState.vue';
 import PayingTable from '@/components/dashboards/dashboard2/PayingTable.vue';
 import TextCards from '@/components/dashboards/dashboard2/TextCard.vue';
 import WelcomeCard from '@/components/dashboards/dashboard2/WelcomeCard.vue';
-import Footer from '@/components/frontpages/layout/Footer.vue';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
+import { storeToRefs } from 'pinia';
+import { useEventServiceProposition } from '~/composables/event-service-propositions/UseEventServiceProposition';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
-import { UserCategory } from '~/models/enums/userCategoryEnums';
+import { useUserStore } from '~/stores/userStore';
 
 const userStore = useUserStore();
-const { isProfileCreated, user } = storeToRefs(userStore);
+const { user, isProfileCreated, isProfessional } = storeToRefs(userStore);
 const { getProfessionalProfileDetails } = useProfessionalProfile();
+const { getServicePropositionForProfessional } = useEventServiceProposition();
 
 onMounted(async () => {
-  if (!isProfileCreated.value && user.value?.category == UserCategory.PRESTA) {
+  isProfessional.value = true;
+  if (isProfileCreated.value && isProfessional.value) {
     await getProfessionalProfileDetails();
+    await getServicePropositionForProfessional();
   }
 });
 </script>
@@ -34,7 +38,7 @@ onMounted(async () => {
     </v-col>
     <!---Profit Expanse-->
   </v-row>
-  <v-row v-else>
+  <v-row v-else class="dashboard-2">
     <v-col cols="12" class="mt-6">
       <BaseEmptyState>
         <template #image>
@@ -49,5 +53,11 @@ onMounted(async () => {
       </BaseEmptyState>
     </v-col>
   </v-row>
-  <Footer />
 </template>
+<style lang="scss" scoped>
+.dashboard-2 {
+  height: 50vh;
+  display: flex;
+  align-items: center;
+}
+</style>

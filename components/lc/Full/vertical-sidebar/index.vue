@@ -20,8 +20,7 @@ const sidebarMenu = shallowRef(sidebarItems);
   >
     <div class="pa-5 pl-4">
       <LcFullLogo />
-    </div>
-     ---------------------------------------------- -->
+    </div> -->
   <!---Navigation -->
   <!-- ---------------------------------------------- -->
   <!-- <perfect-scrollbar class="scrollnavbar bg-containerBg overflow-y-hidden"> -->
@@ -43,9 +42,9 @@ const sidebarMenu = shallowRef(sidebarItems);
   <!-- </template> -->
   <!-- <Moreoption/> -->
   <!-- </v-list> -->
-  <!-- <div class="pa-6 px-4 userbottom mt-10">
-        <LcFullVerticalSidebarExtrabox />
-      </div> -->
+  <!-- <div class="pa-6 px-4 userbottom mt-10"> -->
+  <!-- <LcFullVerticalSidebarExtrabox /> -->
+  <!-- </div> -->
   <!-- </perfect-scrollbar> -->
   <!-- </v-navigation-drawer> -->
 </template>

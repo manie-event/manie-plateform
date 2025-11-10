@@ -1,3 +1,5 @@
+import type { Services } from '../professionalService/Services';
+
 export interface User {
   username: string;
   email: string;
@@ -31,6 +33,7 @@ export interface clientProfile {
 export interface ProfessionalProfile {
   name: string;
   uuid?: string;
+  email: string;
   userUuid?: string;
   siret: string;
   telephone: string;
@@ -41,9 +44,11 @@ export interface ProfessionalProfile {
   thirdActivity?: string;
   mainInterlocutor: string;
   experience: number;
+  certification: string[];
   category?: string;
   geographicArea: string;
   picture: string;
+  professionalServices: Services[];
   faq: Faq;
   minimumReservationPeriod: number;
   deposit: boolean;

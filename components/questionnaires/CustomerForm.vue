@@ -100,7 +100,6 @@
         <v-text-field
           v-model="theme"
           label="Thème de l'événement"
-          prepend-inner-icon="mdi-palette-outline"
           control-variant="hidden"
           class="mb-4"
         />
@@ -110,7 +109,6 @@
           type="number"
           control-variant="hidden"
           label="Nombre d'invités"
-          prepend-inner-icon="mdi-account-group-outline"
           class="mb-4"
         />
 
@@ -123,16 +121,20 @@
         <v-number-input
           v-model="budgetInput"
           label="Montant"
+          control-variant="hidden"
           color="primary"
-          prepend-inner-icon="mdi-cash"
           variant="outlined"
         />
       </div>
 
       <!-- PAGE 3 -->
 
-      <div v-if="currentPage === 3" key="page3">
-        <v-alert color="warning" class="mb-6">
+      <div v-if="currentPage === 3" key="page3" class="pa-3">
+        <v-alert
+          color="rgb(var(--v-theme-darkbg))"
+          style="color: rgb(var(--v-theme-background))"
+          class="mb-6"
+        >
           ⚠️ Chaque secteur sélectionné ne pourra pas être modifié une fois la mise en relation
           commencée.
         </v-alert>
@@ -140,15 +142,16 @@
         <div
           v-for="(service, serviceIndex) in selectedServices"
           :key="serviceIndex"
-          class="mb-8 p-4 bg-white rounded-xl shadow-sm"
+          class="mb-8 pa-6 bg-white rounded-xl shadow-sm"
         >
           <div class="d-flex justify-space-between align-center mb-3">
             <h3 class="font-weight-bold">Choisissez un univers</h3>
-            <v-btn
+            <Icon
+              icon="solar:trash-bin-trash-line-duotone"
+              height="24"
+              style="cursor: pointer"
+              class="me-2"
               v-if="selectedServices.length > 1"
-              color="error"
-              variant="text"
-              icon="mdi-delete-outline"
               @click="removeService(serviceIndex)"
             />
           </div>
@@ -177,7 +180,7 @@
                 :key="answer.uuid"
                 :color="baseColor"
                 :variant="service.selectedServiceId === answer.uuid ? 'flat' : 'outlined'"
-                class="ma-1 transition-all pa-3"
+                class="transition-all"
                 @click="selectServiceForIndex(serviceIndex, answer.uuid)"
               >
                 {{ answer.name }}
@@ -197,21 +200,14 @@
             </div>
           </div>
         </div>
-
-        <v-btn
-          color="#293b57"
-          variant="outlined"
-          prepend-icon="mdi-plus"
-          class="pa-3"
-          @click="addNewService"
-        >
-          Ajouter un nouveau service
-        </v-btn>
       </div>
 
       <!-- Navigation -->
       <div class="d-flex justify-space-between mt-8">
-        <v-btn v-if="currentPage > 1" variant="text" @click="currentPage--"> Précédent</v-btn>
+        <v-btn v-if="currentPage === 3" color="#293b57" variant="outlined" @click="addNewService">
+          Ajouter un nouveau service
+        </v-btn>
+        <v-btn v-if="currentPage === 2" variant="text" @click="currentPage--"> Précédent</v-btn>
 
         <v-btn v-if="currentPage < 3" color="primary" variant="flat" @click="nextPage">
           Suivant
@@ -221,7 +217,6 @@
           v-if="currentPage === 3"
           color="#f39454"
           style="color: white"
-          class="pa-3"
           variant="flat"
           @click="handleSubmit"
         >
@@ -235,24 +230,30 @@
 <script setup lang="ts">
 import questionnaire from '@/data/questionnaire-client-refonte.json';
 import { eventsStore } from '@/stores/events';
+import { Icon } from '@iconify/vue';
 import { UseEvent } from '~/composables/event/UseEvent';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { SectorsDto } from '~/models/dto/sectorsDto';
-import type { QuestionnaireClient } from '~/models/questionnaire/QuestionnaireClientModel';
+import type { eventModel } from '~/models/events/eventModel';
+import { useEventService } from '~/services/UseEventService';
+import { useProfessionalService } from '~/services/UseProfessionalService';
 
 const props = defineProps<{
-  answers?: QuestionnaireClient;
+  event: eventModel;
 }>();
 
 const openCustomerForm = defineModel<boolean>('openCustomerForm', { default: false });
 
 const { sectors, servicesFiltered } = storeToRefs(eventsStore());
-const { keywords, clientProfile } = storeToRefs(useUserStore());
+const { clientProfile } = storeToRefs(useUserStore());
+const { keywords } = storeToRefs(useKeywordsStore());
+const { getAllSectors, getKeywords } = useKeywordsStore();
+const { getProfessionalService } = useProfessionalService();
 const { submitEvent, isLoading, error } = UseEvent();
 //ref generale
 const eventType = ref<'particulier' | 'professionnel'>('particulier');
 const name = ref('');
-const location = ref('');
+const location = ref('Veuillez choisir un département');
 const duration = ref('');
 const group_type = ref('');
 const theme = ref('');
@@ -270,6 +271,7 @@ const dateStart = ref('');
 const dateEnd = ref('');
 
 const baseColor = '#5d79a4';
+const { getEventsInstance } = useEventService();
 
 const selectedServices = ref([
   {
@@ -300,7 +302,7 @@ const chooseEventTypeDependingOnUserCategory = computed(() => {
 
 const customerResponse = computed(() => {
   return {
-    organisatorUuid: localStorage.getItem('client-uuid'),
+    organisatorUuid: clientProfile.value?.uuid,
     event_type: chooseEventTypeDependingOnUserCategory.value,
     name: name.value,
     date: finalDateSelection.value,
@@ -386,8 +388,9 @@ const getFilteredQuestionsForService = (selectedSector: any) => {
 };
 
 const sectorFiltered = computed(() => {
+  // servicesFiltered =
+  // sectors =
   const servicefiltered = servicesFiltered.value.map((s) => s.sectorUuid);
-
   const sector = sectors.value.filter((sector) => servicefiltered.includes(sector.uuid));
 
   const activityAvailable = ACTIVITY_ITEMS.map((activity) => {
@@ -438,7 +441,7 @@ const mapSectionsWithServices = (selectedSector?: string | SectorsDto) => {
 };
 
 const getQuestionOptions = (sectionIndex: number) => {
-  const eventTypeValue = clientProfile.value.isBusiness ? 'professionnel' : 'particulier';
+  const eventTypeValue = clientProfile.value?.isBusiness ? 'professionnel' : 'particulier';
 
   if (sectionIndex === 0) {
     // Pour la première question, filtrer selon le profil client automatiquement
@@ -471,33 +474,35 @@ const handleSubmit = async () => {
   }
 };
 
-onMounted(() => {
-  if (!props.answers) return;
+onMounted(async () => {
+  // Récupère l'instance complète de l'événement
+  const responses = await getEventsInstance(props.event.uuid);
 
-  const normalizedAnswer = props.answers.$attributes;
+  // Données normalisées du questionnaire
+  const normalizedAnswer = responses.$attributes;
+  console.log('normalizedAnswer', normalizedAnswer);
 
-  eventType.value = normalizedAnswer.event_type || '';
-  name.value = normalizedAnswer.name || '';
-  location.value = normalizedAnswer.location || '';
-  duration.value = normalizedAnswer.duration || '';
-  group_type.value = normalizedAnswer.group_type || '';
-  theme.value = normalizedAnswer.theme || '';
-  organized_for.value = normalizedAnswer.organized_for || '';
+  // Pré-remplir les champs
+  eventType.value = normalizedAnswer.event_type ?? '';
+  name.value = normalizedAnswer.name ?? '';
+  location.value = normalizedAnswer.location ?? '';
+  duration.value = normalizedAnswer.duration ?? '';
+  group_type.value = normalizedAnswer.group_type ?? '';
+  theme.value = normalizedAnswer.theme ?? '';
+  organized_for.value = normalizedAnswer.organized_for ?? '';
   people.value = Number(normalizedAnswer.people) || 0;
-  budgetInput.value = normalizedAnswer.budget || 0;
-  dateStart.value = normalizedAnswer.date[0] || '';
-  dateEnd.value = normalizedAnswer.date[1] || '';
+  budgetInput.value = normalizedAnswer.budget ?? 0;
+  [dateStart.value, dateEnd.value] = normalizedAnswer.date ?? ['', ''];
 
-  if (props.answers.$preloaded?.eventServices?.length > 0) {
-    selectedServices.value = props.answers.$preloaded.eventServices.map((srv: any) => {
+  // Pré-remplir les services sélectionnés
+  if (responses.$preloaded?.eventServices?.length) {
+    selectedServices.value = responses.$preloaded.eventServices.map((srv) => {
       const service = servicesFiltered.value.find((s) => s.uuid === srv.serviceUuid);
       const sector = sectors.value.find((sect) => sect.uuid === service?.sectorUuid);
-
       return {
         selectedSector: sector?.name ?? undefined,
         selectedServiceId: srv.serviceUuid,
-        selectedKeywords:
-          srv.keywordsUuid?.map((k: any) => (typeof k === 'string' ? k : k.uuid)) || [],
+        selectedKeywords: srv.keywordsUuid?.map((k) => (typeof k === 'string' ? k : k.uuid)) || [],
       };
     });
   }

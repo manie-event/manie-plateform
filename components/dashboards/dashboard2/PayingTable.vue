@@ -1,5 +1,5 @@
 <template>
-  <VCard elevation="10" class="mb-16">
+  <VCard elevation="2" class="mb-16">
     <v-card-text>
       <div class="d-flex align-center justify-space-between">
         <div>
@@ -15,16 +15,28 @@
                 <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
                   Nom de l'évènement
                 </th>
-                <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
+                <th
+                  class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap"
+                  v-if="!isMobile"
+                >
                   Date de la prestation
                 </th>
-                <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
+                <th
+                  class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap"
+                  v-if="!isMobile"
+                >
                   Localisation
                 </th>
-                <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
+                <th
+                  class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap"
+                  v-if="!isMobile"
+                >
                   Nombre d'invités
                 </th>
-                <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
+                <th
+                  class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap"
+                  v-if="!isMobile"
+                >
                   Status de la demande
                 </th>
                 <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap"></th>
@@ -41,7 +53,7 @@
                     </div>
                   </div>
                 </td>
-                <td>
+                <td v-if="!isMobile">
                   <h5
                     class="text-subtitle-1 font-weight-medium text-no-wrap text-grey200"
                     v-if="Array.isArray(item.date) && item.date.length"
@@ -49,21 +61,18 @@
                     Du <b>{{ formatDate(item.date)[0] }}</b> au
                     <b>{{ formatDate(item.date)[1] }}</b>
                   </h5>
-                  <h5 class="text-subtitle-1 font-weight-medium text-no-wrap text-grey200" v-else>
-                    {{ item.date ? `Plutôt en ${item.date}` : 'A définir' }}
-                  </h5>
                 </td>
-                <td>
+                <td v-if="!isMobile">
                   <h4 class="text-subtitle-1 text-no-wrap font-weight-medium text-grey200">
                     {{ item.location.toUpperCase() }}
                   </h4>
                 </td>
-                <td>
+                <td v-if="!isMobile">
                   <h4 class="text-subtitle-1 text-no-wrap font-weight-medium text-grey200">
                     <span>{{ item.people }} pers.</span>
                   </h4>
                 </td>
-                <td>
+                <td v-if="!isMobile">
                   <v-chip
                     :class="'text-subtitle-1 font-weight-medium bg-light'"
                     variant="outlined"
@@ -128,6 +137,8 @@ import PropositionDetails from './PropositionDetails.vue';
 const { setPropositions } = usePropositionStore();
 const { serviceEventProposition } = storeToRefs(usePropositionStore());
 
+const isMobile = ref(window.innerWidth < 960);
+
 const getStatusColor = (status: string) => {
   switch (status) {
     case 'pending':
@@ -176,5 +187,18 @@ const selectedProposition = computed(() => {
   return serviceEventProposition.value.filter(
     (proposition: EventModelForProposition) => proposition.proposition.professionalMessage
   );
+});
+
+const handleResize = () => {
+  isMobile.value = window.innerWidth < 680;
+};
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize);
+});
+
+onMounted(() => {
+  handleResize();
+  window.addEventListener('resize', handleResize);
 });
 </script>

@@ -2,8 +2,8 @@ export const useProfessionalService = () => {
   const { addError } = useToaster();
   const { setServicesFiltered } = eventsStore();
   const { setProfessionalServices } = usePropositionStore();
-  const api = useApi(); // ✅ instance Axios avec interceptors
-  const professionalUuid = localStorage.getItem('professional-uuid');
+  const { professionalUser } = storeToRefs(useUserStore());
+  const api = useApi();
 
   /**
    * Récupère les services sélectionnés du professionnel
@@ -14,6 +14,7 @@ export const useProfessionalService = () => {
       const { data } = await api.get(
         '/professional-service/show-selected-services-for-professional'
       );
+
       setServicesFiltered(data);
       return data ?? [];
     } catch (error: any) {
@@ -27,9 +28,9 @@ export const useProfessionalService = () => {
    */
   const getListProfessionalServiceByProfessional = async () => {
     try {
-      if (!api || !professionalUuid) return;
+      if (!api || !professionalUser.value?.uuid) return;
       const { data } = await api.get(
-        `/professional-service/list-by-professional/${professionalUuid}`
+        `/professional-service/list-by-professional/${professionalUser.value.uuid}`
       );
       setProfessionalServices(data.data);
       return data.data ?? [];

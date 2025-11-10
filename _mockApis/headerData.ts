@@ -2,9 +2,24 @@
 
 import type { profileType } from '@/types/HeaderTypes';
 
+const appsLink = [
+  {
+    title: 'prout',
+    subtitle: 'sous-prout',
+  },
+  {
+    title: 'prout2',
+    subtitle: 'sous-prout2',
+  },
+  {
+    title: 'prout3',
+    subtitle: 'sous-prout3',
+  },
+];
+
 const professionalProfile: profileType[] = [
   {
-    avatar: 'wallet-2-line-duotone',
+    avatar: 'meditation-round-bold-duotone',
     bgcolor: 'info',
     title: 'Mon Profil',
     subtitle: 'Votre page de profil',
@@ -32,4 +47,4 @@ const clientMenu: profileType[] = [
   },
 ];
 
-export { clientMenu, professionalProfile };
+export { appsLink, clientMenu, professionalProfile };

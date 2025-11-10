@@ -1,7 +1,6 @@
 <template>
   <v-dialog v-model="openPropositionPro" max-width="800">
     <v-card>
-      <v-divider class="mx-6"><p class="text-h6 py-6">Le coin des bonnes affaires</p></v-divider>
       <v-card-text>
         <div v-if="props.propositionFiltered.length > 0 && paginatedEvents.length > 0">
           <v-card v-for="proposition in paginatedEvents" class="d-flex proposition__card">
@@ -70,7 +69,12 @@
       </div>
       <v-card-actions>
         <v-spacer />
-        <v-btn text @click="openPropositionPro = false">Fermer</v-btn>
+        <v-btn
+          text
+          @click="openPropositionPro = false"
+          style="background: rgb(var(--v-theme-darkbg)); color: white"
+          >Fermer</v-btn
+        >
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -116,7 +120,6 @@ const getKeywordValues = (keywordUuids: string[]) => {
 
 const getBackgroundStyle = (eventName: string) => {
   const imageUrl = getEventBackground(eventName as any);
-  console.log('Resolved image URL:', imageUrl);
 
   return {
     backgroundImage: `url(${imageUrl})`,

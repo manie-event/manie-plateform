@@ -1,46 +1,71 @@
 <template>
-  <v-card elevation="5" class="overflow-hidden profile-banner">
-    <img :src="profileBg" alt="profile" class="w-100" />
-    <div class="mt-1 d-flex justify-center">
-      <v-col cols="4" class="d-flex gap-2 align-center flex-column justify-center">
-        <h6 class="text-subtitle-1 d-flex align-center gap-2">
-          <Icon icon="ci:paper-plane" height="24" width="24"></Icon>{{ clientProfile?.email }}
-        </h6>
-        <h6 class="text-subtitle-1 d-flex align-center gap-2">
-          <Icon icon="ci:phone" height="24" width="24"></Icon> {{ clientProfile?.phoneNumber }}
-        </h6>
-      </v-col>
-      <v-col cols="4" class="d-flex justify-center order-sml-first">
-        <div class="text-center top-spacer">
-          <div class="avatar-border">
-            <v-avatar size="100" class="userImage">
-              <img :src="UserImage" width="100" alt="Mathew" />
-            </v-avatar>
+  <v-card elevation="5" class="profile-banner">
+    <img :src="profileBg" alt="profile background" />
+    <v-row>
+      <v-col cols="12" md="5" order="2" order-md="1" class="profile-banner__card">
+        <div class="info-section">
+          <div class="contact-info">
+            <h6>
+              <Icon icon="ci:paper-plane" height="20" />
+              {{ clientProfile?.email ?? 'Veuillez renseigner un email' }}
+            </h6>
+            <h6>
+              <Icon icon="ci:phone" height="20" />
+              <span style="text-align: center">{{
+                clientProfile?.phoneNumber ?? 'Veuillez renseigner un téléphone'
+              }}</span>
+            </h6>
           </div>
-          <h5 class="text-h4 mt-3 font-weight-bold">
-            {{ userName ? userName : clientName }}
-          </h5>
-          <span class="text-h6 font-weight-regular">Chercheur de bonheur</span>
         </div>
       </v-col>
       <v-col
-        cols="4"
-        class="d-flex align-center justify-center justify-lg-end order-sm-third text-sm-right text-center"
+        cols="12"
+        md="3"
+        order="1"
+        order-md="2"
+        class="profile-banner__card"
+        style="position: relative; top: -55px"
       >
-        <div
-          class="d-flex d-column align-center justify-sm-space-between justify-center px-sm-10 py-1 gap-3"
-        >
-          <v-btn color="primary" size="large" class="pa-3" @click="openEditProfilModal()"
-            >Editez votre profil</v-btn
-          >
-          <NuxtLink to="/dashboards/dashboard-client"
-            ><v-btn color="success" size="large" class="pa-3">
-              Revenir au dashboard</v-btn
-            ></NuxtLink
-          >
+        <div class="user-details">
+          <div class="avatar-border">
+            <v-avatar size="100" class="userImage">
+              <h3>{{ initials }}</h3>
+            </v-avatar>
+          </div>
+          <h5>{{ clientProfile?.username || user?.username }}</h5>
+          <span>Organisateur</span>
         </div>
       </v-col>
-    </div>
+      <v-col
+        cols="12"
+        md="4"
+        order="3"
+        style="display: flex; align-items: center; justify-content: center"
+      >
+        <div class="actions">
+          <v-btn
+            variant="flat"
+            style="background: rgb(var(--v-theme-thirdy)); color: white; text-decoration: none"
+            @click="openEditProfilModal()"
+            class="px-7 py-0"
+            >Éditer votre profil</v-btn
+          >
+
+          <NuxtLink to="/dashboards/dashboard-client">
+            <v-btn
+              style="
+                background: rgb(var(--v-theme-lightprimary));
+                color: white;
+                text-decoration: none;
+              "
+              variant="flat"
+              class="pa-3 py-0"
+              >Revenir au dashboard</v-btn
+            >
+          </NuxtLink>
+        </div>
+      </v-col>
+    </v-row>
   </v-card>
   <Teleport to="body">
     <EditClientProfil v-model:openModal="openModal" />
@@ -48,18 +73,17 @@
   </Teleport>
 </template>
 <script setup lang="ts">
-import profileBg from '@/public/images/backgrounds/profilebg.jpg';
-import UserImage from '@/public/images/side-picture/charlesdeluvio-rRWiVQzLm7k-unsplash.jpg';
+import profileBg from '@/public/images/backgrounds/client-profil-bg.png';
 import { Icon } from '@iconify/vue';
+import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
+import { useUserStore } from '~/stores/userStore';
 import EditClientProfil from './EditClientProfil.vue';
 import ModalRedirection from './ModalRedirection.vue';
 
-const { isProfilUpdate, clientProfile } = storeToRefs(useUserStore());
+const { isProfilUpdate, clientProfile, user, initials } = storeToRefs(useUserStore());
 
 const openModal = ref(false);
-const clientName = localStorage.getItem('client-name');
-const userName = localStorage.getItem('username');
 const openEditProfilModal = () => {
   openModal.value = !openModal.value;
 };
@@ -67,55 +91,119 @@ const openEditProfilModal = () => {
 
 <style lang="scss">
 .profile-banner {
-  padding-bottom: 50px;
-}
-.avatar-border {
-  background-image: linear-gradient(rgb(80, 178, 252), rgb(244, 76, 102));
-  border-radius: 50%;
-  width: 110px;
-  height: 110px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-  .userImage {
-    border: 4px solid rgb(var(--v-theme-surface));
+  position: relative;
+  background: rgb(var(--v-theme-surface));
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+  margin-bottom: 2rem;
+  width: 80vw;
+  padding-bottom: 60px;
+  @media screen and (max-width: 960px) {
+    width: 100%;
   }
-}
 
-.top-spacer {
-  margin-top: -95px;
-}
-
-.profiletab .v-slide-group__content {
-  justify-content: end;
-  .v-btn--variant-text .v-btn__overlay {
-    background: transparent;
+  img {
+    object-fit: cover;
+    height: 180px;
+    width: 100%;
+    filter: brightness(0.8);
   }
-}
-.profiletab {
-  .v-tab.v-tab {
-    &.v-slide-group-item--active {
-      color: rgb(var(--v-theme-primary)) !important;
-      .icon {
-        color: rgb(var(--v-theme-primary)) !important;
+  &__card {
+    display: flex;
+    align-items: center;
+    @media screen and (max-width: 960px) {
+      position: relative;
+      top: -30px;
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .info-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    gap: 1.5rem;
+    padding: 1rem 2rem;
+    height: 100%;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      margin-top: -60px;
+      text-align: center;
+    }
+  }
+
+  .avatar-border {
+    .userImage {
+      border-radius: 50%;
+      background: rgb(var(--v-theme-darkbg));
+      width: 110px;
+      height: 110px;
+      border: 3px solid rgb(var(--v-theme-surface));
+      overflow: hidden;
+    }
+    h3 {
+      color: rgb(var(--v-theme-background));
+      font-size: 2.5rem;
+    }
+  }
+
+  .user-details {
+    text-align: center;
+    h5 {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: rgb(var(--v-theme-darkbg));
+      margin-top: 0.75rem;
+    }
+    span {
+      color: rgba(var(--v-theme-on-surface), 0.7);
+      font-size: 1rem;
+    }
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.75rem;
+    h6 {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(var(--v-theme-on-surface), 0.8);
+      font-size: 0.95rem;
+      svg {
+        color: rgb(var(--v-theme-primary));
       }
     }
   }
-}
 
-@media (max-width: 1023px) {
-  .order-sm-second {
-    order: 2;
-  }
-  .order-sml-first {
-    order: 1;
-  }
-  .order-sm-third {
-    order: 3;
-  }
-  .order-sm-last {
-    order: 4;
+  .actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    .v-btn {
+      text-transform: none;
+      font-weight: 600;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+      padding: 0.8rem 1.5rem;
+
+      &--variant-contained {
+        background-color: rgb(var(--v-theme-primary)) !important;
+      }
+
+      &:hover {
+        transform: translateY(-1px);
+      }
+    }
   }
 }
 </style>
