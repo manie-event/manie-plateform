@@ -16,35 +16,35 @@
       "questions": [
         {
           "id": "food-keywords-1",
-          "question": "Quel type de cuisine proposez-vous ?  ",
+          "question": "Le type de cuisine(s) proposé : ",
           "category": "cuisines",
           "type": "checkbox",
           "required": true
         },
         {
-          "id": "food-keywords-1",
-          "question": "Quel(s) format(s) de prestations assurez-vous ? ",
+          "id": "food-keywords-2",
+          "question": "Les formats proposés : ",
           "category": "format",
           "type": "checkbox",
           "required": true
         },
         {
-          "id": "food-keywords-2",
-          "question": "Propositions sucrées : ",
+          "id": "food-keywords-3",
+          "question": "Les propositions sucrées : ",
           "category": "sucré",
           "type": "checkbox",
           "required": true
         },
         {
-          "id": "food-keywords-3",
-          "question": "Propositions salées : ",
+          "id": "food-keywords-4",
+          "question": "Les propositions salées : ",
           "category": "salé",
           "type": "checkbox",
           "required": true
         },
         {
-          "id": "food-keywords-4",
-          "question": "Vos options : ",
+          "id": "food-keywords-5",
+          "question": "Les options proposées : ",
           "category": "régimes",
           "type": "checkbox",
           "required": true
@@ -55,8 +55,8 @@
     "habitudesSection": {
       "questions": [
         {
-          "id": "food-keywords-1",
-          "question": "Quelles sont vos habitudes en matière d'éco-responsabilité ?  ",
+          "id": "food-keywords-6",
+          "question": "Vos habitudes responsables : ",
           "category": "écoresp-food",
           "type": "checkbox",
           "required": true
@@ -80,14 +80,14 @@
     "servicesSection": {
       "questions": [
         {
-          "id": "food-keywords-1",
-          "question": "Dans quel environement ? ",
+          "id": "lieux-keywords-1",
+          "question": "Dans quel environnement ? ",
           "category": "environnement",
           "type": "checkbox",
           "required": true
         },
         {
-          "id": "food-keywords-2",
+          "id": "lieux-keywords-2",
           "question": "Mon lieu est accessible : ",
           "category": "accessibilité",
 
@@ -95,15 +95,15 @@
           "required": true
         },
         {
-          "id": "food-keywords-3",
-          "question": "Quelles prestations sont imposées à vos clients ? ",
+          "id": "lieux-keywords-3",
+          "question": "Quels prestataires sont imposés ? ",
           "category": "prestations imposées",
 
           "type": "checkbox",
           "required": true
         },
         {
-          "id": "food-keywords-4",
+          "id": "lieux-keywords-4",
           "question": "Vous proposez une privatisation : ",
           "category": "privatisation",
 
@@ -111,26 +111,25 @@
           "required": true
         },
         {
-          "id": "food-keywords-4",
-          "question": "Quel(s) espaces peuvent-ils y trouver ? ",
+          "id": "lieux-keywords-5",
+          "question": "Quels espaces peut-on y trouver ? ",
           "category": "espaces",
 
           "type": "checkbox",
           "required": true
         },
         {
-          "id": "food-keywords-4",
-          "question": "Quels équipements sont à leur disposition ? ",
+          "id": "lieux-keywords-6",
+          "question": "Quels équipements proposez-vous ? ",
           "category": "équipements",
 
           "type": "checkbox",
           "required": true
         },
-
         {
-          "id": "food-keywords-4",
+          "id": "lieux-keywords-7",
           "question": "Quels options proposez-vous ? ",
-          "category": "options",
+          "category": "options lieux",
 
           "type": "checkbox",
           "required": true
@@ -138,7 +137,17 @@
       ]
     },
     "habitudes": "VOS HABITUDES ",
-    "habitudesSection": {}
+    "habitudesSection": {
+      "questions": [
+        {
+          "id": "lieux-keywords-8",
+          "question": "Vos habitudes responsables : ",
+          "category": "écoresp-lieux",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    }
   },
   {
     "sector": "boisson",
@@ -156,24 +165,24 @@
     "servicesSection": {
       "questions": [
         {
-          "id": "food-keywords-1",
-          "question": "Quelle boisson proposez-vous ? ",
+          "id": "boisson-keywords-1",
+          "question": "Quelles boissons ? ",
           "category": "type",
           "type": "checkbox",
           "required": true
         },
         {
-          "id": "food-keywords-2",
-          "question": "Quel matériel proposez-vous ? ",
-          "category": "matériel",
+          "id": "boisson-keywords-2",
+          "question": "Quel matériel ? ",
+          "category": "matériel-boissons",
 
           "type": "checkbox",
           "required": true
         },
         {
-          "id": "food-keywords-3",
-          "question": "Quels options proposez-vous ? ",
-          "category": "options",
+          "id": "boisson-keywords-3",
+          "question": "Quelles options ? ",
+          "category": "options boisson",
 
           "type": "checkbox",
           "required": true
@@ -181,7 +190,17 @@
       ]
     },
     "habitudes": "VOS HABITUDES ",
-    "habitudesSection": {}
+    "habitudesSection": {
+      "questions": [
+        {
+          "id": "boisson-keywords-4",
+          "question": "Vos habitudes responsables : ",
+          "category": "écoresp-boisson",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    }
   },
   {
     "sector": "service",
@@ -200,14 +219,14 @@
       "questions": [
         {
           "id": "service-keywords-1",
-          "question": "Quelle(s) préstation(s) proposez-vous ? ",
+          "question": "Quelle(s) prestation(s) assurez-vous ? ",
           "category": "serveur",
           "type": "checkbox",
           "required": true
         },
         {
-          "id": "service-keywords-1",
-          "question": "Quel(s) matériel(s) fournissez-vous sur une prestation ? ",
+          "id": "service-keywords-2",
+          "question": "Quel matériel fournissez-vous ? ",
           "category": "matériel serveur",
           "type": "checkbox",
           "required": true
@@ -218,9 +237,9 @@
     "habitudesSection": {
       "questions": [
         {
-          "id": "food-keywords-1",
-          "question": "Quelles sont vos habitudes en matière d'éco-responsabilité ?  ",
-          "category": "écoresp-food",
+          "id": "service-keywords-3",
+          "question": "Vos petites habitudes responsabiles ?  ",
+          "category": "écoresp-service",
           "type": "checkbox",
           "required": true
         }
@@ -244,23 +263,55 @@
       "questions": [
         {
           "id": "musique-keywords-1",
-          "question": "Quelle service proposez-vous ? ",
-          "category": "type",
+          "question": "Quel format proposez-vous ? ",
+          "category": "format",
           "type": "checkbox",
           "required": true
         },
         {
           "id": "musique-keywords-2",
-          "question": "Quel matériel proposez-vous ? ",
-          "category": "matériel",
+          "question": "Dans quel but ? ",
+          "category": "but",
 
           "type": "checkbox",
           "required": true
         },
         {
           "id": "musique-keywords-3",
-          "question": "Quels options proposez-vous ? ",
-          "category": "options",
+          "question": "Quel(s) style(s) de musique ? ",
+          "category": "styles-musique",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "musique-keywords-4",
+          "question": "Quel mood inspire votre musique ? ",
+          "category": "mood",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "musique-keywords-5",
+          "question": "Quel matériel technique fournissez-vous ? ",
+          "category": "technique",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "musique-keywords-6",
+          "question": "Et votre matériel musical ? ",
+          "category": "instrument",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "musique-keywords-7",
+          "question": "Comment aimez-vous construire vos playlists ? ",
+          "category": "playlist",
 
           "type": "checkbox",
           "required": true
@@ -271,9 +322,9 @@
     "habitudesSection": {
       "questions": [
         {
-          "id": "food-keywords-1",
-          "question": "Quelles sont vos habitudes en matière d'éco-responsabilité ?  ",
-          "category": "écoresp-food",
+          "id": "musique-keywords-8",
+          "question": "Vos petites habitudes responsables ?  ",
+          "category": "écoresp-musique",
           "type": "checkbox",
           "required": true
         }
@@ -281,11 +332,11 @@
     }
   },
   {
-    "sector": "service",
+    "sector": "animation",
     "general": {
       "questions": [
         {
-          "id": "service-general-1",
+          "id": "animation-general-1",
           "question": "Vous êtes ?",
           "type": "checkbox",
           "required": true
@@ -296,23 +347,31 @@
     "servicesSection": {
       "questions": [
         {
-          "id": "food-keywords-1",
-          "question": "Quelle boisson proposez-vous ? ",
+          "id": "animation-keywords-1",
+          "question": "Animation bien-être : ",
           "category": "type",
           "type": "checkbox",
           "required": true
         },
         {
-          "id": "food-keywords-2",
-          "question": "Quel matériel proposez-vous ? ",
+          "id": "animation-keywords-2",
+          "question": "Animation jeux : ",
           "category": "matériel",
 
           "type": "checkbox",
           "required": true
         },
         {
-          "id": "food-keywords-3",
-          "question": "Quels options proposez-vous ? ",
+          "id": "animation-keywords-3",
+          "question": "Animation art visuel : ",
+          "category": "options",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "animation-keywords-4",
+          "question": "Animation performers : ",
           "category": "options",
 
           "type": "checkbox",
@@ -324,9 +383,9 @@
     "habitudesSection": {
       "questions": [
         {
-          "id": "food-keywords-1",
-          "question": "Quelles sont vos habitudes en matière d'éco-responsabilité ?  ",
-          "category": "écoresp-food",
+          "id": "animation-keywords-5",
+          "question": "Vos petits gestes responsables ?",
+          "category": "écoresp-animation",
           "type": "checkbox",
           "required": true
         }
@@ -334,11 +393,11 @@
     }
   },
   {
-    "sector": "boisson",
+    "sector": "audiovisuel",
     "general": {
       "questions": [
         {
-          "id": "boisson-general-1",
+          "id": "audiovisuel-general-1",
           "question": "Vous êtes ?",
           "type": "checkbox",
           "required": true
@@ -349,24 +408,32 @@
     "servicesSection": {
       "questions": [
         {
-          "id": "food-keywords-1",
-          "question": "Quelle boisson proposez-vous ? ",
-          "category": "type",
+          "id": "audiovisuel-keywords-1",
+          "question": "Quelle technologie utilisez-vous ? ",
+          "category": "technologie",
           "type": "checkbox",
           "required": true
         },
         {
-          "id": "food-keywords-2",
-          "question": "Quel matériel proposez-vous ? ",
-          "category": "matériel",
+          "id": "audiovisuel-keywords-2",
+          "question": "Quelles prestations proposez-vous ? ",
+          "category": "shootings",
 
           "type": "checkbox",
           "required": true
         },
         {
-          "id": "food-keywords-3",
-          "question": "Quels options proposez-vous ? ",
-          "category": "options",
+          "id": "audiovisuel-keywords-3",
+          "question": " Comment définiriez-vous votre style ? ",
+          "category": "style-audiovisuel",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "audiovisuel-keywords-4",
+          "question": " Quels sont vos shoot idyliques ? ",
+          "category": "cadre",
 
           "type": "checkbox",
           "required": true
@@ -377,9 +444,9 @@
     "habitudesSection": {
       "questions": [
         {
-          "id": "food-keywords-1",
+          "id": "audiovisuel-keywords-5",
           "question": "Quelles sont vos habitudes en matière d'éco-responsabilité ?  ",
-          "category": "écoresp-food",
+          "category": "écoresp-audiovisuel",
           "type": "checkbox",
           "required": true
         }
@@ -387,11 +454,11 @@
     }
   },
   {
-    "sector": "boisson",
+    "sector": "décoration",
     "general": {
       "questions": [
         {
-          "id": "boisson-general-1",
+          "id": "décoration-general-1",
           "question": "Vous êtes ?",
           "type": "checkbox",
           "required": true
@@ -402,24 +469,64 @@
     "servicesSection": {
       "questions": [
         {
-          "id": "food-keywords-1",
-          "question": "Quelle boisson proposez-vous ? ",
-          "category": "type",
+          "id": "décoration-keywords-1",
+          "question": "Vous intervenez pour quel(s) besoin(s) ?",
+          "category": "besoin",
           "type": "checkbox",
           "required": true
         },
         {
-          "id": "food-keywords-2",
-          "question": "Quel matériel proposez-vous ? ",
-          "category": "matériel",
+          "id": "décoration-keywords-2",
+          "question": "Décorations végétales proposées : ",
+          "category": "végétaux",
 
           "type": "checkbox",
           "required": true
         },
         {
-          "id": "food-keywords-3",
-          "question": "Quels options proposez-vous ? ",
-          "category": "options",
+          "id": "décoration-keywords-3",
+          "question": "Sous quelle(s) forme(s) ? ",
+          "category": "texture",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "décoration-keywords-4",
+          "question": "Proposez-vous du matériel déco ? ",
+          "category": "matériel-déco",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "décoration-keywords-5",
+          "question": "Quelles options proposez-vous ? ",
+          "category": "options-déco",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "décoration-keywords-6",
+          "question": "Comment définissez-vous votre style ? ",
+          "category": "style-déco",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "décoration-keywords-7",
+          "question": "Quels cadeaux personnalisés proposez-vous ? ",
+          "category": "cadeaux personnalisés",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "décoration-keywords-8",
+          "question": "Quel procédé utilisez-vous ? ",
+          "category": "procédé",
 
           "type": "checkbox",
           "required": true
@@ -430,9 +537,9 @@
     "habitudesSection": {
       "questions": [
         {
-          "id": "food-keywords-1",
-          "question": "Quelles sont vos habitudes en matière d'éco-responsabilité ?  ",
-          "category": "écoresp-food",
+          "id": "décoration-keywords-9",
+          "question": "Vos petites habitudes responsables ? ",
+          "category": "écoresp-déco",
           "type": "checkbox",
           "required": true
         }
@@ -440,11 +547,11 @@
     }
   },
   {
-    "sector": "boisson",
+    "sector": "transport",
     "general": {
       "questions": [
         {
-          "id": "boisson-general-1",
+          "id": "transport-general-1",
           "question": "Vous êtes ?",
           "type": "checkbox",
           "required": true
@@ -455,24 +562,40 @@
     "servicesSection": {
       "questions": [
         {
-          "id": "food-keywords-1",
-          "question": "Quelle boisson proposez-vous ? ",
-          "category": "type",
+          "id": "transport-keywords-1",
+          "question": "On parle de quel moyen de transport ? ",
+          "category": "moyen",
           "type": "checkbox",
           "required": true
         },
         {
-          "id": "food-keywords-2",
-          "question": "Quel matériel proposez-vous ? ",
-          "category": "matériel",
+          "id": "transport-keywords-2",
+          "question": "Comment définiriez vous le style ? ",
+          "category": "style-transport",
 
           "type": "checkbox",
           "required": true
         },
         {
-          "id": "food-keywords-3",
-          "question": "Quels options proposez-vous ? ",
-          "category": "options",
+          "id": "transport-keywords-3",
+          "question": "Quelles couleurs sont proposées ? ",
+          "category": "couleur",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "transport-keywords-4",
+          "question": "Pour quel type de trajet ? ",
+          "category": "trajet",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "transport-keywords-5",
+          "question": " Un chauffeur est : ",
+          "category": "chauffeur",
 
           "type": "checkbox",
           "required": true
@@ -483,9 +606,9 @@
     "habitudesSection": {
       "questions": [
         {
-          "id": "food-keywords-1",
-          "question": "Quelles sont vos habitudes en matière d'éco-responsabilité ?  ",
-          "category": "écoresp-food",
+          "id": "transport-keywords-6",
+          "question": "Vos petites habitudes responsables ?  ",
+          "category": "écoresp-transport",
           "type": "checkbox",
           "required": true
         }
@@ -493,11 +616,11 @@
     }
   },
   {
-    "sector": "boisson",
+    "sector": "look",
     "general": {
       "questions": [
         {
-          "id": "boisson-general-1",
+          "id": "look-general-1",
           "question": "Vous êtes ?",
           "type": "checkbox",
           "required": true
@@ -508,24 +631,24 @@
     "servicesSection": {
       "questions": [
         {
-          "id": "food-keywords-1",
-          "question": "Quelle boisson proposez-vous ? ",
-          "category": "type",
+          "id": "look-keywords-1",
+          "question": "Vous proposez : ",
+          "category": "acquisition",
           "type": "checkbox",
           "required": true
         },
         {
-          "id": "food-keywords-2",
-          "question": "Quel matériel proposez-vous ? ",
-          "category": "matériel",
+          "id": "look-keywords-2",
+          "question": "Que proposez-vous pour les femmes ? ",
+          "category": "femme",
 
           "type": "checkbox",
           "required": true
         },
         {
-          "id": "food-keywords-3",
-          "question": "Quels options proposez-vous ? ",
-          "category": "options",
+          "id": "look-keywords-3",
+          "question": "Que proposez-vous pour les hommes ? ",
+          "category": "homme",
 
           "type": "checkbox",
           "required": true
@@ -536,9 +659,9 @@
     "habitudesSection": {
       "questions": [
         {
-          "id": "food-keywords-1",
+          "id": "look-keywords-4",
           "question": "Quelles sont vos habitudes en matière d'éco-responsabilité ?  ",
-          "category": "écoresp-food",
+          "category": "écoresp-look",
           "type": "checkbox",
           "required": true
         }
@@ -546,11 +669,11 @@
     }
   },
   {
-    "sector": "boisson",
+    "sector": "loueur",
     "general": {
       "questions": [
         {
-          "id": "boisson-general-1",
+          "id": "loueur-general-1",
           "question": "Vous êtes ?",
           "type": "checkbox",
           "required": true
@@ -561,24 +684,41 @@
     "servicesSection": {
       "questions": [
         {
-          "id": "food-keywords-1",
-          "question": "Quelle boisson proposez-vous ? ",
-          "category": "type",
-          "type": "checkbox",
-          "required": true
-        },
-        {
-          "id": "food-keywords-2",
-          "question": "Quel matériel proposez-vous ? ",
-          "category": "matériel",
+          "id": "loueur-keywords-2",
+          "question": "Matériel d'ambiance ? ",
+          "category": "ambiance",
 
           "type": "checkbox",
           "required": true
         },
         {
-          "id": "food-keywords-3",
-          "question": "Quels options proposez-vous ? ",
-          "category": "options",
+          "id": "loueur-keywords-3",
+          "question": "Matériel audiovisuel ? ",
+          "category": "audiovisuel",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "loueur-keywords-4",
+          "question": "Matériel autour de la table ? ",
+          "category": "table",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "loueur-keywords-5",
+          "question": "Matériel décoratif ? ",
+          "category": "décoration",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "loueur-keywords-6",
+          "question": "Matériel culinaire ? ",
+          "category": "culinaire",
 
           "type": "checkbox",
           "required": true
@@ -589,9 +729,9 @@
     "habitudesSection": {
       "questions": [
         {
-          "id": "food-keywords-1",
-          "question": "Quelles sont vos habitudes en matière d'éco-responsabilité ?  ",
-          "category": "écoresp-food",
+          "id": "loueur-keywords-7",
+          "question": "Vos petites habitudes responsables ?  ",
+          "category": "écoresp-loueur",
           "type": "checkbox",
           "required": true
         }
@@ -599,11 +739,11 @@
     }
   },
   {
-    "sector": "boisson",
+    "sector": "esthétique",
     "general": {
       "questions": [
         {
-          "id": "boisson-general-1",
+          "id": "esthétique-general-1",
           "question": "Vous êtes ?",
           "type": "checkbox",
           "required": true
@@ -614,24 +754,16 @@
     "servicesSection": {
       "questions": [
         {
-          "id": "food-keywords-1",
-          "question": "Quelle boisson proposez-vous ? ",
-          "category": "type",
+          "id": "esthétique-keywords-1",
+          "question": "Vous proposez vos services : ",
+          "category": "emplacement",
           "type": "checkbox",
           "required": true
         },
         {
-          "id": "food-keywords-2",
-          "question": "Quel matériel proposez-vous ? ",
-          "category": "matériel",
-
-          "type": "checkbox",
-          "required": true
-        },
-        {
-          "id": "food-keywords-3",
-          "question": "Quels options proposez-vous ? ",
-          "category": "options",
+          "id": "esthétique-keywords-2",
+          "question": "Quelles sont les prestations proposées ? ",
+          "category": "prestations",
 
           "type": "checkbox",
           "required": true
@@ -642,9 +774,137 @@
     "habitudesSection": {
       "questions": [
         {
-          "id": "food-keywords-1",
-          "question": "Quelles sont vos habitudes en matière d'éco-responsabilité ?  ",
-          "category": "écoresp-food",
+          "id": "esthétique-keywords-3",
+          "question": "Vos petites habitudes responsables ? ",
+          "category": "écoresp-esthétique",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    }
+  },
+  {
+    "sector": "humain",
+    "general": {
+      "questions": [
+        {
+          "id": "humain-general-1",
+          "question": "Vous êtes ?",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "services": "VOTRE OFFRE",
+    "servicesSection": {
+      "questions": [
+        {
+          "id": "humain-keywords-2",
+          "question": "Quelles qualités mettez-vous en avant ? ",
+          "category": "qualités",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "humain-keywords-3",
+          "question": "Quelles genre de cérémonie officiez-vous ? ",
+          "category": "cérémonie",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "humain-keywords-4",
+          "question": "Quel ton aimez-vous donner à vos cérémonies ? ",
+          "category": "ton",
+
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "habitudes": "VOS HABITUDES ",
+    "habitudesSection": {
+      "questions": [
+        {
+          "id": "humain-keywords-5",
+          "question": "Vos petites habitudes responsables ? ",
+          "category": "écoresp-humain",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    }
+  },
+  {
+    "sector": "beauté",
+    "general": {
+      "questions": [
+        {
+          "id": "beauté-general-1",
+          "question": "Vous êtes ?",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "services": "VOTRE OFFRE",
+    "servicesSection": {
+      "questions": [
+        {
+          "id": "beauté-keywords-1",
+          "question": "Vous proposez un style de coiffure : ",
+          "category": "coiffure",
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "beauté-keywords-2",
+          "question": "Vos prestations coiffure : ",
+          "category": "presta coiffure",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "beauté-keywords-3",
+          "question": "Matériel utilisé : ",
+          "category": "matériel-beauté",
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "beauté-keywords-4",
+          "question": "Vous proposez un style de maquillage : ",
+          "category": "maquillage",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "beauté-keywords-5",
+          "question": "Qui sont vos client(e)s ? ",
+          "category": "client",
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "beauté-keywords-6",
+          "question": "Comment vous adaptez-vous à vos clients ? ",
+          "category": "adaptabilité",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "habitudes": "VOS HABITUDES ",
+    "habitudesSection": {
+      "questions": [
+        {
+          "id": "beauté-keywords-3",
+          "question": "Vos petites habitudes responsables ? ",
+          "category": "écoresp-beauté",
           "type": "checkbox",
           "required": true
         }

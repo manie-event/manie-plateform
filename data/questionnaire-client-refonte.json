@@ -1,14 +1,14 @@
 {
   "general": [
     {
-      "title": "Que fêtez-vous ?",
+      "title": "Que fêtez-vous?",
       "reponses": [
         {
           "event-type": "particulier",
           "type": [
             { "value": "mariage", "label": "Mariage" },
             { "value": "pacs", "label": "PACS" },
-            { "value": "demande", "label": "Demande" },
+            { "value": "demande", "label": "Demande en mariage" },
             {
               "value": "fiancailles",
               "label": "Fiançailles"
@@ -41,7 +41,7 @@
             },
             {
               "value": "cocktail",
-              "label": "Cocktail"
+              "label": "Cocktail apéritif"
             },
             { "value": "fetes", "label": "Fêtes" },
             { "value": "bapteme", "label": "Baptême" },
@@ -66,31 +66,27 @@
               "value": "fin_these",
               "label": "Fin de thèse"
             },
-            { "value": "diplome", "label": "Diplôme" }
+            { "value": "diplome", "label": "Fin d'étude" }
           ]
         },
         {
           "event-type": "professionnel",
           "type": [
             {
-              "value": "cocktail_lancement",
-              "label": "Cocktail lancement"
-            },
-            {
               "value": "cocktail_reseautage",
-              "label": "Cocktail réseautage"
+              "label": "Networking"
             },
             {
               "value": "cocktail_anniversaire",
-              "label": "Cocktail anniversaire"
+              "label": "Anniversaire"
             },
             {
               "value": "lancement",
-              "label": "Lancement"
+              "label": "Lancement de produit"
             },
             {
               "value": "partenaire",
-              "label": "Partenaire"
+              "label": "Soirée partenaires"
             },
             {
               "value": "inauguration",
@@ -127,10 +123,6 @@
               "label": "Journée porte ouverte"
             },
             {
-              "value": "journee_etude",
-              "label": "Journée d'étude"
-            },
-            {
               "value": "repas_affaire",
               "label": "Repas d'affaire"
             },
@@ -141,23 +133,23 @@
             { "value": "codir", "label": "Codir" },
             {
               "value": "remise_diplome",
-              "label": "Remise de diplôme"
+              "label": "Diplôme"
             },
             {
               "value": "integration",
-              "label": "Soirée d'intégration"
+              "label": "Intégration"
             },
             {
               "value": "fin_annee_scolaire",
-              "label": "Soirée de fin d'année"
+              "label": "Fin d'année"
             },
             {
               "value": "pot_arrivee",
-              "label": "Pot d'arrivée"
+              "label": "Arrivée"
             },
             {
               "value": "pot_depart_pro",
-              "label": "Pot de départ"
+              "label": "Départ"
             }
           ]
         }
@@ -189,7 +181,7 @@
           "type": [
             { "value": "family", "label": "En famille" },
             { "value": "friends", "label": "Entre amis" },
-            { "value": "mixed", "label": "Mélangés" }
+            { "value": "mixed", "label": "Les deux !" }
           ]
         },
         {
@@ -198,19 +190,19 @@
             { "value": "collegues", "label": "Entre collègues" },
             { "value": "clients", "label": "Avec des clients" },
             { "value": "partenaires", "label": "Avec des partenaires" },
-            { "value": "melange_pro", "label": "Mélangés" }
+            { "value": "melange_pro", "label": "Les trois !" }
           ]
         }
       ]
     },
     {
-      "title": "Pendant combien de temps ?",
+      "title": "Pour combien de temps ?",
       "reponses": [
         {
           "event-type": "particulier",
           "type": [
             { "value": "meal", "label": "Le temps d'un repas" },
-            { "value": "day", "label": "Une journée" },
+            { "value": "day", "label": "Une journée / une soirée" },
             { "value": "stay", "label": "Un séjour (min 1 nuit)" }
           ]
         },
@@ -230,7 +222,7 @@
       "reponses": [
         { "value": "self", "label": "Pour vous" },
         { "value": "other", "label": "Pour quelqu'un d'autre" },
-        { "value": "surprise", "label": "C'est une surprise" }
+        { "value": "surprise", "label": "C'est une surprise !" }
       ]
     }
   ],
@@ -239,187 +231,175 @@
       "sector": "food",
       "isService": true,
       "category": null,
-      "question": "Quel type de services vous donne envie ?"
+      "question": "A quoi pensez-vous pour votre repas ?"
     },
     {
       "sector": "food",
       "isService": false,
       "category": "cuisines",
-      "question": "Quelles CUISINES vous inspirent ?"
+      "question": "Quelles cuisines vous inspirent ?"
     },
     {
       "sector": "food",
       "isService": false,
       "category": "format",
-      "question": "Quel FORMAT de repas ?"
+      "question": "Dans quel format de repas ?"
     },
     {
       "sector": "food",
       "isService": false,
       "category": "sucré",
-      "question": "Quels plats SUCRÉS vous inspirent ?"
+      "question": "Vos envies sucrées ?"
     },
     {
       "sector": "food",
       "isService": false,
       "category": "salé",
-      "question": "Quels plats SALÉS vous inspirent ?"
+      "question": "Vos envies salées ?"
     },
     {
       "sector": "food",
       "isService": false,
       "category": "régimes",
-      "question": "Quels RÉGIMES spéciaux souhaitez-vous prendre en compte ?"
+      "question": "Y aura t-il des régimes spéciaux ?"
     },
     {
-      "sector": "food",
+      "sector": "loueur",
       "isService": false,
       "category": "culinaire",
-      "question": "Souhaitez-vous louer du matériel CULINAIRE ?"
+      "question": "Souhaitez-vous louer du matériel culinaire ?"
     },
     {
-      "sector": "food",
+      "sector": "loueur",
       "isService": false,
       "category": "table",
-      "question": "Souhaitez-vous louer du matériel de TABLE ?"
+      "question": "Souhaitez-vous louer du matériel de table ?"
     },
     {
       "sector": "lieux",
       "isService": true,
       "category": null,
-      "question": "Quelles type de Lieux vous donne envie ?"
+      "question": "Dans quel type de lieux vous voyez-vous ?"
     },
     {
       "sector": "lieux",
       "isService": false,
       "category": "privatisation",
-      "question": "Vous souhaitez une privatisation ?"
-    },
-    {
-      "sector": "lieux",
-      "isService": false,
-      "category": "couchages",
-      "question": "Nécessitez-vous des couchages ? "
+      "question": "Quel type de privatisation souhaitez-vous ?"
     },
     {
       "sector": "lieux",
       "isService": false,
       "category": "environnement",
-      "question": "Quelles type d'environnement vous donne envie ?"
+      "question": "Dans quel environnement ?"
     },
     {
       "sector": "lieux",
       "isService": false,
       "category": "accessibilité",
-      "question": "Vous avez besoin d’un lieu accessible aux : ?"
+      "question": "Vous avez besoin d’un lieu accessible aux :"
     },
     {
       "sector": "lieux",
       "isService": false,
       "category": "imposé",
-      "question": "Acceptez-vous que le lieu vous impose : ?"
+      "question": "Vous acceptez qu'un lieu vous impose :"
     },
     {
       "sector": "lieux",
       "isService": false,
       "category": "espaces",
-      "question": "Quels sont selon vous les espaces prioritaires ?"
+      "question": "Quels espaces sont pour vous obligatoires ?"
     },
     {
       "sector": "lieux",
       "isService": false,
       "category": "équipements",
-      "question": "Des équipements essentiels à avoir sur votre lieu ?"
+      "question": "Quels équipements sont essentiels ?"
+    },
+    {
+      "sector": "lieux",
+      "isService": false,
+      "category": "options lieux",
+      "question": "Nécessitez-vous d'option ? "
     },
     {
       "sector": "boisson",
       "isService": true,
       "category": null,
-      "question": "Qu’est-ce qu’on boit ?"
+      "question": "Qu'est-ce que vous buvez ?"
     },
     {
       "sector": "boisson",
       "isService": false,
       "category": "boissons",
-      "question": "Quelles BOISSONS imaginez-vous ?"
+      "question": "Quels types de boissons ?"
     },
     {
       "sector": "boisson",
       "isService": false,
-      "category": "matériel",
-      "question": "De quel MATÉRIEL avez-vous besoin ?"
+      "category": "matériel-boissons",
+      "question": "De quel matériel avez-vous besoin ?"
     },
     {
       "sector": "boisson",
       "isService": false,
-      "category": "options",
-      "question": "Quelle(s) OPTIONS vous intéressent ?"
+      "category": "options boisson",
+      "question": "Quel service peut vous intéresser ?"
     },
     {
-      "sector": "boisson",
+      "sector": "service",
       "isService": false,
       "category": "serveur",
-      "question": "Pour quel service souhaitez-vous engager un SERVEUR ?"
+      "question": "Si vous optez pour du service, que demanderez-vous à vos/votre serveur ?"
     },
     {
       "sector": "musique",
       "isService": true,
       "category": null,
-      "question": "Et pour l’ambiance ?"
+      "question": "Vous souhaitez ambiancer vos invités ?"
     },
     {
       "sector": "musique",
       "isService": false,
       "category": "but",
-      "question": "Dans quel BUT souhaitez-vous mettre en musique votre évènement ?"
+      "question": "Dans quel but ?"
     },
     {
       "sector": "musique",
       "isService": false,
       "category": "styles-musique",
-      "question": "Quel genre de MUSIQUE souhaitez-vous écouter ? "
+      "question": "Quel genre de musique ? "
     },
     {
       "sector": "musique",
       "isService": false,
       "category": "mood",
-      "question": "Quel MOOD vous parle quand vous pensez “musique” ?"
-    },
-    {
-      "sector": "musique",
-      "isService": false,
-      "category": "but",
-      "question": "Dans quel BUT souhaitez-vous mettre en musique votre évènement ?"
+      "question": "Quel ambiance vous parle ?"
     },
     {
       "sector": "musique",
       "isService": false,
       "category": "format",
-      "question": "Quel FORMAT de prestataire souhaiteriez-vous ?"
+      "question": "Dans quel format ?"
     },
     {
       "sector": "musique",
       "isService": false,
-      "category": "instruments",
-      "question": "Quels INSTRUMENTS de musique ? "
-    },
-    {
-      "sector": "musique",
-      "isService": false,
-      "category": "technique",
-      "question": "Des exigences TECHNIQUES ?"
+      "category": "instrument",
+      "question": "Un accompagnement avec instruments ?"
     },
     {
       "sector": "musique",
       "isService": false,
       "category": "playlist",
-      "question": "Comment souhaitez-vous que votre PLAYLIST soient gérées ?"
+      "question": "Vous préférez une playlist gérée :"
     },
     {
       "sector": "musique",
       "isService": false,
       "category": "technique",
-      "question": "Vous souhaitez louer du MATERIEL MUSICAL ?"
+      "question": "Avez-vous besoin de matériel ?"
     },
     {
       "sector": "animation",
@@ -431,160 +411,178 @@
       "sector": "animation",
       "isService": false,
       "category": "jeux",
-      "question": "Vous avez pensé aux JEUX ?"
+      "question": "Vous avez pensé à des jeux ?"
     },
     {
       "sector": "animation",
       "isService": false,
       "category": "art-visuel",
-      "question": "Et des animations d’ART VISUEL ?"
+      "question": "Ou des animations artistiques ?"
     },
     {
       "sector": "animation",
       "isService": false,
       "category": "performers",
-      "question": "Ou peut-être des PERFORMERS ?"
+      "question": "Vous voulez faire dans la performance ?"
     },
     {
       "sector": "animation",
       "isService": false,
       "category": "bien-être",
-      "question": "La nouveauté ? Des animations BIEN-ÊTRE ! "
+      "question": "Choisir une animation autour du bien-être ? "
     },
     {
       "sector": "audiovisuel",
       "isService": true,
       "category": null,
-      "question": "Est-ce qu’on immortalise cet évènement ? "
+      "question": "Est-ce qu’on immortalise cet évènement ?"
     },
     {
-      "sector": "animation",
+      "sector": "audiovisuel",
       "isService": false,
-      "category": "shooting",
-      "question": "Quel type de SHOOTING ?"
+      "category": "shootings",
+      "question": "Vous êtes plutôt :"
     },
     {
-      "sector": "animation",
+      "sector": "audiovisuel",
       "isService": false,
       "category": "cadre",
-      "question": "Dans quel CADRE ?"
+      "question": "Dans quel cadre ?"
     },
     {
-      "sector": "animation",
-      "isService": false,
-      "category": "technologie",
-      "question": "Des préférences en termes de TECHNOLOGIE ?"
-    },
-    {
-      "sector": "animation",
+      "sector": "audiovisuel",
       "isService": false,
       "category": "style-audiovisuel",
-      "question": "Quel genre de photo-vidéo souhaitez-vous souhaitez ? "
+      "question": "Quel genre de souvenirs souhaitez-vous ? "
     },
     {
-      "sector": "animation",
+      "sector": "audiovisuel",
       "isService": false,
       "category": "technologie",
-      "question": "Vous souhaitez louer du matériel d’ANIMATION AUDIOVISUEL ?"
+      "question": "Des préférences sur technologie utilisée ?"
     },
     {
-      "sector": "decoration",
+      "sector": "loueur",
+      "isService": false,
+      "category": "audiovisuel",
+      "question": "Vous souhaitez louer du matériel audiovisuel ?"
+    },
+    {
+      "sector": "décoration",
       "isService": true,
       "category": null,
-      "question": "Quelle ambiance visuelle ?"
+      "question": "Et pour le visuel de votre événement ?"
     },
     {
-      "sector": "decoration",
-      "isService": false,
-      "category": "ambiance",
-      "question": "Qu’est-ce que vous imaginez comme AMBIANCE ? "
-    },
-    {
-      "sector": "decoration",
+      "sector": "décoration",
       "isService": false,
       "category": "besoin",
-      "question": "Pour cela, de quoi avez-vous BESOIN ?"
+      "question": "Quels sont vos besoins ? "
     },
     {
-      "sector": "decoration",
+      "sector": "décoration",
       "isService": false,
-      "category": "procédés",
-      "question": "Quels PROCÉDÉS vous parlent ?"
+      "category": "style-déco",
+      "question": "Quels styles vous parlent le plus ?"
     },
     {
-      "sector": "decoration",
+      "sector": "décoration",
       "isService": false,
-      "category": "vegetaux",
-      "question": "Souhaitez-vous intégrer des VEGETAUX ?"
+      "category": "végétaux",
+      "question": "Souhaitez-vous intégrer des éléments végétaux ?"
     },
     {
-      "sector": "decoration",
+      "sector": "décoration",
       "isService": false,
-      "category": "cadeau",
-      "question": "Vos invités repartiront-ils avec un CADEAU personnalisé ?"
+      "category": "texture",
+      "question": "Des fleurs pourquoi pas, mais comment ?"
+    },
+    {
+      "sector": "décoration",
+      "isService": false,
+      "category": "cadeaux personnalisés",
+      "question": "Vos invités repartiront-ils avec un cadeau ?"
+    },
+    {
+      "sector": "loueur",
+      "isService": false,
+      "category": "ambiance",
+      "question": "Souhaitez-vous du matériel d'ambiance ?"
+    },
+    {
+      "sector": "loueur",
+      "isService": false,
+      "category": "décoration",
+      "question": "Souhaitez-vous du matériel décoratif ?"
+    },
+    {
+      "sector": "loueur",
+      "isService": false,
+      "category": "table",
+      "question": "Souhaitez-vous du matériel de table ?"
     },
     {
       "sector": "transport",
       "isService": true,
       "category": null,
-      "question": "Comment se rendre à votre évènement ?"
+      "question": "Et pour le transport ?"
     },
     {
       "sector": "transport",
       "isService": false,
       "category": "moyen",
-      "question": "Les moyens de TRANSPORT imaginables sont :"
+      "question": "Imaginez vos/votre moyen de transport !"
+    },
+    {
+      "sector": "transport",
+      "isService": false,
+      "category": "style-transport",
+      "question": "Quel style de transport ?"
     },
     {
       "sector": "transport",
       "isService": false,
       "category": "couleur",
-      "question": "De quelle(s) COULEUR ?"
+      "question": "La couleur a t-elle une importance ?"
     },
     {
       "sector": "transport",
       "isService": false,
       "category": "trajet",
-      "question": "Pour quel TRAJET ?"
+      "question": "Pour quel trajet ?"
     },
     {
       "sector": "transport",
       "isService": false,
       "category": "chauffeur",
-      "question": "Souhaitez-vous : "
+      "question": "Vous souhaitez un chauffeur :"
     },
     {
       "sector": "humain",
       "isService": true,
       "category": null,
-      "question": "Qui gère votre évènement le jour J ?"
-    },
-    {
-      "sector": "humain",
-      "isService": false,
-      "category": "fonction",
-      "question": "Sur quelle(s)  FONCTION  ?"
+      "question": "Vous souhaitez être assisté.e le jour-J ?"
     },
     {
       "sector": "humain",
       "isService": false,
       "category": "qualités",
-      "question": "Quelles sont les 3 QUALITÉS que vous souhaiteriez qu’il.elle ait ? "
+      "question": "Quelles qualités pour votre coordinateur ?"
     },
     {
       "sector": "humain",
       "isService": false,
       "category": "cérémonie",
-      "question": "Pour quel genre de CÉRÉMONIE ? "
+      "question": "Si cérémonie, quel genre ?"
     },
     {
       "sector": "humain",
       "isService": false,
       "category": "ton",
-      "question": "Quel TON souhaiteriez-vous donner à votre cérémonie ? "
+      "question": "Quel ton souhaitez-vous donner à votre cérémonie ? "
     },
     {
-      "sector": "loueur",
+      "sector": "logistique",
       "isService": true,
       "category": null,
       "question": "Et pour la logistique ? "
@@ -592,86 +590,98 @@
     {
       "sector": "loueur",
       "isService": false,
-      "category": "materiel",
-      "question": "Avez-vous besoin de louer du  MATERIEL supplémentaire ?"
+      "category": "structure",
+      "question": "Avez-vous besoin de louer du matériel structure ?"
     },
     {
       "sector": "loueur",
       "isService": false,
       "category": "service",
-      "question": "De quel  SERVICE supplémentaire pourriez-vous avoir besoin ?"
+      "question": "Avez-vous besoin de louer du matériel de confort ?"
+    },
+    {
+      "sector": "logistique",
+      "isService": false,
+      "category": "service logistique",
+      "question": "Avez-vous besoin d'un service logistique ?"
     },
     {
       "sector": "look",
       "isService": true,
       "category": null,
-      "question": "Avez-vous déjà trouvé votre tenue ?"
+      "question": "Et pour la tenue ?"
     },
     {
       "sector": "look",
       "isService": false,
-      "category": "besoins",
-      "question": "Faites-nous part de vos BESOINS  !"
+      "category": "acquisition",
+      "question": "Vous êtes plutôt :"
     },
     {
       "sector": "look",
       "isService": false,
-      "category": "conso",
-      "question": "Souhaitez-vous plutôt faire un.e : "
+      "category": "femme",
+      "question": "Pour femme :"
+    },
+    {
+      "sector": "look",
+      "isService": false,
+      "category": "homme",
+      "question": "Pour homme : "
     },
     {
       "sector": "beauté",
       "isService": true,
       "category": null,
-      "question": "Avez-vous besoin de soins beauté ? (coiffure, maquillage) "
+      "question": "Une petite mise en beauté ?"
     },
     {
       "sector": "beauté",
       "isService": false,
-      "category": "invité",
-      "question": "Pour qui ?"
+      "category": "client",
+      "question": "C'est pour qui ?"
     },
     {
       "sector": "beauté",
       "isService": false,
       "category": "coiffure",
-      "question": "Comment définir vos envies de COIFFURE ?"
+      "question": "Pour la coiffure :"
     },
     {
       "sector": "beauté",
       "isService": false,
-      "category": "prestation",
-      "question": "Comment imaginez-vous la PRESTATION ?"
+      "category": "presta coiffure",
+      "question": "Quel genre de prestation ?"
+    },
+    {
+      "sector": "beauté",
+      "isService": false,
+      "category": "matériel-beauté",
+      "question": "Avec quel genre d'accessoires coiffure ?"
     },
     {
       "sector": "beauté",
       "isService": false,
       "category": "maquillage",
-      "question": "Comment définir vos envies de MAQUILLAGE ?"
+      "question": "Et pour le maquillage ?"
     },
     {
       "sector": "beauté",
       "isService": false,
-      "category": "options",
-      "question": "Quelles OPTIONS ?"
+      "category": "adaptabilité",
+      "question": "Vous avez besoin que l'on s'adapte ?"
     },
     {
       "sector": "esthétique",
       "isService": true,
       "category": null,
-      "question": " Avez-vous besoin d’une prestation esthétique ?"
+      "question": "Une cerise sur le gâteau ?"
     },
     {
       "sector": "esthétique",
       "isService": false,
-      "category": "besoin",
-      "question": "De quelles prestations avez-vous BESOIN ?"
-    },
-    {
-      "sector": "esthétique",
-      "isService": false,
-      "category": "emplacement",
-      "question": "Souhaitez-vous: "
+      "category": "prestations",
+      "question": "De quelles prestations avez-vous besoin ? "
     }
   ]
 }

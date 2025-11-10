@@ -1,6 +1,15 @@
 <template>
   <v-dialog v-model="openCustomerForm" transition="dialog-bottom-transition" max-width="800">
     <v-card class="pa-6 rounded-2xl elevation-3 bg-grey-lighten-5">
+      <Icon
+        icon="ri:close-fill"
+        color="rgb(var(--v-theme-darkbg))"
+        height="24"
+        width="24"
+        style="position: absolute; top: 20px; right: 20px"
+        @click="openCustomerForm = false"
+      />
+
       <div v-if="currentPage === 1" key="page1">
         <h2 class="text-h5 font-weight-bold mb-4">
           {{ questionnaire.general[0].title }}
@@ -133,7 +142,7 @@
         <v-alert
           color="rgb(var(--v-theme-darkbg))"
           style="color: rgb(var(--v-theme-background))"
-          class="mb-6"
+          class="my-6"
         >
           ⚠️ Chaque secteur sélectionné ne pourra pas être modifié une fois la mise en relation
           commencée.
@@ -145,7 +154,7 @@
           class="mb-8 pa-6 bg-white rounded-xl shadow-sm"
         >
           <div class="d-flex justify-space-between align-center mb-3">
-            <h3 class="font-weight-bold">Choisissez un univers</h3>
+            <h3 class="font-weight-bold">De quels prestataires avez-vous besoin ?</h3>
             <Icon
               icon="solar:trash-bin-trash-line-duotone"
               height="24"
@@ -207,9 +216,21 @@
         <v-btn v-if="currentPage === 3" color="#293b57" variant="outlined" @click="addNewService">
           Ajouter un nouveau service
         </v-btn>
-        <v-btn v-if="currentPage === 2" variant="text" @click="currentPage--"> Précédent</v-btn>
+        <v-btn
+          v-if="currentPage === 2"
+          variant="text"
+          style="background: rgb(var(--v-theme-darkbg)); color: rgb(var(--v-theme-background))"
+          @click="currentPage--"
+        >
+          Précédent</v-btn
+        >
 
-        <v-btn v-if="currentPage < 3" color="primary" variant="flat" @click="nextPage">
+        <v-btn
+          v-if="currentPage < 3"
+          style="background: rgb(var(--v-theme-darkbg)); color: rgb(var(--v-theme-background))"
+          variant="flat"
+          @click="nextPage"
+        >
           Suivant
         </v-btn>
 
@@ -473,38 +494,61 @@ const handleSubmit = async () => {
     openCustomerForm.value = false;
   }
 };
+const resetForm = () => {
+  currentPage.value = 1;
+  name.value = '';
+  location.value = 'Veuillez choisir un département';
+  duration.value = '';
+  group_type.value = '';
+  theme.value = '';
+  organized_for.value = '';
+  people.value = 0;
+  isBudgetGlobale.value = false;
+  budgetInput.value = 0;
+  dateStart.value = '';
+  dateEnd.value = '';
 
-onMounted(async () => {
-  // Récupère l'instance complète de l'événement
-  const responses = await getEventsInstance(props.event.uuid);
+  selectedServices.value = [
+    {
+      selectedSector: undefined,
+      selectedServiceId: '',
+      selectedKeywords: [],
+    },
+  ];
+};
 
-  // Données normalisées du questionnaire
-  const normalizedAnswer = responses.$attributes;
-  console.log('normalizedAnswer', normalizedAnswer);
+watch(
+  () => openCustomerForm.value,
+  async (isOpen, wasOpen) => {
+    if (isOpen && !wasOpen) {
+      resetForm();
 
-  // Pré-remplir les champs
-  eventType.value = normalizedAnswer.event_type ?? '';
-  name.value = normalizedAnswer.name ?? '';
-  location.value = normalizedAnswer.location ?? '';
-  duration.value = normalizedAnswer.duration ?? '';
-  group_type.value = normalizedAnswer.group_type ?? '';
-  theme.value = normalizedAnswer.theme ?? '';
-  organized_for.value = normalizedAnswer.organized_for ?? '';
-  people.value = Number(normalizedAnswer.people) || 0;
-  budgetInput.value = normalizedAnswer.budget ?? 0;
-  [dateStart.value, dateEnd.value] = normalizedAnswer.date ?? ['', ''];
+      const responses = await getEventsInstance(props.event.uuid);
+      const normalizedAnswer = responses.$attributes;
 
-  // Pré-remplir les services sélectionnés
-  if (responses.$preloaded?.eventServices?.length) {
-    selectedServices.value = responses.$preloaded.eventServices.map((srv) => {
-      const service = servicesFiltered.value.find((s) => s.uuid === srv.serviceUuid);
-      const sector = sectors.value.find((sect) => sect.uuid === service?.sectorUuid);
-      return {
-        selectedSector: sector?.name ?? undefined,
-        selectedServiceId: srv.serviceUuid,
-        selectedKeywords: srv.keywordsUuid?.map((k) => (typeof k === 'string' ? k : k.uuid)) || [],
-      };
-    });
+      name.value = normalizedAnswer.name ?? '';
+      location.value = normalizedAnswer.location ?? '';
+      duration.value = normalizedAnswer.duration ?? '';
+      group_type.value = normalizedAnswer.group_type ?? '';
+      theme.value = normalizedAnswer.theme ?? '';
+      organized_for.value = normalizedAnswer.organized_for ?? '';
+      people.value = Number(normalizedAnswer.people) || 0;
+      budgetInput.value = normalizedAnswer.budget ?? 0;
+      [dateStart.value, dateEnd.value] = normalizedAnswer.date ?? ['', ''];
+
+      if (responses.$preloaded?.eventServices?.length) {
+        selectedServices.value = responses.$preloaded.eventServices.map((srv) => {
+          const service = servicesFiltered.value.find((s) => s.uuid === srv.serviceUuid);
+          const sector = sectors.value.find((sect) => sect.uuid === service?.sectorUuid);
+          return {
+            selectedSector: sector?.name ?? undefined,
+            selectedServiceId: srv.serviceUuid,
+            selectedKeywords:
+              srv.keywordsUuid?.map((k) => (typeof k === 'string' ? k : k.uuid)) || [],
+          };
+        });
+      }
+    }
   }
-});
+);
 </script>
