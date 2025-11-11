@@ -141,8 +141,7 @@ const register = async () => {
 
     <div class="d-flex gap-4 mt-3">
       <p style="font-size: small">
-        Je certifie avoir lu et accepté la charte de bonne conduite de MANIE. Je m’engage à
-        respecter les valeurs et engagements qui y figurent.
+        Je certifie avoir lu et accepté la charte de bonne conduite établie par Manie.
         <span @click="openModalCharte = true" style="opacity: 0.5; cursor: pointer"
           >En savoir plus ici</span
         >
@@ -151,8 +150,7 @@ const register = async () => {
     </div>
     <div class="d-flex gap-4 mt-3">
       <p style="font-size: small">
-        Je certifie avoir lu et accepté la charte de bonne conduite de MANIE. Je m’engage à
-        respecter les valeurs et engagements qui y figurent.
+        Je certifie avoir lu et accepté l’ensemble des mentions légales et politiques.
         <span @click="openModalCharteMentions = true" style="opacity: 0.5; cursor: pointer"
           >En savoir plus ici</span
         >
@@ -162,6 +160,8 @@ const register = async () => {
     <v-btn
       size="large"
       class="mt-2"
+      style="color: white"
+      color="rgb(var(--v-theme-darkbg))"
       style="color: white"
       color="rgb(var(--v-theme-darkbg))"
       block

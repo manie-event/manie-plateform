@@ -16,6 +16,16 @@
           />
           <p>Êtes-vous une entreprise ?</p>
         </div>
+        <div class="d-flex align-center my-4">
+          <input
+            type="checkbox"
+            class="mr-3"
+            label="Êtes-vous une entreprise ?"
+            v-model="profile.isBusiness"
+            :error-messages="showErrors ? errors.isBusiness : undefined"
+          />
+          <p>Êtes-vous une entreprise ?</p>
+        </div>
 
         <template v-if="profile.isBusiness">
           <v-text-field
@@ -57,6 +67,8 @@
 
         <v-divider class="my-6">
           <p>A propos de votre adresse</p>
+        <v-divider class="my-6">
+          <p>A propos de votre adresse</p>
         </v-divider>
 
         <v-text-field
@@ -84,6 +96,7 @@
         />
 
         <v-btn color="primary" @click="onSubmit" :loading="isSubmitting" block>
+        <v-btn color="primary" @click="onSubmit" :loading="isSubmitting" block>
           Valider le profil
         </v-btn>
       </v-form>
@@ -91,6 +104,7 @@
   </v-dialog>
   <Teleport to="body">
     <error-toaster></error-toaster>
+    <SuccessToaster></SuccessToaster>
     <SuccessToaster></SuccessToaster>
   </Teleport>
 </template>
@@ -111,10 +125,15 @@ const { clientProfile, isProfileCreated } = storeToRefs(userStore);
 const { patchClientProfil, getClientProfil } = useClientProfil();
 const { addSuccess, addError } = useToaster();
 
+const { clientProfile, isProfileCreated } = storeToRefs(userStore);
+const { patchClientProfil, getClientProfil } = useClientProfil();
+const { addSuccess, addError } = useToaster();
+
 const openModal = defineModel<boolean>('openModal');
 const showErrors = ref(false);
 const isSubmitting = ref(false);
 
+// ✅ Schéma de validation
 // ✅ Schéma de validation
 const validationSchema = yup.object({
   isBusiness: yup.boolean(),
@@ -126,6 +145,7 @@ const validationSchema = yup.object({
     is: true,
     then: (schema) =>
       schema
+        .required('Le numéro de SIRET est requis')
         .required('Le numéro de SIRET est requis')
         .matches(/^\d{14}$/, 'Le SIRET doit contenir 14 chiffres'),
   }),
@@ -154,6 +174,7 @@ const {
   handleSubmit,
   resetForm,
   setValues,
+  setValues,
 } = useForm({
   validationSchema,
   initialValues: {
@@ -164,6 +185,7 @@ const {
     zipCode: '',
     city: '',
     country: 'France',
+    country: 'France',
     birthDate: null,
     username: '',
     phoneNumber: '',
@@ -173,6 +195,10 @@ const {
   keepValuesOnUnmount: true,
 });
 
+// ✅ Pré-remplir les champs à l’ouverture
+
+// ✅ Soumission
+const onSubmit = handleSubmit(async (values) => {
 // ✅ Pré-remplir les champs à l’ouverture
 
 // ✅ Soumission
@@ -196,7 +222,27 @@ const onSubmit = handleSubmit(async (values) => {
     };
 
     await patchClientProfil(profilePayload);
+    const profilePayload: ClientModel = {
+      businessName: values.businessName,
+      businessSiret: values.businessSiret,
+      businessLeader: values.businessLeader,
+      address: values.address,
+      zipCode: values.zipCode,
+      city: values.city,
+      country: values.country,
+      birthDate: values.birthDate ?? null,
+      username: values.username,
+      phoneNumber: values.phoneNumber,
+      isBusiness: values.isBusiness,
+    };
 
+    await patchClientProfil(profilePayload);
+
+    if (isProfileCreated.value) {
+      addSuccess('Profil mis à jour avec succès !');
+      openModal.value = false;
+      showErrors.value = false;
+    }
     if (isProfileCreated.value) {
       addSuccess('Profil mis à jour avec succès !');
       openModal.value = false;
@@ -206,9 +252,45 @@ const onSubmit = handleSubmit(async (values) => {
     addError({
       message: 'Une erreur est survenue lors de la mise à jour du profil.',
     });
+    addError({
+      message: 'Une erreur est survenue lors de la mise à jour du profil.',
+    });
   } finally {
     isSubmitting.value = false;
   }
+});
+
+onMounted(async () => {
+  try {
+    // On recharge les infos si le store est vide (sécurité)
+    if (!clientProfile.value?.uuid) {
+      await getClientProfil();
+    }
+
+    const profileData = clientProfile.value;
+
+    if (profileData) {
+      const formattedBirthDate = profileData.birthDate
+        ? new Date(profileData.birthDate).toISOString().split('T')[0]
+        : '';
+      setValues({
+        businessName: profileData.businessName || '',
+        businessSiret: profileData.businessSiret || '',
+        businessLeader: profileData.businessLeader || '',
+        address: profileData.address || '',
+        zipCode: profileData.zipCode || '',
+        city: profileData.city || '',
+        country: profileData.country || 'France',
+        birthDate: formattedBirthDate || '',
+        username: profileData.username || '',
+        phoneNumber: profileData.phoneNumber || '',
+        isBusiness: profileData.isBusiness || false,
+      });
+    }
+  } catch (error) {
+    addError({ message: 'Erreur lors du chargement du profil.' });
+  }
+});
 });
 
 onMounted(async () => {

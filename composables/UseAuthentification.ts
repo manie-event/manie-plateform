@@ -67,9 +67,16 @@ export const useAuthentification = () => {
       setUser(user);
 
       addSuccess('Connexion réussie.');
-      localStorage.setItem('isConnected', 'true');
       // Redirection par rôle
       if (user.category === 'consumer') {
+        await Promise.all([
+          getAllSectors(),
+          getKeywords(),
+          getProfessionalService(),
+          await getClientProfil(),
+          await getEventsPerOrganisator(),
+        ]);
+
         await router.push({ path: '/dashboards/dashboard-client' });
       } else {
         (router.push({ path: '/dashboards/dashboard2' }),
@@ -155,7 +162,6 @@ export const useAuthentification = () => {
         'professional-uuid',
         'notesByEvent',
         'tasksByEvent',
-        'isConnected',
       ];
       keysToRemove.forEach((key) => localStorage.removeItem(key));
       userStore.resetUserStore();

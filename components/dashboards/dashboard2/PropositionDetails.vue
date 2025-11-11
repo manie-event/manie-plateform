@@ -132,6 +132,11 @@ const getPriceFromMessage = (message?: string) => {
 };
 
 const getPropositionServiceValue = (serviceUuid: string) => {
+  console.log(
+    professionalServices.value.find((service) => service.uuid === serviceUuid)?.name,
+    'PROUT'
+  );
+
   return professionalServices.value.find((service) => service.uuid === serviceUuid)?.name;
 };
 </script>

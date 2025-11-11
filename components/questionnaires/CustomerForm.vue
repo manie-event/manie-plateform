@@ -488,8 +488,6 @@ const getQuestionOptions = (sectionIndex: number) => {
 const handleSubmit = async () => {
   await submitEvent(customerResponse.value);
 
-  // si tu n’as pas d’erreur (ou si submitEvent() ne renvoie pas de valeur utile),
-  // tu fermes le formulaire et tu ouvres la modale pricing.
   if (!error.value) {
     openCustomerForm.value = false;
   }

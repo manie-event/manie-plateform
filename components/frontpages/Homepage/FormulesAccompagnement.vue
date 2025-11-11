@@ -347,5 +347,9 @@ const selectedFormule = (index: number) => {
   .divider {
     display: none;
   }
+  .pricing-free-card {
+    max-height: none;
+    height: auto;
+  }
 }
 </style>

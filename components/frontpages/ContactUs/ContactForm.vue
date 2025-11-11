@@ -20,11 +20,18 @@ const message = ref<ContactMessage>({
 <template>
   <div class="pt-3 pb-14">
     <v-container class="max-width-1218 ">
+  <div class="pt-3 pb-14">
+    <v-container class="max-width-1218 ">
       <v-row>
         <v-col cols="12" lg="4">
           <div
             class="contact-form rounded-lg pa-7 position-relative overflow-hidden mt-md-0 mt-6 position-relative"
+            class="contact-form rounded-lg pa-7 position-relative overflow-hidden mt-md-0 mt-6 position-relative"
           >
+            <h4 class="text-18 font-weight-bold mb-4 text-white">On vous écoute !</h4>
+            <p class="text-16 font-weight-regular position-relative z-1 text-white">
+              Vous avez des questions ou souhaitez en savoir plus sur nos services ? <br />
+              N'hésitez pas à nous contacter.
             <h4 class="text-18 font-weight-bold mb-4 text-white">On vous écoute !</h4>
             <p class="text-16 font-weight-regular position-relative z-1 text-white">
               Vous avez des questions ou souhaitez en savoir plus sur nos services ? <br />
@@ -41,8 +48,20 @@ const message = ref<ContactMessage>({
   <v-btn class="contact-form__btn" to="/front-pages/Faq-prestataire">FAQ Presta</v-btn>
 </div>
             </p>
+            <v-divider class="my-10 opacity-20 text-white"></v-divider>
+            <p>
+              <b class="text-white"
+                >Avant toute chose, avez-vous pensé à regarder si votre question figure dans le FAQ
+                ?</b
+              >
+              <div class="d-flex justify-space-between">
+  <v-btn class="contact-form__btn" to="/front-pages/Faq-client">FAQ Client</v-btn>
+  <v-btn class="contact-form__btn" to="/front-pages/Faq-prestataire">FAQ Presta</v-btn>
+</div>
+            </p>
             <v-divider class="my-10 opacity-20"></v-divider>
             <div class="contact-form__reseaux">
+              <NuxtLink to="https://www.instagram.com/manie.event/" target="_blank"
               <NuxtLink to="https://www.instagram.com/manie.event/" target="_blank"
                 ><Icon icon="ant-design:instagram-outlined" height="22" width="22"></Icon
               ></NuxtLink>
@@ -54,6 +73,14 @@ const message = ref<ContactMessage>({
                 target="_blank"
                 ><Icon icon="ant-design:facebook-outlined" height="22" width="22"></Icon
               ></NuxtLink>
+            </div>
+            <div class="mt-4">
+              <div class="d-flex">
+                <Icon icon="iconamoon:email-light" width="24" height="24" style="color: white; stroke-width: 0.3;"></Icon><p class="text-white ml-3">contact@manie-event.fr</p>
+              </div>
+              <div class="d-flex">
+                <Icon icon="iconamoon:location-pin-light" width="24" height="24" style="color: white; stroke-width: 0.3;"></Icon><p class="text-white ml-3">Rue de Gerland 69007 LYON</p>
+              </div>
             </div>
             <div class="mt-4">
               <div class="d-flex">
@@ -138,6 +165,8 @@ const message = ref<ContactMessage>({
                   <v-btn
                     color="rgb(var(--v-theme-lightprimary))"
                     style="color: rgb(var(--v-theme-background)) "
+                    color="rgb(var(--v-theme-lightprimary))"
+                    style="color: rgb(var(--v-theme-background)) "
                     class="px-5"
                     rounded="pill"
                     size="large"
@@ -163,14 +192,27 @@ const message = ref<ContactMessage>({
 <style lang="scss" scoped>
 .contact-form {
   background: rgb(var(--v-theme-darkbg));
+  background: rgb(var(--v-theme-darkbg));
   &__reseaux {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     justify-content: flex-start;
     gap: 0.8rem;
     a {
       color: white;
       height: 22px;
+      text-decoration: none;
+    }
+  }
+  &__btn{
+  font-weight: bold;
+  margin: 20px 0;
+  background: transparent;
+  border: 1px solid white;
+  color: rgb(var(--v-theme-background));
+  a {
+      text-decoration: none;
       text-decoration: none;
     }
   }
