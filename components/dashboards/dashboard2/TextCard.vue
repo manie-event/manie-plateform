@@ -1,10 +1,10 @@
 <template>
   <v-row class="d-flex">
     <v-col v-for="item in statistiques" :key="item.title" class="d-flex">
-      <v-card elevation="10" color="primary">
+      <v-card elevation="10" color="rgb(var(--v-theme-thirdy))">
         <v-card-text class="pl-5 pr-7">
           <span class="shape" :style="{ backgroundColor: item.color }"></span>
-          <Icon :icon="'solar:' + item.icon" width="30" height="30" class="mb-6" />
+          <Icon :icon="'solar:' + item.icon" width="30" height="30" class="mb-6 text-white" />
           <h3 class="text-h3 font-weight-semibold mb-2 text-white">
             {{ item.num }}
             <!-- <span
@@ -17,7 +17,7 @@
               {{ item.percent }}
             </span> -->
           </h3>
-          <p class="text-subtitle-1 opacity-50 font-weight-medium">{{ item.title }}</p>
+          <p class="text-subtitle-1 opacity-80 font-weight-medium text-white">{{ item.title }}</p>
         </v-card-text>
       </v-card>
     </v-col>
@@ -184,7 +184,7 @@ const statistiques = computed(() => [
     num: totalEventSigned.value.length,
     title: 'Presta signée(s)',
     icon: 'chat-round-money-line-duotone',
-    color: '#fabe4a',
+    color: '#f39454',
     // percent: signedStats.value.percent,
     // diff: signedStats.value.diff,
   },

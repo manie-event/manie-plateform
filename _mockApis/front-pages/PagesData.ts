@@ -21,7 +21,7 @@ const Packages: PackageType[] = [
       // },
       {
         listtitle:
-          ' La seule condition : <br> Minimum 1 mois avant l’évènement ! <br><br><b>On vous présente 2 prestataires sous 2 semaines.</b> <br><br> Vous n’avez plus qu’à choisir celui qui correspond le plus à votre projet. ',
+          ' La seule condition : Minimum 1 mois avant l’évènement ! <br>On vous présente 2 prestataires sous 2 semaines. <br> Vous n’avez plus qu’à choisir celui qui correspond le plus à votre projet. ',
         status: false,
         icon: true,
         disable: false,
@@ -47,21 +47,21 @@ const Packages: PackageType[] = [
       // },
       {
         listtitle:
-          'RDV découverte : <br> Cahier des charges (attentes et priorités) <br> Budget prévisionnel',
+          '<b>RDV découverte :</b> Cahier des charges (attentes et priorités) <br> Budget prévisionnel',
         status: false,
         icon: true,
         disable: false,
       },
       {
         listtitle:
-          'RDV de point d’étape : <br> Choix des prestataires <br> Ajustements du rétro-planning <br> Document techniques lieu (accès, parking, plan fluides, plan techniques) ',
+          '<b>RDV de point d’étape :</b> <br> Choix des prestataires <br> Ajustements du rétro-planning <br> Document techniques lieu (accès, parking, plan fluides, plan techniques) ',
         status: false,
         icon: true,
         disable: false,
       },
       {
         listtitle:
-          'RDV avant jour-J : <br> Point sur les documents supports : <br> planning détaillé, déroulé prestataires, plan de table, menu, plans techniques, installation, contacts',
+          '<b>RDV avant jour-J :</b> <br> Point sur les documents supports : <br> planning détaillé, déroulé prestataires, plan de table, menu, plans techniques, installation, contacts',
         status: false,
         icon: true,
         disable: false,
@@ -89,28 +89,28 @@ const Packages: PackageType[] = [
     list: [
       {
         listtitle:
-          'RDV DÉCOUVERTE : <br> Création du cahier des charges (attentes et priorités) <br> Budget prévisionnel <br>Rétro-planning général (points, réunions, échéances) ',
+          '<b>RDV DÉCOUVERTE :</b> <br> Création du cahier des charges (attentes et priorités) <br> Budget prévisionnel <br>Rétro-planning général (points, réunions, échéances) ',
         status: false,
         icon: true,
         disable: false,
       },
       {
         listtitle:
-          'RECHERCHE DE PRESTATAIRES: <br> Accompagnement visio sur RDV prestataires <br> Analyse des devis, négociation',
+          '<b>RECHERCHE DE PRESTATAIRES:</b> <br> Accompagnement visio sur RDV prestataires <br> Analyse des devis, négociation',
         status: false,
         icon: true,
         disable: false,
       },
       {
         listtitle:
-          'RDV POINT D’ÉTAPE: <br> Présentation des prestataires <br> Ajustement du cahier des charges <br> Mise à jour des documents de suivi <br> Réponse aux questions',
+          '<b>RDV POINT D’ÉTAPE:</b> <br> Présentation des prestataires <br> Ajustement du cahier des charges <br> Mise à jour des documents de suivi <br> Réponse aux questions',
         status: false,
         icon: true,
         disable: false,
       },
       // {
       //   listtitle:
-      //     'Repérage des lieux <br> Rdv visio prestataires <br> Signature des contrats <br> Gestion des dépenses',
+      //     'Repérage des lieux <br> Rdv visio prestataires <br> Signature des contrats <br> Gestion des dépenses'
       //   status: false,
       //   icon: true,
       //   disable: false,
@@ -130,14 +130,14 @@ const Packages: PackageType[] = [
       // },
       {
         listtitle:
-          'RDV AVANT JOUR-J : <br> Présentation des doc supports : planning détaillé, déroulé prestataires, plan de table, menu, plans techniques, installation, contacts',
+          '<b>RDV AVANT JOUR-J</b> : <br> Présentation des doc supports : planning détaillé, déroulé prestataires, plan de table, menu, plans techniques, installation, contacts',
         status: false,
         icon: true,
         disable: false,
       },
       {
         listtitle:
-          '<b>LOGISTIQUE:</b> Repérage des lieux <br> Rdv visio prestataires <br> Signature des contrats <br> Gestion des dépenses, <br> Point final prestataires, <br> Derniers ajustements des docs supports <br> Création du dossier final client et prestataire <br>',
+          '<b>LOGISTIQUE:</b> <br>Repérage des lieux <br> Rdv visio prestataires <br> Signature des contrats <br> Gestion des dépenses <br> Point final prestataires <br> Derniers ajustements des docs supports <br> Création du dossier final client et prestataire <br>',
         status: false,
         icon: true,
         disable: false,
@@ -170,21 +170,21 @@ const Packages: PackageType[] = [
     list: [
       {
         listtitle:
-          "<b>Avant l'événement 17h :</b><br> - Rdv client à M-2 et J-7 <br> - Repérage du lieu <br> - Point visio générale prestataires <br> - Création du planning <br> - Annuaire de contacts <br> - Feuille de route prestataires <br> - Plan d’agencement des espaces <br> - Menu et signalétique <br> - Dossier final client et prestataires",
+          "<b>AVANT L'EVENEMENT:</b><br> - Rdv client à M-2 et J-7 <br> - Repérage du lieu <br> - Point visio générale prestataires <br> - Création du planning <br> - Annuaire de contacts <br> - Feuille de route prestataires <br> - Plan d’agencement des espaces <br> - Menu et signalétique <br> - Dossier final client et prestataires",
         status: false,
         icon: true,
         disable: false,
       },
       {
         listtitle:
-          '<b>Pendant l’événement :</b> <br> - Présence sur place <br> - Accueil des prestataires sur site <br> - Supervision des installations <br> - Accueil des invités <br> - Gestion des prestataires <br> - Interlocuteur principal <br> - Gestion des imprévus',
+          "<b>PENDANT L'EVENEMENT :</b> <br> - Présence sur place <br> - Accueil des prestataires sur site <br> - Supervision des installations <br> - Accueil des invités <br> - Gestion des prestataires <br> - Interlocuteur principal <br> - Gestion des imprévus",
         status: false,
         icon: true,
         disable: false,
       },
       {
         listtitle:
-          '<b> Ce qui peut faire varier ce devis :</b> <br> - + 200 invités (assistant)> <br> - heures supplémentaires> <br> - Présence brunch du lendemain ou welcome dinner <br> - Frais annexes : restauration, déplacement, hébergement> <br> - complexité logistique (assistant)',
+          '<b>VARIATIONS EVENTUELLES :</b> <br> - + 200 invités (assistant) <br> - heures supplémentaires <br> - Présence brunch du lendemain ou welcome dinner <br> - Frais annexes : restauration, déplacement, hébergement <br> - complexité logistique (assistant)',
         status: false,
         icon: true,
         disable: false,
@@ -218,7 +218,7 @@ const footerContact: FooterType[] = [
     link: '/juridique/cgv',
   },
   {
-    titre: 'Mentions légales',
+    titre: 'Mentions légales générales',
     description: '',
     link: '/juridique/mentions-legales',
   },

@@ -5,7 +5,7 @@
         <h2 class="display-1 font-weight-bold textPrimary">Votre formule sera la nôtre.</h2>
         <p class="text-grey100 pt-4 text-17 lh-32">
           Que vous souhaitiez organiser votre événement en autonomie ou être accompagné(e), vous
-          trouverez chaussure à votre pied !
+          trouverez ici chaussure à votre pied !
         </p>
       </div>
 
@@ -13,14 +13,14 @@
         <v-col cols="12">
           <v-card
             elevation="0"
-            class="rounded-16 pa-10 border pricing-free-card text-center transition-all"
+            class="rounded-16 pa-4 border pricing-free-card text-center transition-all"
           >
             <v-row>
               <v-col cols="12" md="6" class="d-flex align-center flex-column justify-center">
                 <div class="pb-4">
                   <h4 class="text-22 font-weight-bold mb-2">LIBERTE</h4>
                   <p class="text-15 text-grey100 font-weight-medium mb-0">
-                    Vous souhaitez planifier votre événement en autonomie
+                    Vous souhaitez planifier votre événement en autonomie.
                   </p>
                 </div>
 
@@ -60,7 +60,6 @@
         </v-col>
       </v-row>
 
-      <v-divider class="my-6 opacity-60"> Pour aller plus loin</v-divider>
       <v-row class="d-flex justify-center">
         <v-col cols="12" lg="3" sm="6" v-for="card in Packages" :key="card.caption">
           <v-card elevation="0" class="rounded-16 pa-6 border card packages__card">
@@ -138,7 +137,7 @@
           class="font-weight-bold mb-4 text-center"
           style="color: rgb(var(--v-theme-lightprimary))"
         >
-          {{ formule?.caption }}
+          {{ formule?.caption.toUpperCase() }}
         </h3>
         <h5 class="text-center">{{ formule?.subtext }}</h5>
 
@@ -175,7 +174,7 @@ import type { PackageType } from '~/types/components/front-pages';
 
 const firstPlanList = [
   {
-    listtitle: 'Création de votre compte et votre tableau de bord ',
+    listtitle: 'création de votre compte, identité et tableau de bord',
     status: false,
     icon: true,
     disable: false,
@@ -293,10 +292,6 @@ const selectedFormule = (index: number) => {
   }
 }
 
-.pricing-free-card {
-  height: 310px;
-}
-
 /* ✅ Le point reste aligné avec la première ligne du texte */
 .bullet-line {
   display: flex;
@@ -351,10 +346,6 @@ const selectedFormule = (index: number) => {
   }
   .divider {
     display: none;
-  }
-  .pricing-free-card {
-    max-height: none;
-    height: auto;
   }
 }
 </style>

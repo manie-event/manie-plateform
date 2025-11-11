@@ -17,7 +17,7 @@
       </div>
     </v-col>
   </v-row>
-  <v-row>
+  <v-row class="home">
     <v-col cols="12" md="6" style="height: calc(100vh - 115px); padding: 0">
       <div style="height: 100%">
         <img :src="homePro" alt="" class="home__image" />
@@ -36,7 +36,7 @@
     </v-col>
   </v-row>
   <v-row
-    class="d-flex justify-center align-center"
+    class="d-flex justify-center align-center home"
     style="background: rgb(var(--v-theme-background))"
   >
     <v-col
@@ -51,9 +51,9 @@
         class="text-subtitle1 font-weight-medium w-100 px-6"
         style="color: rgb(var(--v-theme-darkbg))"
       >
-        Vous faites partie de la team lieux, food, boissons, musique, audiovisuel, déco, location de
-        matériel animation ou logistique ? <b>Bienvenue chez Manie !</b> Rejoins un écosystème local
-        de professionnels sélectionnés pour leur talent, leurs valeurs et leur ancrage territorial !
+        Tu fais partie de la team lieux, food, boissons, musique, audiovisuel, déco, location de
+        matériel animation ou logistique ? Bienvenue chez Manie ! Rejoins un écosystème local de
+        professionnels sélectionnés pour leur talent, leurs valeurs et leur ancrage territorial !
         Unissons nos talents pour faire vibrer l’Auvergne-Rhône-Alpes.
       </h5>
       <NuxtLink class="nuxt-link" style="font-size: 1rem" to="/auth/login">
@@ -76,10 +76,10 @@
         >
           <Icon icon="teenyicons:plant-outline" height="40" width="40" color="#125605"></Icon>
           <p>
-            L’éco-responsabilité n'est pas un slogan chez Manie, ni un argument marketing. C’est une
-            valeur ancrée dans nos choix et nos collaborations. Nos partenaires partagent cette
+            Chez Manie, l’éco-responsabilité n'est pas un slogan, ni un argument marketing. C’est
+            une valeur ancrée dans nos choix et nos collaborations. Nos partenaires partagent cette
             exigence, marque de respect et de bon sens. On ne le revendique pas pour se distinguer,
-            on le fait, tout simplement. C’est une conviction.
+            on le fait, tout simplement. C’est une conviction. Commencer par “chez manie”
           </p>
 
           <v-btn @click="greenModal = false" color="#125605">Fermer </v-btn>
@@ -129,6 +129,8 @@ h5 {
   max-width: 45ch; // pour garder une bonne lisibilité
 }
 .home {
+  width: 100vw !important;
+  margin: unset !important;
   &__image {
     height: 100%;
     width: 100%;

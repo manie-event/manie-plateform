@@ -5,11 +5,11 @@
   },
   {
     "titre": "Pourquoi rejoindre Manie ?",
-    "description": "Vous êtes mis en relation avec des clients qualifiés, cohérents avec votre positionnement <ul><li>vous gagnez un temps précieux sur votre prospection</li> <li>vous vous positionnez sur les évènements de votre choix et choisissez vos clients</li> <li>vous avez accès à une communauté bienveillante de partenaires locaux</li> <li>vous améliorerez votre pratique environnementale grâce à la synergie inter-partenaires et aux thématiques proposées lors de nos évènements partenaires.</li></ul>"
+    "description": " <ul><li>Vous êtes mis en relation avec des clients qualifiés, cohérents avec votre positionnement</li><li>vous gagnez un temps précieux sur votre prospection</li> <li>vous vous positionnez sur les évènements de votre choix et choisissez vos clients</li> <li>vous avez accès à une communauté bienveillante de partenaires locaux</li> <li>vous améliorerez votre pratique environnementale grâce à la synergie inter-partenaires et aux thématiques proposées d’évènements partenaires.</li></ul>"
   },
   {
     "titre": "Comment ça fonctionne ?",
-    "description": "Rendez-vous sur la page 'comment ça marche' ? si vous souhaitez avoir plus d'informations sur l'ensemble des fonctionnalités de la plateforme. Et si tout n’est pas assez clair, vous pouvez poser toutes vos questions à l'adresse <a :mailto='contact@manie-event.fr'>contact@manie-event.fr</a>."
+    "description": "Rendez-vous sur la page <a href='/front-pages/Ccm'>comment ça marche ?</a> si vous souhaitez avoir plus d'informations sur l'ensemble des fonctionnalités de la plateforme. Et si tout n’est pas assez clair, vous pouvez poser toutes vos questions à l'adresse <a :mailto='contact@manie-event.fr'>contact@manie-event.fr</a>."
   },
   {
     "titre": "Comment m’inscrire sur Manie ? ",
@@ -57,6 +57,6 @@
   },
   {
     "titre": "Vous n’avez pas trouvé la réponse à votre question ?",
-    "description": "<a href='/front-pages/Contact-us'>Ecrivez-nous !</a> "
+    "description": "<a href='/front-pages/Contact-us'>Écrivez-nous !</a>"
   }
 ]

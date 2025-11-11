@@ -6,7 +6,8 @@
       </h5>
       <div class="text-subtitle-1 text-grey100 pb-1">Un coup d'oeil sur les annonces du jour ?</div>
       <v-btn
-        color="primary"
+        color="rgb(var(--v-theme-darkbg))"
+        style="color: rgb(var(--v-theme-background))"
         class="mt-4 mb-2 px-7"
         rounded="pill"
         size="large"

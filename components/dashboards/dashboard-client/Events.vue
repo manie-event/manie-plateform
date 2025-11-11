@@ -14,17 +14,15 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import CustomerForm from '~/components/questionnaires/CustomerForm.vue';
-import { useProfessionalService } from '~/services/UseProfessionalService';
 
 const { clientName, user } = storeToRefs(useUserStore());
 const openModal = ref(false);
 
 const { getAllSectors, getKeywords } = useKeywordsStore();
-const { getProfessionalService } = useProfessionalService();
 
 const eventCreation = async () => {
   openModal.value = !openModal.value;
-  await Promise.all([getAllSectors(), getKeywords(), getProfessionalService()]);
+  await Promise.all([getAllSectors(), getKeywords()]);
 };
 </script>
 <style lang="scss" scoped>

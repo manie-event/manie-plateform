@@ -120,7 +120,15 @@ onMounted(async () => {
       </div>
 
       <div class="pb-6 px-8 text-center">
-        <v-btn color="primary" size="large" rounded="pill" block @click="sendLogout()">
+        <v-btn
+          color="rgb(var(--v-theme-darkbg))"
+          class="mt-6"
+          style="color: rgb(var(--v-theme-background))"
+          size="large"
+          rounded="pill"
+          block
+          @click="sendLogout()"
+        >
           Me déconnecter
         </v-btn>
       </div>

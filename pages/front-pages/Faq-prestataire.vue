@@ -75,6 +75,9 @@ definePageMeta({
   top: 40px;
   left: 40px;
 }
+ul {
+  padding-left: 20px;
+}
 
 @media screen and (max-width: 960px) {
   .faq-prestataire {

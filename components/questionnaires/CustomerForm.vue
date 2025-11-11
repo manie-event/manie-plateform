@@ -494,61 +494,37 @@ const handleSubmit = async () => {
     openCustomerForm.value = false;
   }
 };
-const resetForm = () => {
-  currentPage.value = 1;
-  name.value = '';
-  location.value = 'Veuillez choisir un département';
-  duration.value = '';
-  group_type.value = '';
-  theme.value = '';
-  organized_for.value = '';
-  people.value = 0;
-  isBudgetGlobale.value = false;
-  budgetInput.value = 0;
-  dateStart.value = '';
-  dateEnd.value = '';
 
-  selectedServices.value = [
-    {
-      selectedSector: undefined,
-      selectedServiceId: '',
-      selectedKeywords: [],
-    },
-  ];
-};
+onMounted(async () => {
+  // Récupère l'instance complète de l'événement
+  const responses = await getEventsInstance(props.event.uuid);
 
-watch(
-  () => openCustomerForm.value,
-  async (isOpen, wasOpen) => {
-    if (isOpen && !wasOpen) {
-      resetForm();
+  // Données normalisées du questionnaire
+  const normalizedAnswer = responses.$attributes;
 
-      const responses = await getEventsInstance(props.event.uuid);
-      const normalizedAnswer = responses.$attributes;
+  // Pré-remplir les champs
+  eventType.value = normalizedAnswer.event_type ?? '';
+  name.value = normalizedAnswer.name ?? '';
+  location.value = normalizedAnswer.location ?? '';
+  duration.value = normalizedAnswer.duration ?? '';
+  group_type.value = normalizedAnswer.group_type ?? '';
+  theme.value = normalizedAnswer.theme ?? '';
+  organized_for.value = normalizedAnswer.organized_for ?? '';
+  people.value = Number(normalizedAnswer.people) || 0;
+  budgetInput.value = normalizedAnswer.budget ?? 0;
+  [dateStart.value, dateEnd.value] = normalizedAnswer.date ?? ['', ''];
 
-      name.value = normalizedAnswer.name ?? '';
-      location.value = normalizedAnswer.location ?? '';
-      duration.value = normalizedAnswer.duration ?? '';
-      group_type.value = normalizedAnswer.group_type ?? '';
-      theme.value = normalizedAnswer.theme ?? '';
-      organized_for.value = normalizedAnswer.organized_for ?? '';
-      people.value = Number(normalizedAnswer.people) || 0;
-      budgetInput.value = normalizedAnswer.budget ?? 0;
-      [dateStart.value, dateEnd.value] = normalizedAnswer.date ?? ['', ''];
-
-      if (responses.$preloaded?.eventServices?.length) {
-        selectedServices.value = responses.$preloaded.eventServices.map((srv) => {
-          const service = servicesFiltered.value.find((s) => s.uuid === srv.serviceUuid);
-          const sector = sectors.value.find((sect) => sect.uuid === service?.sectorUuid);
-          return {
-            selectedSector: sector?.name ?? undefined,
-            selectedServiceId: srv.serviceUuid,
-            selectedKeywords:
-              srv.keywordsUuid?.map((k) => (typeof k === 'string' ? k : k.uuid)) || [],
-          };
-        });
-      }
-    }
+  // Pré-remplir les services sélectionnés
+  if (responses.$preloaded?.eventServices?.length) {
+    selectedServices.value = responses.$preloaded.eventServices.map((srv) => {
+      const service = servicesFiltered.value.find((s) => s.uuid === srv.serviceUuid);
+      const sector = sectors.value.find((sect) => sect.uuid === service?.sectorUuid);
+      return {
+        selectedSector: sector?.name ?? undefined,
+        selectedServiceId: srv.serviceUuid,
+        selectedKeywords: srv.keywordsUuid?.map((k) => (typeof k === 'string' ? k : k.uuid)) || [],
+      };
+    });
   }
-);
+});
 </script>

@@ -101,7 +101,12 @@
             </div>
 
             <!-- Bouton d’ajout -->
-            <v-btn color="primary" class="mb-5" @click="addCertification">
+            <v-btn
+              color="rgb(var(--v-theme-darkbg))"
+              style="color: rgb(var(--v-theme-background))"
+              class="mb-5"
+              @click="addCertification"
+            >
               Ajouter une certification
             </v-btn>
           </div>
@@ -136,7 +141,9 @@
                 v-model="profile.billingPeriod"
                 false-value="beforeEvent"
                 true-value="afterEvent"
-                :color="profile.billingPeriod === 'beforeEvent' ? 'success' : 'primary'"
+                :color="
+                  profile.billingPeriod === 'beforeEvent' ? 'success' : 'rgb(var(--v-theme-darkbg))'
+                "
                 hide-details
                 :error-messages="showErrors ? errors.billingPeriod : undefined"
                 >{{ profile.billingPeriod }}</v-switch
@@ -172,7 +179,7 @@
               <v-btn
                 @click="removeLink(index)"
                 :disabled="profile.links.length <= 0"
-                color="rgb(var(--v-theme-error))"
+                color="rgb(var(--v-theme-lightprimary))"
                 size="small"
                 style="color: rgb(var(--v-theme-background))"
                 class="mb-4 text-center"
@@ -180,7 +187,11 @@
                 Supprimer
               </v-btn>
             </div>
-            <v-btn @click="addLink" color="primary">
+            <v-btn
+              @click="addLink"
+              color="rgb(var(--v-theme-darkbg))"
+              style="color: rgb(var(--v-theme-background))"
+            >
               Ajouter un lien vers un réseau social ou un site web
             </v-btn>
           </div>
@@ -212,7 +223,11 @@
                 Supprimer
               </v-btn>
             </div>
-            <v-btn @click="addFaq" color="primary">
+            <v-btn
+              @click="addFaq"
+              color="rgb(var(--v-theme-darkbg))"
+              style="color: rgb(var(--v-theme-background))"
+            >
               Ajouter une question fréquente et sa réponse
             </v-btn>
           </div>
@@ -220,13 +235,19 @@
 
         <div v-if="currentPage === 1" class="d-flex justify-space-between edit-professional__btn">
           <v-btn @click="openModal = false">Annuler</v-btn>
-          <v-btn v-if="!isProfileCreated" color="primary" @click="createProfile(profile)">
+          <v-btn
+            v-if="!isProfileCreated"
+            color="rgb(var(--v-theme-darkbg))"
+            style="color: rgb(var(--v-theme-background))"
+            @click="createProfile(profile)"
+          >
             Valider mon profil
           </v-btn>
           <div v-else>
             <v-btn
               class="edit-professional__btn-width"
-              color="primary"
+              color="rgb(var(--v-theme-darkbg))"
+              style="color: rgb(var(--v-theme-background))"
               @click="modifyProfile(profile)"
             >
               Modifier mon profil
@@ -486,6 +507,9 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.edit-professional {
+  background: rgb(var(--v-theme-background));
+}
 .v-form {
   padding: 2rem 3.5rem;
   border-radius: 16px;
@@ -519,9 +543,8 @@ onMounted(() => {
 .v-text-field,
 .v-select,
 .v-number-input {
-  background: rgb(var(--v-theme-surface));
+  background: rgb(var(--v-theme-background));
   border-radius: 10px;
-  box-shadow: 0 0 0 1px rgba(93, 121, 164, 0.08);
   transition: box-shadow 0.2s ease-in-out;
 
   .v-field__input,
@@ -597,11 +620,6 @@ onMounted(() => {
     background-color: rgb(var(--v-theme-error)) !important;
     color: white !important;
   }
-
-  &.primary {
-    background-color: rgb(var(--v-theme-darkbg)) !important;
-    color: rgb(var(--v-theme-background)) !important;
-  }
 }
 
 /* --- ZONE DE VALIDATION / ACTIONS --- */
@@ -625,15 +643,6 @@ onMounted(() => {
   font-weight: 500;
 }
 
-/* --- RESPONSIVE --- */
-@media (max-width: 1024px) {
-  .edit-professional {
-    .v-form {
-      max-width: 95%;
-    }
-  }
-}
-
 @media (max-width: 900px) {
   .edit-professional {
     &__btn {
@@ -642,6 +651,9 @@ onMounted(() => {
       &-width {
         width: 100%;
       }
+    }
+    .v-form {
+      max-width: 95%;
     }
   }
 }

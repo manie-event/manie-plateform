@@ -17,7 +17,9 @@ const registerForm = ref<RegisterModel>({
 });
 const valid = ref(true);
 const isCharteBonneConduite = ref(false);
+const isCharteMention = ref(false);
 const openModalCharte = ref(false);
+const openModalCharteMentions = ref(false);
 const passwordRules = ref([
   (v: string) => !!v || 'Le mot de passe est obligatoire',
   (v: string) => (v && v.length >= 10) || 'Le mot de passe doit faire 10 caractères minimum',
@@ -136,29 +138,26 @@ const register = async () => {
       variant="outlined"
       color="primary"
     ></VTextField>
-    <div v-if="registerForm.category === 'professional'">
-      <div class="d-flex gap-4 mt-3">
-        <p style="font-size: small">
-           Je certifie avoir lu et accepté la charte de bonne conduite de MANIE.
-           Je m’engage à respecter les valeurs et engagements qui y figurent.
-          <span @click="openModalCharte = true" style="opacity: 0.5; cursor: pointer"
-            >En savoir plus ici</span
-          >
-        </p>
-        <input type="checkbox" v-model="isCharteBonneConduite"></input>
-      </div>
+
+    <div class="d-flex gap-4 mt-3">
+      <p style="font-size: small">
+        Je certifie avoir lu et accepté la charte de bonne conduite de MANIE. Je m’engage à
+        respecter les valeurs et engagements qui y figurent.
+        <span @click="openModalCharte = true" style="opacity: 0.5; cursor: pointer"
+          >En savoir plus ici</span
+        >
+      </p>
+      <input type="checkbox" v-model="isCharteBonneConduite" />
     </div>
-    <div v-else>
-      <div class="d-flex gap-4 mt-3">
-        <p style="font-size: small">
-          Je certifie avoir lu et accepté la charte de bonne conduite de MANIE. Je m’engage à
-          respecter les valeurs et engagements qui y figurent.
-          <span @click="openModalCharte = true" style="opacity: 0.5; cursor: pointer"
-            >En savoir plus ici</span
-          >
-        </p>
-         <input type="checkbox" v-model="isCharteBonneConduite" />
-      </div>
+    <div class="d-flex gap-4 mt-3">
+      <p style="font-size: small">
+        Je certifie avoir lu et accepté la charte de bonne conduite de MANIE. Je m’engage à
+        respecter les valeurs et engagements qui y figurent.
+        <span @click="openModalCharteMentions = true" style="opacity: 0.5; cursor: pointer"
+          >En savoir plus ici</span
+        >
+      </p>
+      <input type="checkbox" v-model="isCharteMention" />
     </div>
     <v-btn
       size="large"
@@ -176,6 +175,12 @@ const register = async () => {
       <JuridiqueCharteBonneConduite
         v-model:openModal="openModalCharte"
         @isCharteBonneConduite="isCharteBonneConduite = $event"
+      />
+    </div>
+    <div v-if="openModalCharteMentions">
+      <JuridiqueMentionLegales
+        v-model:openModal="openModalCharteMentions"
+        @is-charte-mentions-legales="isCharteMention = $event"
       />
     </div>
   </v-form>

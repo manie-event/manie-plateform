@@ -12,7 +12,11 @@
         @click="openPricingModal = true"
         class="flex-grow-1"
         variant="flat"
-        style="background: rgb(var(--v-theme-darkbg)); color: white; text-decoration: none"
+        style="
+          background: rgb(var(--v-theme-darkbg));
+          color: rgb(var(--v-theme-background));
+          text-decoration: none;
+        "
       >
         Me faire accompagner
       </v-btn>
@@ -21,7 +25,11 @@
         @click="isEventModificationOpen = true"
         class="flex-grow-1"
         variant="flat"
-        style="background: rgb(var(--v-theme-darkbg)); color: white; text-decoration: none"
+        style="
+          background: rgb(var(--v-theme-darkbg));
+          color: rgb(var(--v-theme-background));
+          text-decoration: none;
+        "
       >
         Modifier l'événement
       </v-btn>
@@ -29,7 +37,11 @@
         @click="isAddingServiceOpen = true"
         class="flex-grow-1"
         variant="flat"
-        style="background: rgb(var(--v-theme-darkbg)); color: white; text-decoration: none"
+        style="
+          background: rgb(var(--v-theme-darkbg));
+          color: rgb(var(--v-theme-background));
+          text-decoration: none;
+        "
       >
         Ajouter des services
       </v-btn>

@@ -16,8 +16,8 @@
               </v-col>
               <v-col cols="12" lg="5" md="6">
                 <div class="mt-xl-0 mt-5 mw-100">
-                  <h2 class="text-h2 font-weight-bold mb-2">Bienvenue sur Manie,</h2>
-                  <div class="text-h6 mb-6 font-weight-medium mt-3 mb-8">
+                  <h2 class="text-h4 font-weight-bold">Bienvenue sur Manie,</h2>
+                  <div class="text-h6 mb-6 font-weight-medium mb-8">
                     votre assistant à la création et gestion d'évènement.
                   </div>
                   <AuthLoginForm />

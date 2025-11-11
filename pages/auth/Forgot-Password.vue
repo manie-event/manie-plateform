@@ -9,20 +9,13 @@ definePageMeta({
 <template>
   <div class="login-app-wrapper">
     <div
-      class="auth-login position-relative d-flex align-center justify-content-center px-lg-16 px-sm-8 px-3 rounded-xl"
+      class="auth-login position-relative d-flex align-center justify-content-center px-lg-16 px-sm-8 px-3 rounded-xl overflow-hidden"
     >
       <div class="auth-login-wrapper position-relative rounded-xl mx-lg-16 mx-4 mx-auto w-100">
-        <v-card elevation="0" class="overflow-hidden px-sm-3">
+        <v-card elevation="0" class="overflow-hidden px-sm-3 mx-auto" max-width="800">
           <v-card-item class="px-sm-8 px-3">
-            <v-row class="justify-md-space-around align-center py-md-8">
-              <v-col cols="12" lg="5" md="6" class="d-md-flex d-none">
-                <img
-                  src="@/public/images/backgrounds/flutter.png"
-                  class="w-100"
-                  alt="login-background"
-                />
-              </v-col>
-              <v-col cols="12" lg="5" md="6">
+            <v-row class="justify-md-space-around align-center p-0">
+              <v-col cols="12">
                 <div class="mt-xl-0 mt-5 mw-100">
                   <h2 class="text-h2 font-weight-bold mb-2">
                     Vous avez oublié votre mot de passe ?
@@ -35,11 +28,14 @@ definePageMeta({
                   <v-btn
                     size="large"
                     flat
-                    color="lightprimary"
+                    color=""
+                    style="
+                      border: 1px solid rgb(var(--v-theme-darkbg));
+                      color: rgb(var(--v-theme-darkbg));
+                    "
                     to="/auth/login"
                     block
-                    class="mt-5 text-primary"
-                    rounded="pill"
+                    class="mt-5"
                     >Revenir à la page d'identification</v-btn
                   >
                 </div>

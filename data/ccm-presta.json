@@ -32,7 +32,7 @@
     "description": "Vous communiquez à Manie le montant du devis final détaillé que vous lui avez transmis. Le client enregistre son devis signé sur la plateforme. Afin de réserver définitivement sa prestation, il règle son acompte via Stripe Connect. Manie vous reverse le montant de cet acompte, déduction faite de la commission prévue, dans un délai de 5 jours ouvrés. "
   },
   {
-    "titre": "Réglez votre dû",
-    "description": "Si vous êtes nouveau, vous êtes d’office en formule classique “commission”-> 10% sur le montant du devis signé TTC, 12% sur le HTAprès 1 an d’ancienneté, vous pouvez choisir de passer sur un abonnement si celui-ci est plus avantageux pour vous (selon votre activité, sa récurrence et votre préférence de gestion)."
+    "titre": "Réglez votre acompte",
+    "description": "Si vous êtes nouveau, vous êtes d’office en formule classique : une commission de 12% sur le montant du devis signé HT sera prélevée. Après 1 an d’ancienneté, vous pouvez choisir de passer sur un abonnement si celui-ci est plus avantageux pour vous (selon votre activité, sa récurrence et votre préférence de gestion)."
   }
 ]

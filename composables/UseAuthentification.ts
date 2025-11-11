@@ -67,23 +67,15 @@ export const useAuthentification = () => {
       setUser(user);
 
       addSuccess('Connexion réussie.');
-
+      localStorage.setItem('isConnected', 'true');
       // Redirection par rôle
       if (user.category === 'consumer') {
-        await Promise.all([
-          getAllSectors(),
-          getKeywords(),
-          getProfessionalService(),
-          await getClientProfil(),
-          await getEventsPerOrganisator(),
-        ]);
-
         await router.push({ path: '/dashboards/dashboard-client' });
       } else {
-        (await getProfessionalProfile(),
+        (router.push({ path: '/dashboards/dashboard2' }),
+          await getProfessionalProfile(),
           await getServicePropositionForProfessional(),
-          await getJetonQuantity(),
-          router.push({ path: '/dashboards/dashboard2' }));
+          await getJetonQuantity());
       }
     } catch (error: unknown) {
       console.error('Login error:', error);
@@ -163,6 +155,7 @@ export const useAuthentification = () => {
         'professional-uuid',
         'notesByEvent',
         'tasksByEvent',
+        'isConnected',
       ];
       keysToRemove.forEach((key) => localStorage.removeItem(key));
       userStore.resetUserStore();
