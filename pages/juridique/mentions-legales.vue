@@ -3,8 +3,8 @@
   <p style="margin-bottom: 15px" v-html="linkify(mentions[0].sectionDescription)"></p>
   <v-expansion-panels>
     <v-expansion-panel v-for="(item, index) in mentions[0].sections" :key="index">
-      <v-expansion-panel-title>{{ item.title }}</v-expansion-panel-title>
-      <v-expansion-panel-text>
+      <v-expansion-panel-title class="text-subtitle">{{ item.title }}</v-expansion-panel-title>
+      <v-expansion-panel-text class="text-subtitle2">
         <div v-html="linkify(item.description).replaceAll('\n', '<br>')"></div>
       </v-expansion-panel-text>
     </v-expansion-panel>
