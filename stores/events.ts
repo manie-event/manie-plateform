@@ -23,7 +23,9 @@ export const eventsStore = defineStore('eventsStore', () => {
   };
 
   const setServicesFiltered = (newServicesFiltered: ServicesFiltered[]) => {
-    servicesFiltered.value.push(...newServicesFiltered);
+    servicesFiltered.value = Array.from(
+      new Map([...servicesFiltered.value, ...newServicesFiltered].map((s) => [s.uuid, s])).values()
+    );
   };
 
   return {

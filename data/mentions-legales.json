@@ -21,11 +21,11 @@
       },
       {
         "title": "5. Données personnelles",
-        "description": "Les informations relatives à la collecte et au traitement des données personnelles des utilisateurs sont disponibles dans la Politique de confidentialité, accessible ici. (lien de redirection vers cookie?). Le site peut utiliser des cookies pour améliorer l’expérience utilisateur et mesurer l’audience. L’utilisateur peut refuser ou paramétrer les cookies depuis le bandeau prévu à cet effet lors de sa première visite."
+        "description": "Les informations relatives à la collecte et au traitement des données personnelles des utilisateurs sont disponibles dans la Politique de confidentialité, accessible ici. (lien de redirection vers cookie?). Le site peut utiliser des cookies pour améliorer l’expérience utilisateur et mesurer l’audience. <br>L’utilisateur peut refuser ou paramétrer les cookies depuis le bandeau prévu à cet effet lors de sa première visite."
       },
       {
         "title": "6. Responsabilités",
-        "description": "<b>Manie Coop</b><br> s’efforce d’assurer l’exactitude des informations diffusées sur le site, mais ne peut garantir l’exhaustivité ou l’absence d’erreurs. La responsabilité de l’éditeur ne pourra être engagée pour tout dommage direct ou indirect lié à l’utilisation du site."
+        "description": "<b>Manie Coop</b> s’efforce d’assurer l’exactitude des informations diffusées sur le site, mais ne peut garantir l’exhaustivité ou l’absence d’erreurs. <br> La responsabilité de l’éditeur ne pourra être engagée pour tout dommage direct ou indirect lié à l’utilisation du site."
       },
       {
         "title": "7. Loi applicable",
@@ -37,7 +37,7 @@
       },
       {
         "title": "9. Sincérité des données utilisateurs",
-        "description": "Les utilisateurs s’engagent à fournir des données exactes, complètes et à les maintenir à jour. Manie Coop décline toute responsabilité en cas d’erreur ou d’omission."
+        "description": "Les utilisateurs s’engagent à fournir des données exactes, complètes et à les maintenir à jour. <br>Manie Coop décline toute responsabilité en cas d’erreur ou d’omission."
       },
       {
         "title": "10. Contenus utilisateurs",
@@ -49,13 +49,12 @@
       },
       {
         "title": "12. Liens externes",
-        "description": "Le site peut contenir des liens vers des sites tiers. Manie Coop n’assume aucune responsabilité quant au contenu de ces sites et ne garantit pas leur disponibilité ni leur sécurité."
+        "description": "Le site peut contenir des liens vers des sites tiers. <br>Manie Coop n’assume aucune responsabilité quant au contenu de ces sites et ne garantit pas leur disponibilité ni leur sécurité."
       },
       {
         "title": "13. Contact",
-        "description": "Pour toute question relative aux mentions légales : 📧 contact@manie-event.fr"
-      },
-      {}
+        "description": "Pour toute question relative aux mentions légales : <br> <a href='/front-pages/Contact-us'>contact@manie-event.fr</a>"
+      }
     ]
   }
 ]

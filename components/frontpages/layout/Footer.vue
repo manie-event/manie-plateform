@@ -67,6 +67,10 @@ import manieFooterDroits from '/images/logos/logo-footer-droits.png';
                   ></Icon
                 ></NuxtLink>
               </div>
+              <NuxtLink to="/juridique/charteBonneConduite"
+                ><p>Charte de bonne conduite</p></NuxtLink
+              >
+              <NuxtLink to="/front-pages/Ccm"><p>Comment ça marche ?</p></NuxtLink>
             </div>
           </v-col>
         </v-row>

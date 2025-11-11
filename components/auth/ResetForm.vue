@@ -25,7 +25,13 @@ const patchNewPassword = async () => {
   >
     <v-label class="text-subtitle-1 font-weight-medium pb-2 text-lightText">Email</v-label>
     <VTextField v-model="resetPassword.email" :rules="emailRules" required></VTextField>
-    <v-btn size="large" color="primary" @click="patchNewPassword" block submit rounded="pill"
+    <v-btn
+      size="large"
+      color="rgb(var(--v-theme-darkbg))"
+      style="color: rgb(var(--v-theme-background))"
+      @click="patchNewPassword"
+      block
+      submit
       >Réinitialiser mon mot de passe</v-btn
     >
   </v-form>

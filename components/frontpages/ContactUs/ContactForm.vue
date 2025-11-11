@@ -6,7 +6,7 @@ import { ref } from 'vue';
 
 const { sendContactForm } = useContactService();
 
-const items = ref(['Question générale', 'Demande de rendez-vous',  'Au sujet des formules', 'Partenariat et collaboration']);
+const items = ref(['Question générale', 'Demande de rendez-vous',  'Formules', 'Partenariat et collaboration']);
 
 const message = ref<ContactMessage>({
   firstName: '',

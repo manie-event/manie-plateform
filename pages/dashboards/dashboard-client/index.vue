@@ -48,9 +48,10 @@ await getServicePropositionForClient();
           <p class="text-subtitle-1">
             Veuillez compléter votre profil client pour accéder à toutes les fonctionnalités
           </p>
-          <v-btn>
-            <NuxtLink to="/apps/userprofile/two">Créer mon profil Client</NuxtLink>
-          </v-btn>
+
+          <NuxtLink to="/apps/userprofile/two" class="nuxt-link mt-6"
+            >Créer mon profil Client</NuxtLink
+          >
         </template>
       </BaseEmptyState>
     </v-col>

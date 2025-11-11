@@ -28,7 +28,7 @@
   </div> -->
   <div class="main-banner">
     <v-container class="max-width-1218 pt-md-10 pt-6 pb-xl-0 pb-10">
-      <v-row class="d-flex justify-center align-center">
+      <v-row class="d-flex justify-center align-center" style="margin: unset !important">
         <v-col
           class="text-align-start text-center d-flex flex-row justify-center align-center ga-8 w-33"
         >
@@ -40,8 +40,8 @@
                 <p>l'événementiel.<span style="color: #f39454; margin: 0; padding: 0">*</span></p>
               </h1>
               <h2 class="main-banner__title">
-                <span style="color: #f39454; font-size: 1.2rem">* </span>Notre mission : permettre à
-                n'importe qui d'organiser n'importe quoi !
+                <span style="color: #f39454; font-size: 1.2rem">* </span> permet à n’importe qui
+                d’organiser n’importe quoi !
               </h2>
             </div>
 
@@ -122,7 +122,7 @@ const { $gsap, $ScrollTrigger } = useNuxtApp();
     height: 700px;
   }
   &__party-picture {
-    width: 80vw;
+    width: 70vw;
     height: 100vh;
     z-index: -1;
     border-radius: 10px;
@@ -163,7 +163,7 @@ const { $gsap, $ScrollTrigger } = useNuxtApp();
 @media screen and (max-width: 900px) {
   .main-banner {
     height: 400px;
-    width: 103vw;
+    width: 100vw;
     &__titre-position {
       position: relative;
       top: 20px;

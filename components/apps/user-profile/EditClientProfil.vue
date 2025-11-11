@@ -1,6 +1,6 @@
 <template>
-  <BaseModal v-model="openModal" fullscreen transition="dialog-bottom-transition">
-    <template #content>
+  <v-dialog v-model="openModal" transition="dialog-bottom-transition">
+    <v-card class="edit-client-profil">
       <v-form class="px-4">
         <v-divider class="mt-6">
           <p class="mt-6"></p>
@@ -87,8 +87,8 @@
           Valider le profil
         </v-btn>
       </v-form>
-    </template>
-  </BaseModal>
+    </v-card>
+  </v-dialog>
   <Teleport to="body">
     <error-toaster></error-toaster>
     <SuccessToaster></SuccessToaster>
@@ -96,7 +96,6 @@
 </template>
 
 <script setup lang="ts">
-import BaseModal from '@/components/common/BaseModal.vue';
 import { useToaster } from '@/utils/toaster';
 import { useForm } from 'vee-validate';
 import { onMounted, ref, Teleport } from 'vue';
@@ -244,3 +243,17 @@ onMounted(async () => {
   }
 });
 </script>
+<style lang="scss" scoped>
+.edit-client-profil {
+  width: 50vw;
+  margin: 0 auto;
+  padding: 30px;
+}
+@media screen and (max-width: 960px) {
+  .edit-client-profil {
+    width: 80vw;
+    margin: 0 auto;
+    padding: 30px;
+  }
+}
+</style>

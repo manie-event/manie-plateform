@@ -10,7 +10,11 @@
         <Icon icon="solar:camera-outline" width="20" height="20" />
       </button>
       <input type="file" ref="fileInput" @change="changeBannerPhoto" accept="image/*" hidden />
-      <NuxtLink to="/dashboards/dashboard2" color="primary" class="profile-header__redirect-btn">
+      <NuxtLink
+        to="/dashboards/dashboard2"
+        style="color: rgb(var(--v-theme-darkbg))"
+        class="profile-header__redirect-btn"
+      >
         Retour au tableau de bord
       </NuxtLink>
     </div>
@@ -58,10 +62,22 @@
           </v-btn>
 
           <template v-else>
-            <v-btn color="primary" class="profile-header__btn" @click="openModal = true">
+            <v-btn
+              style="
+                border: 1px solid rgb(var(--v-theme-darkbg));
+                color: rgb(var(--v-theme-darkbg));
+              "
+              class="profile-header__btn"
+              @click="openModal = true"
+            >
               Modifier le profil
             </v-btn>
-            <v-btn color="success" class="profile-header__btn" @click="openServiceModal = true">
+            <v-btn
+              color="rgb(var(--v-theme-darkbg))"
+              style="color: rgb(var(--v-theme-background))"
+              class="profile-header__btn"
+              @click="openServiceModal = true"
+            >
               Ajouter un secteur d'activité
             </v-btn>
           </template>
@@ -182,7 +198,7 @@ onMounted(async () => {
   }
 
   &__avatar {
-    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    background: linear-gradient(135deg, rgb(var(--v-theme-thirdy)), rgb(var(--v-theme-darkbg)));
     font-size: 2rem;
     font-weight: bold;
     color: white;

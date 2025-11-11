@@ -95,11 +95,10 @@ onMounted(() => {
     <div class="d-flex flex-wrap align-center my-3 ml-n2">
       <div class="ml-sm-auto">
         <NuxtLink
+          class="nuxt-link"
           to="/auth/forgot-password"
           :style="{
-            color: 'var(--manie-secondary)',
-            textDecoration: 'unset',
-            fontFamily: 'Poppins',
+            color: 'rgb(var(--v-theme-darkbg))',
           }"
           >Mot de passe oublié ?</NuxtLink
         >
