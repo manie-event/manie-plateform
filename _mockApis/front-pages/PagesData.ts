@@ -8,7 +8,6 @@ const Packages: PackageType[] = [
     subCaption: 'booster',
     subtext:
       'Vous êtes charette et vous cherchez un prestataire de dernière minute qui correspond à vos critères. ',
-      'Vous êtes charette et vous cherchez un prestataire de dernière minute qui correspond à vos critères. ',
     price: '15%',
     subprice: 'du montant de la prestation retenue',
     buttontext: 'En savoir +',
@@ -35,8 +34,6 @@ const Packages: PackageType[] = [
     caption: 'Coup de pouce',
     subCaption: 'coup-de-pouce',
     subtext:
-      'Vous souhaitez garder la main et être accompagné(e) à chaque étape clé de votre projet.',
-    price: '490€',
       'Vous souhaitez garder la main et être accompagné(e) à chaque étape clé de votre projet.',
     price: '490€',
     buttontext: 'En savoir +',
@@ -72,7 +69,6 @@ const Packages: PackageType[] = [
       {
         listtitle:
           'Conversation Whatsapp dédié pour toutes questions 5/7J réponse sous 24h jours ouvrés (49€/mois) ',
-          'Conversation Whatsapp dédié pour toutes questions 5/7J réponse sous 24h jours ouvrés (49€/mois) ',
         status: false,
         icon: true,
         disable: false,
@@ -86,9 +82,7 @@ const Packages: PackageType[] = [
     subCaption: 'grande-pompe',
     subtext:
       'Vous souhaitez une prise en charge complète de ce jour mémorable par un professionnel. ',
-      'Vous souhaitez une prise en charge complète de ce jour mémorable par un professionnel. ',
     price: '2990€',
-    subprice: '',
     subprice: '',
     buttontext: 'En savoir +',
     url: '/',
@@ -157,7 +151,6 @@ const Packages: PackageType[] = [
       },
       {
         listtitle: '<b><u>Option</u></b> : coordination (+990 €)',
-        listtitle: '<b><u>Option</u></b> : coordination (+990 €)',
         status: false,
         icon: true,
         disable: false,
@@ -170,11 +163,7 @@ const Packages: PackageType[] = [
     caption: 'coordination',
     subCaption: 'coordination de jour-J',
     subtext: 'Vous profitez de votre jour-J pendant qu’on fait tourner la machine.',
-    caption: 'coordination',
-    subCaption: 'coordination de jour-J',
-    subtext: 'Vous profitez de votre jour-J pendant qu’on fait tourner la machine.',
     price: '990€',
-    subprice: '',
     subprice: '',
     buttontext: 'En savoir +',
     url: '/',
@@ -217,16 +206,6 @@ const footerContact: FooterType[] = [
     titre: 'Manie Coop - SASU',
     description: '',
     link: undefined,
-  },
-  {
-    titre: 'Manie Coop - SASU',
-    description: '',
-    link: undefined,
-  },
-  {
-    titre: "Conditions Générales d'utilisation",
-    description: '',
-    link: '/juridique/cgu',
   },
   {
     titre: 'Conditions Générales de Ventes',

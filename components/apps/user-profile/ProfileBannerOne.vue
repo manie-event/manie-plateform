@@ -10,11 +10,7 @@
         <Icon icon="solar:camera-outline" width="20" height="20" />
       </button>
       <input type="file" ref="fileInput" @change="changeBannerPhoto" accept="image/*" hidden />
-      <NuxtLink
-        to="/dashboards/dashboard2"
-        style="color: rgb(var(--v-theme-darkbg))"
-        class="profile-header__redirect-btn"
-      >
+      <NuxtLink to="/dashboards/dashboard2" class="profile-header__redirect-btn">
         Retour au tableau de bord
       </NuxtLink>
     </div>
@@ -23,13 +19,12 @@
       <div class="profile-header__content">
         <div class="profile-header__identity">
           <v-avatar size="100" class="profile-header__avatar">
-            <!-- <img v-if="professionalUser?.avatar" :src="professionalUser.avatar" alt="Avatar" /> -->
             <span>{{ initials }}</span>
           </v-avatar>
 
           <div class="profile-header__info">
             <div class="d-flex flex-row gap-2">
-              <div v-for="service in getServiceValues">
+              <div v-for="service in getServiceValues" :key="service">
                 <v-chip color="primary" variant="outlined" size="x-small">{{ service }}</v-chip>
               </div>
             </div>
@@ -42,12 +37,6 @@
                 {{ professionalUser?.telephone || 'Définissez votre téléphone' }}
               </p>
             </div>
-            <!-- <div class="d-flex align-center">
-              <Icon icon="ci:mail" height="18" width="18" class="mr-1" />
-              <p class="profile-header__phone">
-                {{ professionalUser?.email || 'Définissez votre email' }}
-              </p>
-            </div> -->
           </div>
         </div>
 
@@ -87,45 +76,28 @@
 
     <Teleport to="body">
       <EditerProfessionalProfile v-model:openModal="openModal" />
-      <services-prestataire class="mt-6" v-model:pageActuelle="openServiceModal" />
-    </Teleport>
-  </section>
-
-    <Teleport to="body">
-      <EditerProfessionalProfile v-model:openModal="openModal" />
-      <services-prestataire class="mt-6" v-model:pageActuelle="openServiceModal" />
+      <ServicesPrestataire v-model:pageActuelle="openServiceModal" class="mt-6" />
     </Teleport>
   </section>
 </template>
 
 <script setup lang="ts">
 import { NuxtLink } from '#components';
-import { NuxtLink } from '#components';
 import EditerProfessionalProfile from '@/components/apps/user-profile/EditProfessionalProfil.vue';
 import { Icon } from '@iconify/vue';
-import { onMounted, ref } from 'vue';
-import { Icon } from '@iconify/vue';
-import { onMounted, ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import { computed, onMounted, ref } from 'vue';
 import ServicesPrestataire from '~/components/questionnaires/ServicesPrestataire.vue';
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { useUserStore } from '~/stores/userStore';
-import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
-import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
-import { useUserStore } from '~/stores/userStore';
 
 const { professionalUser, user, isProfileCreated, initials } = storeToRefs(useUserStore());
-const { changeProfessionalBannerPicture, getProfessionalProfileDetails, getProfessionalProfile } =
-  useProfessionalProfile();
-const { getJetonQuantity } = usePaiementJeton();
-const { professionalUser, user, isProfileCreated, initials } = storeToRefs(useUserStore());
-const { changeProfessionalBannerPicture, getProfessionalProfileDetails, getProfessionalProfile } =
-  useProfessionalProfile();
+const { changeProfessionalBannerPicture, getProfessionalProfile } = useProfessionalProfile();
 const { getJetonQuantity } = usePaiementJeton();
 
 const openModal = ref(false);
 const openServiceModal = ref(false);
-const fileInput = ref<HTMLInputElement | null>(null);
 const fileInput = ref<HTMLInputElement | null>(null);
 
 const triggerClickFileInput = () => fileInput.value?.click();
@@ -139,16 +111,8 @@ const changeBannerPhoto = async (e: Event) => {
 const getServiceValues = computed(
   () => professionalUser.value?.professionalServices?.map((s) => s.name) ?? []
 );
-const getServiceValues = computed(
-  () => professionalUser.value?.professionalServices?.map((s) => s.name) ?? []
-);
 
 onMounted(async () => {
-  const name = professionalUser.value?.name || user.value?.username || '';
-  await getProfessionalProfile();
-  await getJetonQuantity();
-onMounted(async () => {
-  const name = professionalUser.value?.name || user.value?.username || '';
   await getProfessionalProfile();
   await getJetonQuantity();
 });
@@ -157,32 +121,17 @@ onMounted(async () => {
 <style scoped lang="scss">
 .profile-header {
   width: 80vw;
-  &__cover {
-    position: relative;
-    overflow: hidden;
-    border-radius: 12px;
-<style scoped lang="scss">
-.profile-header {
-  width: 80vw;
+
   &__cover {
     position: relative;
     overflow: hidden;
     border-radius: 12px;
   }
-  &__redirect-btn {
-    top: 20px;
-    right: 20px;
+
   &__redirect-btn {
     top: 20px;
     right: 20px;
     position: absolute;
-    z-index: 9;
-    background: rgb(var(--v-theme-background));
-    color: rgb(var(--v-theme-primary));
-    font-weight: 600;
-    font-family: 'Poppins', sans-serif;
-    padding: 9px 20px;
-    text-decoration: none;
     z-index: 9;
     background: rgb(var(--v-theme-background));
     color: rgb(var(--v-theme-primary));
@@ -212,30 +161,9 @@ onMounted(async () => {
     height: 40px;
     cursor: pointer;
     transition: all 0.3s ease;
-  }
 
-  &__image {
-    width: 100%;
-    height: 400px;
-    object-fit: cover;
-    filter: brightness(0.9);
-  }
-
-  &__edit {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    background: rgba(255, 255, 255, 0.8);
-    border: none;
-    border-radius: 50%;
-    padding: 10px;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    transition: all 0.3s ease;
     &:hover {
       background: white;
-      transform: scale(1.05);
       transform: scale(1.05);
     }
   }
@@ -281,42 +209,15 @@ onMounted(async () => {
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
-  &__name {
-    margin: 0;
-    font-weight: 700;
-  }
-
-  &__phone {
-    font-size: 0.95rem;
-    color: #777;
-  }
-
-  &__actions {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
   }
 
   &__btn {
     border-radius: 12px;
     font-weight: 500;
     letter-spacing: 0.3px;
-  &__btn {
-    border-radius: 12px;
-    font-weight: 500;
-    letter-spacing: 0.3px;
   }
 }
-@media screen and (max-width: 900px) {
-  .profile-header {
-    width: 90vw;
-    margin: 0 auto;
 
-    &__actions {
-      width: 100%;
-      margin-top: 30px;
-    }
-}
 @media screen and (max-width: 900px) {
   .profile-header {
     width: 90vw;
