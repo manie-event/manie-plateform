@@ -1,118 +1,102 @@
 <template>
-  <v-dialog v-model="openModal" transition="dialog-bottom-transition">
+  <v-dialog v-model="openModal" transition="dialog-bottom-transition" max-width="600">
     <v-card class="edit-client-profil">
       <v-form class="px-4">
         <v-divider class="mt-6">
-          <p class="mt-6"></p>
-          A propos de vous
+          <p class="mt-6">À propos de vous</p>
         </v-divider>
+
+        <!-- Checkbox entreprise -->
         <div class="d-flex align-center my-4">
-          <input
-            type="checkbox"
-            class="mr-3"
-            label="Êtes-vous une entreprise ?"
-            v-model="profile.isBusiness"
-            :error-messages="showErrors ? errors.isBusiness : undefined"
-          />
-          <p>Êtes-vous une entreprise ?</p>
-        </div>
-        <div class="d-flex align-center my-4">
-          <input
-            type="checkbox"
-            class="mr-3"
-            label="Êtes-vous une entreprise ?"
-            v-model="profile.isBusiness"
-            :error-messages="showErrors ? errors.isBusiness : undefined"
-          />
-          <p>Êtes-vous une entreprise ?</p>
+          <input type="checkbox" class="mr-3" v-model="profile.isBusiness" id="isBusiness" />
+          <label for="isBusiness">Êtes-vous une entreprise ?</label>
         </div>
 
+        <!-- Si entreprise -->
         <template v-if="profile.isBusiness">
           <v-text-field
             class="mt-6"
-            label="Le nom de votre entreprise ?"
+            label="Nom de votre entreprise"
             v-model="profile.businessName"
             :error-messages="showErrors ? errors.businessName : undefined"
           />
           <v-text-field
-            label="Votre Numéro De Siret ?"
+            label="Numéro de SIRET"
             v-model="profile.businessSiret"
             :error-messages="showErrors ? errors.businessSiret : undefined"
           />
           <v-text-field
-            label="Nom du dirigeant ?"
+            label="Nom du dirigeant"
             v-model="profile.businessLeader"
             :error-messages="showErrors ? errors.businessLeader : undefined"
           />
         </template>
 
         <v-text-field
-          label="Votre nom ?"
+          label="Votre nom"
           v-model="profile.username"
           :error-messages="showErrors ? errors.username : undefined"
         />
 
         <v-text-field
-          label="Votre date de naissance ?"
+          label="Votre date de naissance"
           type="date"
           v-model="profile.birthDate"
           :error-messages="showErrors ? errors.birthDate : undefined"
         />
 
         <v-text-field
-          label="Votre numéro de téléphone ?"
+          label="Votre numéro de téléphone"
           v-model="profile.phoneNumber"
           :error-messages="showErrors ? errors.phoneNumber : undefined"
         />
 
         <v-divider class="my-6">
-          <p>A propos de votre adresse</p>
-        <v-divider class="my-6">
-          <p>A propos de votre adresse</p>
+          <p>À propos de votre adresse</p>
         </v-divider>
 
         <v-text-field
-          label="Votre adresse ?"
+          label="Votre adresse"
           v-model="profile.address"
           :error-messages="showErrors ? errors.address : undefined"
         />
 
         <v-text-field
-          label="Votre code postal ?"
+          label="Code postal"
           v-model="profile.zipCode"
           :error-messages="showErrors ? errors.zipCode : undefined"
         />
 
         <v-text-field
-          label="Votre ville ?"
+          label="Ville"
           v-model="profile.city"
           :error-messages="showErrors ? errors.city : undefined"
         />
 
         <v-text-field
-          label="Votre pays ?"
+          label="Pays"
           v-model="profile.country"
           :error-messages="showErrors ? errors.country : undefined"
         />
 
-        <v-btn color="primary" @click="onSubmit" :loading="isSubmitting" block>
-        <v-btn color="primary" @click="onSubmit" :loading="isSubmitting" block>
+        <v-btn color="primary" class="mt-6" @click="onSubmit" :loading="isSubmitting" block>
           Valider le profil
         </v-btn>
       </v-form>
     </v-card>
   </v-dialog>
+
   <Teleport to="body">
-    <error-toaster></error-toaster>
-    <SuccessToaster></SuccessToaster>
-    <SuccessToaster></SuccessToaster>
+    <error-toaster />
+    <SuccessToaster />
   </Teleport>
 </template>
 
 <script setup lang="ts">
 import { useToaster } from '@/utils/toaster';
+import { storeToRefs } from 'pinia';
 import { useForm } from 'vee-validate';
-import { onMounted, ref, Teleport } from 'vue';
+import { onMounted, ref } from 'vue';
 import * as yup from 'yup';
 import errorToaster from '~/components/common/errorToaster.vue';
 import SuccessToaster from '~/components/common/successToaster.vue';
@@ -125,15 +109,10 @@ const { clientProfile, isProfileCreated } = storeToRefs(userStore);
 const { patchClientProfil, getClientProfil } = useClientProfil();
 const { addSuccess, addError } = useToaster();
 
-const { clientProfile, isProfileCreated } = storeToRefs(userStore);
-const { patchClientProfil, getClientProfil } = useClientProfil();
-const { addSuccess, addError } = useToaster();
-
 const openModal = defineModel<boolean>('openModal');
 const showErrors = ref(false);
 const isSubmitting = ref(false);
 
-// ✅ Schéma de validation
 // ✅ Schéma de validation
 const validationSchema = yup.object({
   isBusiness: yup.boolean(),
@@ -145,7 +124,6 @@ const validationSchema = yup.object({
     is: true,
     then: (schema) =>
       schema
-        .required('Le numéro de SIRET est requis')
         .required('Le numéro de SIRET est requis')
         .matches(/^\d{14}$/, 'Le SIRET doit contenir 14 chiffres'),
   }),
@@ -172,8 +150,6 @@ const {
   values: profile,
   errors,
   handleSubmit,
-  resetForm,
-  setValues,
   setValues,
 } = useForm({
   validationSchema,
@@ -185,7 +161,6 @@ const {
     zipCode: '',
     city: '',
     country: 'France',
-    country: 'France',
     birthDate: null,
     username: '',
     phoneNumber: '',
@@ -195,13 +170,7 @@ const {
   keepValuesOnUnmount: true,
 });
 
-// ✅ Pré-remplir les champs à l’ouverture
-
-// ✅ Soumission
-const onSubmit = handleSubmit(async (values) => {
-// ✅ Pré-remplir les champs à l’ouverture
-
-// ✅ Soumission
+// ✅ Soumission du formulaire
 const onSubmit = handleSubmit(async (values) => {
   try {
     isSubmitting.value = true;
@@ -222,120 +191,62 @@ const onSubmit = handleSubmit(async (values) => {
     };
 
     await patchClientProfil(profilePayload);
-    const profilePayload: ClientModel = {
-      businessName: values.businessName,
-      businessSiret: values.businessSiret,
-      businessLeader: values.businessLeader,
-      address: values.address,
-      zipCode: values.zipCode,
-      city: values.city,
-      country: values.country,
-      birthDate: values.birthDate ?? null,
-      username: values.username,
-      phoneNumber: values.phoneNumber,
-      isBusiness: values.isBusiness,
-    };
 
-    await patchClientProfil(profilePayload);
-
-    if (isProfileCreated.value) {
-      addSuccess('Profil mis à jour avec succès !');
-      openModal.value = false;
-      showErrors.value = false;
-    }
-    if (isProfileCreated.value) {
-      addSuccess('Profil mis à jour avec succès !');
-      openModal.value = false;
-      showErrors.value = false;
-    }
+    addSuccess('Profil mis à jour avec succès !');
+    openModal.value = false;
+    showErrors.value = false;
   } catch (error) {
-    addError({
-      message: 'Une erreur est survenue lors de la mise à jour du profil.',
-    });
-    addError({
-      message: 'Une erreur est survenue lors de la mise à jour du profil.',
-    });
+    addError({ message: 'Une erreur est survenue lors de la mise à jour du profil.' });
   } finally {
     isSubmitting.value = false;
   }
 });
 
+// ✅ Pré-remplir les champs à l’ouverture
 onMounted(async () => {
   try {
-    // On recharge les infos si le store est vide (sécurité)
     if (!clientProfile.value?.uuid) {
       await getClientProfil();
     }
 
-    const profileData = clientProfile.value;
-
-    if (profileData) {
-      const formattedBirthDate = profileData.birthDate
-        ? new Date(profileData.birthDate).toISOString().split('T')[0]
+    const data = clientProfile.value;
+    if (data) {
+      const formattedBirthDate = data.birthDate
+        ? new Date(data.birthDate).toISOString().split('T')[0]
         : '';
       setValues({
-        businessName: profileData.businessName || '',
-        businessSiret: profileData.businessSiret || '',
-        businessLeader: profileData.businessLeader || '',
-        address: profileData.address || '',
-        zipCode: profileData.zipCode || '',
-        city: profileData.city || '',
-        country: profileData.country || 'France',
+        businessName: data.businessName || '',
+        businessSiret: data.businessSiret || '',
+        businessLeader: data.businessLeader || '',
+        address: data.address || '',
+        zipCode: data.zipCode || '',
+        city: data.city || '',
+        country: data.country || 'France',
         birthDate: formattedBirthDate || '',
-        username: profileData.username || '',
-        phoneNumber: profileData.phoneNumber || '',
-        isBusiness: profileData.isBusiness || false,
+        username: data.username || '',
+        phoneNumber: data.phoneNumber || '',
+        isBusiness: data.isBusiness || false,
       });
     }
-  } catch (error) {
-    addError({ message: 'Erreur lors du chargement du profil.' });
-  }
-});
-});
-
-onMounted(async () => {
-  try {
-    // On recharge les infos si le store est vide (sécurité)
-    if (!clientProfile.value?.uuid) {
-      await getClientProfil();
-    }
-
-    const profileData = clientProfile.value;
-
-    if (profileData) {
-      const formattedBirthDate = profileData.birthDate
-        ? new Date(profileData.birthDate).toISOString().split('T')[0]
-        : '';
-      setValues({
-        businessName: profileData.businessName || '',
-        businessSiret: profileData.businessSiret || '',
-        businessLeader: profileData.businessLeader || '',
-        address: profileData.address || '',
-        zipCode: profileData.zipCode || '',
-        city: profileData.city || '',
-        country: profileData.country || 'France',
-        birthDate: formattedBirthDate || '',
-        username: profileData.username || '',
-        phoneNumber: profileData.phoneNumber || '',
-        isBusiness: profileData.isBusiness || false,
-      });
-    }
-  } catch (error) {
+  } catch {
     addError({ message: 'Erreur lors du chargement du profil.' });
   }
 });
 </script>
-<style lang="scss" scoped>
+
+<style scoped lang="scss">
 .edit-client-profil {
   width: 50vw;
   margin: 0 auto;
   padding: 30px;
+  background: rgb(var(--v-theme-background));
+  border-radius: 12px;
 }
+
 @media screen and (max-width: 960px) {
   .edit-client-profil {
     width: 80vw;
-    margin: 0 auto;
-    padding: 30px;
+    padding: 20px;
   }
 }
 </style>

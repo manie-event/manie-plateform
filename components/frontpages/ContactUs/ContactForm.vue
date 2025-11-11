@@ -20,18 +20,16 @@ const message = ref<ContactMessage>({
 <template>
   <div class="pt-3 pb-14">
     <v-container class="max-width-1218 ">
-  <div class="pt-3 pb-14">
-    <v-container class="max-width-1218 ">
       <v-row>
         <v-col cols="12" lg="4">
           <div
-            class="contact-form rounded-lg pa-7 position-relative overflow-hidden mt-md-0 mt-6 position-relative"
             class="contact-form rounded-lg pa-7 position-relative overflow-hidden mt-md-0 mt-6 position-relative"
           >
             <h4 class="text-18 font-weight-bold mb-4 text-white">On vous écoute !</h4>
             <p class="text-16 font-weight-regular position-relative z-1 text-white">
               Vous avez des questions ou souhaitez en savoir plus sur nos services ? <br />
               N'hésitez pas à nous contacter.
+            </p>
             <h4 class="text-18 font-weight-bold mb-4 text-white">On vous écoute !</h4>
             <p class="text-16 font-weight-regular position-relative z-1 text-white">
               Vous avez des questions ou souhaitez en savoir plus sur nos services ? <br />
@@ -61,7 +59,6 @@ const message = ref<ContactMessage>({
             </p>
             <v-divider class="my-10 opacity-20"></v-divider>
             <div class="contact-form__reseaux">
-              <NuxtLink to="https://www.instagram.com/manie.event/" target="_blank"
               <NuxtLink to="https://www.instagram.com/manie.event/" target="_blank"
                 ><Icon icon="ant-design:instagram-outlined" height="22" width="22"></Icon
               ></NuxtLink>
@@ -163,8 +160,6 @@ const message = ref<ContactMessage>({
                 </v-col>
                 <v-col cols="12" class="text-md-end">
                   <v-btn
-                    color="rgb(var(--v-theme-lightprimary))"
-                    style="color: rgb(var(--v-theme-background)) "
                     color="rgb(var(--v-theme-lightprimary))"
                     style="color: rgb(var(--v-theme-background)) "
                     class="px-5"
