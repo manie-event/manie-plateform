@@ -37,6 +37,12 @@
                 {{ professionalUser?.telephone || 'Définissez votre téléphone' }}
               </p>
             </div>
+            <div class="d-flex align-center">
+              <Icon icon="ci:mail" height="18" width="18" class="mr-1" />
+              <p class="profile-header__phone">
+                {{ professionalUser?.email || 'Définissez votre email' }}
+              </p>
+            </div>
           </div>
         </div>
 
@@ -62,12 +68,17 @@
               Modifier le profil
             </v-btn>
             <v-btn
+              :disabled="isFirstTime"
               color="rgb(var(--v-theme-darkbg))"
               style="color: rgb(var(--v-theme-background))"
               class="profile-header__btn"
               @click="openServiceModal = true"
             >
-              Ajouter un secteur d'activité
+              {{
+                isFirstTime
+                  ? 'Nous vérifions votre profil sous 48h'
+                  : 'Ajouter un secteur d’activité'
+              }}
             </v-btn>
           </template>
         </div>
@@ -90,16 +101,18 @@ import { computed, onMounted, ref } from 'vue';
 import ServicesPrestataire from '~/components/questionnaires/ServicesPrestataire.vue';
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
+import { useProfessionalService } from '~/services/UseProfessionalService';
 import { useUserStore } from '~/stores/userStore';
 
 const { professionalUser, user, isProfileCreated, initials } = storeToRefs(useUserStore());
 const { changeProfessionalBannerPicture, getProfessionalProfile } = useProfessionalProfile();
 const { getJetonQuantity } = usePaiementJeton();
+const { getListProfessionalServiceByProfessional } = useProfessionalService();
 
 const openModal = ref(false);
 const openServiceModal = ref(false);
 const fileInput = ref<HTMLInputElement | null>(null);
-
+const isFirstTime = ref(false);
 const triggerClickFileInput = () => fileInput.value?.click();
 const changeBannerPhoto = async (e: Event) => {
   const input = e.target as HTMLInputElement;
@@ -114,6 +127,11 @@ const getServiceValues = computed(
 
 onMounted(async () => {
   await getProfessionalProfile();
+  const proService = await getListProfessionalServiceByProfessional();
+  console.log(proService, 'Proservice');
+  if (proService.length > 0) {
+    isFirstTime.value = proService.some((service) => service.isVerified === false);
+  }
   await getJetonQuantity();
 });
 </script>

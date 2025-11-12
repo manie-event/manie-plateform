@@ -166,7 +166,7 @@ const register = async () => {
       submit
       rounded="pill"
       @click="register"
-      :disabled="!isCharteBonneConduite"
+      :disabled="!isCharteBonneConduite && isCharteMention"
       >Je créer mon compte</v-btn
     >
     <div v-if="openModalCharte">

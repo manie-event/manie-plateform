@@ -82,3 +82,8 @@ export const computeDateRange = (answers: FormState): [string, string] => {
   }
   return ['', ''];
 };
+
+export const capitalizeFirst = (str: string) => {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};

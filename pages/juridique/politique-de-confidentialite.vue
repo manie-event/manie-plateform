@@ -13,3 +13,15 @@
 <script setup lang="ts">
 import politique from '@/data/politique-de-confidentialite.json';
 </script>
+<style scoped>
+.v-expansion-panel-text ul {
+  list-style-type: disc;
+  margin-left: 20px;
+  padding-left: 10px;
+}
+
+.v-expansion-panel-text li {
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+</style>

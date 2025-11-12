@@ -1,11 +1,11 @@
 [
   {
     "sectionTitle": "Politique de Confidentialité (Conformité RGPD)",
-    "sectionDescription": "La présente politique de confidentialité s’applique à la plateforme MANIE, exploitée par Manie Event, entreprise individuelle immatriculée à Lyon, SIRET n°94028451600017, domiciliée à Lyon 7e.",
+    "sectionDescription": "La présente politique de confidentialité s’applique à la plateforme MANIE, exploitée par Manie Coop, société par Actions Simplifiée Unipersonnelle (SASU) immatriculée à Lyon, SIRET n°99299206500019, domiciliée à Lyon.",
     "sections": [
       {
         "title": "1. Responsable du traitement",
-        "description": "Le responsable du traitement des données est <b>Manie Event</b>, représentée par Mme DUJEANCOURT Léonore, en qualité de fondatrice de l’entreprise."
+        "description": "Le responsable du traitement des données est Manie Coop, représentée par Mme DUJEANCOURT, en qualité de présidente de la société. "
       },
       {
         "title": "2. Données collectées",
@@ -17,7 +17,7 @@
       },
       {
         "title": "4. Base légale",
-        "description": "<ul><li>L’exécution d’un contrat (inscription, contrat de partenariat)</li><li>Le consentement (formulaire de contact, cookie, newsletter)</li><li>L’intérêt légitime de Manie Event (amélioration du service, sécurité des données)</li></ul>"
+        "description": "<ul><li>L’exécution d’un contrat (inscription, contrat de partenariat)</li><li>Le consentement (formulaire de contact, cookie, newsletter)</li><li>L’intérêt légitime de Manie Coop (amélioration du service, sécurité des données)</li></ul>"
       },
       {
         "title": "5. Destinataires des données",
@@ -29,11 +29,11 @@
       },
       {
         "title": "7. Droits des utilisateurs",
-        "description": "Conformément au RGPD, vous disposez des droits suivants :<ul><li>Droit d’accès, de rectification, de suppression</li><li>Droit d’opposition et de limitation du traitement</li><li>Droit à la portabilité de vos données</li><li>Droit de retirer votre consentement à tout moment</li></ul>Pour exercer vos droits, contactez-nous à : <a href='mailto:contact@manie-event.fr'>contact@manie-event.fr</a>"
+        "description": "Conformément au RGPD, vous disposez des droits suivants :<ul><li>Droit d’accès, de rectification, de suppression</li><li>Droit d’opposition et de limitation du traitement</li><li>Droit à la portabilité de vos données</li><li>Droit de retirer votre consentement à tout moment</li></ul><br>Pour exercer vos droits, contactez-nous à : <a href='mailto:contact@manie-event.fr'>contact@manie-event.fr</a>"
       },
       {
         "title": "8. Sécurité des données",
-        "description": "Nous mettons en œuvre des mesures techniques et organisationnelles pour protéger vos données : serveurs sécurisés, accès restreint, sauvegardes régulières.<br>Les données sont hébergées au sein de l’Union européenne. En cas de recours à des outils situés hors UE (ex : Stripe, Google), nous nous assurons que des garanties adéquates sont en place (clauses contractuelles types ou équivalent)."
+        "description": "Nous mettons en œuvre des mesures techniques et organisationnelles pour protéger vos données : serveurs sécurisés, accès restreint, sauvegardes régulières. Les données sont hébergées au sein de l’Union européenne. <br> En cas de recours à des outils situés hors UE (ex : Stripe, Google), nous nous assurons que des garanties adéquates sont en place (clauses contractuelles types ou équivalent)."
       },
       {
         "title": "9. Contact",

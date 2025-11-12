@@ -16,6 +16,8 @@
         </h2>
 
         <!-- Type d'utilisateur -->
+        <v-text-field v-model="type_event" label="Nom de votre évènement" variant="outlined" />
+        <h3 class="text-h6 mb-2">Quel type d'évènement?</h3>
         <div class="d-flex flex-wrap gap-2 mb-6">
           <v-chip
             v-for="userType in getQuestionOptions(0)"
@@ -212,7 +214,7 @@
       </div>
 
       <!-- Navigation -->
-      <div class="d-flex justify-space-between mt-8">
+      <div class="d-flex justify-space-between mt-8 navigation">
         <v-btn v-if="currentPage === 3" color="#293b57" variant="outlined" @click="addNewService">
           Ajouter un nouveau service
         </v-btn>
@@ -272,6 +274,7 @@ const { getAllSectors, getKeywords } = useKeywordsStore();
 const { getProfessionalService } = useProfessionalService();
 const { submitEvent, isLoading, error } = UseEvent();
 //ref generale
+const type_event = ref('');
 const eventType = ref<'particulier' | 'professionnel'>('particulier');
 const name = ref('');
 const location = ref('Veuillez choisir un département');
@@ -494,13 +497,10 @@ const handleSubmit = async () => {
 };
 
 onMounted(async () => {
-  // Récupère l'instance complète de l'événement
   const responses = await getEventsInstance(props.event.uuid);
-
-  // Données normalisées du questionnaire
   const normalizedAnswer = responses.$attributes;
 
-  // Pré-remplir les champs
+  type_event.value = normalizedAnswer.type_event ?? '';
   eventType.value = normalizedAnswer.event_type ?? '';
   name.value = normalizedAnswer.name ?? '';
   location.value = normalizedAnswer.location ?? '';
@@ -512,7 +512,6 @@ onMounted(async () => {
   budgetInput.value = normalizedAnswer.budget ?? 0;
   [dateStart.value, dateEnd.value] = normalizedAnswer.date ?? ['', ''];
 
-  // Pré-remplir les services sélectionnés
   if (responses.$preloaded?.eventServices?.length) {
     selectedServices.value = responses.$preloaded.eventServices.map((srv) => {
       const service = servicesFiltered.value.find((s) => s.uuid === srv.serviceUuid);
@@ -526,3 +525,12 @@ onMounted(async () => {
   }
 });
 </script>
+<style lang="scss" scoped>
+@media screen and (max-width: 400px) {
+  .navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+</style>
