@@ -1,10 +1,10 @@
 {
-  "title": "Charte de Bonne Conduite – MANIE",
+  "title": "Charte de Bonne Conduite",
   "description": "Chez MANIE, nous croyons qu’un événement réussi repose sur plus qu’un bon prestataire : il repose sur des relations de confiance, des pratiques responsables, et des engagements partagés. Cette charte définit les valeurs et comportements attendus de chaque prestataire inscrit sur notre plateforme.",
   "sections": [
     {
       "subtitle": "Nos valeurs fondamentales",
-      "description": "Tous les prestataires partenaires de MANIE s’engagent à respecter et incarner les valeurs suivantes :\n- Respect : dans toutes les interactions avec les clients, les autres prestataires, et l’équipe MANIE.\n- Bienveillance : attitude constructive, accueil inclusif, écoute active.\n- Transparence : dans les offres, les tarifs, la disponibilité et les engagements contractuels.\n- Responsabilité sociale et environnementale : privilégier des pratiques durables, locales, éthiques.\n- Santé mentale et bien-être : promouvoir une organisation de travail saine et respectueuse des rythmes humains.\n- Dématérialisation des process : favoriser les outils numériques pour une gestion fluide, centralisée et écoresponsable."
+      "description": "Tous les prestataires partenaires de MANIE s’engagent à respecter et incarner les valeurs suivantes :<br> <ul><li> Respect : dans toutes les interactions avec les clients, les autres prestataires, et l’équipe Manie.</li><li> Bienveillance : attitude constructive, accueil inclusif, écoute active.</li><li>Transparence : dans les offres, les tarifs, la disponibilité et les engagements contractuels.</li><li> Responsabilité sociale et environnementale : privilégier des pratiques durables, locales, éthiques.</li><li> Santé mentale et bien-être : promouvoir une organisation de travail saine et respectueuse des rythmes humains.</li><li> Dématérialisation des process : favoriser les outils numériques pour une gestion fluide, centralisée et écoresponsable.</li></ul>"
     },
     {
       "subtitle": "1. Qualité professionnelle et respect des engagements",
@@ -32,7 +32,7 @@
     },
     {
       "subtitle": "7. Acceptation de la charte",
-      "description": "Mon inscription sur la plateforme MANIE vaut adhésion pleine et entière à cette charte.\nJe comprends qu’elle fait partie intégrante de mon engagement en tant que partenaire professionnel."
+      "description": "Mon inscription sur la plateforme MANIE vaut adhésion pleine et entière à cette charte.\nJe comprends qu’elle fait partie intégrante de mon engagement en tant que partenaire professionnel. <br> L. DUJEANCOURT<br>Pour Manie Coop (SASU)<br>SIRET : 99299206500019<br>Fait à Lyon, le 31/10/2025"
     }
   ]
 }

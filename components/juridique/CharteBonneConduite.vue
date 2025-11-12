@@ -3,7 +3,7 @@
     <v-card>
       <v-card-text>
         <div class="charte__title">
-          <h2>{{ CharteBonneConduite.title }}</h2>
+          <h2>{{ CharteBonneConduite.title.toLocaleUpperCase() }}</h2>
           <p>{{ CharteBonneConduite.description }}</p>
         </div>
         <div v-for="section in CharteBonneConduite.sections" class="charte__section">

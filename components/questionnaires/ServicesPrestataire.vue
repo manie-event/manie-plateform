@@ -15,9 +15,7 @@
           class="questionnaire-section mb-8"
         >
           <div class="d-flex justify-space-between align-center mb-2">
-            <h3 class="text-subtitle1 font-weight-medium">
-              Quelle est votre Activité N°{{ index + 1 }} ?
-            </h3>
+            <h3 class="text-subtitle1 font-weight-medium">Mon activité</h3>
 
             <v-btn
               v-if="questionnaires.length > 1"
@@ -55,7 +53,6 @@
                 v-for="service in questionnaire.services"
                 :key="service.uuid"
                 variant="outlined"
-                :color="questionnaire.selectedServiceUuid === service.uuid ? '#5d79a4' : 'default'"
                 class="ma-1"
                 @click="selectService(service, questionnaire)"
                 :class="{ 'selected-chip': questionnaire.selectedServiceUuid === service.uuid }"
@@ -90,9 +87,6 @@
                           :key="keyword.uuid"
                           variant="outlined"
                           class="ma-1"
-                          :color="
-                            questionnaire.selectedKeywords.has(keyword.uuid) ? '#f39454' : 'default'
-                          "
                           @click="selectKeyword(keyword, questionnaire)"
                           :class="{
                             'selected-chip': questionnaire.selectedKeywords.has(keyword.uuid),
@@ -211,6 +205,7 @@ import type { ProfessionalServiceUuid } from '~/models/professionalService/profe
 import type { QuestionnaireItem } from '~/models/professionalService/QuestionnairePresta';
 import type { Services } from '~/models/professionalService/Services';
 import type { ProfessionalProfile } from '~/models/user/UserModel';
+import { useProfessionalService } from '~/services/UseProfessionalService';
 import ModalRedirection from '../apps/user-profile/ModalRedirection.vue';
 
 const serviceModal = defineModel<boolean>('pageActuelle', { default: false });
@@ -224,11 +219,13 @@ const { getSectors, sendProfessionalServices } = keywordsStore;
 const { patchProfessionalProfileDetails } = useProfessionalProfile();
 const { addSuccess, addError } = useToaster();
 
+const { getListProfessionalServiceByProfessional } = useProfessionalService();
 const questionnaires = ref<QuestionnaireItem[]>([]);
 const activityItems = ref(ACTIVITY_ITEMS);
 const payloadArray = ref<ProfessionalServiceUuid[]>([]);
 const isProfilUpdate = ref(false);
 let sectorsLoaded = false;
+const isFirstTime = ref(false);
 
 const generateId = () => Math.random().toString(36).substr(2, 9);
 
@@ -373,18 +370,64 @@ const submitAllQuestionnaires = async () => {
   }
 };
 
-// Initialisation
+// Initialisation';
+
+// 🔄 Pré-remplissage des services et mots-clés déjà enregistrés
+// 🔄 Pré-remplissage des services et mots-clés déjà enregistrés
 watch(
-  () => professionalUser.value,
-  async (user) => {
-    if (!user?.mainActivity || !user?.uuid || sectorsLoaded) return;
-    sectorsLoaded = true;
+  () => serviceModal.value,
+  async (open) => {
+    if (!open || !professionalUser.value?.uuid) return;
+
+    // 🔁 Réinitialisation complète
+    questionnaires.value = [];
+    sectorsLoaded = false;
+
     try {
-      await getSectors(user.mainActivity);
-      questionnaires.value.push(createQuestionnaire(user.mainActivity));
+      const proService = await getListProfessionalServiceByProfessional();
+      const isFirstTime = proService.some((service) => service.isVerified === false);
+      const tempQuestionnaires: QuestionnaireItem[] = [];
+
+      if (proService.length && !isFirstTime) {
+        // Cas où le pro a déjà des services validés
+        for (const srv of proService) {
+          const sector = professionalUser.value.mainActivity || 'Autre';
+          await getSectors(sector);
+
+          const qData = questionnairePresta.find(
+            (q) => q.sector.toLowerCase() === sector.toLowerCase()
+          );
+
+          tempQuestionnaires.push({
+            id: generateId(),
+            sector,
+            questionnaireData: qData,
+            services: [...(services.value || [])],
+            keywordsByCategory: calculateKeywordsByCategory(qData, sector),
+            selectedServiceUuid: srv.serviceUuid,
+            selectedKeywords: new Set(
+              (srv.keywordsUuid || []).map((k: any) => (typeof k === 'string' ? k : k.uuid))
+            ),
+          });
+        }
+      } else {
+        const user = professionalUser.value;
+        const sectors = [user.mainActivity, user.secondActivity, user.thirdActivity].filter(
+          Boolean
+        );
+
+        for (const sector of sectors) {
+          await getSectors(sector!);
+          tempQuestionnaires.push(createQuestionnaire(sector!));
+        }
+      }
+
+      // ✅ On injecte tout d’un coup, une fois les chargements terminés
+      questionnaires.value = tempQuestionnaires;
+      sectorsLoaded = true;
     } catch (e) {
-      console.error('Erreur chargement initial :', e);
-      addError({ message: 'Erreur lors du chargement des données.' });
+      console.error('Erreur lors du préremplissage :', e);
+      addError({ message: 'Erreur lors du chargement des services existants.' });
     }
   },
   { immediate: true }
@@ -403,5 +446,10 @@ watch(
   right: 10px;
   color: rgba(0, 0, 0, 0.54); /* adapte la couleur selon ton thème */
   z-index: 1;
+}
+.selected-chip {
+  background: rgb(var(--v-theme-darkbg));
+  border: rgb(var(--v-theme-darkbg));
+  color: rgb(var(--v-theme-background));
 }
 </style>
