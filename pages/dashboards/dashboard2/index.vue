@@ -11,15 +11,17 @@ import { useUserStore } from '~/stores/userStore';
 
 const userStore = useUserStore();
 const { user, isProfileCreated, isProfessional } = storeToRefs(userStore);
-const { getProfessionalProfileDetails } = useProfessionalProfile();
+const { getProfessionalProfileDetails, getProfessionalProfile } = useProfessionalProfile();
 const { getServicePropositionForProfessional } = useEventServiceProposition();
 
 onMounted(async () => {
   isProfessional.value = true;
-  if (isProfileCreated.value && isProfessional.value) {
-    await getProfessionalProfileDetails();
-    await getServicePropositionForProfessional();
-  }
+  console.log(isProfileCreated.value, 'isProfileCreated.value');
+  console.log(isProfessional.value, 'isProfessional.value');
+
+  await getProfessionalProfile();
+  await getProfessionalProfileDetails();
+  await getServicePropositionForProfessional();
 });
 </script>
 

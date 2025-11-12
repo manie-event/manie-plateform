@@ -1,5 +1,6 @@
 export interface eventModel {
   uuid: string;
+  typeEvent: string;
   organisatorUuid: string;
   isAlreadyCreated: boolean;
   status: string;

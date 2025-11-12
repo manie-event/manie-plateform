@@ -1,6 +1,7 @@
 export interface eventModelDto {
   id: number;
   uuid: string;
+  typeEvent: string;
   organisatorUuid: string;
   status: string;
   budget: number;

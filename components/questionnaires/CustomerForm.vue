@@ -254,6 +254,7 @@
 import questionnaire from '@/data/questionnaire-client-refonte.json';
 import { eventsStore } from '@/stores/events';
 import { Icon } from '@iconify/vue';
+import * as yup from 'yup';
 import { UseEvent } from '~/composables/event/UseEvent';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { SectorsDto } from '~/models/dto/sectorsDto';
@@ -293,10 +294,11 @@ const budgetInput = ref(0);
 const today = new Date().toISOString().split('T')[0];
 const dateStart = ref('');
 const dateEnd = ref('');
+const errors = ref<Record<string, string>>({});
 
 const baseColor = '#5d79a4';
 const { getEventsInstance } = useEventService();
-
+const { addSuccess, addError } = useToaster();
 const selectedServices = ref([
   {
     selectedSector: undefined,
@@ -305,16 +307,47 @@ const selectedServices = ref([
   },
 ]);
 
-const finalDateSelection = computed(() => {
-  // if (isFlexible.value) {
-  //   return flexibleDate.value;
-  // } else {
-  return [dateStart.value, dateEnd.value];
+const schemaPage1 = yup.object({
+  type_event: yup.string().required('Veuillez nommer votre évènement'),
+  name: yup.string().required("Veuillez choisir un type d'évènement"),
+  dateStart: yup.date().required('La date de début est obligatoire'),
+  dateEnd: yup
+    .date()
+    .min(yup.ref('dateStart'), 'La date de fin doit être postérieure à la date de début')
+    .required('La date de fin est obligatoire'),
+  location: yup.string().required('Veuillez indiquer une localisation'),
+  group_type: yup.string().required('Veuillez préciser le type de groupe'),
+  duration: yup.string().required('Veuillez préciser la durée'),
 });
 
-const nextPage = () => {
-  if (currentPage.value < 3) currentPage.value++;
-};
+const schemaPage2 = yup.object({
+  organized_for: yup.string().required('Veuillez indiquer pour qui est organisé l’événement'),
+  theme: yup.string().required('Veuillez définir un thème'),
+  people: yup
+    .number()
+    .positive('Le nombre de participants doit être supérieur à 0')
+    .required('Le nombre de participants est obligatoire'),
+  budgetInput: yup
+    .number()
+    .positive('Le budget doit être supérieur à 0')
+    .required('Veuillez renseigner un budget'),
+});
+
+const schemaPage3 = yup.object({
+  services: yup
+    .array()
+    .of(
+      yup.object({
+        selectedSector: yup.string().required('Choisissez un secteur'),
+        selectedServiceId: yup.string().required('Choisissez un service'),
+      })
+    )
+    .min(1, 'Ajoutez au moins un service'),
+});
+
+const finalDateSelection = computed(() => {
+  return [dateStart.value, dateEnd.value];
+});
 
 const budgetCalculation = computed(() => {
   return isBudgetGlobale.value ? budgetInput.value : budgetInput.value * people.value;
@@ -327,6 +360,7 @@ const chooseEventTypeDependingOnUserCategory = computed(() => {
 const customerResponse = computed(() => {
   return {
     organisatorUuid: clientProfile.value?.uuid,
+    type_event: type_event.value,
     event_type: chooseEventTypeDependingOnUserCategory.value,
     name: name.value,
     date: finalDateSelection.value,
@@ -488,10 +522,70 @@ const getQuestionOptions = (sectionIndex: number) => {
   return section.reponses;
 };
 
-const handleSubmit = async () => {
-  await submitEvent(customerResponse.value);
+const nextPage = () => {
+  // Détermine le schéma correspondant à la page
+  let schema;
+  if (currentPage.value === 1) {
+    schema = schemaPage1;
+  } else if (currentPage.value === 2) {
+    schema = schemaPage2;
+  }
+  if (schema) {
+    schema
+      .validate(
+        {
+          type_event: type_event.value,
+          name: name.value,
+          dateStart: dateStart.value,
+          dateEnd: dateEnd.value,
+          location: location.value,
+          group_type: group_type.value,
+          duration: duration.value,
+          organized_for: organized_for.value,
+          theme: theme.value,
+          people: people.value,
+          budgetInput: budgetInput.value,
+        },
+        { abortEarly: false }
+      )
+      .then(() => {
+        if (currentPage.value < 3) currentPage.value++;
+      })
+      .catch((err: any) => {
+        if (err.errors && Array.isArray(err.errors)) {
+          err.errors.forEach((msg: string) => addError({ message: msg }));
+        } else {
+          addError({ message: err.message });
+        }
+      });
+  } else {
+    if (currentPage.value < 3) currentPage.value++;
+  }
+};
 
+const handleSubmit = async () => {
+  try {
+    await schemaPage3.validate(
+      {
+        services: selectedServices.value.map((srv) => ({
+          selectedSector: srv.selectedSector,
+          selectedServiceId: srv.selectedServiceId,
+        })),
+      },
+      { abortEarly: false }
+    );
+  } catch (validationError: any) {
+    if (validationError.errors && Array.isArray(validationError.errors)) {
+      validationError.errors.forEach((msg: string) => addError({ message: msg }));
+    } else {
+      addError({ message: validationError.message || 'Une erreur est survenue.' });
+    }
+    return;
+  }
+  // Envoie du formulaire : UseEvent gère l’affichage des toasts de succès/erreur
+  await submitEvent(customerResponse.value);
   if (!error.value) {
+    addSuccess('Votre évènement a été créé avec succès');
     openCustomerForm.value = false;
   }
 };
@@ -499,6 +593,7 @@ const handleSubmit = async () => {
 onMounted(async () => {
   const responses = await getEventsInstance(props.event.uuid);
   const normalizedAnswer = responses.$attributes;
+  console.log(responses, 'RESPONSES');
 
   type_event.value = normalizedAnswer.type_event ?? '';
   eventType.value = normalizedAnswer.event_type ?? '';

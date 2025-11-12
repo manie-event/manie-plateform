@@ -108,7 +108,7 @@
             </template>
             <template #description>
               <p class="text-subtitle-1">
-                Veuillez vous positionner sur au moins une proposition pour accéder à cette section
+                Veuillez vous positionner sur au moins une annonce pour accéder à cette section
               </p>
             </template>
           </BaseEmptyState>

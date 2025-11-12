@@ -12,6 +12,7 @@ export const eventsStore = defineStore('eventsStore', () => {
 
   const setEventsByOrganisator = (newEvents: eventModel[]) => {
     events.value = newEvents;
+    console.log(events.value, 'EVENTS');
   };
 
   const setQuestionnaireAnswers = (newAnswers: eventModel) => {
