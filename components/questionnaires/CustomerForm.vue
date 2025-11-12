@@ -500,7 +500,7 @@ onMounted(async () => {
   const responses = await getEventsInstance(props.event.uuid);
   const normalizedAnswer = responses.$attributes;
 
-  type_event = normalizedAnswer.type_event ?? '';
+  type_event.value = normalizedAnswer.type_event ?? '';
   eventType.value = normalizedAnswer.event_type ?? '';
   name.value = normalizedAnswer.name ?? '';
   location.value = normalizedAnswer.location ?? '';

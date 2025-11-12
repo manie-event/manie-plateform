@@ -207,6 +207,7 @@ const footerContact: FooterType[] = [
     description: '',
     link: undefined,
   },
+  { titre: 'Charte de bonne conduite', description: '', link: '/juridique/charteBonneConduite' },
   {
     titre: 'Conditions Générales de Ventes',
     description: '',

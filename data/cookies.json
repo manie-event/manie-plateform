@@ -1,11 +1,11 @@
 [
   {
     "sectionTitle": "Politique de Cookies",
-    "sectionDescription": "Lors de votre navigation sur la plateforme MANIE, des cookies peuvent être déposés sur votre appareil (ordinateur, tablette ou smartphone) pour améliorer votre navigation sur la plateforme.",
+    "sectionDescription": "Lors de votre navigation, des cookies peuvent être déposés sur votre appareil (ordinateur, tablette ou smartphone) pour améliorer votre navigation sur la plateforme.",
     "sections": [
       {
         "title": "1. Qu’est-ce qu’un cookie ?",
-        "description": "Un cookie est un petit fichier texte enregistré sur votre appareil lorsque vous consultez un site web. Il permet notamment de mémoriser vos préférences, de mesurer l’audience ou encore de faciliter votre navigation."
+        "description": "Un cookie est un petit fichier texte enregistré sur votre appareil lorsque vous consultez un site web. <br> Il permet notamment de mémoriser vos préférences, de mesurer l’audience ou encore de faciliter votre navigation."
       },
       {
         "title": "2. Quels cookies utilisons-nous ?",
@@ -13,7 +13,7 @@
       },
       {
         "title": "3. Consentement",
-        "description": "Vous pouvez accepter ou refuser les cookies depuis le bandeau prévu à cet effet.<br>Lors de votre première visite, un bandeau d’information vous informe de l’utilisation des cookies. Vous avez alors la possibilité de :<ul><li>Accepter tous les cookies</li><li>Refuser tous les cookies non essentiels</li><li>Personnaliser vos préférences</li></ul>Vous pouvez modifier votre choix à tout moment via le lien « Gérer mes cookies »."
+        "description": "Vous pouvez accepter ou refuser les cookies depuis le bandeau prévu à cet effet.<br>Lors de votre première visite, un bandeau d’information vous informe de l’utilisation des cookies. <br> Vous avez alors la possibilité de :<ul><li>Accepter tous les cookies</li><li>Refuser tous les cookies non essentiels</li><li>Personnaliser vos préférences</li></ul><br>Vous pouvez modifier votre choix à tout moment via le lien « Gérer mes cookies »."
       },
       {
         "title": "4. Durée de conservation",
@@ -21,7 +21,7 @@
       },
       {
         "title": "5. Gestion des cookies",
-        "description": "Vous pouvez configurer votre navigateur pour bloquer ou supprimer les cookies. Attention : le blocage de certains cookies peut altérer le fonctionnement optimal du site."
+        "description": "Vous pouvez configurer votre navigateur pour bloquer ou supprimer les cookies.<br> Attention : le blocage de certains cookies peut altérer le fonctionnement optimal du site."
       },
       {
         "title": "6. Contact",
