@@ -18,9 +18,7 @@ export const formatDate = (dates: (string | Date)[]) => {
     return format(dateObj, 'dd MMM yyyy', { locale: fr });
   });
 
-  return formatted.length === 1
-    ? formatted[0]
-    : `du ${formatted[0]} au ${formatted[formatted.length - 1]}`;
+  return `du ${formatted[0]} au ${formatted[1]}`;
 };
 export const dateCounter = (date: string) => {
   const today = new Date();

@@ -15,11 +15,9 @@
               <p><b>Nombre de convives:</b> {{ proposition.people }} personnes</p>
               <p><b>Dans quel département:</b> {{ proposition.location }}</p>
 
-              <p>
-                <b>Du </b>{{ formatDate(proposition.date)[0] }} <b>au</b>
-                {{ formatDate(proposition.date)[1] }}
-              </p>
-              <p><b>Le budget:</b> {{ proposition.budget }}€</p>
+              <p></p>
+              <p><b>A quelle date:</b> {{ formatDate(proposition.date) }}</p>
+              <p><b>Le budget global:</b> {{ proposition.budget }}€</p>
               <v-chip
                 v-for="word in getKeywordValues(proposition.keywordsUuid)"
                 :key="word"

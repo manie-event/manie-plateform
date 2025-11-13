@@ -12,11 +12,9 @@
       <!-- Contenu -->
       <v-card-text class="py-6 px-6">
         <!-- Section principale -->
-        <div class="pp-info-grid">
-          <div>
-            <span class="pp-label">Description :</span>
-            <p class="pp-value">{{ props.pprofile.bio }}</p>
-          </div>
+        <div>
+          <span class="pp-label">Description :</span>
+          <p class="pp-value">{{ props.pprofile.bio }}</p>
         </div>
 
         <!-- Infos entreprise -->
@@ -29,10 +27,6 @@
           <div>
             <span class="pp-label">Email :</span>
             <p class="pp-value">{{ props.pprofile.email }}</p>
-          </div>
-          <div>
-            <span class="pp-label">Zone géographique :</span>
-            <p class="pp-value">{{ props.pprofile.geographicArea }}</p>
           </div>
         </div>
 

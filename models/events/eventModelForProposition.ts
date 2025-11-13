@@ -1,5 +1,6 @@
 export interface EventModelForProposition {
   id: number;
+  eventType: string;
   uuid: string;
   organisator_uuid: string;
   status: string;

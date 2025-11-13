@@ -1,17 +1,18 @@
 <template>
-  <VCard elevation="2" class="mb-16">
+  <v-card elevation="2" class="mb-16">
     <v-card-text>
       <div class="d-flex align-center justify-space-between">
         <div>
           <h5 class="text-h6 mb-1 font-weight-semibold">Vos propositions en cours</h5>
         </div>
       </div>
+
+      <!-- Table des propositions -->
       <div class="month-table" v-if="selectedProposition.length > 0">
         <v-table class="mt-5 mb-0">
           <template v-slot:default>
             <thead>
               <tr>
-                <!-- A voir pour changer avec nom de la personne -->
                 <th class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap">
                   Nom de l'évènement
                 </th>
@@ -43,7 +44,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in selectedProposition" :key="item.id" class="month-item">
+              <tr v-for="item in selectedProposition" :key="item.uuid" class="month-item">
                 <td>
                   <div class="d-flex align-center">
                     <div class="mr-4">
@@ -58,8 +59,7 @@
                     class="text-subtitle-1 font-weight-medium text-no-wrap text-grey200"
                     v-if="Array.isArray(item.date) && item.date.length"
                   >
-                    Du <b>{{ formatDate(item.date)[0] }}</b> au
-                    <b>{{ formatDate(item.date)[1] }}</b>
+                    {{ formatDate(item.date) }}
                   </h5>
                 </td>
                 <td v-if="!isMobile">
@@ -78,26 +78,29 @@
                     variant="outlined"
                     size="x-small"
                     :color="getStatusColor(item.proposition.status)"
-                    >{{ getStatusName(item.proposition.status) }}</v-chip
                   >
+                    {{ getStatusName(item.proposition.status) }}
+                  </v-chip>
                 </td>
                 <td>
-                  <v-btn color="primary" @click="findSelectedProposition(item.proposition.uuid)"
-                    >voir plus+</v-btn
+                  <v-btn
+                    color="rgb(var(--v-theme-darkbg))"
+                    style="color: rgb(var(--v-theme-background))"
+                    @click="findSelectedProposition(item.proposition.uuid)"
                   >
+                    voir plus
+                  </v-btn>
                 </td>
               </tr>
             </tbody>
           </template>
         </v-table>
       </div>
+
+      <!-- État vide -->
       <div v-else class="position-relative">
         <v-col cols="12" class="mt-6">
-          <BaseEmptyState
-            :style="{
-              position: 'relative',
-            }"
-          >
+          <BaseEmptyState :style="{ position: 'relative' }">
             <template #image>
               <EmptyState
                 :style="{ color: svgColor }"
@@ -115,9 +118,11 @@
         </v-col>
       </div>
     </v-card-text>
-  </VCard>
+  </v-card>
+
+  <!-- Modale de détails de proposition -->
   <Teleport to="body">
-    <PropositionDetails
+    <PropositionDetailsForPresta
       v-if="selectedPropositionInformation"
       v-model:open-proposition-detail="openMarketModal"
       :selectedProposition="selectedPropositionInformation"
@@ -125,20 +130,55 @@
     <errorToaster></errorToaster>
   </Teleport>
 </template>
+
 <script setup lang="ts">
 import BaseEmptyState from '@/components/common/BaseEmptyState.vue';
 import errorToaster from '@/components/common/errorToaster.vue';
 import EmptyState from '@/public/images/empty-state/no-proposition-presta.svg';
-import { Teleport } from 'vue';
+import { storeToRefs } from 'pinia';
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
+import { useCustomizerStore } from '~/stores/customizer';
 import { usePropositionStore } from '~/stores/propositionStore';
-import PropositionDetails from './PropositionDetails.vue';
+import PropositionDetailsForPresta from './PropositionDetailsForPresta.vue';
 
-const { setPropositions } = usePropositionStore();
+const customizer = useCustomizerStore();
+const svgColor = computed(() => {
+  return customizer.actTheme === 'DARK_BLUE_THEME' ? '#FFFFFF' : '#000000';
+});
+
+// Récupération des propositions depuis le store
 const { serviceEventProposition } = storeToRefs(usePropositionStore());
 
 const isMobile = ref(window.innerWidth < 960);
+const handleResize = () => {
+  isMobile.value = window.innerWidth < 960;
+};
+onMounted(() => {
+  handleResize();
+  window.addEventListener('resize', handleResize);
+});
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize);
+});
 
+// Sélection de propositions ayant un message de la part du pro
+const selectedProposition = computed(() =>
+  serviceEventProposition.value.filter((p) => p.proposition?.professionalMessage)
+);
+
+// Gère l'ouverture de la modale de détail
+const selectedPropositionInformation = ref<EventModelForProposition>();
+const openMarketModal = ref(false);
+
+const findSelectedProposition = (propositionUuid: string) => {
+  selectedPropositionInformation.value = serviceEventProposition.value.find(
+    (p) => p.proposition.uuid === propositionUuid
+  );
+  openMarketModal.value = true;
+};
+
+// Fonctions auxiliaires pour le statut
 const getStatusColor = (status: string) => {
   switch (status) {
     case 'pending':
@@ -153,7 +193,6 @@ const getStatusColor = (status: string) => {
       return 'grey';
   }
 };
-
 const getStatusName = (status: string) => {
   switch (status) {
     case 'pending':
@@ -164,41 +203,8 @@ const getStatusName = (status: string) => {
       return 'Accepté';
     case 'cancelled':
       return 'Refusé';
+    default:
+      return '';
   }
 };
-
-const getDate = (date: string[]) => (Array.isArray(date) ? formatDate(date) : undefined);
-const customizer = useCustomizerStore();
-const selectedPropositionInformation = ref<EventModelForProposition>();
-const openMarketModal = ref(false);
-
-const svgColor = computed(() => {
-  return customizer.actTheme === 'DARK_BLUE_THEME' ? '#FFFFFF' : '#000000';
-});
-
-const findSelectedProposition = (propositionUuid: string) => {
-  selectedPropositionInformation.value = serviceEventProposition.value.find(
-    (p) => p.proposition.uuid === propositionUuid
-  );
-
-  openMarketModal.value = true;
-};
-const selectedProposition = computed(() => {
-  return serviceEventProposition.value.filter(
-    (proposition: EventModelForProposition) => proposition.proposition.professionalMessage
-  );
-});
-
-const handleResize = () => {
-  isMobile.value = window.innerWidth < 680;
-};
-
-onBeforeUnmount(() => {
-  window.removeEventListener('resize', handleResize);
-});
-
-onMounted(() => {
-  handleResize();
-  window.addEventListener('resize', handleResize);
-});
 </script>

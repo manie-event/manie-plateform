@@ -593,7 +593,6 @@ const handleSubmit = async () => {
 onMounted(async () => {
   const responses = await getEventsInstance(props.event.uuid);
   const normalizedAnswer = responses.$attributes;
-  console.log(responses, 'RESPONSES');
 
   type_event.value = normalizedAnswer.type_event ?? '';
   eventType.value = normalizedAnswer.event_type ?? '';
