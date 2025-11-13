@@ -19,7 +19,6 @@ export const useProfessionalService = () => {
       return data ?? [];
     } catch (error: any) {
       console.error('❌ getProfessionalService:', error);
-      addError({ message: 'Une erreur est survenue lors de la récupération des services.' });
     }
   };
 
@@ -36,7 +35,6 @@ export const useProfessionalService = () => {
       return data.data ?? [];
     } catch (error: any) {
       console.error('❌ getListProfessionalServiceByProfessional:', error);
-      addError({ message: 'Une erreur est survenue lors de la récupération des services.' });
     }
   };
 

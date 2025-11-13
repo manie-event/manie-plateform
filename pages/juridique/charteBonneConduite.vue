@@ -5,7 +5,7 @@
   </div>
   <div v-for="section in CharteBonneConduite.sections" class="charte__section">
     <h3>{{ section.subtitle }}</h3>
-    <p>{{ section.description }}</p>
+    <p v-html="section.description"></p>
   </div>
 </template>
 <script setup lang="ts">

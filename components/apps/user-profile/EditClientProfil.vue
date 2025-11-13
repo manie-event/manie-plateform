@@ -79,7 +79,14 @@
           :error-messages="showErrors ? errors.country : undefined"
         />
 
-        <v-btn color="primary" class="mt-6" @click="onSubmit" :loading="isSubmitting" block>
+        <v-btn
+          color="rgb(var(--v-theme-darkbg))"
+          style="color: rgb(var(--v-theme-background))"
+          class="mt-6"
+          @click="onSubmit"
+          :loading="isSubmitting"
+          block
+        >
           Valider le profil
         </v-btn>
       </v-form>
@@ -196,7 +203,10 @@ const onSubmit = handleSubmit(async (values) => {
     openModal.value = false;
     showErrors.value = false;
   } catch (error) {
-    addError({ message: 'Une erreur est survenue lors de la mise à jour du profil.' });
+    if (!clientProfile.value?.uuid) {
+      addError({ message: 'Le profil utilisateur est introuvable.' });
+      return;
+    }
   } finally {
     isSubmitting.value = false;
   }
@@ -206,7 +216,11 @@ const onSubmit = handleSubmit(async (values) => {
 onMounted(async () => {
   try {
     if (!clientProfile.value?.uuid) {
-      await getClientProfil();
+      const profil = await getClientProfil();
+      if (!profil) {
+        console.warn('Aucun profil trouvé pour cet utilisateur.');
+        return; // on arrête ici, pas de setValues
+      }
     }
 
     const data = clientProfile.value;
@@ -228,7 +242,8 @@ onMounted(async () => {
         isBusiness: data.isBusiness || false,
       });
     }
-  } catch {
+  } catch (e) {
+    console.error('Erreur lors du chargement du profil :', e);
     addError({ message: 'Erreur lors du chargement du profil.' });
   }
 });

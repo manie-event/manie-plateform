@@ -16,20 +16,6 @@ const { getClientProfil } = useClientProfil();
 const userStore = useUserStore();
 const { isProfessional, category, displayName, initials } = storeToRefs(userStore);
 const { cartQuantity } = storeToRefs(useCartStore());
-
-onMounted(async () => {
-  try {
-    if (isProfessional.value) {
-      await getProfessionalProfile();
-      await getProfessionalProfileDetails();
-      await getJetonQuantity();
-    } else {
-      await getClientProfil();
-    }
-  } catch (e) {
-    console.warn('Erreur chargement profil header:', e);
-  }
-});
 </script>
 
 <template>

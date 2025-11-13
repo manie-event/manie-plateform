@@ -9,8 +9,13 @@
         @click="dialogOpen = false"
       />
       <!-- Services existants -->
-      <v-alert color="warning" class="w-auto p-5 mb-5">
-        Chaque secteur sélectionné ne pourra pas être modifié une fois la mise en relation commencée
+      <v-alert
+        color="rgb(var(--v-theme-darkbg))"
+        style="color: rgb(var(--v-theme-background)); min-height: 50px"
+        class="w-auto p-5 mb-5"
+      >
+        Chaque secteur d'activité sélectionné ne pourra pas être modifié une fois la mise en
+        relation commencée
       </v-alert>
 
       <div v-for="(service, serviceIndex) in selectedServices" :key="serviceIndex" class="mb-6">
@@ -28,13 +33,14 @@
         </div>
 
         <div>
-          <h4>De quoi avez-vous besoin&nbsp;?</h4>
+          <h4>De quoi avez-vous besoin?</h4>
           <v-select
             v-model="service.selectedSector"
             :items="sectorFiltered"
             item-title="label"
             item-value="value"
             clearable
+            class="my-3"
             placeholder="Sélectionnez un secteur"
             @update:modelValue="updateServiceSector(serviceIndex, service.selectedSector)"
           />
@@ -51,7 +57,12 @@
             <v-btn
               v-for="answer in question.answers"
               :key="answer.uuid"
-              :color="service.selectedServiceId === answer.uuid ? 'primary' : 'default'"
+              :color="
+                service.selectedServiceId === answer.uuid ? 'rgb(var(--v-theme-darkbg))' : 'default'
+              "
+              :style="{
+                color: service.selectedServiceId === answer.uuid ? 'white' : 'black',
+              }"
               :variant="service.selectedServiceId === answer.uuid ? 'flat' : 'outlined'"
               @click="selectServiceForIndex(serviceIndex, answer.uuid)"
             >
@@ -62,7 +73,10 @@
             <v-chip
               v-for="answer in question.answers"
               :key="answer.id"
-              :color="service.selectedKeywords.includes(answer.uuid) ? 'green' : 'grey'"
+              :color="service.selectedKeywords.includes(answer.uuid) ? '#f39454' : 'grey'"
+              :style="{
+                color: service.selectedKeywords.includes(answer.uuid) ? 'white' : 'black',
+              }"
               :variant="service.selectedKeywords.includes(answer.uuid) ? 'flat' : 'outlined'"
               @click="toggleKeywordForService(serviceIndex, answer.uuid)"
             >
@@ -72,14 +86,22 @@
         </div>
       </div>
 
-      <div class="mt-4">
-        <v-btn color="primary" variant="outlined" @click="addNewService">
+      <div class="d-flex justify-space-between align-center">
+        <v-btn
+          color="rgb(var(--v-theme-darkbg))"
+          variant="outlined"
+          class="w-auto"
+          @click="addNewService"
+        >
           Ajouter un nouveau service
         </v-btn>
-      </div>
 
-      <div class="add-event">
-        <v-btn @click="addNewEventService" color="primary">
+        <v-btn
+          @click="addNewEventService"
+          color="rgb(var(--v-theme-darkbg))"
+          style="color: rgb(var(--v-theme-background))"
+          class="w-auto"
+        >
           Ajouter mes nouveaux services à mon événement
         </v-btn>
       </div>

@@ -118,6 +118,7 @@
                 <td
                   v-if="item.propositionStatus === 'completed' && !isMobile"
                   @click="confirmedProposition(item.eventServiceUuid)"
+                  class="d-flex justify-end align-center"
                 >
                   <v-btn
                     color="rgb(var(--v-theme-darkbg))"
@@ -181,7 +182,7 @@
     </div>
   </div>
   <Teleport to="body">
-    <PropositionDetails
+    <PropositionDetailsForClient
       v-if="selectedPropositionDetail"
       v-model:open-proposition-detail="openMarketModal"
       :selectedProposition="selectedPropositionDetail"
@@ -207,8 +208,8 @@ import { useProfessionalProfile } from '~/composables/professional-user/UseProfe
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
 import type { ClientServiceProposition } from '~/models/propositions/client-service-proposition';
 import { useCustomizerStore } from '../../../stores/customizer';
-import PropositionDetails from '../dashboard2/PropositionDetails.vue';
 import ProfessionalProfil from './ProfessionalProfil.vue';
+import PropositionDetailsForClient from './PropositionDetailsForClient.vue';
 
 const props = defineProps<{
   currentPropositions: ClientServiceProposition[];

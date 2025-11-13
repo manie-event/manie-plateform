@@ -119,11 +119,10 @@ const { $gsap, $ScrollTrigger } = useNuxtApp();
   &__picture-container {
     position: relative;
     top: -40px;
-    height: 700px;
   }
   &__party-picture {
     width: 70vw;
-    height: 100vh;
+    height: auto;
     z-index: -1;
     border-radius: 10px;
     -o-object-fit: cover;
@@ -131,7 +130,7 @@ const { $gsap, $ScrollTrigger } = useNuxtApp();
     z-index: 1;
     border-radius: 10px;
     position: absolute;
-    top: 10vh;
+    top: 0vh;
     right: -3vw;
     opacity: 0.1;
   }
@@ -169,7 +168,9 @@ const { $gsap, $ScrollTrigger } = useNuxtApp();
       top: 20px;
     }
     &__party-picture {
-      height: 50vh;
+      top: 0vh;
+      width: 100vw;
+      left: 10vw;
     }
     h2 {
       font-size: 0.8rem;

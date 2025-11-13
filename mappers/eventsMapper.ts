@@ -4,6 +4,7 @@ import type { eventModel } from '~/models/events/eventModel';
 export const eventsMapper = () => {
   const mapDtoToEvent = (event: eventModelDto): eventModel => {
     return {
+      typeEvent: event.typeEvent,
       uuid: event.uuid,
       organisatorUuid: event.organisatorUuid,
       isAlreadyCreated: true,

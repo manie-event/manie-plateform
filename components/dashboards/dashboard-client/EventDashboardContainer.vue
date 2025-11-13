@@ -3,7 +3,7 @@
     <div class="d-flex gap-3">
       <div v-for="event in props.events" :key="event.uuid" class="d-flex">
         <v-btn @click="selectedEvent(event.uuid)" class="event-dashboard__btn mb-6">
-          {{ event.name }}
+          {{ event.typeEvent }}
         </v-btn>
       </div>
     </div>
@@ -149,12 +149,9 @@ const getPropositionsByEvent = computed(() => {
   return professionalResponseProposition.value.filter((proposition) => {
     const p = proposition as unknown as Record<string, any>;
 
-    // If proposition explicitly references the event UUID
     if ('eventUuid' in p) {
       return p.eventUuid === eventUuid;
     }
-
-    // Otherwise, if proposition references an event service, match against current event's services
     if ('eventServiceUuid' in p && Array.isArray(currentEvent.value?.eventServices)) {
       return currentEvent.value?.eventServices.some((es: any) => es.uuid === p.eventServiceUuid);
     }
