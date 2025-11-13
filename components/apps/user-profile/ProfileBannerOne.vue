@@ -108,6 +108,7 @@ const { professionalUser, user, isProfileCreated, initials } = storeToRefs(useUs
 const { changeProfessionalBannerPicture, getProfessionalProfile } = useProfessionalProfile();
 const { getJetonQuantity } = usePaiementJeton();
 const { getListProfessionalServiceByProfessional } = useProfessionalService();
+const { addSuccess } = useToaster();
 
 const openModal = ref(false);
 const openServiceModal = ref(false);
@@ -118,7 +119,14 @@ const changeBannerPhoto = async (e: Event) => {
   const input = e.target as HTMLInputElement;
   if (!input.files?.length) return;
   const picture = input.files[0];
-  await changeProfessionalBannerPicture(picture);
+  try {
+    await changeProfessionalBannerPicture(picture);
+
+    addSuccess('La photo de profil a été mis à jour');
+    await getProfessionalProfile();
+  } catch (err) {
+    console.error('Erreur lors du changement de bannière :', err);
+  }
 };
 
 const getServiceValues = computed(
@@ -128,7 +136,6 @@ const getServiceValues = computed(
 onMounted(async () => {
   await getProfessionalProfile();
   const proService = await getListProfessionalServiceByProfessional();
-  console.log(proService, 'Proservice');
   if (proService.length > 0) {
     isFirstTime.value = proService.some((service) => service.isVerified === false);
   }

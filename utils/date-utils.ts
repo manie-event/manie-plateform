@@ -10,13 +10,16 @@ export const isEventDone = (date: string) => {
   return isEventAlreadyPast;
 };
 
-export const formatDate = (dates: string[]) => {
+export const formatDate = (dates: (string | Date)[]) => {
   if (!dates || !dates.length) return '';
-  const formatted = dates.map((d) => format(parseISO(d), 'dd MMM yyyy', { locale: fr }));
-  if (formatted.length === 1) return formatted[0];
-  return `du ${formatted[0]} au ${formatted[formatted.length - 1]}`;
-};
 
+  const formatted = dates.map((d) => {
+    const dateObj = typeof d === 'string' ? parseISO(d) : d;
+    return format(dateObj, 'dd MMM yyyy', { locale: fr });
+  });
+
+  return `du ${formatted[0]} au ${formatted[1]}`;
+};
 export const dateCounter = (date: string) => {
   const today = new Date();
 

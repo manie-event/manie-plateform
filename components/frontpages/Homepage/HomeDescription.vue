@@ -63,7 +63,7 @@
   </v-row>
   <Teleport to="body">
     <v-dialog v-model="greenModal" max-width="600">
-      <v-card max-width="600">
+      <v-card max-width="600" class="pa-6">
         <v-card-text
           style="
             background: rgb(var(-v-theme-background));
@@ -75,11 +75,11 @@
           "
         >
           <Icon icon="teenyicons:plant-outline" height="40" width="40" color="#125605"></Icon>
-          <p>
+          <p class="">
             Chez Manie, l’éco-responsabilité n'est pas un slogan, ni un argument marketing. C’est
             une valeur ancrée dans nos choix et nos collaborations. Nos partenaires partagent cette
             exigence, marque de respect et de bon sens. On ne le revendique pas pour se distinguer,
-            on le fait, tout simplement. C’est une conviction. Commencer par “chez manie”
+            on le fait, tout simplement. C’est une conviction.
           </p>
 
           <v-btn @click="greenModal = false" color="#125605">Fermer </v-btn>

@@ -3,11 +3,13 @@
     <v-card>
       <v-card-text>
         <h4>Présentez votre offre au client:</h4>
-        <v-form @submit.prevent>
+        <v-form ref="form" v-model="isValid" @submit.prevent>
           <v-textarea
             v-model="message.description"
             label="Votre offre ici"
             placeholder="Veuillez renseigner votre offre et votre proposition de prix"
+            counter="255"
+            :rules="[rules.required, rules.max255]"
           ></v-textarea>
           <p>
             Votre fourchette de prix se trouve entre
@@ -60,6 +62,8 @@ const { addSuccess } = useToaster();
 const emit = defineEmits(['message-sent']);
 
 const isOpen = defineModel<boolean>('is-proposition-accepted', { default: false });
+const isValid = ref(false);
+const form = ref();
 
 const { getServicePropositionForProfessional } = useEventServiceProposition();
 const { updateProfessionalMessage } = useProfessionalProposition();
@@ -69,7 +73,16 @@ const message = ref({
   fourchetteB: 1,
 });
 
+const rules = {
+  required: (v: string) => !!v || 'Ce champ est obligatoire',
+  max255: (v: string) =>
+    (v && v.length <= 255) || 'Votre texte ne doit pas dépasser 255 caractères',
+};
+
 const sendMessage = async () => {
+  const { valid } = await form.value.validate();
+  if (!valid) return;
+
   const messageAllTogether = message.value.description.concat(
     ' fourchette basse ' + message.value.fourchetteB,
     ' fourchette haute ' + message.value.fourchetteH

@@ -8,6 +8,8 @@ export const useProfessionalProposition = () => {
       const { data } = await api.get(
         `/event-service-proposition/${professionalServiceUuid}/show-event-service-for-professional`
       );
+      console.log('getListEventServiceProposition', data);
+
       return data;
     } catch (error) {
       console.error('❌ Erreur getListEventServiceProposition:', error);
@@ -52,8 +54,6 @@ export const useProfessionalProposition = () => {
       addSuccess('Félicitations, vous vous êtes positionné sur cet évènement 🎉');
       return data;
     } catch (error: any) {
-      console.log(error, 'updateProfessionalMessage');
-
       addError({
         message: error.response.data.message || 'Erreur lors de la mise à jour du message.',
       });

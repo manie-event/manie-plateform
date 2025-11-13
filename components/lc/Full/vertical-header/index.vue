@@ -47,10 +47,7 @@ onBeforeUnmount(() => {
       </div>
 
       <!-- Actions desktop -->
-      <div
-        class="menu-dashboard__right-part d-none d-md-flex align-center"
-        v-if="clientProfile || professionalUser"
-      >
+      <div class="menu-dashboard__right-part d-none d-md-flex align-center">
         <div class="d-flex mr-10">
           <LcFullVerticalHeaderThemeToggler />
           <v-menu v-if="isProfessional" :close-on-content-click="false" class="notification_popup">

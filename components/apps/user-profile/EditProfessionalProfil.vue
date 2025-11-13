@@ -65,14 +65,14 @@
             :error-messages="showErrors ? errors.experience : undefined"
           />
 
-          <v-select
+          <!-- <v-select
             label="Votre secteur géographique ?"
             v-model="profile.geographicArea"
             :items="geographicActivity"
             item-title="label"
             item-value="value"
             :error-messages="showErrors ? errors.geographicArea : undefined"
-          />
+          /> -->
 
           <div>
             <div
@@ -118,7 +118,7 @@
             v-model="reservationDelay"
             :error-messages="showErrors ? errors.minimumReservationPeriod : undefined"
           />
-          <div class="d-flex gap-2 text-subtitle-1 mb-3">
+          <div class="d-flex gap-2 text-subtitle-1 mb-3 justify-center">
             <p>Un acompte est nécessaire à la réservation d’une prestation</p>
           </div>
           <v-number-input
@@ -234,7 +234,11 @@
         <div v-if="currentPage === 1" class="d-flex justify-space-between edit-professional__btn">
           <v-btn
             @click="openModal = false"
-            style="border: 1px solid rgb(var(--v-theme-darkbg)); color: rgb(var(--v-theme-darkbg))"
+            style="
+              border: 1px solid rgb(var(--v-theme-darkbg));
+              background: rgb(var(--v-theme-background));
+              color: rgb(var(--v-theme-darkbg));
+            "
             >Annuler</v-btn
           >
           <v-btn
@@ -361,7 +365,7 @@ const {
     mainActivity: 'Veuillez choisir votre activité',
     mainInterlocutor: '',
     experience: 0,
-    geographicArea: geographicActivity.value[0]?.label ?? '',
+    geographicArea: geographicActivity.value[0]?.label,
     faq: {},
     minimumReservationPeriod: 0,
     certification: [''],
@@ -424,7 +428,6 @@ const createProfile = async (values: ProfessionalProfile) => {
     if (response.message === 'Professional created') {
       addSuccess('Votre profil a été créé avec succès');
       openModal.value = false;
-      isProfilUpdate.value = true;
     } else {
       addError({ message: 'La création du profil a échoué.' });
     }
@@ -437,6 +440,7 @@ const modifyProfile = async (newValues: ProfessionalProfile) => {
   try {
     const payload = {
       ...newValues,
+      uuid: professionalUser.value?.uuid,
       faq: mergedFaq.value || {},
       minimumReservationPeriod: minimumDaysReservation.value,
       links: profile.links.filter((link) => link.type.trim() && link.value.trim()),
@@ -469,6 +473,12 @@ const handleClose = async () => {
 };
 
 onMounted(() => {
+  if (!professionalUser.value) {
+    console.warn("Aucun profil pro trouvé — l'utilisateur va devoir en créer un.");
+    isProfileCreated.value = false;
+    return;
+  }
+
   if (professionalUser.value) {
     const isBooleanBillingPeriod =
       typeof professionalUser.value.billingPeriod === 'boolean'

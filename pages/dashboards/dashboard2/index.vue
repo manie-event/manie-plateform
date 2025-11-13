@@ -6,20 +6,23 @@ import WelcomeCard from '@/components/dashboards/dashboard2/WelcomeCard.vue';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
 import { storeToRefs } from 'pinia';
 import { useEventServiceProposition } from '~/composables/event-service-propositions/UseEventServiceProposition';
+import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { useUserStore } from '~/stores/userStore';
 
 const userStore = useUserStore();
-const { user, isProfileCreated, isProfessional } = storeToRefs(userStore);
-const { getProfessionalProfileDetails } = useProfessionalProfile();
+const { isProfileCreated, isProfessional } = storeToRefs(userStore);
+const { getProfessionalProfileDetails, getProfessionalProfile } = useProfessionalProfile();
 const { getServicePropositionForProfessional } = useEventServiceProposition();
+const { getJetonQuantity } = usePaiementJeton();
 
 onMounted(async () => {
   isProfessional.value = true;
-  if (isProfileCreated.value && isProfessional.value) {
-    await getProfessionalProfileDetails();
-    await getServicePropositionForProfessional();
-  }
+
+  await getProfessionalProfile();
+  await getProfessionalProfileDetails();
+  await getServicePropositionForProfessional();
+  await getJetonQuantity();
 });
 </script>
 

@@ -69,13 +69,7 @@ export const useAuthentification = () => {
       addSuccess('Connexion réussie.');
       // Redirection par rôle
       if (user.category === 'consumer') {
-        await Promise.all([
-          getAllSectors(),
-          getKeywords(),
-          getProfessionalService(),
-          await getClientProfil(),
-          await getEventsPerOrganisator(),
-        ]);
+        await Promise.all([await getClientProfil(), await getEventsPerOrganisator()]);
 
         await router.push({ path: '/dashboards/dashboard-client' });
       } else {
@@ -167,7 +161,6 @@ export const useAuthentification = () => {
       userStore.resetUserStore();
 
       await router.push('/');
-      addSuccess('Déconnexion réussie.');
     } catch (error: unknown) {
       addError(error as errorModel);
     }

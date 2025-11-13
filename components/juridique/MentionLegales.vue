@@ -39,7 +39,7 @@
           class="text-white font-semibold px-8 py-3 rounded-pill"
           @click="validatingConditions"
         >
-          Je valide les metions légales.
+          Je valide les mentions légales.
         </v-btn>
       </v-card-text>
     </v-card>
