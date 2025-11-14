@@ -169,31 +169,37 @@
       </div>
 
       <!-- NAVIGATION -->
-      <div class="d-flex justify-space-between mt-8">
-        <v-btn v-if="currentPage === 3 && !isLocked" variant="outlined" @click="addNewService">
-          Ajouter un service
-        </v-btn>
-
-        <v-btn v-if="currentPage > 1" variant="text" @click="currentPage--"> Précédent </v-btn>
-
-        <v-btn
-          v-if="currentPage < 3"
-          variant="flat"
-          class="bg-primary text-white"
-          @click="nextPage"
-        >
-          Suivant
-        </v-btn>
-
-        <v-btn
-          v-if="currentPage === 3"
-          variant="flat"
-          class="bg-orange text-white"
-          @click="handleSubmit"
-        >
-          Mettre à jour
-        </v-btn>
-      </div>
+      <v-row class="w-100 d-flex justify-md-space-between">
+        <v-col cols="12" v-if="currentPage === 3">
+          <v-btn variant="outlined" class="w-100" @click="addNewService">
+            Ajouter un service
+          </v-btn>
+        </v-col>
+        <v-col cols="12" md="4" v-if="currentPage > 1">
+          <div class="d-flex justify-space-between w-100">
+            <v-btn variant="outlined" class="w-100" @click="currentPage--"> Précédent </v-btn>
+          </div>
+        </v-col>
+        <v-col cols="12" md="4" v-if="currentPage < 3">
+          <v-btn
+            variant="flat"
+            style="background: rgb(var(--v-theme-darkbg))"
+            class="text-white w-100"
+            @click="nextPage"
+          >
+            Suivant
+          </v-btn>
+        </v-col>
+        <v-col cols="12" md="4" v-if="currentPage === 3">
+          <v-btn
+            style="background: rgb(var(--v-theme-lightprimary))"
+            class="text-white w-100"
+            @click="handleSubmit"
+          >
+            Mettre à jour mon évènement
+          </v-btn>
+        </v-col>
+      </v-row>
     </v-card>
   </v-dialog>
 </template>
@@ -339,7 +345,7 @@ const handleSubmit = async () => {
 
     // Services : logique identique au backend
     services: locked
-      ? [] // 🔥 DOIT être un tableau vide, sinon validator KO
+      ? []
       : selectedServices.value.map((s) => ({
           serviceUuid: s.selectedServiceId,
           keywordsUuid: s.selectedKeywords,
