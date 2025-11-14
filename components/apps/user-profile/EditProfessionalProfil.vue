@@ -133,10 +133,10 @@
           />
           <div class="d-flex gap-2 flex-column justify-start align-items-start">
             <v-divider class="text-subtitle-1 font-weight-medium"
-              >Vous souhaitez être payé (restant dû) ?</v-divider
+              >Le restant dû est à régler avant ou après la prestation ?</v-divider
             >
             <div class="d-flex align-center justify-center gap-2">
-              <v-label class="text-subtitle-1 font-weight-medium">Avant la prestation</v-label>
+              <v-label class="text-subtitle-1 font-weight-medium">AVANT</v-label>
               <v-switch
                 v-model="profile.billingPeriod"
                 false-value="beforeEvent"
@@ -146,11 +146,13 @@
                 :error-messages="showErrors ? errors.billingPeriod : undefined"
                 >{{ profile.billingPeriod }}</v-switch
               >
-              <v-label class="text-subtitle-1 font-weight-medium">Après la prestation</v-label>
+              <v-label class="text-subtitle-1 font-weight-medium">APRES</v-label>
             </div>
           </div>
 
-          <v-divider class="mb-6"> <p class="mb-6">A propos de votre communication</p></v-divider>
+          <v-divider class="mb-6 edit-professional__divider">
+            <p class="mb-6">A propos de votre communication</p></v-divider
+          >
 
           <v-text-field
             label="Votre numéro de téléphone ?"
@@ -290,7 +292,7 @@ const { setProfessionalUser } = userStore;
 const { getSectors } = useKeywordsStore();
 const { createProfessionalProfile, patchProfessionalProfileDetails } = useProfessionalProfile();
 
-const openModal = defineModel<boolean>('openModal');
+const openModal = defineModel<boolean>('openModal', { default: false });
 
 const faqArray = ref<Faq[]>([]);
 const showErrors = ref(false);
@@ -448,57 +450,59 @@ const modifyProfile = async (newValues: ProfessionalProfile) => {
 
     const response = await patchProfessionalProfileDetails(payload);
 
-    const updatedProfessional = response.newPro || response.data?.professional;
+    const updatedProfessional = response.newPro || response;
 
     setProfessionalUser(updatedProfessional);
+
     addSuccess('Votre profil a été modifié avec succès');
+
     openModal.value = false;
   } catch (error: any) {
     addError({ message: error.response.data.message as any });
   }
 };
 
-watch(
-  () => openModal.value,
-  (isOpen) => {
-    if (isOpen && professionalUser.value) {
-      const isBooleanBillingPeriod =
-        typeof professionalUser.value.billingPeriod === 'boolean'
-          ? professionalUser.value.billingPeriod
-            ? 'afterEvent'
-            : 'beforeEvent'
-          : professionalUser.value.billingPeriod || 'beforeEvent';
+watch(openModal, (isOpen) => {
+  if (!isOpen) return; // ← ne rien faire quand on ferme
 
-      resetForm({
-        values: {
-          name: professionalUser.value.name ?? '',
-          siret: professionalUser.value.siret ?? '',
-          telephone: professionalUser.value.telephone ?? '',
-          address: professionalUser.value.address ?? '',
-          bio: professionalUser.value.bio ?? '',
-          mainActivity: professionalUser.value.mainActivity ?? 'Veuillez choisir votre activité',
-          mainInterlocutor: professionalUser.value.mainInterlocutor ?? '',
-          experience: professionalUser.value.experience ?? 0,
-          geographicArea:
-            professionalUser.value.geographicArea ?? geographicActivity.value[0]?.label ?? '',
-          certification:
-            Array.isArray(professionalUser.value.certification) &&
-            professionalUser.value.certification.length > 0
-              ? professionalUser.value.certification
-              : [''],
-          minimumReservationPeriod: professionalUser.value.minimumReservationPeriod ?? 0,
-          deposit: professionalUser.value.deposit ?? false,
-          depositAmount: professionalUser.value.depositAmount ?? 0,
-          billingPeriod: isBooleanBillingPeriod,
-          links: professionalUser.value.links?.length ? professionalUser.value.links : [],
-          faq: professionalUser.value.faq ?? {},
-        },
-      });
+  // Chargement des données uniquement quand on OUVRE
+  if (professionalUser.value) {
+    const isBooleanBillingPeriod =
+      typeof professionalUser.value.billingPeriod === 'boolean'
+        ? professionalUser.value.billingPeriod
+          ? 'afterEvent'
+          : 'beforeEvent'
+        : professionalUser.value.billingPeriod || 'beforeEvent';
 
-      faqArray.value = professionalUser.value.faqArray ?? [];
-    }
+    resetForm({
+      values: {
+        name: professionalUser.value.name ?? '',
+        siret: professionalUser.value.siret ?? '',
+        telephone: professionalUser.value.telephone ?? '',
+        address: professionalUser.value.address ?? '',
+        bio: professionalUser.value.bio ?? '',
+        mainActivity: professionalUser.value.mainActivity ?? 'Veuillez choisir votre activité',
+        mainInterlocutor: professionalUser.value.mainInterlocutor ?? '',
+        experience: professionalUser.value.experience ?? 0,
+        geographicArea:
+          professionalUser.value.geographicArea ?? geographicActivity.value[0]?.label ?? '',
+        certification:
+          Array.isArray(professionalUser.value.certification) &&
+          professionalUser.value.certification.length > 0
+            ? professionalUser.value.certification
+            : [''],
+        minimumReservationPeriod: professionalUser.value.minimumReservationPeriod ?? 0,
+        deposit: professionalUser.value.deposit ?? false,
+        depositAmount: professionalUser.value.depositAmount ?? 0,
+        billingPeriod: isBooleanBillingPeriod,
+        links: professionalUser.value.links?.length ? professionalUser.value.links : [],
+        faq: professionalUser.value.faq ?? {},
+      },
+    });
+
+    faqArray.value = professionalUser.value.faqArray ?? [];
   }
-);
+});
 </script>
 
 <style lang="scss" scoped>
@@ -632,23 +636,26 @@ watch(
   font-weight: 500;
 }
 
-/* --- RESPONSIVE --- */
-@media (max-width: 1024px) {
-  .edit-professional {
-    .v-form {
-      max-width: 95%;
-    }
-  }
-}
-
 @media (max-width: 900px) {
+  .v-form {
+    max-width: 100%;
+  }
   .edit-professional {
+    p {
+      text-align: center;
+    }
+
     &__btn {
       display: flex;
       flex-direction: column-reverse;
       &-width {
         width: 100%;
       }
+    }
+    &__divider {
+      max-width: 100%;
+      text-wrap: unset;
+      font-size: 0.5rem;
     }
   }
 }

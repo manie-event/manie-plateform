@@ -34,7 +34,6 @@ export const useClientProfil = () => {
     if (response?.data) {
       const profileUpdated = await getClientProfil();
 
-      console.log(profileUpdated, 'REPONSE');
       updateClientProfile(profileUpdated);
       isProfileCreated.value = true;
 

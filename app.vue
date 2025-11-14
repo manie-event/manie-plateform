@@ -32,7 +32,6 @@
   textarea,
   select {
     font-size: 16px !important;
-    transform: scale(0.9);
     transform-origin: left center;
   }
 }

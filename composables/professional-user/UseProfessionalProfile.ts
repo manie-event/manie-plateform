@@ -29,6 +29,7 @@ export const useProfessionalProfile = () => {
       setProfessionalUser(data);
       return data;
     } catch (err: any) {
+      console.log({ message: err.response.data.message });
       // addError({ message: err.response.data.message });
     }
   };
