@@ -1,7 +1,7 @@
 <template>
   <div v-if="props.events.length > 0">
     <div class="d-flex gap-3">
-      <div v-for="event in props.events" :key="event.uuid" class="d-flex">
+      <div v-for="event in props.events" :key="event.uuid" class="d-flex overflow-scroll">
         <v-btn
           @click="selectedEvent(event.uuid)"
           class="event-dashboard__btn mb-6"
