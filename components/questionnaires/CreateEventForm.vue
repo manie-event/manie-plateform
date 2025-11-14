@@ -102,7 +102,7 @@
 
       <!-- PAGE 3 -->
       <div v-if="currentPage === 3">
-        <v-alert v-if="isLocked" color="warning" class="my-6">
+        <v-alert color="rgb(var(--v-theme-darkbg))" class="my-6 text-white">
           ⚠️ Certains services sont verrouillés car déjà utilisés dans des propositions.
         </v-alert>
 
@@ -114,7 +114,7 @@
           <div class="d-flex justify-space-between align-center mb-3">
             <h3 class="font-weight-bold">Prestataires</h3>
             <Icon
-              v-if="selectedServices.length > 1 && !isLocked"
+              v-if="selectedServices.length > 1"
               icon="solar:trash-bin-trash-line-duotone"
               height="24"
               class="cursor-pointer"
@@ -128,7 +128,6 @@
             item-title="label"
             item-value="value"
             placeholder="Secteur"
-            :disabled="isLocked"
             @update:modelValue="updateServiceSector(i, service.selectedSector)"
           />
 
@@ -137,15 +136,27 @@
             :key="question.category"
             class="mt-4"
           >
-            <h4 class="mb-2">{{ question.question }}</h4>
+            <div>
+              <h4>{{ question.question }}</h4>
+            </div>
 
             <div v-if="question.isService">
               <v-btn
                 v-for="answer in question.answers"
                 :key="answer.uuid"
+                :style="
+                  service.selectedServiceId === answer.uuid
+                    ? {
+                        background: 'rgb(var(--v-theme-darkbg))',
+                        color: 'rgb(var(--v-theme-background))',
+                      }
+                    : {
+                        border: '1px solid rgb(var(--v-theme-darkbg))',
+                        color: 'rgb(var(--v-theme-darkbg))',
+                      }
+                "
                 :variant="service.selectedServiceId === answer.uuid ? 'flat' : 'outlined'"
                 class="ma-1"
-                :disabled="isLocked"
                 @click="selectServiceForIndex(i, answer.uuid)"
               >
                 {{ answer.name }}
@@ -158,7 +169,6 @@
                 :key="answer.uuid"
                 :variant="service.selectedKeywords.includes(answer.uuid) ? 'flat' : 'outlined'"
                 class="ma-1"
-                :disabled="isLocked"
                 @click="toggleKeywordForService(i, answer.uuid)"
               >
                 {{ answer.value }}
@@ -169,31 +179,37 @@
       </div>
 
       <!-- NAVIGATION -->
-      <div class="d-flex justify-space-between mt-8">
-        <v-btn v-if="currentPage === 3 && !isLocked" variant="outlined" @click="addNewService">
-          Ajouter un service
-        </v-btn>
-
-        <v-btn v-if="currentPage > 1" variant="text" @click="currentPage--"> Précédent </v-btn>
-
-        <v-btn
-          v-if="currentPage < 3"
-          variant="flat"
-          class="bg-primary text-white"
-          @click="nextPage"
-        >
-          Suivant
-        </v-btn>
-
-        <v-btn
-          v-if="currentPage === 3"
-          variant="flat"
-          class="bg-orange text-white"
-          @click="handleSubmit"
-        >
-          Mettre à jour
-        </v-btn>
-      </div>
+      <v-row class="w-100 d-flex justify-md-space-between">
+        <v-col cols="12" v-if="currentPage === 3">
+          <v-btn variant="outlined" class="w-100" @click="addNewService">
+            Ajouter un service
+          </v-btn>
+        </v-col>
+        <v-col cols="12" md="4" v-if="currentPage > 1">
+          <div class="d-flex justify-space-between w-100">
+            <v-btn variant="outlined" class="w-100" @click="currentPage--"> Précédent </v-btn>
+          </div>
+        </v-col>
+        <v-col cols="12" md="4" v-if="currentPage < 3">
+          <v-btn
+            variant="flat"
+            style="background: rgb(var(--v-theme-darkbg))"
+            class="text-white w-100"
+            @click="nextPage"
+          >
+            Suivant
+          </v-btn>
+        </v-col>
+        <v-col cols="12" md="4" v-if="currentPage === 3">
+          <v-btn
+            style="background: rgb(var(--v-theme-lightprimary))"
+            class="text-white w-100"
+            @click="handleSubmit"
+          >
+            Créer mon évènement
+          </v-btn>
+        </v-col>
+      </v-row>
     </v-card>
   </v-dialog>
 </template>
@@ -207,7 +223,7 @@ import { useEventForm } from '~/composables/event/UseEventForm';
 const props = defineProps<{ event: any }>();
 
 const open = defineModel<boolean>('open-customer-form');
-const { updateEvent } = UseEvent();
+const { submitEvent } = UseEvent();
 
 const {
   currentPage,
@@ -243,53 +259,22 @@ const {
   customerResponse,
 } = useEventForm();
 
-const { addSuccess } = useToaster();
-
-//
-// 🔄 PRELOAD — charger props.event dans ton composable
-//
-onMounted(() => {
-  const e = props.event;
-
-  type_event.value = e.type_event;
-  name.value = e.name;
-  location.value = e.location;
-  duration.value = e.duration;
-  group_type.value = e.group_type;
-  theme.value = e.theme;
-  organized_for.value = e.organized_for;
-  people.value = Number(e.people);
-  budgetInput.value = Number(e.budget);
-
-  dateStart.value = e.date?.[0] || '';
-  dateEnd.value = e.date?.[1] || '';
-
-  if (e.eventServices?.length) {
-    selectedServices.value = e.eventServices.map((srv: any) => ({
-      selectedSector: srv.sectorName,
-      selectedServiceId: srv.serviceUuid,
-      selectedKeywords: srv.keywordsUuid,
-    }));
-  }
-});
-
-const isLocked = computed(() => {
-  return props.event?.eventServices?.some(
-    (s: any) =>
-      s.status !== 'pending' || (Array.isArray(s.propositions) && s.propositions.length > 0)
-  );
-});
+const { addSuccess, addError } = useToaster();
 
 const handleSubmit = async () => {
-  const finalPayload = {
-    ...props.event,
-    ...customerResponse.value,
-    services: undefined,
-  };
+  try {
+    const finalPayload = {
+      ...props.event,
+      ...customerResponse.value,
+    };
 
-  await updateEvent(props.event.uuid, finalPayload);
+    await submitEvent(finalPayload);
 
-  addSuccess('Évènement mis à jour avec succès !');
-  open.value = false;
+    addSuccess('Évènement mis à jour avec succès !');
+    open.value = false;
+  } catch (error: unknown) {
+    const err = error as any;
+    addError({ message: err?.response?.data?.message ?? String(error) });
+  }
 };
 </script>
