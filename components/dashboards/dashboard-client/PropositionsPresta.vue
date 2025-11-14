@@ -173,7 +173,7 @@
             </template>
             <template #description>
               <p class="text-subtitle-1">
-                Aucun prestataire n'a, pour l'instant, répondu à votre annonce.
+                Aucun prestataire ne s’est positionné sur votre événement pour l’instant.
               </p>
             </template>
           </BaseEmptyState>

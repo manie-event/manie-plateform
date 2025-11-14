@@ -3,22 +3,22 @@ import type { colorVariationType } from '~/types/apps/colorationTypes';
 export const colorVariation: colorVariationType[] = [
   {
     id: 1,
-    color: 'warning',
+    color: 'darkbg',
   },
   {
     id: 2,
-    color: 'secondary',
+    color: 'thirdy',
   },
   {
     id: 3,
-    color: 'error',
+    color: 'lighterror',
   },
   {
     id: 4,
-    color: 'success',
+    color: 'lightprimary',
   },
   {
     id: 5,
-    color: 'primary',
+    color: 'lightsuccess',
   },
 ];

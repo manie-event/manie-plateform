@@ -2,12 +2,14 @@
   <v-dialog v-model="openModal" fullscreen transition="dialog-bottom-transition">
     <div class="modal-redirection__container">
       <img :src="redirectionImg" alt="" />
-      <h2>
-        Nous avons récolté vos informations avec succès. Vous pouvez, maintenant aller sur votre
-        tableau de bord
+      <h2 class="text-center">
+        <span>Nous avons récolté vos informations avec succès.</span>
+        <span>Vous pouvez, maintenant aller sur votre tableau de bord</span>
       </h2>
       <NuxtLink :to="`/dashboards/${redirection}`" @click="setUpdateProfile(false)" class="w-100">
-        <v-btn color="primary" size="large" class="w-100"> Revenir à votre dashboard </v-btn>
+        <v-btn color="rgb(var(--v-theme-thirdy))" size="large" class="w-100">
+          Revenir à votre dashboard
+        </v-btn>
       </NuxtLink>
     </div>
   </v-dialog>

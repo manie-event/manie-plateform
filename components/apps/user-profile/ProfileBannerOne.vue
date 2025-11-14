@@ -65,7 +65,7 @@
               class="profile-header__btn"
               @click="openModal = true"
             >
-              Modifier le profil
+              Mon profil
             </v-btn>
             <v-btn
               :disabled="isFirstTime"
@@ -74,11 +74,7 @@
               class="profile-header__btn"
               @click="openServiceModal = true"
             >
-              {{
-                isFirstTime
-                  ? 'Nous vérifions votre profil sous 48h'
-                  : 'Ajouter un secteur d’activité'
-              }}
+              {{ isFirstTime ? 'Nous vérifions votre profil sous 48h' : 'Mon activité' }}
             </v-btn>
           </template>
         </div>

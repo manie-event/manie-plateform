@@ -1,7 +1,7 @@
 <template>
   <div v-if="props.events.length > 0">
-    <div class="d-flex gap-3">
-      <div v-for="event in props.events" :key="event.uuid" class="d-flex overflow-scroll">
+    <div class="d-flex gap-3 overflow-scroll">
+      <div v-for="event in props.events" :key="event.uuid" class="d-flex">
         <v-btn
           @click="selectedEvent(event.uuid)"
           class="event-dashboard__btn mb-6"
@@ -21,56 +21,62 @@
         </v-btn>
       </div>
     </div>
-    <div class="button-row">
-      <v-btn
-        @click="openPricingModal = true"
-        class="btn-item"
-        variant="flat"
-        style="background: rgb(var(--v-theme-darkbg)); color: rgb(var(--v-theme-background))"
-      >
-        Me faire accompagner
-      </v-btn>
 
-      <template v-if="getCurrentEventLocked">
-        <v-tooltip text="Modification impossible : un service est déjà traité">
-          <template #activator="{ props }">
-            <span v-bind="props" class="btn-item">
-              <v-btn
-                disabled
-                class="inner-btn"
-                variant="flat"
-                style="
-                  background: rgb(var(--v-theme-darkbg));
-                  color: rgb(var(--v-theme-background));
-                "
-              >
-                Modifier l'événement
-              </v-btn>
-            </span>
-          </template>
-        </v-tooltip>
-      </template>
-
-      <template v-else>
+    <v-row>
+      <v-col cols="12" md="4">
         <v-btn
-          class="btn-item"
+          @click="openPricingModal = true"
+          class="btn-item w-100"
           variant="flat"
-          @click="isEventModificationOpen = true"
           style="background: rgb(var(--v-theme-darkbg)); color: rgb(var(--v-theme-background))"
         >
-          Modifier l'événement
+          Me faire accompagner
         </v-btn>
-      </template>
+      </v-col>
 
-      <v-btn
-        @click="isAddingServiceOpen = true"
-        class="btn-item"
-        variant="flat"
-        style="background: rgb(var(--v-theme-darkbg)); color: rgb(var(--v-theme-background))"
-      >
-        Ajouter des services
-      </v-btn>
-    </div>
+      <v-col cols="12" md="4">
+        <template v-if="getCurrentEventLocked">
+          <v-tooltip text="Modification impossible : un service est déjà traité">
+            <template #activator="{ props }">
+              <span v-bind="props" class="btn-item">
+                <v-btn
+                  disabled
+                  class="inner-btn w-100"
+                  variant="flat"
+                  style="
+                    background: rgb(var(--v-theme-darkbg));
+                    color: rgb(var(--v-theme-background));
+                  "
+                >
+                  Modifier l'événement
+                </v-btn>
+              </span>
+            </template>
+          </v-tooltip>
+        </template>
+
+        <template v-else>
+          <v-btn
+            class="btn-item w-100"
+            variant="flat"
+            @click="isEventModificationOpen = true"
+            style="background: rgb(var(--v-theme-darkbg)); color: rgb(var(--v-theme-background))"
+          >
+            Modifier l'événement
+          </v-btn>
+        </template>
+      </v-col>
+      <v-col cols="12" md="4">
+        <v-btn
+          @click="isAddingServiceOpen = true"
+          class="btn-item w-100"
+          variant="flat"
+          style="background: rgb(var(--v-theme-darkbg)); color: rgb(var(--v-theme-background))"
+        >
+          Ajouter des services
+        </v-btn>
+      </v-col>
+    </v-row>
 
     <div v-if="currentEvent">
       <v-row>

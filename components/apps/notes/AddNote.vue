@@ -75,10 +75,28 @@ const handleAddNote = () => {
             </v-btn>
           </div>
 
-          <div class="pt-6 pb-3 d-flex gap-2">
-            <v-btn color="primary" @click="handleAddNote" class="pa-3"> Enregistrer </v-btn>
-            <v-btn color="error" @click="dialog = false" class="pa-3"> Fermer </v-btn>
-          </div>
+          <v-row class="d-flex justify-md-space-between mt-6">
+            <v-col cols="12" md="4">
+              <v-btn
+                color="rgb(var(--v-theme-lighterror))"
+                style="color: rgb(var(--v-theme-background))"
+                class="w-100"
+                @click="dialog = false"
+              >
+                Fermer
+              </v-btn>
+            </v-col>
+            <v-col cols="12" md="4">
+              <v-btn
+                color="rgb(var(--v-theme-darkbg))"
+                style="color: rgb(var(--v-theme-background))"
+                class="w-100"
+                @click="handleAddNote"
+              >
+                Enregistrer
+              </v-btn>
+            </v-col>
+          </v-row>
         </v-card-text>
       </v-card>
     </v-dialog>
