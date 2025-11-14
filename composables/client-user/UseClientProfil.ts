@@ -34,14 +34,17 @@ export const useClientProfil = () => {
     if (response?.data) {
       const profileUpdated = await getClientProfil();
 
+      console.log(profileUpdated, 'REPONSE');
       updateClientProfile(profileUpdated);
       isProfileCreated.value = true;
+
       addSuccess('Profil mis à jour avec succès.');
-      return response.data;
+      return response?.data ?? true;
     } else {
       addError({ message: 'Une erreur est survenue lors de la mise à jour du profil.' });
     }
   };
+
   return {
     getClientProfil,
     patchClientProfil,

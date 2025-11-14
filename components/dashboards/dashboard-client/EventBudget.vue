@@ -132,7 +132,7 @@
 
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import type { eventModel } from '~/models/events/eventModel';
 /* Chart */
 const props = defineProps<{
@@ -263,14 +263,23 @@ watch(
   { deep: true }
 );
 
-onMounted(() => {
-  const savedData = localStorage.getItem(storageKey.value);
-  if (savedData) {
-    const parsed = JSON.parse(savedData);
-    series.value = parsed.series || [];
-    labels.value = parsed.labels || [];
-  }
-});
+watch(
+  () => props.currentEvent.uuid,
+  (newUuid) => {
+    if (!newUuid) return;
+
+    const saved = localStorage.getItem(`event-expenses-${newUuid}`);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      series.value = parsed.series || [];
+      labels.value = parsed.labels || [];
+    } else {
+      series.value = [];
+      labels.value = [];
+    }
+  },
+  { immediate: true }
+);
 </script>
 <style lang="scss" scoped>
 .event-budget {

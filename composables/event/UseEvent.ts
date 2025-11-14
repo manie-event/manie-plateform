@@ -1,4 +1,6 @@
+import type { eventModel } from '~/models/events/eventModel';
 import { useEventService } from '~/services/UseEventService';
+import { useApi } from '../UseApi';
 
 export const UseEvent = () => {
   const { createEventService, updateEventFormuleService } = useEventService();
@@ -6,7 +8,7 @@ export const UseEvent = () => {
   const isLoading = ref(false);
   const error = ref<string | null>(null);
   const { addSuccess, addError } = useToaster();
-
+  const api = useApi();
   const submitEvent = async (payload: any) => {
     isLoading.value = true;
     error.value = null;
@@ -24,6 +26,18 @@ export const UseEvent = () => {
       error.value = message;
     } finally {
       isLoading.value = false;
+    }
+  };
+
+  const updateEvent = async (eventUuid: string, payload: eventModel) => {
+    try {
+      if (!api) return;
+      const { data } = await api.patch(`/event/update/${eventUuid}`, payload);
+
+      return data;
+    } catch (error) {
+      addError({ message: "Impossible d'ajouter le service à l'événement." });
+      throw error;
     }
   };
 
@@ -51,5 +65,6 @@ export const UseEvent = () => {
     error,
     submitEvent,
     changeEventFormule,
+    updateEvent,
   };
 };

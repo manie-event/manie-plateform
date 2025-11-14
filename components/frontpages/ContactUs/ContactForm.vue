@@ -30,11 +30,6 @@ const message = ref<ContactMessage>({
               Vous avez des questions ou souhaitez en savoir plus sur nos services ? <br />
               N'hésitez pas à nous contacter.
             </p>
-            <h4 class="text-18 font-weight-bold mb-4 text-white">On vous écoute !</h4>
-            <p class="text-16 font-weight-regular position-relative z-1 text-white">
-              Vous avez des questions ou souhaitez en savoir plus sur nos services ? <br />
-              N'hésitez pas à nous contacter.
-            </p>
             <v-divider class="my-10 opacity-20 text-white"></v-divider>
             <p>
               <b class="text-white"
@@ -42,20 +37,9 @@ const message = ref<ContactMessage>({
                 ?</b
               >
               <div class="d-flex justify-space-between">
-  <v-btn class="contact-form__btn" to="/front-pages/Faq-client">FAQ Client</v-btn>
-  <v-btn class="contact-form__btn" to="/front-pages/Faq-prestataire">FAQ Presta</v-btn>
-</div>
-            </p>
-            <v-divider class="my-10 opacity-20 text-white"></v-divider>
-            <p>
-              <b class="text-white"
-                >Avant toute chose, avez-vous pensé à regarder si votre question figure dans le FAQ
-                ?</b
-              >
-              <div class="d-flex justify-space-between">
-  <v-btn class="contact-form__btn" to="/front-pages/Faq-client">FAQ Client</v-btn>
-  <v-btn class="contact-form__btn" to="/front-pages/Faq-prestataire">FAQ Presta</v-btn>
-</div>
+            <v-btn class="contact-form__btn" to="/front-pages/Faq-client">FAQ Client</v-btn>
+            <v-btn class="contact-form__btn" to="/front-pages/Faq-prestataire">FAQ Presta</v-btn>
+            </div>
             </p>
             <v-divider class="my-10 opacity-20"></v-divider>
             <div class="contact-form__reseaux">
@@ -70,14 +54,6 @@ const message = ref<ContactMessage>({
                 target="_blank"
                 ><Icon icon="ant-design:facebook-outlined" height="22" width="22"></Icon
               ></NuxtLink>
-            </div>
-            <div class="mt-4">
-              <div class="d-flex">
-                <Icon icon="iconamoon:email-light" width="24" height="24" style="color: white; stroke-width: 0.3;"></Icon><p class="text-white ml-3">contact@manie-event.fr</p>
-              </div>
-              <div class="d-flex">
-                <Icon icon="iconamoon:location-pin-light" width="24" height="24" style="color: white; stroke-width: 0.3;"></Icon><p class="text-white ml-3">Rue de Gerland 69007 LYON</p>
-              </div>
             </div>
             <div class="mt-4">
               <div class="d-flex">

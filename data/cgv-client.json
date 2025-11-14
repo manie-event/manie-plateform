@@ -1,0 +1,95 @@
+[
+  {
+    "sectionTitle": "Conditions Générales de Vente pour client",
+    "sectionDescription": "Documents légal de ventes de services et produits",
+    "sections": [
+      {
+        "title": "1. Objet",
+        "description": "Les présentes conditions générales de vente régissent la vente de prestations de services proposées sur la plateforme Manie aux utilisateurs inscrits."
+      },
+      {
+        "title": "2. Services proposés",
+        "description": "Accompagnement à la définition de projet (outil intégré et inspirations), mise en relation avec des prestataires, accès à des outils de gestion événementielle, accompagnement personnalisé (suivi et conseil). "
+      },
+      {
+        "title": "3. Modalités de commande",
+        "description": "L’ensemble des services proposés par Manie se commandent exclusivement via la plateforme.<br>Les formules personnalisées se commandent via un devis validé par le client.<br>Les devis des prestataires sont établis directement par eux et enregistrés sur la plateforme une fois signés.<br><br>L’ensemble des paiements (formules personnalisées ou acomptes prestataires) sont réalisés via notre partenaire sécurisé STRIPE, garantissant la protection de vos fonds en cas de litige ou de désistement hors cadre du prestataire."
+      },
+      {
+        "title": "4. Tarification",
+        "description": "<b>L’accès à la plateforme</b> est gratuit pour les clients souhaitant définir et gérer leur projet ainsi qu’être mis en relation avec des prestataires.<br><br><b>Des formules d’accompagnement personnalisé</b> peuvent être proposées telles que :<br>- le suivi et l’accompagnement personnalisé ;<br>- la gestion complète de leur évènement ;<br>- la sélection de prestataire(s) de dernière minute.<br><br>Les tarifs des formules payantes sont clairement indiqués sur la plateforme (page Nos formules) et précisés dans un devis transmis lors de la souscription. Ils sont exprimés en euros TTC et HT et peuvent varier en fonction du niveau d’accompagnement choisi.<br><br><b>Les devis prestataires</b> sont établis par leurs soins et fixent librement le montant de l’acompte nécessaire pour réserver la prestation (entre 20 et 50% du montant total du devis).<br>Les factures de formules personnalisées vous seront transmises par Manie après votre événement.<br>Les factures de vos prestataires vous seront transmises directement par ces derniers après votre événement."
+      },
+      {
+        "title": "5. Paiement",
+        "description": "Le règlement des formules personnalisées s’effectue via STRIPE : un acompte peut être demandé à la commande, le solde étant dû à l’issue de l’événement (sauf indication contraire précisée au devis).<br><br>Les acomptes liés à la réservation des prestations se règlent également via STRIPE CONNECT, tandis que le solde de leur devis est payé directement auprès d’eux, selon les modalités de paiement qu’ils auront définis.<br><br>Les factures des formules personnalisées sont émises par Manie, celles des prestations par les prestataires.<br>Toutes d’elles vous seront transmises après la prestation.<br><br>Conformément à la loi, le client dispose d’un délai légal de 14 jours après le versement de ses acomptes pour exercer son droit de rétractation, sauf si la prestation a déjà commencé ou si le client a expressément renoncé à ce droit."
+      },
+
+      {
+        "title": "6. Responsabilités et garanties",
+        "description": "Tous les paiements transitent par Manie via une solution sécurisée (STRIPE / CONNECT).<br>Le client s’engage à verser l’acompte défini par le prestataire concerné directement sur la plateforme via Stripe dans les <b>5 jours ouvrés</b> après l’enregistrement du devis définitif.<br><br>Manie ne transmettra aucun acompte au prestataire avant validation officielle de la commande.<br>En cas de litige fondé, 10% de cet acompte resteront bloqués et seront reversés à la partie reconnue comme légitime une fois la situation résolue.<br><br>En cas d’annulation de l’événement par le client dans les délais légaux, Manie s’engage à rembourser l’acompte perçu, déduction faite des frais engagés le cas échéant.<br><br>Manie garantit l’absence de frais cachés : les prix indiqués sur la plateforme et dans les devis incluent l’ensemble des coûts de la prestation.<br><br>En cas de litige financier entre un client et un prestataire, Manie intervient gratuitement en qualité de médiateur afin de proposer une solution amiable.<br><br>En cas de désistement d’un prestataire jusqu’à un un mois avant l’événement, Manie s’engage à proposer au client une solution de remplacement équivalente, à 5 % près du coût initial, sous réserve de disponibilité."
+      },
+      {
+        "title": "7. Clause de non-contournement",
+        "description": "Toute mise en relation entre un Client et un Prestataire effectuée par l’intermédiaire de la plateforme Manie est strictement encadrée par les présentes conditions.<br><br>En choisissant Manie, vous bénéficiez d’une mise en relation sécurisée et d’un accompagnement complet. Ainsi, et pour garantir le respect du travail de Manie, le Client et le Prestataire s’engagent à ne pas conclure, directement ou indirectement, un accord en dehors de la plateforme.<br><br>En cas de non-respect de cette obligation, une indemnité forfaitaire de 10 % du montant total TTC de la prestation concernée sera due à Manie, à titre de compensation du préjudice subi.<br><br>Cette indemnité est exigible de plein droit, sans mise en demeure préalable, et devra être réglée à Manie dans un délai de 10 jours ouvrés suivant la constatation du contournement.<br><br>Manie se réserve en outre le droit de suspendre ou supprimer le compte de l’utilisateur concerné et d’engager toute action légale nécessaire à la protection de ses intérêts"
+      },
+      {
+        "title": "8. Résiliation",
+        "description": "Un client peut résilier son compte à tout moment depuis son espace personnel si :<ul><li>Aucun événement ni engagement contractuel est en cours ;</li><li>Il est engagé auprès d'aucun autre utilisateur que lui-même ;</li><li>Il a réglé l’ensemble des sommes dûes à la plateforme. </li>En cas de non-respect des CGU-CGV ou de la charte mise en place par Manie, ce dernier se réserve le droit de suspendre ou supprimer un compte sans préavis."
+      },
+      {
+        "title": "9. Loi applicable et litiges",
+        "description": "Les présentes conditions générales de vente sont régies par le droit français. Tout litige sera porté devant les tribunaux compétents du ressort de LYON, après tentative de résolution amiable."
+      },
+      {
+        "title": "10. Contact",
+        "description": "Pour toute question relative aux conditions générales de vente :<br>📧 contact@Manie-event.fr"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Conditions Générales d'Utilisation pour client",
+    "sectionDescription": "Documents légal de ventes de services et produits",
+    "sections": [
+      {
+        "title": "1. Présentation de la plateforme",
+        "description": "La plateforme Manie, exploitée par Manie Coop, Société par Actions Simplifiée Unipersonnelle (SASU), propose un service de mise en relation entre clients (particuliers ou professionnels) et prestataires événementiels sélectionnés dans la région Auvergne-Rhône-Alpes. Elle offre également à ses clients des outils de gestion de projet événementiel et plusieurs formules d’accompagnement personnalisé."
+      },
+      {
+        "title": "2. Acceptation des CGU",
+        "description": "L’utilisation de la plateforme Manie implique l’acceptation pleine et entière des présentes Conditions Générales d’Utilisation (CGU) par tous les utilisateurs (clients et prestataires). En cas de désaccord avec tout ou partie des CGU, l'utilisateur doit cesser immédiatement d’utiliser la plateforme."
+      },
+      {
+        "title": "3. Accès à la plateforme",
+        "description": "L’accès à la plateforme est libre. La création d’un compte personnel ou professionnel doit être validée par Manie avant inscription officielle. Le client garantit l’exactitude des informations fournies."
+      },
+      {
+        "title": "4. Fonctionnalités disponibles",
+        "description": "<ul><li>Définition d’événement via un outil intégré ; </li><li>Publication de projet ; </li><li>Accès à des outils de gestion et de suivi ; </li><li>Formules personnalisées ou sur-mesure. </li>"
+      },
+      {
+        "title": "5. Charte de bonne conduite",
+        "description": "Tous les utilisateurs s’engagent à respecter une charte de bonne conduite fondée sur les valeurs de Manie. En cas de contournement de la plateforme (ex. : contact direct hors plateforme sans accord), une sanction allant jusqu’à l’exclusion définitive sera appliquée.Les Utilisateurs s’engagent également à coopérer de bonne foi avec la Plateforme en cas de différend.En cas de litige entre un Client et un Prestataire, la Plateforme se réserve le droit de suspendre temporairement le compte de l’une ou l’autre des parties en attendant résolution.La Plateforme se réserve le droit de retirer un profil ou de bloquer un compte sans avoir à se justifier.La Plateforme peut conserver les éléments de communication et contenus échangés à des fins de preuve.."
+      },
+      {
+        "title": "6. Propriété intellectuelle",
+        "description": "Tous les contenus présents sur la plateforme Manie (textes, outils, visuels, interface) sont la propriété exclusive de Manie Coop. Toute reproduction, diffusion ou utilisation sans autorisation est interdite."
+      },
+      {
+        "title": "7. Responsabilités du client",
+        "description": "<ul><li>Informer immédiatement Manie et les prestataires en cas d’annulation d’un événement ;</li><li>Garantir l'exactitude des informations fournies dans son cahier des charges ;</li><li>Accepter qu’en cas de désistement d’un prestataire (jusqu’à 30 jours avant l’événement), un remplacement équivalent sera proposé (à 5% près du coût).</li></ul>"
+      },
+      {
+        "title": "8. Responsabilités de Manie",
+        "description": "Manie s’engage à proposer des prestataires locaux et de qualité.<br><br>Aucune relation de subordination n’est créée entre les utilisateurs et la plateforme.<br><br>Manie agit en tant qu’intermédiaire et ne peut être tenue responsable de la mauvaise exécution des prestations fournies directement par les prestataires. Toutefois, Manie s'engage à intervenir en cas de litige pour proposer une solution équitable à l’amiable. Si plusieurs clients se voyaient insatisfaits d’un prestataire pour des raisons et arguments fondés, Manie se verrait alors exclure ce prestataire de la plateforme."
+      },
+      {
+        "title": "9. Données personnelles",
+        "description": "La plateforme est conforme au Règlement Général sur la Protection des Données (RGPD).<br>Les données collectées ne sont utilisées que dans le cadre des services fournis.<br>Plus d'informations disponibles dans la <a href='/front-pages/politique-de-confidentialite'>Politique de confidentialité.</a>"
+      },
+      {
+        "title": "10. Service client",
+        "description": "Contact et service client disponible uniquement par email : contact@Manie-event.fr. <br>Réponse sous 48h ouvrés. "
+      }
+    ]
+  }
+]

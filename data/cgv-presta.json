@@ -1,0 +1,98 @@
+[
+  {
+    "sectionTitle": "Conditions Générales de Vente pour prestataire",
+    "sectionDescription": "Documents légal de ventes de services et produits",
+    "sections": [
+      {
+        "title": "1. Objet",
+        "description": "Les présentes conditions générales de vente régissent la vente de prestations de services proposées sur la plateforme MANIE aux utilisateurs inscrits."
+      },
+      {
+        "title": "2. Services proposés",
+        "description": "<ul><li>Mise en relation avec des clients qualifiés (développement du portefeuille client, gain de temps)</li><li>Accès à une communauté de professionnels (développement du réseau partenaire)</li></ul>"
+      },
+      {
+        "title": "3. Modalités de commande",
+        "description": "Les commandes de services se font exclusivement via la plateforme pour l’ensemble des fonctionnalités.<br>Les commandes de jeton se font via la plateforme de paiement Stripe.<br>Une confirmation est envoyée par email dès validation."
+      },
+      {
+        "title": "4. Tarification",
+        "description": "<ul><li><strong>Une commission sur devis</strong><br>MANIE prélève 12% du montant total HT (soit 10% TTC) du devis accepté par le client.<br>Peu importe le pourcentage d’acompte fixé par le prestataire (entre 20 et 50%), cette commission est prélevée immédiatement et définitivement sur l’acompte réglé par le client via Stripe Connect.<br>Le reste de l’acompte, après déduction de la commission, est reversé automatiquement au prestataire par virement bancaire via Stripe Connect.<br>Après son évènement, le client règle le solde de sa prestation directement au prestataire selon les modalités convenues.</li><li><strong>Un système de jetons</strong><br>Pour se positionner sur un événement, le prestataire doit disposer du nombre de jetons requis.<br>Ce nombre dépend de plusieurs critères : taille de l’événement, montant estimé, taille de l’entreprise du prestataire.<br>L’exigence en jetons est indiquée dans chaque cahier des charges publié sur MANIE.<br>En cas de solde insuffisant, l’achat de jetons est possible via Stripe.</li><li><strong>Un abonnement annuel à venir</strong><br>Une formule sans commission ni jetons, via un abonnement annuel fixe.<br>Le tarif sera communiqué lors de la sortie de la V2 de Manie et pourra être révisé annuellement.<br>L'abonnement donnera accès à toutes les fonctionnalités sans frais supplémentaires.<br>Adapté aux prestataires avec un volume important d’événements annuels.<br>Le choix de la formule sera fait à la signature du contrat et pourra être modifié chaque année avec un préavis de 30 jours.</li></ul>"
+      },
+      {
+        "title": "5. Paiement",
+        "description": "L’achat de jetons s’effectue exclusivement via Stripe.<br>Les acomptes versés par les clients transitent uniquement par Stripe.<br>MANIE prélève automatiquement sa commission via Stripe Connect.<br>Le solde net de l’acompte, après commission, est reversé au prestataire par virement bancaire.<br>Aucun autre mode de reversement ne peut être exigé."
+      },
+      {
+        "title": "6. Parcours Stripe Connect",
+        "description": "<ul><li>Le client choisit son prestataire</li><li>Il règle l’acompte via Stripe (CB, Apple Pay, Google Pay…)</li><li>L’argent est encaissé sur le compte Stripe de MANIE</li><li>Il est sécurisé sur un compte de cantonnement</li><li>En cas de litige ou annulation hors délai, MANIE peut procéder à des remboursements</li><li>Le prestataire crée un compte Stripe Connect</li><li>Il renseigne son RIB directement dans Stripe via un lien sécurisé</li><li>MANIE ne stocke aucune donnée bancaire</li><li>MANIE est conforme RGPD et DSP2</li><li>MANIE définit la commission dans Stripe Connect</li><li>Stripe prélève automatiquement la commission de MANIE</li><li>Le prestataire reçoit le reste sur son compte bancaire professionnel</li></ul>"
+      },
+      {
+        "title": "7. Responsabilités et garanties",
+        "description": "Le prestataire reconnaît que l’achat de jetons est obligatoire pour se positionner sur un projet.<br>Les jetons sont payants et non remboursables (sauf cas exceptionnel : bug, erreur technique).<br>Sur chaque devis accepté, MANIE prélève automatiquement une commission via Stripe Connect.<br>Le prestataire reçoit le solde net de l’acompte après commission.<br>Le solde final est payé directement par le client au prestataire.<br>Le prestataire doit honorer sa prestation, faute de quoi MANIE peut retenir un acompte ou l’exclure.<br>En cas de litige fondé, MANIE peut conserver tout ou partie de l’acompte jusqu’à résolution.<br>Le prestataire reste responsable de sa facturation et de ses obligations fiscales et sociales (TVA, URSSAF, intermittence…)."
+      },
+      {
+        "title": "8. Clause de non-contournement",
+        "description": "Toute mise en relation via MANIE est strictement encadrée.<br>Le Client et le Prestataire s’engagent à ne pas conclure d’accord en dehors de la plateforme.<br>En cas de contournement, une indemnité forfaitaire de 10% du montant total TTC de la prestation sera due à MANIE.<br>Cette indemnité est exigible sans mise en demeure et payable sous 10 jours ouvrés.<br>MANIE peut suspendre ou supprimer le compte concerné et engager des actions légales."
+      },
+      {
+        "title": "9. Résiliation",
+        "description": "Le prestataire peut résilier son compte à tout moment si :<br><ul><li>Aucun événement ni engagement n’est en cours</li><li>Il n’est engagé auprès d’aucun utilisateur</li><li>Toutes les sommes dues sont réglées</li></ul>En cas de non-respect des CGU-CGV ou de la charte, MANIE peut suspendre ou supprimer un compte sans préavis."
+      },
+      {
+        "title": "10. Loi applicable et litiges",
+        "description": "Les présentes CGV sont régies par le droit français.<br>Tout litige sera porté devant les tribunaux compétents de LYON après tentative amiable."
+      },
+      {
+        "title": "11. Contact",
+        "description": "Pour toute question :<br>📧 contact@manie-event.fr"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Conditions Générales d'Utilisation pour prestataire",
+    "sectionDescription": "Documents légal de ventes de services et produits",
+    "sections": [
+      {
+        "title": "1. Présentation de la plateforme",
+        "description": "La plateforme Manie, exploitée par Manie Coop (entreprise individuelle), propose un service de mise en relation entre clients (particuliers ou professionnels) et prestataires événementiels sélectionnés dans la région Auvergne-Rhône-Alpes. Elle offre également à ses clients des outils de gestion de projet événementiel et plusieurs formules d’accompagnement personnalisé."
+      },
+      {
+        "title": "2. Acceptation des CGU",
+        "description": "L’utilisation de la plateforme Manie implique l’acceptation pleine et entière des présentes Conditions Générales d’Utilisation (CGU) par tous les utilisateurs (clients et prestataires). En cas de désaccord avec tout ou partie des CGU, l'utilisateur doit cesser immédiatement d’utiliser la plateforme."
+      },
+      {
+        "title": "3. Accès à la plateforme",
+        "description": "Inscription obligatoire, création d’un compte prestataire validé par Manie."
+      },
+      {
+        "title": "4. Fonctionnalités disponibles",
+        "description": "Accès aux projets publiés par nos clients, possibilité de se positionner sur les événements pertinents, achat de jeton, messagerie client."
+      },
+      {
+        "title": "5. Charte de bonne conduite",
+        "description": "Tous les utilisateurs s’engagent à respecter une charte de bonne conduite fondée sur les valeurs de Manie. En cas de contournement de la plateforme (ex. : contact direct hors plateforme sans accord), une sanction allant jusqu’à l’exclusion définitive sera appliquée.Les Utilisateurs s’engagent également à coopérer de bonne foi avec la Plateforme en cas de différend.En cas de litige entre un Client et un Prestataire, la Plateforme se réserve le droit de suspendre temporairement le compte de l’une ou l’autre des parties en attendant résolution.La Plateforme se réserve le droit de retirer un profil ou de bloquer un compte sans avoir à se justifier.La Plateforme peut conserver les éléments de communication et contenus échangés à des fins de preuve.."
+      },
+      {
+        "title": "6. Responsabilités du prestataire",
+        "description": "Le prestataire s’engage à publier uniquement des informations exactes et sincères.<br>Il s’engage à respecter ses engagements auprès de son client. <br>Lorsqu’il accepte une mission, il doit honorer son contrat, et ce jusqu’à la fin de cette mission ; se présenter le jour J, fournir la prestation telle que décrite, respecter délais, tarifs et conditions. <br>Il reconnaît que l’inscription ne confère aucun droit d’exclusivité. <br>Le prestataire n’est pas le seul dans sa catégorie sur la plateforme, MANIE n’est pas dans l’obligation de lui envoyer systématiquement des clients, aucun contrat d’exclusivité n’est mis en place. <br>Le prestataire établit un premier devis à partir du cahier des charges fourni par le client, dont il est seul responsable. Une fois ce devis signé, il s’engage à l’enregistrer sur la plateforme afin de permettre au client de régler l’acompte en toute sécurité. <br>"
+      },
+      {
+        "title": "7. Responsabilités de Manie",
+        "description": "Manie garantit l’apport de clients qualifiés, cohérents avec leur positionnement, ainsi qu’un gain de temps dans leur prospection.Les Prestataires garantissent que les informations publiées sont exactes, non trompeuses, et ne portent pas atteinte aux droits de tiers.L’inscription sur la Plateforme ne confère aucun droit d’exclusivité. Aucune relation de subordination n’est créée entre les utilisateurs et la plateforme. Manie agit en tant qu’intermédiaire et ne peut être tenue responsable de la mauvaise exécution des prestations fournies directement par les prestataires. Toutefois, Manie s'engage à intervenir en cas de litige pour proposer une solution équitable à l’amiable. Si plusieurs clients se voyaient insatisfaits d’un prestataire pour des raisons et arguments fondés, Manie se verrait alors exclure ce prestataire de la plateforme."
+      },
+      {
+        "title": "8. Propriété intellectuelle",
+        "description": "Tous les contenus présents sur la plateforme Manie (textes, outils, visuels, interface) sont la propriété exclusive de Manie Coop. Toute reproduction, diffusion ou utilisation sans autorisation est interdite."
+      },
+      {
+        "title": "9. Données personnelles",
+        "description": "La plateforme est conforme au Règlement Général sur la Protection des Données (RGPD). <br>Les données collectées ne sont utilisées que dans le cadre des services fournis. <br>Plus d'informations disponibles dans la <a href='/front-pages/politique-de-confidentialite'>Politique de confidentialité.</a>"
+      },
+      {
+        "title": "10. Service client",
+        "description": "Le service client est accessible uniquement par email à l’adresse suivante : contact@manie-event.fr et assure à ses clients une réponse sous 48h, jours ouvrés. "
+      }
+    ]
+  }
+]

@@ -78,6 +78,40 @@ const Packages: PackageType[] = [
   {
     index: 2,
     tagtext: false,
+    caption: 'coordination',
+    subCaption: 'coordination de jour-J',
+    subtext: 'Vous profitez de votre jour-J pendant qu’on fait tourner la machine.',
+    price: '990€',
+    subprice: ' ',
+    buttontext: 'En savoir +',
+    url: '/',
+    list: [
+      {
+        listtitle:
+          "<b>AVANT L'EVENEMENT:</b><br> - Rdv client à M-2 et J-7 <br> - Repérage du lieu <br> - Point visio générale prestataires <br> - Création du planning <br> - Annuaire de contacts <br> - Feuille de route prestataires <br> - Plan d’agencement des espaces <br> - Menu et signalétique <br> - Dossier final client et prestataires",
+        status: false,
+        icon: true,
+        disable: false,
+      },
+      {
+        listtitle:
+          "<b>PENDANT L'EVENEMENT :</b> <br> - Présence sur place <br> - Accueil des prestataires sur site <br> - Supervision des installations <br> - Accueil des invités <br> - Gestion des prestataires <br> - Interlocuteur principal <br> - Gestion des imprévus",
+        status: false,
+        icon: true,
+        disable: false,
+      },
+      {
+        listtitle:
+          '<b>VARIATIONS EVENTUELLES :</b> <br> - + 200 invités (assistant) <br> - heures supplémentaires <br> - Présence brunch du lendemain ou welcome dinner <br> - Frais annexes : restauration, déplacement, hébergement <br> - complexité logistique (assistant)',
+        status: false,
+        icon: true,
+        disable: false,
+      },
+    ],
+  },
+  {
+    index: 3,
+    tagtext: false,
     caption: 'Grande pompe',
     subCaption: 'grande-pompe',
     subtext:
@@ -157,40 +191,6 @@ const Packages: PackageType[] = [
       },
     ],
   },
-  {
-    index: 3,
-    tagtext: false,
-    caption: 'coordination',
-    subCaption: 'coordination de jour-J',
-    subtext: 'Vous profitez de votre jour-J pendant qu’on fait tourner la machine.',
-    price: '990€',
-    subprice: '',
-    buttontext: 'En savoir +',
-    url: '/',
-    list: [
-      {
-        listtitle:
-          "<b>AVANT L'EVENEMENT:</b><br> - Rdv client à M-2 et J-7 <br> - Repérage du lieu <br> - Point visio générale prestataires <br> - Création du planning <br> - Annuaire de contacts <br> - Feuille de route prestataires <br> - Plan d’agencement des espaces <br> - Menu et signalétique <br> - Dossier final client et prestataires",
-        status: false,
-        icon: true,
-        disable: false,
-      },
-      {
-        listtitle:
-          "<b>PENDANT L'EVENEMENT :</b> <br> - Présence sur place <br> - Accueil des prestataires sur site <br> - Supervision des installations <br> - Accueil des invités <br> - Gestion des prestataires <br> - Interlocuteur principal <br> - Gestion des imprévus",
-        status: false,
-        icon: true,
-        disable: false,
-      },
-      {
-        listtitle:
-          '<b>VARIATIONS EVENTUELLES :</b> <br> - + 200 invités (assistant) <br> - heures supplémentaires <br> - Présence brunch du lendemain ou welcome dinner <br> - Frais annexes : restauration, déplacement, hébergement <br> - complexité logistique (assistant)',
-        status: false,
-        icon: true,
-        disable: false,
-      },
-    ],
-  },
 ];
 
 const FAQData: TemplateType[] = [
@@ -202,17 +202,6 @@ const FAQData: TemplateType[] = [
 ];
 
 const footerContact: FooterType[] = [
-  {
-    titre: 'Manie Coop - SASU',
-    description: '',
-    link: undefined,
-  },
-  { titre: 'Charte de bonne conduite', description: '', link: '/juridique/charteBonneConduite' },
-  {
-    titre: 'Conditions Générales de Ventes',
-    description: '',
-    link: '/juridique/cgv',
-  },
   {
     titre: 'Mentions légales générales',
     description: '',
@@ -228,9 +217,25 @@ const footerContact: FooterType[] = [
     description: '',
     link: '/juridique/cookies',
   },
+  {
+    titre: 'CGV - CGU pour clients',
+    description: '',
+    link: '/juridique/cgvClient',
+  },
+  {
+    titre: 'CGV - CGU pour prestataires',
+    description: '',
+    link: '/juridique/cgvPresta',
+  },
+  { titre: 'Charte de bonne conduite', description: '', link: '/juridique/charteBonneConduite' },
 ];
 
 const footerMedia: FooterType[] = [
+  {
+    titre: 'Manie Coop - SASU',
+    description: '',
+    link: undefined,
+  },
   {
     titre: 'Adresse mail',
     description: 'contact@manie-event.fr',

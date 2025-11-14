@@ -260,7 +260,6 @@ import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { SectorsDto } from '~/models/dto/sectorsDto';
 import type { eventModel } from '~/models/events/eventModel';
 import { useEventService } from '~/services/UseEventService';
-import { useProfessionalService } from '~/services/UseProfessionalService';
 
 const props = defineProps<{
   event: eventModel;
@@ -271,9 +270,7 @@ const openCustomerForm = defineModel<boolean>('openCustomerForm', { default: fal
 const { sectors, servicesFiltered } = storeToRefs(eventsStore());
 const { clientProfile } = storeToRefs(useUserStore());
 const { keywords } = storeToRefs(useKeywordsStore());
-const { getAllSectors, getKeywords } = useKeywordsStore();
-const { getProfessionalService } = useProfessionalService();
-const { submitEvent, isLoading, error } = UseEvent();
+const { submitEvent, updateEvent, isLoading, error } = UseEvent();
 //ref generale
 const type_event = ref('');
 const eventType = ref<'particulier' | 'professionnel'>('particulier');
@@ -446,8 +443,6 @@ const getFilteredQuestionsForService = (selectedSector: any) => {
 };
 
 const sectorFiltered = computed(() => {
-  // servicesFiltered =
-  // sectors =
   const servicefiltered = servicesFiltered.value.map((s) => s.sectorUuid);
   const sector = sectors.value.filter((sector) => servicefiltered.includes(sector.uuid));
 
@@ -564,33 +559,47 @@ const nextPage = () => {
 };
 
 const handleSubmit = async () => {
-  try {
-    await schemaPage3.validate(
-      {
-        services: selectedServices.value.map((srv) => ({
-          selectedSector: srv.selectedSector,
-          selectedServiceId: srv.selectedServiceId,
-        })),
-      },
-      { abortEarly: false }
-    );
-  } catch (validationError: any) {
-    if (validationError.errors && Array.isArray(validationError.errors)) {
-      validationError.errors.forEach((msg: string) => addError({ message: msg }));
-    } else {
-      addError({ message: validationError.message || 'Une erreur est survenue.' });
-    }
+  if (!props.event) {
+    addError("L'évènement n'est pas chargé");
     return;
   }
-  // Envoie du formulaire : UseEvent gère l’affichage des toasts de succès/erreur
-  await submitEvent(customerResponse.value);
-  if (!error.value) {
-    addSuccess('Votre évènement a été créé avec succès');
-    openCustomerForm.value = false;
+
+  const isUpdate = props.event?.isAlreadyCreated;
+
+  if (!isUpdate) {
+    try {
+      await schemaPage3.validate(
+        {
+          services: selectedServices.value.map((srv) => ({
+            selectedSector: srv.selectedSector,
+            selectedServiceId: srv.selectedServiceId,
+          })),
+        },
+        { abortEarly: false }
+      );
+    } catch (validationError: any) {
+      validationError.errors.forEach((msg: string) => addError({ message: msg }));
+      return;
+    }
   }
+
+  const finalPayload = isUpdate
+    ? { ...props.event, ...customerResponse.value, services: undefined, eventServices: undefined }
+    : customerResponse.value;
+
+  if (isUpdate) {
+    await updateEvent(props.event.uuid, finalPayload);
+  } else {
+    await submitEvent(finalPayload);
+  }
+
+  addSuccess('Votre évènement a été mis à jour');
+  openCustomerForm.value = false;
 };
 
 onMounted(async () => {
+  if (!props.event?.uuid) return;
+
   const responses = await getEventsInstance(props.event.uuid);
   const normalizedAnswer = responses.$attributes;
 

@@ -21,11 +21,11 @@
       },
       {
         "title": "5. Destinataires des données",
-        "description": "Les données sont accessibles uniquement :<ul><li>À l’équipe de MANIE</li><li>Aux prestataires techniques (hébergement, paiement Stripe)</li><li>Aux prestataires événementiels, dans le cadre de la mise en relation</li></ul>Les données ne sont jamais vendues ni transmises à des tiers non autorisés."
+        "description": "Les données sont accessibles uniquement à l’équipe de Manie, aux prestataires événementiels dans le cadre de la mise en relation ainsi qu’aux prestataires techniques (hébergeur, Stripe…). Les données ne sont jamais vendues ni transmises à des tiers non autorisés"
       },
       {
         "title": "6. Durée de conservation",
-        "description": "Les données sont conservées :<ul><li>Pendant toute la durée de l’inscription à la plateforme</li><li>Puis archivées pendant 3 ans après la dernière interaction</li></ul>"
+        "description": "Les données sont conservées pendant toute la durée de l’inscription à la plateforme, puis archivées après  3 ans sans interaction. "
       },
       {
         "title": "7. Droits des utilisateurs",

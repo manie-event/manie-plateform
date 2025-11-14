@@ -127,7 +127,7 @@
             :min="0"
             :max="100"
             :step="5"
-            label="Quel est le montant de dépôt (en pourcentage)?"
+            label="Quel est le montant (en pourcentage)?"
             v-model="profile.depositAmount"
             :error-messages="showErrors ? errors.depositAmount : undefined"
           />
@@ -256,7 +256,7 @@
               style="color: rgb(var(--v-theme-background))"
               @click="modifyProfile(profile)"
             >
-              Modifier mon profil
+              Enregistrer
             </v-btn>
           </div>
         </div>
@@ -289,6 +289,7 @@ const { professionalUser, isProfilUpdate, isProfileCreated } = storeToRefs(userS
 const { setProfessionalUser } = userStore;
 const { getSectors } = useKeywordsStore();
 const { createProfessionalProfile, patchProfessionalProfileDetails } = useProfessionalProfile();
+
 const openModal = defineModel<boolean>('openModal');
 
 const faqArray = ref<Faq[]>([]);
@@ -427,10 +428,8 @@ const createProfile = async (values: ProfessionalProfile) => {
 
     if (response.message === 'Professional created') {
       addSuccess('Votre profil a été créé avec succès');
-      openModal.value = false;
-    } else {
-      addError({ message: 'La création du profil a échoué.' });
     }
+    openModal.value = false;
   } catch (error: any) {
     addError({ message: error.response.data.message });
   }
@@ -449,73 +448,57 @@ const modifyProfile = async (newValues: ProfessionalProfile) => {
 
     const response = await patchProfessionalProfileDetails(payload);
 
-    if (response.message === 'Professional updated') {
-      const updatedProfessional = response.newPro || response.data?.professional;
+    const updatedProfessional = response.newPro || response.data?.professional;
 
-      if (updatedProfessional) {
-        setProfessionalUser(updatedProfessional);
-
-        await handleClose();
-
-        addSuccess('Votre profil a été modifié avec succès');
-      } else {
-        addError({ message: 'La mise à jour du profil a échoué.' });
-      }
-    }
+    setProfessionalUser(updatedProfessional);
+    addSuccess('Votre profil a été modifié avec succès');
+    openModal.value = false;
   } catch (error: any) {
     addError({ message: error.response.data.message as any });
   }
 };
 
-const handleClose = async () => {
-  openModal.value = false;
-  await nextTick(); // on attend que le parent ait reçu l’événement et que le DOM se mette à jour
-};
+watch(
+  () => openModal.value,
+  (isOpen) => {
+    if (isOpen && professionalUser.value) {
+      const isBooleanBillingPeriod =
+        typeof professionalUser.value.billingPeriod === 'boolean'
+          ? professionalUser.value.billingPeriod
+            ? 'afterEvent'
+            : 'beforeEvent'
+          : professionalUser.value.billingPeriod || 'beforeEvent';
 
-onMounted(() => {
-  if (!professionalUser.value) {
-    console.warn("Aucun profil pro trouvé — l'utilisateur va devoir en créer un.");
-    isProfileCreated.value = false;
-    return;
+      resetForm({
+        values: {
+          name: professionalUser.value.name ?? '',
+          siret: professionalUser.value.siret ?? '',
+          telephone: professionalUser.value.telephone ?? '',
+          address: professionalUser.value.address ?? '',
+          bio: professionalUser.value.bio ?? '',
+          mainActivity: professionalUser.value.mainActivity ?? 'Veuillez choisir votre activité',
+          mainInterlocutor: professionalUser.value.mainInterlocutor ?? '',
+          experience: professionalUser.value.experience ?? 0,
+          geographicArea:
+            professionalUser.value.geographicArea ?? geographicActivity.value[0]?.label ?? '',
+          certification:
+            Array.isArray(professionalUser.value.certification) &&
+            professionalUser.value.certification.length > 0
+              ? professionalUser.value.certification
+              : [''],
+          minimumReservationPeriod: professionalUser.value.minimumReservationPeriod ?? 0,
+          deposit: professionalUser.value.deposit ?? false,
+          depositAmount: professionalUser.value.depositAmount ?? 0,
+          billingPeriod: isBooleanBillingPeriod,
+          links: professionalUser.value.links?.length ? professionalUser.value.links : [],
+          faq: professionalUser.value.faq ?? {},
+        },
+      });
+
+      faqArray.value = professionalUser.value.faqArray ?? [];
+    }
   }
-
-  if (professionalUser.value) {
-    const isBooleanBillingPeriod =
-      typeof professionalUser.value.billingPeriod === 'boolean'
-        ? professionalUser.value.billingPeriod
-          ? 'afterEvent'
-          : 'beforeEvent'
-        : professionalUser.value.billingPeriod || 'beforeEvent';
-    resetForm({
-      values: {
-        name: professionalUser.value.name ?? '',
-        siret: professionalUser.value.siret ?? '',
-        telephone: professionalUser.value.telephone ?? '',
-        address: professionalUser.value.address ?? '',
-        bio: professionalUser.value.bio ?? '',
-        mainActivity: professionalUser.value.mainActivity ?? 'Veuillez choisir votre activité',
-        mainInterlocutor: professionalUser.value.mainInterlocutor ?? '',
-        experience: professionalUser.value.experience ?? 0,
-        geographicArea:
-          professionalUser.value.geographicArea ?? geographicActivity.value[0]?.label ?? '',
-        certification:
-          Array.isArray(professionalUser.value.certification) &&
-          professionalUser.value.certification.length > 0
-            ? professionalUser.value.certification
-            : [''],
-        minimumReservationPeriod: professionalUser.value.minimumReservationPeriod ?? 0,
-        deposit: professionalUser.value.deposit ?? false,
-        depositAmount: professionalUser.value.depositAmount ?? 0,
-        billingPeriod: isBooleanBillingPeriod,
-        links: professionalUser.value.links?.length ? professionalUser.value.links : [],
-        faq: professionalUser.value.faq ?? {},
-      },
-    });
-
-    // Pré-remplir la FAQ et les liens si tu gères des refs séparés
-    faqArray.value = professionalUser.value.faqArray ?? [];
-  }
-});
+);
 </script>
 
 <style lang="scss" scoped>
