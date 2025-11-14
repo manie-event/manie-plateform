@@ -1,7 +1,7 @@
 <template>
   <div elevation="10" class="event-budget">
     <div class="position-relative">
-      <div class="d-flex justify-space-between d-block align-center">
+      <div class="d-flex justify-space-between d-block align-center event-budget__header">
         <div>
           <h5 class="text-subtitle-1 mb-1 font-weight-semibold">Votre gestion budget</h5>
         </div>
@@ -132,7 +132,7 @@
 
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import type { eventModel } from '~/models/events/eventModel';
 /* Chart */
 const props = defineProps<{
@@ -212,7 +212,7 @@ const selectedIndex = ref<number | null>(null);
 
 const chartOptions = computed(() => {
   const hasData = series.value.some((v) => v > 0);
-  const displaySeries = hasData ? series.value : [0.0001];
+  const displaySeries = hasData ? series.value : [0.01];
   const displayLabels = hasData ? labels.value : ['Aucune dépense'];
 
   return {
@@ -247,7 +247,14 @@ const chartOptions = computed(() => {
     dataLabels: { enabled: false },
     legend: { show: false },
     colors: hasData ? ['#5d79a4', '#e34632', '#f39454', '#fabe4a', '#293b57'] : ['#e0e0e0'],
-    tooltip: { theme: 'dark', fillSeriesColor: false, enabled: hasData },
+    tooltip: {
+      theme: 'dark',
+      fillSeriesColor: false,
+      enabled: hasData,
+      y: {
+        formatter: (value) => `${Math.round(value)}%`,
+      },
+    },
   };
 });
 
@@ -263,14 +270,23 @@ watch(
   { deep: true }
 );
 
-onMounted(() => {
-  const savedData = localStorage.getItem(storageKey.value);
-  if (savedData) {
-    const parsed = JSON.parse(savedData);
-    series.value = parsed.series || [];
-    labels.value = parsed.labels || [];
-  }
-});
+watch(
+  () => props.currentEvent.uuid,
+  (newUuid) => {
+    if (!newUuid) return;
+
+    const saved = localStorage.getItem(`event-expenses-${newUuid}`);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      series.value = parsed.series || [];
+      labels.value = parsed.labels || [];
+    } else {
+      series.value = [];
+      labels.value = [];
+    }
+  },
+  { immediate: true }
+);
 </script>
 <style lang="scss" scoped>
 .event-budget {
@@ -284,6 +300,16 @@ onMounted(() => {
     font-size: 0.85rem;
     display: flex;
     justify-content: center;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .event-budget {
+    height: unset;
+    &__header {
+      display: flex;
+      flex-direction: column;
+    }
   }
 }
 </style>

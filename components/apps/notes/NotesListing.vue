@@ -4,7 +4,10 @@
   <!-- ---------------------------------------------------- -->
   <div>
     <div class="d-flex mb-6 align-center justify-space-between">
-      <h4 class="text-subtitle-1 mb-4 font-weight-semibold">Carnet de brouillon</h4>
+      <div class="d-flex flex-column">
+        <h4 class="text-subtitle-1 font-weight-semibold">Votre carnet de brouillon</h4>
+        <span class="note-listing__subtitle">Vos post-it, notes, comptes rendus de rdv…</span>
+      </div>
       <addNote :event />
     </div>
     <!-- <div class="mb-5">
@@ -19,7 +22,11 @@
     </div> -->
     <div class="d-flex gap-4 notes__container">
       <v-sheet
-        :class="'note-sheet pa-6 pb-4 rounded-md cursor-pointer mb-4  bg-light' + note.color"
+        :class="'note-sheet pa-6 pb-4 rounded-md cursor-pointer mb-4'"
+        :style="{
+          backgroundColor: `rgb(var(--v-theme-${note.color}))`,
+          color: `rgb(var(--v-theme-background))`,
+        }"
         v-for="note in currentEventNotes"
         :key="note.id"
         @click="
@@ -29,7 +36,12 @@
         "
         v-if="currentEventNotes.length > 0"
       >
-        <h6 :class="'text-h6 text-truncate text-' + note.color">
+        <h6
+          class="text-h6 text-truncate pa-2 rounded"
+          :style="{
+            color: `rgb(var(--v-theme-background))`,
+          }"
+        >
           {{ note.title }}
         </h6>
         <div class="d-flex mt-3 align-center">
@@ -95,6 +107,13 @@ const handleSelectNote = (noteId: number) => {
   transition: 0.1s ease-in;
   &:hover {
     transform: scale(1.02);
+  }
+}
+
+.note-listing {
+  &__subtitle {
+    font-size: 0.9rem;
+    opacity: 0.7;
   }
 }
 </style>

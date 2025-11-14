@@ -22,4 +22,17 @@
     transition: all 0.4s ease-out;
   }
 }
+
+@media (max-width: 600px) {
+  .v-field__input,
+  .v-input__control,
+  .v-text-field input,
+  .v-textarea textarea,
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+    transform-origin: left center;
+  }
+}
 </style>

@@ -91,41 +91,28 @@
               </v-tooltip>
             </div>
 
-            <div class="d-flex align-center mt-3 flex-column">
+            <div class="d-flex align-center mt-3 flex-column justify-space-between">
               <h2
                 class="display-2 font-weight-bold position-relative"
                 style="z-index: 10; color: rgb(var(--v-theme-lightprimary))"
               >
                 {{ card.price }}
               </h2>
-              <span class="text-h6 font-weight-thin opacity-60 text-center">{{
+              <span class="text-subtitle2 font-weight-thin opacity-60 text-center">{{
                 card.subprice
               }}</span>
             </div>
 
-            <v-list class="mb-0 pl-0 bg-transparent pt-5">
-              <v-list-item class="pa-0" v-for="desc in card.list" :key="desc.listtitle">
-                <v-list-item-title
-                  :class="{ 'opacity-50': desc.disable }"
-                  class="text-14 font-weight-medium break-text bullet-line"
-                >
-                  <span class="packages__custom-dot"></span>
-                  <span v-html="desc.listtitle" class="packages__text-wrap"></span>
-                </v-list-item-title>
-              </v-list-item>
-            </v-list>
-            <div class="packages__background-shaded">
-              <v-btn
-                color="rgb(var(--v-theme-thirdy))"
-                style="color: rgb(var(--v-theme-background))"
-                class="font-weight-medium packages__more"
-                target="_blank"
-                flat
-                @click="selectedFormule(card.index)"
-              >
-                {{ card.buttontext }}
-              </v-btn>
-            </div>
+            <v-btn
+              color="rgb(var(--v-theme-thirdy))"
+              style="color: rgb(var(--v-theme-background))"
+              class="font-weight-medium mt-5 w-100"
+              target="_blank"
+              flat
+              @click="selectedFormule(card.index)"
+            >
+              {{ card.buttontext }}
+            </v-btn>
           </v-card>
         </v-col>
       </v-row>
@@ -154,8 +141,7 @@
         </div>
 
         <span class="custom-alert"
-          >Pour choisir votre formule, rendez-vous sur votre événement, dans votre tableau de
-          bord</span
+          >Pour choisir votre formule, rendez-vous sur le tableau de bord de votre événement.</span
         >
 
         <div class="text-end mt-6">
@@ -174,7 +160,7 @@ import type { PackageType } from '~/types/components/front-pages';
 
 const firstPlanList = [
   {
-    listtitle: 'création de votre compte, identité et tableau de bord',
+    listtitle: 'Création de votre compte, identité et tableau de bord',
     status: false,
     icon: true,
     disable: false,
@@ -201,16 +187,32 @@ const firstPlanList = [
 
 const detailsDialog = ref(false);
 const formule = ref<PackageType>();
+const isMobile = ref(window.innerWidth < 960);
 
 const troncateDescription = (desc: string) => {
-  const shortDescription = desc.slice(0, 50);
-  return `${shortDescription} ...`;
+  if (!isMobile.value) {
+    const shortDescription = desc.slice(0, 50);
+    return `${shortDescription} ...`;
+  } else {
+    return desc;
+  }
 };
 
 const selectedFormule = (index: number) => {
   detailsDialog.value = true;
   formule.value = Packages.find((pack) => pack.index === index);
 };
+
+const handleResize = () => {
+  isMobile.value = window.innerWidth < 960;
+};
+onMounted(() => {
+  handleResize();
+  window.addEventListener('resize', handleResize);
+});
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize);
+});
 </script>
 
 <style lang="scss" scoped>
@@ -218,6 +220,11 @@ const selectedFormule = (index: number) => {
   position: relative;
   background: rgb(var(--v-theme-background));
 
+  &__card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
   &__text-wrap {
     white-space: normal;
     padding-top: 105px;
@@ -285,7 +292,7 @@ const selectedFormule = (index: number) => {
     width: 80%;
   }
   &__card {
-    max-height: 310px;
+    height: 100%;
     h2 {
       color: rgb(var(--v-theme-textSecondary));
     }
@@ -340,6 +347,12 @@ const selectedFormule = (index: number) => {
 }
 
 @media (max-width: 960px) {
+  .packages__feature-item span {
+    white-space: normal !important;
+    word-break: break-word !important;
+    display: inline-block; /* important pour casser le flex */
+    max-width: 100%;
+  }
   .feature-item {
     min-width: 100%;
     text-align: left;

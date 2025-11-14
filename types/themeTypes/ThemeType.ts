@@ -10,6 +10,7 @@ export interface ThemeTypes {
     success?: string;
     warning?: string;
     error?: string;
+    mimosa: string;
     indigo?: string;
     lightprimary?: string;
     lightsecondary?: string;

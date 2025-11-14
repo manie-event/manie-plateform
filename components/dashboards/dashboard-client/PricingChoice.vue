@@ -2,11 +2,13 @@
   <v-dialog v-model="openPricingChoice" max-width="900">
     <v-card class="pricing-choice pa-6 rounded-16">
       <h3 class="text-center textPrimary font-weight-bold mb-8">Choisis ta formule</h3>
-      <v-divider class="mb-4"
-        ><p class="mb-4">
-          Aujourd'hui vous avez une formule : {{ props.event.formule }}
-        </p></v-divider
-      >
+
+      <v-divider class="mb-4">
+        <p class="mb-4 formula-info">
+          Aujourd'hui vous bénéficiez de la formule :
+          <b>{{ props.event.formule.toLocaleUpperCase() }}</b>
+        </p>
+      </v-divider>
       <v-list class="bg-transparent">
         <v-list-item v-for="(formule, index) in Packages" :key="index" class="pa-0 mb-4">
           <v-card
@@ -18,7 +20,7 @@
             <!-- Bloc gauche : titre + sous-texte -->
             <div class="flex-1 text-start pe-md-6">
               <h5 class="text-18 font-weight-semibold mb-2">
-                {{ formule.caption }}
+                {{ formule.caption.toLocaleUpperCase() }}
               </h5>
               <p class="text-14 text-grey100 mb-0 line-clamp-2" style="max-width: 500px">
                 {{ formule.subtext }}
@@ -192,16 +194,17 @@ const openDetails = (formule: any) => {
     color: rgb(var(--v-theme-textPrimary));
   }
 
-  /* 🔹 Petits utilitaires */
-  .line-clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
   /* 🔹 Responsive */
   @media (max-width: 960px) {
+    .formula-info {
+      font-size: 0.95rem;
+      line-height: 1.4;
+      padding: 0 15px;
+      display: block;
+      text-align: center;
+      white-space: normal;
+    }
+
     &__card {
       flex-direction: column;
       text-align: center;

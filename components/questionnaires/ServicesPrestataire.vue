@@ -291,6 +291,7 @@ const selectKeyword = (keyword: Keywords, q: QuestionnaireItem) => {
 const updateQuestionnaireSector = async (q: QuestionnaireItem, newSector: string) => {
   if (!newSector) return;
 
+  // Reset
   Object.assign(q, {
     questionnaireData: null,
     services: [],
@@ -301,18 +302,16 @@ const updateQuestionnaireSector = async (q: QuestionnaireItem, newSector: string
 
   await getSectors(newSector);
 
-  const stopWatching = watch([services, keywords], ([s, k]) => {
-    if (s?.length && k?.length) {
-      const data = questionnairePresta.find(
-        (item) => item.sector.toLowerCase() === newSector.toLowerCase()
-      );
-      q.sector = newSector;
-      q.questionnaireData = data;
-      q.services = [...s];
-      q.keywordsByCategory = calculateKeywordsByCategory(data, newSector);
-      stopWatching();
-    }
-  });
+  // Maintenant que getSectors a mis à jour les valeurs globales,
+  // on peut directement les injecter
+  const data = questionnairePresta.find(
+    (item) => item.sector.toLowerCase() === newSector.toLowerCase()
+  );
+
+  q.sector = newSector;
+  q.questionnaireData = data;
+  q.services = [...services.value];
+  q.keywordsByCategory = calculateKeywordsByCategory(data, newSector);
 };
 
 const addNewQuestionnaire = () =>

@@ -127,16 +127,16 @@
             :min="0"
             :max="100"
             :step="5"
-            label="Quel est le montant de dépôt (en pourcentage)?"
+            label="Quel est le montant (en pourcentage)?"
             v-model="profile.depositAmount"
             :error-messages="showErrors ? errors.depositAmount : undefined"
           />
           <div class="d-flex gap-2 flex-column justify-start align-items-start">
             <v-divider class="text-subtitle-1 font-weight-medium"
-              >Vous souhaitez être payé (restant dû) ?</v-divider
+              >Le restant dû est à régler avant ou après la prestation ?</v-divider
             >
             <div class="d-flex align-center justify-center gap-2">
-              <v-label class="text-subtitle-1 font-weight-medium">Avant la prestation</v-label>
+              <v-label class="text-subtitle-1 font-weight-medium">AVANT</v-label>
               <v-switch
                 v-model="profile.billingPeriod"
                 false-value="beforeEvent"
@@ -146,11 +146,13 @@
                 :error-messages="showErrors ? errors.billingPeriod : undefined"
                 >{{ profile.billingPeriod }}</v-switch
               >
-              <v-label class="text-subtitle-1 font-weight-medium">Après la prestation</v-label>
+              <v-label class="text-subtitle-1 font-weight-medium">APRES</v-label>
             </div>
           </div>
 
-          <v-divider class="mb-6"> <p class="mb-6">A propos de votre communication</p></v-divider>
+          <v-divider class="mb-6 edit-professional__divider">
+            <p class="mb-6">A propos de votre communication</p></v-divider
+          >
 
           <v-text-field
             label="Votre numéro de téléphone ?"
@@ -256,7 +258,7 @@
               style="color: rgb(var(--v-theme-background))"
               @click="modifyProfile(profile)"
             >
-              Modifier mon profil
+              Enregistrer
             </v-btn>
           </div>
         </div>
@@ -289,7 +291,8 @@ const { professionalUser, isProfilUpdate, isProfileCreated } = storeToRefs(userS
 const { setProfessionalUser } = userStore;
 const { getSectors } = useKeywordsStore();
 const { createProfessionalProfile, patchProfessionalProfileDetails } = useProfessionalProfile();
-const openModal = defineModel<boolean>('openModal');
+
+const openModal = defineModel<boolean>('openModal', { default: false });
 
 const faqArray = ref<Faq[]>([]);
 const showErrors = ref(false);
@@ -427,10 +430,8 @@ const createProfile = async (values: ProfessionalProfile) => {
 
     if (response.message === 'Professional created') {
       addSuccess('Votre profil a été créé avec succès');
-      openModal.value = false;
-    } else {
-      addError({ message: 'La création du profil a échoué.' });
     }
+    openModal.value = false;
   } catch (error: any) {
     addError({ message: error.response.data.message });
   }
@@ -449,36 +450,22 @@ const modifyProfile = async (newValues: ProfessionalProfile) => {
 
     const response = await patchProfessionalProfileDetails(payload);
 
-    if (response.message === 'Professional updated') {
-      const updatedProfessional = response.newPro || response.data?.professional;
+    const updatedProfessional = response.newPro || response;
 
-      if (updatedProfessional) {
-        setProfessionalUser(updatedProfessional);
+    setProfessionalUser(updatedProfessional);
 
-        await handleClose();
+    addSuccess('Votre profil a été modifié avec succès');
 
-        addSuccess('Votre profil a été modifié avec succès');
-      } else {
-        addError({ message: 'La mise à jour du profil a échoué.' });
-      }
-    }
+    openModal.value = false;
   } catch (error: any) {
     addError({ message: error.response.data.message as any });
   }
 };
 
-const handleClose = async () => {
-  openModal.value = false;
-  await nextTick(); // on attend que le parent ait reçu l’événement et que le DOM se mette à jour
-};
+watch(openModal, (isOpen) => {
+  if (!isOpen) return; // ← ne rien faire quand on ferme
 
-onMounted(() => {
-  if (!professionalUser.value) {
-    console.warn("Aucun profil pro trouvé — l'utilisateur va devoir en créer un.");
-    isProfileCreated.value = false;
-    return;
-  }
-
+  // Chargement des données uniquement quand on OUVRE
   if (professionalUser.value) {
     const isBooleanBillingPeriod =
       typeof professionalUser.value.billingPeriod === 'boolean'
@@ -486,6 +473,7 @@ onMounted(() => {
           ? 'afterEvent'
           : 'beforeEvent'
         : professionalUser.value.billingPeriod || 'beforeEvent';
+
     resetForm({
       values: {
         name: professionalUser.value.name ?? '',
@@ -512,7 +500,6 @@ onMounted(() => {
       },
     });
 
-    // Pré-remplir la FAQ et les liens si tu gères des refs séparés
     faqArray.value = professionalUser.value.faqArray ?? [];
   }
 });
@@ -649,23 +636,26 @@ onMounted(() => {
   font-weight: 500;
 }
 
-/* --- RESPONSIVE --- */
-@media (max-width: 1024px) {
-  .edit-professional {
-    .v-form {
-      max-width: 95%;
-    }
-  }
-}
-
 @media (max-width: 900px) {
+  .v-form {
+    max-width: 100%;
+  }
   .edit-professional {
+    p {
+      text-align: center;
+    }
+
     &__btn {
       display: flex;
       flex-direction: column-reverse;
       &-width {
         width: 100%;
       }
+    }
+    &__divider {
+      max-width: 100%;
+      text-wrap: unset;
+      font-size: 0.5rem;
     }
   }
 }

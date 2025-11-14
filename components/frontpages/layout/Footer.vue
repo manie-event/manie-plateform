@@ -32,7 +32,7 @@ import manieFooterDroits from '/images/logos/logo-footer-droits.png';
             <div class="d-flex flex-column ga-4">
               <div v-for="item in footerMedia" :key="item.titre">
                 <h4 class="footer-title">
-                  {{ `${item.titre}: ` }}
+                  {{ `${item.titre} ` }}
                 </h4>
 
                 <h5>
@@ -45,7 +45,7 @@ import manieFooterDroits from '/images/logos/logo-footer-droits.png';
             <div>
               <h5 class="text-17 mb-sm-8">Notre FAQ</h5>
               <NuxtLink to="/front-pages/Faq-client"><p>FAQ client</p></NuxtLink>
-              <NuxtLink to="/front-pages/Faq-prestataire"><p>FAQ Prestataire</p></NuxtLink>
+              <NuxtLink to="/front-pages/Faq-prestataire"><p>FAQ prestataire</p></NuxtLink>
             </div>
           </v-col>
 

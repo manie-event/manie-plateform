@@ -52,6 +52,9 @@ onMounted(async () => {
           <p class="text-subtitle-1">
             Veuillez compléter votre profil professionnel pour accéder à toutes les fonctionnalités.
           </p>
+          <NuxtLink to="/apps/userprofile/one" class="nuxt-link mt-6"
+            >Editer mon profil Professionnel</NuxtLink
+          >
         </template>
       </BaseEmptyState>
     </v-col>

@@ -154,8 +154,6 @@ export const useAuthentification = () => {
         'client-name',
         'client-uuid',
         'professional-uuid',
-        'notesByEvent',
-        'tasksByEvent',
       ];
       keysToRemove.forEach((key) => localStorage.removeItem(key));
       userStore.resetUserStore();

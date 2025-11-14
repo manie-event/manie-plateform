@@ -16,43 +16,49 @@
     </div>
 
     <v-card elevation="8" class="profile-header__card">
-      <div class="profile-header__content">
-        <div class="profile-header__identity">
+      <v-row class="w-100 pa-6 m-0">
+        <v-col cols="12" md="2">
           <v-avatar size="100" class="profile-header__avatar">
             <span>{{ initials }}</span>
           </v-avatar>
-
-          <div class="profile-header__info">
-            <div class="d-flex flex-row gap-2">
-              <div v-for="service in getServiceValues" :key="service">
-                <v-chip color="primary" variant="outlined" size="x-small">{{ service }}</v-chip>
-              </div>
+        </v-col>
+        <v-col cols="12" md="6">
+          <div class="d-flex flex-row gap-2">
+            <div v-for="service in getServiceValues" :key="service">
+              <v-chip color="primary" variant="outlined" size="x-small">{{ service }}</v-chip>
             </div>
-            <h2 class="profile-header__name">
+          </div>
+
+          <div>
+            <h2 class="profile-header__name w-100">
               {{ professionalUser?.name || user?.username }}
             </h2>
             <div class="d-flex align-center">
-              <Icon icon="ci:phone" height="18" width="18" class="mr-1" />
+              <Icon
+                icon="ci:phone"
+                height="18"
+                width="18"
+                class="mr-1 profile-header__phone-icone"
+              />
               <p class="profile-header__phone">
                 {{ professionalUser?.telephone || 'Définissez votre téléphone' }}
               </p>
             </div>
             <div class="d-flex align-center">
-              <Icon icon="ci:mail" height="18" width="18" class="mr-1" />
+              <Icon
+                icon="ci:mail"
+                height="18"
+                width="18"
+                class="mr-1 profile-header__phone-icone"
+              />
               <p class="profile-header__phone">
-                {{ professionalUser?.email || 'Définissez votre email' }}
+                {{ displayedEmail || 'Définissez votre email' }}
               </p>
             </div>
           </div>
-        </div>
-
-        <div class="profile-header__actions">
-          <v-btn
-            v-if="!isProfileCreated"
-            color="primary"
-            class="profile-header__btn"
-            @click="openModal = true"
-          >
+        </v-col>
+        <v-col cols="12" md="4" class="w-100 d-flex gap-2 flex-column">
+          <v-btn v-if="!isProfileCreated" color="primary" class="w-100" @click="openModal = true">
             Créer mon profil
           </v-btn>
 
@@ -62,27 +68,23 @@
                 border: 1px solid rgb(var(--v-theme-darkbg));
                 color: rgb(var(--v-theme-darkbg));
               "
-              class="profile-header__btn"
+              class="w-100"
               @click="openModal = true"
             >
-              Modifier le profil
+              Mon profil
             </v-btn>
             <v-btn
               :disabled="isFirstTime"
               color="rgb(var(--v-theme-darkbg))"
               style="color: rgb(var(--v-theme-background))"
-              class="profile-header__btn"
+              class="w-100"
               @click="openServiceModal = true"
             >
-              {{
-                isFirstTime
-                  ? 'Nous vérifions votre profil sous 48h'
-                  : 'Ajouter un secteur d’activité'
-              }}
+              {{ isFirstTime ? 'Nous vérifions votre profil sous 48h' : 'Mon activité' }}
             </v-btn>
           </template>
-        </div>
-      </div>
+        </v-col>
+      </v-row>
     </v-card>
 
     <Teleport to="body">
@@ -114,6 +116,7 @@ const openModal = ref(false);
 const openServiceModal = ref(false);
 const fileInput = ref<HTMLInputElement | null>(null);
 const isFirstTime = ref(false);
+const professionalEmail = ref();
 const triggerClickFileInput = () => fileInput.value?.click();
 const changeBannerPhoto = async (e: Event) => {
   const input = e.target as HTMLInputElement;
@@ -133,8 +136,13 @@ const getServiceValues = computed(
   () => professionalUser.value?.professionalServices?.map((s) => s.name) ?? []
 );
 
+const displayedEmail = computed(
+  () => professionalUser.value?.email || professionalEmail.value || null
+);
+
 onMounted(async () => {
-  await getProfessionalProfile();
+  const professional = await getProfessionalProfile();
+  professionalEmail.value = professional.email;
   const proService = await getListProfessionalServiceByProfessional();
   if (proService.length > 0) {
     isFirstTime.value = proService.some((service) => service.isVerified === false);
@@ -226,8 +234,15 @@ onMounted(async () => {
   }
 
   &__phone {
+    max-width: 100%;
     font-size: 0.95rem;
     color: #777;
+    &-icone {
+      width: 20px !important;
+      min-width: 20px !important;
+      height: 20px !important;
+      flex-shrink: 0; // empêche le rétrécissement
+    }
   }
 
   &__actions {
@@ -251,6 +266,17 @@ onMounted(async () => {
     &__actions {
       width: 100%;
       margin-top: 30px;
+    }
+    &__phone {
+      max-width: 100%;
+      font-size: 0.95rem;
+      color: #777;
+      &-icone {
+        width: 20px !important;
+        min-width: 20px !important;
+        height: 20px !important;
+        flex-shrink: 0; // empêche le rétrécissement
+      }
     }
   }
 }

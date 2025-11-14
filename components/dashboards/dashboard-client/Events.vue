@@ -7,13 +7,13 @@
     <v-col cols="12" lg="6" class="events__cta">
       <v-btn @click="eventCreation()" class="events__add-button">Créer un évènement</v-btn>
     </v-col>
-    <CustomerForm v-if="openModal" v-model:open-customer-form="openModal" />
+    <CreateEventForm v-if="openModal" v-model:open-customer-form="openModal" />
   </v-row>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import CustomerForm from '~/components/questionnaires/CustomerForm.vue';
+import CreateEventForm from '~/components/questionnaires/CreateEventForm.vue';
 
 const { clientName, user } = storeToRefs(useUserStore());
 const openModal = ref(false);

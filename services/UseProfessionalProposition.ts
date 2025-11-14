@@ -8,7 +8,6 @@ export const useProfessionalProposition = () => {
       const { data } = await api.get(
         `/event-service-proposition/${professionalServiceUuid}/show-event-service-for-professional`
       );
-      console.log('getListEventServiceProposition', data);
 
       return data;
     } catch (error) {

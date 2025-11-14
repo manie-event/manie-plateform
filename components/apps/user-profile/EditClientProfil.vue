@@ -177,7 +177,6 @@ const {
   keepValuesOnUnmount: true,
 });
 
-// ✅ Soumission du formulaire
 const onSubmit = handleSubmit(async (values) => {
   try {
     isSubmitting.value = true;
@@ -197,19 +196,20 @@ const onSubmit = handleSubmit(async (values) => {
       isBusiness: values.isBusiness,
     };
 
-    await patchClientProfil(profilePayload);
+    const response = await patchClientProfil(profilePayload);
 
-    addSuccess('Profil mis à jour avec succès !');
-    openModal.value = false;
+    if (response) {
+      addSuccess('Profil mis à jour avec succès !');
+    }
+
     showErrors.value = false;
   } catch (error) {
     if (!clientProfile.value?.uuid) {
       addError({ message: 'Le profil utilisateur est introuvable.' });
       return;
     }
-  } finally {
-    isSubmitting.value = false;
   }
+  openModal.value = false;
 });
 
 // ✅ Pré-remplir les champs à l’ouverture

@@ -50,7 +50,7 @@ await getServicePropositionForClient();
           </p>
 
           <NuxtLink to="/apps/userprofile/two" class="nuxt-link mt-6"
-            >Créer mon profil Client</NuxtLink
+            >Editer mon profil Client</NuxtLink
           >
         </template>
       </BaseEmptyState>
