@@ -73,6 +73,14 @@
             >
               Mon profil
             </v-btn>
+            <!-- <v-btn
+              color="rgb(var(--v-theme-darkbg))"
+              style="color: rgb(var(--v-theme-background))"
+              class="w-100"
+              @click="openModificationModal = true"
+            >
+              Mon activité
+            </v-btn> -->
             <v-btn
               :disabled="isFirstTime"
               color="rgb(var(--v-theme-darkbg))"
@@ -80,7 +88,7 @@
               class="w-100"
               @click="openServiceModal = true"
             >
-              {{ isFirstTime ? 'Nous vérifions votre profil sous 48h' : 'Mon activité' }}
+              {{ isFirstTime ? 'Nous vérifions votre profil sous 48h' : 'Ajouter une activité' }}
             </v-btn>
           </template>
         </v-col>
@@ -89,7 +97,8 @@
 
     <Teleport to="body">
       <EditerProfessionalProfile v-model:openModal="openModal" />
-      <ServicesPrestataire v-model:pageActuelle="openServiceModal" class="mt-6" />
+      <!-- <EditPrestataireServices v-model:openModificationModal="openModificationModal" class="mt-6" /> -->
+      <CreatePrestataireServices v-model:openCreateServiceModal="openServiceModal" class="mt-6" />
     </Teleport>
   </section>
 </template>
@@ -100,7 +109,8 @@ import EditerProfessionalProfile from '@/components/apps/user-profile/EditProfes
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { computed, onMounted, ref } from 'vue';
-import ServicesPrestataire from '~/components/questionnaires/ServicesPrestataire.vue';
+import CreatePrestataireServices from '~/components/questionnaires/ServicesPrestataire.vue';
+// import EditPrestataireServices from '~/components/questionnaires/EditPrestataireServices.vue';
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { useProfessionalService } from '~/services/UseProfessionalService';
@@ -114,9 +124,11 @@ const { addSuccess } = useToaster();
 
 const openModal = ref(false);
 const openServiceModal = ref(false);
+const openModificationModal = ref(false);
 const fileInput = ref<HTMLInputElement | null>(null);
 const isFirstTime = ref(false);
 const professionalEmail = ref();
+const serviceProfessional = ref([]);
 const triggerClickFileInput = () => fileInput.value?.click();
 const changeBannerPhoto = async (e: Event) => {
   const input = e.target as HTMLInputElement;
@@ -132,9 +144,7 @@ const changeBannerPhoto = async (e: Event) => {
   }
 };
 
-const getServiceValues = computed(
-  () => professionalUser.value?.professionalServices?.map((s) => s.name) ?? []
-);
+const getServiceValues = computed(() => serviceProfessional.value.map((s) => s.name) ?? []);
 
 const displayedEmail = computed(
   () => professionalUser.value?.email || professionalEmail.value || null
@@ -144,6 +154,7 @@ onMounted(async () => {
   const professional = await getProfessionalProfile();
   professionalEmail.value = professional.email;
   const proService = await getListProfessionalServiceByProfessional();
+  serviceProfessional.value = proService;
   if (proService.length > 0) {
     isFirstTime.value = proService.some((service) => service.isVerified === false);
   }

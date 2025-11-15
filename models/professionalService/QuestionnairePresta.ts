@@ -22,7 +22,6 @@ export interface QuestionGeneral {
 }
 
 export interface QuestionnaireItem {
-  id: string;
   sector: string;
   questionnaireData: any;
   services: Services[];

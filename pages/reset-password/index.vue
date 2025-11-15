@@ -78,40 +78,34 @@ const route = useRoute();
 const token = route.query.token as string;
 
 const { registerNewPassword } = useAuthentification();
-const passwordSchemaAdvanced = yup.object({
+
+const schema = yup.object({
   password: yup
     .string()
-    .min(8, 'Le mot de passe doit contenir au moins 8 caractères')
+    .min(10, 'Le mot de passe doit faire 10 caractères minimum')
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
-      'Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial'
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/,
+      'Le mot de passe doit contenir une majuscule, une minuscule, un chiffre et un caractère spécial'
     )
     .required('Le mot de passe est requis'),
+
   confirmPassword: yup
     .string()
     .test('passwords-match', 'Les mots de passe ne correspondent pas', function (value) {
       return this.parent.password === value;
     })
-    .required('La confirmation du mot de passe est requise'),
+    .required('La confirmation est requise'),
 });
 
-const {
-  values: registerPassword,
-  errors,
-  handleSubmit,
-  setFieldValue,
-  validate,
-} = useForm({
-  validationSchema: passwordSchemaAdvanced,
+const { handleSubmit } = useForm({
+  validationSchema: schema,
   initialValues: {
-    token: token,
+    token,
     password: '',
     confirmPassword: '',
   },
-  validateOnMount: false,
 });
 
-// Soumission simplifiée
 const onSubmit = handleSubmit(async (values) => {
   await registerNewPassword(values);
 });
