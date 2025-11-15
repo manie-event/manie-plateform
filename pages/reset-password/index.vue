@@ -18,7 +18,7 @@ const passwordSchemaAdvanced = yup.object({
     .string()
     .min(10, 'Le mot de passe doit contenir au moins 10 caractères')
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).+$/,
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).+$/,
       'Le mot de passe doit contenir une majuscule, une minuscule, un chiffre et un caractère spécial'
     )
     .required('Le mot de passe est requis'),
