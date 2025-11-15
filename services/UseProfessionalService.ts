@@ -38,8 +38,27 @@ export const useProfessionalService = () => {
     }
   };
 
+  // const updateProfessionalServices = async (serviceUuid: string, payload) => {
+  //   console.log(payload, 'updateProfessionalServices');
+
+  //   try {
+  //     if (!api || !professionalUser.value?.uuid) return;
+  //     const { data } = await api.patch(`/professional-service/update/${serviceUuid}`, payload, {
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         Accept: 'application/json',
+  //       },
+  //     });
+  //     setProfessionalServices(data.data);
+  //     return data.data ?? [];
+  //   } catch (error: any) {
+  //     console.error('❌ getListProfessionalServiceByProfessional:', error);
+  //   }
+  // };
+
   return {
     getProfessionalService,
     getListProfessionalServiceByProfessional,
+    // updateProfessionalServices,
   };
 };

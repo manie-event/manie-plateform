@@ -32,18 +32,19 @@ import { computed } from 'vue';
 const { serviceEventProposition, professionalServices } = storeToRefs(usePropositionStore());
 
 // Fonction pour obtenir la clé mois-année (format: "2025-10")
-const getMonthKey = (date: Date | string): string => {
-  const d = new Date(date);
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
-};
+// const getMonthKey = (date: Date | string): string => {
+//   const d = new Date(date);
+//   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+// };
 
 // Filtrer les propositions associées aux services du professionnel
 const totalSelectedEvent = computed(() => {
-  return serviceEventProposition.value
-    .filter((sep) =>
-      professionalServices.value.some((ps) => ps.uuid === sep.professionalServiceUuid)
-    )
-    .filter((ps) => ps.proposition.professionalMessage);
+  const services = professionalServices.value ?? [];
+  const events = serviceEventProposition.value ?? [];
+
+  return events
+    .filter((sep) => services.some((ps) => ps.uuid === sep.professionalServiceUuid))
+    .filter((ps) => ps.proposition?.professionalMessage);
 });
 
 // Filtrer les propositions signées (status = 'completed')
