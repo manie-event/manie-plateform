@@ -86,6 +86,7 @@
                 variant="outlined"
                 placeholder="Exemple : Label AB (Bio)"
                 hide-details
+                :error-messages="showErrors ? errors.certification : undefined"
                 class="flex-1"
               />
 
@@ -157,7 +158,7 @@
           <v-text-field
             label="Votre numéro de téléphone ?"
             v-model="profile.telephone"
-            :error-messages="showErrors ? errors.siret : undefined"
+            :error-messages="showErrors ? errors.telephone : undefined"
           />
 
           <div class="mt-4">
@@ -206,7 +207,7 @@
               >
               </v-text-field>
               <v-text-field
-                v-model="faq.reponse"
+                v-model="faq.answer"
                 label="Renseignez la réponse à la question"
                 type="text"
                 variant="outlined"
@@ -307,8 +308,8 @@ const minimumDaysReservation = computed(() => reservationDelay.value);
 const mergedFaq = computed(() => {
   return faqArray.value.reduce(
     (acc, faq) => {
-      if (faq.question && faq.reponse) {
-        acc[faq.question] = faq.reponse;
+      if (faq.question && faq.answer) {
+        acc[faq.question] = faq.answer;
       }
       return acc;
     },
@@ -325,20 +326,37 @@ const validationSchema = yup.object({
   address: yup.string().required("L'adresse est requise"),
   telephone: yup
     .string()
-    .length(10, 'Vous devez indiquer 10 numéros')
+    .matches(/^[0-9]{10}$/, 'Le numéro doit contenir exactement 10 chiffres')
     .required('Le numéro de téléphone est obligatoire'),
-  bio: yup.string().required('La bio est requise'),
-  mainActivity: yup.string().required('Activité requise'),
+  bio: yup
+    .string()
+    .required('La bio est requise')
+    .min(10, 'La bio doit contenir au moins 10 caractères'),
+  mainActivity: yup
+    .string()
+    .required('Activité requise')
+    .notOneOf(['Veuillez choisir votre activité'], 'Veuillez sélectionner une activité'),
   mainInterlocutor: yup.string().required("L'interlocuteur principal est requis"),
   experience: yup
     .number()
     .min(0, "L'expérience doit être positive")
     .required("L'expérience est requise"),
   geographicArea: yup.string().required('La zone géographique est requise'),
-  certification: yup.string(),
-  minimumReservationPeriod: yup.number().min(0, 'La période de réservation doit être positive'),
+  certification: yup.array().of(yup.string()),
+  minimumReservationPeriod: yup
+    .number()
+    .min(0, 'La période de réservation doit être positive')
+    .required('La période de réservation est requise'),
   deposit: yup.boolean(),
-  depositAmount: yup.number().min(0, "Le montant de l'acompte doit être positif"),
+  depositAmount: yup.number().when('deposit', {
+    is: true,
+    then: (schema) =>
+      schema
+        .min(1, "Le montant de l'acompte doit être supérieur à 0")
+        .max(100, "Le montant de l'acompte ne peut pas dépasser 100%")
+        .required("Le montant de l'acompte est requis"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
   billingPeriod: yup.string().required('La période de facturation est requise'),
   links: yup.array().of(
     yup.object({
@@ -346,10 +364,7 @@ const validationSchema = yup.object({
       value: yup.string().url('URL non valide'),
     })
   ),
-  faq: yup.object({
-    question: yup.string(),
-    reponse: yup.string(),
-  }),
+  faq: yup.object(),
 });
 
 const {
@@ -394,7 +409,7 @@ const removeLink = (index: number) => {
 const addFaq = () => {
   faqArray.value.push({
     question: '',
-    reponse: '',
+    answer: '',
   });
 };
 
@@ -416,7 +431,54 @@ const setSector = () => {
   getSectors(profile.mainActivity);
 };
 
+// Ajoutez cette fonction avant vos fonctions createProfile et modifyProfile
+
+const validateAndShowErrors = async (): Promise<boolean> => {
+  try {
+    // Valider toutes les données du formulaire
+    await validationSchema.validate(
+      {
+        ...profile,
+        minimumReservationPeriod: reservationDelay.value,
+      },
+      { abortEarly: false } // Récupère toutes les erreurs, pas seulement la première
+    );
+
+    showErrors.value = false;
+    return true; // Validation réussie
+  } catch (err) {
+    if (err instanceof yup.ValidationError) {
+      showErrors.value = true;
+
+      // Afficher un message d'erreur global
+      addError({
+        message: err.message,
+      });
+
+      // Optionnel : Logger les erreurs en console pour debug
+      console.error(
+        'Erreurs de validation:',
+        err.inner.map((e) => ({
+          field: e.path,
+          message: e.message,
+        }))
+      );
+
+      return false; // Validation échouée
+    }
+
+    // Erreur inattendue
+    addError({ message: 'Une erreur est survenue lors de la validation' });
+    return false;
+  }
+};
+
+// Modifiez votre fonction createProfile
 const createProfile = async (values: ProfessionalProfile) => {
+  // Valider avant d'envoyer
+  const isValid = await validateAndShowErrors();
+  if (!isValid) return;
+
   try {
     const payload = {
       ...values,
@@ -430,14 +492,20 @@ const createProfile = async (values: ProfessionalProfile) => {
 
     if (response.message === 'Professional created') {
       addSuccess('Votre profil a été créé avec succès');
+      showErrors.value = false; // Réinitialiser les erreurs
     }
     openModal.value = false;
   } catch (error: any) {
-    addError({ message: error.response.data.message });
+    addError({ message: error.response?.data?.message || 'Erreur lors de la création du profil' });
   }
 };
 
+// Modifiez votre fonction modifyProfile
 const modifyProfile = async (newValues: ProfessionalProfile) => {
+  // Valider avant d'envoyer
+  const isValid = await validateAndShowErrors();
+  if (!isValid) return;
+
   try {
     const payload = {
       ...newValues,
@@ -455,10 +523,13 @@ const modifyProfile = async (newValues: ProfessionalProfile) => {
     setProfessionalUser(updatedProfessional);
 
     addSuccess('Votre profil a été modifié avec succès');
+    showErrors.value = false; // Réinitialiser les erreurs
 
     openModal.value = false;
   } catch (error: any) {
-    addError({ message: error.response.data.message as any });
+    addError({
+      message: error.response?.data?.message || 'Erreur lors de la modification du profil',
+    });
   }
 };
 
@@ -473,6 +544,29 @@ watch(openModal, (isOpen) => {
           ? 'afterEvent'
           : 'beforeEvent'
         : professionalUser.value.billingPeriod || 'beforeEvent';
+
+    // Parse la FAQ correctement
+    let parsedFaq = {};
+    if (professionalUser.value.faq) {
+      try {
+        parsedFaq =
+          typeof professionalUser.value.faq === 'string'
+            ? JSON.parse(professionalUser.value.faq)
+            : professionalUser.value.faq;
+      } catch (e) {
+        console.error('Erreur lors du parsing de la FAQ:', e);
+        parsedFaq = {};
+      }
+    }
+
+    // Convertir l'objet FAQ en tableau pour faqArray
+    const faqEntries = Object.entries(parsedFaq).map(([question, answer]) => ({
+      question,
+      answer: answer || '', // S'assurer qu'il y a toujours une valeur
+    }));
+
+    // S'il n'y a pas de FAQ, initialiser avec un élément vide
+    faqArray.value = faqEntries.length > 0 ? faqEntries : [{ question: '', answer: '' }];
 
     resetForm({
       values: {
@@ -496,11 +590,9 @@ watch(openModal, (isOpen) => {
         depositAmount: professionalUser.value.depositAmount ?? 0,
         billingPeriod: isBooleanBillingPeriod,
         links: professionalUser.value.links?.length ? professionalUser.value.links : [],
-        faq: professionalUser.value.faq ?? {},
+        faq: parsedFaq, // Objet FAQ parsé
       },
     });
-
-    faqArray.value = professionalUser.value.faqArray ?? [];
   }
 });
 </script>

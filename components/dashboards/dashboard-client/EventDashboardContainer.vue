@@ -36,7 +36,7 @@
 
       <v-col cols="12" md="4">
         <template v-if="getCurrentEventLocked">
-          <v-tooltip text="Modification impossible : un service est déjà traité">
+          <v-tooltip text="Modification impossible : demande de prestataire en cours">
             <template #activator="{ props }">
               <span v-bind="props" class="btn-item">
                 <v-btn
@@ -73,7 +73,7 @@
           variant="flat"
           style="background: rgb(var(--v-theme-darkbg)); color: rgb(var(--v-theme-background))"
         >
-          Ajouter des services
+          Ajouter des prestataires
         </v-btn>
       </v-col>
     </v-row>

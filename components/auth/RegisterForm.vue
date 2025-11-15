@@ -75,41 +75,36 @@ const register = async () => {
     </div>
   </div>
   <v-form ref="form" v-model="valid" lazy-validation class="mt-5">
-    <div class="d-flex gap-2 align-center">
-      <v-label class="text-subtitle-1 font-weight-medium">Vous êtes :</v-label>
-      <div class="d-flex align-center gap-2">
-        <v-label class="text-subtitle-1 font-weight-medium">Prestataire</v-label>
-        <v-switch
-          v-model="registerForm.category"
-          false-value="professional"
-          true-value="consumer"
-          :color="registerForm.category === 'consumer' ? '#f39454' : 'primary'"
-          hide-details
-          >{{ registerForm.category }}</v-switch
+    <v-label class="text-subtitle-1 font-weight-medium">Vous êtes :</v-label>
+    <v-row>
+      <v-col cols="12" md="6">
+        <v-btn
+          @click="registerForm.category = 'professional'"
+          class="register-form__nature-personne-btn text-white"
+          :style="{
+            width: '100%',
+            background: 'rgb(var(--v-theme-darkbg))',
+            opacity: registerForm.category === 'professional' ? 1 : 0.4,
+          }"
         >
-        <v-label class="text-subtitle-1 font-weight-medium">Client</v-label>
-      </div>
-    </div>
+          Prestataire
+        </v-btn>
+      </v-col>
 
-    <div class="d-flex gap-4">
-      <div class="w-100">
-        <v-label class="text-subtitle-1 font-weight-medium pb-2">Pseudo</v-label>
-        <VTextField
-          v-model="registerForm.username"
-          :rules="nameRules"
-          required
-          placeholder="Votre nom d'utilisateur"
-        ></VTextField>
-      </div>
-    </div>
-    <v-label class="text-subtitle-1 font-weight-medium pb-2">Email</v-label>
-    <VTextField
-      v-model="registerForm.email"
-      :rules="emailRules"
-      required
-      autocomplete="new-email"
-      placeholder="info@manie.com"
-    ></VTextField>
+      <v-col cols="12" md="6">
+        <v-btn
+          @click="registerForm.category = 'consumer'"
+          class="register-form__nature-personne-btn text-white"
+          :style="{
+            width: '100%',
+            background: 'rgb(var(--v-theme-thirdy))',
+            opacity: registerForm.category === 'consumer' ? 1 : 0.4,
+          }"
+        >
+          Client
+        </v-btn>
+      </v-col>
+    </v-row>
     <div class="d-flex flex-column gap-2">
       <v-label class="text-subtitle-1 font-weight-medium pb-2">Mot de passe</v-label>
       <span :style="{ fontSize: '0.75rem', opacity: 0.5, marginBottom: '1rem' }"
@@ -214,3 +209,16 @@ const register = async () => {
     <errorToaster />
   </Teleport>
 </template>
+<style lang="scss" scoped>
+.register-form {
+  &__nature-personne-btn {
+    width: 200px;
+    padding: 30px 20px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+  }
+}
+</style>

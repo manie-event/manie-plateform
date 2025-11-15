@@ -116,7 +116,7 @@ export const useAuthentification = () => {
   // --- RESET PASSWORD (AUTH) -------------------------------------------------
   const registerNewPassword = async (registerPassword: registerNewPasswordModel) => {
     try {
-      if (!api) return; // garde-fou si l’instance n’est pas prête (théoriquement jamais ici)
+      if (!api) return;
 
       const { data } = await api.post('/auth/reset-password', registerPassword);
       if (data) {
