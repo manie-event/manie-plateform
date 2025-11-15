@@ -16,9 +16,9 @@ const { registerNewPassword } = useAuthentification();
 const passwordSchemaAdvanced = yup.object({
   password: yup
     .string()
-    .min(8, 'Le mot de passe doit contenir au moins 8 caractères')
+    .min(10, 'Le mot de passe doit contenir au moins 10 caractères')
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/,
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).+$/,
       'Le mot de passe doit contenir une majuscule, une minuscule, un chiffre et un caractère spécial'
     )
     .required('Le mot de passe est requis'),
@@ -28,7 +28,6 @@ const passwordSchemaAdvanced = yup.object({
     .required('La confirmation du mot de passe est requise'),
 });
 
-// VeeValidate Form
 const { values, errors, handleSubmit, setFieldValue } = useForm({
   validationSchema: passwordSchemaAdvanced,
   initialValues: {
@@ -82,7 +81,7 @@ const onSubmit = handleSubmit(async (values) => {
                     size="large"
                     flat
                     style="
-                      border: 1px solid rgb(var(--v-theme-darkbg));
+                      background: rgb(var(--v-theme-darkbg));
                       color: rgb(var(--v-theme-background));
                     "
                     @click="onSubmit"
