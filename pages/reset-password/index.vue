@@ -23,12 +23,9 @@
     <div class="relative bg-white rounded-3xl shadow-xl p-12 w-full max-w-2xl z-10">
       <div class="max-w-lg mx-auto">
         <!-- Titre -->
-        <h1 class="text-4xl font-bold text-[#1a1a1a] mb-3">
-          Vous avez oublié votre mot de passe ?
-        </h1>
+        <h1 class="text-4xl font-bold text-[#1a1a1a] mb-3">Réinitialiser votre mot de passe</h1>
         <p class="text-gray-700 mb-8">
-          Entrez l'email associé à votre compte et nous vous enverrons un lien pour en saisir un
-          nouveau.
+          Choisissez un nouveau mot de passe sécurisé pour votre compte.
         </p>
 
         <!-- Formulaire -->
@@ -36,22 +33,51 @@
           ref="form"
           @submit.prevent="onSubmit()"
           action="/dashboards/analytical"
-          class="space-y-4"
+          class="space-y-5"
         >
-          <!-- Champ Email -->
+          <!-- Champ Nouveau mot de passe -->
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"> Email </label>
-            <input
-              type="email"
-              class="w-full px-4 py-3 bg-white border-2 border-gray-300 rounded-lg focus:border-[#2c3e50] focus:outline-none transition-colors"
-              placeholder=""
-            />
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Votre nouveau mot de passe
+            </label>
+            <Field name="password" v-slot="{ field, errors }">
+              <input
+                v-bind="field"
+                type="password"
+                class="w-full px-4 py-3 bg-white border-2 border-gray-300 rounded-lg focus:border-[#2c3e50] focus:outline-none transition-colors"
+                :class="{ 'border-red-500 focus:border-red-500': errors.length }"
+                placeholder="Votre nouveau mot de passe"
+              />
+              <span v-if="errors.length" class="text-red-600 text-sm block mt-2">{{
+                errors[0]
+              }}</span>
+            </Field>
+          </div>
+
+          <!-- Champ Confirmation mot de passe -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Confirmez votre nouveau mot de passe
+            </label>
+            <Field name="confirmPassword" v-slot="{ field, errors }">
+              <input
+                v-bind="field"
+                type="password"
+                class="w-full px-4 py-3 bg-white border-2 border-gray-300 rounded-lg focus:border-[#2c3e50] focus:outline-none transition-colors"
+                :class="{ 'border-red-500 focus:border-red-500': errors.length }"
+                placeholder="Confirmez votre nouveau mot de passe"
+              />
+              <span v-if="errors.length" class="text-red-600 text-sm block mt-2">{{
+                errors[0]
+              }}</span>
+            </Field>
+            <ErrorMessage name="confirmPassword" class="text-red-600 text-sm block mt-2" />
           </div>
 
           <!-- Bouton principal -->
           <button
             type="submit"
-            class="w-full bg-[#2c3e50] hover:bg-[#243442] text-white font-medium py-3.5 px-6 rounded-lg transition-colors"
+            class="w-full bg-[#2c3e50] hover:bg-[#243442] text-white font-medium py-3.5 px-6 rounded-lg transition-colors mt-6"
           >
             Réinitialiser mon mot de passe
           </button>
@@ -71,41 +97,47 @@
 
 <script setup lang="ts">
 import { useAuthentification } from '@/composables/UseAuthentification';
-import { Form, useForm } from 'vee-validate';
+import { ErrorMessage, Field, Form, useForm } from 'vee-validate';
 import * as yup from 'yup';
 
 const route = useRoute();
 const token = route.query.token as string;
 
 const { registerNewPassword } = useAuthentification();
-
-const schema = yup.object({
+const passwordSchemaAdvanced = yup.object({
   password: yup
     .string()
-    .min(10, 'Le mot de passe doit faire 10 caractères minimum')
+    .min(8, 'Le mot de passe doit contenir au moins 8 caractères')
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/,
-      'Le mot de passe doit contenir une majuscule, une minuscule, un chiffre et un caractère spécial'
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
+      'Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial'
     )
     .required('Le mot de passe est requis'),
-
   confirmPassword: yup
     .string()
     .test('passwords-match', 'Les mots de passe ne correspondent pas', function (value) {
       return this.parent.password === value;
     })
-    .required('La confirmation est requise'),
+    .required('La confirmation du mot de passe est requise'),
 });
 
-const { handleSubmit } = useForm({
-  validationSchema: schema,
+const {
+  values: registerPassword,
+  errors,
+  handleSubmit,
+  setFieldValue,
+  validate,
+} = useForm({
+  validationSchema: passwordSchemaAdvanced,
   initialValues: {
-    token,
+    token: token,
     password: '',
     confirmPassword: '',
   },
+  validateOnMount: false,
 });
 
+// Soumission simplifiée
 const onSubmit = handleSubmit(async (values) => {
   await registerNewPassword(values);
 });
