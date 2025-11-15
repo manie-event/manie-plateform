@@ -106,6 +106,25 @@ const register = async () => {
       </v-col>
     </v-row>
     <div class="d-flex flex-column gap-2">
+      <div class="d-flex gap-4">
+        <div class="w-100">
+          <v-label class="text-subtitle-1 font-weight-medium pb-2">Pseudo</v-label>
+          <VTextField
+            v-model="registerForm.username"
+            :rules="nameRules"
+            required
+            placeholder="Votre nom d'utilisateur"
+          ></VTextField>
+        </div>
+      </div>
+      <v-label class="text-subtitle-1 font-weight-medium pb-2">Email</v-label>
+      <VTextField
+        v-model="registerForm.email"
+        :rules="emailRules"
+        required
+        autocomplete="new-email"
+        placeholder="info@manie.com"
+      ></VTextField>
       <v-label class="text-subtitle-1 font-weight-medium pb-2">Mot de passe</v-label>
       <span :style="{ fontSize: '0.75rem', opacity: 0.5, marginBottom: '1rem' }"
         >Votre mot de passe doit combiner au moins une majuscule, une minuscule, un chiffre, un
