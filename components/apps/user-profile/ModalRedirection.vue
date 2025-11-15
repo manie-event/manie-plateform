@@ -6,7 +6,7 @@
         <span>Nous avons récolté vos informations avec succès.</span>
         <span>Vous pouvez, maintenant aller sur votre tableau de bord</span>
       </h2>
-      <NuxtLink :to="`/dashboards/${redirection}`" @click="setUpdateProfile(false)" class="w-100">
+      <NuxtLink :to="`/dashboards/${redirection}`" class="w-100">
         <v-btn color="rgb(var(--v-theme-thirdy))" size="large" class="w-100">
           Revenir à votre dashboard
         </v-btn>
@@ -22,8 +22,6 @@ defineProps<{
 }>();
 
 const openModal = defineModel<boolean>();
-
-const { setUpdateProfile } = useUserStore();
 </script>
 <style lang="scss" scoped>
 .modal-redirection {

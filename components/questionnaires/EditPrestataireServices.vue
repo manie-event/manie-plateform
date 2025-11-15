@@ -157,20 +157,6 @@
         </div>
 
         <div class="d-flex align-center justify-space-between w-100">
-          <div class="d-flex justify-space-between align-center py-3">
-            <v-btn
-              v-if="questionnaires.length < 3"
-              @click="addNewQuestionnaire"
-              variant="outlined"
-              style="
-                border: 1px solid rgb(var(--v-theme-darkbg));
-                color: rgb(var(--v-theme-darkbg));
-              "
-              class="px-4"
-            >
-              <span>Ajouter une nouvelle activité</span>
-            </v-btn>
-          </div>
           <div>
             <v-btn
               style="background: rgb(var(--v-theme-darkbg)); color: white"
@@ -201,14 +187,14 @@ import { ref, Teleport, watch } from 'vue';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { Keywords } from '~/models/professionalService/Keywords';
-import type { ProfessionalServiceUuid } from '~/models/professionalService/professionalServiceUuid';
+import type { ProfessionalServicePayload } from '~/models/professionalService/ProfessionalServicePayload';
 import type { QuestionnaireItem } from '~/models/professionalService/QuestionnairePresta';
 import type { Services } from '~/models/professionalService/Services';
 import type { ProfessionalProfile } from '~/models/user/UserModel';
 import { useProfessionalService } from '~/services/UseProfessionalService';
 import ModalRedirection from '../apps/user-profile/ModalRedirection.vue';
 
-const serviceModal = defineModel<boolean>('openCreateServiceModal', { default: false });
+const serviceModal = defineModel<boolean>('openModificationModal', { default: false });
 const userStore = useUserStore();
 const { professionalUser } = storeToRefs(userStore);
 
@@ -219,15 +205,14 @@ const { getSectors, sendProfessionalServices } = keywordsStore;
 const { patchProfessionalProfileDetails } = useProfessionalProfile();
 const { addSuccess, addError } = useToaster();
 
-const { getListProfessionalServiceByProfessional } = useProfessionalService();
+const { getListProfessionalServiceByProfessional, updateProfessionalServices } =
+  useProfessionalService();
 const questionnaires = ref<QuestionnaireItem[]>([]);
 const activityItems = ref(ACTIVITY_ITEMS);
-const payloadArray = ref<ProfessionalServiceUuid[]>([]);
+
+const payloadArray = ref<ProfessionalServicePayload[]>([]);
 const isProfilUpdate = ref(false);
 let sectorsLoaded = false;
-const isFirstTime = ref(false);
-
-const generateId = () => Math.random().toString(36).substr(2, 9);
 
 const calculateKeywordsByCategory = (
   questionnaireData: any,
@@ -264,7 +249,6 @@ const calculateKeywordsByCategory = (
 const createQuestionnaire = (sector: string): QuestionnaireItem => {
   const data = questionnairePresta.find((q) => q.sector.toLowerCase() === sector.toLowerCase());
   return {
-    id: generateId(),
     sector,
     questionnaireData: data,
     services: [...(services.value || [])],
@@ -291,6 +275,7 @@ const selectKeyword = (keyword: Keywords, q: QuestionnaireItem) => {
 const updateQuestionnaireSector = async (q: QuestionnaireItem, newSector: string) => {
   if (!newSector) return;
 
+  // Reset
   Object.assign(q, {
     questionnaireData: null,
     services: [],
@@ -301,35 +286,29 @@ const updateQuestionnaireSector = async (q: QuestionnaireItem, newSector: string
 
   await getSectors(newSector);
 
-  const stopWatching = watch([services, keywords], ([s, k]) => {
-    if (s?.length && k?.length) {
-      const data = questionnairePresta.find(
-        (item) => item.sector.toLowerCase() === newSector.toLowerCase()
-      );
-      q.sector = newSector;
-      q.questionnaireData = data;
-      q.services = [...s];
-      q.keywordsByCategory = calculateKeywordsByCategory(data, newSector);
-      stopWatching();
-    }
-  });
-};
+  // Maintenant que getSectors a mis à jour les valeurs globales,
+  // on peut directement les injecter
+  const data = questionnairePresta.find(
+    (item) => item.sector.toLowerCase() === newSector.toLowerCase()
+  );
 
-const addNewQuestionnaire = () =>
-  questionnaires.value.push({
-    id: generateId(),
-    sector: '',
-    questionnaireData: null,
-    services: [],
-    keywordsByCategory: {},
-    selectedServiceUuid: null,
-    selectedKeywords: new Set<string>(),
-  });
+  q.sector = newSector;
+  q.questionnaireData = data;
+  q.services = [...services.value];
+  q.keywordsByCategory = calculateKeywordsByCategory(data, newSector);
+};
 
 const updatePayloadArray = () => {
   payloadArray.value = questionnaires.value
-    .filter((q) => q.selectedServiceUuid && professionalUser.value?.uuid)
+    .filter((q) => q.linkUuid) // on ne touche qu’aux services existants
+    .filter((q) => {
+      const serviceChanged = q.selectedServiceUuid !== q.original.serviceUuid;
+      const keywordsChanged =
+        JSON.stringify([...q.selectedKeywords]) !== JSON.stringify([...q.original.keywords]);
+      return serviceChanged || keywordsChanged;
+    })
     .map((q) => ({
+      linkUuid: q.linkUuid,
       serviceUuid: q.selectedServiceUuid!,
       professionalUuid: professionalUser.value!.uuid,
       keywordsUuid: Array.from(q.selectedKeywords),
@@ -359,7 +338,15 @@ const submitAllQuestionnaires = async () => {
       thirdActivity: selected[1] || '',
     } as ProfessionalProfile);
 
-    await Promise.all(payloadArray.value.map((p) => sendProfessionalServices(p)));
+    await Promise.all(
+      payloadArray.value.map((p) =>
+        updateProfessionalServices(p.linkUuid, {
+          serviceUuid: p.serviceUuid,
+          professionalUuid: p.professionalUuid,
+          keywordsUuid: p.keywordsUuid,
+        })
+      )
+    );
 
     addSuccess(`${payloadArray.value.length} service(s) créé(s) avec succès !`);
     serviceModal.value = false;
@@ -370,44 +357,50 @@ const submitAllQuestionnaires = async () => {
   }
 };
 
-// Initialisation';
-
-// 🔄 Pré-remplissage des services et mots-clés déjà enregistrés
 watch(
   () => serviceModal.value,
   async (open) => {
     if (!open || !professionalUser.value?.uuid) return;
 
+    // 🔁 Réinitialisation complète
     questionnaires.value = [];
-    sectorsLoaded = true;
+    sectorsLoaded = false;
 
     try {
       const proService = await getListProfessionalServiceByProfessional();
-      console.log(proService, 'Proservice');
 
-      const isFirstTime = proService.some((service) => service.isVerified === false);
-      if (proService.length && !isFirstTime) {
-        console.log(isFirstTime, 'isFirstTime');
+      const tempQuestionnaires: QuestionnaireItem[] = [];
+
+      if (proService.length) {
+        // Cas où le pro a déjà des services validés
         for (const srv of proService) {
-          const sector = professionalUser.value.mainActivity || 'Autre';
+          const sector = srv.mainActivity || professionalUser.value.mainActivity || 'Autre';
           await getSectors(sector);
+
           const qData = questionnairePresta.find(
             (q) => q.sector.toLowerCase() === sector.toLowerCase()
           );
 
-          const q: QuestionnaireItem = {
-            id: generateId(),
+          tempQuestionnaires.push({
+            linkUuid: srv.uuid,
             sector,
             questionnaireData: qData,
-            services: [...(services.value || [])], // Liste complète des services du secteur
+            services: [...(services.value || [])],
             keywordsByCategory: calculateKeywordsByCategory(qData, sector),
-            selectedServiceUuid: srv.serviceUuid, // ✅ Service déjà choisi
+
+            selectedServiceUuid: srv.serviceUuid,
             selectedKeywords: new Set(
               (srv.keywordsUuid || []).map((k: any) => (typeof k === 'string' ? k : k.uuid))
             ),
-          };
 
-          questionnaires.value.push(q);
+            // snapshot
+            original: {
+              serviceUuid: srv.serviceUuid,
+              keywords: new Set(
+                (srv.keywordsUuid || []).map((k: any) => (typeof k === 'string' ? k : k.uuid))
+              ),
+            },
+          });
         }
       } else {
         const user = professionalUser.value;
@@ -417,9 +410,13 @@ watch(
 
         for (const sector of sectors) {
           await getSectors(sector!);
-          questionnaires.value.push(createQuestionnaire(sector!));
+          tempQuestionnaires.push(createQuestionnaire(sector!));
         }
       }
+
+      // ✅ On injecte tout d’un coup, une fois les chargements terminés
+      questionnaires.value = tempQuestionnaires;
+      sectorsLoaded = true;
     } catch (e) {
       console.error('Erreur lors du préremplissage :', e);
       addError({ message: 'Erreur lors du chargement des services existants.' });
