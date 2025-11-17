@@ -73,14 +73,14 @@
             >
               Mon profil
             </v-btn>
-            <!-- <v-btn
+            <v-btn
               color="rgb(var(--v-theme-darkbg))"
               style="color: rgb(var(--v-theme-background))"
               class="w-100"
               @click="openModificationModal = true"
             >
               Mon activité
-            </v-btn> -->
+            </v-btn>
             <v-btn
               :disabled="isFirstTime"
               color="rgb(var(--v-theme-darkbg))"
@@ -97,7 +97,7 @@
 
     <Teleport to="body">
       <EditerProfessionalProfile v-model:openModal="openModal" />
-      <!-- <EditPrestataireServices v-model:openModificationModal="openModificationModal" class="mt-6" /> -->
+      <EditPrestataireServices v-model:openModificationModal="openModificationModal" class="mt-6" />
       <CreatePrestataireServices v-model:openCreateServiceModal="openServiceModal" class="mt-6" />
     </Teleport>
   </section>
@@ -109,8 +109,8 @@ import EditerProfessionalProfile from '@/components/apps/user-profile/EditProfes
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { computed, onMounted, ref } from 'vue';
+import EditPrestataireServices from '~/components/questionnaires/EditPrestataireServices.vue';
 import CreatePrestataireServices from '~/components/questionnaires/ServicesPrestataire.vue';
-// import EditPrestataireServices from '~/components/questionnaires/EditPrestataireServices.vue';
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { useProfessionalService } from '~/services/UseProfessionalService';
@@ -165,6 +165,7 @@ onMounted(async () => {
 <style scoped lang="scss">
 .profile-header {
   width: 80vw;
+  margin: 0 auto;
 
   &__cover {
     position: relative;

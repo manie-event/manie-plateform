@@ -19,10 +19,12 @@ const { getJetonQuantity } = usePaiementJeton();
 onMounted(async () => {
   isProfessional.value = true;
 
-  await getProfessionalProfile();
-  await getProfessionalProfileDetails();
-  await getServicePropositionForProfessional();
-  await getJetonQuantity();
+  await Promise.all([
+    getProfessionalProfile(),
+    getProfessionalProfileDetails(),
+    getServicePropositionForProfessional(),
+    getJetonQuantity(),
+  ]);
 });
 </script>
 

@@ -2,6 +2,7 @@
 import EventDashboardContainer from '@/components/dashboards/dashboard-client/EventDashboardContainer.vue';
 import Event from '@/components/dashboards/dashboard-client/Events.vue';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
+import { storeToRefs } from 'pinia';
 import BaseEmptyState from '~/components/common/BaseEmptyState.vue';
 import { useClientProfil } from '~/composables/client-user/UseClientProfil';
 import { useEventServiceProposition } from '~/composables/event-service-propositions/UseEventServiceProposition';

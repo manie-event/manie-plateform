@@ -9,10 +9,9 @@ export const useClientProfil = () => {
   const token = useCookie('token');
   const userStore = useUserStore();
   const { setClientProfile, updateClientProfile } = userStore;
-  const { clientProfile } = storeToRefs(userStore);
+  const { clientProfile, isProfileCreated } = storeToRefs(userStore);
   const config = useRuntimeConfig();
   const api = useApi();
-  const isProfileCreated = ref(localStorage.getItem('profil-created') === 'true');
 
   const getClientProfil = async () => {
     const response = await api?.get(`${config.public.apiUrl}/organisator`);

@@ -87,14 +87,7 @@ export const useProfessionalProfile = () => {
     try {
       const formData = new FormData();
       formData.append('file', file);
-
-      const { data } = await api.patch(
-        `/professional/${professionalUuid.value}/picture`,
-        formData,
-        {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        }
-      );
+      const { data } = await api.patch(`/professional/${professionalUuid.value}/picture`, formData);
 
       if (data?.imageUrl) {
         const normalizedData = {
@@ -105,7 +98,6 @@ export const useProfessionalProfile = () => {
         setProfessionalUser(normalizedData);
         addSuccess('Bannière changée avec succès !');
       }
-
       return data;
     } catch (err: any) {
       addError({ message: err.response.data.message });

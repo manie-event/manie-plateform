@@ -30,7 +30,7 @@
     "date-fns": "3.6.0",
     "gsap": "3.13.0",
     "lodash": "4.17.21",
-    "nuxt": "3.17.7",
+    "nuxt": "3.17.5",
     "ofetch": "1.4.1",
     "pinia": "^3.0.3",
     "pinia-plugin-persistedstate": "^4.7.1",

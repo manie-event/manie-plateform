@@ -32,11 +32,6 @@ export const useEventService = () => {
     try {
       if (!api) return;
 
-      if (!clientUuid.value) {
-        console.warn('Aucun UUID client trouvé dans le store');
-        return;
-      }
-
       const { mapDtoToEvent } = eventsMapper();
       const allEvents: any[] = [];
       let page = 1;
