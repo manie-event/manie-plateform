@@ -156,7 +156,7 @@
           </div>
         </div>
 
-        <div class="d-flex align-center justify-space-between w-100">
+        <div class="d-flex align-center justify-flex-end w-100">
           <div>
             <v-btn
               style="background: rgb(var(--v-theme-darkbg)); color: white"
@@ -190,7 +190,6 @@ import type { Keywords } from '~/models/professionalService/Keywords';
 import type { ProfessionalServicePayload } from '~/models/professionalService/ProfessionalServicePayload';
 import type { QuestionnaireItem } from '~/models/professionalService/QuestionnairePresta';
 import type { Services } from '~/models/professionalService/Services';
-import type { ProfessionalProfile } from '~/models/user/UserModel';
 import { useProfessionalService } from '~/services/UseProfessionalService';
 import ModalRedirection from '../apps/user-profile/ModalRedirection.vue';
 
@@ -300,19 +299,31 @@ const updateQuestionnaireSector = async (q: QuestionnaireItem, newSector: string
 
 const updatePayloadArray = () => {
   payloadArray.value = questionnaires.value
-    .filter((q) => q.linkUuid) // on ne touche qu’aux services existants
+    .filter((q) => q.linkUuid) // on ne touche qu'aux services existants
     .filter((q) => {
-      const serviceChanged = q.selectedServiceUuid !== q.original.serviceUuid;
+      const serviceChanged = q.selectedServiceUuid !== q.original?.serviceUuid;
+      const originalKeywordsArray = q.original?.keywords
+        ? Array.isArray(q.original.keywords)
+          ? q.original.keywords
+          : Array.from(q.original.keywords)
+        : [];
       const keywordsChanged =
-        JSON.stringify([...q.selectedKeywords]) !== JSON.stringify([...q.original.keywords]);
+        JSON.stringify(Array.from(q.selectedKeywords || [])) !==
+        JSON.stringify(originalKeywordsArray);
       return serviceChanged || keywordsChanged;
     })
-    .map((q) => ({
-      linkUuid: q.linkUuid,
-      serviceUuid: q.selectedServiceUuid!,
-      professionalUuid: professionalUser.value!.uuid,
-      keywordsUuid: Array.from(q.selectedKeywords),
-    }));
+    .map((q) => {
+      // 🔍 Trouver le service sélectionné pour récupérer son name
+      const selectedService = q.services.find((s) => s.uuid === q.selectedServiceUuid);
+
+      return {
+        linkUuid: q.linkUuid,
+        name: selectedService?.name || '',
+        serviceUuid: q.selectedServiceUuid!,
+        professionalUuid: professionalUser.value!.uuid,
+        keywordsUuid: Array.from(q.selectedKeywords),
+      };
+    });
 };
 
 const submitAllQuestionnaires = async () => {
@@ -328,32 +339,24 @@ const submitAllQuestionnaires = async () => {
       .filter((q) => q.sector && q.selectedServiceUuid)
       .map((q) => q.sector);
 
-    await patchProfessionalProfileDetails({
-      ...professionalUser.value,
-      faq:
-        typeof professionalUser.value?.faq === 'string'
-          ? JSON.parse(professionalUser.value.faq || '{}')
-          : professionalUser.value?.faq || {},
-      secondActivity: selected[0] || '',
-      thirdActivity: selected[1] || '',
-    } as ProfessionalProfile);
-
     await Promise.all(
-      payloadArray.value.map((p) =>
-        updateProfessionalServices(p.linkUuid, {
+      payloadArray.value.map((p) => {
+        console.log('📦 Payload envoyé:', p); // Pour vérifier
+
+        return updateProfessionalServices(p.linkUuid!, {
+          name: p.name, // ✅ Utiliser le name du payload au lieu de hardcoder
           serviceUuid: p.serviceUuid,
-          professionalUuid: p.professionalUuid,
           keywordsUuid: p.keywordsUuid,
-        })
-      )
+        });
+      })
     );
 
-    addSuccess(`${payloadArray.value.length} service(s) créé(s) avec succès !`);
+    addSuccess(`${selected.length} service(s) modifié(s) avec succès !`);
     serviceModal.value = false;
     isProfilUpdate.value = true;
   } catch (e) {
-    console.error('Erreur lors de lenvoi :', e);
-    addError({ message: 'Erreur lors de lenvoi des services.' });
+    console.error("Erreur lors de l'envoi :", e);
+    addError({ message: "Erreur lors de l'envoi des services." });
   }
 };
 

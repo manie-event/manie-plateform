@@ -20,10 +20,9 @@ export const useAuthentification = () => {
   const { getServicePropositionForProfessional } = useEventServiceProposition();
   const { getEventsPerOrganisator } = useEventService();
 
-  const { token } = useAuthCookies(); // access token (15 min)
-  const { refreshToken } = useRefreshToken(); // refresh token (7 jours)
+  const { token } = useAuthCookies();
+  const { refreshToken } = useRefreshToken();
 
-  // Instance Axios authentifiée (interceptors + refresh)
   const api = useApi();
 
   // --- REGISTER --------------------------------------------------------------
