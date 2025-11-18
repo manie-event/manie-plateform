@@ -22,10 +22,17 @@ export interface QuestionGeneral {
 }
 
 export interface QuestionnaireItem {
+  linkUuid?: string; // UUID du professional_service existant
   sector: string;
   questionnaireData: any;
   services: Services[];
   keywordsByCategory: Record<string, Keywords[]>;
   selectedServiceUuid: string | null;
   selectedKeywords: Set<string>;
+
+  // ✅ Ajouter cette propriété
+  original?: {
+    serviceUuid: string | null;
+    keywords: Set<string>;
+  };
 }
