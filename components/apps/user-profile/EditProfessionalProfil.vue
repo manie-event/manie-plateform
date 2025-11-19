@@ -50,12 +50,13 @@
             @update:model-value="setSector"
             :error-messages="showErrors ? errors.mainActivity : undefined"
           />
-
-          <v-text-field
-            label="Une courte description de votre activité ?"
+          <v-textarea
             v-model="profile.bio"
+            label="Une courte description de votre activité ?"
+            placeholder="Veuillez renseigner votre activité ici"
+            counter="1000"
             :error-messages="showErrors ? errors.bio : undefined"
-          />
+          ></v-textarea>
 
           <v-number-input
             label="Depuis quelle année exercez-vous cette activité ?"
@@ -88,6 +89,7 @@
                 hide-details
                 :error-messages="showErrors ? errors.certification : undefined"
                 class="flex-1"
+                counter="255"
               />
 
               <Icon
@@ -125,7 +127,7 @@
           <v-number-input
             v-if="profile.deposit"
             control-variant="hidden"
-            :min="0"
+            :min="10"
             :max="100"
             :step="5"
             label="Quel est le montant (en pourcentage)?"
@@ -206,14 +208,15 @@
                 item-value="value"
               >
               </v-text-field>
-              <v-text-field
+              <v-textarea
                 v-model="faq.answer"
                 label="Renseignez la réponse à la question"
                 type="text"
                 variant="outlined"
-                placeholder="https://www.example.com/mon-reseau-social"
-              >
-              </v-text-field>
+                placeholder="Veuillez renseigner votre réponse ici"
+                counter="255"
+                :error-messages="showErrors ? errors.faq : undefined"
+              ></v-textarea>
               <v-btn
                 @click="removeFaq(index)"
                 :disabled="faqArray.length === 0"
