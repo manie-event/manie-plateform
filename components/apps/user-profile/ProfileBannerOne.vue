@@ -25,7 +25,9 @@
         <v-col cols="12" md="6">
           <div class="d-flex flex-row gap-2">
             <div v-for="service in getServiceValues" :key="service">
-              <v-chip color="primary" variant="outlined" size="x-small">{{ service }}</v-chip>
+              <div class="d-flex gap-2">
+                <v-chip color="primary" variant="outlined" size="x-small">{{ service }}</v-chip>
+              </div>
             </div>
           </div>
 
@@ -82,13 +84,19 @@
               Mon activité
             </v-btn>
             <v-btn
-              :disabled="isFirstTime"
+              :disabled="isFirstTime || serviceProfessional.length === 3"
               color="rgb(var(--v-theme-darkbg))"
               style="color: rgb(var(--v-theme-background))"
               class="w-100"
               @click="openServiceModal = true"
             >
-              {{ isFirstTime ? 'Nous vérifions votre profil sous 48h' : 'Ajouter une activité' }}
+              {{
+                isFirstTime
+                  ? 'Nous vérifions votre profil sous 48h'
+                  : serviceProfessional.length === 3
+                    ? 'Vous détenez le maximum de service possible'
+                    : 'Ajouter une activité'
+              }}
             </v-btn>
           </template>
         </v-col>
