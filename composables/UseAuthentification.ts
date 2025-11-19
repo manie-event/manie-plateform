@@ -4,14 +4,8 @@ import type { AuthentificationModel } from '~/models/authentification/authentifi
 import type { RegisterModel } from '~/models/authentification/registerModel';
 import type { registerNewPasswordModel } from '~/models/authentification/registerNewPasswordModel';
 import type { errorModel } from '~/models/errorModel';
-import { useEventService } from '~/services/UseEventService';
-import { useProfessionalService } from '~/services/UseProfessionalService';
 import { useClientProfil } from './client-user/UseClientProfil';
 import { useEventServiceProposition } from './event-service-propositions/UseEventServiceProposition';
-<<<<<<< Updated upstream
-import { usePaiementJeton } from './professional-user/UsePaiementJeton';
-=======
->>>>>>> Stashed changes
 import { useProfessionalProfile } from './professional-user/UseProfessionalProfile';
 
 export const useAuthentification = () => {
@@ -20,21 +14,11 @@ export const useAuthentification = () => {
   const { addError, addSuccess } = useToaster();
   const userStore = useUserStore();
   const { setUser } = userStore;
-<<<<<<< Updated upstream
-  const { getProfessionalProfile, getProfessionalProfileDetails } = useProfessionalProfile();
-  const { getClientProfil } = useClientProfil();
-  const { getServicePropositionForProfessional } = useEventServiceProposition();
-  const { getEventsPerOrganisator } = useEventService();
-  const { getAllSectors, getKeywords } = useKeywordsStore();
-  const { getProfessionalService } = useProfessionalService();
-  const { getJetonQuantity } = usePaiementJeton();
-=======
   const { isProfessional } = storeToRefs(userStore);
   const { getProfessionalProfile, getProfessionalProfileDetails } = useProfessionalProfile();
   const { getClientProfil } = useClientProfil();
   const { getServicePropositionForProfessional } = useEventServiceProposition();
 
->>>>>>> Stashed changes
   const { token } = useAuthCookies(); // access token (15 min)
   const { refreshToken } = useRefreshToken(); // refresh token (7 jours)
 
@@ -83,13 +67,6 @@ export const useAuthentification = () => {
         await Promise.all([await getClientProfil(), await getEventsPerOrganisator()]);
 
         await router.push({ path: '/dashboards/dashboard-client' });
-<<<<<<< Updated upstream
-      } else {
-        (router.push({ path: '/dashboards/dashboard2' }),
-          await getProfessionalProfile(),
-          await getServicePropositionForProfessional(),
-          await getJetonQuantity());
-=======
         await getClientProfil();
         isProfessional.value = false;
       } else {
@@ -97,7 +74,6 @@ export const useAuthentification = () => {
         await getProfessionalProfile();
         await getProfessionalProfileDetails();
         await getServicePropositionForProfessional();
->>>>>>> Stashed changes
       }
     } catch (error: unknown) {
       console.error('Login error:', error);
