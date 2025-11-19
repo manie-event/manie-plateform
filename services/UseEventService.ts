@@ -1,4 +1,5 @@
 import { eventsStore } from '@/stores/events';
+import type { AxiosError } from 'axios';
 import { eventsMapper } from '~/mappers/eventsMapper';
 import type { eventModelDto } from '~/models/dto/eventDto';
 import type { QuestionnaireClient } from '~/models/questionnaire/QuestionnaireClientModel';
@@ -22,9 +23,8 @@ export const useEventService = () => {
 
       if (clientProfile.value) await getEventsPerOrganisator();
       return data;
-    } catch (error) {
-      console.error(error);
-      addError({ message: "Une erreur est survenue lors de la création de l'événement." });
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 
@@ -58,9 +58,8 @@ export const useEventService = () => {
       }
 
       return allEvents;
-    } catch (error) {
-      console.error('❌ Erreur dans getEventsPerOrganisator:', error);
-      addError({ message: 'Erreur lors de la récupération des événements.' });
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 
@@ -71,9 +70,8 @@ export const useEventService = () => {
       const responseInstance = { ...data, isAlreadyCreated: true };
       setQuestionnaireAnswers(responseInstance);
       return responseInstance;
-    } catch (error) {
-      console.error(error);
-      addError({ message: 'Erreur lors de la récupération de l’événement.' });
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 
@@ -86,9 +84,8 @@ export const useEventService = () => {
       if (!api) return;
       const { data } = await api.post('/event-service/create', payload);
       return data;
-    } catch (error) {
-      addError({ message: "Impossible d'ajouter le service à l'événement." });
-      throw error;
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 
@@ -97,9 +94,8 @@ export const useEventService = () => {
       if (!api) return;
       const { data } = await api.get(`/event-service/list-by-event/${uuid}`);
       return data.data;
-    } catch (error) {
-      addError({ message: "Erreur lors de la récupération des services de l'événement." });
-      throw error;
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 
@@ -108,9 +104,8 @@ export const useEventService = () => {
       if (!api) return;
       const { data } = await api.patch(`/event/${uuid}/update-formule`, { formule });
       return data.data;
-    } catch (error) {
-      addError({ message: "Erreur lors de la mise à jour de la formule de l'événement." });
-      throw error;
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 

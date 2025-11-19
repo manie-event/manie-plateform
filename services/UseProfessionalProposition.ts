@@ -1,3 +1,5 @@
+import type { AxiosError } from 'axios';
+
 export const useProfessionalProposition = () => {
   const { addSuccess, addError } = useToaster();
   const api = useApi();
@@ -10,9 +12,8 @@ export const useProfessionalProposition = () => {
       );
 
       return data;
-    } catch (error) {
-      console.error('❌ Erreur getListEventServiceProposition:', error);
-      return null;
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 
@@ -24,9 +25,8 @@ export const useProfessionalProposition = () => {
       );
 
       return data?.data ?? [];
-    } catch (error) {
-      console.error('❌ Erreur getListPropositionByEventService:', error);
-      return null;
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 
@@ -37,9 +37,8 @@ export const useProfessionalProposition = () => {
         `/event-service-proposition/list-by-professional-service/${professionalServiceUuid}`
       );
       return data?.data ?? [];
-    } catch (error) {
-      console.error('❌ Erreur getListProfessionalProposition:', error);
-      return null;
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 
@@ -52,11 +51,8 @@ export const useProfessionalProposition = () => {
       );
       addSuccess('Félicitations, vous vous êtes positionné sur cet évènement 🎉');
       return data;
-    } catch (error: any) {
-      addError({
-        message: error.response.data.message || 'Erreur lors de la mise à jour du message.',
-      });
-      return null;
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 
@@ -68,10 +64,8 @@ export const useProfessionalProposition = () => {
       );
       addSuccess("Félicitations 🎊 Vous venez d'avoir accès au profil prestataire !");
       return data;
-    } catch (error: any) {
-      addError({ message: error.response.data.message || "Erreur lors de l'acceptation." });
-      console.error('❌ Erreur acceptedByClient:', error);
-      return null;
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 
@@ -83,12 +77,8 @@ export const useProfessionalProposition = () => {
       );
       addSuccess('Vous avez décliné cette proposition 🙅‍♂️');
       return data;
-    } catch (error: any) {
-      addError({
-        message: error.response.data.message || 'Erreur lors du refus de la proposition.',
-      });
-      console.error('❌ Erreur declinedByClient:', error);
-      return null;
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 

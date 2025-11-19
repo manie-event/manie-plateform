@@ -1,9 +1,9 @@
 // useAuthentification.ts
-import axios from 'axios'; // routes publiques (sans auth)
+import axios, { AxiosError } from 'axios'; // routes publiques (sans auth)
 import type { AuthentificationModel } from '~/models/authentification/authentificationModel';
 import type { RegisterModel } from '~/models/authentification/registerModel';
 import type { registerNewPasswordModel } from '~/models/authentification/registerNewPasswordModel';
-import type { errorModel } from '~/models/errorModel';
+import { useEventService } from '~/services/UseEventService';
 import { useClientProfil } from './client-user/UseClientProfil';
 import { useEventServiceProposition } from './event-service-propositions/UseEventServiceProposition';
 import { useProfessionalProfile } from './professional-user/UseProfessionalProfile';
@@ -18,6 +18,7 @@ export const useAuthentification = () => {
   const { getProfessionalProfile, getProfessionalProfileDetails } = useProfessionalProfile();
   const { getClientProfil } = useClientProfil();
   const { getServicePropositionForProfessional } = useEventServiceProposition();
+  const { getEventsPerOrganisator } = useEventService();
 
   const { token } = useAuthCookies(); // access token (15 min)
   const { refreshToken } = useRefreshToken(); // refresh token (7 jours)
@@ -36,8 +37,8 @@ export const useAuthentification = () => {
         );
         await router.push('/auth/login');
       }
-    } catch (error: unknown) {
-      addError(error as errorModel);
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 
@@ -67,7 +68,6 @@ export const useAuthentification = () => {
         await Promise.all([await getClientProfil(), await getEventsPerOrganisator()]);
 
         await router.push({ path: '/dashboards/dashboard-client' });
-        await getClientProfil();
         isProfessional.value = false;
       } else {
         await router.push({ path: '/dashboards/dashboard2' });
@@ -75,10 +75,8 @@ export const useAuthentification = () => {
         await getProfessionalProfileDetails();
         await getServicePropositionForProfessional();
       }
-    } catch (error: unknown) {
-      console.error('Login error:', error);
-      addError(error as errorModel);
-      throw error;
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 
@@ -90,9 +88,8 @@ export const useAuthentification = () => {
         addSuccess('Email vérifié avec succès, vous pouvez maintenant vous connecter.');
         return data;
       }
-    } catch (error: unknown) {
-      console.error('Error in checkEmail:', error);
-      addError(error as errorModel);
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 
@@ -105,8 +102,8 @@ export const useAuthentification = () => {
         await router.push('/auth/login');
         return data;
       }
-    } catch (error) {
-      addError(error as errorModel);
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 
@@ -121,10 +118,8 @@ export const useAuthentification = () => {
         await router.push('/auth/login');
         return data;
       }
-    } catch (error: unknown) {
-      console.error('Error in registerNewPassword:', error);
-      addError(error as errorModel);
-      throw error;
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 
@@ -156,8 +151,8 @@ export const useAuthentification = () => {
       userStore.resetUserStore();
 
       await router.push('/');
-    } catch (error: unknown) {
-      addError(error as errorModel);
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 

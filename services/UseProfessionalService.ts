@@ -1,3 +1,5 @@
+import type { AxiosError } from 'axios';
+
 export const useProfessionalService = () => {
   const { addError } = useToaster();
   const { setServicesFiltered } = eventsStore();
@@ -17,8 +19,8 @@ export const useProfessionalService = () => {
 
       setServicesFiltered(data);
       return data ?? [];
-    } catch (error: any) {
-      console.error('❌ getProfessionalService:', error);
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 
@@ -33,8 +35,8 @@ export const useProfessionalService = () => {
       );
       setProfessionalServices(data.data);
       return data.data ?? [];
-    } catch (error: any) {
-      console.error('❌ getListProfessionalServiceByProfessional:', error);
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 

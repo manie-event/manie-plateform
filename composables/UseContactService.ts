@@ -1,3 +1,4 @@
+import type { AxiosError } from 'axios';
 import type { ContactMessage } from '~/models/contact/contactMessage';
 const { addError, addSuccess } = useToaster();
 
@@ -11,18 +12,13 @@ export const useContactService = () => {
     try {
       if (!api) return;
 
-      const { data } = await api.post(`${config.public.apiUrl}/contact`, contactData, {
-        headers: {
-          Authorization: `Bearer ${token.value}`,
-          'Content-Type': 'application/json',
-        },
-      });
+      const { data } = await api.post(`${config.public.apiUrl}/contact`, contactData);
       if (data) {
         addSuccess('Votre message a été envoyé avec succès.');
         return data;
       }
-    } catch (error: unknown) {
-      addError({ message: "Une erreur est survenue lors de l'envoi du message." });
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 

@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { SectorsDto } from '~/models/dto/sectorsDto';
 
-export function useEventForm() {
+export const useEventForm = () => {
   const { sectors, servicesFiltered } = storeToRefs(eventsStore());
   const { clientProfile } = storeToRefs(useUserStore());
   const { keywords } = storeToRefs(useKeywordsStore());
@@ -293,4 +293,4 @@ export function useEventForm() {
     // schemas for page 3 only
     schemaPage3,
   };
-}
+};
