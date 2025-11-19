@@ -58,6 +58,19 @@ export const useProfessionalService = () => {
     }
   };
 
+  const removeProfessionalService = async (serviceUuid: string) => {
+    try {
+      if (!api || !professionalUser.value?.uuid) return;
+      const { data } = await api.delete(`/professional-service/update/${serviceUuid}`);
+      console.log(data, 'updateProfessionalServices');
+
+      setProfessionalServices(data.data);
+      return data.data ?? [];
+    } catch (error: any) {
+      console.error('❌ getListProfessionalServiceByProfessional:', error);
+    }
+  };
+
   return {
     getProfessionalService,
     getListProfessionalServiceByProfessional,

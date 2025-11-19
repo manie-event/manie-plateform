@@ -22,7 +22,8 @@
               icon
               variant="text"
               color="error"
-              @click="removeQuestionnaire(index)"
+              @click="removeProfessionalService(questionnaire.linkUuid ?? '')"
+              é
             >
               <Icon icon="mdi:close" width="20" height="20" />
             </v-btn>
@@ -200,6 +201,7 @@ const { professionalUser } = storeToRefs(userStore);
 const keywordsStore = useKeywordsStore();
 const { loading, services, keywords } = storeToRefs(keywordsStore);
 const { getSectors, sendProfessionalServices } = keywordsStore;
+const { removeService } = useProfessionalService();
 
 const { patchProfessionalProfileDetails } = useProfessionalProfile();
 const { addSuccess, addError } = useToaster();
@@ -257,7 +259,7 @@ const createQuestionnaire = (sector: string): QuestionnaireItem => {
   };
 };
 
-const removeQuestionnaire = (index: number) => questionnaires.value.splice(index, 1);
+const removeProfessionalService = (uuid: string) => removeService(uuid);
 
 const selectService = (service: Services, q: QuestionnaireItem) => {
   q.selectedServiceUuid = q.selectedServiceUuid === service.uuid ? null : service.uuid;
