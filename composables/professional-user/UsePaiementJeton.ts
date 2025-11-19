@@ -1,3 +1,4 @@
+import type { AxiosError } from 'axios';
 import { PRICE_PER_TOKEN } from '~/constants/prixToken';
 import { useProfessionalProfile } from './UseProfessionalProfile';
 
@@ -94,10 +95,8 @@ export const usePaiementJeton = () => {
 
       addSuccess('Paiement réussi ! Votre solde de jetons a été mis à jour.');
       return { success: true, quantity, sessionData };
-    } catch (error: any) {
-      addError({
-        message: error.response.data.message || 'Erreur lors du traitement du paiement.',
-      });
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     } finally {
       isProcessing.value = false;
     }

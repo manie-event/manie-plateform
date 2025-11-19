@@ -217,6 +217,7 @@
 <script setup lang="ts">
 import questionnaire from '@/data/questionnaire-client-refonte.json';
 import { Icon } from '@iconify/vue';
+import { AxiosError } from 'axios';
 import { UseEvent } from '~/composables/event/UseEvent';
 import { useEventForm } from '~/composables/event/UseEventForm';
 
@@ -272,9 +273,8 @@ const handleSubmit = async () => {
 
     addSuccess('Évènement mis à jour avec succès !');
     open.value = false;
-  } catch (error: unknown) {
-    const err = error as any;
-    addError({ message: err?.response?.data?.message ?? String(error) });
+  } catch (err) {
+    useDisplayErrorMessage(err as AxiosError);
   }
 };
 </script>

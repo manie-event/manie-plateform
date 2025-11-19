@@ -1,3 +1,4 @@
+import type { AxiosError } from 'axios';
 import type { eventModel } from '~/models/events/eventModel';
 import { useEventService } from '~/services/UseEventService';
 import { useApi } from '../UseApi';
@@ -20,10 +21,8 @@ export const UseEvent = () => {
         addSuccess('Événement créé avec succès.');
         return response.data;
       }
-    } catch (err: any) {
-      addError({ message: "Une erreur est survenue lors de la création de l'événement." });
-      const message = err?.message ?? 'Une erreur est survenue.';
-      error.value = message;
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     } finally {
       isLoading.value = false;
     }
@@ -35,9 +34,8 @@ export const UseEvent = () => {
       const { data } = await api.patch(`/event/update/${eventUuid}`, payload);
 
       return data;
-    } catch (error) {
-      addError({ message: "Impossible d'ajouter le service à l'événement." });
-      throw error;
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 
@@ -51,10 +49,8 @@ export const UseEvent = () => {
         addSuccess("Formule d'accompagnement de l'événement mise à jour avec succès.");
         return formuleEvent;
       }
-    } catch (error: any) {
-      addError({
-        message: "Une erreur est survenue lors de la mise à jour de la formule d'accompagnement.",
-      });
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     } finally {
       isLoading.value = false;
     }

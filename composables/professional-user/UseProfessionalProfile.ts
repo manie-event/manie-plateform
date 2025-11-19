@@ -1,4 +1,4 @@
-import type { errorModel } from '~/models/errorModel';
+import type { AxiosError } from 'axios';
 import type { ProfessionalProfile } from '~/models/user/UserModel';
 
 export const useProfessionalProfile = () => {
@@ -16,8 +16,8 @@ export const useProfessionalProfile = () => {
       addSuccess('Profil professionnel créé avec succès !');
       await getProfessionalProfile(); // rafraîchit les infos locales
       return data;
-    } catch (err: any) {
-      addError((err.response?.data as errorModel) ?? { message: 'Erreur de création du profil.' });
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 
@@ -30,7 +30,6 @@ export const useProfessionalProfile = () => {
       return data;
     } catch (err: any) {
       console.log({ message: err.response.data.message });
-      // addError({ message: err.response.data.message });
     }
   };
 
@@ -52,7 +51,7 @@ export const useProfessionalProfile = () => {
 
       return profile;
     } catch (err: any) {
-      addError({ message: err.response.data.message });
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 
@@ -77,8 +76,8 @@ export const useProfessionalProfile = () => {
       }
 
       return updatedProfile;
-    } catch (err: any) {
-      addError({ message: err.response.data.message });
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
   const changeProfessionalBannerPicture = async (file: File) => {
@@ -99,8 +98,8 @@ export const useProfessionalProfile = () => {
         addSuccess('Bannière changée avec succès !');
       }
       return data;
-    } catch (err: any) {
-      addError({ message: err.response.data.message });
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 
@@ -112,8 +111,8 @@ export const useProfessionalProfile = () => {
       );
       sendProfessionalProfileForCustomer(data);
       return data;
-    } catch (err: any) {
-      addError({ message: err.response.data.message });
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 

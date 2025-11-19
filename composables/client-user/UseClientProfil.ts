@@ -1,3 +1,4 @@
+import type { AxiosError } from 'axios';
 import { storeToRefs } from 'pinia';
 import type { ClientModel } from '~/models/user/ClientModel';
 import { useUserStore } from '~/stores/userStore';
@@ -8,7 +9,7 @@ export const useClientProfil = () => {
   const { addError, addSuccess } = useToaster();
   const token = useCookie('token');
   const userStore = useUserStore();
-  const { setClientProfile, updateClientProfile } = userStore;
+  const { setClientProfile } = userStore;
   const { clientProfile, isProfileCreated } = storeToRefs(userStore);
   const config = useRuntimeConfig();
   const api = useApi();
@@ -25,21 +26,23 @@ export const useClientProfil = () => {
   const patchClientProfil = async (newProfil: ClientModel) => {
     const clientUuid = clientProfile.value?.uuid;
 
-    const response = await api?.patch(
-      `${config.public.apiUrl}/organisator/${clientUuid}`,
-      newProfil
-    );
+    try {
+      const response = await api?.patch(
+        `${config.public.apiUrl}/organisator/${clientUuid}`,
+        newProfil
+      );
 
-    if (response?.data) {
-      const profileUpdated = await getClientProfil();
+      if (response?.data) {
+        const profileUpdated = await getClientProfil();
 
-      updateClientProfile(profileUpdated);
-      isProfileCreated.value = true;
+        setClientProfile(profileUpdated);
+        isProfileCreated.value = true;
 
-      addSuccess('Profil mis à jour avec succès.');
-      return response?.data ?? true;
-    } else {
-      addError({ message: 'Une erreur est survenue lors de la mise à jour du profil.' });
+        addSuccess('Profil mis à jour avec succès.');
+        return response?.data ?? true;
+      }
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 

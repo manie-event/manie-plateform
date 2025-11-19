@@ -1,57 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue';
-import type { RegisterModel } from '../../models/authentification/registerModel';
-import errorToaster from '../common/errorToaster.vue';
-
-/*Social icons*/
-// import google from "/images/svgs/google-icon.svg";
-// import facebook from "/images/svgs/icon-facebook.svg";
-import JuridiqueCharteBonneConduite from '@/components/juridique/CharteBonneConduite.vue';
-const { sendRegister } = useAuthentification();
-const registerForm = ref<RegisterModel>({
-  username: '',
-  category: 'professional',
-  password: '',
-  confirmPassword: '',
-  email: '',
-});
-const valid = ref(true);
-const isCharteBonneConduite = ref(false);
-const isCharteMention = ref(false);
-const openModalCharte = ref(false);
-const openModalCharteMentions = ref(false);
-const passwordRules = ref([
-  (v: string) => !!v || 'Le mot de passe est obligatoire',
-  (v: string) => (v && v.length >= 10) || 'Le mot de passe doit faire 10 caractères minimum',
-  (v: string) =>
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{10,}$/.test(v) ||
-    'Le mot de passe doit contenir une majuscule, une minuscule, un chiffre et un caractère spécial',
-]);
-const checkPasswordRules = ref([
-  (v: string) => !!v || 'La confirmation du mot de passe est obligatoire',
-  (v: string) => v === registerForm.value.password || 'Les mots de passe doivent être identiques',
-]);
-const emailRules = ref([
-  (v: string) => !!v || "L'e-mail est obligatoire",
-  (v: string) => /.+@.+\..+/.test(v) || "L'e-mail doit être valide",
-]);
-const nameRules = ref([(v: string) => !!v || 'Votre pseudo est obligatoire']);
-const siretRules = ref([
-  (v: string) => v.length === 14 || 'Le numéro SIRET doit faire 14 caractères',
-  (v: string) => /^\d+$/.test(v) || 'Le numéro SIRET doit contenir uniquement des chiffres',
-]);
-
-const register = async () => {
-  await sendRegister(registerForm.value);
-  registerForm.value = {
-    username: '',
-    category: 'professional',
-    password: '',
-    confirmPassword: '',
-    email: '',
-  };
-};
-</script>
 <template>
   <!-- <v-row class="d-flex mb-3">
         <v-col cols="6" sm="6">
@@ -228,6 +174,58 @@ const register = async () => {
     <errorToaster />
   </Teleport>
 </template>
+<script setup lang="ts">
+import { ref } from 'vue';
+import type { RegisterModel } from '../../models/authentification/registerModel';
+import errorToaster from '../common/errorToaster.vue';
+
+/*Social icons*/
+// import google from "/images/svgs/google-icon.svg";
+// import facebook from "/images/svgs/icon-facebook.svg";
+import JuridiqueCharteBonneConduite from '@/components/juridique/CharteBonneConduite.vue';
+const { sendRegister } = useAuthentification();
+const registerForm = ref<RegisterModel>({
+  username: '',
+  category: 'professional',
+  password: '',
+  confirmPassword: '',
+  email: '',
+});
+const valid = ref(true);
+const isCharteBonneConduite = ref(false);
+const isCharteMention = ref(false);
+const openModalCharte = ref(false);
+const openModalCharteMentions = ref(false);
+const passwordRules = ref([
+  (v: string) => !!v || 'Le mot de passe est obligatoire',
+  (v: string) => (v && v.length >= 10) || 'Le mot de passe doit faire 10 caractères minimum',
+  (v: string) =>
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{10,}$/.test(v) ||
+    'Le mot de passe doit contenir une majuscule, une minuscule, un chiffre et un caractère spécial',
+]);
+const checkPasswordRules = ref([
+  (v: string) => !!v || 'La confirmation du mot de passe est obligatoire',
+  (v: string) => v === registerForm.value.password || 'Les mots de passe doivent être identiques',
+]);
+const emailRules = ref([
+  (v: string) => !!v || "L'e-mail est obligatoire",
+  (v: string) => /.+@.+\..+/.test(v) || "L'e-mail doit être valide",
+]);
+const nameRules = ref([(v: string) => !!v || 'Votre pseudo est obligatoire']);
+
+const register = async () => {
+  const register = await sendRegister(registerForm.value);
+  // if (register === ) {
+  //   registerForm.value = {
+  //     username: '',
+  //     category: 'professional',
+  //     password: '',
+  //     confirmPassword: '',
+  //     email: '',
+  //   };
+  // }
+};
+</script>
 <style lang="scss" scoped>
 .register-form {
   &__nature-personne-btn {
