@@ -3,7 +3,8 @@ import type { AxiosError } from 'axios';
 export const useProfessionalService = () => {
   const { addError } = useToaster();
   const { setServicesFiltered } = eventsStore();
-  const { setProfessionalServices } = usePropositionStore();
+
+  const { setProfessionalServices } = useProfessionalStore();
   const { professionalUser } = storeToRefs(useUserStore());
   const api = useApi();
 
@@ -28,16 +29,11 @@ export const useProfessionalService = () => {
    * Récupère la liste des services du professionnel
    */
   const getListProfessionalServiceByProfessional = async () => {
-    try {
-      if (!api || !professionalUser.value?.uuid) return;
-      const { data } = await api.get(
-        `/professional-service/list-by-professional/${professionalUser.value.uuid}`
-      );
-      setProfessionalServices(data.data);
-      return data.data ?? [];
-    } catch (err) {
-      useDisplayErrorMessage(err as AxiosError);
-    }
+    if (!api || !professionalUser.value?.uuid) return;
+    const { data } = await api.get(
+      `/professional-service/list-by-professional/${professionalUser.value.uuid}`
+    );
+    return data.data ?? [];
   };
 
   const updateProfessionalServices = async (serviceUuid: string, payload) => {
@@ -55,27 +51,21 @@ export const useProfessionalService = () => {
 
       setProfessionalServices(data.data);
       return data.data ?? [];
-    } catch (error: any) {
-      console.error('❌ getListProfessionalServiceByProfessional:', error);
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
     }
   };
 
   const removeProfessionalService = async (serviceUuid: string) => {
-    try {
-      if (!api || !professionalUser.value?.uuid) return;
-      const { data } = await api.delete(`/professional-service/update/${serviceUuid}`);
-      console.log(data, 'updateProfessionalServices');
-
-      setProfessionalServices(data.data);
-      return data.data ?? [];
-    } catch (error: any) {
-      console.error('❌ getListProfessionalServiceByProfessional:', error);
-    }
+    if (!api || !professionalUser.value?.uuid) return;
+    const { data } = await api.delete(`/professional-service/${serviceUuid}`);
+    return data.data ?? [];
   };
 
   return {
     getProfessionalService,
     getListProfessionalServiceByProfessional,
     updateProfessionalServices,
+    removeProfessionalService,
   };
 };

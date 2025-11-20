@@ -91,7 +91,7 @@ const props = defineProps<{
   selectedProposition: ClientServiceProposition;
 }>();
 
-const { professionalServices } = storeToRefs(usePropositionStore());
+const { professionalServices } = storeToRefs(useProfessionalStore());
 const { propositionAcceptedByClient, propositionDeclinedByClient } = useEventServiceProposition();
 
 const openPropositionDetail = defineModel('openPropositionDetail', { default: false });

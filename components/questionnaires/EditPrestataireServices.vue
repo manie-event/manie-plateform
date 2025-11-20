@@ -21,9 +21,7 @@
               v-if="questionnaires.length > 1"
               icon
               variant="text"
-              color="error"
-              @click="removeProfessionalService(questionnaire.linkUuid ?? '')"
-              é
+              @click="openRemoveModalWithServiceUuid(questionnaire.linkUuid ?? '')"
             >
               <Icon icon="mdi:close" width="20" height="20" />
             </v-btn>
@@ -174,10 +172,15 @@
 
   <Teleport to="body">
     <ModalRedirection :redirection="'dashboard2'" v-model="isProfilUpdate" />
+    <RemovingProfessionalServiceModal
+      v-model:open-service-modal="isServiceModalOpen"
+      :service-uuid="serviceUuidFromProfil"
+    />
   </Teleport>
 </template>
 
 <script setup lang="ts">
+import RemovingProfessionalServiceModal from '@/components/apps/user-profile/RemovingProfessionalServiceModal.vue';
 import questionnairePresta from '@/data/questionnaire-presta.json';
 import { useKeywordsStore } from '@/stores/keywordsStore';
 import { useUserStore } from '@/stores/userStore';
@@ -185,7 +188,6 @@ import { useToaster } from '@/utils/toaster';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { ref, Teleport, watch } from 'vue';
-import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { Keywords } from '~/models/professionalService/Keywords';
 import type { ProfessionalServicePayload } from '~/models/professionalService/ProfessionalServicePayload';
@@ -200,10 +202,8 @@ const { professionalUser } = storeToRefs(userStore);
 
 const keywordsStore = useKeywordsStore();
 const { loading, services, keywords } = storeToRefs(keywordsStore);
-const { getSectors, sendProfessionalServices } = keywordsStore;
-const { removeService } = useProfessionalService();
+const { getSectors } = keywordsStore;
 
-const { patchProfessionalProfileDetails } = useProfessionalProfile();
 const { addSuccess, addError } = useToaster();
 
 const { getListProfessionalServiceByProfessional, updateProfessionalServices } =
@@ -213,7 +213,14 @@ const activityItems = ref(ACTIVITY_ITEMS);
 
 const payloadArray = ref<ProfessionalServicePayload[]>([]);
 const isProfilUpdate = ref(false);
-let sectorsLoaded = false;
+const isServiceModalOpen = ref(false);
+const serviceUuidFromProfil = ref('');
+const sectorsLoaded = ref(false);
+
+const openRemoveModalWithServiceUuid = (serviceUuid: string) => {
+  serviceUuidFromProfil.value = serviceUuid;
+  isServiceModalOpen.value = true;
+};
 
 const calculateKeywordsByCategory = (
   questionnaireData: any,
@@ -258,8 +265,6 @@ const createQuestionnaire = (sector: string): QuestionnaireItem => {
     selectedKeywords: new Set<string>(),
   };
 };
-
-const removeProfessionalService = (uuid: string) => removeService(uuid);
 
 const selectService = (service: Services, q: QuestionnaireItem) => {
   q.selectedServiceUuid = q.selectedServiceUuid === service.uuid ? null : service.uuid;
@@ -343,10 +348,8 @@ const submitAllQuestionnaires = async () => {
 
     await Promise.all(
       payloadArray.value.map((p) => {
-        console.log('📦 Payload envoyé:', p); // Pour vérifier
-
         return updateProfessionalServices(p.linkUuid!, {
-          name: p.name, // ✅ Utiliser le name du payload au lieu de hardcoder
+          name: p.name,
           serviceUuid: p.serviceUuid,
           keywordsUuid: p.keywordsUuid,
         });
@@ -369,7 +372,7 @@ watch(
 
     // 🔁 Réinitialisation complète
     questionnaires.value = [];
-    sectorsLoaded = false;
+    sectorsLoaded.value = false;
 
     try {
       const proService = await getListProfessionalServiceByProfessional();
@@ -421,7 +424,7 @@ watch(
 
       // ✅ On injecte tout d’un coup, une fois les chargements terminés
       questionnaires.value = tempQuestionnaires;
-      sectorsLoaded = true;
+      sectorsLoaded.value = true;
     } catch (e) {
       console.error('Erreur lors du préremplissage :', e);
       addError({ message: 'Erreur lors du chargement des services existants.' });

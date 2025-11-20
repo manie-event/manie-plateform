@@ -70,10 +70,6 @@ export const useUserStore = defineStore(
       isStoringUserAccepted.value = accepted;
     };
 
-    const setProfessionalServices = (services: Services[]) => {
-      professionalServices.value = services;
-    };
-
     const setKeywords = (newKeywords: Keywords[]) => {
       keywords.value = newKeywords;
     };
@@ -118,7 +114,6 @@ export const useUserStore = defineStore(
       setUserAccepted,
       setUser,
       setProfessionalUser,
-      setProfessionalServices,
       setClientProfile,
       setKeywords,
       sendProfessionalProfileForCustomer,

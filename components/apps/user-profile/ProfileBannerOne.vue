@@ -84,14 +84,14 @@
               Mon activité
             </v-btn>
             <v-btn
-              :disabled="isFirstTime || serviceProfessional.length === 3"
+              :disabled="isFirstConnection || serviceProfessional.length === 3"
               color="rgb(var(--v-theme-darkbg))"
               style="color: rgb(var(--v-theme-background))"
               class="w-100"
               @click="openServiceModal = true"
             >
               {{
-                isFirstTime
+                isFirstConnection
                   ? 'Nous vérifions votre profil sous 48h'
                   : serviceProfessional.length === 3
                     ? 'Vous détenez le maximum de service possible'
@@ -128,6 +128,7 @@ const { professionalUser, user, isProfileCreated, initials } = storeToRefs(useUs
 const { changeProfessionalBannerPicture, getProfessionalProfile } = useProfessionalProfile();
 const { getJetonQuantity } = usePaiementJeton();
 const { getListProfessionalServiceByProfessional } = useProfessionalService();
+const { professionalServices } = storeToRefs(useProfessionalStore());
 const { addSuccess } = useToaster();
 
 const openModal = ref(false);
@@ -158,14 +159,14 @@ const displayedEmail = computed(
   () => professionalUser.value?.email || professionalEmail.value || null
 );
 
+const isFirstConnection = computed(() =>
+  professionalServices.value.some((service) => service.isVerified === false)
+);
+
 onMounted(async () => {
   const professional = await getProfessionalProfile();
   professionalEmail.value = professional.email;
-  const proService = await getListProfessionalServiceByProfessional();
-  serviceProfessional.value = proService;
-  if (proService.length > 0) {
-    isFirstTime.value = proService.some((service) => service.isVerified === false);
-  }
+  getListProfessionalServiceByProfessional();
   await getJetonQuantity();
 });
 </script>

@@ -29,8 +29,8 @@ import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
 
-const { serviceEventProposition, professionalServices } = storeToRefs(usePropositionStore());
-
+const { serviceEventProposition } = storeToRefs(usePropositionStore());
+const { professionalServices } = storeToRefs(useProfessionalStore());
 // Fonction pour obtenir la clé mois-année (format: "2025-10")
 // const getMonthKey = (date: Date | string): string => {
 //   const d = new Date(date);
