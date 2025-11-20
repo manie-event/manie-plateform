@@ -128,7 +128,7 @@
         },
         {
           "id": "lieux-keywords-7",
-          "question": "Quels options proposez-vous ? ",
+          "question": "Quelles options proposez-vous ? ",
           "category": "options lieux",
 
           "type": "checkbox",
@@ -138,7 +138,7 @@
     },
     "habitudes": "VOS HABITUDES ",
     "habitudesSection": {
-      "questions": [
+"questions": [
         {
           "id": "lieux-keywords-8",
           "question": "Vos habitudes responsables : ",
@@ -174,7 +174,7 @@
         {
           "id": "boisson-keywords-2",
           "question": "Quel matériel ? ",
-          "category": "matériel-boissons",
+          "category": "matériel-boisson",
 
           "type": "checkbox",
           "required": true
@@ -191,7 +191,7 @@
     },
     "habitudes": "VOS HABITUDES ",
     "habitudesSection": {
-      "questions": [
+	"questions": [
         {
           "id": "boisson-keywords-4",
           "question": "Vos habitudes responsables : ",
@@ -284,7 +284,7 @@
           "type": "checkbox",
           "required": true
         },
-        {
+  {
           "id": "musique-keywords-4",
           "question": "Quel mood inspire votre musique ? ",
           "category": "mood",
@@ -292,7 +292,7 @@
           "type": "checkbox",
           "required": true
         },
-        {
+{
           "id": "musique-keywords-5",
           "question": "Quel matériel technique fournissez-vous ? ",
           "category": "technique",
@@ -300,7 +300,7 @@
           "type": "checkbox",
           "required": true
         },
-        {
+{
           "id": "musique-keywords-6",
           "question": "Et votre matériel musical ? ",
           "category": "instrument",
@@ -308,7 +308,7 @@
           "type": "checkbox",
           "required": true
         },
-        {
+{
           "id": "musique-keywords-7",
           "question": "Comment aimez-vous construire vos playlists ? ",
           "category": "playlist",
@@ -349,14 +349,14 @@
         {
           "id": "animation-keywords-1",
           "question": "Animation bien-être : ",
-          "category": "type",
+          "category": "bien-être",
           "type": "checkbox",
           "required": true
         },
         {
           "id": "animation-keywords-2",
           "question": "Animation jeux : ",
-          "category": "matériel",
+          "category": "jeux",
 
           "type": "checkbox",
           "required": true
@@ -364,7 +364,7 @@
         {
           "id": "animation-keywords-3",
           "question": "Animation art visuel : ",
-          "category": "options",
+          "category": "art visuel",
 
           "type": "checkbox",
           "required": true
@@ -372,7 +372,7 @@
         {
           "id": "animation-keywords-4",
           "question": "Animation performers : ",
-          "category": "options",
+          "category": "performers",
 
           "type": "checkbox",
           "required": true
@@ -425,14 +425,14 @@
         {
           "id": "audiovisuel-keywords-3",
           "question": " Comment définiriez-vous votre style ? ",
-          "category": "style-audiovisuel",
+          "category": "styles-audiovisuel",
 
           "type": "checkbox",
           "required": true
         },
         {
           "id": "audiovisuel-keywords-4",
-          "question": " Quels sont vos shoot idyliques ? ",
+          "question": " Quels sont vos shoot idylliques ? ",
           "category": "cadre",
 
           "type": "checkbox",
@@ -510,7 +510,7 @@
         {
           "id": "décoration-keywords-6",
           "question": "Comment définissez-vous votre style ? ",
-          "category": "style-déco",
+          "category": "styles-déco",
 
           "type": "checkbox",
           "required": true
@@ -540,6 +540,43 @@
           "id": "décoration-keywords-9",
           "question": "Vos petites habitudes responsables ? ",
           "category": "écoresp-déco",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    }
+  },
+    {
+    "sector": "logistique",
+    "general": {
+      "questions": [
+        {
+          "id": "logistique-general-1",
+          "question": "Vous êtes ?",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "services": "VOTRE OFFRE",
+    "servicesSection": {
+      "questions": [
+        {
+          "id": "logistique-keywords-1",
+          "question": "Vous intervenez pour quel(s) besoin(s) ?",
+          "category": "proposition",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    "habitudes": "VOS HABITUDES ",
+    "habitudesSection": {
+      "questions": [
+        {
+          "id": "logistique-keywords-2",
+          "question": "Vos petites habitudes responsables ? ",
+          "category": "écoresp-logistique",
           "type": "checkbox",
           "required": true
         }
@@ -701,7 +738,7 @@
         },
         {
           "id": "loueur-keywords-4",
-          "question": "Matériel autour de la table ? ",
+          "question": "Autour de la table ? ",
           "category": "table",
 
           "type": "checkbox",
@@ -722,6 +759,22 @@
 
           "type": "checkbox",
           "required": true
+        },
+        {
+          "id": "loueur-keywords-7",
+          "question": "Matériel de structure ? ",
+          "category": "structure",
+
+          "type": "checkbox",
+          "required": true
+        },
+        {
+          "id": "loueur-keywords-8",
+          "question": "Matériel de confort ? ",
+          "category": "confort",
+
+          "type": "checkbox",
+          "required": true
         }
       ]
     },
@@ -729,7 +782,7 @@
     "habitudesSection": {
       "questions": [
         {
-          "id": "loueur-keywords-7",
+          "id": "loueur-keywords-9",
           "question": "Vos petites habitudes responsables ?  ",
           "category": "écoresp-loueur",
           "type": "checkbox",

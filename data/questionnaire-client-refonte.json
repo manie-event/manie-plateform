@@ -303,7 +303,7 @@
       "sector": "lieux",
       "isService": false,
       "category": "imposé",
-      "question": "Vous acceptez qu'un lieu vous impose :"
+      "question": "Vous cceptez qu'un lieu vous impose :"
     },
     {
       "sector": "lieux",
@@ -338,7 +338,7 @@
     {
       "sector": "boisson",
       "isService": false,
-      "category": "matériel-boissons",
+      "category": "matériel-boisson",
       "question": "De quel matériel avez-vous besoin ?"
     },
     {
@@ -416,7 +416,7 @@
     {
       "sector": "animation",
       "isService": false,
-      "category": "art-visuel",
+      "category": "art visuel",
       "question": "Ou des animations artistiques ?"
     },
     {
@@ -452,7 +452,7 @@
     {
       "sector": "audiovisuel",
       "isService": false,
-      "category": "style-audiovisuel",
+      "category": "styles-audiovisuel",
       "question": "Quel genre de souvenirs souhaitez-vous ? "
     },
     {
@@ -482,7 +482,7 @@
     {
       "sector": "décoration",
       "isService": false,
-      "category": "style-déco",
+      "category": "styles-déco",
       "question": "Quels styles vous parlent le plus ?"
     },
     {
@@ -588,22 +588,22 @@
       "question": "Et pour la logistique ? "
     },
     {
+      "sector": "logistique",
+      "isService": false,
+      "category": "proposition",
+      "question": "Avez-vous besoin d'un service logistique ?"
+    },
+    {
       "sector": "loueur",
       "isService": false,
       "category": "structure",
-      "question": "Avez-vous besoin de louer du matériel structure ?"
+      "question": "Avez-vous besoin de louer du matériel de structure ?"
     },
     {
       "sector": "loueur",
       "isService": false,
-      "category": "service",
+      "category": "confort",
       "question": "Avez-vous besoin de louer du matériel de confort ?"
-    },
-    {
-      "sector": "logistique",
-      "isService": false,
-      "category": "service logistique",
-      "question": "Avez-vous besoin d'un service logistique ?"
     },
     {
       "sector": "look",
