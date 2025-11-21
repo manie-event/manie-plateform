@@ -23,7 +23,7 @@
               variant="text"
               @click="openRemoveModalWithServiceUuid(questionnaire.linkUuid ?? '')"
             >
-              <Icon icon="mdi:close" width="20" height="20" />
+              <Icon icon="mdi:trash" width="20" height="20" />
             </v-btn>
           </div>
 
@@ -175,6 +175,7 @@
     <RemovingProfessionalServiceModal
       v-model:open-service-modal="isServiceModalOpen"
       :service-uuid="serviceUuidFromProfil"
+      @close-modal-on-removing-service="handleCloseModalOnRemovingService()"
     />
   </Teleport>
 </template>
@@ -186,6 +187,7 @@ import { useKeywordsStore } from '@/stores/keywordsStore';
 import { useUserStore } from '@/stores/userStore';
 import { useToaster } from '@/utils/toaster';
 import { Icon } from '@iconify/vue';
+import type { AxiosError } from 'axios';
 import { storeToRefs } from 'pinia';
 import { ref, Teleport, watch } from 'vue';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
@@ -203,11 +205,11 @@ const { professionalUser } = storeToRefs(userStore);
 const keywordsStore = useKeywordsStore();
 const { loading, services, keywords } = storeToRefs(keywordsStore);
 const { getSectors } = keywordsStore;
-
+const { sectors } = storeToRefs(keywordsStore);
 const { addSuccess, addError } = useToaster();
+const { updateProfessionalServices } = useProfessionalService();
+const { professionalServices } = storeToRefs(useProfessionalStore());
 
-const { getListProfessionalServiceByProfessional, updateProfessionalServices } =
-  useProfessionalService();
 const questionnaires = ref<QuestionnaireItem[]>([]);
 const activityItems = ref(ACTIVITY_ITEMS);
 
@@ -220,6 +222,11 @@ const sectorsLoaded = ref(false);
 const openRemoveModalWithServiceUuid = (serviceUuid: string) => {
   serviceUuidFromProfil.value = serviceUuid;
   isServiceModalOpen.value = true;
+};
+
+const handleCloseModalOnRemovingService = () => {
+  isServiceModalOpen.value = false;
+  serviceModal.value = false;
 };
 
 const calculateKeywordsByCategory = (
@@ -356,12 +363,11 @@ const submitAllQuestionnaires = async () => {
       })
     );
 
-    addSuccess(`${selected.length} service(s) modifié(s) avec succès !`);
+    addSuccess('service(s) modifié(s) avec succès !');
     serviceModal.value = false;
     isProfilUpdate.value = true;
-  } catch (e) {
-    console.error("Erreur lors de l'envoi :", e);
-    addError({ message: "Erreur lors de l'envoi des services." });
+  } catch (err) {
+    useDisplayErrorMessage(err as AxiosError);
   }
 };
 
@@ -375,14 +381,13 @@ watch(
     sectorsLoaded.value = false;
 
     try {
-      const proService = await getListProfessionalServiceByProfessional();
-
       const tempQuestionnaires: QuestionnaireItem[] = [];
+      console.log(professionalServices.value, 'professionalServices.value');
 
-      if (proService.length) {
+      if (professionalServices.value.length) {
         // Cas où le pro a déjà des services validés
-        for (const srv of proService) {
-          const sector = srv.mainActivity || professionalUser.value.mainActivity || 'Autre';
+        for (const srv of professionalServices.value) {
+          const sector = srv.sector.name;
           await getSectors(sector);
 
           const qData = questionnairePresta.find(

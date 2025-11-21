@@ -204,9 +204,9 @@ import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { computed, ref, Teleport } from 'vue';
 import { useEventServiceProposition } from '~/composables/event-service-propositions/UseEventServiceProposition';
-import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
 import type { ClientServiceProposition } from '~/models/propositions/client-service-proposition';
+import { useProfessionalProfileService } from '~/services/UseProfessionalProfileService';
 import { useCustomizerStore } from '../../../stores/customizer';
 import ProfessionalProfil from './ProfessionalProfil.vue';
 import PropositionDetailsForClient from './PropositionDetailsForClient.vue';
@@ -220,7 +220,7 @@ const isMobile = ref(window.innerWidth < 1280);
 const { getServicePropositionForClient, propositionAcceptedByClient, propositionDeclinedByClient } =
   useEventServiceProposition();
 const { preloadServices } = useKeywordsStore();
-const { getProfessionalProfileForCustomer } = useProfessionalProfile();
+const { getProfessionalProfileForCustomer } = useProfessionalProfileService();
 const { professionalProfileForCustomer } = storeToRefs(useUserStore());
 
 const isAcceptedByClient = ref(false);

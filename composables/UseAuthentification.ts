@@ -4,9 +4,9 @@ import type { AuthentificationModel } from '~/models/authentification/authentifi
 import type { RegisterModel } from '~/models/authentification/registerModel';
 import type { registerNewPasswordModel } from '~/models/authentification/registerNewPasswordModel';
 import { useEventService } from '~/services/UseEventService';
+import { useProfessionalProfileService } from '../services/UseProfessionalProfileService';
 import { useClientProfil } from './client-user/UseClientProfil';
 import { useEventServiceProposition } from './event-service-propositions/UseEventServiceProposition';
-import { useProfessionalProfile } from './professional-user/UseProfessionalProfile';
 
 export const useAuthentification = () => {
   const config = useRuntimeConfig();
@@ -15,7 +15,7 @@ export const useAuthentification = () => {
   const userStore = useUserStore();
   const { setUser } = userStore;
   const { isProfessional } = storeToRefs(userStore);
-  const { getProfessionalProfile, getProfessionalProfileDetails } = useProfessionalProfile();
+  const { getProfessionalProfile, getProfessionalProfileDetails } = useProfessionalProfileService();
   const { getClientProfil } = useClientProfil();
   const { getServicePropositionForProfessional } = useEventServiceProposition();
   const { getEventsPerOrganisator } = useEventService();

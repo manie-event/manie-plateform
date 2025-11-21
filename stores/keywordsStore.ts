@@ -129,9 +129,11 @@ export const useKeywordsStore = defineStore('keywords', () => {
   const preloadServices = async () => {
     if (!api) throw new Error('API non initialisée');
 
-    if (services.value.length === 0) {
+    try {
       const response = await api.get('/service', { params: { limit: 1000 } });
       services.value = response.data.data;
+    } catch (err) {
+      console.error('❌ Erreur lors de preloadServices :', err);
     }
   };
 

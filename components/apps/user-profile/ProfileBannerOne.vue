@@ -114,6 +114,7 @@
 <script setup lang="ts">
 import { NuxtLink } from '#components';
 import EditerProfessionalProfile from '@/components/apps/user-profile/EditProfessionalProfil.vue';
+import { useProfessionalProfileService } from '@/services/UseProfessionalProfileService';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { computed, onMounted, ref } from 'vue';
@@ -121,13 +122,13 @@ import EditPrestataireServices from '~/components/questionnaires/EditPrestataire
 import CreatePrestataireServices from '~/components/questionnaires/ServicesPrestataire.vue';
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
-import { useProfessionalService } from '~/services/UseProfessionalService';
 import { useUserStore } from '~/stores/userStore';
 
 const { professionalUser, user, isProfileCreated, initials } = storeToRefs(useUserStore());
-const { changeProfessionalBannerPicture, getProfessionalProfile } = useProfessionalProfile();
+const { changeProfessionalBannerPicture, getProfessionalProfile } = useProfessionalProfileService();
 const { getJetonQuantity } = usePaiementJeton();
-const { getListProfessionalServiceByProfessional } = useProfessionalService();
+const { listProfessionalServiceByProfessional } = useProfessionalProfile();
+const { preloadServices, getAllSectors } = useKeywordsStore();
 const { professionalServices } = storeToRefs(useProfessionalStore());
 const { addSuccess } = useToaster();
 
@@ -135,7 +136,6 @@ const openModal = ref(false);
 const openServiceModal = ref(false);
 const openModificationModal = ref(false);
 const fileInput = ref<HTMLInputElement | null>(null);
-const isFirstTime = ref(false);
 const professionalEmail = ref();
 const serviceProfessional = ref([]);
 const triggerClickFileInput = () => fileInput.value?.click();
@@ -166,7 +166,9 @@ const isFirstConnection = computed(() =>
 onMounted(async () => {
   const professional = await getProfessionalProfile();
   professionalEmail.value = professional.email;
-  getListProfessionalServiceByProfessional();
+  await preloadServices();
+  await getAllSectors();
+  await listProfessionalServiceByProfessional();
   await getJetonQuantity();
 });
 </script>

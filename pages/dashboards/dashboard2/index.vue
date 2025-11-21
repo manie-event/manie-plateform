@@ -7,12 +7,12 @@ import EmptyState from '@/public/images/empty-state/profil-vide.png';
 import { storeToRefs } from 'pinia';
 import { useEventServiceProposition } from '~/composables/event-service-propositions/UseEventServiceProposition';
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
-import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
+import { useProfessionalProfileService } from '~/services/UseProfessionalProfileService';
 import { useUserStore } from '~/stores/userStore';
 
 const userStore = useUserStore();
 const { isProfileCreated, isProfessional } = storeToRefs(userStore);
-const { getProfessionalProfileDetails, getProfessionalProfile } = useProfessionalProfile();
+const { getProfessionalProfileDetails, getProfessionalProfile } = useProfessionalProfileService();
 const { getServicePropositionForProfessional } = useEventServiceProposition();
 const { getJetonQuantity } = usePaiementJeton();
 

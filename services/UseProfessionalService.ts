@@ -5,6 +5,7 @@ export const useProfessionalService = () => {
   const { setServicesFiltered } = eventsStore();
 
   const { setProfessionalServices } = useProfessionalStore();
+  const { services, sectors } = storeToRefs(useKeywordsStore());
   const { professionalUser } = storeToRefs(useUserStore());
   const api = useApi();
 
@@ -33,7 +34,21 @@ export const useProfessionalService = () => {
     const { data } = await api.get(
       `/professional-service/list-by-professional/${professionalUser.value.uuid}`
     );
-    return data.data ?? [];
+    const proServices = data.data;
+    const allServices = services.value; // contiennent les sectors
+    const allSectors = sectors.value;
+    const proServicesWithSector = proServices.map((proService) => {
+      const matchingService = allServices.find((s) => s.uuid === proService.serviceUuid);
+      const findSector = allSectors.find((sector) => sector.uuid === matchingService?.sectorUuid);
+      return {
+        ...proService,
+        sector: findSector,
+      };
+    });
+
+    console.log(proServicesWithSector, 'proServicesWithSector');
+
+    return proServicesWithSector;
   };
 
   const updateProfessionalServices = async (serviceUuid: string, payload) => {
@@ -59,6 +74,7 @@ export const useProfessionalService = () => {
   const removeProfessionalService = async (serviceUuid: string) => {
     if (!api || !professionalUser.value?.uuid) return;
     const { data } = await api.delete(`/professional-service/${serviceUuid}`);
+
     return data.data ?? [];
   };
 
