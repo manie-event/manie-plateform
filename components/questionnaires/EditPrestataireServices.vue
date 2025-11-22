@@ -183,31 +183,30 @@
 <script setup lang="ts">
 import RemovingProfessionalServiceModal from '@/components/apps/user-profile/RemovingProfessionalServiceModal.vue';
 import questionnairePresta from '@/data/questionnaire-presta.json';
-import { useKeywordsStore } from '@/stores/keywordsStore';
+import { useProfessionalServiceService } from '@/services/useProfessionalServiceService';
 import { useUserStore } from '@/stores/userStore';
 import { useToaster } from '@/utils/toaster';
 import { Icon } from '@iconify/vue';
 import type { AxiosError } from 'axios';
 import { storeToRefs } from 'pinia';
 import { ref, Teleport, watch } from 'vue';
+import { useSector } from '~/composables/sector/UseSector';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { Keywords } from '~/models/professionalService/Keywords';
 import type { ProfessionalServicePayload } from '~/models/professionalService/ProfessionalServicePayload';
 import type { QuestionnaireItem } from '~/models/professionalService/QuestionnairePresta';
 import type { Services } from '~/models/professionalService/Services';
-import { useProfessionalService } from '~/services/UseProfessionalService';
 import ModalRedirection from '../apps/user-profile/ModalRedirection.vue';
 
 const serviceModal = defineModel<boolean>('openModificationModal', { default: false });
 const userStore = useUserStore();
 const { professionalUser } = storeToRefs(userStore);
 
-const keywordsStore = useKeywordsStore();
-const { loading, services, keywords } = storeToRefs(keywordsStore);
-const { getSectors } = keywordsStore;
-const { sectors } = storeToRefs(keywordsStore);
+const sectorStore = useSectorStore();
+const { services, keywords } = storeToRefs(sectorStore);
+const { selectSectors } = useSector();
 const { addSuccess, addError } = useToaster();
-const { updateProfessionalServices } = useProfessionalService();
+const { updateProfessionalServices } = useProfessionalServiceService();
 const { professionalServices } = storeToRefs(useProfessionalStore());
 
 const questionnaires = ref<QuestionnaireItem[]>([]);
@@ -297,9 +296,9 @@ const updateQuestionnaireSector = async (q: QuestionnaireItem, newSector: string
     selectedKeywords: new Set<string>(),
   });
 
-  await getSectors(newSector);
+  await selectSectors(newSector);
 
-  // Maintenant que getSectors a mis à jour les valeurs globales,
+  // Maintenant que selectSectors a mis à jour les valeurs globales,
   // on peut directement les injecter
   const data = questionnairePresta.find(
     (item) => item.sector.toLowerCase() === newSector.toLowerCase()
@@ -382,13 +381,12 @@ watch(
 
     try {
       const tempQuestionnaires: QuestionnaireItem[] = [];
-      console.log(professionalServices.value, 'professionalServices.value');
 
       if (professionalServices.value.length) {
         // Cas où le pro a déjà des services validés
         for (const srv of professionalServices.value) {
           const sector = srv.sector.name;
-          await getSectors(sector);
+          await selectSectors(sector);
 
           const qData = questionnairePresta.find(
             (q) => q.sector.toLowerCase() === sector.toLowerCase()
@@ -422,7 +420,7 @@ watch(
         );
 
         for (const sector of sectors) {
-          await getSectors(sector!);
+          await selectSectors(sector!);
           tempQuestionnaires.push(createQuestionnaire(sector!));
         }
       }

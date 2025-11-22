@@ -131,11 +131,12 @@
 </template>
 <script setup lang="ts">
 import questionnairePresta from '@/data/questionnaire-presta.json';
-import { useKeywordsStore } from '@/stores/keywordsStore';
 import { useUserStore } from '@/stores/userStore';
 import { useToaster } from '@/utils/toaster';
 import { Icon } from '@iconify/vue';
 import { ref, watch } from 'vue';
+import { useProfessionalService } from '~/composables/professional-services/UseProfessionalService';
+import { useSector } from '~/composables/sector/UseSector';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { Keywords } from '~/models/professionalService/Keywords';
 
@@ -143,9 +144,9 @@ const serviceModal = defineModel<boolean>('openCreateServiceModal', { default: f
 
 // Stores
 const { professionalUser } = useUserStore();
-const { getSectors } = useKeywordsStore();
-const { services, keywords } = storeToRefs(useKeywordsStore());
-const { sendProfessionalServices } = useKeywordsStore();
+const { selectSectors } = useSector();
+const { services, keywords, sectors } = storeToRefs(useSectorStore());
+const { professionalServices } = useProfessionalService();
 const { addSuccess, addError } = useToaster();
 
 // State
@@ -204,22 +205,30 @@ const calculateKeywordsByCategory = (data: any, sector: string): Record<string, 
     );
 
     grouped[category] = filtered;
-    console.log(`📦 Catégorie "${category}":`, filtered.length, 'keywords');
   });
 
   return grouped;
+};
+
+const filterServiceBySector = (sector: string) => {
+  const sectorFiltered = sectors.value.find((s) => s.name === sector);
+
+  console.log(sectorFiltered, 'sectorFiltered');
+
+  console.log(
+    services.value.filter((service) => service.sectorUuid === sectorFiltered?.uuid),
+    'SECTOFILTERED'
+  );
+
+  return services.value.filter((service) => service.sectorUuid === sectorFiltered?.uuid);
 };
 
 // Sector selection
 const onSectorSelected = async (sector: string) => {
   console.log('🎯 Secteur sélectionné:', sector);
 
-  // ✅ Attendre que getSectors charge les données
-  await getSectors(sector);
-
-  console.log('✅ Après getSectors:');
-  console.log('  - Services:', services.value.length);
-  console.log('  - Keywords:', keywords.value.length);
+  // ✅ Attendre que selectSectors charge les données
+  await selectSectors(sector);
 
   const data = questionnairePresta.find((q) => q.sector.toLowerCase() === sector.toLowerCase());
 
@@ -227,12 +236,14 @@ const onSectorSelected = async (sector: string) => {
     console.error('❌ Questionnaire non trouvé pour le secteur:', sector);
     return;
   }
+  console.log(services.value);
+  console.log(sector, 'SECTOR');
 
   // ✅ Créer le questionnaire APRÈS le chargement
   questionnaire.value = {
     sector,
     questionnaireData: data,
-    services: [...services.value],
+    services: filterServiceBySector(sector),
     keywordsByCategory: calculateKeywordsByCategory(data, sector),
     selectedServiceUuid: null,
     selectedKeywords: new Set(),
@@ -262,11 +273,13 @@ const submit = async () => {
   if (!questionnaire.value) return;
 
   try {
-    await sendProfessionalServices({
-      serviceUuid: questionnaire.value.selectedServiceUuid,
-      professionalUuid: professionalUser.uuid,
-      keywordsUuid: Array.from(questionnaire.value.selectedKeywords),
-    });
+    if (questionnaire.value && professionalUser) {
+      await professionalServices({
+        serviceUuid: questionnaire.value.selectedServiceUuid,
+        professionalUuid: professionalUser.uuid,
+        keywordsUuid: Array.from(questionnaire.value.selectedKeywords),
+      });
+    }
 
     addSuccess('Service créé avec succès !');
     serviceModal.value = false;

@@ -1,8 +1,15 @@
+import { useProfessionalServiceService } from '@/services/UseProfessionalServiceService';
+import type { ProfessionalServiceUuid } from '~/models/professionalService/professionalServiceUuid';
+
 export const useProfessionalService = () => {
-  const removeService = async () => {
-    await
+  const { setProfessionalServices } = useProfessionalStore();
+  const { sendProfessionalServices } = useProfessionalServiceService();
+
+  const professionalServices = async (service: ProfessionalServiceUuid) => {
+    const proServices = await sendProfessionalServices(service);
+    setProfessionalServices(proServices);
   };
   return {
-    removeService,
+    professionalServices,
   };
 };

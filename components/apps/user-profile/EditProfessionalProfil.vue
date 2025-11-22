@@ -288,12 +288,13 @@ import { GEOGRAPHIC_ACTIVITY } from '~/constants/geographicActivity';
 import type { Faq, ProfessionalProfile } from '~/models/user/UserModel';
 import { useProfessionalProfileService } from '~/services/UseProfessionalProfileService';
 import { useToaster } from '~/utils/toaster';
+import { useSector } from '../../../composables/sector/UseSector';
 import ModalRedirection from './ModalRedirection.vue';
 
 const userStore = useUserStore();
 const { professionalUser, isProfilUpdate, isProfileCreated } = storeToRefs(userStore);
 const { setProfessionalUser } = userStore;
-const { getSectors } = useKeywordsStore();
+const { selectSectors } = useSector();
 const { createProfessionalProfile, patchProfessionalProfileDetails } =
   useProfessionalProfileService();
 
@@ -432,7 +433,7 @@ const removeCertification = (index: number) => {
 };
 
 const setSector = () => {
-  getSectors(profile.mainActivity);
+  selectSectors(profile.mainActivity);
 };
 
 // Ajoutez cette fonction avant vos fonctions createProfile et modifyProfile

@@ -84,7 +84,7 @@
               Mon activité
             </v-btn>
             <v-btn
-              :disabled="isFirstConnection || serviceProfessional.length === 3"
+              :disabled="isFirstConnection || professionalServices.length === 3"
               color="rgb(var(--v-theme-darkbg))"
               style="color: rgb(var(--v-theme-background))"
               class="w-100"
@@ -93,7 +93,7 @@
               {{
                 isFirstConnection
                   ? 'Nous vérifions votre profil sous 48h'
-                  : serviceProfessional.length === 3
+                  : professionalServices.length === 3
                     ? 'Vous détenez le maximum de service possible'
                     : 'Ajouter une activité'
               }}
@@ -123,12 +123,13 @@ import CreatePrestataireServices from '~/components/questionnaires/ServicesPrest
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { useUserStore } from '~/stores/userStore';
+import { useSector } from '../../../composables/sector/UseSector';
 
 const { professionalUser, user, isProfileCreated, initials } = storeToRefs(useUserStore());
 const { changeProfessionalBannerPicture, getProfessionalProfile } = useProfessionalProfileService();
 const { getJetonQuantity } = usePaiementJeton();
 const { listProfessionalServiceByProfessional } = useProfessionalProfile();
-const { preloadServices, getAllSectors } = useKeywordsStore();
+const { getServicesList, getListSector } = useSector();
 const { professionalServices } = storeToRefs(useProfessionalStore());
 const { addSuccess } = useToaster();
 
@@ -137,7 +138,6 @@ const openServiceModal = ref(false);
 const openModificationModal = ref(false);
 const fileInput = ref<HTMLInputElement | null>(null);
 const professionalEmail = ref();
-const serviceProfessional = ref([]);
 const triggerClickFileInput = () => fileInput.value?.click();
 const changeBannerPhoto = async (e: Event) => {
   const input = e.target as HTMLInputElement;
@@ -153,7 +153,9 @@ const changeBannerPhoto = async (e: Event) => {
   }
 };
 
-const getServiceValues = computed(() => serviceProfessional.value.map((s) => s.name) ?? []);
+const getServiceValues = computed(() =>
+  professionalServices.value?.length ? professionalServices.value.map((s) => s.name) : []
+);
 
 const displayedEmail = computed(
   () => professionalUser.value?.email || professionalEmail.value || null
@@ -166,8 +168,9 @@ const isFirstConnection = computed(() =>
 onMounted(async () => {
   const professional = await getProfessionalProfile();
   professionalEmail.value = professional.email;
-  await preloadServices();
-  await getAllSectors();
+
+  await getServicesList();
+  await getListSector();
   await listProfessionalServiceByProfessional();
   await getJetonQuantity();
 });

@@ -14,15 +14,16 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import CreateEventForm from '~/components/questionnaires/CreateEventForm.vue';
+import { useSector } from '~/composables/sector/UseSector';
 
 const { clientName, user } = storeToRefs(useUserStore());
 const openModal = ref(false);
 
-const { getAllSectors, getKeywords } = useKeywordsStore();
+const { getListSector } = useSector();
 
 const eventCreation = async () => {
   openModal.value = !openModal.value;
-  await Promise.all([getAllSectors(), getKeywords()]);
+  await getListSector();
 };
 </script>
 <style lang="scss" scoped>

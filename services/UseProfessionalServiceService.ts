@@ -1,11 +1,12 @@
 import type { AxiosError } from 'axios';
+import type { ProfessionalServiceUuid } from '~/models/professionalService/professionalServiceUuid';
 
-export const useProfessionalService = () => {
+export const useProfessionalServiceService = () => {
   const { addError } = useToaster();
   const { setServicesFiltered } = eventsStore();
 
   const { setProfessionalServices } = useProfessionalStore();
-  const { services, sectors } = storeToRefs(useKeywordsStore());
+  const { services, sectors } = storeToRefs(useSectorStore());
   const { professionalUser } = storeToRefs(useUserStore());
   const api = useApi();
 
@@ -78,10 +79,23 @@ export const useProfessionalService = () => {
     return data.data ?? [];
   };
 
+  const sendProfessionalServices = async (servicesPayload: ProfessionalServiceUuid) => {
+    try {
+      if (!api) throw new Error('API non initialisée');
+      const { data } = await api.post('/professional-service/create', servicesPayload);
+
+      return data;
+    } catch (error) {
+      console.error('❌ Erreur lors de sendProfessionalServices :', error);
+      throw error;
+    }
+  };
+
   return {
     getProfessionalService,
     getListProfessionalServiceByProfessional,
     updateProfessionalServices,
     removeProfessionalService,
+    sendProfessionalServices,
   };
 };

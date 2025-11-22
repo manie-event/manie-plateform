@@ -1,4 +1,4 @@
-import { useProfessionalService } from '~/services/UseProfessionalService';
+import { useProfessionalServiceService } from '~/services/useProfessionalServiceService';
 import { useProfessionalStore } from '../../stores/professionalStore';
 
 export const useProfessionalProfile = () => {
@@ -6,7 +6,7 @@ export const useProfessionalProfile = () => {
   const { setProfessionalServices } = professionalStore;
   const { professionalServices } = storeToRefs(professionalStore);
   const { getListProfessionalServiceByProfessional, removeProfessionalService } =
-    useProfessionalService();
+    useProfessionalServiceService();
 
   const listProfessionalServiceByProfessional = async () => {
     const listProService = await getListProfessionalServiceByProfessional();

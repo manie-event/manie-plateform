@@ -152,9 +152,10 @@ import Notes from '@/pages/apps/notes/index.vue';
 import LightEmptyState from '@/public/images/svgs/empty-state.svg';
 import Product from '~/components/dashboards/dashboard-client/EventBudget.vue';
 import EditEventForm from '~/components/questionnaires/EditEventForm.vue';
+import { useSector } from '~/composables/sector/UseSector';
 import type { eventModel } from '~/models/events/eventModel';
 import { useProfessionalProposition } from '~/services/UseProfessionalProposition';
-import { useProfessionalService } from '~/services/UseProfessionalService';
+import { useProfessionalServiceService } from '~/services/useProfessionalServiceService';
 import PricingChoice from './PricingChoice.vue';
 const props = defineProps<{
   events: eventModel[];
@@ -164,8 +165,8 @@ const isEventModificationOpen = ref(false);
 const isAddingServiceOpen = ref(false);
 const openPricingModal = ref(false);
 const { professionalResponseProposition } = storeToRefs(usePropositionStore());
-const { getAllSectors, getKeywords } = useKeywordsStore();
-const { getProfessionalService } = useProfessionalService();
+const { getListSector, allKeywords } = useSector();
+const { getProfessionalService } = useProfessionalServiceService();
 const { getListPropositionByEventService } = useProfessionalProposition();
 
 const currentEvent = ref<eventModel>();
@@ -218,7 +219,7 @@ const getPropositionsByEvent = computed(() => {
 });
 
 onMounted(async () => {
-  await Promise.all([getAllSectors(), getKeywords(), getProfessionalService()]);
+  await Promise.all([getListSector(), getProfessionalService()]);
 
   if (props.events.length > 0) {
     selectedEvent(props.events[0].uuid);

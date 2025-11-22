@@ -7,7 +7,7 @@ import type { SectorsDto } from '~/models/dto/sectorsDto';
 export const useEventForm = () => {
   const { sectors, servicesFiltered } = storeToRefs(eventsStore());
   const { clientProfile } = storeToRefs(useUserStore());
-  const { keywords } = storeToRefs(useKeywordsStore());
+  const { keywords } = storeToRefs(useSectorStore());
   const { addError } = useToaster();
 
   // --- STATE GENERAL --- //
