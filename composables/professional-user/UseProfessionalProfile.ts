@@ -1,4 +1,4 @@
-import { useProfessionalServiceService } from '~/services/useProfessionalServiceService';
+import { useProfessionalServiceService } from '@/services/UseProfessionalServiceService';
 import { useProfessionalStore } from '../../stores/professionalStore';
 
 export const useProfessionalProfile = () => {

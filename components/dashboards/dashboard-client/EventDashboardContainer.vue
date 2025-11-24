@@ -150,12 +150,12 @@ import LatestDeals from '@/components/dashboards/dashboard-client/LatestDeals.vu
 import PropositionsPresta from '@/components/dashboards/dashboard-client/PropositionsPresta.vue';
 import Notes from '@/pages/apps/notes/index.vue';
 import LightEmptyState from '@/public/images/svgs/empty-state.svg';
+import { useProfessionalServiceService } from '@/services/useProfessionalServiceService';
 import Product from '~/components/dashboards/dashboard-client/EventBudget.vue';
 import EditEventForm from '~/components/questionnaires/EditEventForm.vue';
 import { useSector } from '~/composables/sector/UseSector';
 import type { eventModel } from '~/models/events/eventModel';
 import { useProfessionalProposition } from '~/services/UseProfessionalProposition';
-import { useProfessionalServiceService } from '~/services/useProfessionalServiceService';
 import PricingChoice from './PricingChoice.vue';
 const props = defineProps<{
   events: eventModel[];
@@ -165,7 +165,7 @@ const isEventModificationOpen = ref(false);
 const isAddingServiceOpen = ref(false);
 const openPricingModal = ref(false);
 const { professionalResponseProposition } = storeToRefs(usePropositionStore());
-const { getListSector, allKeywords } = useSector();
+const { getListSector } = useSector();
 const { getProfessionalService } = useProfessionalServiceService();
 const { getListPropositionByEventService } = useProfessionalProposition();
 

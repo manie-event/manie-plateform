@@ -1,7 +1,7 @@
+import { useProfessionalServiceService } from '@/services/UseProfessionalServiceService';
 import type { ProfessionalServiceUuid } from '~/models/professionalService/professionalServiceUuid';
 import { useEventService } from '~/services/UseEventService';
 import { useProfessionalProposition } from '~/services/UseProfessionalProposition';
-import { useProfessionalServiceService } from '../../services/useProfessionalServiceService';
 
 const servicePropositionAvailable = ref(false);
 
