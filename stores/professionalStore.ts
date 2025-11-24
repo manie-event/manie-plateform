@@ -5,7 +5,6 @@ export const useProfessionalStore = defineStore('professional-service', () => {
 
   const setProfessionalServices = (newProfessionalService: ProfessionalServiceUuid[]) => {
     professionalServices.value = newProfessionalService;
-    console.log(professionalServices.value, 'CHANGE professionalServices.value');
   };
 
   return {

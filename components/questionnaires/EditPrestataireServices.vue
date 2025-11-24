@@ -381,7 +381,6 @@ watch(
 
     try {
       const tempQuestionnaires: QuestionnaireItem[] = [];
-      console.log(professionalServices.value, 'PROVALUE');
 
       if (professionalServices.value.length) {
         // Cas où le pro a déjà des services validés
