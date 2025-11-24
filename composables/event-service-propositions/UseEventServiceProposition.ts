@@ -1,12 +1,12 @@
+import { useProfessionalServiceService } from '@/services/UseProfessionalServiceService';
 import type { ProfessionalServiceUuid } from '~/models/professionalService/professionalServiceUuid';
 import { useEventService } from '~/services/UseEventService';
 import { useProfessionalProposition } from '~/services/UseProfessionalProposition';
-import { useProfessionalService } from '../../services/UseProfessionalService';
 
 const servicePropositionAvailable = ref(false);
 
 export const useEventServiceProposition = () => {
-  const { getListProfessionalServiceByProfessional } = useProfessionalService();
+  const { getListProfessionalServiceByProfessional } = useProfessionalServiceService();
   const {
     getListProfessionalProposition,
     getListEventServiceProposition,
@@ -14,7 +14,7 @@ export const useEventServiceProposition = () => {
     acceptedByClient,
     declinedByClient,
   } = useProfessionalProposition();
-  const { services } = storeToRefs(useKeywordsStore());
+  const { services } = storeToRefs(useSectorStore());
   const { servicesFiltered } = storeToRefs(eventsStore());
   const { getEventsPerOrganisator, getEventServiceList } = useEventService();
   const { setServiceEventPropositionForPresta, setServiceEventPropositionForClient } =

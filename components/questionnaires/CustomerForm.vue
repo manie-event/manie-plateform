@@ -269,7 +269,7 @@ const openCustomerForm = defineModel<boolean>('openCustomerForm', { default: fal
 
 const { sectors, servicesFiltered } = storeToRefs(eventsStore());
 const { clientProfile } = storeToRefs(useUserStore());
-const { keywords } = storeToRefs(useKeywordsStore());
+const { keywords } = storeToRefs(useSectorStore());
 const { submitEvent, updateEvent, isLoading, error } = UseEvent();
 //ref generale
 const type_event = ref('');

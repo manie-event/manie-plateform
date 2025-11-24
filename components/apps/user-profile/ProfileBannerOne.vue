@@ -25,7 +25,9 @@
         <v-col cols="12" md="6">
           <div class="d-flex flex-row gap-2">
             <div v-for="service in getServiceValues" :key="service">
-              <v-chip color="primary" variant="outlined" size="x-small">{{ service }}</v-chip>
+              <div class="d-flex gap-2">
+                <v-chip color="primary" variant="outlined" size="x-small">{{ service }}</v-chip>
+              </div>
             </div>
           </div>
 
@@ -74,21 +76,28 @@
               Mon profil
             </v-btn>
             <v-btn
+              :disabled="isFirstConnection"
               color="rgb(var(--v-theme-darkbg))"
               style="color: rgb(var(--v-theme-background))"
               class="w-100"
               @click="openModificationModal = true"
             >
-              Mon activité
+              {{ isFirstConnection ? 'Votre service doit être vérifié' : 'Mon activité' }}
             </v-btn>
             <v-btn
-              :disabled="isFirstTime"
+              :disabled="isFirstConnection || professionalServices.length === 3"
               color="rgb(var(--v-theme-darkbg))"
               style="color: rgb(var(--v-theme-background))"
               class="w-100"
               @click="openServiceModal = true"
             >
-              {{ isFirstTime ? 'Nous vérifions votre profil sous 48h' : 'Ajouter une activité' }}
+              {{
+                isFirstConnection
+                  ? 'Nous vérifions votre nouveau service sous 48h'
+                  : professionalServices.length === 3
+                    ? 'Vous détenez le maximum de service possible'
+                    : 'Ajouter une activité'
+              }}
             </v-btn>
           </template>
         </v-col>
@@ -106,6 +115,7 @@
 <script setup lang="ts">
 import { NuxtLink } from '#components';
 import EditerProfessionalProfile from '@/components/apps/user-profile/EditProfessionalProfil.vue';
+import { useProfessionalProfileService } from '@/services/UseProfessionalProfileService';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { computed, onMounted, ref } from 'vue';
@@ -113,22 +123,22 @@ import EditPrestataireServices from '~/components/questionnaires/EditPrestataire
 import CreatePrestataireServices from '~/components/questionnaires/ServicesPrestataire.vue';
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
-import { useProfessionalService } from '~/services/UseProfessionalService';
 import { useUserStore } from '~/stores/userStore';
+import { useSector } from '../../../composables/sector/UseSector';
 
 const { professionalUser, user, isProfileCreated, initials } = storeToRefs(useUserStore());
-const { changeProfessionalBannerPicture, getProfessionalProfile } = useProfessionalProfile();
+const { changeProfessionalBannerPicture, getProfessionalProfile } = useProfessionalProfileService();
 const { getJetonQuantity } = usePaiementJeton();
-const { getListProfessionalServiceByProfessional } = useProfessionalService();
+const { listProfessionalServiceByProfessional } = useProfessionalProfile();
+const { getServicesList, getListSector } = useSector();
+const { professionalServices } = storeToRefs(useProfessionalStore());
 const { addSuccess } = useToaster();
 
 const openModal = ref(false);
 const openServiceModal = ref(false);
 const openModificationModal = ref(false);
 const fileInput = ref<HTMLInputElement | null>(null);
-const isFirstTime = ref(false);
 const professionalEmail = ref();
-const serviceProfessional = ref([]);
 const triggerClickFileInput = () => fileInput.value?.click();
 const changeBannerPhoto = async (e: Event) => {
   const input = e.target as HTMLInputElement;
@@ -144,20 +154,25 @@ const changeBannerPhoto = async (e: Event) => {
   }
 };
 
-const getServiceValues = computed(() => serviceProfessional.value.map((s) => s.name) ?? []);
+const getServiceValues = computed(() =>
+  professionalServices.value?.length ? professionalServices.value.map((s) => s.name) : []
+);
 
 const displayedEmail = computed(
   () => professionalUser.value?.email || professionalEmail.value || null
 );
 
+const isFirstConnection = computed(() =>
+  professionalServices.value.some((service) => service.isVerified === false)
+);
+
 onMounted(async () => {
   const professional = await getProfessionalProfile();
   professionalEmail.value = professional.email;
-  const proService = await getListProfessionalServiceByProfessional();
-  serviceProfessional.value = proService;
-  if (proService.length > 0) {
-    isFirstTime.value = proService.some((service) => service.isVerified === false);
-  }
+
+  await getServicesList();
+  await getListSector();
+  await listProfessionalServiceByProfessional();
   await getJetonQuantity();
 });
 </script>

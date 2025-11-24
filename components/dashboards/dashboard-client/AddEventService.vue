@@ -123,14 +123,14 @@ import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { SectorsDto } from '~/models/dto/sectorsDto';
 import type { eventModel } from '~/models/events/eventModel';
 import { useEventService } from '~/services/UseEventService';
-import { useKeywordsStore } from '~/stores/keywordsStore';
+import { useSectorStore } from '~/stores/sectorStore';
 const props = defineProps<{ event: eventModel }>();
 
 // V-model pour contrôler l'ouverture du dialogue depuis le parent
 const dialogOpen = defineModel<boolean>('addServiceOpen', { default: false });
 
 const { sectors, servicesFiltered } = storeToRefs(eventsStore());
-const { keywords } = storeToRefs(useKeywordsStore());
+const { keywords } = storeToRefs(useSectorStore());
 const { createEventServiceItem } = useEventService();
 
 // Liste des services affichés dans le formulaire

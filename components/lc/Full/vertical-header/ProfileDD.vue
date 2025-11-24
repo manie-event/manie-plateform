@@ -5,12 +5,12 @@ import { storeToRefs } from 'pinia';
 import { useAuthentification } from '~/composables/UseAuthentification';
 import { useClientProfil } from '~/composables/client-user/UseClientProfil';
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
-import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
+import { useProfessionalProfileService } from '~/services/UseProfessionalProfileService';
 import { useUserStore } from '~/stores/userStore';
 
 const { sendLogout } = useAuthentification();
 const { getJetonQuantity } = usePaiementJeton();
-const { getProfessionalProfileDetails, getProfessionalProfile } = useProfessionalProfile();
+const { getProfessionalProfileDetails, getProfessionalProfile } = useProfessionalProfileService();
 const { getClientProfil } = useClientProfil();
 
 const userStore = useUserStore();

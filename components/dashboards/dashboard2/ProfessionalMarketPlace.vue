@@ -90,13 +90,12 @@ import BaseEmptyState from '@/components/common/BaseEmptyState.vue';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
 import { getEventBackground } from '@/utils/card-utils';
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
-import { usePropositionStore } from '~/stores/propositionStore';
 import PropositionAccepted from './PropositionAccepted.vue';
 
 const props = defineProps<{ propositionFiltered: EventModelForProposition[] }>();
 const openPropositionPro = defineModel<boolean>('openPropositionPro', { default: false });
 
-const { serviceEventProposition, professionalServices } = storeToRefs(usePropositionStore());
+const { professionalServices } = storeToRefs(useProfessionalStore());
 const { keywords } = storeToRefs(useUserStore());
 const propositionUuid = ref('');
 const isAccepted = ref(false);

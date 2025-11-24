@@ -56,7 +56,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
-import { usePropositionStore } from '~/stores/propositionStore';
 import { getEventBackground } from '~/utils/card-utils';
 
 // Réception de la proposition sélectionnée depuis le parent
@@ -68,7 +67,7 @@ const props = defineProps<{
 const openPropositionDetail = defineModel('openPropositionDetail', { default: false });
 
 // Accès aux services professionnels pour obtenir le nom du service
-const { professionalServices } = storeToRefs(usePropositionStore());
+const { professionalServices } = storeToRefs(useProfessionalStore());
 
 // Recherche du nom du service correspondant à professionalServiceUuid
 const serviceName = computed(() => {

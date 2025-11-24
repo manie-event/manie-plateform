@@ -198,8 +198,6 @@ const onSubmit = handleSubmit(async (values) => {
 
     const response = await patchClientProfil(profilePayload);
 
-    console.log(response, 'RESPONSE');
-
     if (response) {
       addSuccess('Profil mis à jour avec succès !');
     }

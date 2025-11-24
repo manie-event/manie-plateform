@@ -21,10 +21,9 @@
               v-if="questionnaires.length > 1"
               icon
               variant="text"
-              color="error"
-              @click="removeQuestionnaire(index)"
+              @click="openRemoveModalWithServiceUuid(questionnaire.linkUuid ?? '')"
             >
-              <Icon icon="mdi:close" width="20" height="20" />
+              <Icon icon="mdi:trash" width="20" height="20" />
             </v-btn>
           </div>
 
@@ -156,7 +155,7 @@
           </div>
         </div>
 
-        <div class="d-flex align-center justify-space-between w-100">
+        <div class="d-flex align-center justify-flex-end w-100">
           <div>
             <v-btn
               style="background: rgb(var(--v-theme-darkbg)); color: white"
@@ -173,46 +172,61 @@
 
   <Teleport to="body">
     <ModalRedirection :redirection="'dashboard2'" v-model="isProfilUpdate" />
+    <RemovingProfessionalServiceModal
+      v-model:open-service-modal="isServiceModalOpen"
+      :service-uuid="serviceUuidFromProfil"
+      @close-modal-on-removing-service="handleCloseModalOnRemovingService()"
+    />
   </Teleport>
 </template>
 
 <script setup lang="ts">
+import RemovingProfessionalServiceModal from '@/components/apps/user-profile/RemovingProfessionalServiceModal.vue';
 import questionnairePresta from '@/data/questionnaire-presta.json';
-import { useKeywordsStore } from '@/stores/keywordsStore';
+import { useProfessionalServiceService } from '@/services/UseProfessionalServiceService';
 import { useUserStore } from '@/stores/userStore';
 import { useToaster } from '@/utils/toaster';
 import { Icon } from '@iconify/vue';
+import type { AxiosError } from 'axios';
 import { storeToRefs } from 'pinia';
 import { ref, Teleport, watch } from 'vue';
-import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
+import { useSector } from '~/composables/sector/UseSector';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { Keywords } from '~/models/professionalService/Keywords';
 import type { ProfessionalServicePayload } from '~/models/professionalService/ProfessionalServicePayload';
 import type { QuestionnaireItem } from '~/models/professionalService/QuestionnairePresta';
 import type { Services } from '~/models/professionalService/Services';
-import type { ProfessionalProfile } from '~/models/user/UserModel';
-import { useProfessionalService } from '~/services/UseProfessionalService';
 import ModalRedirection from '../apps/user-profile/ModalRedirection.vue';
 
 const serviceModal = defineModel<boolean>('openModificationModal', { default: false });
 const userStore = useUserStore();
 const { professionalUser } = storeToRefs(userStore);
 
-const keywordsStore = useKeywordsStore();
-const { loading, services, keywords } = storeToRefs(keywordsStore);
-const { getSectors, sendProfessionalServices } = keywordsStore;
-
-const { patchProfessionalProfileDetails } = useProfessionalProfile();
+const sectorStore = useSectorStore();
+const { services, keywords } = storeToRefs(sectorStore);
+const { selectSectors } = useSector();
 const { addSuccess, addError } = useToaster();
+const { updateProfessionalServices } = useProfessionalServiceService();
+const { professionalServices } = storeToRefs(useProfessionalStore());
 
-const { getListProfessionalServiceByProfessional, updateProfessionalServices } =
-  useProfessionalService();
 const questionnaires = ref<QuestionnaireItem[]>([]);
 const activityItems = ref(ACTIVITY_ITEMS);
 
 const payloadArray = ref<ProfessionalServicePayload[]>([]);
 const isProfilUpdate = ref(false);
-let sectorsLoaded = false;
+const isServiceModalOpen = ref(false);
+const serviceUuidFromProfil = ref('');
+const sectorsLoaded = ref(false);
+
+const openRemoveModalWithServiceUuid = (serviceUuid: string) => {
+  serviceUuidFromProfil.value = serviceUuid;
+  isServiceModalOpen.value = true;
+};
+
+const handleCloseModalOnRemovingService = () => {
+  isServiceModalOpen.value = false;
+  serviceModal.value = false;
+};
 
 const calculateKeywordsByCategory = (
   questionnaireData: any,
@@ -258,8 +272,6 @@ const createQuestionnaire = (sector: string): QuestionnaireItem => {
   };
 };
 
-const removeQuestionnaire = (index: number) => questionnaires.value.splice(index, 1);
-
 const selectService = (service: Services, q: QuestionnaireItem) => {
   q.selectedServiceUuid = q.selectedServiceUuid === service.uuid ? null : service.uuid;
   updatePayloadArray();
@@ -284,9 +296,9 @@ const updateQuestionnaireSector = async (q: QuestionnaireItem, newSector: string
     selectedKeywords: new Set<string>(),
   });
 
-  await getSectors(newSector);
+  await selectSectors(newSector);
 
-  // Maintenant que getSectors a mis à jour les valeurs globales,
+  // Maintenant que selectSectors a mis à jour les valeurs globales,
   // on peut directement les injecter
   const data = questionnairePresta.find(
     (item) => item.sector.toLowerCase() === newSector.toLowerCase()
@@ -300,19 +312,31 @@ const updateQuestionnaireSector = async (q: QuestionnaireItem, newSector: string
 
 const updatePayloadArray = () => {
   payloadArray.value = questionnaires.value
-    .filter((q) => q.linkUuid) // on ne touche qu’aux services existants
+    .filter((q) => q.linkUuid) // on ne touche qu'aux services existants
     .filter((q) => {
-      const serviceChanged = q.selectedServiceUuid !== q.original.serviceUuid;
+      const serviceChanged = q.selectedServiceUuid !== q.original?.serviceUuid;
+      const originalKeywordsArray = q.original?.keywords
+        ? Array.isArray(q.original.keywords)
+          ? q.original.keywords
+          : Array.from(q.original.keywords)
+        : [];
       const keywordsChanged =
-        JSON.stringify([...q.selectedKeywords]) !== JSON.stringify([...q.original.keywords]);
+        JSON.stringify(Array.from(q.selectedKeywords || [])) !==
+        JSON.stringify(originalKeywordsArray);
       return serviceChanged || keywordsChanged;
     })
-    .map((q) => ({
-      linkUuid: q.linkUuid,
-      serviceUuid: q.selectedServiceUuid!,
-      professionalUuid: professionalUser.value!.uuid,
-      keywordsUuid: Array.from(q.selectedKeywords),
-    }));
+    .map((q) => {
+      // 🔍 Trouver le service sélectionné pour récupérer son name
+      const selectedService = q.services.find((s) => s.uuid === q.selectedServiceUuid);
+
+      return {
+        linkUuid: q.linkUuid,
+        name: selectedService?.name || '',
+        serviceUuid: q.selectedServiceUuid!,
+        professionalUuid: professionalUser.value!.uuid,
+        keywordsUuid: Array.from(q.selectedKeywords),
+      };
+    });
 };
 
 const submitAllQuestionnaires = async () => {
@@ -328,32 +352,21 @@ const submitAllQuestionnaires = async () => {
       .filter((q) => q.sector && q.selectedServiceUuid)
       .map((q) => q.sector);
 
-    await patchProfessionalProfileDetails({
-      ...professionalUser.value,
-      faq:
-        typeof professionalUser.value?.faq === 'string'
-          ? JSON.parse(professionalUser.value.faq || '{}')
-          : professionalUser.value?.faq || {},
-      secondActivity: selected[0] || '',
-      thirdActivity: selected[1] || '',
-    } as ProfessionalProfile);
-
     await Promise.all(
-      payloadArray.value.map((p) =>
-        updateProfessionalServices(p.linkUuid, {
+      payloadArray.value.map((p) => {
+        return updateProfessionalServices(p.linkUuid!, {
+          name: p.name,
           serviceUuid: p.serviceUuid,
-          professionalUuid: p.professionalUuid,
           keywordsUuid: p.keywordsUuid,
-        })
-      )
+        });
+      })
     );
 
-    addSuccess(`${payloadArray.value.length} service(s) créé(s) avec succès !`);
+    addSuccess('service(s) modifié(s) avec succès !');
     serviceModal.value = false;
     isProfilUpdate.value = true;
-  } catch (e) {
-    console.error('Erreur lors de lenvoi :', e);
-    addError({ message: 'Erreur lors de lenvoi des services.' });
+  } catch (err) {
+    useDisplayErrorMessage(err as AxiosError);
   }
 };
 
@@ -364,18 +377,16 @@ watch(
 
     // 🔁 Réinitialisation complète
     questionnaires.value = [];
-    sectorsLoaded = false;
+    sectorsLoaded.value = false;
 
     try {
-      const proService = await getListProfessionalServiceByProfessional();
-
       const tempQuestionnaires: QuestionnaireItem[] = [];
 
-      if (proService.length) {
+      if (professionalServices.value.length) {
         // Cas où le pro a déjà des services validés
-        for (const srv of proService) {
-          const sector = srv.mainActivity || professionalUser.value.mainActivity || 'Autre';
-          await getSectors(sector);
+        for (const srv of professionalServices.value) {
+          const sector = srv.sector.name;
+          await selectSectors(sector);
 
           const qData = questionnairePresta.find(
             (q) => q.sector.toLowerCase() === sector.toLowerCase()
@@ -409,20 +420,19 @@ watch(
         );
 
         for (const sector of sectors) {
-          await getSectors(sector!);
+          await selectSectors(sector!);
           tempQuestionnaires.push(createQuestionnaire(sector!));
         }
       }
 
       // ✅ On injecte tout d’un coup, une fois les chargements terminés
       questionnaires.value = tempQuestionnaires;
-      sectorsLoaded = true;
+      sectorsLoaded.value = true;
     } catch (e) {
       console.error('Erreur lors du préremplissage :', e);
       addError({ message: 'Erreur lors du chargement des services existants.' });
     }
-  },
-  { immediate: true }
+  }
 );
 </script>
 

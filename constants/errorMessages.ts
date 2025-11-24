@@ -15,4 +15,6 @@ export const ERROR_MESSAGES = {
     "L'adresse e-mail est déjà utilisée, veuillez en choisir une autre.",
   'You do not have enough credits to accept this event service proposition':
     "Vous n'avez pas assez de jeton pour vous positionner, veuillez en racheter",
+  'You cannot delete this professional service because it is used by event service propositions':
+    'Vous ne pouvez pas supprimer ce service car il est utilisé dans une proposition commerciale',
 };

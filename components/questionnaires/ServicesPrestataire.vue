@@ -1,251 +1,195 @@
 <template>
-  <v-dialog v-model="serviceModal" max-width="800" transition="dialog-bottom-transition">
-    <v-card
-      v-if="professionalUser?.uuid"
-      max-width="800"
-      style="padding: 35px; background: rgb(var(--v-theme-background))"
-    >
-      <v-btn icon class="close-btn" @click="serviceModal = false" variant="text">
-        <Icon icon="mdi:close" width="20" height="20" />
-      </v-btn>
-      <div class="questionnaires-container">
-        <div
-          v-for="(questionnaire, index) in questionnaires"
-          :key="questionnaire.id"
-          class="questionnaire-section mb-8"
+  <v-dialog v-model="serviceModal" max-width="800">
+    <v-card style="padding: 30px; background: rgb(var(--v-theme-background))">
+      <!-- SECTION : CHOIX DU SECTEUR -->
+      <div class="mb-6">
+        <v-select
+          label="Sélectionnez votre secteur d'activité"
+          v-model="selectedSector"
+          :items="activityItems"
+          item-title="label"
+          item-value="value"
+          variant="outlined"
+          @update:model-value="onSectorSelected"
+        />
+      </div>
+
+      <!-- SECTION : SERVICES + KEYWORDS DU SECTEUR -->
+      <div v-if="questionnaire">
+        <v-divider class="mt-6">
+          <span class="text-h6 px-4">
+            {{ questionnaire.questionnaireData?.general.questions[0].question }}
+          </span>
+        </v-divider>
+
+        <!-- Services -->
+        <div class="service-chips mt-4">
+          <v-chip
+            v-for="service in questionnaire.services"
+            :key="service.uuid"
+            class="ma-1"
+            variant="outlined"
+            @click="selectService(service)"
+            :class="{ 'selected-chip': questionnaire.selectedServiceUuid === service.uuid }"
+          >
+            {{ service.name }}
+          </v-chip>
+        </div>
+
+        <!-- Keywords par catégorie -->
+        <!-- Keywords par catégorie -->
+        <div v-if="questionnaire?.questionnaireData?.servicesSection" class="mt-6">
+          <v-divider>
+            <span class="text-h6 px-4">
+              {{ questionnaire.questionnaireData.servicesSection.title || 'Services détaillés' }}
+            </span>
+          </v-divider>
+
+          <v-expansion-panels multiple variant="accordion" class="mt-4">
+            <v-expansion-panel
+              v-for="q in questionnaire.questionnaireData.servicesSection.questions"
+              :key="q.category"
+              :title="q.question"
+            >
+              <v-expansion-panel-text>
+                <div v-if="questionnaire.keywordsByCategory[q.category]?.length > 0">
+                  <v-chip
+                    v-for="keyword in questionnaire.keywordsByCategory[q.category]"
+                    :key="keyword.uuid"
+                    class="ma-1"
+                    variant="outlined"
+                    @click="selectKeyword(keyword)"
+                    :class="{ 'selected-chip': questionnaire.selectedKeywords.has(keyword.uuid) }"
+                  >
+                    {{ keyword.value }}
+                  </v-chip>
+                </div>
+                <div v-else class="text-grey text-caption">
+                  Aucun mot-clé disponible pour cette catégorie
+                </div>
+              </v-expansion-panel-text>
+            </v-expansion-panel>
+          </v-expansion-panels>
+        </div>
+
+        <!-- Habitudes -->
+        <div v-if="questionnaire?.questionnaireData?.habitudesSection" class="mt-6">
+          <v-divider>
+            <span class="text-h6 px-4">
+              {{
+                questionnaire.questionnaireData.habitudesSection.title || 'Habitudes et pratiques'
+              }}
+            </span>
+          </v-divider>
+
+          <v-expansion-panels multiple variant="accordion" class="mt-4">
+            <v-expansion-panel
+              v-for="q in questionnaire.questionnaireData.habitudesSection.questions"
+              :key="q.category"
+              :title="q.question"
+            >
+              <v-expansion-panel-text>
+                <div v-if="questionnaire.keywordsByCategory[q.category]?.length > 0">
+                  <v-chip
+                    v-for="keyword in questionnaire.keywordsByCategory[q.category]"
+                    :key="keyword.uuid"
+                    class="ma-1"
+                    variant="outlined"
+                    @click="selectKeyword(keyword)"
+                    :class="{ 'selected-chip': questionnaire.selectedKeywords.has(keyword.uuid) }"
+                  >
+                    {{ keyword.value }}
+                  </v-chip>
+                </div>
+                <div v-else class="text-grey text-caption">
+                  Aucun mot-clé disponible pour cette catégorie
+                </div>
+              </v-expansion-panel-text>
+            </v-expansion-panel>
+          </v-expansion-panels>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <div class="d-flex justify-end mt-8">
+        <v-btn
+          color="primary"
+          style="background: rgb(var(--v-theme-darkbg)); color: white"
+          @click="submit"
+          :disabled="!canSubmit"
         >
-          <div class="d-flex justify-space-between align-center mb-2">
-            <h3 class="text-subtitle1 font-weight-medium">Mon activité</h3>
-
-            <v-btn
-              v-if="questionnaires.length > 1"
-              icon
-              variant="text"
-              color="error"
-              @click="removeQuestionnaire(index)"
-            >
-              <Icon icon="mdi:close" width="20" height="20" />
-            </v-btn>
-          </div>
-
-          <div v-if="index > 0" class="mb-6">
-            <v-select
-              :label="`Votre ${index + 1}ème activité ?`"
-              v-model="questionnaire.sector"
-              :items="activityItems"
-              item-title="label"
-              item-value="value"
-              style="background: rgb(var(--v-theme-background))"
-              @update:model-value="updateQuestionnaireSector(questionnaire, $event)"
-              variant="outlined"
-            />
-          </div>
-
-          <div v-if="questionnaire.questionnaireData && questionnaire.services.length > 0">
-            <v-divider class="mt-6">
-              <span class="text-h6 px-4">
-                {{ questionnaire.questionnaireData.general.questions[0].question }}
-              </span>
-            </v-divider>
-
-            <div class="service-chips mt-4">
-              <v-chip
-                v-for="service in questionnaire.services"
-                :key="service.uuid"
-                variant="outlined"
-                class="ma-1"
-                @click="selectService(service, questionnaire)"
-                :class="{ 'selected-chip': questionnaire.selectedServiceUuid === service.uuid }"
-              >
-                {{ service.name }}
-              </v-chip>
-            </div>
-
-            <div v-if="questionnaire.questionnaireData.servicesSection" class="mt-6">
-              <v-divider>
-                <span class="text-h6 px-4">
-                  {{
-                    questionnaire.questionnaireData.servicesSection.title || 'Services détaillés'
-                  }}
-                </span>
-              </v-divider>
-
-              <div class="mt-4">
-                <v-expansion-panels variant="accordion" multiple>
-                  <v-expansion-panel
-                    v-for="serviceQuestion in questionnaire.questionnaireData.servicesSection
-                      .questions"
-                    :key="serviceQuestion.category"
-                    :title="serviceQuestion.question"
-                  >
-                    <v-expansion-panel-text>
-                      <div class="keyword-chips">
-                        <v-chip
-                          v-for="keyword in questionnaire.keywordsByCategory[
-                            serviceQuestion.category
-                          ] || []"
-                          :key="keyword.uuid"
-                          variant="outlined"
-                          class="ma-1"
-                          @click="selectKeyword(keyword, questionnaire)"
-                          :class="{
-                            'selected-chip': questionnaire.selectedKeywords.has(keyword.uuid),
-                          }"
-                        >
-                          {{ keyword.value }}
-                        </v-chip>
-                      </div>
-                    </v-expansion-panel-text>
-                  </v-expansion-panel>
-                </v-expansion-panels>
-              </div>
-            </div>
-
-            <div v-if="questionnaire.questionnaireData.habitudesSection" class="mt-6">
-              <v-divider>
-                <span class="text-h6 px-4">
-                  {{
-                    questionnaire.questionnaireData.habitudesSection.title ||
-                    'Habitudes et pratiques'
-                  }}
-                </span>
-              </v-divider>
-
-              <div class="mt-4">
-                <v-expansion-panels variant="accordion" multiple>
-                  <v-expansion-panel
-                    v-for="habitude in questionnaire.questionnaireData.habitudesSection.questions"
-                    :key="habitude.category"
-                    :title="habitude.question"
-                  >
-                    <v-expansion-panel-text>
-                      <div class="keyword-chips">
-                        <v-chip
-                          v-for="keyword in questionnaire.keywordsByCategory[habitude.category] ||
-                          []"
-                          :key="keyword.uuid"
-                          variant="outlined"
-                          class="ma-1"
-                          :color="
-                            questionnaire.selectedKeywords.has(keyword.uuid) ? 'success' : 'default'
-                          "
-                          @click="selectKeyword(keyword, questionnaire)"
-                          :class="{
-                            'selected-chip': questionnaire.selectedKeywords.has(keyword.uuid),
-                          }"
-                        >
-                          {{ keyword.value }}
-                        </v-chip>
-                      </div>
-                    </v-expansion-panel-text>
-                  </v-expansion-panel>
-                </v-expansion-panels>
-              </div>
-            </div>
-          </div>
-
-          <div v-else-if="index === 0" class="text-center py-8">
-            <v-progress-circular indeterminate color="primary" class="mb-4" />
-            <p>Chargement des services et mots-clés...</p>
-          </div>
-
-          <div v-else-if="index > 0 && !questionnaire.sector" class="text-center py-4">
-            <p class="text-grey">
-              Sélectionnez un secteur d'activité pour afficher les services disponibles
-            </p>
-          </div>
-        </div>
-
-        <div class="d-flex align-center justify-space-between w-100">
-          <div class="d-flex justify-space-between align-center py-3">
-            <v-btn
-              v-if="questionnaires.length < 3"
-              @click="addNewQuestionnaire"
-              variant="outlined"
-              style="
-                border: 1px solid rgb(var(--v-theme-darkbg));
-                color: rgb(var(--v-theme-darkbg));
-              "
-              class="px-4"
-            >
-              <span>Ajouter une nouvelle activité</span>
-            </v-btn>
-          </div>
-          <div>
-            <v-btn
-              style="background: rgb(var(--v-theme-darkbg)); color: white"
-              class="px-4"
-              @click="submitAllQuestionnaires()"
-            >
-              Valider ma sélection
-            </v-btn>
-          </div>
-        </div>
+          Valider
+        </v-btn>
       </div>
     </v-card>
   </v-dialog>
-
-  <Teleport to="body">
-    <ModalRedirection :redirection="'dashboard2'" v-model="isProfilUpdate" />
-  </Teleport>
 </template>
-
 <script setup lang="ts">
 import questionnairePresta from '@/data/questionnaire-presta.json';
-import { useKeywordsStore } from '@/stores/keywordsStore';
 import { useUserStore } from '@/stores/userStore';
 import { useToaster } from '@/utils/toaster';
-import { Icon } from '@iconify/vue';
-import { storeToRefs } from 'pinia';
-import { ref, Teleport, watch } from 'vue';
+import { ref, watch } from 'vue';
+import { useProfessionalService } from '~/composables/professional-services/UseProfessionalService';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
+import { useSector } from '~/composables/sector/UseSector';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { Keywords } from '~/models/professionalService/Keywords';
-import type { ProfessionalServiceUuid } from '~/models/professionalService/professionalServiceUuid';
-import type { QuestionnaireItem } from '~/models/professionalService/QuestionnairePresta';
-import type { Services } from '~/models/professionalService/Services';
-import type { ProfessionalProfile } from '~/models/user/UserModel';
-import { useProfessionalService } from '~/services/UseProfessionalService';
-import ModalRedirection from '../apps/user-profile/ModalRedirection.vue';
+import { useProfessionalProfileService } from '~/services/UseProfessionalProfileService';
 
 const serviceModal = defineModel<boolean>('openCreateServiceModal', { default: false });
-const userStore = useUserStore();
-const { professionalUser } = storeToRefs(userStore);
 
-const keywordsStore = useKeywordsStore();
-const { loading, services, keywords } = storeToRefs(keywordsStore);
-const { getSectors, sendProfessionalServices } = keywordsStore;
+// Stores
+const { professionalUser } = useUserStore();
+const { selectSectors } = useSector();
+const { services, keywords, sectors } = storeToRefs(useSectorStore());
+const { listProfessionalServiceByProfessional } = useProfessionalProfile();
+const { getProfessionalProfile } = useProfessionalProfileService();
+const { professionalServices } = useProfessionalService();
 
-const { patchProfessionalProfileDetails } = useProfessionalProfile();
 const { addSuccess, addError } = useToaster();
 
-const { getListProfessionalServiceByProfessional } = useProfessionalService();
-const questionnaires = ref<QuestionnaireItem[]>([]);
+// State
+const selectedSector = ref<string | null>(null);
+
+const questionnaire = ref(
+  null as null | {
+    sector: string;
+    questionnaireData: any;
+    services: any[];
+    keywordsByCategory: Record<string, any>;
+    selectedServiceUuid: string | null;
+    selectedKeywords: Set<string>;
+  }
+);
+
+// Reset on modal open
+watch(
+  () => serviceModal.value,
+  (open) => {
+    if (open) {
+      selectedSector.value = null;
+      questionnaire.value = null;
+    }
+  }
+);
+
 const activityItems = ref(ACTIVITY_ITEMS);
-const payloadArray = ref<ProfessionalServiceUuid[]>([]);
-const isProfilUpdate = ref(false);
-let sectorsLoaded = false;
-const isFirstTime = ref(false);
 
-const generateId = () => Math.random().toString(36).substr(2, 9);
+// Helpers
+const calculateKeywordsByCategory = (data: any, sector: string): Record<string, Keywords[]> => {
+  if (!data || !keywords.value?.length) {
+    console.log('❌ Pas de data ou keywords vide');
+    return {};
+  }
 
-const calculateKeywordsByCategory = (
-  questionnaireData: any,
-  sector: string
-): Record<string, Keywords[]> => {
-  if (!questionnaireData || !keywords.value?.length) return {};
   const grouped: Record<string, Keywords[]> = {};
   const categories: string[] = [];
 
-  if (questionnaireData.servicesSection) {
-    categories.push(
-      ...(questionnaireData.servicesSection.questions?.map((q: any) => q.category) || [])
-    );
+  if (data.servicesSection?.questions) {
+    categories.push(...data.servicesSection.questions.map((q: any) => q.category));
   }
-  if (questionnaireData.habitudesSection) {
-    categories.push(
-      ...(questionnaireData.habitudesSection.questions?.map((q: any) => q.category) || [])
-    );
+  if (data.habitudesSection?.questions) {
+    categories.push(...data.habitudesSection.questions.map((q: any) => q.category));
   }
 
   categories.forEach((category) => {
@@ -253,198 +197,90 @@ const calculateKeywordsByCategory = (
       (k) =>
         k.category === category && (k.sector.toLowerCase() === sector.toLowerCase() || !k.sector)
     );
-    grouped[category] = filtered.filter(
-      (kw, i, arr) => arr.findIndex((x) => x.uuid === kw.uuid) === i
-    );
+
+    grouped[category] = filtered;
   });
 
   return grouped;
 };
 
-const createQuestionnaire = (sector: string): QuestionnaireItem => {
+const filterServiceBySector = (sector: string) => {
+  const sectorFiltered = sectors.value.find((s) => s.name === sector);
+
+  return services.value.filter((service) => service.sectorUuid === sectorFiltered?.uuid);
+};
+
+// Sector selection
+const onSectorSelected = async (sector: string) => {
+  await selectSectors(sector);
+
   const data = questionnairePresta.find((q) => q.sector.toLowerCase() === sector.toLowerCase());
-  return {
-    id: generateId(),
-    sector,
-    questionnaireData: data,
-    services: [...(services.value || [])],
-    keywordsByCategory: calculateKeywordsByCategory(data, sector),
-    selectedServiceUuid: null,
-    selectedKeywords: new Set<string>(),
-  };
-};
 
-const removeQuestionnaire = (index: number) => questionnaires.value.splice(index, 1);
-
-const selectService = (service: Services, q: QuestionnaireItem) => {
-  q.selectedServiceUuid = q.selectedServiceUuid === service.uuid ? null : service.uuid;
-  updatePayloadArray();
-};
-
-const selectKeyword = (keyword: Keywords, q: QuestionnaireItem) => {
-  q.selectedKeywords.has(keyword.uuid)
-    ? q.selectedKeywords.delete(keyword.uuid)
-    : q.selectedKeywords.add(keyword.uuid);
-  updatePayloadArray();
-};
-
-const updateQuestionnaireSector = async (q: QuestionnaireItem, newSector: string) => {
-  if (!newSector) return;
-
-  Object.assign(q, {
-    questionnaireData: null,
-    services: [],
-    keywordsByCategory: {},
-    selectedServiceUuid: null,
-    selectedKeywords: new Set<string>(),
-  });
-
-  await getSectors(newSector);
-
-  const stopWatching = watch([services, keywords], ([s, k]) => {
-    if (s?.length && k?.length) {
-      const data = questionnairePresta.find(
-        (item) => item.sector.toLowerCase() === newSector.toLowerCase()
-      );
-      q.sector = newSector;
-      q.questionnaireData = data;
-      q.services = [...s];
-      q.keywordsByCategory = calculateKeywordsByCategory(data, newSector);
-      stopWatching();
-    }
-  });
-};
-
-const addNewQuestionnaire = () =>
-  questionnaires.value.push({
-    id: generateId(),
-    sector: '',
-    questionnaireData: null,
-    services: [],
-    keywordsByCategory: {},
-    selectedServiceUuid: null,
-    selectedKeywords: new Set<string>(),
-  });
-
-const updatePayloadArray = () => {
-  payloadArray.value = questionnaires.value
-    .filter((q) => q.selectedServiceUuid && professionalUser.value?.uuid)
-    .map((q) => ({
-      serviceUuid: q.selectedServiceUuid!,
-      professionalUuid: professionalUser.value!.uuid,
-      keywordsUuid: Array.from(q.selectedKeywords),
-    }));
-};
-
-const submitAllQuestionnaires = async () => {
-  updatePayloadArray();
-
-  if (!payloadArray.value.length) {
-    addError({ message: 'Veuillez sélectionner au moins un service.' });
+  if (!data) {
+    console.error('❌ Questionnaire non trouvé pour le secteur:', sector);
     return;
   }
 
-  try {
-    const selected = questionnaires.value
-      .filter((q) => q.sector && q.selectedServiceUuid)
-      .map((q) => q.sector);
-
-    await patchProfessionalProfileDetails({
-      ...professionalUser.value,
-      faq:
-        typeof professionalUser.value?.faq === 'string'
-          ? JSON.parse(professionalUser.value.faq || '{}')
-          : professionalUser.value?.faq || {},
-      secondActivity: selected[0] || '',
-      thirdActivity: selected[1] || '',
-    } as ProfessionalProfile);
-
-    await Promise.all(payloadArray.value.map((p) => sendProfessionalServices(p)));
-
-    addSuccess(`${payloadArray.value.length} service(s) créé(s) avec succès !`);
-    serviceModal.value = false;
-    isProfilUpdate.value = true;
-  } catch (e) {
-    console.error('Erreur lors de lenvoi :', e);
-    addError({ message: 'Erreur lors de lenvoi des services.' });
-  }
+  questionnaire.value = {
+    sector,
+    questionnaireData: data,
+    services: filterServiceBySector(sector),
+    keywordsByCategory: calculateKeywordsByCategory(data, sector),
+    selectedServiceUuid: null,
+    selectedKeywords: new Set(),
+  };
 };
 
-// Initialisation';
+const selectService = (service) => {
+  if (!questionnaire.value) return;
+  questionnaire.value.selectedServiceUuid =
+    questionnaire.value.selectedServiceUuid === service.uuid ? null : service.uuid;
+};
 
-// 🔄 Pré-remplissage des services et mots-clés déjà enregistrés
-watch(
-  () => serviceModal.value,
-  async (open) => {
-    if (!open || !professionalUser.value?.uuid) return;
+// Keyword selection
+const selectKeyword = (keyword) => {
+  if (!questionnaire.value) return;
+  const set = questionnaire.value.selectedKeywords;
+  set.has(keyword.uuid) ? set.delete(keyword.uuid) : set.add(keyword.uuid);
+};
 
-    questionnaires.value = [];
-    sectorsLoaded = true;
-
-    try {
-      const proService = await getListProfessionalServiceByProfessional();
-      console.log(proService, 'Proservice');
-
-      const isFirstTime = proService.some((service) => service.isVerified === false);
-      if (proService.length && !isFirstTime) {
-        console.log(isFirstTime, 'isFirstTime');
-        for (const srv of proService) {
-          const sector = professionalUser.value.mainActivity || 'Autre';
-          await getSectors(sector);
-          const qData = questionnairePresta.find(
-            (q) => q.sector.toLowerCase() === sector.toLowerCase()
-          );
-
-          const q: QuestionnaireItem = {
-            id: generateId(),
-            sector,
-            questionnaireData: qData,
-            services: [...(services.value || [])], // Liste complète des services du secteur
-            keywordsByCategory: calculateKeywordsByCategory(qData, sector),
-            selectedServiceUuid: srv.serviceUuid, // ✅ Service déjà choisi
-            selectedKeywords: new Set(
-              (srv.keywordsUuid || []).map((k: any) => (typeof k === 'string' ? k : k.uuid))
-            ),
-          };
-
-          questionnaires.value.push(q);
-        }
-      } else {
-        const user = professionalUser.value;
-        const sectors = [user.mainActivity, user.secondActivity, user.thirdActivity].filter(
-          Boolean
-        );
-
-        for (const sector of sectors) {
-          await getSectors(sector!);
-          questionnaires.value.push(createQuestionnaire(sector!));
-        }
-      }
-    } catch (e) {
-      console.error('Erreur lors du préremplissage :', e);
-      addError({ message: 'Erreur lors du chargement des services existants.' });
-    }
-  },
-  { immediate: true }
+// Submit
+const canSubmit = computed(
+  () => questionnaire.value?.selectedServiceUuid && professionalUser?.uuid
 );
+
+const submit = async () => {
+  if (!questionnaire.value) return;
+
+  try {
+    if (questionnaire.value && professionalUser) {
+      await professionalServices({
+        serviceUuid: questionnaire.value.selectedServiceUuid,
+        professionalUuid: professionalUser.uuid,
+        keywordsUuid: Array.from(questionnaire.value.selectedKeywords),
+      });
+    }
+
+    await listProfessionalServiceByProfessional();
+
+    addSuccess('Service créé avec succès !');
+    serviceModal.value = false;
+  } catch (err) {
+    console.error(err);
+    addError({ message: 'Impossible d’enregistrer votre service.' });
+  }
+};
 </script>
-
 <style scoped lang="scss">
-.v-expansion-panel {
-  background: rgb(var(--v-theme-background));
-  border-bottom: 1px solid rgb(var(--v-theme-background));
-}
-
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: rgba(0, 0, 0, 0.54); /* adapte la couleur selon ton thème */
-  z-index: 1;
-}
 .selected-chip {
   background: rgb(var(--v-theme-darkbg));
   border: rgb(var(--v-theme-darkbg));
   color: rgb(var(--v-theme-background));
+}
+
+.close-btn {
+  position: relative;
+  top: 10px;
+  right: 10px;
 }
 </style>

@@ -1,27 +1,13 @@
-import { useApi } from '@/composables/UseApi';
-import { keyWordsDtoToKeywords } from '@/mappers/profesionnalKeywordsMapper';
-import type { Keywords } from '@/models/professionalService/Keywords';
-import type { Sectors } from '@/models/professionalService/Sectors';
-import type { Services } from '@/models/professionalService/Services';
-import type { ProfessionalServiceUuid } from '@/models/professionalService/professionalServiceUuid';
-import { eventsStore } from '@/stores/events';
-import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { keyWordsDtoToKeywords } from '~/mappers/profesionnalKeywordsMapper';
 import type { KeywordsDto } from '~/models/dto/keywordsDto';
+import type { Keywords } from '~/models/professionalService/Keywords';
+import type { Sectors } from '~/models/professionalService/Sectors';
+import type { Services } from '~/models/professionalService/Services';
 
-export const useKeywordsStore = defineStore('keywords', () => {
-  // --- STORES EXTERNES ---
-  const { setSectors } = eventsStore();
-
-  // --- ÉTAT LOCAL ---
-  const loading = ref(false);
-  const services = ref<Services[]>([]);
-  const keywords = ref<Keywords[]>([]);
-  const sectors = ref<Sectors[]>([]);
+export const useSectorService = () => {
   const api = useApi();
   const config = useRuntimeConfig();
-
-  // --- MÉTHODES MÉTIER ---
+  const loading = ref(false);
   const getAllSectors = async () => {
     try {
       if (!api) throw new Error('API non initialisée');
@@ -31,16 +17,14 @@ export const useKeywordsStore = defineStore('keywords', () => {
       const allResults: Sectors[] = [];
 
       while (true) {
-        const response = await api.get(`/sector?page=${page}`);
-        if (!response?.data?.data?.length) break;
+        const { data } = await api.get(`/sector?page=${page}`);
+        if (!data?.data?.length) break;
 
-        allResults.push(...response.data.data);
-        if (page >= response.data.meta.lastPage) break;
+        allResults.push(...data.data);
+        if (page >= data.meta.lastPage) break;
         page++;
       }
 
-      sectors.value = allResults;
-      setSectors(allResults);
       return allResults;
     } catch (error) {
       console.error('❌ Erreur lors du chargement des secteurs :', error);
@@ -55,9 +39,9 @@ export const useKeywordsStore = defineStore('keywords', () => {
       if (!api) throw new Error('API non initialisée');
 
       loading.value = true;
-      const response = await api.get('/sector', { params: { limit: 30 } });
+      const { data } = await api.get('/sector', { params: { limit: 30 } });
 
-      const sectorFiltered = response.data.data.filter(
+      const sectorFiltered = data.data.filter(
         (sectorItem: Sectors) => sectorItem.name.toLowerCase() === sector.toLowerCase()
       );
 
@@ -83,15 +67,14 @@ export const useKeywordsStore = defineStore('keywords', () => {
     try {
       if (!api) throw new Error('API non initialisée');
 
-      const response = await api.get(`${config.public.apiUrl}/service`, {
+      const { data } = await api.get(`${config.public.apiUrl}/service`, {
         params: { q: sectorUuid, limit: 100 },
       });
 
-      const serviceFiltered = response.data.data.filter(
+      const serviceFiltered = data.data.filter(
         (serviceItem: Services) => serviceItem.sectorUuid.toLowerCase() === sectorUuid.toLowerCase()
       );
 
-      services.value = serviceFiltered;
       return serviceFiltered;
     } catch (error) {
       console.error('❌ Erreur lors de getServices :', error);
@@ -116,7 +99,6 @@ export const useKeywordsStore = defineStore('keywords', () => {
             .map((k: KeywordsDto) => keyWordsDtoToKeywords(k))
         : data.data;
 
-      keywords.value = filtered;
       return filtered;
     } catch (error) {
       console.error('❌ Erreur lors de getKeywords :', error);
@@ -129,42 +111,20 @@ export const useKeywordsStore = defineStore('keywords', () => {
   const preloadServices = async () => {
     if (!api) throw new Error('API non initialisée');
 
-    if (services.value.length === 0) {
-      const response = await api.get('/service', { params: { limit: 1000 } });
-      services.value = response.data.data;
-    }
-  };
-
-  const sendProfessionalServices = async (servicesPayload: ProfessionalServiceUuid) => {
     try {
-      if (!api) throw new Error('API non initialisée');
-      const response = await api.post(
-        `${config.public.apiUrl}/professional-service/create`,
-        servicesPayload
-      );
-
-      services.value = response.data;
-      return response.data;
-    } catch (error) {
-      console.error('❌ Erreur lors de sendProfessionalServices :', error);
-      throw error;
+      const { data } = await api.get('/service', { params: { limit: 1000 } });
+      return data.data;
+    } catch (err) {
+      console.error('❌ Erreur lors de preloadServices :', err);
     }
   };
 
-  // --- EXPORT PUBLIC ---
   return {
-    // État
     loading,
-    services,
-    keywords,
-    sectors,
-
-    // Méthodes
     getAllSectors,
     getSectors,
     getServices,
     getKeywords,
     preloadServices,
-    sendProfessionalServices,
   };
-});
+};
