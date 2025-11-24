@@ -150,7 +150,7 @@ import LatestDeals from '@/components/dashboards/dashboard-client/LatestDeals.vu
 import PropositionsPresta from '@/components/dashboards/dashboard-client/PropositionsPresta.vue';
 import Notes from '@/pages/apps/notes/index.vue';
 import LightEmptyState from '@/public/images/svgs/empty-state.svg';
-import { useProfessionalServiceService } from '@/services/useProfessionalServiceService';
+import { useProfessionalServiceService } from '@/services/UseProfessionalServiceService';
 import Product from '~/components/dashboards/dashboard-client/EventBudget.vue';
 import EditEventForm from '~/components/questionnaires/EditEventForm.vue';
 import { useSector } from '~/composables/sector/UseSector';
