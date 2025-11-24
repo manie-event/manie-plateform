@@ -183,7 +183,7 @@
 <script setup lang="ts">
 import RemovingProfessionalServiceModal from '@/components/apps/user-profile/RemovingProfessionalServiceModal.vue';
 import questionnairePresta from '@/data/questionnaire-presta.json';
-import { useProfessionalServiceService } from '@/services/useProfessionalServiceService';
+import { useProfessionalServiceService } from '@/services/UseProfessionalServiceService';
 import { useUserStore } from '@/stores/userStore';
 import { useToaster } from '@/utils/toaster';
 import { Icon } from '@iconify/vue';
