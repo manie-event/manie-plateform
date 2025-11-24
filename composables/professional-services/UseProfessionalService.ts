@@ -6,8 +6,7 @@ export const useProfessionalService = () => {
   const { sendProfessionalServices } = useProfessionalServiceService();
 
   const professionalServices = async (service: ProfessionalServiceUuid) => {
-    const proServices = await sendProfessionalServices(service);
-    setProfessionalServices(proServices);
+    await sendProfessionalServices(service);
   };
   return {
     professionalServices,

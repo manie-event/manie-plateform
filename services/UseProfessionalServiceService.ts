@@ -36,8 +36,9 @@ export const useProfessionalServiceService = () => {
       `/professional-service/list-by-professional/${professionalUser.value.uuid}`
     );
     const proServices = data.data;
-    const allServices = services.value; // contiennent les sectors
+    const allServices = services.value;
     const allSectors = sectors.value;
+
     const proServicesWithSector = proServices.map((proService) => {
       const matchingService = allServices.find((s) => s.uuid === proService.serviceUuid);
       const findSector = allSectors.find((sector) => sector.uuid === matchingService?.sectorUuid);
@@ -47,14 +48,10 @@ export const useProfessionalServiceService = () => {
       };
     });
 
-    console.log(proServicesWithSector, 'proServicesWithSector');
-
     return proServicesWithSector;
   };
 
   const updateProfessionalServices = async (serviceUuid: string, payload) => {
-    console.log(payload, 'updateProfessionalServices');
-
     try {
       if (!api || !professionalUser.value?.uuid) return;
       const { data } = await api.patch(`/professional-service/update/${serviceUuid}`, payload, {
@@ -63,7 +60,6 @@ export const useProfessionalServiceService = () => {
           Accept: 'application/json',
         },
       });
-      console.log(data, 'updateProfessionalServices');
 
       setProfessionalServices(data.data);
       return data.data ?? [];

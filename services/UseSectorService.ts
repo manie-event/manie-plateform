@@ -93,8 +93,6 @@ export const useSectorService = () => {
 
       if (!data?.data) throw new Error('Aucune donnée reçue pour les mots-clés.');
 
-      console.log(data.data, 'getKeywords');
-
       const filtered = query
         ? data.data
             .filter((k: Keywords) => k.sector.toLowerCase() === query.toLowerCase())

@@ -1,14 +1,10 @@
 import type { Keywords } from '@/models/professionalService/Keywords';
 import type { Sectors } from '@/models/professionalService/Sectors';
 import type { Services } from '@/models/professionalService/Services';
-import { eventsStore } from '@/stores/events';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 export const useSectorStore = defineStore('sector', () => {
-  // --- STORES EXTERNES ---
-  const { setSectors } = eventsStore();
-
   const services = ref<Services[]>([]);
   const keywords = ref<Keywords[]>([]);
   const sectors = ref<Sectors[]>([]);
@@ -23,6 +19,7 @@ export const useSectorStore = defineStore('sector', () => {
   };
 
   const setKeywordList = (newKeyword: Keywords[]) => {
+    keywords.value = [];
     keywords.value.push(...newKeyword);
   };
   return {

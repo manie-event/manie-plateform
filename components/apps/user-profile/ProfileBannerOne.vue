@@ -76,12 +76,13 @@
               Mon profil
             </v-btn>
             <v-btn
+              :disabled="isFirstConnection"
               color="rgb(var(--v-theme-darkbg))"
               style="color: rgb(var(--v-theme-background))"
               class="w-100"
               @click="openModificationModal = true"
             >
-              Mon activité
+              {{ isFirstConnection ? 'Votre service doit être vérifié' : 'Mon activité' }}
             </v-btn>
             <v-btn
               :disabled="isFirstConnection || professionalServices.length === 3"
@@ -92,7 +93,7 @@
             >
               {{
                 isFirstConnection
-                  ? 'Nous vérifions votre profil sous 48h'
+                  ? 'Nous vérifions votre nouveau service sous 48h'
                   : professionalServices.length === 3
                     ? 'Vous détenez le maximum de service possible'
                     : 'Ajouter une activité'

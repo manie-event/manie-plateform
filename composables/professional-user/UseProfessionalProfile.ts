@@ -10,13 +10,11 @@ export const useProfessionalProfile = () => {
 
   const listProfessionalServiceByProfessional = async () => {
     const listProService = await getListProfessionalServiceByProfessional();
-    console.log(listProService, 'listProService');
     setProfessionalServices(listProService);
   };
 
   const removeServiceFromProfessionalProfile = async (serviceUuid: string) => {
     const res = await removeProfessionalService(serviceUuid);
-    console.log(res, 'removeServiceFromProfessionalProfile');
 
     if (res !== null) {
       professionalServices.value = professionalServices.value.filter(

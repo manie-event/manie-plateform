@@ -381,6 +381,7 @@ watch(
 
     try {
       const tempQuestionnaires: QuestionnaireItem[] = [];
+      console.log(professionalServices.value, 'PROVALUE');
 
       if (professionalServices.value.length) {
         // Cas où le pro a déjà des services validés
@@ -432,8 +433,7 @@ watch(
       console.error('Erreur lors du préremplissage :', e);
       addError({ message: 'Erreur lors du chargement des services existants.' });
     }
-  },
-  { immediate: true }
+  }
 );
 </script>
 

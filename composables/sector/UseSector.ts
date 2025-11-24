@@ -19,8 +19,6 @@ export const useSector = () => {
 
   const getServicesList = async () => {
     const services = await preloadServices();
-    console.log(services, 'getServicesList');
-
     setServiceList(services);
   };
 

@@ -1,11 +1,6 @@
 <template>
   <v-dialog v-model="serviceModal" max-width="800">
     <v-card style="padding: 30px; background: rgb(var(--v-theme-background))">
-      <!-- Close -->
-      <v-btn icon class="close-btn" @click="serviceModal = false" variant="text">
-        <Icon icon="mdi:close" width="20" />
-      </v-btn>
-
       <!-- SECTION : CHOIX DU SECTEUR -->
       <div class="mb-6">
         <v-select
@@ -133,12 +128,13 @@
 import questionnairePresta from '@/data/questionnaire-presta.json';
 import { useUserStore } from '@/stores/userStore';
 import { useToaster } from '@/utils/toaster';
-import { Icon } from '@iconify/vue';
 import { ref, watch } from 'vue';
 import { useProfessionalService } from '~/composables/professional-services/UseProfessionalService';
+import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { useSector } from '~/composables/sector/UseSector';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { Keywords } from '~/models/professionalService/Keywords';
+import { useProfessionalProfileService } from '~/services/UseProfessionalProfileService';
 
 const serviceModal = defineModel<boolean>('openCreateServiceModal', { default: false });
 
@@ -146,7 +142,10 @@ const serviceModal = defineModel<boolean>('openCreateServiceModal', { default: f
 const { professionalUser } = useUserStore();
 const { selectSectors } = useSector();
 const { services, keywords, sectors } = storeToRefs(useSectorStore());
+const { listProfessionalServiceByProfessional } = useProfessionalProfile();
+const { getProfessionalProfile } = useProfessionalProfileService();
 const { professionalServices } = useProfessionalService();
+
 const { addSuccess, addError } = useToaster();
 
 // State
@@ -186,7 +185,6 @@ const calculateKeywordsByCategory = (data: any, sector: string): Record<string, 
   const grouped: Record<string, Keywords[]> = {};
   const categories: string[] = [];
 
-  // ✅ Collecter toutes les catégories
   if (data.servicesSection?.questions) {
     categories.push(...data.servicesSection.questions.map((q: any) => q.category));
   }
@@ -194,10 +192,6 @@ const calculateKeywordsByCategory = (data: any, sector: string): Record<string, 
     categories.push(...data.habitudesSection.questions.map((q: any) => q.category));
   }
 
-  console.log('📋 Catégories trouvées:', categories);
-  console.log('🔑 Keywords disponibles:', keywords.value.length);
-
-  // ✅ Grouper par catégorie
   categories.forEach((category) => {
     const filtered = keywords.value.filter(
       (k) =>
@@ -213,21 +207,11 @@ const calculateKeywordsByCategory = (data: any, sector: string): Record<string, 
 const filterServiceBySector = (sector: string) => {
   const sectorFiltered = sectors.value.find((s) => s.name === sector);
 
-  console.log(sectorFiltered, 'sectorFiltered');
-
-  console.log(
-    services.value.filter((service) => service.sectorUuid === sectorFiltered?.uuid),
-    'SECTOFILTERED'
-  );
-
   return services.value.filter((service) => service.sectorUuid === sectorFiltered?.uuid);
 };
 
 // Sector selection
 const onSectorSelected = async (sector: string) => {
-  console.log('🎯 Secteur sélectionné:', sector);
-
-  // ✅ Attendre que selectSectors charge les données
   await selectSectors(sector);
 
   const data = questionnairePresta.find((q) => q.sector.toLowerCase() === sector.toLowerCase());
@@ -236,10 +220,7 @@ const onSectorSelected = async (sector: string) => {
     console.error('❌ Questionnaire non trouvé pour le secteur:', sector);
     return;
   }
-  console.log(services.value);
-  console.log(sector, 'SECTOR');
 
-  // ✅ Créer le questionnaire APRÈS le chargement
   questionnaire.value = {
     sector,
     questionnaireData: data,
@@ -250,7 +231,6 @@ const onSectorSelected = async (sector: string) => {
   };
 };
 
-// Service selection
 const selectService = (service) => {
   if (!questionnaire.value) return;
   questionnaire.value.selectedServiceUuid =
@@ -281,6 +261,8 @@ const submit = async () => {
       });
     }
 
+    await listProfessionalServiceByProfessional();
+
     addSuccess('Service créé avec succès !');
     serviceModal.value = false;
   } catch (err) {
@@ -297,7 +279,7 @@ const submit = async () => {
 }
 
 .close-btn {
-  position: absolute;
+  position: relative;
   top: 10px;
   right: 10px;
 }
