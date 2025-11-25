@@ -4,7 +4,6 @@
       v-for="error in errorMessageArray"
       :key="error.id"
       class="alert-card"
-      type="error"
       :text="error.message"
     >
       <div class="progress-bar" />
@@ -32,6 +31,8 @@ const { errorMessageArray } = useToaster();
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgb(var(--v-theme-spritz));
+  color: rgb(var(--v-theme-containerBg));
 }
 
 .progress-bar {

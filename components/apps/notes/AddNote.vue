@@ -43,7 +43,7 @@ const handleAddNote = () => {
 <template>
   <v-sheet>
     <v-btn
-      style="background: rgb(var(--v-theme-thirdy)); color: white; text-decoration: none"
+      style="background: rgb(var(--v-theme-acier)); color: white; text-decoration: none"
       @click="dialog = true"
     >
       +
@@ -78,7 +78,7 @@ const handleAddNote = () => {
           <v-row class="d-flex justify-md-space-between mt-6">
             <v-col cols="12" md="4">
               <v-btn
-                color="rgb(var(--v-theme-lighterror))"
+                color="rgb(var(--v-theme-spritz))"
                 style="color: rgb(var(--v-theme-background))"
                 class="w-100"
                 @click="dialog = false"

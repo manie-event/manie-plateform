@@ -192,7 +192,7 @@
         </v-col>
         <v-col cols="12" md="4" v-if="currentPage === 3">
           <v-btn
-            style="background: rgb(var(--v-theme-lightprimary))"
+            style="background: rgb(var(--v-theme-peach))"
             class="text-white w-100"
             @click="handleSubmit"
           >

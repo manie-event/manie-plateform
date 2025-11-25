@@ -47,7 +47,7 @@ const eventCreation = async () => {
   }
   &__add-button {
     position: relative;
-    background: rgb(var(--v-theme-lightprimary));
+    background: rgb(var(--v-theme-peach));
     color: rgb(var(--v-theme-background));
     font-weight: 700;
   }

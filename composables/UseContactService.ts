@@ -5,6 +5,7 @@ const { addError, addSuccess } = useToaster();
 export const useContactService = () => {
   const config = useRuntimeConfig();
   const token = useCookie('token');
+  const route = useRouter();
 
   const api = useApi();
 
@@ -15,6 +16,7 @@ export const useContactService = () => {
       const { data } = await api.post(`${config.public.apiUrl}/contact`, contactData);
       if (data) {
         addSuccess('Votre message a été envoyé avec succès.');
+        route.push('/');
         return data;
       }
     } catch (err) {

@@ -12,9 +12,13 @@ export const ERROR_MESSAGES = {
   'The email has already been taken': "L'adresse e-mail a déjà été prise.",
   'Invalid user credentials': 'Identifiants utilisateur invalides, veuillez réessayer.',
   'insert into "users" ("category", "created_at", "email", "password", "updated_at", "username", "uuid") values ($1, $2, $3, $4, $5, $6, $7) returning "id" - duplicate key value violates unique constraint "users_email_unique"':
-    "L'adresse e-mail est déjà utilisée, veuillez en choisir une autre.",
+    'Cette adresse mail est déjà utilisée pour un autre compte, veuillez saisir une autre adresse.',
   'You do not have enough credits to accept this event service proposition':
     "Vous n'avez pas assez de jeton pour vous positionner, veuillez en racheter",
   'You cannot delete this professional service because it is used by event service propositions':
     'Vous ne pouvez pas supprimer ce service car il est utilisé dans une proposition commerciale',
+  'The firstName field must be defined': 'Le Prénom doit être indiqué',
+  'The lastName field must be defined': 'Le Nom doit être indiqué',
+  'The phoneNumber field must be defined': 'Le numéro de téléphone doit être indiqué',
+  'The message field must be defined': 'Vous devez rentrer un message',
 };

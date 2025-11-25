@@ -121,7 +121,7 @@
             v-model="reservationDelay"
             :error-messages="showErrors ? errors.minimumReservationPeriod : undefined"
           />
-          <div class="d-flex gap-2 text-subtitle-1 mb-3 justify-center">
+          <div class="d-flex gap-2 text-subtitle-2 mb-3 justify-center">
             <p>Un acompte est nécessaire à la réservation d’une prestation</p>
           </div>
           <v-number-input
@@ -135,21 +135,21 @@
             :error-messages="showErrors ? errors.depositAmount : undefined"
           />
           <div class="d-flex gap-2 flex-column justify-start align-items-start">
-            <v-divider class="text-subtitle-1 font-weight-medium"
+            <v-divider class="text-subtitle-2 font-weight-medium"
               >Le restant dû est à régler avant ou après la prestation ?</v-divider
             >
             <div class="d-flex align-center justify-center gap-2">
-              <v-label class="text-subtitle-1 font-weight-medium">AVANT</v-label>
+              <v-label class="text-subtitle-2 font-weight-medium">AVANT</v-label>
               <v-switch
                 v-model="profile.billingPeriod"
                 false-value="beforeEvent"
                 true-value="afterEvent"
-                :color="profile.billingPeriod === 'beforeEvent' ? 'success' : 'primary'"
+                :color="profile.billingPeriod === 'beforeEvent' ? '#293b57' : '#f39454'"
                 hide-details
                 :error-messages="showErrors ? errors.billingPeriod : undefined"
                 >{{ profile.billingPeriod }}</v-switch
               >
-              <v-label class="text-subtitle-1 font-weight-medium">APRES</v-label>
+              <v-label class="text-subtitle-2 font-weight-medium">APRES</v-label>
             </div>
           </div>
 
@@ -182,7 +182,7 @@
               <v-btn
                 @click="removeLink(index)"
                 :disabled="profile.links.length <= 0"
-                color="rgb(var(--v-theme-lightprimary))"
+                color="rgb(var(--v-theme-peach))"
                 style="color: rgb(var(--v-theme-background))"
                 size="small"
                 class="mb-4 text-center"
@@ -220,7 +220,8 @@
               <v-btn
                 @click="removeFaq(index)"
                 :disabled="faqArray.length === 0"
-                color="error"
+                color="rgb(var(--v-theme-peach))"
+                style="color: rgb(var(--v-theme-background))"
                 size="small"
                 class="my-2"
               >

@@ -61,7 +61,7 @@
       </v-sheet>
     </div>
     <v-sheet v-if="currentEventNotes.length === 0" class="pa-6">
-      <v-alert style="background: rgb(var(--v-theme-thirdy)); color: white; text-decoration: none">
+      <v-alert style="background: rgb(var(--v-theme-acier)); color: white; text-decoration: none">
         <div class="d-flex gap-3">
           <Icon icon="solar:pen-broken" width="24" height="24" />
           <p>Il est temps de créer votre première note</p>

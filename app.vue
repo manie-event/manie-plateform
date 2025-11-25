@@ -11,7 +11,7 @@
   text-decoration: unset;
   margin-left: 15px;
   font-weight: 600;
-  color: rgb(var(--v-theme-lightprimary));
+  color: rgb(var(--v-theme-peach));
   transition: all 0.4s ease-in;
   background: none;
 

@@ -136,7 +136,7 @@ const message = ref<ContactMessage>({
                 </v-col>
                 <v-col cols="12" class="text-md-end">
                   <v-btn
-                    color="rgb(var(--v-theme-lightprimary))"
+                    color="rgb(var(--v-theme-peach))"
                     style="color: rgb(var(--v-theme-background)) "
                     class="px-5"
                     rounded="pill"
@@ -145,7 +145,7 @@ const message = ref<ContactMessage>({
                     href=""
                     target="_blank"
                     @click="sendContactForm(message)"
-                    >Envoyez votre message</v-btn
+                    >Envoyer</v-btn
                   >
                 </v-col>
               </v-row>

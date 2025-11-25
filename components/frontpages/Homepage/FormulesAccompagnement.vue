@@ -28,20 +28,15 @@
                 <div class="d-flex align-center justify-center flex-column">
                   <h2
                     class="display-2 font-weight-bold mb-1"
-                    style="color: rgb(var(--v-theme-lightprimary))"
+                    style="color: rgb(var(--v-theme-peach))"
                   >
                     GRATUIT
                   </h2>
-                  <div
-                    class="separator my-3"
-                    style="background: rgb(var(--v-theme-lightprimary))"
-                  ></div>
+                  <div class="separator my-3" style="background: rgb(var(--v-theme-peach))"></div>
                 </div>
               </v-col>
-              <v-col cols="12" md="6"
-                ><v-list
-                  class="mb-0 pl-0 pt-0 d-flex flex-column flex-wrap justify-center align-center gap-2 packages__features-list"
-                >
+              <v-col cols="12" md="6" class="d-flex"
+                ><v-list class="mb-0 pl-0 pt-0 packages__features-list">
                   <v-list-item
                     v-for="desc in firstPlanList"
                     :key="desc.listtitle"
@@ -94,7 +89,7 @@
             <div class="d-flex align-center mt-3 flex-column justify-space-between">
               <h2
                 class="display-2 font-weight-bold position-relative"
-                style="z-index: 10; color: rgb(var(--v-theme-lightprimary))"
+                style="z-index: 10; color: rgb(var(--v-theme-peach))"
               >
                 {{ card.price }}
               </h2>
@@ -104,7 +99,7 @@
             </div>
 
             <v-btn
-              color="rgb(var(--v-theme-thirdy))"
+              color="rgb(var(--v-theme-acier))"
               style="color: rgb(var(--v-theme-background))"
               class="font-weight-medium mt-5 w-100"
               target="_blank"
@@ -120,10 +115,7 @@
 
     <v-dialog v-model="detailsDialog" max-width="700">
       <v-card class="pa-6 rounded-16">
-        <h3
-          class="font-weight-bold mb-4 text-center"
-          style="color: rgb(var(--v-theme-lightprimary))"
-        >
+        <h3 class="font-weight-bold mb-4 text-center" style="color: rgb(var(--v-theme-peach))">
           {{ formule?.caption.toUpperCase() }}
         </h3>
         <h5 class="text-center">{{ formule?.subtext }}</h5>
@@ -156,6 +148,7 @@
 
 <script setup lang="ts">
 import { Packages } from '@/_mockApis/front-pages/PagesData';
+import { useDisplay } from 'vuetify';
 import type { PackageType } from '~/types/components/front-pages';
 
 const firstPlanList = [
@@ -187,10 +180,10 @@ const firstPlanList = [
 
 const detailsDialog = ref(false);
 const formule = ref<PackageType>();
-const isMobile = ref(window.innerWidth < 960);
+const { mdAndDown } = useDisplay();
 
 const troncateDescription = (desc: string) => {
-  if (!isMobile.value) {
+  if (!mdAndDown.value) {
     const shortDescription = desc.slice(0, 50);
     return `${shortDescription} ...`;
   } else {
@@ -202,17 +195,6 @@ const selectedFormule = (index: number) => {
   detailsDialog.value = true;
   formule.value = Packages.find((pack) => pack.index === index);
 };
-
-const handleResize = () => {
-  isMobile.value = window.innerWidth < 960;
-};
-onMounted(() => {
-  handleResize();
-  window.addEventListener('resize', handleResize);
-});
-onBeforeUnmount(() => {
-  window.removeEventListener('resize', handleResize);
-});
 </script>
 
 <style lang="scss" scoped>
@@ -229,6 +211,14 @@ onBeforeUnmount(() => {
     white-space: normal;
     padding-top: 105px;
     word-break: break-word;
+  }
+
+  &__features-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
   }
 
   &__custom-dot {
@@ -262,14 +252,10 @@ onBeforeUnmount(() => {
     }
   }
 
-  &__features-list {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
   &__feature-item {
     flex: 1 1 auto;
     min-width: 200px;
+    min-height: 30px !important;
     text-align: center;
   }
   &__background-shaded {
@@ -347,22 +333,29 @@ onBeforeUnmount(() => {
 }
 
 @media (max-width: 960px) {
-  .packages__feature-item span {
-    white-space: normal !important;
-    word-break: break-word !important;
-    display: inline-block; /* important pour casser le flex */
-    max-width: 100%;
-  }
-  .feature-item {
-    min-width: 100%;
-    text-align: left;
-  }
-  .divider {
-    display: none;
-  }
-  .pricing-free-card {
-    max-height: none;
-    height: auto;
+  .packages {
+    &__features-list {
+      display: flex;
+      align-items: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    &__feature-item span {
+      white-space: normal !important;
+      word-break: break-word !important;
+      display: inline-block;
+      max-width: 100%;
+    }
+
+    .feature-item {
+      min-width: 100%;
+      text-align: left;
+    }
+    .pricing-free-card {
+      max-height: none;
+      height: auto;
+    }
   }
 }
 </style>

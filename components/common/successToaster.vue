@@ -1,6 +1,6 @@
 <template>
   <TransitionGroup name="fade" tag="div" class="alerts-wrapper" v-if="sucessToaster">
-    <v-alert class="success-card" type="success" :text="sucessToaster">
+    <v-alert class="success-card" :text="sucessToaster">
       <div class="progress-bar" />
     </v-alert>
   </TransitionGroup>
@@ -19,6 +19,11 @@ const { sucessToaster } = useToaster();
   align-items: center;
   justify-content: center;
   gap: 12px;
+}
+
+.success-card {
+  background: rgb(var(--v-theme-success));
+  color: rgb(var(--v-theme-containerBg));
 }
 
 .alert-card {

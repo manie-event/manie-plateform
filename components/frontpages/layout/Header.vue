@@ -3,7 +3,8 @@ import JetonImg from '@/public/images/panier/jeton.png';
 import { default as Logo } from '@/public/images/svgs/logo-manie-nav.svg';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
+import { useDisplay } from 'vuetify';
 import Navigation from '~/components/landingpage/layout/Navigation.vue';
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 import { useUserStore } from '~/stores/userStore';
@@ -13,24 +14,10 @@ const { createTokenSession } = usePaiementJeton();
 const jetonAmount = ref(0);
 const stickyHeader = ref(false);
 const appsdrawer = ref(false);
-const isMobile = ref(window.innerWidth < 960);
-const { clientProfile, professionalUser, isProfileCreated } = storeToRefs(useUserStore());
+const { mdAndDown } = useDisplay();
+const { isProfileCreated } = storeToRefs(useUserStore());
 
-const totalPriceJeton = computed(() => `${jetonAmount.value * 9} €`);
-
-// Resize responsive
-const handleResize = () => {
-  isMobile.value = window.innerWidth < 960;
-};
-
-// Mount / Unmount events
-onMounted(() => {
-  window.addEventListener('resize', handleResize);
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener('resize', handleResize);
-});
+const totalPriceJeton = computed(() => `${jetonAmount.value * 5} €`);
 </script>
 
 <template>
@@ -95,7 +82,7 @@ onBeforeUnmount(() => {
       </div>
 
       <!-- Burger mobile -->
-      <v-btn v-if="isMobile" variant="text" @click.stop="appsdrawer = !appsdrawer">
+      <v-btn v-if="mdAndDown" variant="text" @click.stop="appsdrawer = !appsdrawer">
         <Icon icon="material-symbols:menu-rounded" size="24" height="24" />
       </v-btn>
     </div>

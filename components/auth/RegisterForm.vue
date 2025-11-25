@@ -43,7 +43,7 @@
           class="register-form__nature-personne-btn text-white"
           :style="{
             width: '100%',
-            background: 'rgb(var(--v-theme-thirdy))',
+            background: 'rgb(var(--v-theme-acier))',
             opacity: registerForm.category === 'consumer' ? 1 : 0.4,
           }"
         >

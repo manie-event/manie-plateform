@@ -16,10 +16,11 @@
 
       <!-- SECTION : SERVICES + KEYWORDS DU SECTEUR -->
       <div v-if="questionnaire">
-        <v-divider class="mt-6">
+        <v-divider class="mt-2">
           <span class="text-h6 px-4">
             {{ questionnaire.questionnaireData?.general.questions[0].question }}
           </span>
+          <span class="text-subtitle-2 font-italic font-light text-grey">(1 choix)</span>
         </v-divider>
 
         <!-- Services -->
@@ -35,14 +36,13 @@
             {{ service.name }}
           </v-chip>
         </div>
-
-        <!-- Keywords par catégorie -->
         <!-- Keywords par catégorie -->
         <div v-if="questionnaire?.questionnaireData?.servicesSection" class="mt-6">
-          <v-divider>
+          <v-divider class="mt-2">
             <span class="text-h6 px-4">
               {{ questionnaire.questionnaireData.servicesSection.title || 'Services détaillés' }}
             </span>
+            <span class="text-subtitle-2 font-italic font-light text-grey">(3 choix minimum)</span>
           </v-divider>
 
           <v-expansion-panels multiple variant="accordion" class="mt-4">
@@ -50,6 +50,7 @@
               v-for="q in questionnaire.questionnaireData.servicesSection.questions"
               :key="q.category"
               :title="q.question"
+              style="background: rgb(var(--v-theme-background))"
             >
               <v-expansion-panel-text>
                 <div v-if="questionnaire.keywordsByCategory[q.category]?.length > 0">
@@ -87,6 +88,7 @@
               v-for="q in questionnaire.questionnaireData.habitudesSection.questions"
               :key="q.category"
               :title="q.question"
+              style="background: rgb(var(--v-theme-background))"
             >
               <v-expansion-panel-text>
                 <div v-if="questionnaire.keywordsByCategory[q.category]?.length > 0">
@@ -113,7 +115,6 @@
       <!-- Submit -->
       <div class="d-flex justify-end mt-8">
         <v-btn
-          color="primary"
           style="background: rgb(var(--v-theme-darkbg)); color: white"
           @click="submit"
           :disabled="!canSubmit"

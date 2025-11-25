@@ -9,7 +9,7 @@
           <div class="text-right mr-6">
             <v-btn
               @click="openExpenseModal = true"
-              style="background: rgb(var(--v-theme-thirdy)); color: white; text-decoration: none"
+              style="background: rgb(var(--v-theme-acier)); color: white; text-decoration: none"
               >+</v-btn
             >
           </div>

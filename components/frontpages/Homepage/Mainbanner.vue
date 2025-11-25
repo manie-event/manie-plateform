@@ -135,7 +135,7 @@ const { $gsap, $ScrollTrigger } = useNuxtApp();
     opacity: 0.1;
   }
   &__cta {
-    background: var(--manie-thirdy);
+    background: var(--manie-acier);
     position: fixed;
     bottom: 20vh;
     right: 10vw;
