@@ -16,7 +16,7 @@ const jetonAmount = ref(0);
 const appsdrawer = ref(false);
 const { mdAndDown } = useDisplay();
 
-const { clientProfile, professionalUser, isProfileCreated } = storeToRefs(useUserStore());
+const { isProfileCreated } = storeToRefs(useUserStore());
 
 const totalPriceJeton = computed(() => `${jetonAmount.value * 5} €`);
 </script>
@@ -35,7 +35,7 @@ const totalPriceJeton = computed(() => `${jetonAmount.value * 5} €`);
       </div>
 
       <!-- Actions desktop -->
-      <div class="menu-dashboard__right-part d-none d-md-flex align-center">
+      <div class="menu-dashboard__right-part d-none d-md-flex align-center" v-if="!mdAndDown">
         <div class="d-flex mr-10">
           <LcFullVerticalHeaderThemeToggler />
           <v-menu v-if="isProfessional" :close-on-content-click="false" class="notification_popup">
@@ -130,8 +130,7 @@ const totalPriceJeton = computed(() => `${jetonAmount.value * 5} €`);
             </v-sheet>
           </v-menu>
         </div>
-        <LcFullVerticalHeaderProfileDD />
-        <v-btn v-if="mdAndDown" variant="text" @click.stop="appsdrawer = !appsdrawer">
+        <v-btn variant="text" @click="appsdrawer = !appsdrawer">
           <Icon icon="material-symbols:menu-rounded" size="24" height="24" />
         </v-btn>
       </div>
@@ -139,24 +138,47 @@ const totalPriceJeton = computed(() => `${jetonAmount.value * 5} €`);
   </v-app-bar>
 
   <!-- Drawer mobile -->
-  <v-navigation-drawer v-model="appsdrawer" location="left" color="containerBg" class="drawer-menu">
+  <v-navigation-drawer
+    v-model="appsdrawer"
+    temporary
+    scrim
+    color="containerBg"
+    width="350"
+    class="drawer-menu"
+    @click:outside="appsdrawer = false"
+  >
     <div class="pa-4">
       <div class="d-flex justify-space-between align-center mb-4">
+        <LcFullVerticalHeaderProfileDD />
         <v-btn icon variant="text" @click="appsdrawer = false" class="drawer-menu__skip-btn">
           <Icon icon="ci:close-big" size="24" />
         </v-btn>
       </div>
+
       <div class="d-flex flex-column align-center justify-center">
-        <v-col v-for="demo in FrontPageMenu.slice(0, 5)" :key="demo.img">
+        <v-col
+          v-for="demo in FrontPageMenu.slice(0, 5)"
+          :key="demo.img"
+          @click="appsdrawer = false"
+        >
           <NuxtLink class="nuxt-link" size="small" rounded="pill" flat :href="demo.link">
             {{ demo.name }}
           </NuxtLink>
         </v-col>
+
         <v-col>
-          <NuxtLink class="nuxt-link mr-lg-0" to="/front-pages/pricing">Formules</NuxtLink>
+          <NuxtLink class="nuxt-link mr-lg-0" to="/front-pages/pricing" @click="appsdrawer = false">
+            Formules
+          </NuxtLink>
         </v-col>
         <v-col>
-          <NuxtLink class="nuxt-link mr-lg-0" to="/front-pages/Contact-us">Contact</NuxtLink>
+          <NuxtLink
+            class="nuxt-link mr-lg-0"
+            to="/front-pages/Contact-us"
+            @click="appsdrawer = false"
+          >
+            Contact
+          </NuxtLink>
         </v-col>
       </div>
 

@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { FrontPageMenu } from '@/_mockApis/landingpage/lpPage';
+import { default as Logo } from '@/public/images/svgs/logo-manie-nav.svg';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 import { useDisplay } from 'vuetify';
 import Navigation from '~/components/landingpage/layout/Navigation.vue';
 import { useUserStore } from '~/stores/userStore';
+
 const { isProfessional } = storeToRefs(useUserStore());
 const appsdrawer = ref(false);
 const { mdAndDown } = useDisplay();
@@ -20,7 +22,7 @@ const { isProfileCreated } = storeToRefs(useUserStore());
         <!-- Logo -->
         <!-- Logo -->
         <NuxtLink to="/">
-          <img src="/images/svgs/logo-manie-nav.svg" width="150" height="100" alt="Manie logo" />
+          <Logo width="150" height="100" alt="Manie logo" />
         </NuxtLink>
         <!-- Navigation desktop -->
         <div class="menu-dashboard__navigation d-none d-md-flex">
@@ -65,7 +67,13 @@ const { isProfileCreated } = storeToRefs(useUserStore());
     </v-app-bar>
 
     <!-- Drawer mobile -->
-    <v-navigation-drawer v-model="appsdrawer" location="left" color="containerBg" class="mt-6">
+    <v-navigation-drawer
+      width="350"
+      v-model="appsdrawer"
+      location="left"
+      color="containerBg"
+      class="mt-6"
+    >
       <div class="pa-4">
         <div class="d-flex justify-space-between align-center mb-4">
           <div class="d-flex" v-if="isProfileCreated">

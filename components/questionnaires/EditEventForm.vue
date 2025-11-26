@@ -172,7 +172,7 @@
       <v-row class="w-100 d-flex justify-md-space-between">
         <v-col cols="12" v-if="currentPage === 3">
           <v-btn variant="outlined" class="w-100" @click="addNewService">
-            Ajouter un service
+            Ajouter un prestataire
           </v-btn>
         </v-col>
         <v-col cols="12" md="4" v-if="currentPage > 1">
