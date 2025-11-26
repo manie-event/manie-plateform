@@ -45,7 +45,7 @@
         <div class="actions">
           <v-btn
             variant="flat"
-            style="background: rgb(var(--v-theme-thirdy)); color: white; text-decoration: none"
+            style="background: rgb(var(--v-theme-acier)); color: white; text-decoration: none"
             @click="openEditProfilModal()"
             class="px-7 py-0"
             >Éditer votre profil</v-btn
@@ -53,11 +53,7 @@
 
           <NuxtLink to="/dashboards/dashboard-client">
             <v-btn
-              style="
-                background: rgb(var(--v-theme-lightprimary));
-                color: white;
-                text-decoration: none;
-              "
+              style="background: rgb(var(--v-theme-peach)); color: white; text-decoration: none"
               variant="flat"
               class="pa-3 py-0"
               >Revenir au dashboard</v-btn

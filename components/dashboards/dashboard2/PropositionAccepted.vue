@@ -33,7 +33,7 @@
             <v-alert
               density="compact"
               border-color="warning"
-              color="rgb(var(--v-theme-thirdy))"
+              color="rgb(var(--v-theme-acier))"
               style="color: rgb(var(--v-theme-background))"
               elevation="2"
               ><b>{{ props.token }} jetons</b> sont mis en jeu pour cette annonce. Ils seront

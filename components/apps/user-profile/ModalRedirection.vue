@@ -7,7 +7,7 @@
         <span>Vous pouvez, maintenant aller sur votre tableau de bord</span>
       </h2>
       <NuxtLink :to="`/dashboards/${redirection}`" class="w-100">
-        <v-btn color="rgb(var(--v-theme-thirdy))" size="large" class="w-100">
+        <v-btn color="rgb(var(--v-theme-acier))" size="large" class="w-100">
           Revenir à votre dashboard
         </v-btn>
       </NuxtLink>

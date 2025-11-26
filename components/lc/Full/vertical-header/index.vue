@@ -4,7 +4,8 @@ import JetonImg from '@/public/images/panier/jeton.png';
 import { default as Logo } from '@/public/images/svgs/logo-manie-nav.svg';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
+import { useDisplay } from 'vuetify';
 import Navigation from '~/components/landingpage/layout/Navigation.vue';
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 import { useUserStore } from '~/stores/userStore';
@@ -13,24 +14,11 @@ const { isProfessional } = storeToRefs(useUserStore());
 const { createTokenSession } = usePaiementJeton();
 const jetonAmount = ref(0);
 const appsdrawer = ref(false);
-const isMobile = ref(window.innerWidth < 960);
-const { clientProfile, professionalUser, isProfileCreated } = storeToRefs(useUserStore());
+const { mdAndDown } = useDisplay();
 
-const totalPriceJeton = computed(() => `${jetonAmount.value * 9} €`);
+const { isProfileCreated } = storeToRefs(useUserStore());
 
-// Resize responsive
-const handleResize = () => {
-  isMobile.value = window.innerWidth < 960;
-};
-
-// Mount / Unmount events
-onMounted(() => {
-  window.addEventListener('resize', handleResize);
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener('resize', handleResize);
-});
+const totalPriceJeton = computed(() => `${jetonAmount.value * 5} €`);
 </script>
 
 <template>
@@ -47,7 +35,7 @@ onBeforeUnmount(() => {
       </div>
 
       <!-- Actions desktop -->
-      <div class="menu-dashboard__right-part d-none d-md-flex align-center">
+      <div class="menu-dashboard__right-part d-none d-md-flex align-center" v-if="!mdAndDown">
         <div class="d-flex mr-10">
           <LcFullVerticalHeaderThemeToggler />
           <v-menu v-if="isProfessional" :close-on-content-click="false" class="notification_popup">
@@ -55,7 +43,7 @@ onBeforeUnmount(() => {
               <v-btn icon flat size="small" class="custom-hover-primary" v-bind="props">
                 <Icon icon="solar:cart-3-outline" height="24" width="24" />
                 <v-badge
-                  color="primary"
+                  color="rgb(var(--v-theme-peach))"
                   :content="jetonAmount"
                   variant="flat"
                   size="x-small"
@@ -96,7 +84,7 @@ onBeforeUnmount(() => {
         <LcFullVerticalHeaderProfileDD />
       </div>
 
-      <div class="d-flex" v-if="isMobile">
+      <div class="d-flex" v-if="mdAndDown">
         <div class="d-flex mr-10">
           <LcFullVerticalHeaderThemeToggler />
           <v-menu v-if="isProfessional" :close-on-content-click="false" class="notification_popup">
@@ -104,7 +92,7 @@ onBeforeUnmount(() => {
               <v-btn icon flat size="small" class="custom-hover-primary" v-bind="props">
                 <Icon icon="solar:cart-3-outline" height="24" width="24" />
                 <v-badge
-                  color="primary"
+                  color="rgb(var(--v-theme-peach))"
                   :content="jetonAmount"
                   variant="flat"
                   size="x-small"
@@ -142,8 +130,7 @@ onBeforeUnmount(() => {
             </v-sheet>
           </v-menu>
         </div>
-        <LcFullVerticalHeaderProfileDD />
-        <v-btn v-if="isMobile" variant="text" @click.stop="appsdrawer = !appsdrawer">
+        <v-btn variant="text" @click="appsdrawer = !appsdrawer">
           <Icon icon="material-symbols:menu-rounded" size="24" height="24" />
         </v-btn>
       </div>
@@ -151,24 +138,47 @@ onBeforeUnmount(() => {
   </v-app-bar>
 
   <!-- Drawer mobile -->
-  <v-navigation-drawer v-model="appsdrawer" location="left" color="containerBg" class="drawer-menu">
+  <v-navigation-drawer
+    v-model="appsdrawer"
+    temporary
+    scrim
+    color="containerBg"
+    width="350"
+    class="drawer-menu"
+    @click:outside="appsdrawer = false"
+  >
     <div class="pa-4">
       <div class="d-flex justify-space-between align-center mb-4">
+        <LcFullVerticalHeaderProfileDD />
         <v-btn icon variant="text" @click="appsdrawer = false" class="drawer-menu__skip-btn">
           <Icon icon="ci:close-big" size="24" />
         </v-btn>
       </div>
+
       <div class="d-flex flex-column align-center justify-center">
-        <v-col v-for="demo in FrontPageMenu.slice(0, 5)" :key="demo.img">
+        <v-col
+          v-for="demo in FrontPageMenu.slice(0, 5)"
+          :key="demo.img"
+          @click="appsdrawer = false"
+        >
           <NuxtLink class="nuxt-link" size="small" rounded="pill" flat :href="demo.link">
             {{ demo.name }}
           </NuxtLink>
         </v-col>
+
         <v-col>
-          <NuxtLink class="nuxt-link mr-lg-0" to="/front-pages/pricing">Formules</NuxtLink>
+          <NuxtLink class="nuxt-link mr-lg-0" to="/front-pages/pricing" @click="appsdrawer = false">
+            Formules
+          </NuxtLink>
         </v-col>
         <v-col>
-          <NuxtLink class="nuxt-link mr-lg-0" to="/front-pages/Contact-us">Contact</NuxtLink>
+          <NuxtLink
+            class="nuxt-link mr-lg-0"
+            to="/front-pages/Contact-us"
+            @click="appsdrawer = false"
+          >
+            Contact
+          </NuxtLink>
         </v-col>
       </div>
 

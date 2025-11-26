@@ -16,7 +16,7 @@ import manieFooterDroits from '/images/logos/logo-footer-droits.png';
         <v-row>
           <v-col cols="12" lg="3" sm="6">
             <div class="footer__double-category">
-              <h5 class="text-17">Mentions légales</h5>
+              <h5 class="text-17"><u>MENTIONS LEGALES</u></h5>
               <div class="d-flex flex-column ga-4">
                 <div v-for="item in footerContact" :key="item.titre">
                   <h4 class="footer-title">
@@ -28,7 +28,7 @@ import manieFooterDroits from '/images/logos/logo-footer-droits.png';
             </div>
           </v-col>
           <v-col cols="12" lg="3" sm="6">
-            <h5 class="text-17 mb-sm-8 mb-6">Nous contacter</h5>
+            <h5 class="text-17 mb-sm-8 mb-6"><u>NOUS CONTACTER</u></h5>
             <div class="d-flex flex-column ga-4">
               <div v-for="item in footerMedia" :key="item.titre">
                 <h4 class="footer-title">
@@ -43,14 +43,14 @@ import manieFooterDroits from '/images/logos/logo-footer-droits.png';
           </v-col>
           <v-col>
             <div>
-              <h5 class="text-17 mb-sm-8">Notre FAQ</h5>
+              <h5 class="text-17 mb-sm-8"><u>FOIRE AUX QUESTIONS</u></h5>
               <NuxtLink to="/front-pages/Faq-client"><p>FAQ client</p></NuxtLink>
               <NuxtLink to="/front-pages/Faq-prestataire"><p>FAQ prestataire</p></NuxtLink>
             </div>
           </v-col>
 
           <v-col cols="12" lg="3" sm="6">
-            <h5 class="text-17 mb-sm-8 mb-6">Suivez-nous</h5>
+            <h5 class="text-17 mb-sm-8 mb-6"><u>SUIVEZ-NOUS</u></h5>
             <div class="contact-form__contact">
               <div class="contact-form__reseaux">
                 <NuxtLink to="https://www.instagram.com/manie.event/" target="_blank"

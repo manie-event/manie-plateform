@@ -10,7 +10,11 @@
         <Icon icon="solar:camera-outline" width="20" height="20" />
       </button>
       <input type="file" ref="fileInput" @change="changeBannerPhoto" accept="image/*" hidden />
-      <NuxtLink to="/dashboards/dashboard2" class="profile-header__redirect-btn">
+      <NuxtLink
+        to="/dashboards/dashboard2"
+        class="profile-header__redirect-btn"
+        style="color: rgb(var(--v-theme-darkbg))"
+      >
         Retour au tableau de bord
       </NuxtLink>
     </div>
@@ -26,7 +30,9 @@
           <div class="d-flex flex-row gap-2">
             <div v-for="service in getServiceValues" :key="service">
               <div class="d-flex gap-2">
-                <v-chip color="primary" variant="outlined" size="x-small">{{ service }}</v-chip>
+                <v-chip color="rgb(var(--v-theme-darkbg))" variant="outlined" size="x-small">{{
+                  service
+                }}</v-chip>
               </div>
             </div>
           </div>
@@ -249,7 +255,7 @@ onMounted(async () => {
   }
 
   &__avatar {
-    background: linear-gradient(135deg, rgb(var(--v-theme-thirdy)), rgb(var(--v-theme-darkbg)));
+    background: linear-gradient(135deg, rgb(var(--v-theme-acier)), rgb(var(--v-theme-darkbg)));
     font-size: 2rem;
     font-weight: bold;
     color: white;

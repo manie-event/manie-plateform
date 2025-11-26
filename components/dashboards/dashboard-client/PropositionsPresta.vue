@@ -13,25 +13,25 @@
               <tr>
                 <!-- A voir pour changer avec nom de la personne -->
                 <th class="text-subtitle-1 text-grey200 text-no-wrap pa-0">Nom</th>
-                <th class="text-subtitle-1 text-grey200 text-no-wrap" v-if="!isMobile">Service</th>
+                <th class="text-subtitle-1 text-grey200 text-no-wrap" v-if="!mdAndDown">Service</th>
                 <th class="text-subtitle-1 text-grey200 text-no-wrap pa-0 text-center">
                   Proposition commerciale
                 </th>
                 <th
                   class="text-subtitle-1 text-grey200 text-no-wrap pa-0 text-center"
-                  v-if="!isMobile"
+                  v-if="!mdAndDown"
                 >
                   Prix
                 </th>
                 <th
                   class="text-subtitle-1 text-grey200 text-no-wrap pa-0 text-center"
-                  v-if="!isMobile"
+                  v-if="!mdAndDown"
                 >
                   Status
                 </th>
                 <th
                   class="text-subtitle-1 text-grey200 text-no-wrap pa-0 text-center"
-                  v-if="!isMobile"
+                  v-if="!mdAndDown"
                 ></th>
               </tr>
             </thead>
@@ -54,7 +54,7 @@
                   </div>
                 </td>
 
-                <td v-if="!isMobile">
+                <td v-if="!mdAndDown">
                   <v-chip
                     variant="outlined"
                     color="primary"
@@ -66,7 +66,7 @@
                 </td>
 
                 <!-- 💡 Proposition commerciale -->
-                <td class="pa-0 text-center" v-if="!isMobile">
+                <td class="pa-0 text-center" v-if="!mdAndDown">
                   <v-tooltip
                     :text="getTooltipText(item.professionalMessage)"
                     interactive
@@ -98,13 +98,13 @@
                   </v-btn>
                 </td>
 
-                <td class="pa-0 text-center" v-if="!isMobile">
+                <td class="pa-0 text-center" v-if="!mdAndDown">
                   <h5 class="text-subtitle-1 text-no-wrap text-grey200">
                     {{ getPriceFromMessage(item.professionalMessage) }}
                   </h5>
                 </td>
 
-                <td class="pa-0 text-center" v-if="!isMobile">
+                <td class="pa-0 text-center" v-if="!mdAndDown">
                   <v-chip
                     class="text-subtitle-1 font-weight-medium bg-light"
                     variant="outlined"
@@ -116,7 +116,7 @@
                 </td>
 
                 <td
-                  v-if="item.propositionStatus === 'completed' && !isMobile"
+                  v-if="item.propositionStatus === 'completed' && !mdAndDown"
                   @click="confirmedProposition(item.eventServiceUuid)"
                   class="d-flex justify-end align-center"
                 >
@@ -129,7 +129,7 @@
                   </v-btn>
                 </td>
 
-                <td v-else-if="item.propositionStatus !== 'completed' && !isMobile">
+                <td v-else-if="item.propositionStatus !== 'completed' && !mdAndDown">
                   <div class="d-flex align-center gap-4">
                     <v-btn
                       variant="outlined"
@@ -203,6 +203,7 @@ import LigthIcon from '@/public/images/empty-state/no-proposition-presta.svg';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { computed, ref, Teleport } from 'vue';
+import { useDisplay } from 'vuetify';
 import { useEventServiceProposition } from '~/composables/event-service-propositions/UseEventServiceProposition';
 import { useSector } from '~/composables/sector/UseSector';
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
@@ -215,14 +216,13 @@ import PropositionDetailsForClient from './PropositionDetailsForClient.vue';
 const props = defineProps<{
   currentPropositions: ClientServiceProposition[];
 }>();
-const windowWidth = ref(window.innerWidth);
-const isMobile = ref(window.innerWidth < 1280);
 
 const { getServicePropositionForClient, propositionAcceptedByClient, propositionDeclinedByClient } =
   useEventServiceProposition();
 const { getServicesList } = useSector();
 const { getProfessionalProfileForCustomer } = useProfessionalProfileService();
 const { professionalProfileForCustomer } = storeToRefs(useUserStore());
+const { mdAndDown } = useDisplay();
 
 const isAcceptedByClient = ref(false);
 
@@ -297,19 +297,15 @@ const filteredPropositionByStatus = computed<ClientServiceProposition[]>(() => {
   );
 });
 
-const handleResize = () => {
-  isMobile.value = window.innerWidth < 1280;
-};
-
 onBeforeUnmount(() => {
-  window.removeEventListener('resize', handleResize);
+  removeWindowListener();
 });
 
 onMounted(() => {
   getServicesList();
   getServicePropositionForClient();
   handleResize();
-  window.addEventListener('resize', handleResize);
+  addWindowListener();
 });
 </script>
 <style lang="scss" scoped>

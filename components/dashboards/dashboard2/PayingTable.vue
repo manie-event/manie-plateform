@@ -18,25 +18,25 @@
                 </th>
                 <th
                   class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap"
-                  v-if="!isMobile"
+                  v-if="!mdAndDown"
                 >
                   Date de la prestation
                 </th>
                 <th
                   class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap"
-                  v-if="!isMobile"
+                  v-if="!mdAndDown"
                 >
                   Localisation
                 </th>
                 <th
                   class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap"
-                  v-if="!isMobile"
+                  v-if="!mdAndDown"
                 >
                   Nombre d'invités
                 </th>
                 <th
                   class="text-subtitle-1 font-weight-semibold text-grey200 text-no-wrap"
-                  v-if="!isMobile"
+                  v-if="!mdAndDown"
                 >
                   Status de la demande
                 </th>
@@ -54,7 +54,7 @@
                     </div>
                   </div>
                 </td>
-                <td v-if="!isMobile">
+                <td v-if="!mdAndDown">
                   <h5
                     class="text-subtitle-1 font-weight-medium text-no-wrap text-grey200"
                     v-if="Array.isArray(item.date) && item.date.length"
@@ -62,17 +62,17 @@
                     {{ formatDate(item.date) }}
                   </h5>
                 </td>
-                <td v-if="!isMobile">
+                <td v-if="!mdAndDown">
                   <h4 class="text-subtitle-1 text-no-wrap font-weight-medium text-grey200">
                     {{ item.location.toUpperCase() }}
                   </h4>
                 </td>
-                <td v-if="!isMobile">
+                <td v-if="!mdAndDown">
                   <h4 class="text-subtitle-1 text-no-wrap font-weight-medium text-grey200">
                     <span>{{ item.people }} pers.</span>
                   </h4>
                 </td>
-                <td v-if="!isMobile">
+                <td v-if="!mdAndDown">
                   <v-chip
                     :class="'text-subtitle-1 font-weight-medium bg-light'"
                     variant="outlined"
@@ -111,7 +111,7 @@
             </template>
             <template #description>
               <p class="text-subtitle-1">
-                Veuillez vous positionner sur au moins une annonce pour accéder à cette section
+                Veuillez vous positionner sur au moins une annonce, pour accéder à cette section.
               </p>
             </template>
           </BaseEmptyState>
@@ -136,7 +136,8 @@ import BaseEmptyState from '@/components/common/BaseEmptyState.vue';
 import errorToaster from '@/components/common/errorToaster.vue';
 import EmptyState from '@/public/images/empty-state/no-proposition-presta.svg';
 import { storeToRefs } from 'pinia';
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
+import { useDisplay } from 'vuetify';
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
 import { useCustomizerStore } from '~/stores/customizer';
 import { usePropositionStore } from '~/stores/propositionStore';
@@ -149,18 +150,7 @@ const svgColor = computed(() => {
 
 // Récupération des propositions depuis le store
 const { serviceEventProposition } = storeToRefs(usePropositionStore());
-
-const isMobile = ref(window.innerWidth < 960);
-const handleResize = () => {
-  isMobile.value = window.innerWidth < 960;
-};
-onMounted(() => {
-  handleResize();
-  window.addEventListener('resize', handleResize);
-});
-onBeforeUnmount(() => {
-  window.removeEventListener('resize', handleResize);
-});
+const { mdAndDown } = useDisplay();
 
 // Sélection de propositions ayant un message de la part du pro
 const selectedProposition = computed(() =>

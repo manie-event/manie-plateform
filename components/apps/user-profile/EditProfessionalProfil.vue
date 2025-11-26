@@ -121,7 +121,7 @@
             v-model="reservationDelay"
             :error-messages="showErrors ? errors.minimumReservationPeriod : undefined"
           />
-          <div class="d-flex gap-2 text-subtitle-1 mb-3 justify-center">
+          <div class="d-flex gap-2 text-subtitle-2 mb-3 justify-center">
             <p>Un acompte est nécessaire à la réservation d’une prestation</p>
           </div>
           <v-number-input
@@ -135,21 +135,21 @@
             :error-messages="showErrors ? errors.depositAmount : undefined"
           />
           <div class="d-flex gap-2 flex-column justify-start align-items-start">
-            <v-divider class="text-subtitle-1 font-weight-medium"
+            <v-divider class="text-subtitle-2 font-weight-medium"
               >Le restant dû est à régler avant ou après la prestation ?</v-divider
             >
             <div class="d-flex align-center justify-center gap-2">
-              <v-label class="text-subtitle-1 font-weight-medium">AVANT</v-label>
+              <v-label class="text-subtitle-2 font-weight-medium">AVANT</v-label>
               <v-switch
                 v-model="profile.billingPeriod"
                 false-value="beforeEvent"
                 true-value="afterEvent"
-                :color="profile.billingPeriod === 'beforeEvent' ? 'success' : 'primary'"
+                :color="profile.billingPeriod === 'beforeEvent' ? '#293b57' : '#f39454'"
                 hide-details
                 :error-messages="showErrors ? errors.billingPeriod : undefined"
                 >{{ profile.billingPeriod }}</v-switch
               >
-              <v-label class="text-subtitle-1 font-weight-medium">APRES</v-label>
+              <v-label class="text-subtitle-2 font-weight-medium">APRES</v-label>
             </div>
           </div>
 
@@ -182,7 +182,7 @@
               <v-btn
                 @click="removeLink(index)"
                 :disabled="profile.links.length <= 0"
-                color="rgb(var(--v-theme-lightprimary))"
+                color="rgb(var(--v-theme-peach))"
                 style="color: rgb(var(--v-theme-background))"
                 size="small"
                 class="mb-4 text-center"
@@ -220,7 +220,8 @@
               <v-btn
                 @click="removeFaq(index)"
                 :disabled="faqArray.length === 0"
-                color="error"
+                color="rgb(var(--v-theme-peach))"
+                style="color: rgb(var(--v-theme-background))"
                 size="small"
                 class="my-2"
               >
@@ -327,7 +328,11 @@ const validationSchema = yup.object({
   siret: yup
     .string()
     .required('Le SIRET est requis')
-    .length(14, 'Le SIRET doit contenir 14 caractères'),
+    .matches(/^[0-9]{14}$/, 'Le SIRET doit contenir exactement 14 chiffres numériques') // ✅ Plus strict
+    .test('siret-valid', 'SIRET invalide', (value) => {
+      // ✅ Vérifier que c'est bien un nombre
+      return value ? /^\d{14}$/.test(value) : false;
+    }),
   address: yup.string().required("L'adresse est requise"),
   telephone: yup
     .string()
@@ -336,7 +341,8 @@ const validationSchema = yup.object({
   bio: yup
     .string()
     .required('La bio est requise')
-    .min(10, 'La bio doit contenir au moins 10 caractères'),
+    .min(10, 'La bio doit contenir au moins 10 caractères')
+    .max(1000, 'La bio ne peut pas dépasser 1000 caractères'),
   mainActivity: yup
     .string()
     .required('Activité requise')
@@ -344,10 +350,11 @@ const validationSchema = yup.object({
   mainInterlocutor: yup.string().required("L'interlocuteur principal est requis"),
   experience: yup
     .number()
-    .min(0, "L'expérience doit être positive")
+    .min(1900, "L'année doit être supérieure à 1900")
+    .max(new Date().getFullYear(), "L'année ne peut pas être dans le futur")
     .required("L'expérience est requise"),
   geographicArea: yup.string().required('La zone géographique est requise'),
-  certification: yup.array().of(yup.string()),
+  certification: yup.array().of(yup.string().max(255, 'Maximum 255 caractères par certification')),
   minimumReservationPeriod: yup
     .number()
     .min(0, 'La période de réservation doit être positive')
@@ -357,7 +364,7 @@ const validationSchema = yup.object({
     is: true,
     then: (schema) =>
       schema
-        .min(1, "Le montant de l'acompte doit être supérieur à 0")
+        .min(10, "Le montant de l'acompte doit être au minimum 10%")
         .max(100, "Le montant de l'acompte ne peut pas dépasser 100%")
         .required("Le montant de l'acompte est requis"),
     otherwise: (schema) => schema.notRequired(),
@@ -400,6 +407,38 @@ const {
   validateOnMount: false,
   keepValuesOnUnmount: true,
 });
+
+const sanitizePayload = (values: ProfessionalProfile) => {
+  return {
+    ...values,
+    // ✅ S'assurer que le SIRET est une string numérique
+    siret: values.siret?.replace(/\s/g, '').trim() || '',
+
+    // ✅ Nettoyer le téléphone
+    telephone: values.telephone?.replace(/\s/g, '').trim() || '',
+
+    // ✅ Limiter la bio à 1000 caractères
+    bio: values.bio?.substring(0, 1000) || '',
+
+    // ✅ FAQ en objet propre
+    faq: mergedFaq.value || {},
+
+    // ✅ Période de réservation en jours (conversion semaines → jours)
+    minimumReservationPeriod: (reservationDelay.value || 0) * 7,
+
+    // ✅ Filtrer les liens vides
+    links: profile.links.filter((link) => link.type?.trim() && link.value?.trim()),
+
+    // ✅ Filtrer les certifications vides
+    certification: profile.certification.filter((c) => c?.trim()),
+
+    // ✅ S'assurer que depositAmount existe si deposit = true
+    depositAmount: values.deposit ? values.depositAmount || 0 : null,
+
+    // ✅ Convertir billingPeriod en format attendu par la DB
+    billingPeriod: values.billingPeriod === 'afterEvent' ? 'afterEvent' : 'beforeEvent',
+  };
+};
 
 const addLink = () => {
   profile.links.push({ type: '', value: '' });
@@ -480,61 +519,72 @@ const validateAndShowErrors = async (): Promise<boolean> => {
 
 // Modifiez votre fonction createProfile
 const createProfile = async (values: ProfessionalProfile) => {
-  // Valider avant d'envoyer
   const isValid = await validateAndShowErrors();
   if (!isValid) return;
 
   try {
-    const payload = {
-      ...values,
-      faq: mergedFaq.value || {},
-      minimumReservationPeriod: minimumDaysReservation.value,
-      links: profile.links.filter((link) => link.type.trim() && link.value.trim()),
-      certification: profile.certification.filter((c) => c.trim()),
-    };
+    const payload = sanitizePayload(values);
+
+    console.log('📤 Payload envoyé:', payload); // ✅ Debug
 
     const response = await createProfessionalProfile(payload);
 
     if (response.message === 'Professional created') {
       addSuccess('Votre profil a été créé avec succès');
-      showErrors.value = false; // Réinitialiser les erreurs
+      showErrors.value = false;
+      openModal.value = false;
     }
-    openModal.value = false;
   } catch (error: any) {
-    addError({ message: error.response?.data?.message || 'Erreur lors de la création du profil' });
+    console.error('❌ Erreur complète:', error); // ✅ Log complet
+
+    // ✅ Extraire le message d'erreur DB si disponible
+    const dbError = error.response?.data?.error || error.response?.data?.message;
+    const userMessage = error.response?.data?.message || 'Erreur lors de la création du profil';
+
+    // ✅ Afficher une erreur plus explicite
+    if (dbError?.includes('duplicate') || dbError?.includes('unique')) {
+      addError({ message: 'Ce SIRET ou email existe déjà dans notre base de données' });
+    } else if (dbError?.includes('invalid input syntax')) {
+      addError({ message: 'Format de données invalide. Vérifiez le SIRET et le téléphone.' });
+    } else {
+      addError({ message: userMessage });
+    }
   }
 };
 
 // Modifiez votre fonction modifyProfile
 const modifyProfile = async (newValues: ProfessionalProfile) => {
-  // Valider avant d'envoyer
   const isValid = await validateAndShowErrors();
   if (!isValid) return;
 
   try {
     const payload = {
-      ...newValues,
+      ...sanitizePayload(newValues),
       uuid: professionalUser.value?.uuid,
-      faq: mergedFaq.value || {},
-      minimumReservationPeriod: minimumDaysReservation.value,
-      links: profile.links.filter((link) => link.type.trim() && link.value.trim()),
-      certification: profile.certification.filter((c) => c.trim()),
     };
 
-    const response = await patchProfessionalProfileDetails(payload);
+    console.log('📤 Payload modification:', payload); // ✅ Debug
 
+    const response = await patchProfessionalProfileDetails(payload);
     const updatedProfessional = response.newPro || response;
 
     setProfessionalUser(updatedProfessional);
-
     addSuccess('Votre profil a été modifié avec succès');
-    showErrors.value = false; // Réinitialiser les erreurs
-
+    showErrors.value = false;
     openModal.value = false;
   } catch (error: any) {
-    addError({
-      message: error.response?.data?.message || 'Erreur lors de la modification du profil',
-    });
+    console.error('❌ Erreur modification:', error);
+
+    const dbError = error.response?.data?.error || error.response?.data?.message;
+    const userMessage = error.response?.data?.message || 'Erreur lors de la modification du profil';
+
+    if (dbError?.includes('duplicate') || dbError?.includes('unique')) {
+      addError({ message: 'Ce SIRET existe déjà pour un autre professionnel' });
+    } else if (dbError?.includes('invalid input syntax')) {
+      addError({ message: 'Format de données invalide. Vérifiez vos informations.' });
+    } else {
+      addError({ message: userMessage });
+    }
   }
 };
 

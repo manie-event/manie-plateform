@@ -48,7 +48,7 @@
                     color: rgb(var(--v-theme-background));
                   "
                 >
-                  Modifier l'événement
+                  Modifier mon event
                 </v-btn>
               </span>
             </template>

@@ -2,6 +2,7 @@
 import { clientMenu, professionalProfile } from '@/_mockApis/headerData';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
+import { useDisplay } from 'vuetify';
 import { useAuthentification } from '~/composables/UseAuthentification';
 import { useClientProfil } from '~/composables/client-user/UseClientProfil';
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
@@ -12,6 +13,7 @@ const { sendLogout } = useAuthentification();
 const { getJetonQuantity } = usePaiementJeton();
 const { getProfessionalProfileDetails, getProfessionalProfile } = useProfessionalProfileService();
 const { getClientProfil } = useClientProfil();
+const { mdAndDown } = useDisplay();
 
 const userStore = useUserStore();
 const { isProfessional, category, displayName, initials } = storeToRefs(userStore);

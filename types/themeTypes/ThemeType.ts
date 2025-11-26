@@ -5,17 +5,17 @@ export interface ThemeTypes {
   colors: {
     primary?: string;
     secondary?: string;
-    thirdy?: string;
+    acier?: string;
     info?: string;
     success?: string;
     warning?: string;
     error?: string;
     mimosa: string;
     indigo?: string;
-    lightprimary?: string;
+    peach?: string;
     lightsecondary?: string;
     lightsuccess?: string;
-    lighterror?: string;
+    spritz?: string;
     lightinfo?: string;
     lightwarning?: string;
     lightindigo?: string;

@@ -1,6 +1,6 @@
 <template>
   <v-row class="home">
-    <v-col cols="12" md="6" class="home__container" style="background: rgb(var(--v-theme-thirdy))">
+    <v-col cols="12" md="6" class="home__container" style="background: rgb(var(--v-theme-acier))">
       <h2 class="font-weight-bold text-uppercase text-left">Particuliers</h2>
       <h5 class="text-subtitle1 font-weight-medium">
         En famille, entre amis, ou les deux : célébrez la vie ! Qu’il s’agisse d’honorer l’amour, de
@@ -18,7 +18,12 @@
     </v-col>
   </v-row>
   <v-row class="home">
-    <v-col cols="12" md="6" style="height: calc(100vh - 115px); padding: 0">
+    <v-col
+      cols="12"
+      md="6"
+      :order="mdAndDown ? 2 : 1"
+      style="height: calc(100vh - 115px); padding: 0"
+    >
       <div style="height: 100%">
         <img :src="homePro" alt="" class="home__image" />
       </div>
@@ -93,11 +98,14 @@ import homePerso from '@/public/images/backgrounds/home_perso.jpg';
 import homePro from '@/public/images/backgrounds/home_pro.png';
 import { Icon } from '@iconify/vue';
 import { Teleport } from 'vue';
+import { useDisplay } from 'vuetify';
 
 const greenModal = ref(false);
 
 const scrollTriggered = ref(false);
 const scrollThreshold = 1200;
+
+const { mdAndDown } = useDisplay();
 
 const handleScroll = () => {
   if (scrollTriggered.value) return;
@@ -151,7 +159,7 @@ h5 {
   text-decoration: unset;
   margin-left: 15px;
   font-weight: 600;
-  color: rgb(var(--v-theme-lightprimary));
+  color: rgb(var(--v-theme-peach));
   transition: all 0.4s ease-in;
   padding: 0px 10px;
   border-radius: 15px;

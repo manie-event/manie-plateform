@@ -2,16 +2,19 @@
   <!-- Menu A propos -->
   <v-menu
     v-model="aboutMenu"
-    :open-on-hover="!isMobile"
+    :open-on-hover="!mdAndDown"
     :open-on-content-click="true"
     class="position-relative"
     offset-y
   >
     <template #activator="{ props }">
       <div class="d-flex align-center">
-        <!-- ⚙️ En mobile : clic ouvre/ferme -->
-        <NuxtLink class="nuxt-link" v-bind="props" @click.prevent="aboutMenu = !aboutMenu">
-          À propos
+        <NuxtLink
+          style="color: rgb(var(--v-theme-peach))"
+          v-bind="props"
+          @click.prevent="aboutMenu = !aboutMenu"
+        >
+          À PROPOS
         </NuxtLink>
         <i class="ddIcon me-3 z-index-1 d-flex align-center"></i>
       </div>
@@ -56,14 +59,25 @@
   </v-menu>
 
   <!-- Liens restants -->
-  <NuxtLink class="nuxt-link mr-lg-0" to="/front-pages/pricing">Formules</NuxtLink>
-  <NuxtLink class="nuxt-link mr-lg-0" to="/front-pages/Contact-us">Contact</NuxtLink>
+  <NuxtLink
+    class="mr-lg-0 text-decoration-none"
+    style="color: rgb(var(--v-theme-peach))"
+    to="/front-pages/pricing"
+    >NOS FORMULES</NuxtLink
+  >
+  <NuxtLink
+    class="mr-lg-0 text-decoration-none"
+    style="color: rgb(var(--v-theme-peach))"
+    to="/front-pages/Contact-us"
+    >CONTACT</NuxtLink
+  >
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue';
-
 import { demosMegamenu, FrontPageMenu } from '@/_mockApis/landingpage/lpPage';
+import { useDisplay } from 'vuetify';
+
+const { mdAndDown } = useDisplay();
 
 const hoverStates = ref<Record<string, boolean>>(
   demosMegamenu.reduce(
@@ -77,13 +91,8 @@ const hoverStates = ref<Record<string, boolean>>(
 
 // contrôle d’ouverture du menu
 const aboutMenu = ref(false);
-const isMobile = ref(window.innerWidth < 960);
 
 const setHoverState = (key: string, value: boolean) => {
   hoverStates.value[key] = value;
 };
-
-const handleResize = () => (isMobile.value = window.innerWidth < 960);
-onMounted(() => window.addEventListener('resize', handleResize));
-onBeforeUnmount(() => window.removeEventListener('resize', handleResize));
 </script>

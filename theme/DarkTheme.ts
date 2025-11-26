@@ -10,7 +10,7 @@ const DARK_BLUE_THEME: ThemeTypes = {
   colors: {
     primary: '#0085db',
     secondary: '#7C8FAC',
-    thirdy: '#5d79a4',
+    acier: '#5d79a4',
     info: '#5AC8FA',
     success: '#09C97F',
     warning: '#F8B15D',

@@ -1,28 +1,18 @@
 <script setup lang="ts">
 import { FrontPageMenu } from '@/_mockApis/landingpage/lpPage';
+import { default as Logo } from '@/public/images/svgs/logo-manie-nav.svg';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
-import { onBeforeUnmount, onMounted, ref } from 'vue';
+import { ref } from 'vue';
+import { useDisplay } from 'vuetify';
 import Navigation from '~/components/landingpage/layout/Navigation.vue';
 import { useUserStore } from '~/stores/userStore';
+
 const { isProfessional } = storeToRefs(useUserStore());
 const appsdrawer = ref(false);
-const isMobile = ref(window.innerWidth < 960);
+const { mdAndDown } = useDisplay();
+
 const { isProfileCreated } = storeToRefs(useUserStore());
-
-// Resize responsive
-const handleResize = () => {
-  isMobile.value = window.innerWidth < 960;
-};
-
-// Mount / Unmount events
-onMounted(() => {
-  window.addEventListener('resize', handleResize);
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener('resize', handleResize);
-});
 </script>
 
 <template>
@@ -32,7 +22,7 @@ onBeforeUnmount(() => {
         <!-- Logo -->
         <!-- Logo -->
         <NuxtLink to="/">
-          <img src="/images/svgs/logo-manie-nav.svg" width="150" height="100" alt="Manie logo" />
+          <Logo width="150" height="100" alt="Manie logo" />
         </NuxtLink>
         <!-- Navigation desktop -->
         <div class="menu-dashboard__navigation d-none d-md-flex">
@@ -41,19 +31,19 @@ onBeforeUnmount(() => {
 
         <div class="d-flex gap-3">
           <v-btn
-            v-if="!isProfileCreated && !isMobile"
+            v-if="!isProfileCreated && !mdAndDown"
             rounded="pill"
             to="/auth/register"
             style="
-              border: 1px solid rgb(var(--v-theme-lightprimary));
-              color: rgb(var(--v-theme-lightprimary));
+              border: 1px solid rgb(var(--v-theme-peach));
+              color: rgb(var(--v-theme-peach));
               font-weight: 600;
             "
           >
             Devenir prestataire
           </v-btn>
           <v-btn
-            v-if="!isMobile"
+            v-if="!mdAndDown"
             class="header__btn"
             rounded="pill"
             :to="
@@ -70,14 +60,20 @@ onBeforeUnmount(() => {
         </div>
 
         <!-- Burger mobile -->
-        <v-btn v-if="isMobile" @click.stop="appsdrawer = !appsdrawer">
+        <v-btn v-if="mdAndDown" @click.stop="appsdrawer = !appsdrawer">
           <Icon icon="material-symbols:menu-rounded" size="24" height="24" />
         </v-btn>
       </div>
     </v-app-bar>
 
     <!-- Drawer mobile -->
-    <v-navigation-drawer v-model="appsdrawer" location="left" color="containerBg" class="mt-6">
+    <v-navigation-drawer
+      width="350"
+      v-model="appsdrawer"
+      location="left"
+      color="containerBg"
+      class="mt-6"
+    >
       <div class="pa-4">
         <div class="d-flex justify-space-between align-center mb-4">
           <div class="d-flex" v-if="isProfileCreated">
@@ -94,7 +90,7 @@ onBeforeUnmount(() => {
               size="small"
               flat
               :href="demo.link"
-              style="color: rgb(var(--v-theme-thirdy)); font-weight: 400"
+              style="color: rgb(var(--v-theme-acier)); font-weight: 400"
             >
               {{ demo.name }}
             </NuxtLink>
@@ -103,15 +99,15 @@ onBeforeUnmount(() => {
             <NuxtLink
               class="nuxt-link mr-lg-0"
               to="/front-pages/pricing"
-              style="color: rgb(var(--v-theme-thirdy)); font-weight: 400"
-              >Formules</NuxtLink
+              style="color: rgb(var(--v-theme-acier)); font-weight: 400"
+              >Nos formules</NuxtLink
             >
           </v-col>
           <v-col>
             <NuxtLink
               class="nuxt-link mr-lg-0"
               to="/front-pages/Contact-us"
-              style="color: rgb(var(--v-theme-thirdy)); font-weight: 400"
+              style="color: rgb(var(--v-theme-acier)); font-weight: 400"
               >Contact</NuxtLink
             >
           </v-col>
@@ -125,8 +121,8 @@ onBeforeUnmount(() => {
             class="w-100"
             to="/auth/register"
             style="
-              border: 1px solid rgb(var(--v-theme-lightprimary));
-              color: rgb(var(--v-theme-lightprimary));
+              border: 1px solid rgb(var(--v-theme-peach));
+              color: rgb(var(--v-theme-peach));
               font-weight: 600;
             "
           >

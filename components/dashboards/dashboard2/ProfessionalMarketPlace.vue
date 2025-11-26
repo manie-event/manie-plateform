@@ -50,7 +50,7 @@
                 <img :src="EmptyState" alt="Empty State" />
               </template>
               <template #description>
-                <p class="text-subtitle-1">Aucune nouvelle annonce qui correspond à vos critères</p>
+                <p class="text-subtitle-1">Aucune nouvelle annonce ne correspond à vos critères.</p>
               </template>
             </BaseEmptyState>
           </v-col>

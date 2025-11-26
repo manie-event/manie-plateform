@@ -7,7 +7,7 @@ export const colorVariation: colorVariationType[] = [
   },
   {
     id: 2,
-    color: 'thirdy',
+    color: 'acier',
   },
   {
     id: 3,
