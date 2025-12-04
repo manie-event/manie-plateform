@@ -252,7 +252,6 @@
 
 <script setup lang="ts">
 import questionnaire from '@/data/questionnaire-client-refonte.json';
-import { eventsStore } from '@/stores/events';
 import { Icon } from '@iconify/vue';
 import * as yup from 'yup';
 import { UseEvent } from '~/composables/event/UseEvent';
@@ -267,9 +266,8 @@ const props = defineProps<{
 
 const openCustomerForm = defineModel<boolean>('openCustomerForm', { default: false });
 
-const { sectors, servicesFiltered } = storeToRefs(eventsStore());
 const { clientProfile } = storeToRefs(useUserStore());
-const { keywords } = storeToRefs(useSectorStore());
+const { keywords, sectors, servicesFiltered } = storeToRefs(useSectorStore());
 const { submitEvent, updateEvent, isLoading, error } = UseEvent();
 //ref generale
 const type_event = ref('');

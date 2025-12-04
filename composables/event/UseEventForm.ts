@@ -3,11 +3,12 @@ import questionnaire from '@/data/questionnaire-client-refonte.json';
 import * as yup from 'yup';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { SectorsDto } from '~/models/dto/sectorsDto';
+import { useSector } from '../sector/UseSector';
 
 export const useEventForm = () => {
-  const { sectors, servicesFiltered } = storeToRefs(eventsStore());
   const { clientProfile } = storeToRefs(useUserStore());
-  const { keywords } = storeToRefs(useSectorStore());
+  const { keywords, sectors, servicesFiltered } = storeToRefs(useSectorStore());
+  const { selectSectors } = useSector();
   const { addError } = useToaster();
 
   // --- STATE GENERAL --- //
@@ -144,7 +145,8 @@ export const useEventForm = () => {
   };
 
   const sectorFiltered = computed(() => {
-    const servicefiltered = servicesFiltered.value.map((s) => s.sectorUuid);
+    const servicefiltered = servicesFiltered.value.map((s) => s.sectorUuid.trim());
+
     const sector = sectors.value.filter((sector) => servicefiltered.includes(sector.uuid));
 
     const activityAvailable = ACTIVITY_ITEMS.map((activity) => {
@@ -201,6 +203,7 @@ export const useEventForm = () => {
 
   const updateServiceSector = (serviceIndex: number, selectedSector: any) => {
     const service = selectedServices.value[serviceIndex];
+    selectSectors(selectedSector);
     service.selectedSector = selectedSector;
     service.selectedServiceId = '';
     service.selectedKeywords = [];
@@ -208,7 +211,10 @@ export const useEventForm = () => {
 
   const selectServiceForIndex = (serviceIndex: number, uuid: string) => {
     const service = selectedServices.value[serviceIndex];
+    console.log(service, 'service to select');
+
     service.selectedServiceId = service.selectedServiceId === uuid ? '' : uuid;
+    console.log(service.selectedServiceId, 'service.selectedServiceId');
   };
 
   const toggleKeywordForService = (index: number, keywordUuid: string) => {
@@ -219,16 +225,32 @@ export const useEventForm = () => {
 
   const mapSectionsWithServices = (selectedSector?: string | SectorsDto) => {
     const findSelectedSectorUuid = sectors.value.find((s) => s.name === selectedSector);
+    console.log(findSelectedSectorUuid, 'findSelectedSectorUuid');
 
     const findServicesForSelectedSector = servicesFiltered.value.filter(
       (s) => s.sectorUuid === findSelectedSectorUuid?.uuid
     );
+    console.log(findServicesForSelectedSector, 'findServicesForSelectedSector');
 
     const questionnaireSectorFiltering = questionnaire.sections.filter(
       (section) => section.sector === selectedSector
     );
+    console.log(questionnaireSectorFiltering, 'questionnaireSectorFiltering');
+
     return questionnaireSectorFiltering.map((section) => {
       if (section.isService && section.sector === selectedSector) {
+        console.log(
+          {
+            ...section,
+            answers: findServicesForSelectedSector.map((s) => ({
+              id: s.id,
+              name: s.name,
+              uuid: s.uuid,
+            })),
+          },
+          "'section with services'"
+        );
+
         return {
           ...section,
           answers: findServicesForSelectedSector.map((s) => ({
@@ -238,9 +260,13 @@ export const useEventForm = () => {
           })),
         };
       } else {
+        console.log(keywords.value, "'keywords filtered'");
+
         const keywordsCategory = keywords.value.filter(
           (k) => k.category === section.category && k.sector === section.sector
         );
+
+        console.log(keywordsCategory, 'keywordsCategory');
 
         return {
           ...section,
@@ -252,6 +278,7 @@ export const useEventForm = () => {
 
   const getFilteredQuestionsForService = (selectedSector: any) => {
     if (!selectedSector) return [];
+
     return mapSectionsWithServices(selectedSector);
   };
 

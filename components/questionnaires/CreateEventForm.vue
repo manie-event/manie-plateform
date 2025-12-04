@@ -132,17 +132,17 @@
           />
 
           <div
-            v-for="question in getFilteredQuestionsForService(service.selectedSector)"
-            :key="question.category"
+            v-for="(question, index) in getFilteredQuestionsForService(service.selectedSector)"
+            :key="index"
             class="mt-4"
           >
             <div>
-              <h4>{{ question.question }}</h4>
+              <h4>{{ question?.question }}</h4>
             </div>
 
-            <div v-if="question.isService">
+            <div v-if="question?.isService">
               <v-btn
-                v-for="answer in question.answers"
+                v-for="answer in question?.answers"
                 :key="answer.uuid"
                 :style="
                   service.selectedServiceId === answer.uuid
@@ -165,7 +165,7 @@
 
             <div v-else>
               <v-chip
-                v-for="answer in question.answers"
+                v-for="answer in question?.answers"
                 :key="answer.uuid"
                 :variant="service.selectedKeywords.includes(answer.uuid) ? 'flat' : 'outlined'"
                 class="ma-1"
@@ -221,8 +221,6 @@ import { AxiosError } from 'axios';
 import { UseEvent } from '~/composables/event/UseEvent';
 import { useEventForm } from '~/composables/event/UseEventForm';
 
-const props = defineProps<{ event: any }>();
-
 const open = defineModel<boolean>('open-customer-form');
 const { submitEvent } = UseEvent();
 
@@ -264,10 +262,7 @@ const { addSuccess, addError } = useToaster();
 
 const handleSubmit = async () => {
   try {
-    const finalPayload = {
-      ...props.event,
-      ...customerResponse.value,
-    };
+    const finalPayload = customerResponse.value;
 
     await submitEvent(finalPayload);
 

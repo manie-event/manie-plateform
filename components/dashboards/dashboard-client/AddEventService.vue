@@ -45,47 +45,55 @@
           />
         </div>
 
-        <div
-          v-for="question in getFilteredQuestionsForService(service.selectedSector)"
-          :key="question.sector + question.category"
-          v-if="service.selectedSector"
-          class="m-4"
-        >
-          <h4 class="my-4">{{ question.question }}</h4>
-          <div v-if="question.isService">
-            <v-btn
-              v-for="answer in question.answers"
-              :key="answer.uuid"
-              :color="
-                service.selectedServiceId === answer.uuid ? 'rgb(var(--v-theme-darkbg))' : 'default'
-              "
-              :style="{
-                color: service.selectedServiceId === answer.uuid ? 'white' : 'black',
-              }"
-              :variant="service.selectedServiceId === answer.uuid ? 'flat' : 'outlined'"
-              @click="selectServiceForIndex(serviceIndex, answer.uuid)"
-            >
-              {{ answer.name }}
-            </v-btn>
+        <div v-if="keywords.length > 0">
+          <div
+            v-for="question in getFilteredQuestionsForService(service.selectedSector)"
+            :key="question.sector + question.category"
+            v-if="service.selectedSector"
+            class="m-4"
+          >
+            <h4 class="my-4">{{ question.question }}</h4>
+            <div v-if="question.isService">
+              <v-btn
+                v-for="answer in question.answers"
+                :key="answer.uuid"
+                :color="
+                  service.selectedServiceId === answer.uuid
+                    ? 'rgb(var(--v-theme-darkbg))'
+                    : 'default'
+                "
+                :style="{
+                  color: service.selectedServiceId === answer.uuid ? 'white' : 'black',
+                }"
+                :variant="service.selectedServiceId === answer.uuid ? 'flat' : 'outlined'"
+                @click="selectServiceForIndex(serviceIndex, answer.uuid)"
+              >
+                {{ answer.name }}
+              </v-btn>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2" v-else>
+              <v-chip
+                v-for="answer in question.answers"
+                :key="answer.id"
+                :color="
+                  service.selectedKeywords.includes(answer.uuid)
+                    ? 'rgb(var(--v-theme-darkbg))'
+                    : 'grey'
+                "
+                :style="{
+                  color: service.selectedKeywords.includes(answer.uuid) ? 'white' : 'black',
+                }"
+                :variant="service.selectedKeywords.includes(answer.uuid) ? 'flat' : 'outlined'"
+                @click="toggleKeywordForService(serviceIndex, answer.uuid)"
+              >
+                {{ answer.value }}
+              </v-chip>
+            </div>
           </div>
-          <div class="d-flex flex-wrap gap-2" v-else>
-            <v-chip
-              v-for="answer in question.answers"
-              :key="answer.id"
-              :color="
-                service.selectedKeywords.includes(answer.uuid)
-                  ? 'rgb(var(--v-theme-darkbg))'
-                  : 'grey'
-              "
-              :style="{
-                color: service.selectedKeywords.includes(answer.uuid) ? 'white' : 'black',
-              }"
-              :variant="service.selectedKeywords.includes(answer.uuid) ? 'flat' : 'outlined'"
-              @click="toggleKeywordForService(serviceIndex, answer.uuid)"
-            >
-              {{ answer.value }}
-            </v-chip>
-          </div>
+        </div>
+        <div v-else>
+          <CommonLoader width="100" height="100"></CommonLoader>
         </div>
       </div>
 
@@ -116,22 +124,24 @@
 </template>
 
 <script setup lang="ts">
+import CommonLoader from '@/components/common/Loader.vue';
 import questionnaire from '@/data/questionnaire-client-refonte.json';
-import { eventsStore } from '@/stores/events';
 import { Icon } from '@iconify/vue';
+import { useSector } from '~/composables/sector/UseSector';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { SectorsDto } from '~/models/dto/sectorsDto';
 import type { eventModel } from '~/models/events/eventModel';
 import { useEventService } from '~/services/UseEventService';
 import { useSectorStore } from '~/stores/sectorStore';
+
 const props = defineProps<{ event: eventModel }>();
 
 // V-model pour contrôler l'ouverture du dialogue depuis le parent
 const dialogOpen = defineModel<boolean>('addServiceOpen', { default: false });
 
-const { sectors, servicesFiltered } = storeToRefs(eventsStore());
-const { keywords } = storeToRefs(useSectorStore());
+const { keywords, sectors, servicesFiltered } = storeToRefs(useSectorStore());
 const { createEventServiceItem } = useEventService();
+const { selectSectors } = useSector();
 
 // Liste des services affichés dans le formulaire
 const selectedServices = ref<
@@ -196,6 +206,7 @@ const toggleKeywordForService = (serviceIndex: number, keywordUuid: string) => {
 const updateServiceSector = (serviceIndex: number, selectedSector: any) => {
   const service = selectedServices.value[serviceIndex];
   service.selectedSector = selectedSector;
+  selectSectors(selectedSector);
   service.selectedServiceId = '';
   service.selectedKeywords = [];
 };

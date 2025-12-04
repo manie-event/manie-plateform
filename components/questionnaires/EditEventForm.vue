@@ -128,13 +128,12 @@
             item-title="label"
             item-value="value"
             placeholder="Secteur"
-            :disabled="isLocked"
             @update:modelValue="updateServiceSector(i, service.selectedSector)"
           />
 
           <div
-            v-for="question in getFilteredQuestionsForService(service.selectedSector)"
-            :key="question.category"
+            v-for="(question, index) in getFilteredQuestionsForService(service.selectedSector)"
+            :key="index"
             class="mt-4"
           >
             <h4 class="mb-2">{{ question.question }}</h4>
@@ -145,7 +144,6 @@
                 :key="answer.uuid"
                 :variant="service.selectedServiceId === answer.uuid ? 'flat' : 'outlined'"
                 class="ma-1"
-                :disabled="isLocked"
                 @click="selectServiceForIndex(i, answer.uuid)"
               >
                 {{ answer.name }}
@@ -158,7 +156,6 @@
                 :key="answer.uuid"
                 :variant="service.selectedKeywords.includes(answer.uuid) ? 'flat' : 'outlined'"
                 class="ma-1"
-                :disabled="isLocked"
                 @click="toggleKeywordForService(i, answer.uuid)"
               >
                 {{ answer.value }}
@@ -209,6 +206,7 @@ import questionnaire from '@/data/questionnaire-client-refonte.json';
 import { Icon } from '@iconify/vue';
 import { UseEvent } from '~/composables/event/UseEvent';
 import { useEventForm } from '~/composables/event/UseEventForm';
+import { useSector } from '~/composables/sector/UseSector';
 import { useEventService } from '~/services/UseEventService';
 import { useProfessionalProposition } from '~/services/UseProfessionalProposition';
 
@@ -218,7 +216,8 @@ const open = defineModel<boolean>('open-customer-form');
 const { getEventsInstance } = useEventService();
 const { getListPropositionByEventService } = useProfessionalProposition();
 const { updateEvent } = UseEvent();
-const { servicesFiltered, sectors } = storeToRefs(eventsStore());
+const { getListSector } = useSector();
+const { servicesFiltered, sectors } = storeToRefs(useSectorStore());
 
 const fullEvent = ref();
 const {
@@ -263,6 +262,8 @@ const { addSuccess } = useToaster();
 watch(
   () => props.event.uuid,
   async () => {
+    console.log(props.event, 'event prop');
+
     if (!props.event?.uuid) return;
 
     const responses = await getEventsInstance(props.event.uuid);
@@ -299,24 +300,26 @@ watch(
 //
 // 🔐 LOCK LOGIC — si un service est déjà utilisé ou traité
 //
-const isLocked = computed(async () => {
-  const event = fullEvent.value;
-  if (!event) return false;
+// const isLocked = computed(async () => {
+//   const event = fullEvent.value;
+//   console.log(event, 'isLocked');
 
-  const services = event.$preloaded?.eventServices || [];
+//   if (!event) return false;
 
-  const propositions = await Promise.all(
-    services.map((service) => getListPropositionByEventService(service.uuid))
-  );
+//   const services = event.$preloaded?.eventServices || [];
 
-  // Règle 1 : un service n'est pas pending → locked
-  const serviceLocked = services.some((s) => s.status !== 'pending');
+//   const propositions = await Promise.all(
+//     services.map((service) => getListPropositionByEventService(service.uuid))
+//   );
 
-  // Règle 2 : une proposition existe et n'est pas cancelled → locked
-  const propositionLocked = propositions.some((p) => p.status !== 'cancelled');
+//   // Règle 1 : un service n'est pas pending → locked
+//   const serviceLocked = services.some((s) => s.status !== 'pending');
 
-  return serviceLocked || propositionLocked;
-});
+//   // Règle 2 : une proposition existe et n'est pas cancelled → locked
+//   const propositionLocked = propositions.some((p) => p.status !== 'cancelled');
+
+//   return serviceLocked || propositionLocked;
+// });
 
 //
 // ✔️ UPDATE
@@ -357,4 +360,8 @@ const handleSubmit = async () => {
   addSuccess('Évènement mis à jour avec succès !');
   open.value = false;
 };
+
+onMounted(async () => {
+  await getListSector();
+});
 </script>

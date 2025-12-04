@@ -1,7 +1,6 @@
 import type { ProfessionalProfile, User, clientProfile } from '@/models/user/UserModel';
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
-import type { Keywords } from '~/models/professionalService/Keywords';
 import type { Services } from '~/models/professionalService/Services';
 
 export const useUserStore = defineStore(
@@ -21,7 +20,6 @@ export const useUserStore = defineStore(
     const isProfilUpdate = ref(false);
     const isStoringUserAccepted = ref(false);
     const professionalServices = ref<Services[]>([]);
-    const keywords = ref<Keywords[]>([]);
     const professionalProfileForCustomer = ref<ProfessionalProfile>();
 
     // --- computed ---
@@ -70,10 +68,6 @@ export const useUserStore = defineStore(
       isStoringUserAccepted.value = accepted;
     };
 
-    const setKeywords = (newKeywords: Keywords[]) => {
-      keywords.value = newKeywords;
-    };
-
     const sendProfessionalProfileForCustomer = (profile: ProfessionalProfile) => {
       professionalProfileForCustomer.value = profile;
     };
@@ -91,7 +85,6 @@ export const useUserStore = defineStore(
       professionalUuid.value = null;
       clientUuid.value = null;
       professionalServices.value = [];
-      keywords.value = [];
       professionalProfileForCustomer.value = undefined;
     };
 
@@ -107,7 +100,6 @@ export const useUserStore = defineStore(
       isProfileCreated,
       professionalProfileForCustomer,
       isProfilUpdate,
-      keywords,
       category,
       displayName,
       initials,
@@ -115,7 +107,6 @@ export const useUserStore = defineStore(
       setUser,
       setProfessionalUser,
       setClientProfile,
-      setKeywords,
       sendProfessionalProfileForCustomer,
       resetUserStore,
     };
