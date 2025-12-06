@@ -4,7 +4,7 @@ export const useSector = () => {
   const { getAllSectors, getSectors, preloadServices, getKeywords } = useSectorService();
   const sectorStore = useSectorStore();
   const { setAllSectors, setServiceList, setKeywordList } = sectorStore;
-
+  const { keywords, services } = storeToRefs(sectorStore);
   const getListSector = async () => {
     const sectorList = await getAllSectors();
 
@@ -12,6 +12,9 @@ export const useSector = () => {
   };
 
   const selectSectors = async (selectedSector: string) => {
+    keywords.value = [];
+    services.value = [];
+
     const elementListBySector = await getSectors(selectedSector);
     setServiceList(elementListBySector.services);
     setKeywordList(elementListBySector.keywords);

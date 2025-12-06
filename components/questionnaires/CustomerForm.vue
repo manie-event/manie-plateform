@@ -215,7 +215,12 @@
 
       <!-- Navigation -->
       <div class="d-flex justify-space-between mt-8 navigation">
-        <v-btn v-if="currentPage === 3" color="#293b57" variant="outlined" @click="addNewService">
+        <v-btn
+          v-if="currentPage === 3"
+          color="#293b57"
+          variant="outlined"
+          @click="addNewServiceForm"
+        >
           Ajouter un nouveau service
         </v-btn>
         <v-btn
@@ -374,7 +379,7 @@ const customerResponse = computed(() => {
   };
 });
 
-const addNewService = () => {
+const addNewServiceForm = () => {
   selectedServices.value.push({
     selectedSector: undefined,
     selectedServiceId: '',

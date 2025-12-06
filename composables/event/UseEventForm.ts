@@ -187,7 +187,7 @@ export const useEventForm = () => {
     return section.reponses;
   };
 
-  const addNewService = () => {
+  const addNewServiceForm = () => {
     selectedServices.value.push({
       selectedSector: undefined,
       selectedServiceId: '',
@@ -211,10 +211,7 @@ export const useEventForm = () => {
 
   const selectServiceForIndex = (serviceIndex: number, uuid: string) => {
     const service = selectedServices.value[serviceIndex];
-    console.log(service, 'service to select');
-
     service.selectedServiceId = service.selectedServiceId === uuid ? '' : uuid;
-    console.log(service.selectedServiceId, 'service.selectedServiceId');
   };
 
   const toggleKeywordForService = (index: number, keywordUuid: string) => {
@@ -225,32 +222,17 @@ export const useEventForm = () => {
 
   const mapSectionsWithServices = (selectedSector?: string | SectorsDto) => {
     const findSelectedSectorUuid = sectors.value.find((s) => s.name === selectedSector);
-    console.log(findSelectedSectorUuid, 'findSelectedSectorUuid');
 
     const findServicesForSelectedSector = servicesFiltered.value.filter(
       (s) => s.sectorUuid === findSelectedSectorUuid?.uuid
     );
-    console.log(findServicesForSelectedSector, 'findServicesForSelectedSector');
 
     const questionnaireSectorFiltering = questionnaire.sections.filter(
       (section) => section.sector === selectedSector
     );
-    console.log(questionnaireSectorFiltering, 'questionnaireSectorFiltering');
 
     return questionnaireSectorFiltering.map((section) => {
       if (section.isService && section.sector === selectedSector) {
-        console.log(
-          {
-            ...section,
-            answers: findServicesForSelectedSector.map((s) => ({
-              id: s.id,
-              name: s.name,
-              uuid: s.uuid,
-            })),
-          },
-          "'section with services'"
-        );
-
         return {
           ...section,
           answers: findServicesForSelectedSector.map((s) => ({
@@ -260,14 +242,9 @@ export const useEventForm = () => {
           })),
         };
       } else {
-        console.log(keywords.value, "'keywords filtered'");
-
         const keywordsCategory = keywords.value.filter(
           (k) => k.category === section.category && k.sector === section.sector
         );
-
-        console.log(keywordsCategory, 'keywordsCategory');
-
         return {
           ...section,
           answers: keywordsCategory,
@@ -308,7 +285,7 @@ export const useEventForm = () => {
 
     // methods
     nextPage,
-    addNewService,
+    addNewServiceForm,
     removeService,
     selectServiceForIndex,
     toggleKeywordForService,

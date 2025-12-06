@@ -5,9 +5,10 @@ import type { eventModelDto } from '~/models/dto/eventDto';
 import type { QuestionnaireClient } from '~/models/questionnaire/QuestionnaireClientModel';
 
 export const useEventService = () => {
-  const { addError, addSuccess } = useToaster();
+  const { addSuccess } = useToaster();
   const api = useApi();
   const eventStore = eventsStore();
+  const { resetForm } = useEventServiceStore();
   const { clientProfile, clientUuid } = storeToRefs(useUserStore());
   const { setEventsByOrganisator, setQuestionnaireAnswers } = eventStore;
 
@@ -83,6 +84,8 @@ export const useEventService = () => {
     try {
       if (!api) return;
       const { data } = await api.post('/event-service/create', payload);
+      addSuccess('Services ajoutés avec succès');
+      resetForm();
       return data;
     } catch (err) {
       useDisplayErrorMessage(err as AxiosError);

@@ -18,14 +18,14 @@
         relation commencée
       </v-alert>
 
-      <div v-for="(service, serviceIndex) in selectedServices" :key="serviceIndex" class="mb-6">
+      <div v-for="(service, serviceIndex) in eventServices" :key="serviceIndex" class="mb-6">
         <div class="d-flex justify-space-between align-center mb-2">
           <v-btn
-            v-if="selectedServices.length > 1"
+            v-if="eventServices.length > 1"
             size="small"
             color="red"
             variant="outlined"
-            @click="removeService(serviceIndex)"
+            @click="removeEventService(serviceIndex)"
           >
             Supprimer
           </v-btn>
@@ -41,11 +41,13 @@
             clearable
             class="my-3"
             placeholder="Sélectionnez un secteur"
-            @update:modelValue="updateServiceSector(serviceIndex, service.selectedSector)"
+            @update:modelValue="
+              service.selectedSector && updateServiceSector(service.selectedSector)
+            "
           />
         </div>
 
-        <div v-if="keywords.length > 0">
+        <div v-if="service.selectedSector">
           <div
             v-for="question in getFilteredQuestionsForService(service.selectedSector)"
             :key="question.sector + question.category"
@@ -76,11 +78,6 @@
               <v-chip
                 v-for="answer in question.answers"
                 :key="answer.id"
-                :color="
-                  service.selectedKeywords.includes(answer.uuid)
-                    ? 'rgb(var(--v-theme-darkbg))'
-                    : 'grey'
-                "
                 :style="{
                   color: service.selectedKeywords.includes(answer.uuid) ? 'white' : 'black',
                 }"
@@ -103,14 +100,14 @@
             color="rgb(var(--v-theme-darkbg))"
             variant="outlined"
             class="event-service__btn"
-            @click="addNewService"
+            @click="addNewServiceForm"
           >
             Ajouter un nouveau service
           </v-btn>
         </v-col>
         <v-col cols="12" md="3">
           <v-btn
-            @click="addNewEventService"
+            @click="sendNewEventService"
             color="rgb(var(--v-theme-darkbg))"
             style="color: rgb(var(--v-theme-background))"
             class="event-service__btn w-100"
@@ -125,169 +122,30 @@
 
 <script setup lang="ts">
 import CommonLoader from '@/components/common/Loader.vue';
-import questionnaire from '@/data/questionnaire-client-refonte.json';
 import { Icon } from '@iconify/vue';
-import { useSector } from '~/composables/sector/UseSector';
-import { ACTIVITY_ITEMS } from '~/constants/activitySector';
-import type { SectorsDto } from '~/models/dto/sectorsDto';
+import { useAddNewEventService } from '~/composables/event-service/UseAddNewEventService';
 import type { eventModel } from '~/models/events/eventModel';
-import { useEventService } from '~/services/UseEventService';
-import { useSectorStore } from '~/stores/sectorStore';
 
 const props = defineProps<{ event: eventModel }>();
 
-// V-model pour contrôler l'ouverture du dialogue depuis le parent
 const dialogOpen = defineModel<boolean>('addServiceOpen', { default: false });
 
-const { keywords, sectors, servicesFiltered } = storeToRefs(useSectorStore());
-const { createEventServiceItem } = useEventService();
-const { selectSectors } = useSector();
+const { eventServices } = storeToRefs(useEventServiceStore());
+const {
+  sectorFiltered,
+  addNewServiceForm,
+  removeEventService,
+  selectServiceForIndex,
+  toggleKeywordForService,
+  updateServiceSector,
+  getFilteredQuestionsForService,
+  addNewEventService,
+} = useAddNewEventService();
 
-// Liste des services affichés dans le formulaire
-const selectedServices = ref<
-  Array<{ selectedSector?: string; selectedServiceId: string; selectedKeywords: string[] }>
->([]);
-
-// Envoi des nouveaux services à l'API
-const addNewEventService = async () => {
-  try {
-    const createCalls = selectedServices.value.map((service) =>
-      createEventServiceItem({
-        serviceUuid: service.selectedServiceId,
-        eventUuid: props.event.uuid,
-        keywordsUuid: service.selectedKeywords,
-      })
-    );
-    await Promise.all(createCalls);
-    dialogOpen.value = false;
-  } catch (error) {
-    console.error('Impossible de créer les services', error);
-  }
+const sendNewEventService = async () => {
+  await addNewEventService(props.event.uuid);
+  dialogOpen.value = false;
 };
-
-// Ajouter un nouveau bloc de service vide
-const addNewService = () => {
-  selectedServices.value.push({
-    selectedSector: undefined,
-    selectedServiceId: '',
-    selectedKeywords: [],
-  });
-};
-
-// Supprimer un bloc de service (si plus d'un)
-const removeService = (index: number) => {
-  if (selectedServices.value.length > 1) {
-    selectedServices.value.splice(index, 1);
-  }
-};
-
-// Sélectionner le service pour un index donné
-const selectServiceForIndex = (serviceIndex: number, serviceUuid: string) => {
-  const service = selectedServices.value[serviceIndex];
-  if (service.selectedServiceId === serviceUuid) {
-    service.selectedServiceId = '';
-  } else {
-    service.selectedServiceId = serviceUuid;
-  }
-};
-
-// Ajouter ou retirer un mot-clé pour un service donné
-const toggleKeywordForService = (serviceIndex: number, keywordUuid: string) => {
-  const service = selectedServices.value[serviceIndex];
-  const keywordIndex = service.selectedKeywords.indexOf(keywordUuid);
-  if (keywordIndex > -1) {
-    service.selectedKeywords.splice(keywordIndex, 1);
-  } else {
-    service.selectedKeywords.push(keywordUuid);
-  }
-};
-
-// Mettre à jour le secteur d’un service et réinitialiser ses choix
-const updateServiceSector = (serviceIndex: number, selectedSector: any) => {
-  const service = selectedServices.value[serviceIndex];
-  service.selectedSector = selectedSector;
-  selectSectors(selectedSector);
-  service.selectedServiceId = '';
-  service.selectedKeywords = [];
-};
-
-// Questions et réponses disponibles pour un secteur donné
-const getFilteredQuestionsForService = (selectedSector: any) => {
-  if (!selectedSector) return [];
-  return mapSectionsWithServices(selectedSector);
-};
-
-// Sectors disponibles en fonction des services autorisés
-const sectorFiltered = computed(() => {
-  const servicefiltered = servicesFiltered.value.map((s) => s.sectorUuid);
-  const sectorList = sectors.value.filter((sector) => servicefiltered.includes(sector.uuid));
-  const activityAvailable = ACTIVITY_ITEMS.map((activity) => {
-    const matchingSector = sectorList.find((s) => s.name === activity.value);
-    if (matchingSector) {
-      return {
-        ...activity,
-        sectorUuid: matchingSector.uuid,
-      };
-    }
-    return null;
-  }).filter(Boolean);
-  return activityAvailable;
-});
-
-// Association questions/services/keywords pour un secteur
-const mapSectionsWithServices = (selectedSector?: string | SectorsDto) => {
-  const findSelectedSectorUuid = sectors.value.find((s) => s.name === selectedSector);
-  const findServicesForSelectedSector = servicesFiltered.value.filter(
-    (s) => s.sectorUuid === findSelectedSectorUuid?.uuid
-  );
-  const questionnaireSectorFiltering = questionnaire.sections.filter(
-    (section) => section.sector === selectedSector
-  );
-  return questionnaireSectorFiltering.map((section) => {
-    if (section.isService && section.sector === selectedSector) {
-      return {
-        ...section,
-        answers: findServicesForSelectedSector.map((s) => ({
-          id: s.id,
-          name: s.name,
-          uuid: s.uuid,
-        })),
-      };
-    } else {
-      const keywordsCategory = keywords.value.filter(
-        (k) => k.category === section.category && k.sector === section.sector
-      );
-      return {
-        ...section,
-        answers: keywordsCategory,
-      };
-    }
-  });
-};
-onMounted(() => {
-  selectedServices.value = [
-    {
-      selectedSector: undefined,
-      selectedServiceId: '',
-      selectedKeywords: [],
-    },
-  ];
-});
-watch(dialogOpen, (open) => {
-  if (open) {
-    selectedServices.value = [
-      {
-        selectedSector: undefined,
-        selectedServiceId: '',
-        selectedKeywords: [],
-      },
-    ];
-  }
-  if (!open) {
-    // Exemple si tu veux tout clear en fermeture
-    selectedServices.value = [];
-  }
-});
 </script>
 
 <style lang="scss" scoped>

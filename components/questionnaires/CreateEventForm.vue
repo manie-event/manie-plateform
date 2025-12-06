@@ -181,7 +181,7 @@
       <!-- NAVIGATION -->
       <v-row class="w-100 d-flex justify-md-space-between">
         <v-col cols="12" v-if="currentPage === 3">
-          <v-btn variant="outlined" class="w-100" @click="addNewService">
+          <v-btn variant="outlined" class="w-100" @click="addNewServiceForm">
             Ajouter un prestataire
           </v-btn>
         </v-col>
@@ -245,7 +245,7 @@ const {
 
   // services
   selectedServices,
-  addNewService,
+  addNewServiceForm,
   removeService,
   updateServiceSector,
   selectServiceForIndex,

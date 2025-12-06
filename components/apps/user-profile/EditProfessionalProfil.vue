@@ -525,8 +525,6 @@ const createProfile = async (values: ProfessionalProfile) => {
   try {
     const payload = sanitizePayload(values);
 
-    console.log('📤 Payload envoyé:', payload); // ✅ Debug
-
     const response = await createProfessionalProfile(payload);
 
     if (response.message === 'Professional created') {
@@ -562,8 +560,6 @@ const modifyProfile = async (newValues: ProfessionalProfile) => {
       ...sanitizePayload(newValues),
       uuid: professionalUser.value?.uuid,
     };
-
-    console.log('📤 Payload modification:', payload); // ✅ Debug
 
     const response = await patchProfessionalProfileDetails(payload);
     const updatedProfessional = response.newPro || response;
