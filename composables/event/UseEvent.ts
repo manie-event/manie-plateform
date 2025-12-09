@@ -30,9 +30,6 @@ export const UseEvent = () => {
   };
 
   const updateEvent = async (eventUuid: string, payload: eventModel) => {
-    console.log(eventUuid, 'eventUuid dans updateEvent');
-    console.log(payload, 'payload dans updateEvent');
-
     try {
       if (!api) return;
       const { data } = await api.patch(`/event/update/${eventUuid}`, payload);

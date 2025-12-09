@@ -181,8 +181,6 @@ export const useEventForm = () => {
 
   const selectServiceForIndex = (serviceIndex: number, uuid: string) => {
     const service = selectedServices.value[serviceIndex];
-    console.log(service, 'selectServiceForIndex service');
-
     service.selectedServiceId = uuid;
     return service.selectedServiceId;
   };
@@ -197,13 +195,9 @@ export const useEventForm = () => {
   const mapSectionsWithServices = (selectedSector?: string | SectorsDto) => {
     const findSelectedSectorUuid = sectors.value.find((s) => s.name === selectedSector);
 
-    console.log(servicesFiltered.value, 'servicesFiltered.value');
-
     const findServicesForSelectedSector = servicesFiltered.value.filter(
       (s) => s.sectorUuid === findSelectedSectorUuid?.uuid
     );
-
-    console.log(findServicesForSelectedSector, 'findServicesForSelectedSector');
 
     const questionnaireSectorFiltering = questionnaire.sections.filter(
       (section) => section.sector === selectedSector

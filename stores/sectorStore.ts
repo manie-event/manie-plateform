@@ -17,7 +17,6 @@ export const useSectorStore = defineStore('sector', () => {
 
   const setServiceList = (newServices: Services[]) => {
     services.value.push(...newServices);
-    console.log(services.value, 'services.value');
   };
 
   const setKeywordList = (newKeyword: Keywords[]) => {
@@ -27,7 +26,6 @@ export const useSectorStore = defineStore('sector', () => {
   const setServicesFiltered = (newServicesFiltered: ServicesFiltered[]) => {
     servicesFiltered.value = [];
     servicesFiltered.value.push(...newServicesFiltered);
-    console.log(servicesFiltered.value, 'servicesFiltered.value');
   };
 
   return {

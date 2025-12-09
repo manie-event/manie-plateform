@@ -99,8 +99,6 @@ export const useSectorService = () => {
             .map((k: KeywordsDto) => keyWordsDtoToKeywords(k))
         : data.data;
 
-      console.log(filtered, 'FILTERED SECTOR SERVICE');
-
       return filtered;
     } catch (error) {
       console.error('❌ Erreur lors de getKeywords :', error);

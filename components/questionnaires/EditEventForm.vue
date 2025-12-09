@@ -306,7 +306,6 @@ const handleSubmit = async () => {
 
 onMounted(async () => {
   await getListSector();
-  console.log(props.event.uuid, 'EVENT UUID');
   await getEventsInstance(props.event.uuid);
 });
 </script>
