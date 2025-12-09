@@ -1,41 +1,103 @@
-import type { SectorsDto } from '~/models/dto/sectorsDto';
-import type { ServicesFiltered } from '~/models/dto/serviceFiltered';
 import type { eventModel } from '~/models/events/eventModel';
 
-export const eventsStore = defineStore('eventsStore', () => {
-  const events = ref<eventModel[]>([]);
-  const answers = ref<eventModel>();
-  const sectors = ref<SectorsDto[]>([]);
-  const servicesFiltered = ref<ServicesFiltered[]>([]);
-
-  //setters
+export const useEventsStore = defineStore('useEventsStore', () => {
+  const events = ref<eventModel[]>([
+    {
+      uuid: '',
+      type_event: '',
+      organisatorUuid: '',
+      isAlreadyCreated: false,
+      status: '',
+      date: ['', ''],
+      budget: 0,
+      formule: '',
+      location: '',
+      name: '',
+      people: 0,
+      eventServices: [],
+      group_type: '',
+      theme: '',
+      organized_for: '',
+      duration: '',
+    },
+  ]);
+  const modifyEvent = ref<eventModel>({
+    uuid: '',
+    type_event: '',
+    organisatorUuid: '',
+    isAlreadyCreated: false,
+    status: '',
+    date: ['', ''],
+    budget: 0,
+    formule: '',
+    location: '',
+    name: '',
+    people: 0,
+    eventServices: [],
+    group_type: '',
+    theme: '',
+    organized_for: '',
+    duration: '',
+  });
 
   const setEventsByOrganisator = (newEvents: eventModel[]) => {
     events.value = newEvents;
   };
 
   const setQuestionnaireAnswers = (newAnswers: eventModel) => {
-    answers.value = newAnswers;
+    modifyEvent.value = newAnswers;
   };
 
-  const setSectors = (newSectors: SectorsDto[]) => {
-    sectors.value.push(...newSectors);
+  const resetOrganisatorForm = () => {
+    events.value = [
+      {
+        uuid: '',
+        type_event: '',
+        organisatorUuid: '',
+        isAlreadyCreated: false,
+        status: '',
+        date: ['', ''],
+        budget: 0,
+        formule: '',
+        location: '',
+        name: '',
+        people: 0,
+        eventServices: [],
+        group_type: '',
+        theme: '',
+        organized_for: '',
+        duration: '',
+      },
+    ];
   };
 
-  const setServicesFiltered = (newServicesFiltered: ServicesFiltered[]) => {
-    servicesFiltered.value = Array.from(
-      new Map([...servicesFiltered.value, ...newServicesFiltered].map((s) => [s.uuid, s])).values()
-    );
+  const resetForm = () => {
+    modifyEvent.value = {
+      uuid: '',
+      type_event: '',
+      organisatorUuid: '',
+      isAlreadyCreated: false,
+      status: '',
+      date: ['', ''],
+      budget: 0,
+      formule: '',
+      location: '',
+      name: '',
+      people: 0,
+      eventServices: [],
+      group_type: '',
+      theme: '',
+      organized_for: '',
+      duration: '',
+    };
   };
 
   return {
     events,
-    answers,
-    sectors,
-    servicesFiltered,
+    modifyEvent,
     setEventsByOrganisator,
-    setSectors,
-    setServicesFiltered,
     setQuestionnaireAnswers,
+    resetOrganisatorForm,
+    resetForm,
   };
 });

@@ -7,7 +7,7 @@
         variant="flat"
         @click="handleAddTask()"
       >
-        <icon icon="mdi-plus" />
+        <icon icon="ci:plus" />
       </v-btn>
       <div>
         <h4 class="text-subtitle-1 font-weight-semibold">Votre liste des tâches</h4>

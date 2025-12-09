@@ -125,6 +125,7 @@
   <Teleport to="body">
     <EditEventForm
       v-if="currentEvent"
+      :key="currentEvent.uuid"
       v-model:open-customer-form="isEventModificationOpen"
       :event="currentEvent"
     />
@@ -141,6 +142,7 @@
     />
   </Teleport>
 </template>
+
 <script setup lang="ts">
 import BaseEmptyState from '@/components/common/BaseEmptyState.vue';
 import AddEventService from '@/components/dashboards/dashboard-client/AddEventService.vue';
@@ -170,34 +172,13 @@ const { getProfessionalService } = useProfessionalServiceService();
 const { getListPropositionByEventService } = useProfessionalProposition();
 
 const currentEvent = ref<eventModel>();
+
 const selectedEvent = (uuid: string) => {
   currentEvent.value = props.events.find((event) => event.uuid === uuid);
+  return currentEvent.value;
 };
 
 const getCurrentEventLocked = ref(false);
-
-watch(
-  () => currentEvent.value,
-  async (event) => {
-    if (!event || !event.eventServices) {
-      getCurrentEventLocked.value = false;
-      return;
-    }
-
-    const serviceNotPending = event.eventServices.some((srv) => srv.status !== 'pending');
-
-    const currentProposition = await Promise.all(
-      event.eventServices.map((service) => getListPropositionByEventService(service.uuid))
-    );
-
-    const hasNonPendingProposition = currentProposition.some(
-      (list) => Array.isArray(list) && list.some((p) => p.status !== 'pending')
-    );
-
-    getCurrentEventLocked.value = serviceNotPending || hasNonPendingProposition;
-  },
-  { immediate: true }
-);
 
 const getPropositionsByEvent = computed(() => {
   if (!currentEvent.value) return [];

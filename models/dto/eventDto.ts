@@ -1,26 +1,34 @@
 export interface eventModelDto {
-  id: number;
-  uuid: string;
-  typeEvent: string;
-  organisatorUuid: string;
-  status: string;
-  budget: number;
-  location: string;
-  formule: string;
-  people: string;
-  createdAt: string;
-  updatedAt: string;
-  name: string;
-  date: string[];
-  eventServices: eventService[];
-}
-
-export interface eventService {
-  id: number;
-  uuid: string;
-  eventUuid: string;
-  professionalServiceUuid?: string;
-  serviceUuid: string;
-  status: string;
-  keywordsUuid: string[];
+  $attributes: {
+    id: number;
+    uuid: string;
+    type_event: string;
+    organisatorUuid: string;
+    status: string;
+    budget: number;
+    duration: string;
+    location: string;
+    formule: string;
+    people: number;
+    createdAt: string;
+    updatedAt: string;
+    name: string;
+    date: string[];
+    organized_for: string;
+    group_type: string;
+    theme: string;
+  };
+  $preloaded: {
+    eventServices: [
+      {
+        id: number;
+        uuid: string;
+        eventUuid: string;
+        professionalServiceUuid?: string;
+        serviceUuid: string;
+        status: string;
+        keywordsUuid: string[];
+      },
+    ];
+  };
 }

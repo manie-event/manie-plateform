@@ -3,7 +3,7 @@ import type { ProfessionalServiceUuid } from '~/models/professionalService/profe
 
 export const useProfessionalServiceService = () => {
   const { addError } = useToaster();
-  const { setServicesFiltered } = eventsStore();
+  const { setServicesFiltered } = useSectorStore();
 
   const { setProfessionalServices } = useProfessionalStore();
   const { services, sectors } = storeToRefs(useSectorStore());

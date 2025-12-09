@@ -14,8 +14,7 @@ export const useEventServiceProposition = () => {
     acceptedByClient,
     declinedByClient,
   } = useProfessionalProposition();
-  const { services } = storeToRefs(useSectorStore());
-  const { servicesFiltered } = storeToRefs(eventsStore());
+  const { services, servicesFiltered } = storeToRefs(useSectorStore());
   const { getEventsPerOrganisator, getEventServiceList } = useEventService();
   const { setServiceEventPropositionForPresta, setServiceEventPropositionForClient } =
     usePropositionStore();

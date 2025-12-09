@@ -297,15 +297,9 @@ const filteredPropositionByStatus = computed<ClientServiceProposition[]>(() => {
   );
 });
 
-onBeforeUnmount(() => {
-  removeWindowListener();
-});
-
 onMounted(() => {
   getServicesList();
   getServicePropositionForClient();
-  handleResize();
-  addWindowListener();
 });
 </script>
 <style lang="scss" scoped>

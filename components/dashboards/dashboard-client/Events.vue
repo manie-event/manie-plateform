@@ -22,8 +22,8 @@ const openModal = ref(false);
 const { getListSector } = useSector();
 
 const eventCreation = async () => {
-  openModal.value = !openModal.value;
   await getListSector();
+  openModal.value = !openModal.value;
 };
 </script>
 <style lang="scss" scoped>

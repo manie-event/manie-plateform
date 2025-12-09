@@ -10,6 +10,7 @@ export const UseEvent = () => {
   const error = ref<string | null>(null);
   const { addSuccess, addError } = useToaster();
   const api = useApi();
+
   const submitEvent = async (payload: any) => {
     isLoading.value = true;
     error.value = null;

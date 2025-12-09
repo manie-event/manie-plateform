@@ -14,18 +14,22 @@
       <div v-if="currentPage === 1">
         <h2 class="text-h5 font-weight-bold mb-4">Modifier votre évènement</h2>
 
-        <v-text-field v-model="type_event" label="Nom de votre évènement" variant="outlined" />
+        <v-text-field
+          v-model="modifyEvent.type_event"
+          label="Nom de votre évènement"
+          variant="outlined"
+        />
 
         <h3 class="text-h6 mb-2">Quel type d'évènement ?</h3>
         <div class="d-flex flex-wrap gap-2 mb-6">
           <v-chip
             v-for="type in getQuestionOptions(0)"
             :key="type.value"
-            :color="name === type.value ? '#293b57' : 'default'"
-            :variant="name === type.value ? 'flat' : 'outlined'"
+            :color="modifyEvent.name === type.value ? '#293b57' : 'default'"
+            :variant="modifyEvent.name === type.value ? 'flat' : 'outlined'"
             size="large"
             class="rounded-xl"
-            @click="name = type.value"
+            @click="modifyEvent.name = type.value"
           >
             {{ type.label }}
           </v-chip>
@@ -46,14 +50,14 @@
           :items="questionnaire.general[1].reponses"
           item-title="label"
           item-value="value"
-          v-model="location"
+          v-model="modifyEvent.location"
           label="Localisation"
           variant="outlined"
         />
 
         <div class="mt-6">
           <h3 class="text-h6 mb-2">{{ questionnaire.general[2].title }}</h3>
-          <v-radio-group v-model="group_type" inline>
+          <v-radio-group v-model="modifyEvent.group_type" inline>
             <v-radio
               v-for="r in getQuestionOptions(2)"
               :key="r.value"
@@ -65,7 +69,7 @@
 
         <div class="mt-6">
           <h3 class="text-h6 mb-2">{{ questionnaire.general[3].title }}</h3>
-          <v-radio-group v-model="duration" inline>
+          <v-radio-group v-model="modifyEvent.duration" inline>
             <v-radio
               v-for="d in getQuestionOptions(3)"
               :key="d.value"
@@ -80,7 +84,7 @@
       <div v-if="currentPage === 2">
         <h2 class="text-h5 font-weight-bold mb-4">Détails de votre événement 🎉</h2>
 
-        <v-radio-group v-model="organized_for" class="mb-4">
+        <v-radio-group v-model="modifyEvent.organized_for" class="mb-4">
           <v-radio
             v-for="orga in getQuestionOptions(4)"
             :key="orga.value"
@@ -89,20 +93,20 @@
           />
         </v-radio-group>
 
-        <v-text-field v-model="theme" label="Thème" class="mb-4" />
-        <v-number-input v-model="people" label="Nombre d'invités" class="mb-4" />
+        <v-text-field v-model="modifyEvent.theme" label="Thème" class="mb-4" />
+        <v-number-input v-model="modifyEvent.people" label="Nombre d'invités" class="mb-4" />
 
         <v-radio-group v-model="isBudgetGlobale" class="mb-2">
           <v-radio label="Par personne" :value="false" />
           <v-radio label="Global" :value="true" />
         </v-radio-group>
 
-        <v-number-input v-model="budgetInput" label="Budget" variant="outlined" />
+        <v-number-input v-model="modifyEvent.budget" label="Budget" variant="outlined" />
       </div>
 
       <!-- PAGE 3 -->
       <div v-if="currentPage === 3">
-        <v-alert color="rgb(var(--v-theme-darkbg))" class="my-6 text-white">
+        <v-alert color="warning" class="my-6">
           ⚠️ Certains services sont verrouillés car déjà utilisés dans des propositions.
         </v-alert>
 
@@ -132,29 +136,16 @@
           />
 
           <div
-            v-for="question in getFilteredQuestionsForService(service.selectedSector)"
-            :key="question.category"
+            v-for="(question, index) in getFilteredQuestionsForService(service.selectedSector)"
+            :key="index"
             class="mt-4"
           >
-            <div>
-              <h4>{{ question.question }}</h4>
-            </div>
+            <h4 class="mb-2">{{ question.question }}</h4>
 
             <div v-if="question.isService">
               <v-btn
                 v-for="answer in question.answers"
                 :key="answer.uuid"
-                :style="
-                  service.selectedServiceId === answer.uuid
-                    ? {
-                        background: 'rgb(var(--v-theme-darkbg))',
-                        color: 'rgb(var(--v-theme-background))',
-                      }
-                    : {
-                        border: '1px solid rgb(var(--v-theme-darkbg))',
-                        color: 'rgb(var(--v-theme-darkbg))',
-                      }
-                "
                 :variant="service.selectedServiceId === answer.uuid ? 'flat' : 'outlined'"
                 class="ma-1"
                 @click="selectServiceForIndex(i, answer.uuid)"
@@ -181,7 +172,7 @@
       <!-- NAVIGATION -->
       <v-row class="w-100 d-flex justify-md-space-between">
         <v-col cols="12" v-if="currentPage === 3">
-          <v-btn variant="outlined" class="w-100" @click="addNewService">
+          <v-btn variant="outlined" class="w-100" @click="addNewServiceForm">
             Ajouter un prestataire
           </v-btn>
         </v-col>
@@ -206,7 +197,7 @@
             class="text-white w-100"
             @click="handleSubmit"
           >
-            Créer mon évènement
+            Mettre à jour mon évènement
           </v-btn>
         </v-col>
       </v-row>
@@ -217,29 +208,23 @@
 <script setup lang="ts">
 import questionnaire from '@/data/questionnaire-client-refonte.json';
 import { Icon } from '@iconify/vue';
-import { AxiosError } from 'axios';
+import type { AxiosError } from 'axios';
 import { UseEvent } from '~/composables/event/UseEvent';
 import { useEventForm } from '~/composables/event/UseEventForm';
-
-const props = defineProps<{ event: any }>();
+import { useEventsStore } from '~/stores/events';
 
 const open = defineModel<boolean>('open-customer-form');
-const { submitEvent } = UseEvent();
+const { submitEvent: createEvent } = UseEvent();
+const eventStore = useEventsStore();
+const { modifyEvent } = storeToRefs(eventStore);
+const { resetForm } = eventStore;
 
 const {
   currentPage,
   nextPage,
 
   // fields
-  type_event,
-  name,
-  location,
-  duration,
-  group_type,
   today,
-  theme,
-  organized_for,
-  people,
   isBudgetGlobale,
   budgetInput,
   dateStart,
@@ -247,7 +232,8 @@ const {
 
   // services
   selectedServices,
-  addNewService,
+  budgetCalculation,
+  addNewServiceForm,
   removeService,
   updateServiceSector,
   selectServiceForIndex,
@@ -255,21 +241,19 @@ const {
   getQuestionOptions,
   getFilteredQuestionsForService,
   sectorFiltered,
-
-  // computed
-  customerResponse,
 } = useEventForm();
 
-const { addSuccess, addError } = useToaster();
+const { addSuccess } = useToaster();
 
 const handleSubmit = async () => {
   try {
-    const finalPayload = {
-      ...props.event,
-      ...customerResponse.value,
+    const event = {
+      ...modifyEvent.value,
+      date: [dateStart.value, dateEnd.value],
+      people: Number(modifyEvent.value.people),
+      budget: budgetCalculation.value,
     };
-
-    await submitEvent(finalPayload);
+    await createEvent(event);
 
     addSuccess('Évènement mis à jour avec succès !');
     open.value = false;
@@ -277,4 +261,8 @@ const handleSubmit = async () => {
     useDisplayErrorMessage(err as AxiosError);
   }
 };
+
+onMounted(() => {
+  resetForm();
+});
 </script>

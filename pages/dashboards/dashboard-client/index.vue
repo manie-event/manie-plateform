@@ -12,7 +12,7 @@ import { useUserStore } from '~/stores/userStore';
 const userStore = useUserStore();
 const { isProfileCreated, isProfessional } = storeToRefs(userStore);
 const { getClientProfil } = useClientProfil();
-const { events } = storeToRefs(eventsStore());
+const { events } = storeToRefs(useEventsStore());
 const { getEventsPerOrganisator } = useEventService();
 const { getServicePropositionForClient } = useEventServiceProposition();
 
