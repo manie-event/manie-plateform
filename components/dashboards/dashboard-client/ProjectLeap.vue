@@ -47,7 +47,7 @@
 import { storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
 
-const { events } = storeToRefs(eventsStore());
+const { events } = storeToRefs(useEventsStore());
 const { professionalResponseProposition } = storeToRefs(usePropositionStore());
 
 const itemsPerPage = 2;

@@ -1,6 +1,6 @@
 export interface eventModel {
   uuid: string;
-  typeEvent: string;
+  type_event: string;
   organisatorUuid: string;
   isAlreadyCreated: boolean;
   status: string;
@@ -9,8 +9,12 @@ export interface eventModel {
   formule: string;
   location: string;
   name: string;
-  people: string;
+  people: number;
   eventServices: eventService[];
+  group_type?: string;
+  duration: string;
+  theme?: string;
+  organized_for: string;
 }
 
 export interface eventService {

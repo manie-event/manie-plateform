@@ -1,13 +1,12 @@
-import { eventsStore } from '@/stores/events';
+import { useEventsStore } from '@/stores/events';
 import type { AxiosError } from 'axios';
 import { eventsMapper } from '~/mappers/eventsMapper';
-import type { eventModelDto } from '~/models/dto/eventDto';
 import type { QuestionnaireClient } from '~/models/questionnaire/QuestionnaireClientModel';
 
 export const useEventService = () => {
   const { addSuccess } = useToaster();
   const api = useApi();
-  const eventStore = eventsStore();
+  const eventStore = useEventsStore();
   const { resetForm } = useEventServiceStore();
   const { clientProfile, clientUuid } = storeToRefs(useUserStore());
   const { setEventsByOrganisator, setQuestionnaireAnswers } = eventStore;
@@ -47,7 +46,8 @@ export const useEventService = () => {
         // Sécurité : on vérifie la structure
         if (!data || !Array.isArray(data.data)) break;
 
-        const events = data.data.map((e: eventModelDto) => mapDtoToEvent(e));
+        const events = data.data;
+
         allEvents.push(...events);
         setEventsByOrganisator(allEvents);
 
@@ -69,8 +69,11 @@ export const useEventService = () => {
       if (!api) return;
       const { data } = await api.get(`/event/${eventUuid}`);
       const responseInstance = { ...data, isAlreadyCreated: true };
-      setQuestionnaireAnswers(responseInstance);
-      return responseInstance;
+
+      const mappedEvent = eventsMapper().mapDtoToEvent(responseInstance);
+
+      setQuestionnaireAnswers(mappedEvent);
+      return mappedEvent;
     } catch (err) {
       useDisplayErrorMessage(err as AxiosError);
     }

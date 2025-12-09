@@ -1,34 +1,24 @@
 // composables/event/useEventForm.ts
 import questionnaire from '@/data/questionnaire-client-refonte.json';
 import * as yup from 'yup';
-import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { SectorsDto } from '~/models/dto/sectorsDto';
+import { useAddNewEventService } from '../event-service/UseAddNewEventService';
 import { useSector } from '../sector/UseSector';
 
 export const useEventForm = () => {
   const { clientProfile } = storeToRefs(useUserStore());
-  const { keywords, sectors, servicesFiltered } = storeToRefs(useSectorStore());
+  const { keywords, sectors, servicesFiltered, services } = storeToRefs(useSectorStore());
+  const { sectorFiltered } = useAddNewEventService();
   const { selectSectors } = useSector();
   const { addError } = useToaster();
+  const { modifyEvent } = storeToRefs(useEventsStore());
 
   // --- STATE GENERAL --- //
   const currentPage = ref(1);
 
-  const type_event = ref('');
-  const name = ref('');
-  const location = ref('Veuillez choisir un département');
-  const duration = ref('');
-  const group_type = ref('');
-  const theme = ref('');
-  const organized_for = ref('');
-  const people = ref(0);
-
   const isBudgetGlobale = ref(false);
   const budgetInput = ref(0);
-
   const today = new Date().toISOString().split('T')[0];
-  const dateStart = ref('');
-  const dateEnd = ref('');
 
   const selectedServices = ref([
     {
@@ -37,6 +27,31 @@ export const useEventForm = () => {
       selectedKeywords: [] as string[],
     },
   ]);
+
+  const dateStart = computed({
+    get: () => modifyEvent.value.date?.[0] || '',
+    set: (value: string) => {
+      // Créer un nouveau tableau pour déclencher la réactivité
+      const newDate = [...(modifyEvent.value.date || ['', ''])];
+      newDate[0] = value;
+      modifyEvent.value = {
+        ...modifyEvent.value,
+        date: newDate,
+      };
+    },
+  });
+
+  const dateEnd = computed({
+    get: () => modifyEvent.value.date?.[1] || '',
+    set: (value: string) => {
+      const newDate = [...(modifyEvent.value.date || ['', ''])];
+      newDate[1] = value;
+      modifyEvent.value = {
+        ...modifyEvent.value,
+        date: newDate,
+      };
+    },
+  });
 
   // --- VALIDATIONS --- //
 
@@ -57,7 +72,7 @@ export const useEventForm = () => {
     organized_for: yup.string().required('Veuillez indiquer pour qui est organisé l’événement'),
     theme: yup.string().required('Veuillez définir un thème'),
     people: yup.number().positive('Le nombre de participants doit être > 0'),
-    budgetInput: yup.number().positive('Le budget doit être > 0'),
+    budget: yup.number().positive('Le budget doit être > 0'),
   });
 
   const schemaPage3 = yup.object({
@@ -74,38 +89,14 @@ export const useEventForm = () => {
 
   // --- COMPUTED --- //
 
-  const finalDateSelection = computed(() => {
-    return [dateStart.value, dateEnd.value];
-  });
-
-  const budgetCalculation = computed(() => {
-    return isBudgetGlobale.value ? budgetInput.value : budgetInput.value * people.value;
-  });
-
   const chooseEventTypeDependingOnUserCategory = computed(() => {
     return clientProfile.value?.isBusiness ? 'professionnel' : 'particulier';
   });
 
-  const customerResponse = computed(() => {
-    return {
-      organisatorUuid: clientProfile.value?.uuid,
-      type_event: type_event.value,
-      event_type: chooseEventTypeDependingOnUserCategory.value,
-      name: name.value,
-      date: finalDateSelection.value,
-      location: location.value,
-      duration: duration.value,
-      group_type: group_type.value,
-      theme: theme.value,
-      formule: 'gratuit',
-      organized_for: organized_for.value,
-      people: people.value,
-      budget: budgetCalculation.value,
-      services: selectedServices.value.map((service) => ({
-        serviceUuid: service.selectedServiceId,
-        keywordsUuid: service.selectedKeywords,
-      })),
-    };
+  const budgetCalculation = computed(() => {
+    return isBudgetGlobale.value
+      ? modifyEvent.value.budget
+      : modifyEvent.value.budget * modifyEvent.value.people;
   });
 
   // --- UTILS COMMONS --- //
@@ -123,18 +114,18 @@ export const useEventForm = () => {
     try {
       await schema.validate(
         {
-          type_event: type_event.value,
-          name: name.value,
+          type_event: modifyEvent.value.type_event,
+          name: modifyEvent.value.name,
           dateStart: dateStart.value,
           dateEnd: dateEnd.value,
-          location: location.value,
-          group_type: group_type.value,
-          duration: duration.value,
-          organized_for: organized_for.value,
-          theme: theme.value,
+          location: modifyEvent.value.location,
+          group_type: modifyEvent.value.group_type,
+          duration: modifyEvent.value.duration,
+          organized_for: modifyEvent.value.organized_for,
+          theme: modifyEvent.value.theme,
           formule: 'gratuit',
-          people: people.value,
-          budgetInput: budgetInput.value,
+          people: modifyEvent.value.people,
+          budget: modifyEvent.value.budget,
         },
         { abortEarly: false }
       );
@@ -144,28 +135,7 @@ export const useEventForm = () => {
     }
   };
 
-  const sectorFiltered = computed(() => {
-    const servicefiltered = servicesFiltered.value.map((s) => s.sectorUuid.trim());
-
-    const sector = sectors.value.filter((sector) => servicefiltered.includes(sector.uuid));
-
-    const activityAvailable = ACTIVITY_ITEMS.map((activity) => {
-      const matchingSector = sector.find((s) => s.name === activity.value);
-
-      if (matchingSector) {
-        return {
-          ...activity,
-          sectorUuid: matchingSector.uuid,
-        };
-      }
-      return null;
-    }).filter(Boolean);
-    return activityAvailable;
-  });
-
   const getQuestionOptions = (sectionIndex: number) => {
-    const eventTypeValue = clientProfile.value?.isBusiness ? 'professionnel' : 'particulier';
-
     if (sectionIndex === 0) {
       // Pour la première question, filtrer selon le profil client automatiquement
       const eventTypes = questionnaire.general[0].reponses.find(
@@ -211,21 +181,29 @@ export const useEventForm = () => {
 
   const selectServiceForIndex = (serviceIndex: number, uuid: string) => {
     const service = selectedServices.value[serviceIndex];
-    service.selectedServiceId = service.selectedServiceId === uuid ? '' : uuid;
+    console.log(service, 'selectServiceForIndex service');
+
+    service.selectedServiceId = uuid;
+    return service.selectedServiceId;
   };
 
   const toggleKeywordForService = (index: number, keywordUuid: string) => {
     const keywordsList = selectedServices.value[index].selectedKeywords;
     const pos = keywordsList.indexOf(keywordUuid);
     pos >= 0 ? keywordsList.splice(pos, 1) : keywordsList.push(keywordUuid);
+    return keywordsList;
   };
 
   const mapSectionsWithServices = (selectedSector?: string | SectorsDto) => {
     const findSelectedSectorUuid = sectors.value.find((s) => s.name === selectedSector);
 
+    console.log(servicesFiltered.value, 'servicesFiltered.value');
+
     const findServicesForSelectedSector = servicesFiltered.value.filter(
       (s) => s.sectorUuid === findSelectedSectorUuid?.uuid
     );
+
+    console.log(findServicesForSelectedSector, 'findServicesForSelectedSector');
 
     const questionnaireSectorFiltering = questionnaire.sections.filter(
       (section) => section.sector === selectedSector
@@ -262,15 +240,8 @@ export const useEventForm = () => {
   return {
     // data
     currentPage,
-    type_event,
-    name,
     location,
     today,
-    duration,
-    group_type,
-    theme,
-    organized_for,
-    people,
     isBudgetGlobale,
     budgetInput,
     dateStart,
@@ -278,10 +249,8 @@ export const useEventForm = () => {
     selectedServices,
 
     // computed
-    customerResponse,
     chooseEventTypeDependingOnUserCategory,
     budgetCalculation,
-    finalDateSelection,
 
     // methods
     nextPage,

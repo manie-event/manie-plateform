@@ -10,6 +10,7 @@ export const UseEvent = () => {
   const error = ref<string | null>(null);
   const { addSuccess, addError } = useToaster();
   const api = useApi();
+
   const submitEvent = async (payload: any) => {
     isLoading.value = true;
     error.value = null;
@@ -29,6 +30,9 @@ export const UseEvent = () => {
   };
 
   const updateEvent = async (eventUuid: string, payload: eventModel) => {
+    console.log(eventUuid, 'eventUuid dans updateEvent');
+    console.log(payload, 'payload dans updateEvent');
+
     try {
       if (!api) return;
       const { data } = await api.patch(`/event/update/${eventUuid}`, payload);
