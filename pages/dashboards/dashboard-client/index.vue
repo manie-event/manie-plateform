@@ -19,9 +19,9 @@ const { getServicePropositionForClient } = useEventServiceProposition();
 const isEventPast = computed(() => events.value.filter((event) => isEventDone(event.date[0])));
 
 isProfessional.value = false;
-await getClientProfil();
-await getEventsPerOrganisator();
-await getServicePropositionForClient();
+await getClientProfil(); //récupérer le profil client
+await getEventsPerOrganisator(); //récupérer les événements du client
+await getServicePropositionForClient(); //récupérer les propositions de services pour le client
 </script>
 
 <template>

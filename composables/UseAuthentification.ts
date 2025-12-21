@@ -61,11 +61,10 @@ export const useAuthentification = () => {
       // Enregistre l’utilisateur dans le store
       setUser(user);
 
-      addSuccess('Connexion réussie.');
       // Redirection par rôle
       if (user.category === 'consumer') {
-        await Promise.all([await getClientProfil(), await getEventsPerOrganisator()]);
-
+        await getClientProfil();
+        addSuccess('Connexion réussie.');
         await router.push({ path: '/dashboards/dashboard-client' });
         isProfessional.value = false;
       } else {

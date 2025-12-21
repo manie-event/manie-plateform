@@ -14,14 +14,14 @@ export const useEventsStore = defineStore('useEventsStore', () => {
       location: '',
       name: '',
       people: 0,
-      eventServices: [],
       group_type: '',
+      eventServices: [],
       theme: '',
       organized_for: '',
       duration: '',
     },
   ]);
-  const modifyEvent = ref<eventModel>({
+  const event = ref<eventModel>({
     uuid: '',
     type_event: '',
     organisatorUuid: '',
@@ -33,9 +33,9 @@ export const useEventsStore = defineStore('useEventsStore', () => {
     location: '',
     name: '',
     people: 0,
-    eventServices: [],
     group_type: '',
     theme: '',
+    eventServices: [],
     organized_for: '',
     duration: '',
   });
@@ -45,34 +45,15 @@ export const useEventsStore = defineStore('useEventsStore', () => {
   };
 
   const setQuestionnaireAnswers = (newAnswers: eventModel) => {
-    modifyEvent.value = newAnswers;
+    event.value = newAnswers;
   };
 
   const resetOrganisatorForm = () => {
-    events.value = [
-      {
-        uuid: '',
-        type_event: '',
-        organisatorUuid: '',
-        isAlreadyCreated: false,
-        status: '',
-        date: ['', ''],
-        budget: 0,
-        formule: '',
-        location: '',
-        name: '',
-        people: 0,
-        eventServices: [],
-        group_type: '',
-        theme: '',
-        organized_for: '',
-        duration: '',
-      },
-    ];
+    events.value = [];
   };
 
   const resetForm = () => {
-    modifyEvent.value = {
+    event.value = {
       uuid: '',
       type_event: '',
       organisatorUuid: '',
@@ -84,9 +65,9 @@ export const useEventsStore = defineStore('useEventsStore', () => {
       location: '',
       name: '',
       people: 0,
-      eventServices: [],
       group_type: '',
       theme: '',
+      eventServices: [],
       organized_for: '',
       duration: '',
     };
@@ -94,7 +75,7 @@ export const useEventsStore = defineStore('useEventsStore', () => {
 
   return {
     events,
-    modifyEvent,
+    event,
     setEventsByOrganisator,
     setQuestionnaireAnswers,
     resetOrganisatorForm,

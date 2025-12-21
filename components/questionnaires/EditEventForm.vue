@@ -15,7 +15,7 @@
         <h2 class="text-h5 font-weight-bold mb-4">Modifier votre évènement</h2>
 
         <v-text-field
-          v-model="modifyEvent.type_event"
+          v-model="event.type_event"
           label="Nom de votre évènement"
           variant="outlined"
         />
@@ -25,11 +25,11 @@
           <v-chip
             v-for="type in getQuestionOptions(0)"
             :key="type.value"
-            :color="modifyEvent.name === type.value ? '#293b57' : 'default'"
-            :variant="modifyEvent.name === type.value ? 'flat' : 'outlined'"
+            :color="event.name === type.value ? '#293b57' : 'default'"
+            :variant="event.name === type.value ? 'flat' : 'outlined'"
             size="large"
             class="rounded-xl"
-            @click="modifyEvent.name = type.value"
+            @click="event.name = type.value"
           >
             {{ type.label }}
           </v-chip>
@@ -50,14 +50,14 @@
           :items="questionnaire.general[1].reponses"
           item-title="label"
           item-value="value"
-          v-model="modifyEvent.location"
+          v-model="event.location"
           label="Localisation"
           variant="outlined"
         />
 
         <div class="mt-6">
           <h3 class="text-h6 mb-2">{{ questionnaire.general[2].title }}</h3>
-          <v-radio-group v-model="modifyEvent.group_type" inline>
+          <v-radio-group v-model="event.group_type" inline>
             <v-radio
               v-for="r in getQuestionOptions(2)"
               :key="r.value"
@@ -69,7 +69,7 @@
 
         <div class="mt-6">
           <h3 class="text-h6 mb-2">{{ questionnaire.general[3].title }}</h3>
-          <v-radio-group v-model="modifyEvent.duration" inline>
+          <v-radio-group v-model="event.duration" inline>
             <v-radio
               v-for="d in getQuestionOptions(3)"
               :key="d.value"
@@ -84,7 +84,7 @@
       <div v-if="currentPage === 2">
         <h2 class="text-h5 font-weight-bold mb-4">Détails de votre événement 🎉</h2>
 
-        <v-radio-group v-model="modifyEvent.organized_for" class="mb-4">
+        <v-radio-group v-model="event.organized_for" class="mb-4">
           <v-radio
             v-for="orga in getQuestionOptions(4)"
             :key="orga.value"
@@ -93,15 +93,15 @@
           />
         </v-radio-group>
 
-        <v-text-field v-model="modifyEvent.theme" label="Thème" class="mb-4" />
-        <v-number-input v-model="modifyEvent.people" label="Nombre d'invités" class="mb-4" />
+        <v-text-field v-model="event.theme" label="Thème" class="mb-4" />
+        <v-number-input v-model="event.people" label="Nombre d'invités" class="mb-4" />
 
         <v-radio-group v-model="isBudgetGlobale" class="mb-2">
           <v-radio label="Par personne" :value="false" />
           <v-radio label="Global" :value="true" />
         </v-radio-group>
 
-        <v-number-input v-model="modifyEvent.budget" label="Budget" variant="outlined" />
+        <v-number-input v-model="event.budget" label="Budget" variant="outlined" />
       </div>
 
       <!-- PAGE 3 -->
@@ -111,14 +111,14 @@
         </v-alert>
 
         <div
-          v-for="(service, i) in selectedServices"
+          v-for="(service, i) in event.eventServices"
           :key="i"
           class="mb-6 pa-6 bg-white rounded-xl shadow-sm"
         >
           <div class="d-flex justify-space-between align-center mb-3">
             <h3 class="font-weight-bold">Prestataires</h3>
             <Icon
-              v-if="selectedServices.length > 1"
+              v-if="event.eventServices.length > 1"
               icon="solar:trash-bin-trash-line-duotone"
               height="24"
               class="cursor-pointer"
@@ -126,18 +126,9 @@
             />
           </div>
 
-          <v-select
-            v-model="service.selectedSector"
-            :items="sectorFiltered"
-            item-title="label"
-            item-value="value"
-            placeholder="Secteur"
-            @update:modelValue="updateServiceSector(i, service.selectedSector)"
-          />
-
           <div
-            v-for="(question, index) in getFilteredQuestionsForService(service.selectedSector)"
-            :key="index"
+            v-for="question in getFilteredQuestionsForService(service.sectorName)"
+            :key="question.category"
             class="mt-4"
           >
             <h4 class="mb-2">{{ question.question }}</h4>
@@ -148,10 +139,10 @@
                 :key="answer.uuid"
                 :style="{
                   background:
-                    service.selectedServiceId === answer.uuid ? 'rgb(var(--v-theme-darkbg))' : '',
-                  color: service.selectedServiceId === answer.uuid ? 'white' : '',
+                    service.serviceUuid === answer.uuid ? 'rgb(var(--v-theme-darkbg))' : '',
+                  color: service.serviceUuid === answer.uuid ? 'white' : '',
                 }"
-                :variant="service.selectedServiceId === answer.uuid ? 'flat' : 'outlined'"
+                :variant="service.serviceUuid === answer.uuid ? 'flat' : 'outlined'"
                 class="ma-1"
                 @click="selectServiceForIndex(i, answer.uuid)"
               >
@@ -161,9 +152,9 @@
 
             <div v-else>
               <v-chip
-                v-for="answer in question.answers"
+                v-for="(answer, index) in question.answers"
                 :key="answer.uuid"
-                :variant="service.selectedKeywords.includes(answer.uuid) ? 'flat' : 'outlined'"
+                :variant="service.keywordsUuid.includes(answer.uuid) ? 'flat' : 'outlined'"
                 class="ma-1"
                 @click="toggleKeywordForService(i, answer.uuid)"
               >
@@ -177,9 +168,9 @@
       <!-- NAVIGATION -->
       <v-row class="w-100 d-flex justify-md-space-between">
         <v-col cols="12" v-if="currentPage === 3">
-          <v-btn variant="outlined" class="w-100" @click="addNewServiceForm">
+          <!-- <v-btn variant="outlined" class="w-100" @click="addNewServiceForm">
             Ajouter un prestataire
-          </v-btn>
+          </v-btn> -->
         </v-col>
         <v-col cols="12" md="4" v-if="currentPage > 1">
           <div class="d-flex justify-space-between w-100">
@@ -218,18 +209,14 @@ import { useEventForm } from '~/composables/event/UseEventForm';
 import { useSector } from '~/composables/sector/UseSector';
 import type { eventModel } from '~/models/events/eventModel';
 import { useEventService } from '~/services/UseEventService';
-import { useProfessionalProposition } from '~/services/UseProfessionalProposition';
 
 const props = defineProps<{ event: eventModel }>();
 const open = defineModel<boolean>('open-customer-form');
 
 const { getEventsInstance } = useEventService();
-const { getListPropositionByEventService } = useProfessionalProposition();
 const { updateEvent } = UseEvent();
-const { getListSector } = useSector();
-const { servicesFiltered, sectors } = storeToRefs(useSectorStore());
-const { modifyEvent } = storeToRefs(useEventsStore());
-const fullEvent = ref();
+const { getListSector, allKeywords } = useSector();
+const { event } = storeToRefs(useEventsStore());
 
 const {
   currentPage,
@@ -287,18 +274,19 @@ const { addSuccess } = useToaster();
 const handleSubmit = async () => {
   // const locked = isLocked.value;
 
-  const event = {
-    ...modifyEvent.value,
+  const modifiedEvent = {
+    ...event.value,
     date: [dateStart.value, dateEnd.value],
-    people: Number(modifyEvent.value.people),
+    people: Number(event.value.people),
     budget: budgetCalculation.value,
-    services: selectedServices.value.map((s) => ({
-      serviceUuid: s.selectedServiceId,
-      keywordsUuid: s.selectedKeywords,
+    services: event.value.eventServices.map((service) => ({
+      sectorName: service.sectorName,
+      serviceUuid: service.serviceUuid,
+      keywordsUuid: service.keywordsUuid,
     })),
   };
 
-  await updateEvent(event.uuid, event);
+  await updateEvent(props.event.uuid, modifiedEvent);
 
   addSuccess('Évènement mis à jour avec succès !');
   open.value = false;
@@ -306,6 +294,7 @@ const handleSubmit = async () => {
 
 onMounted(async () => {
   await getListSector();
+  await allKeywords();
   await getEventsInstance(props.event.uuid);
 });
 </script>

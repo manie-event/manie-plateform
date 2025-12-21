@@ -8,6 +8,7 @@ export const useSectorService = () => {
   const api = useApi();
   const config = useRuntimeConfig();
   const loading = ref(false);
+
   const getAllSectors = async () => {
     try {
       if (!api) throw new Error('API non initialisée');
