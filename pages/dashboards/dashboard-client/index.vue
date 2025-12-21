@@ -20,7 +20,6 @@ const isEventPast = computed(() => events.value.filter((event) => isEventDone(ev
 
 isProfessional.value = false;
 await getClientProfil(); //récupérer le profil client
-// await getEventsPerOrganisator(); //récupérer les événements du client
 await getServicePropositionForClient(); //récupérer les propositions de services pour le client
 </script>
 

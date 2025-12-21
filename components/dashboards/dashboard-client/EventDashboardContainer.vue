@@ -157,7 +157,6 @@ import Product from '~/components/dashboards/dashboard-client/EventBudget.vue';
 import EditEventForm from '~/components/questionnaires/EditEventForm.vue';
 import { useSector } from '~/composables/sector/UseSector';
 import type { eventModel } from '~/models/events/eventModel';
-import { useProfessionalProposition } from '~/services/UseProfessionalProposition';
 import PricingChoice from './PricingChoice.vue';
 const props = defineProps<{
   events: eventModel[];
@@ -169,7 +168,7 @@ const openPricingModal = ref(false);
 const { professionalResponseProposition } = storeToRefs(usePropositionStore());
 const { getListSector } = useSector();
 const { getProfessionalService } = useProfessionalServiceService();
-const { getListPropositionByEventService } = useProfessionalProposition();
+const { addSuccess } = useToaster();
 
 const currentEvent = ref<eventModel>();
 
@@ -184,18 +183,19 @@ const getPropositionsByEvent = computed(() => {
   if (!currentEvent.value) return [];
 
   const eventUuid = currentEvent.value.uuid;
+  const eventServiceUuids = currentEvent.value.eventServices?.map((es: any) => es.uuid) || [];
 
   return professionalResponseProposition.value.filter((proposition) => {
-    const p = proposition as unknown as Record<string, any>;
+    const prop = proposition as unknown as Record<string, any>;
 
-    if ('eventUuid' in p) {
-      return p.eventUuid === eventUuid;
-    }
-    if ('eventServiceUuid' in p && Array.isArray(currentEvent.value?.eventServices)) {
-      return currentEvent.value?.eventServices.some((es: any) => es.uuid === p.eventServiceUuid);
-    }
+    // Vérifier si la proposition correspond directement à l'événement
+    const matchesEvent = prop.eventUuid === eventUuid;
 
-    return false;
+    // Vérifier si la proposition correspond à l'un des services de l'événement
+    const matchesEventService =
+      prop.eventServiceUuid && eventServiceUuids.includes(prop.eventServiceUuid);
+
+    return matchesEvent || matchesEventService;
   });
 });
 

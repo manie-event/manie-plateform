@@ -131,6 +131,8 @@ const props = defineProps<{ event: eventModel }>();
 const dialogOpen = defineModel<boolean>('addServiceOpen', { default: false });
 
 const { eventServices } = storeToRefs(useEventServiceStore());
+const { addSuccess } = useToaster();
+
 const {
   sectorFiltered,
   addNewServiceForm,
@@ -144,6 +146,7 @@ const {
 
 const sendNewEventService = async () => {
   await addNewEventService(props.event.uuid);
+  addSuccess('Service(s) ajouté(s) avec succès');
   dialogOpen.value = false;
 };
 </script>

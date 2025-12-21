@@ -143,7 +143,7 @@ export const useAuthentification = () => {
         'client-uuid',
         'professional-uuid',
       ];
-      keysToRemove.forEach((key) => localStorage.removeItem(key));
+      keysToRemove.forEach((key) => sessionStorage.removeItem(key));
       userStore.resetUserStore();
 
       await router.push('/');

@@ -19,7 +19,6 @@ export const useApi = (): AxiosInstance | null => {
       baseURL: runtimeConfig.public.apiUrl,
     });
 
-    // ✅ Interceptor REQUEST — lit toujours le cookie le plus à jour
     apiInstance.interceptors.request.use(
       async (config) => {
         const { token } = useAuthCookies();
@@ -28,7 +27,6 @@ export const useApi = (): AxiosInstance | null => {
           await new Promise((resolve) => setTimeout(resolve, 150));
         }
 
-        // ← lu dynamiquement à chaque requête
         if (token.value) {
           config.headers = config.headers || {};
           config.headers.Authorization = `Bearer ${token.value}`;
@@ -38,7 +36,6 @@ export const useApi = (): AxiosInstance | null => {
       (error) => Promise.reject(error)
     );
 
-    // ✅ Interceptor RESPONSE — gère le refresh de manière centralisée
     apiInstance.interceptors.response.use(
       (response) => response,
       async (error) => {
@@ -46,11 +43,9 @@ export const useApi = (): AxiosInstance | null => {
         const { token } = useAuthCookies();
         const { refreshToken } = useRefreshToken();
 
-        // Si 401 et qu'on a un refreshToken valide
         if (error.response?.status === 401 && refreshToken.value && !originalRequest._retry) {
           originalRequest._retry = true;
           if (isRefreshing) {
-            // ⏳ Si un refresh est déjà en cours → on met la requête en attente
             return new Promise((resolve) => {
               refreshQueue.push(() => {
                 originalRequest.headers.Authorization = `Bearer ${token.value}`;
@@ -61,7 +56,6 @@ export const useApi = (): AxiosInstance | null => {
 
           isRefreshing = true;
           try {
-            // 🔁 Appel du refresh
             const { data } = await axios.post(
               `${runtimeConfig.public.apiUrl}/auth/refresh-token`,
               { refreshToken: refreshToken.value },
@@ -75,7 +69,6 @@ export const useApi = (): AxiosInstance | null => {
               token.value = newAccessToken;
               refreshToken.value = newRefreshToken;
 
-              // ✅ Met à jour les headers globaux Axios
               apiInstance!.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
 
               // ✅ Relance la requête initiale avec le nouveau token

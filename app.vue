@@ -3,8 +3,21 @@
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
+  <Teleport to="body">
+    <InactivityModal
+      v-if="openInactivityModal"
+      v-model:open-modal="openInactivityModal"
+    ></InactivityModal>
+  </Teleport>
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import InactivityModal from '@/components/common/InactivityModal.vue';
+import { Teleport } from 'vue';
+
+const { openInactivityModal } = useInactivityTracker();
+
+useInactivityTracker();
+</script>
 <style lang="scss">
 .nuxt-link {
   font-family: 'Poppins';
