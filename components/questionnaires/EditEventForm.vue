@@ -230,7 +230,6 @@ const {
   budgetCalculation,
 
   // services
-  selectedServices,
   addNewServiceForm,
   removeService,
   updateServiceSector,
@@ -243,34 +242,6 @@ const {
 
 const { addSuccess } = useToaster();
 
-//
-// 🔐 LOCK LOGIC — si un service est déjà utilisé ou traité
-//
-// const isLocked = computed(async () => {
-//   const event = fullEvent.value;
-//   console.log(event, 'isLocked');
-
-//   if (!event) return false;
-
-//   const services = event.$preloaded?.eventServices || [];
-
-//   const propositions = await Promise.all(
-//     services.map((service) => getListPropositionByEventService(service.uuid))
-//   );
-
-//   // Règle 1 : un service n'est pas pending → locked
-//   const serviceLocked = services.some((s) => s.status !== 'pending');
-
-//   // Règle 2 : une proposition existe et n'est pas cancelled → locked
-//   const propositionLocked = propositions.some((p) => p.status !== 'cancelled');
-
-//   return serviceLocked || propositionLocked;
-// });
-
-//
-// ✔️ UPDATE
-//
-
 const handleSubmit = async () => {
   // const locked = isLocked.value;
 
@@ -279,10 +250,13 @@ const handleSubmit = async () => {
     date: [dateStart.value, dateEnd.value],
     people: Number(event.value.people),
     budget: budgetCalculation.value,
-    services: event.value.eventServices.map((service) => ({
+    eventServices: event.value.eventServices.map((service) => ({
+      uuid: service.uuid,
+      eventUuid: service.eventUuid,
       sectorName: service.sectorName,
       serviceUuid: service.serviceUuid,
       keywordsUuid: service.keywordsUuid,
+      status: service.status,
     })),
   };
 

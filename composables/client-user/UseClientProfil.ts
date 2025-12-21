@@ -18,6 +18,8 @@ export const useClientProfil = () => {
     const response = await api?.get(`${config.public.apiUrl}/organisator`);
 
     if (response) {
+      console.log(response.data, 'CLIENT PROFILE');
+
       setClientProfile(response.data);
       return response.data;
     }

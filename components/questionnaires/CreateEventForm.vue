@@ -123,7 +123,7 @@
           <div class="d-flex justify-space-between align-center mb-3">
             <h3 class="font-weight-bold">Prestataires</h3>
             <Icon
-              v-if="selectedServices.length > 1"
+              v-if="event.eventServices.length > 1"
               icon="solar:trash-bin-trash-line-duotone"
               height="24"
               class="cursor-pointer"
@@ -265,10 +265,10 @@ const handleSubmit = async () => {
       budget: budgetCalculation.value,
       organisatorUuid: clientUuid.value,
       status: 'pending',
-      services: selectedServices.value.map((service) => ({
-        sectorName: service.selectedSector,
-        serviceUuid: service.selectedServiceId,
-        keywordsUuid: service.selectedKeywords,
+      eventServices: event.value.eventServices.map((service) => ({
+        sectorName: service.sectorName,
+        serviceUuid: service.serviceUuid,
+        keywordsUuid: service.keywordsUuid,
       })),
       formule: event.value.formule || 'gratuit',
     };

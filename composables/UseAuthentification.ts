@@ -3,7 +3,6 @@ import axios, { AxiosError } from 'axios'; // routes publiques (sans auth)
 import type { AuthentificationModel } from '~/models/authentification/authentificationModel';
 import type { RegisterModel } from '~/models/authentification/registerModel';
 import type { registerNewPasswordModel } from '~/models/authentification/registerNewPasswordModel';
-import { useEventService } from '~/services/UseEventService';
 import { useProfessionalProfileService } from '../services/UseProfessionalProfileService';
 import { useClientProfil } from './client-user/UseClientProfil';
 import { useEventServiceProposition } from './event-service-propositions/UseEventServiceProposition';
@@ -18,7 +17,6 @@ export const useAuthentification = () => {
   const { getProfessionalProfile, getProfessionalProfileDetails } = useProfessionalProfileService();
   const { getClientProfil } = useClientProfil();
   const { getServicePropositionForProfessional } = useEventServiceProposition();
-  const { getEventsPerOrganisator } = useEventService();
 
   const { token } = useAuthCookies();
   const { refreshToken } = useRefreshToken();

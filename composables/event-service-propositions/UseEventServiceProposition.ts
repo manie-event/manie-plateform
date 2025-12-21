@@ -29,6 +29,12 @@ export const useEventServiceProposition = () => {
         return [];
       }
 
+      // Pour récupérer les propositions pour chaque événement
+      // ----
+      // Récupérer tous les events OK
+      // Récupérer les services de chaque event
+      // Récupérer les propositions de chaque service
+
       const allPropositions = await Promise.all(
         allEvents.map(async (event) => {
           if (!event?.eventServices?.length) return [];

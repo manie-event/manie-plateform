@@ -1,26 +1,7 @@
 import type { eventModel } from '~/models/events/eventModel';
 
 export const useEventsStore = defineStore('useEventsStore', () => {
-  const events = ref<eventModel[]>([
-    {
-      uuid: '',
-      type_event: '',
-      organisatorUuid: '',
-      isAlreadyCreated: false,
-      status: '',
-      date: ['', ''],
-      budget: 0,
-      formule: '',
-      location: '',
-      name: '',
-      people: 0,
-      group_type: '',
-      eventServices: [],
-      theme: '',
-      organized_for: '',
-      duration: '',
-    },
-  ]);
+  const events = ref<eventModel[]>([]);
   const event = ref<eventModel>({
     uuid: '',
     type_event: '',
