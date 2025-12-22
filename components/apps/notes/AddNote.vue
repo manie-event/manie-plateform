@@ -79,7 +79,8 @@ const handleAddNote = () => {
             <v-col cols="12" md="4">
               <v-btn
                 color="rgb(var(--v-theme-spritz))"
-                style="color: rgb(var(--v-theme-background))"
+                variant="outlined"
+                style="color: rgb(var(--v-theme-peach))"
                 class="w-100"
                 @click="dialog = false"
               >

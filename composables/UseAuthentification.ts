@@ -61,11 +61,11 @@ export const useAuthentification = () => {
 
       // Redirection par rôle
       if (user.category === 'consumer') {
-        await getClientProfil();
         addSuccess('Connexion réussie.');
         await router.push({ path: '/dashboards/dashboard-client' });
         isProfessional.value = false;
       } else {
+        addSuccess('Connexion réussie.');
         await router.push({ path: '/dashboards/dashboard2' });
         await getProfessionalProfile();
         await getProfessionalProfileDetails();
