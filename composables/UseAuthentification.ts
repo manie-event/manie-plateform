@@ -3,7 +3,6 @@ import axios, { AxiosError } from 'axios'; // routes publiques (sans auth)
 import type { AuthentificationModel } from '~/models/authentification/authentificationModel';
 import type { RegisterModel } from '~/models/authentification/registerModel';
 import type { registerNewPasswordModel } from '~/models/authentification/registerNewPasswordModel';
-import { useEventService } from '~/services/UseEventService';
 import { useProfessionalProfileService } from '../services/UseProfessionalProfileService';
 import { useClientProfil } from './client-user/UseClientProfil';
 import { useEventServiceProposition } from './event-service-propositions/UseEventServiceProposition';
@@ -18,7 +17,6 @@ export const useAuthentification = () => {
   const { getProfessionalProfile, getProfessionalProfileDetails } = useProfessionalProfileService();
   const { getClientProfil } = useClientProfil();
   const { getServicePropositionForProfessional } = useEventServiceProposition();
-  const { getEventsPerOrganisator } = useEventService();
 
   const { token } = useAuthCookies();
   const { refreshToken } = useRefreshToken();
@@ -61,14 +59,13 @@ export const useAuthentification = () => {
       // Enregistre l’utilisateur dans le store
       setUser(user);
 
-      addSuccess('Connexion réussie.');
       // Redirection par rôle
       if (user.category === 'consumer') {
-        await Promise.all([await getClientProfil(), await getEventsPerOrganisator()]);
-
+        addSuccess('Connexion réussie.');
         await router.push({ path: '/dashboards/dashboard-client' });
         isProfessional.value = false;
       } else {
+        addSuccess('Connexion réussie.');
         await router.push({ path: '/dashboards/dashboard2' });
         await getProfessionalProfile();
         await getProfessionalProfileDetails();
@@ -146,7 +143,7 @@ export const useAuthentification = () => {
         'client-uuid',
         'professional-uuid',
       ];
-      keysToRemove.forEach((key) => localStorage.removeItem(key));
+      keysToRemove.forEach((key) => sessionStorage.removeItem(key));
       userStore.resetUserStore();
 
       await router.push('/');

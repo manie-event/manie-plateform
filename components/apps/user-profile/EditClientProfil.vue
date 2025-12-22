@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="openModal" transition="dialog-bottom-transition" max-width="600">
     <v-card class="edit-client-profil">
-      <v-form class="px-4">
+      <v-form class="px-4" @submit.prevent="onSubmit">
         <v-divider class="mt-6">
           <p class="mt-6">À propos de vous</p>
         </v-divider>
@@ -16,39 +16,46 @@
         <template v-if="profile.isBusiness">
           <v-text-field
             class="mt-6"
-            label="Nom de votre entreprise"
+            label="Nom de votre entreprise *"
             v-model="profile.businessName"
-            :error-messages="showErrors ? errors.businessName : undefined"
+            :error-messages="errors.businessName"
+            required
           />
           <v-text-field
-            label="Numéro de SIRET"
+            label="Numéro de SIRET *"
             v-model="profile.businessSiret"
-            :error-messages="showErrors ? errors.businessSiret : undefined"
+            :error-messages="errors.businessSiret"
+            required
           />
           <v-text-field
-            label="Nom du dirigeant"
+            label="Nom du dirigeant *"
             v-model="profile.businessLeader"
-            :error-messages="showErrors ? errors.businessLeader : undefined"
+            :error-messages="errors.businessLeader"
+            required
           />
         </template>
 
         <v-text-field
-          label="Votre nom"
+          label="Votre nom *"
           v-model="profile.username"
-          :error-messages="showErrors ? errors.username : undefined"
+          :error-messages="errors.username"
+          required
         />
 
         <v-text-field
-          label="Votre date de naissance"
+          label="Votre date de naissance *"
           type="date"
           v-model="profile.birthDate"
-          :error-messages="showErrors ? errors.birthDate : undefined"
+          :error-messages="errors.birthDate"
+          required
         />
 
         <v-text-field
-          label="Votre numéro de téléphone"
+          label="Votre numéro de téléphone *"
           v-model="profile.phoneNumber"
-          :error-messages="showErrors ? errors.phoneNumber : undefined"
+          :error-messages="errors.phoneNumber"
+          placeholder="Ex: 06 12 34 56 78"
+          required
         />
 
         <v-divider class="my-6">
@@ -56,34 +63,38 @@
         </v-divider>
 
         <v-text-field
-          label="Votre adresse"
+          label="Votre adresse *"
           v-model="profile.address"
-          :error-messages="showErrors ? errors.address : undefined"
+          :error-messages="errors.address"
+          required
         />
 
         <v-text-field
-          label="Code postal"
+          label="Code postal *"
           v-model="profile.zipCode"
-          :error-messages="showErrors ? errors.zipCode : undefined"
+          :error-messages="errors.zipCode"
+          required
         />
 
         <v-text-field
-          label="Ville"
+          label="Ville *"
           v-model="profile.city"
-          :error-messages="showErrors ? errors.city : undefined"
+          :error-messages="errors.city"
+          required
         />
 
         <v-text-field
-          label="Pays"
+          label="Pays *"
           v-model="profile.country"
-          :error-messages="showErrors ? errors.country : undefined"
+          :error-messages="errors.country"
+          required
         />
 
         <v-btn
           color="rgb(var(--v-theme-darkbg))"
           style="color: rgb(var(--v-theme-background))"
           class="mt-6"
-          @click="onSubmit"
+          type="submit"
           :loading="isSubmitting"
           block
         >
@@ -117,40 +128,66 @@ const { patchClientProfil, getClientProfil } = useClientProfil();
 const { addSuccess, addError } = useToaster();
 
 const openModal = defineModel<boolean>('openModal');
-const showErrors = ref(false);
 const isSubmitting = ref(false);
 
-// ✅ Schéma de validation
+// ✅ Schéma de validation amélioré
 const validationSchema = yup.object({
-  isBusiness: yup.boolean(),
+  isBusiness: yup.boolean().default(false),
   businessName: yup.string().when('isBusiness', {
     is: true,
-    then: (schema) => schema.min(2).required('La raison sociale est requise'),
+    then: (schema) =>
+      schema.min(2, 'Minimum 2 caractères').required('La raison sociale est requise'),
+    otherwise: (schema) => schema.notRequired(),
   }),
   businessSiret: yup.string().when('isBusiness', {
     is: true,
     then: (schema) =>
       schema
         .required('Le numéro de SIRET est requis')
-        .matches(/^\d{14}$/, 'Le SIRET doit contenir 14 chiffres'),
+        .matches(/^\d{14}$/, 'Le SIRET doit contenir exactement 14 chiffres'),
+    otherwise: (schema) => schema.notRequired(),
   }),
   businessLeader: yup.string().when('isBusiness', {
     is: true,
-    then: (schema) => schema.min(2).required('Le nom du dirigeant est requis'),
+    then: (schema) =>
+      schema.min(2, 'Minimum 2 caractères').required('Le nom du dirigeant est requis'),
+    otherwise: (schema) => schema.notRequired(),
   }),
-  username: yup.string().min(2).required('Le nom est requis'),
-  birthDate: yup.date().required('La date de naissance est requise'),
+  username: yup.string().min(2, 'Minimum 2 caractères').required('Le nom est requis'),
+  birthDate: yup
+    .string()
+    .required('La date de naissance est requise')
+    .test('is-valid-date', 'Date invalide', (value) => {
+      if (!value) return false;
+      const date = new Date(value);
+      return date instanceof Date && !isNaN(date.getTime());
+    })
+    .test('is-adult', 'Vous devez avoir au moins 18 ans', (value) => {
+      if (!value) return false;
+      const birthDate = new Date(value);
+      const today = new Date();
+      const age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        return age - 1 >= 18;
+      }
+      return age >= 18;
+    }),
   phoneNumber: yup
     .string()
-    .matches(/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/, 'Format de téléphone invalide')
-    .required('Le numéro de téléphone est requis'),
-  address: yup.string().required("L'adresse est requise"),
+    .required('Le numéro de téléphone est requis')
+    .matches(
+      /^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/,
+      'Format invalide (ex: 06 12 34 56 78)'
+    ),
+  address: yup.string().min(5, 'Minimum 5 caractères').required("L'adresse est requise"),
   zipCode: yup
     .string()
-    .matches(/^\d{5}$/, 'Le code postal doit contenir 5 chiffres')
-    .required('Le code postal est requis'),
-  city: yup.string().required('La ville est requise'),
-  country: yup.string().required('Le pays est requis'),
+    .required('Le code postal est requis')
+    .matches(/^\d{5}$/, 'Le code postal doit contenir exactement 5 chiffres'),
+  city: yup.string().min(2, 'Minimum 2 caractères').required('La ville est requise'),
+  country: yup.string().min(2, 'Minimum 2 caractères').required('Le pays est requis'),
 });
 
 const {
@@ -158,6 +195,7 @@ const {
   errors,
   handleSubmit,
   setValues,
+  validate,
 } = useForm({
   validationSchema,
   initialValues: {
@@ -168,58 +206,70 @@ const {
     zipCode: '',
     city: '',
     country: 'France',
-    birthDate: null,
+    birthDate: '',
     username: '',
     phoneNumber: '',
     isBusiness: false,
   },
   validateOnMount: false,
-  keepValuesOnUnmount: true,
 });
 
-const onSubmit = handleSubmit(async (values) => {
-  try {
-    isSubmitting.value = true;
-    showErrors.value = true;
+const onSubmit = handleSubmit(
+  async (values) => {
+    try {
+      isSubmitting.value = true;
 
-    const profilePayload: ClientModel = {
-      businessName: values.businessName,
-      businessSiret: values.businessSiret,
-      businessLeader: values.businessLeader,
-      address: values.address,
-      zipCode: values.zipCode,
-      city: values.city,
-      country: values.country,
-      birthDate: values.birthDate ?? null,
-      username: values.username,
-      phoneNumber: values.phoneNumber,
-      isBusiness: values.isBusiness,
-    };
+      const profilePayload: ClientModel = {
+        businessName: values.isBusiness ? values.businessName : null,
+        businessSiret: values.isBusiness ? values.businessSiret : null,
+        businessLeader: values.isBusiness ? values.businessLeader : null,
+        address: values.address,
+        zipCode: values.zipCode,
+        city: values.city,
+        country: values.country,
+        birthDate: values.birthDate,
+        username: values.username,
+        phoneNumber: values.phoneNumber,
+        isBusiness: values.isBusiness,
+      };
 
-    const response = await patchClientProfil(profilePayload);
+      const response = await patchClientProfil(profilePayload);
 
-    if (response) {
-      addSuccess('Profil mis à jour avec succès !');
+      if (response) {
+        addSuccess('Profil mis à jour avec succès !');
+        openModal.value = false;
+      }
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour du profil:', error);
+      addError({ message: 'Erreur lors de la mise à jour du profil.' });
+    } finally {
+      isSubmitting.value = false;
     }
+  },
+  ({ errors }) => {
+    // Callback en cas d'erreur de validation
+    console.log('Erreurs de validation:', errors);
 
-    showErrors.value = false;
-  } catch (error) {
-    if (!clientProfile.value?.uuid) {
-      addError({ message: 'Le profil utilisateur est introuvable.' });
-      return;
-    }
+    // Afficher un message global
+    addError({
+      message: 'Veuillez corriger les erreurs dans le formulaire.',
+    });
+
+    // Scroll vers la première erreur
+    const firstErrorField = Object.keys(errors)[0];
+    const element = document.querySelector(`[name="${firstErrorField}"]`);
+    element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
-  openModal.value = false;
-});
+);
 
-// ✅ Pré-remplir les champs à l’ouverture
+// ✅ Pré-remplir les champs à l'ouverture
 onMounted(async () => {
   try {
     if (!clientProfile.value?.uuid) {
       const profil = await getClientProfil();
       if (!profil) {
         console.warn('Aucun profil trouvé pour cet utilisateur.');
-        return; // on arrête ici, pas de setValues
+        return;
       }
     }
 
@@ -228,6 +278,7 @@ onMounted(async () => {
       const formattedBirthDate = data.birthDate
         ? new Date(data.birthDate).toISOString().split('T')[0]
         : '';
+
       setValues({
         businessName: data.businessName || '',
         businessSiret: data.businessSiret || '',
@@ -236,7 +287,7 @@ onMounted(async () => {
         zipCode: data.zipCode || '',
         city: data.city || '',
         country: data.country || 'France',
-        birthDate: formattedBirthDate || '',
+        birthDate: formattedBirthDate,
         username: data.username || '',
         phoneNumber: data.phoneNumber || '',
         isBusiness: data.isBusiness || false,

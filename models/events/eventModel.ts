@@ -3,10 +3,10 @@ export interface eventModel {
   type_event: string;
   organisatorUuid: string;
   isAlreadyCreated: boolean;
-  status: string;
+  status?: string;
   date: string[];
   budget: number;
-  formule: string;
+  formule?: string;
   location: string;
   name: string;
   people: number;
@@ -20,6 +20,7 @@ export interface eventModel {
 export interface eventService {
   uuid: string;
   eventUuid: string;
+  sectorName: string;
   professionalServiceUuid?: string;
   serviceUuid: string;
   status: string;

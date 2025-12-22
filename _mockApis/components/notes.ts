@@ -11,11 +11,11 @@ export const colorVariation: colorVariationType[] = [
   },
   {
     id: 3,
-    color: 'lighterror',
+    color: 'spritz',
   },
   {
     id: 4,
-    color: 'lightprimary',
+    color: 'peach',
   },
   {
     id: 5,

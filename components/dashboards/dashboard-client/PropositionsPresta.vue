@@ -173,7 +173,8 @@
             </template>
             <template #description>
               <p class="text-subtitle-1">
-                Aucun prestataire ne s’est positionné sur votre événement pour l’instant.
+                Nos plus de 70 partenaires locaux sont en train de prendre connaissance de votre
+                projet.
               </p>
             </template>
           </BaseEmptyState>

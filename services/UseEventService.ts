@@ -87,7 +87,6 @@ export const useEventService = () => {
     try {
       if (!api) return;
       const { data } = await api.post('/event-service/create', payload);
-      addSuccess('Services ajoutés avec succès');
       resetForm();
       return data;
     } catch (err) {

@@ -248,14 +248,14 @@
     {
       "sector": "food",
       "isService": false,
-      "category": "sucré",
-      "question": "Vos envies sucrées ?"
+      "category": "salé",
+      "question": "Vos envies salées ?"
     },
     {
       "sector": "food",
       "isService": false,
-      "category": "salé",
-      "question": "Vos envies salées ?"
+      "category": "sucré",
+      "question": "Vos envies sucrées ?"
     },
     {
       "sector": "food",
@@ -302,8 +302,8 @@
     {
       "sector": "lieux",
       "isService": false,
-      "category": "imposé",
-      "question": "Vous cceptez qu'un lieu vous impose :"
+      "category": "prestations imposées",
+      "question": "Vous acceptez qu'un lieu vous impose :"
     },
     {
       "sector": "lieux",
@@ -321,7 +321,7 @@
       "sector": "lieux",
       "isService": false,
       "category": "options lieux",
-      "question": "Nécessitez-vous d'option ? "
+      "question": "Avez-vous besoin d’options ?"
     },
     {
       "sector": "boisson",
@@ -332,7 +332,7 @@
     {
       "sector": "boisson",
       "isService": false,
-      "category": "boissons",
+      "category": "type",
       "question": "Quels types de boissons ?"
     },
     {
@@ -357,7 +357,7 @@
       "sector": "musique",
       "isService": true,
       "category": null,
-      "question": "Vous souhaitez ambiancer vos invités ?"
+      "question": "Quel format musical choisissez vous pour ambiancer vos invités ?"
     },
     {
       "sector": "musique",
@@ -573,7 +573,7 @@
       "sector": "humain",
       "isService": false,
       "category": "cérémonie",
-      "question": "Si cérémonie, quel genre ?"
+      "question": "Si vous faites appel à un.e officiant.e, quel sera le style de votre cérémonie ?"
     },
     {
       "sector": "humain",

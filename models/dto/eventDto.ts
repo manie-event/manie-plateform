@@ -25,6 +25,7 @@ export interface eventModelDto {
         uuid: string;
         eventUuid: string;
         professionalServiceUuid?: string;
+        sectorName: string;
         serviceUuid: string;
         status: string;
         keywordsUuid: string[];
