@@ -157,7 +157,7 @@ export const useEventForm = () => {
 
   const addNewServiceForm = () => {
     event.value.eventServices.push({
-      sectorName: '',
+      sectorName: "Veuillez choisir votre secteur d'activité",
       serviceUuid: '',
       keywordsUuid: [],
       uuid: '',

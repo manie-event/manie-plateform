@@ -136,7 +136,6 @@
             :items="sectorFiltered"
             item-title="label"
             item-value="value"
-            placeholder="Secteur"
             @update:modelValue="updateServiceSector(i, service.sectorName)"
           />
 
