@@ -4,10 +4,12 @@
     <NuxtPage />
   </NuxtLayout>
   <Teleport to="body">
-    <InactivityModal
-      v-if="openInactivityModal"
-      v-model:open-modal="openInactivityModal"
-    ></InactivityModal>
+    <v-no-ssr>
+      <InactivityModal
+        v-if="openInactivityModal"
+        v-model:open-modal="openInactivityModal"
+      ></InactivityModal>
+    </v-no-ssr>
   </Teleport>
 </template>
 <script setup lang="ts">
@@ -16,7 +18,9 @@ import { Teleport } from 'vue';
 
 const { openInactivityModal } = useInactivityTracker();
 
-useInactivityTracker();
+onMounted(() => {
+  useInactivityTracker();
+});
 </script>
 <style lang="scss">
 .nuxt-link {

@@ -1,10 +1,10 @@
 import type { AxiosError } from 'axios';
 import type { eventModel } from '~/models/events/eventModel';
-import { useEventService } from '~/services/UseEventService';
+import { useEventServiceService } from '~/services/UseEventServiceService';
 import { useApi } from '../UseApi';
 
 export const UseEvent = () => {
-  const { createEventService, updateEventFormuleService } = useEventService();
+  const { createEventService, updateEventFormuleService } = useEventServiceService();
 
   const isLoading = ref(false);
   const error = ref<string | null>(null);

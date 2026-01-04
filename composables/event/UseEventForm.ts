@@ -2,7 +2,7 @@
 import questionnaire from '@/data/questionnaire-client-refonte.json';
 import * as yup from 'yup';
 import type { SectorsDto } from '~/models/dto/sectorsDto';
-import { useAddNewEventService } from '../event-service/UseAddNewEventService';
+import { useAddNewEventService } from '../event-service/UseEventService';
 import { useSector } from '../sector/UseSector';
 
 export const useEventForm = () => {
@@ -10,6 +10,7 @@ export const useEventForm = () => {
   const { keywords, sectors, servicesFiltered, services } = storeToRefs(useSectorStore());
   const { sectorFiltered } = useAddNewEventService();
   const { selectSectors } = useSector();
+  const { deleteEventService } = useAddNewEventService();
   const { addError } = useToaster();
   const { event } = storeToRefs(useEventsStore());
 
@@ -19,14 +20,6 @@ export const useEventForm = () => {
   const isBudgetGlobale = ref(false);
   const budgetInput = ref(0);
   const today = new Date().toISOString().split('T')[0];
-
-  // const selectedServices = ref([
-  //   {
-  //     selectedSector: undefined,
-  //     selectedServiceId: '',
-  //     selectedKeywords: [] as string[],
-  //   },
-  // ]);
 
   const dateStart = computed({
     get: () => event.value.date?.[0] || '',
@@ -70,7 +63,7 @@ export const useEventForm = () => {
 
   const schemaPage2 = yup.object({
     organized_for: yup.string().required('Veuillez indiquer pour qui est organisé l’événement'),
-    theme: yup.string().required('Veuillez définir un thème'),
+    theme: yup.string(),
     people: yup.number().positive('Le nombre de participants doit être > 0'),
     budget: yup.number().positive('Le budget doit être > 0'),
   });
@@ -168,14 +161,14 @@ export const useEventForm = () => {
 
   const removeService = (index: number) => {
     if (event.value.eventServices.length > 1) {
-      event.value.eventServices.splice(index, 1);
+      deleteEventService(event.value.eventServices[index].uuid, index);
     }
   };
 
   const updateServiceSector = (serviceIndex: number, selectedSector: any) => {
     const service = event.value.eventServices[serviceIndex];
 
-    selectSectors(selectedSector); //esthétique
+    selectSectors(selectedSector);
     service.sectorName = selectedSector;
     service.serviceUuid = '';
     service.keywordsUuid = [];
@@ -188,15 +181,6 @@ export const useEventForm = () => {
   };
 
   const toggleKeywordForService = (index: number, keywordUuid: string) => {
-    console.log(index, 'toggleKeywordForService index');
-    console.log(keywordUuid, 'toggleKeywordForService keywordUuid');
-    console.log(event.value.eventServices[0], 'EVENT SERVICE ----- ');
-
-    // on m'envoie l'index du keyword
-    // on m'envoie l'uuid du keyword
-    // ---
-    //
-
     const service = event.value.eventServices[index];
     const keywordsList = service.keywordsUuid;
     const pos = keywordsList.indexOf(keywordUuid);

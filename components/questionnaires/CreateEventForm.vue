@@ -94,14 +94,28 @@
         </v-radio-group>
 
         <v-text-field v-model="event.theme" label="Thème" class="mb-4" />
-        <v-number-input v-model="event.people" label="Nombre d'invités" class="mb-4" />
+        <v-text-field
+          type="number"
+          v-model="event.people"
+          label="Nombre d'invités"
+          class="mb-4"
+          :min="1"
+          controlVariant="default"
+        />
 
         <v-radio-group v-model="isBudgetGlobale" class="mb-2">
           <v-radio label="Par personne" :value="false" />
           <v-radio label="Global" :value="true" />
         </v-radio-group>
 
-        <v-number-input v-model="event.budget" label="Budget" variant="outlined" />
+        <v-text-field
+          type="number"
+          v-model="event.budget"
+          label="Budget"
+          variant="outlined"
+          :min="1"
+          controlVariant="default"
+        />
       </div>
 
       <!-- PAGE 3 -->

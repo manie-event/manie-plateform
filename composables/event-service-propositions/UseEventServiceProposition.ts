@@ -1,6 +1,6 @@
 import { useProfessionalServiceService } from '@/services/UseProfessionalServiceService';
 import type { ProfessionalServiceUuid } from '~/models/professionalService/professionalServiceUuid';
-import { useEventService } from '~/services/UseEventService';
+import { useEventServiceService } from '~/services/UseEventServiceService';
 import { useProfessionalProposition } from '~/services/UseProfessionalProposition';
 
 const servicePropositionAvailable = ref(false);
@@ -15,7 +15,7 @@ export const useEventServiceProposition = () => {
     declinedByClient,
   } = useProfessionalProposition();
   const { services, servicesFiltered } = storeToRefs(useSectorStore());
-  const { getEventsPerOrganisator, getEventServiceList } = useEventService();
+  const { getEventsPerOrganisator, getEventServiceList } = useEventServiceService();
   const { setServiceEventPropositionForPresta, setServiceEventPropositionForClient } =
     usePropositionStore();
 
@@ -28,13 +28,6 @@ export const useEventServiceProposition = () => {
         console.warn('⚠️ Aucun événement trouvé.');
         return [];
       }
-
-      // Pour récupérer les propositions pour chaque événement
-      // ----
-      // Récupérer tous les events OK
-      // Récupérer les services de chaque event
-      // Récupérer les propositions de chaque service
-
       const allPropositions = await Promise.all(
         allEvents.map(async (event) => {
           if (!event?.eventServices?.length) return [];

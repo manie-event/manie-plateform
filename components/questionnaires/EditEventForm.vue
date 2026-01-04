@@ -94,22 +94,30 @@
         </v-radio-group>
 
         <v-text-field v-model="event.theme" label="Thème" class="mb-4" />
-        <v-number-input v-model="event.people" label="Nombre d'invités" class="mb-4" />
+        <v-text-field
+          type="number"
+          min="1"
+          v-model="event.people"
+          label="Nombre d'invités"
+          class="mb-4"
+        />
 
         <v-radio-group v-model="isBudgetGlobale" class="mb-2">
           <v-radio label="Par personne" :value="false" />
           <v-radio label="Global" :value="true" />
         </v-radio-group>
 
-        <v-number-input v-model="event.budget" label="Budget" variant="outlined" />
+        <v-text-field
+          type="number"
+          min="1"
+          v-model="event.budget"
+          label="Budget"
+          variant="outlined"
+        />
       </div>
 
       <!-- PAGE 3 -->
       <div v-if="currentPage === 3">
-        <v-alert color="warning" class="my-6">
-          ⚠️ Certains services sont verrouillés car déjà utilisés dans des propositions.
-        </v-alert>
-
         <div
           v-for="(service, i) in event.eventServices"
           :key="i"
@@ -118,14 +126,20 @@
           <div class="d-flex justify-space-between align-center mb-3">
             <h3 class="font-weight-bold">Prestataires</h3>
             <Icon
-              v-if="event.eventServices.length > 1"
+              v-if="event.eventServices.length > 1 && service.status == 'pending'"
               icon="solar:trash-bin-trash-line-duotone"
               height="24"
               class="cursor-pointer"
               @click="removeService(i)"
             />
           </div>
-
+          <v-alert
+            color="rgb(var(--v-theme-peach))"
+            class="my-6 d-flex align-center justify-center text-white"
+            v-if="service.status !== 'pending' && service.status !== 'canceled'"
+          >
+            Ce service est verrouillé car (au moins) un prestataire s'est positionné dessus.
+          </v-alert>
           <div
             v-for="question in getFilteredQuestionsForService(service.sectorName)"
             :key="question.category"
@@ -144,6 +158,7 @@
                 }"
                 :variant="service.serviceUuid === answer.uuid ? 'flat' : 'outlined'"
                 class="ma-1"
+                :disabled="service.status !== 'pending' && service.status !== 'canceled'"
                 @click="selectServiceForIndex(i, answer.uuid)"
               >
                 {{ answer.name }}
@@ -156,6 +171,7 @@
                 :key="answer.uuid"
                 :variant="service.keywordsUuid.includes(answer.uuid) ? 'flat' : 'outlined'"
                 class="ma-1"
+                :disabled="service.status !== 'pending' && service.status !== 'canceled'"
                 @click="toggleKeywordForService(i, answer.uuid)"
               >
                 {{ answer.value }}
@@ -208,12 +224,12 @@ import { UseEvent } from '~/composables/event/UseEvent';
 import { useEventForm } from '~/composables/event/UseEventForm';
 import { useSector } from '~/composables/sector/UseSector';
 import type { eventModel } from '~/models/events/eventModel';
-import { useEventService } from '~/services/UseEventService';
+import { useEventServiceService } from '~/services/UseEventServiceService';
 
 const props = defineProps<{ event: eventModel }>();
 const open = defineModel<boolean>('open-customer-form');
 
-const { getEventsInstance } = useEventService();
+const { getEventsInstance } = useEventServiceService();
 const { updateEvent } = UseEvent();
 const { getListSector, allKeywords } = useSector();
 const { event } = storeToRefs(useEventsStore());
@@ -241,6 +257,14 @@ const {
 } = useEventForm();
 
 const { addSuccess } = useToaster();
+
+const eventServiceLoged = computed(() => {
+  const loged = props.event.eventServices.filter(
+    (service) => service.status !== 'canceled' && service.status !== 'pending'
+  );
+  console.log(loged, 'LOGED');
+  return;
+});
 
 const handleSubmit = async () => {
   // const locked = isLocked.value;

@@ -3,7 +3,7 @@ import questionnaire from '~/data/questionnaire-client-refonte.json';
 import type { SectorsDto } from '~/models/dto/sectorsDto';
 import type { ServicesFiltered } from '~/models/dto/serviceFiltered';
 import type { Sectors } from '~/models/professionalService/Sectors';
-import { useEventService } from '~/services/UseEventService';
+import { useEventServiceService } from '~/services/UseEventServiceService';
 import { useSector } from '../sector/UseSector';
 
 export const useAddNewEventService = () => {
@@ -11,11 +11,12 @@ export const useAddNewEventService = () => {
   const { eventServices } = storeToRefs(eventServiceStore);
   const { keywords, sectors, servicesFiltered } = storeToRefs(useSectorStore());
   const { selectSectors } = useSector();
-  const { createEventServiceItem } = useEventService();
+  const { createEventServiceItem, deleteEventEventService } = useEventServiceService();
 
   const addNewEventService = async (eventUuid: string) => {
     const createNewEventService = eventServices.value.map((service) =>
       createEventServiceItem({
+        sectorName: service.selectedSector!,
         serviceUuid: service.selectedServiceId,
         eventUuid: eventUuid,
         keywordsUuid: service.selectedKeywords,
@@ -114,6 +115,14 @@ export const useAddNewEventService = () => {
     });
   };
 
+  const deleteEventService = async (eventServiceUuid: string, index: number) => {
+    const eventStore = useEventsStore();
+    const { event } = storeToRefs(eventStore);
+
+    await deleteEventEventService(eventServiceUuid);
+    event.value.eventServices.splice(index, 1);
+  };
+
   return {
     sectorFiltered,
     addNewServiceForm,
@@ -123,5 +132,6 @@ export const useAddNewEventService = () => {
     toggleKeywordForService,
     updateServiceSector,
     getFilteredQuestionsForService,
+    deleteEventService,
   };
 };

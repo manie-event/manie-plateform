@@ -2,7 +2,7 @@ import { defineNuxtConfig } from 'nuxt/config';
 import svgLoader from 'vite-svg-loader';
 
 export default defineNuxtConfig({
-  ssr: false,
+  ssr: true,
 
   runtimeConfig: {
     public: {

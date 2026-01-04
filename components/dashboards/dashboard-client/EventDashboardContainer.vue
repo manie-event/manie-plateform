@@ -206,6 +206,12 @@ onMounted(async () => {
     selectedEvent(props.events[0].uuid);
   }
 });
+
+watch(props.events, () => {
+  if (props.events.length > 0 && !currentEvent.value) {
+    selectedEvent(props.events[0].uuid);
+  }
+});
 </script>
 <style lang="scss" scoped>
 .event-dashboard {

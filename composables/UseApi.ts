@@ -3,26 +3,28 @@ import axios, { type AxiosInstance } from 'axios';
 
 let apiInstance: AxiosInstance | null = null;
 
-export const useApi = (): AxiosInstance | null => {
+export const useApi = (): AxiosInstance => {
   const runtimeConfig = useRuntimeConfig();
-  const router = useRouter();
-  let isRefreshing = false;
-  let refreshQueue: (() => void)[] = [];
 
-  const processQueue = () => {
-    refreshQueue.forEach((cb) => cb());
-    refreshQueue = [];
-  };
+  // ✅ Récupère les cookies ICI (contexte Nuxt valide)
+  const { token, refreshToken } = useAuthCookies();
 
   if (!apiInstance) {
     apiInstance = axios.create({
       baseURL: runtimeConfig.public.apiUrl,
     });
 
+    let isRefreshing = false;
+    let refreshQueue: (() => void)[] = [];
+
+    const processQueue = () => {
+      refreshQueue.forEach((cb) => cb());
+      refreshQueue = [];
+    };
+
     apiInstance.interceptors.request.use(
       async (config) => {
-        const { token } = useAuthCookies();
-
+        // ✅ Utilise la ref récupérée en haut
         if (process.client && !token.value) {
           await new Promise((resolve) => setTimeout(resolve, 150));
         }
@@ -40,11 +42,10 @@ export const useApi = (): AxiosInstance | null => {
       (response) => response,
       async (error) => {
         const originalRequest = error.config;
-        const { token } = useAuthCookies();
-        const { refreshToken } = useRefreshToken();
 
         if (error.response?.status === 401 && refreshToken.value && !originalRequest._retry) {
           originalRequest._retry = true;
+
           if (isRefreshing) {
             return new Promise((resolve) => {
               refreshQueue.push(() => {
@@ -71,16 +72,19 @@ export const useApi = (): AxiosInstance | null => {
 
               apiInstance!.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
 
-              // ✅ Relance la requête initiale avec le nouveau token
               originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
               processQueue();
               return apiInstance!.request(originalRequest);
             }
           } catch (refreshError) {
-            // 💣 Si le refresh échoue → redirection login
             token.value = null;
             refreshToken.value = null;
-            await router.push('/auth/login');
+
+            if (process.client) {
+              // ✅ Navigation avec navigateTo (fonctionne SSR + client)
+              await navigateTo('/auth/login');
+            }
+
             return Promise.reject(refreshError);
           } finally {
             isRefreshing = false;

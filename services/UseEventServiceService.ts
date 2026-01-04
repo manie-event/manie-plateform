@@ -3,7 +3,7 @@ import type { AxiosError } from 'axios';
 import { eventsMapper } from '~/mappers/eventsMapper';
 import type { QuestionnaireClient } from '~/models/questionnaire/QuestionnaireClientModel';
 
-export const useEventService = () => {
+export const useEventServiceService = () => {
   const { addSuccess } = useToaster();
   const api = useApi();
   const eventStore = useEventsStore();
@@ -32,7 +32,6 @@ export const useEventService = () => {
     try {
       if (!api) return;
 
-      const { mapDtoToEvent } = eventsMapper();
       const allEvents: any[] = [];
       let page = 1;
       const limit = 10;
@@ -80,6 +79,7 @@ export const useEventService = () => {
   };
 
   const createEventServiceItem = async (payload: {
+    sectorName: string;
     serviceUuid: string;
     eventUuid: string;
     keywordsUuid: string[];
@@ -114,6 +114,15 @@ export const useEventService = () => {
     }
   };
 
+  const deleteEventEventService = async (eventServiceUuid: string) => {
+    try {
+      if (!api) return;
+      await api.delete(`/event-service/delete/${eventServiceUuid}`);
+    } catch (err) {
+      useDisplayErrorMessage(err as AxiosError);
+    }
+  };
+
   return {
     createEventService,
     getEventsPerOrganisator,
@@ -121,5 +130,6 @@ export const useEventService = () => {
     getEventServiceList,
     createEventServiceItem,
     updateEventFormuleService,
+    deleteEventEventService,
   };
 };

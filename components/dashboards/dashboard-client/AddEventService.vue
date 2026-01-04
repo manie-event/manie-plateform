@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="dialogOpen" width="800">
-    <v-card class="pa-4">
+    <v-card class="pa-6">
       <Icon
         icon="ri:close-fill"
         size="22"
@@ -95,7 +95,7 @@
       </div>
 
       <v-row class="d-flex justify-space-between align-center">
-        <v-col cols="12" md="6" class="w-100">
+        <v-col cols="12" md="6" class="w-100 px-0">
           <v-btn
             color="rgb(var(--v-theme-darkbg))"
             variant="outlined"
@@ -123,7 +123,7 @@
 <script setup lang="ts">
 import CommonLoader from '@/components/common/Loader.vue';
 import { Icon } from '@iconify/vue';
-import { useAddNewEventService } from '~/composables/event-service/UseAddNewEventService';
+import { useAddNewEventService } from '~/composables/event-service/UseEventService';
 import type { eventModel } from '~/models/events/eventModel';
 
 const props = defineProps<{ event: eventModel }>();

@@ -6,14 +6,14 @@ import { storeToRefs } from 'pinia';
 import BaseEmptyState from '~/components/common/BaseEmptyState.vue';
 import { useClientProfil } from '~/composables/client-user/UseClientProfil';
 import { useEventServiceProposition } from '~/composables/event-service-propositions/UseEventServiceProposition';
-import { useEventService } from '~/services/UseEventService';
+import { useEventServiceService } from '~/services/UseEventServiceService';
 import { useUserStore } from '~/stores/userStore';
 
 const userStore = useUserStore();
 const { isProfileCreated, isProfessional } = storeToRefs(userStore);
 const { getClientProfil } = useClientProfil();
 const { events } = storeToRefs(useEventsStore());
-const { getEventsPerOrganisator } = useEventService();
+const { getEventsPerOrganisator } = useEventServiceService();
 const { getServicePropositionForClient } = useEventServiceProposition();
 
 const isEventPast = computed(() => events.value.filter((event) => isEventDone(event.date[0])));

@@ -36,6 +36,9 @@ export const useEventsStore = defineStore('useEventsStore', () => {
 
   const setQuestionnaireAnswers = (newAnswers: eventModel) => {
     event.value = newAnswers;
+    if (event.value.isAlreadyCreated && event.value.people > 0) {
+      event.value.budget = event.value.budget / event.value.people;
+    }
   };
 
   const resetOrganisatorForm = () => {
