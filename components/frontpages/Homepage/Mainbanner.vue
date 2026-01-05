@@ -61,20 +61,6 @@
 
 <script setup lang="ts">
 import bouleDisco from '@/public/images/backgrounds/BOULE PNG.png';
-const { $gsap, $ScrollTrigger } = useNuxtApp();
-
-// onMounted(() => {
-//   $gsap.to('.main-banner__cta', {
-//     top: '80vh',
-//     scrollTrigger: {
-//       trigger: 'body',
-//       start: 'top 20vh',
-//       end: 'bottom bottom',
-//       scrub: true,
-//       markers: true,
-//     },
-//   });
-// });
 </script>
 
 <style lang="scss" scoped>

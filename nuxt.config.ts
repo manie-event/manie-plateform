@@ -27,12 +27,24 @@ export default defineNuxtConfig({
     plugins: [svgLoader()],
   },
 
-  modules: ['@pinia/nuxt'],
+  modules: ['@pinia/nuxt', '@zadigetvoltaire/nuxt-gtm'],
 
   app: {
     head: {
       title: 'Manie - Facilite vos événements',
     },
+  },
+
+  gtm: {
+    id: 'GTM-5V625W39',
+    defer: false,
+    compatibility: false,
+    enabled: true,
+    debug: true, // Activez en dev, désactivez en prod
+    loadScript: true,
+    enableRouterSync: true,
+    ignoredViews: ['homepage'],
+    trackOnNextTick: false,
   },
 
   compatibilityDate: '2024-09-06',
