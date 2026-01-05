@@ -40,7 +40,7 @@ export default defineNuxtConfig({
     defer: false,
     compatibility: false,
     enabled: true,
-    debug: true, // Activez en dev, désactivez en prod
+    debug: false, // Activez en dev, désactivez en prod
     loadScript: true,
     enableRouterSync: true,
     ignoredViews: ['homepage'],
