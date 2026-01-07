@@ -100,14 +100,18 @@
 import questionnairePresta from '@/data/questionnaire-presta.json';
 import { storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
+import { useProfessionalService } from '~/composables/professional-services/UseProfessionalService';
 import type { Services } from '~/models/professionalService/Services';
 import { useSectorStore } from '~/stores/sectorStore';
 import { useUserStore } from '~/stores/userStore';
+import { useToaster } from '~/utils/toaster';
 
 const openModificationModal = defineModel<boolean>('openModificationModal', { default: false });
 
 const { professionalActivities, professionalUuid } = storeToRefs(useUserStore());
 const { services, sectors, keywords } = storeToRefs(useSectorStore());
+const { professionalServices } = useProfessionalService();
+const { addError, addSuccess } = useToaster();
 
 const selectedServices = ref<Record<number, Services>>({});
 const selectedKeywordsArray = ref<Record<number, string[]>>([]);
@@ -174,12 +178,10 @@ const selectServices = (activityIndex: number, service: Services) => {
   }
 };
 
-// Vérifier si un keyword est sélectionné
 const isKeywordSelected = (activityIndex: number, keywordUuid: string): boolean => {
   return selectedKeywordsArray.value[activityIndex]?.includes(keywordUuid) ?? false;
 };
 
-// Toggle un keyword
 const toggleKeywordArray = (activityIndex: number, keyword: any) => {
   if (!selectedKeywordsArray.value[activityIndex]) {
     selectedKeywordsArray.value[activityIndex] = [];
@@ -195,23 +197,38 @@ const toggleKeywordArray = (activityIndex: number, keyword: any) => {
   }
 };
 
-// Sauvegarder les réponses
-const saveAnswers = () => {
-  const responses = activities.value.map((activity, index) => ({
-    name: selectedServices.value[index]?.name || '',
-    selectedService: selectedServices.value[index]?.uuid,
-    professionalUuid: professionalUuid.value || '',
-    selectedKeywords: selectedKeywordsArray.value[index] || [],
-  }));
+const saveAnswers = async () => {
+  const responses = activities.value
+    .map((activity, index) => {
+      const service = selectedServices.value[index];
+      const keywordsArray = selectedKeywordsArray.value[index] || [];
 
-  console.log('Réponses à sauvegarder:', responses);
+      if (!service?.uuid) {
+        addError({ message: `Aucun service sélectionné pour ${activity}` });
+        return null;
+      }
+      if (keywordsArray.length === 0) {
+        addError({ message: `Veuillez sélectionner au moins un mot clé pour ${activity}` });
+        return null;
+      }
 
-  // TODO: Envoyer à l'API
-  // await $fetch('/api/professional/responses', {
-  //   method: 'POST',
-  //   body: responses
-  // });
+      return {
+        serviceUuid: service.uuid,
+        professionalUuid: professionalUuid.value!,
+        keywordsUuid: keywordsArray,
+      };
+    })
+    .filter(Boolean);
 
+  // Envoyer les réponses une par une avec un délai de 500ms entre chaque pour éviter la saturation de Resend
+  for (let i = 0; i < responses.length; i++) {
+    await professionalServices(responses[i]);
+
+    if (i < responses.length - 1) {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+    }
+  }
+  addSuccess('Vos services ont été mis à jour avec succès !');
   openModificationModal.value = false;
 };
 </script>

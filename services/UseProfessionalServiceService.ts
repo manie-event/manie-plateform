@@ -1,6 +1,6 @@
 import type { AxiosError } from 'axios';
 import { useDisplayErrorMessage } from '~/composables/UseDisplayErrorMessage';
-import type { ProfessionalServiceUuid } from '~/models/professionalService/professionalServiceUuid';
+import type { ProfessionalServiceCreate } from '~/models/professionalService/professionalServiceCreate';
 
 export const useProfessionalServiceService = () => {
   const { addError } = useToaster();
@@ -76,10 +76,12 @@ export const useProfessionalServiceService = () => {
     return data.data ?? [];
   };
 
-  const sendProfessionalServices = async (servicesPayload: ProfessionalServiceUuid) => {
+  const sendProfessionalServices = async (services: ProfessionalServiceCreate) => {
+    console.log(services, '--- services to sendProfessionalServices ---');
+
     try {
       if (!api) throw new Error('API non initialisée');
-      const { data } = await api.post('/professional-service/create', servicesPayload);
+      const { data } = await api.post('/professional-service/create', services);
 
       return data;
     } catch (error) {

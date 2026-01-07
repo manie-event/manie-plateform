@@ -90,21 +90,6 @@
             >
               {{ isFirstConnection ? 'Votre service doit être vérifié' : 'Mon activité' }}
             </v-btn>
-            <v-btn
-              :disabled="isFirstConnection || professionalServices.length === 3"
-              color="rgb(var(--v-theme-darkbg))"
-              style="color: rgb(var(--v-theme-background))"
-              class="w-100"
-              @click="openServiceModal = true"
-            >
-              {{
-                isFirstConnection
-                  ? 'Nous vérifions votre nouveau service sous 48h'
-                  : professionalServices.length === 3
-                    ? 'Vous détenez le maximum de service possible'
-                    : 'Ajouter une activité'
-              }}
-            </v-btn>
           </template>
         </v-col>
       </v-row>
@@ -116,7 +101,6 @@
         v-model:openModificationModal="openModificationModal"
         class="mt-6"
       />
-      <CreatePrestataireServices v-model:openCreateServiceModal="openServiceModal" class="mt-6" />
     </Teleport>
   </section>
 </template>
@@ -129,7 +113,6 @@ import { useProfessionalProfileService } from '@/services/UseProfessionalProfile
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { computed, onMounted, ref } from 'vue';
-import CreatePrestataireServices from '~/components/questionnaires/ServicesPrestataire.vue';
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { useProfessionalStore } from '~/stores/professionalStore';

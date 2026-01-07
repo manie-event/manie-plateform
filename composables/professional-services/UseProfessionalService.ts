@@ -1,12 +1,10 @@
 import { useProfessionalServiceService } from '@/services/UseProfessionalServiceService';
-import type { ProfessionalServiceUuid } from '~/models/professionalService/professionalServiceUuid';
-import { useProfessionalStore } from '~/stores/professionalStore';
+import type { ProfessionalServiceCreate } from '~/models/professionalService/professionalServiceCreate';
 
 export const useProfessionalService = () => {
-  const { setProfessionalServices } = useProfessionalStore();
   const { sendProfessionalServices } = useProfessionalServiceService();
 
-  const professionalServices = async (service: ProfessionalServiceUuid) => {
+  const professionalServices = async (service: ProfessionalServiceCreate) => {
     await sendProfessionalServices(service);
   };
   return {

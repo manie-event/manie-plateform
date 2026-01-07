@@ -13,6 +13,7 @@
 <script setup lang="ts">
 import InactivityModal from '@/components/common/InactivityModal.vue';
 import { Teleport } from 'vue';
+import { useInactivityTracker } from './composables/UseInactivityTracker';
 
 const { openInactivityModal } = useInactivityTracker();
 
