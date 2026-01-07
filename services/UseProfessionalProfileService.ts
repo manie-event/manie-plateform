@@ -9,6 +9,8 @@ export const useProfessionalProfileService = () => {
   const api = useApi();
 
   const createProfessionalProfile = async (professionalProfil: ProfessionalProfile) => {
+    console.log(professionalProfil, 'createProfessionalProfile');
+
     try {
       if (!api) return;
       const { data } = await api.post('/professional/create', professionalProfil);

@@ -1,3 +1,4 @@
+import { defineStore } from 'pinia';
 import type { ProfessionalServiceUuid } from '~/models/professionalService/professionalServiceUuid';
 
 export const useProfessionalStore = defineStore('professional-service', () => {

@@ -68,8 +68,7 @@ export const useAuthentification = () => {
         addSuccess('Connexion réussie.');
         await router.push({ path: '/dashboards/dashboard2' });
         await getProfessionalProfile();
-        await getProfessionalProfileDetails();
-        await getServicePropositionForProfessional();
+        isProfessional.value = true;
       }
     } catch (err) {
       useDisplayErrorMessage(err as AxiosError);

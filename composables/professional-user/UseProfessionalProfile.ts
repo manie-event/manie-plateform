@@ -1,4 +1,5 @@
 import { useProfessionalServiceService } from '@/services/UseProfessionalServiceService';
+import { storeToRefs } from 'pinia';
 import { useProfessionalStore } from '../../stores/professionalStore';
 
 export const useProfessionalProfile = () => {

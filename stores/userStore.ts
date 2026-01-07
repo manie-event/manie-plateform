@@ -36,6 +36,14 @@ export const useUserStore = defineStore(
       return name.charAt(0).toUpperCase() || '?';
     });
 
+    const professionalActivities = computed(() => {
+      return [
+        professionalUser.value?.mainActivity,
+        professionalUser.value?.secondActivity,
+        professionalUser.value?.thirdActivity,
+      ];
+    });
+
     // --- setters ---
     const setUser = (userData: User) => {
       user.value = userData;
@@ -103,6 +111,7 @@ export const useUserStore = defineStore(
       category,
       displayName,
       initials,
+      professionalActivities,
       setUserAccepted,
       setUser,
       setProfessionalUser,

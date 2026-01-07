@@ -1,4 +1,5 @@
 import type { AxiosError } from 'axios';
+import { useDisplayErrorMessage } from '~/composables/UseDisplayErrorMessage';
 import type { ProfessionalServiceUuid } from '~/models/professionalService/professionalServiceUuid';
 
 export const useProfessionalServiceService = () => {

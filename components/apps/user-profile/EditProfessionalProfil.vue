@@ -6,88 +6,97 @@
         size="22"
         class="text-grey100 cursor-pointer"
         :style="{ position: 'absolute', right: '20px', top: '20px' }"
-        @click="openModal = false"
+        @click="closeModal"
       />
       <v-form class="edit-professional__formulaire">
-        <div v-show="currentPage === 1">
-          <v-divider class="mt-6"
-            ><p class="mt-6"></p>
-            A propos de votre entreprise</v-divider
-          >
+        <div>
+          <v-divider class="mt-6">
+            <p class="mt-6">A propos de votre entreprise</p>
+          </v-divider>
+
           <v-text-field
             class="mt-6"
             label="Le nom de votre entreprise ?"
-            v-model="profile.name"
+            v-model="professionalUser.name"
             :error-messages="showErrors ? errors.name : undefined"
           />
+
           <v-text-field
             label="Le nom complet de l'interlocuteur principal ?"
-            v-model="profile.mainInterlocutor"
+            v-model="professionalUser.mainInterlocutor"
             :error-messages="showErrors ? errors.mainInterlocutor : undefined"
           />
 
           <v-text-field
             label="Votre Numéro De Siret ?"
-            v-model="profile.siret"
+            v-model="professionalUser.siret"
             :error-messages="showErrors ? errors.siret : undefined"
           />
 
           <v-text-field
             label="L'adresse complète du siège social ?"
-            v-model="profile.address"
+            v-model="professionalUser.address"
             :error-messages="showErrors ? errors.address : undefined"
           />
 
-          <v-divider class="border-opacity-50 mb-6"
-            ><p class="mb-6">A propos de votre activité</p></v-divider
-          >
+          <v-divider class="border-opacity-50 mb-6">
+            <p class="mb-6">A propos de votre activité</p>
+          </v-divider>
+
           <v-select
             label="Votre activité principale ?"
-            v-model="profile.mainActivity"
+            v-model="professionalUser.mainActivity"
             :items="activityItems"
             item-title="label"
             item-value="value"
-            @update:model-value="setSector"
             :error-messages="showErrors ? errors.mainActivity : undefined"
           />
+
+          <v-select
+            label="Votre seconde activité ?"
+            v-model="professionalUser.secondActivity"
+            :items="activityItems"
+            item-title="label"
+            item-value="value"
+          />
+
+          <v-select
+            label="Votre troisième activité ?"
+            v-model="professionalUser.thirdActivity"
+            :items="activityItems"
+            item-title="label"
+            item-value="value"
+          />
+
           <v-textarea
-            v-model="profile.bio"
+            v-model="professionalUser.bio"
             label="Une courte description de votre activité ?"
             placeholder="Veuillez renseigner votre activité ici"
             counter="1000"
             :error-messages="showErrors ? errors.bio : undefined"
-          ></v-textarea>
+          />
 
           <v-number-input
             label="Depuis quelle année exercez-vous cette activité ?"
-            v-model="profile.experience"
+            v-model="professionalUser.experience"
             control-variant="hidden"
             :min="0"
             :error-messages="showErrors ? errors.experience : undefined"
           />
 
-          <!-- <v-select
-            label="Votre secteur géographique ?"
-            v-model="profile.geographicArea"
-            :items="geographicActivity"
-            item-title="label"
-            item-value="value"
-            :error-messages="showErrors ? errors.geographicArea : undefined"
-          /> -->
-
+          <!-- Certifications -->
           <div>
             <div
-              v-for="(certif, index) in profile.certification"
+              v-for="(certif, index) in professionalUser.certification"
               :key="index"
               class="flex items-center gap-2 mb-3"
             >
               <v-text-field
-                v-model="profile.certification[index]"
+                v-model="professionalUser.certification[index]"
                 label="Certification(s) & Label(s)"
                 variant="outlined"
                 placeholder="Exemple : Label AB (Bio)"
                 hide-details
-                :error-messages="showErrors ? errors.certification : undefined"
                 class="flex-1"
                 counter="255"
               />
@@ -96,14 +105,13 @@
                 width="24"
                 height="24"
                 icon="solar:trash-bin-trash-line-duotone"
-                v-if="profile.certification.length > 1"
+                v-if="professionalUser.certification.length > 1"
                 color="error"
                 size="small"
                 @click="removeCertification(index)"
               />
             </div>
 
-            <!-- Bouton d’ajout -->
             <v-btn
               color="rgb(var(--v-theme-darkbg))"
               style="color: rgb(var(--v-theme-background))"
@@ -114,63 +122,66 @@
             </v-btn>
           </div>
 
+          <!-- Délai de réservation -->
           <v-number-input
             control-variant="hidden"
             :min="0"
             label="Votre délai de réservation minimum (en semaine) ?"
-            v-model="reservationDelay"
+            v-model="reservationDelayInWeeks"
             :error-messages="showErrors ? errors.minimumReservationPeriod : undefined"
           />
+
+          <!-- Acompte -->
           <div class="d-flex gap-2 text-subtitle-2 mb-3 justify-center">
-            <p>Un acompte est nécessaire à la réservation d’une prestation</p>
+            <p>Un acompte est nécessaire à la réservation d'une prestation</p>
           </div>
+
           <v-number-input
-            v-if="profile.deposit"
+            v-if="professionalUser.deposit"
             control-variant="hidden"
             :min="10"
             :max="100"
             :step="5"
             label="Quel est le montant (en pourcentage)?"
-            v-model="profile.depositAmount"
+            v-model="professionalUser.depositAmount"
             :error-messages="showErrors ? errors.depositAmount : undefined"
           />
+
+          <!-- Période de facturation -->
           <div class="d-flex gap-2 flex-column justify-start align-items-start">
-            <v-divider class="text-subtitle-2 font-weight-medium"
-              >Le restant dû est à régler avant ou après la prestation ?</v-divider
-            >
+            <v-divider class="text-subtitle-2 font-weight-medium">
+              Le restant dû est à régler avant ou après la prestation ?
+            </v-divider>
             <div class="d-flex align-center justify-center gap-2">
               <v-label class="text-subtitle-2 font-weight-medium">AVANT</v-label>
               <v-switch
-                v-model="profile.billingPeriod"
+                v-model="professionalUser.billingPeriod"
                 false-value="beforeEvent"
                 true-value="afterEvent"
-                :color="profile.billingPeriod === 'beforeEvent' ? '#293b57' : '#f39454'"
+                :color="professionalUser.billingPeriod === 'beforeEvent' ? '#293b57' : '#f39454'"
                 hide-details
-                :error-messages="showErrors ? errors.billingPeriod : undefined"
-                >{{ profile.billingPeriod }}</v-switch
-              >
+              />
               <v-label class="text-subtitle-2 font-weight-medium">APRES</v-label>
             </div>
           </div>
 
           <v-divider class="mb-6 edit-professional__divider">
-            <p class="mb-6">A propos de votre communication</p></v-divider
-          >
+            <p class="mb-6">A propos de votre communication</p>
+          </v-divider>
 
           <v-text-field
             label="Votre numéro de téléphone ?"
-            v-model="profile.telephone"
+            v-model="professionalUser.telephone"
             :error-messages="showErrors ? errors.telephone : undefined"
           />
 
+          <!-- Liens réseaux sociaux -->
           <div class="mt-4">
-            <div v-for="(link, index) in profile.links" :key="index">
+            <div v-for="(link, index) in professionalUser.links" :key="index">
               <v-select
                 v-model="link.type"
                 label="Renseignez le réseau social ou le site web"
                 :items="['Facebook', 'Instagram', 'LinkedIn', 'Youtube', 'Twitter', 'Site Web']"
-                item-title="label"
-                item-value="value"
               />
               <v-text-field
                 v-model="link.value"
@@ -181,7 +192,7 @@
               />
               <v-btn
                 @click="removeLink(index)"
-                :disabled="profile.links.length <= 0"
+                :disabled="professionalUser.links?.length === 0"
                 color="rgb(var(--v-theme-peach))"
                 style="color: rgb(var(--v-theme-background))"
                 size="small"
@@ -199,27 +210,24 @@
             </v-btn>
           </div>
 
+          <!-- FAQ -->
           <div class="my-8">
-            <div v-for="(faq, index) in faqArray" :key="index">
+            <div v-for="(question, index) in faqQuestions" :key="index">
               <v-text-field
-                v-model="faq.question"
-                label="Renseignez une question fréquente auquelle vous répondez souvent"
-                item-title="label"
-                item-value="value"
-              >
-              </v-text-field>
+                v-model="faqQuestions[index]"
+                label="Renseignez une question fréquente"
+                @update:model-value="updateFaqQuestion(index, $event)"
+              />
               <v-textarea
-                v-model="faq.answer"
+                v-model="professionalUser.faq[faqQuestions[index]]"
                 label="Renseignez la réponse à la question"
-                type="text"
                 variant="outlined"
                 placeholder="Veuillez renseigner votre réponse ici"
                 counter="255"
-                :error-messages="showErrors ? errors.faq : undefined"
-              ></v-textarea>
+              />
               <v-btn
                 @click="removeFaq(index)"
-                :disabled="faqArray.length === 0"
+                :disabled="faqQuestions.length === 0"
                 color="rgb(var(--v-theme-peach))"
                 style="color: rgb(var(--v-theme-background))"
                 size="small"
@@ -238,101 +246,93 @@
           </div>
         </div>
 
-        <div v-if="currentPage === 1" class="d-flex justify-space-between edit-professional__btn">
+        <!-- Boutons d'action -->
+        <div class="d-flex justify-space-between edit-professional__btn">
           <v-btn
-            @click="openModal = false"
+            @click="closeModal"
             style="
               border: 1px solid rgb(var(--v-theme-darkbg));
               background: rgb(var(--v-theme-background));
               color: rgb(var(--v-theme-darkbg));
             "
-            >Annuler</v-btn
           >
+            Annuler
+          </v-btn>
           <v-btn
             v-if="!isProfileCreated"
             color="rgb(var(--v-theme-darkbg))"
             style="color: rgb(var(--v-theme-background))"
-            @click="createProfile(profile)"
+            @click="createProfile"
           >
             Valider mon profil
           </v-btn>
-          <div v-else>
-            <v-btn
-              class="edit-professional__btn-width"
-              color="rgb(var(--v-theme-darkbg))"
-              style="color: rgb(var(--v-theme-background))"
-              @click="modifyProfile(profile)"
-            >
-              Enregistrer
-            </v-btn>
-          </div>
+          <v-btn
+            v-else
+            class="edit-professional__btn-width"
+            color="rgb(var(--v-theme-darkbg))"
+            style="color: rgb(var(--v-theme-background))"
+            @click="modifyProfile"
+          >
+            Enregistrer
+          </v-btn>
         </div>
       </v-form>
     </v-card>
   </v-dialog>
+
   <Teleport to="body">
     <ModalRedirection :redirection="'dashboard2'" v-model="isProfilUpdate" />
-    <CommonSuccessToaster></CommonSuccessToaster>
-    <error-toaster></error-toaster>
+    <CommonSuccessToaster />
+    <error-toaster />
   </Teleport>
 </template>
+
 <script setup lang="ts">
 import { useUserStore } from '@/stores/userStore';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { useForm } from 'vee-validate';
-import { ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import * as yup from 'yup';
 import errorToaster from '~/components/common/errorToaster.vue';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
-import { GEOGRAPHIC_ACTIVITY } from '~/constants/geographicActivity';
-import type { Faq, ProfessionalProfile } from '~/models/user/UserModel';
+import type { ProfessionalProfile } from '~/models/user/UserModel';
 import { useProfessionalProfileService } from '~/services/UseProfessionalProfileService';
 import { useToaster } from '~/utils/toaster';
-import { useSector } from '../../../composables/sector/UseSector';
 import ModalRedirection from './ModalRedirection.vue';
 
 const userStore = useUserStore();
 const { professionalUser, isProfilUpdate, isProfileCreated } = storeToRefs(userStore);
 const { setProfessionalUser } = userStore;
-const { selectSectors } = useSector();
 const { createProfessionalProfile, patchProfessionalProfileDetails } =
   useProfessionalProfileService();
 
 const openModal = defineModel<boolean>('openModal', { default: false });
 
-const faqArray = ref<Faq[]>([]);
 const showErrors = ref(false);
 const { addError, addSuccess } = useToaster();
-const currentPage = ref(1);
 const activityItems = ref(ACTIVITY_ITEMS);
-const geographicActivity = ref(GEOGRAPHIC_ACTIVITY);
-const reservationDelay = ref(0);
 
-const minimumDaysReservation = computed(() => reservationDelay.value);
+// Gestion des questions FAQ (tableau des clés)
+const faqQuestions = ref<string[]>([]);
 
-const mergedFaq = computed(() => {
-  return faqArray.value.reduce(
-    (acc, faq) => {
-      if (faq.question && faq.answer) {
-        acc[faq.question] = faq.answer;
-      }
-      return acc;
-    },
-    {} as Record<string, string>
-  );
+// Conversion semaines <-> jours
+const reservationDelayInWeeks = computed({
+  get: () => Math.floor((professionalUser.value?.minimumReservationPeriod || 0) / 7),
+  set: (weeks) => {
+    if (professionalUser.value) {
+      professionalUser.value.minimumReservationPeriod = weeks * 7;
+    }
+  },
 });
 
+// Schéma de validation
 const validationSchema = yup.object({
   name: yup.string().min(2).required('Le nom est requis'),
   siret: yup
     .string()
     .required('Le SIRET est requis')
-    .matches(/^[0-9]{14}$/, 'Le SIRET doit contenir exactement 14 chiffres numériques') // ✅ Plus strict
-    .test('siret-valid', 'SIRET invalide', (value) => {
-      // ✅ Vérifier que c'est bien un nombre
-      return value ? /^\d{14}$/.test(value) : false;
-    }),
+    .matches(/^[0-9]{14}$/, 'Le SIRET doit contenir exactement 14 chiffres'),
   address: yup.string().required("L'adresse est requise"),
   telephone: yup
     .string()
@@ -353,13 +353,10 @@ const validationSchema = yup.object({
     .min(1900, "L'année doit être supérieure à 1900")
     .max(new Date().getFullYear(), "L'année ne peut pas être dans le futur")
     .required("L'expérience est requise"),
-  geographicArea: yup.string().required('La zone géographique est requise'),
-  certification: yup.array().of(yup.string().max(255, 'Maximum 255 caractères par certification')),
   minimumReservationPeriod: yup
     .number()
     .min(0, 'La période de réservation doit être positive')
     .required('La période de réservation est requise'),
-  deposit: yup.boolean(),
   depositAmount: yup.number().when('deposit', {
     is: true,
     then: (schema) =>
@@ -370,161 +367,137 @@ const validationSchema = yup.object({
     otherwise: (schema) => schema.notRequired(),
   }),
   billingPeriod: yup.string().required('La période de facturation est requise'),
-  links: yup.array().of(
-    yup.object({
-      type: yup.string(),
-      value: yup.string().url('URL non valide'),
-    })
-  ),
-  faq: yup.object(),
 });
 
-const {
-  values: profile,
-  errors,
-  handleSubmit,
-  resetForm,
-} = useForm({
+const { errors } = useForm({
   validationSchema,
-  initialValues: {
-    name: '',
-    siret: '',
-    address: '',
-    telephone: '',
-    bio: '',
-    mainActivity: 'Veuillez choisir votre activité',
-    mainInterlocutor: '',
-    experience: 0,
-    geographicArea: geographicActivity.value[0]?.label,
-    faq: {},
-    minimumReservationPeriod: 0,
-    certification: [''],
-    deposit: true,
-    depositAmount: 0,
-    billingPeriod: 'beforeEvent',
-    links: [{ type: 'Facebook', value: '' }] as [{ type: string; value: string }],
-  },
   validateOnMount: false,
-  keepValuesOnUnmount: true,
 });
 
-const sanitizePayload = (values: ProfessionalProfile) => {
-  return {
-    ...values,
-    // ✅ S'assurer que le SIRET est une string numérique
-    siret: values.siret?.replace(/\s/g, '').trim() || '',
+// Initialisation du professionalUser si vide
+const initializeProfessionalUser = () => {
+  if (!professionalUser.value) {
+    setProfessionalUser({
+      name: '',
+      email: '',
+      siret: '',
+      telephone: '',
+      address: '',
+      bio: '',
+      mainActivity: 'Veuillez choisir votre activité',
+      mainInterlocutor: '',
+      experience: 0,
+      certification: [''],
+      geographicArea: '',
+      picture: '',
+      professionalServices: [],
+      faq: {},
+      minimumReservationPeriod: 0,
+      deposit: true,
+      depositAmount: 0,
+      billingPeriod: 'beforeEvent',
+      links: [{ type: 'Facebook', value: '' }],
+    } as ProfessionalProfile);
+  }
 
-    // ✅ Nettoyer le téléphone
-    telephone: values.telephone?.replace(/\s/g, '').trim() || '',
-
-    // ✅ Limiter la bio à 1000 caractères
-    bio: values.bio?.substring(0, 1000) || '',
-
-    // ✅ FAQ en objet propre
-    faq: mergedFaq.value || {},
-
-    // ✅ Période de réservation en jours (conversion semaines → jours)
-    minimumReservationPeriod: (reservationDelay.value || 0) * 7,
-
-    // ✅ Filtrer les liens vides
-    links: profile.links.filter((link) => link.type?.trim() && link.value?.trim()),
-
-    // ✅ Filtrer les certifications vides
-    certification: profile.certification.filter((c) => c?.trim()),
-
-    // ✅ S'assurer que depositAmount existe si deposit = true
-    depositAmount: values.deposit ? values.depositAmount || 0 : null,
-
-    // ✅ Convertir billingPeriod en format attendu par la DB
-    billingPeriod: values.billingPeriod === 'afterEvent' ? 'afterEvent' : 'beforeEvent',
-  };
+  // Initialiser les questions FAQ
+  faqQuestions.value = Object.keys(professionalUser.value?.faq || {});
+  if (faqQuestions.value.length === 0) {
+    faqQuestions.value = [''];
+  }
 };
 
+// Gestion des liens
 const addLink = () => {
-  profile.links.push({ type: '', value: '' });
+  if (professionalUser.value?.links) {
+    professionalUser.value.links.push({ type: 'Facebook', value: '' });
+  }
 };
 
 const removeLink = (index: number) => {
-  if (profile.links.length > 0) {
-    profile.links.splice(index, 1);
+  if (professionalUser.value?.links && professionalUser.value.links.length > 0) {
+    professionalUser.value.links.splice(index, 1);
   }
 };
 
+// Gestion des FAQ
 const addFaq = () => {
-  faqArray.value.push({
-    question: '',
-    answer: '',
-  });
+  faqQuestions.value.push('');
 };
 
 const removeFaq = (index: number) => {
-  if (faqArray.value.length >= 0) {
-    faqArray.value.splice(index, 1);
+  const question = faqQuestions.value[index];
+  if (professionalUser.value?.faq && question) {
+    delete professionalUser.value.faq[question];
+  }
+  faqQuestions.value.splice(index, 1);
+};
+
+const updateFaqQuestion = (index: number, newQuestion: string) => {
+  const oldQuestion = faqQuestions.value[index];
+  if (professionalUser.value?.faq && oldQuestion && oldQuestion !== newQuestion) {
+    const answer = professionalUser.value.faq[oldQuestion] || '';
+    delete professionalUser.value.faq[oldQuestion];
+    professionalUser.value.faq[newQuestion] = answer;
   }
 };
 
+// Gestion des certifications
 const addCertification = () => {
-  profile.certification.push('');
+  if (professionalUser.value?.certification) {
+    professionalUser.value.certification.push('');
+  }
 };
 
 const removeCertification = (index: number) => {
-  profile.certification.splice(index, 1);
+  if (professionalUser.value?.certification) {
+    professionalUser.value.certification.splice(index, 1);
+  }
 };
 
-const setSector = () => {
-  selectSectors(profile.mainActivity);
+// Nettoyage du payload
+const sanitizePayload = (): ProfessionalProfile => {
+  if (!professionalUser.value) throw new Error('Professional user is undefined');
+
+  return {
+    ...professionalUser.value,
+    siret: professionalUser.value.siret?.replace(/\s/g, '').trim() || '',
+    telephone: professionalUser.value.telephone?.replace(/\s/g, '').trim() || '',
+    bio: professionalUser.value.bio?.substring(0, 1000) || '',
+    faq: professionalUser.value.faq || {},
+    links:
+      professionalUser.value.links?.filter((link) => link.type?.trim() && link.value?.trim()) || [],
+    certification: professionalUser.value.certification?.filter((c) => c?.trim()) || [],
+    depositAmount: professionalUser.value.deposit
+      ? professionalUser.value.depositAmount || 0
+      : undefined,
+  };
 };
 
-// Ajoutez cette fonction avant vos fonctions createProfile et modifyProfile
-
+// Validation
 const validateAndShowErrors = async (): Promise<boolean> => {
   try {
-    // Valider toutes les données du formulaire
-    await validationSchema.validate(
-      {
-        ...profile,
-        minimumReservationPeriod: reservationDelay.value,
-      },
-      { abortEarly: false } // Récupère toutes les erreurs, pas seulement la première
-    );
-
+    await validationSchema.validate(professionalUser.value, { abortEarly: true });
     showErrors.value = false;
-    return true; // Validation réussie
+    return true;
   } catch (err) {
     if (err instanceof yup.ValidationError) {
       showErrors.value = true;
-
-      // Afficher un message d'erreur global
-      addError({
-        message: err.message,
-      });
-
-      // Optionnel : Logger les erreurs en console pour debug
-      console.error(
-        'Erreurs de validation:',
-        err.inner.map((e) => ({
-          field: e.path,
-          message: e.message,
-        }))
-      );
-
-      return false; // Validation échouée
+      addError({ message: err.message });
+      return false;
     }
-
-    // Erreur inattendue
     addError({ message: 'Une erreur est survenue lors de la validation' });
     return false;
   }
 };
 
-// Modifiez votre fonction createProfile
-const createProfile = async (values: ProfessionalProfile) => {
+// Création du profil
+const createProfile = async () => {
   const isValid = await validateAndShowErrors();
   if (!isValid) return;
 
   try {
-    const payload = sanitizePayload(values);
-
+    const payload = sanitizePayload();
     const response = await createProfessionalProfile(payload);
 
     if (response.message === 'Professional created') {
@@ -533,117 +506,47 @@ const createProfile = async (values: ProfessionalProfile) => {
       openModal.value = false;
     }
   } catch (error: any) {
-    console.error('❌ Erreur complète:', error); // ✅ Log complet
-
-    // ✅ Extraire le message d'erreur DB si disponible
     const dbError = error.response?.data?.error || error.response?.data?.message;
-    const userMessage = error.response?.data?.message || 'Erreur lors de la création du profil';
-
-    // ✅ Afficher une erreur plus explicite
     if (dbError?.includes('duplicate') || dbError?.includes('unique')) {
-      addError({ message: 'Ce SIRET ou email existe déjà dans notre base de données' });
-    } else if (dbError?.includes('invalid input syntax')) {
-      addError({ message: 'Format de données invalide. Vérifiez le SIRET et le téléphone.' });
+      addError({ message: 'Ce SIRET ou email existe déjà' });
     } else {
-      addError({ message: userMessage });
+      addError({ message: error.response?.data?.message || 'Erreur lors de la création' });
     }
   }
 };
 
-// Modifiez votre fonction modifyProfile
-const modifyProfile = async (newValues: ProfessionalProfile) => {
+// Modification du profil
+const modifyProfile = async () => {
   const isValid = await validateAndShowErrors();
   if (!isValid) return;
 
   try {
-    const payload = {
-      ...sanitizePayload(newValues),
-      uuid: professionalUser.value?.uuid,
-    };
-
+    const payload = sanitizePayload();
     const response = await patchProfessionalProfileDetails(payload);
-    const updatedProfessional = response.newPro || response;
-
-    setProfessionalUser(updatedProfessional);
+    setProfessionalUser(response.newPro || response);
     addSuccess('Votre profil a été modifié avec succès');
     showErrors.value = false;
     openModal.value = false;
   } catch (error: any) {
-    console.error('❌ Erreur modification:', error);
-
     const dbError = error.response?.data?.error || error.response?.data?.message;
-    const userMessage = error.response?.data?.message || 'Erreur lors de la modification du profil';
-
     if (dbError?.includes('duplicate') || dbError?.includes('unique')) {
-      addError({ message: 'Ce SIRET existe déjà pour un autre professionnel' });
-    } else if (dbError?.includes('invalid input syntax')) {
-      addError({ message: 'Format de données invalide. Vérifiez vos informations.' });
+      addError({ message: 'Ce SIRET existe déjà' });
     } else {
-      addError({ message: userMessage });
+      addError({ message: error.response?.data?.message || 'Erreur lors de la modification' });
     }
   }
 };
 
+// Fermer le modal
+const closeModal = () => {
+  showErrors.value = false;
+  openModal.value = false;
+};
+
+// Initialisation à l'ouverture
 watch(openModal, (isOpen) => {
-  if (!isOpen) return; // ← ne rien faire quand on ferme
-
-  // Chargement des données uniquement quand on OUVRE
-  if (professionalUser.value) {
-    const isBooleanBillingPeriod =
-      typeof professionalUser.value.billingPeriod === 'boolean'
-        ? professionalUser.value.billingPeriod
-          ? 'afterEvent'
-          : 'beforeEvent'
-        : professionalUser.value.billingPeriod || 'beforeEvent';
-
-    // Parse la FAQ correctement
-    let parsedFaq = {};
-    if (professionalUser.value.faq) {
-      try {
-        parsedFaq =
-          typeof professionalUser.value.faq === 'string'
-            ? JSON.parse(professionalUser.value.faq)
-            : professionalUser.value.faq;
-      } catch (e) {
-        console.error('Erreur lors du parsing de la FAQ:', e);
-        parsedFaq = {};
-      }
-    }
-
-    // Convertir l'objet FAQ en tableau pour faqArray
-    const faqEntries = Object.entries(parsedFaq).map(([question, answer]) => ({
-      question,
-      answer: answer || '', // S'assurer qu'il y a toujours une valeur
-    }));
-
-    // S'il n'y a pas de FAQ, initialiser avec un élément vide
-    faqArray.value = faqEntries.length > 0 ? faqEntries : [{ question: '', answer: '' }];
-
-    resetForm({
-      values: {
-        name: professionalUser.value.name ?? '',
-        siret: professionalUser.value.siret ?? '',
-        telephone: professionalUser.value.telephone ?? '',
-        address: professionalUser.value.address ?? '',
-        bio: professionalUser.value.bio ?? '',
-        mainActivity: professionalUser.value.mainActivity ?? 'Veuillez choisir votre activité',
-        mainInterlocutor: professionalUser.value.mainInterlocutor ?? '',
-        experience: professionalUser.value.experience ?? 0,
-        geographicArea:
-          professionalUser.value.geographicArea ?? geographicActivity.value[0]?.label ?? '',
-        certification:
-          Array.isArray(professionalUser.value.certification) &&
-          professionalUser.value.certification.length > 0
-            ? professionalUser.value.certification
-            : [''],
-        minimumReservationPeriod: professionalUser.value.minimumReservationPeriod ?? 0,
-        deposit: professionalUser.value.deposit ?? false,
-        depositAmount: professionalUser.value.depositAmount ?? 0,
-        billingPeriod: isBooleanBillingPeriod,
-        links: professionalUser.value.links?.length ? professionalUser.value.links : [],
-        faq: parsedFaq, // Objet FAQ parsé
-      },
-    });
+  if (isOpen) {
+    initializeProfessionalUser();
   }
 });
 </script>
@@ -651,6 +554,7 @@ watch(openModal, (isOpen) => {
 <style lang="scss" scoped>
 .edit-professional {
   background: rgb(var(--v-theme-background));
+
   .v-text-field,
   .v-select,
   .v-number-input {
@@ -669,6 +573,7 @@ watch(openModal, (isOpen) => {
     }
   }
 }
+
 .v-form {
   padding: 2rem 3.5rem;
   border-radius: 16px;
@@ -682,7 +587,6 @@ watch(openModal, (isOpen) => {
   }
 }
 
-/* --- DIVIDERS --- */
 .v-divider {
   margin: 2.5rem 0 1.5rem;
   border-color: rgba(93, 121, 164, 0.25) !important;
@@ -698,20 +602,6 @@ watch(openModal, (isOpen) => {
   }
 }
 
-/* --- CHAMPS DE FORMULAIRE --- */
-
-/* --- CHECKBOX & SWITCH --- */
-.v-checkbox,
-.v-switch {
-  margin: 1rem 0;
-
-  .v-label {
-    color: rgb(var(--v-theme-textSecondary)) !important;
-    font-weight: 500;
-  }
-}
-
-/* --- CHAMPS DYNAMIQUES (FAQ, liens, certifs) --- */
 .flex {
   display: flex;
   align-items: center;
@@ -725,10 +615,6 @@ watch(openModal, (isOpen) => {
   margin-bottom: 1.25rem !important;
 }
 
-.mt-2 {
-  margin-top: 0.75rem !important;
-}
-
 .my-8 {
   margin-top: 3rem !important;
   margin-bottom: 3rem !important;
@@ -738,7 +624,6 @@ watch(openModal, (isOpen) => {
   margin-top: 1.5rem !important;
 }
 
-/* --- BOUTONS --- */
 .v-btn {
   border-radius: 10px !important;
   font-weight: 500;
@@ -747,18 +632,8 @@ watch(openModal, (isOpen) => {
   transition:
     background-color 0.2s ease,
     transform 0.1s ease;
-
-  &.v-btn--variant-text {
-    color: rgb(var(--v-theme-darkbg)) !important;
-  }
-
-  &.v-btn--variant-contained {
-    background-color: rgb(var(--v-theme-darkbg)) !important;
-    color: rgb(var(--v-theme-background)) !important;
-  }
 }
 
-/* --- ZONE DE VALIDATION / ACTIONS --- */
 .d-flex.justify-space-between {
   border-top: 1px solid rgba(93, 121, 164, 0.15);
   padding-top: 1.5rem;
@@ -770,35 +645,15 @@ watch(openModal, (isOpen) => {
   }
 }
 
-/* --- HIERARCHIE VISUELLE --- */
-.text-subtitle-1 {
-  color: rgba(93, 121, 164, 0.9);
-}
-
-.font-weight-medium {
-  font-weight: 500;
-}
-
 @media (max-width: 900px) {
-  .v-form {
-    max-width: 100%;
-  }
   .edit-professional {
-    p {
-      text-align: center;
-    }
-
     &__btn {
       display: flex;
       flex-direction: column-reverse;
+
       &-width {
         width: 100%;
       }
-    }
-    &__divider {
-      max-width: 100%;
-      text-wrap: unset;
-      font-size: 0.5rem;
     }
   }
 }

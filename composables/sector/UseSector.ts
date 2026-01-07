@@ -1,4 +1,6 @@
+import { storeToRefs } from 'pinia';
 import { useSectorService } from '~/services/UseSectorService';
+import { useSectorStore } from '~/stores/sectorStore';
 
 export const useSector = () => {
   const { getAllSectors, getSectors, preloadServices, getKeywords } = useSectorService();

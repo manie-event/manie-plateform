@@ -1,33 +1,3 @@
-<script setup lang="ts">
-import BaseEmptyState from '@/components/common/BaseEmptyState.vue';
-import PayingTable from '@/components/dashboards/dashboard2/PayingTable.vue';
-import TextCards from '@/components/dashboards/dashboard2/TextCard.vue';
-import WelcomeCard from '@/components/dashboards/dashboard2/WelcomeCard.vue';
-import EmptyState from '@/public/images/empty-state/profil-vide.png';
-import { storeToRefs } from 'pinia';
-import { useEventServiceProposition } from '~/composables/event-service-propositions/UseEventServiceProposition';
-import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
-import { useProfessionalProfileService } from '~/services/UseProfessionalProfileService';
-import { useUserStore } from '~/stores/userStore';
-
-const userStore = useUserStore();
-const { isProfileCreated, isProfessional } = storeToRefs(userStore);
-const { getProfessionalProfileDetails, getProfessionalProfile } = useProfessionalProfileService();
-const { getServicePropositionForProfessional } = useEventServiceProposition();
-const { getJetonQuantity } = usePaiementJeton();
-
-onMounted(async () => {
-  isProfessional.value = true;
-
-  await Promise.all([
-    getProfessionalProfile(),
-    getProfessionalProfileDetails(),
-    getServicePropositionForProfessional(),
-    getJetonQuantity(),
-  ]);
-});
-</script>
-
 <template>
   <v-row v-if="isProfileCreated">
     <!---Welcome cards-->
@@ -62,6 +32,32 @@ onMounted(async () => {
     </v-col>
   </v-row>
 </template>
+<script setup lang="ts">
+import BaseEmptyState from '@/components/common/BaseEmptyState.vue';
+import PayingTable from '@/components/dashboards/dashboard2/PayingTable.vue';
+import TextCards from '@/components/dashboards/dashboard2/TextCard.vue';
+import WelcomeCard from '@/components/dashboards/dashboard2/WelcomeCard.vue';
+import EmptyState from '@/public/images/empty-state/profil-vide.png';
+import { storeToRefs } from 'pinia';
+import { useEventServiceProposition } from '~/composables/event-service-propositions/UseEventServiceProposition';
+import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
+import { useProfessionalProfileService } from '~/services/UseProfessionalProfileService';
+import { useUserStore } from '~/stores/userStore';
+
+const userStore = useUserStore();
+const { isProfileCreated } = storeToRefs(userStore);
+const { getProfessionalProfileDetails, getProfessionalProfile } = useProfessionalProfileService();
+const { getServicePropositionForProfessional } = useEventServiceProposition();
+const { getJetonQuantity } = usePaiementJeton();
+
+onMounted(async () => {
+  await Promise.all([
+    getProfessionalProfileDetails(),
+    getServicePropositionForProfessional(),
+    getJetonQuantity(),
+  ]);
+});
+</script>
 <style lang="scss" scoped>
 .dashboard-2 {
   height: 50vh;

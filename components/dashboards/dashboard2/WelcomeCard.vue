@@ -30,13 +30,12 @@
   </Teleport>
 </template>
 <script setup lang="ts">
-import { useEventServiceProposition } from '@/composables/event-service-propositions/UseEventServiceProposition';
+import { capitalizeFirst } from '@/utils/text-utils';
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
 import ProfessionalMarketPlace from './ProfessionalMarketPlace.vue';
 
 const { professionalUser, proName } = storeToRefs(useUserStore());
 const { serviceEventProposition } = storeToRefs(usePropositionStore());
-const { getServicePropositionForProfessional } = useEventServiceProposition();
 
 const openMarketModal = ref(false);
 const propositionFiltered = ref<EventModelForProposition[]>([]);
@@ -45,20 +44,10 @@ const isPropositionStillAvailable = () => {
   propositionFiltered.value = serviceEventProposition.value
     .filter((proposition) => !proposition.proposition.professionalMessage)
     .filter((proposition) => isEventDone(proposition.date[0]));
-
   return propositionFiltered.value;
 };
 
-watch(
-  serviceEventProposition,
-  () => {
-    isPropositionStillAvailable();
-  },
-  { deep: true }
-);
-
 onMounted(async () => {
-  await getServicePropositionForProfessional();
   isPropositionStillAvailable();
 });
 </script>

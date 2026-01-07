@@ -209,6 +209,11 @@ const { addSuccess, addError } = useToaster();
 const { updateProfessionalServices } = useProfessionalServiceService();
 const { professionalServices } = storeToRefs(useProfessionalStore());
 
+//TODO: Refactoriser avec un composable si besoin ailleurs
+// Avoir un formulaire qui va chercher le nombre de secteurs le prestataire a sélectionné
+// récupérer les secteurs via le store user mainActivity
+// Des secteurs sélectionnés on définit les questionnaires à afficher
+
 const questionnaires = ref<QuestionnaireItem[]>([]);
 const activityItems = ref(ACTIVITY_ITEMS);
 

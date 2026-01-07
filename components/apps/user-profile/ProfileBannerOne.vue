@@ -112,7 +112,10 @@
 
     <Teleport to="body">
       <EditerProfessionalProfile v-model:openModal="openModal" />
-      <EditPrestataireServices v-model:openModificationModal="openModificationModal" class="mt-6" />
+      <EditPrestataireServicesV2
+        v-model:openModificationModal="openModificationModal"
+        class="mt-6"
+      />
       <CreatePrestataireServices v-model:openCreateServiceModal="openServiceModal" class="mt-6" />
     </Teleport>
   </section>
@@ -121,22 +124,25 @@
 <script setup lang="ts">
 import { NuxtLink } from '#components';
 import EditerProfessionalProfile from '@/components/apps/user-profile/EditProfessionalProfil.vue';
+import EditPrestataireServicesV2 from '@/components/questionnaires/EditPrestataireServicesV2.vue';
 import { useProfessionalProfileService } from '@/services/UseProfessionalProfileService';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { computed, onMounted, ref } from 'vue';
-import EditPrestataireServices from '~/components/questionnaires/EditPrestataireServices.vue';
 import CreatePrestataireServices from '~/components/questionnaires/ServicesPrestataire.vue';
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
 import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
+import { useProfessionalStore } from '~/stores/professionalStore';
 import { useUserStore } from '~/stores/userStore';
+import { useToaster } from '~/utils/toaster';
 import { useSector } from '../../../composables/sector/UseSector';
 
-const { professionalUser, user, isProfileCreated, initials } = storeToRefs(useUserStore());
+const { professionalUser, user, isProfileCreated, initials, professionalActivities } =
+  storeToRefs(useUserStore());
 const { changeProfessionalBannerPicture, getProfessionalProfile } = useProfessionalProfileService();
 const { getJetonQuantity } = usePaiementJeton();
 const { listProfessionalServiceByProfessional } = useProfessionalProfile();
-const { getServicesList, getListSector } = useSector();
+const { getServicesList, getListSector, selectSectors } = useSector();
 const { professionalServices } = storeToRefs(useProfessionalStore());
 const { addSuccess } = useToaster();
 
@@ -145,6 +151,7 @@ const openServiceModal = ref(false);
 const openModificationModal = ref(false);
 const fileInput = ref<HTMLInputElement | null>(null);
 const professionalEmail = ref();
+
 const triggerClickFileInput = () => fileInput.value?.click();
 const changeBannerPhoto = async (e: Event) => {
   const input = e.target as HTMLInputElement;
@@ -160,6 +167,8 @@ const changeBannerPhoto = async (e: Event) => {
   }
 };
 
+const isFirstConnection = computed(() => (professionalUser.value?.uuid ? false : true));
+
 const getServiceValues = computed(() =>
   professionalServices.value?.length ? professionalServices.value.map((s) => s.name) : []
 );
@@ -168,15 +177,21 @@ const displayedEmail = computed(
   () => professionalUser.value?.email || professionalEmail.value || null
 );
 
-const isFirstConnection = computed(() =>
-  professionalServices.value.some((service) => service.isVerified === false)
-);
+const loadKeywordsByActivity = () => {
+  if (professionalUser.value?.mainActivity) {
+    professionalActivities.value.filter(Boolean).forEach((activity) => {
+      if (activity) {
+        selectSectors(activity);
+      }
+    });
+  }
+};
 
 onMounted(async () => {
   const professional = await getProfessionalProfile();
   professionalEmail.value = professional.email;
 
-  await getServicesList();
+  loadKeywordsByActivity();
   await getListSector();
   await listProfessionalServiceByProfessional();
   await getJetonQuantity();
