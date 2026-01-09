@@ -5,19 +5,22 @@
       max-width="800"
       style="padding: 35px; background: rgb(var(--v-theme-background))"
     >
-      <v-card-title></v-card-title>
       <v-card-text>
         <div v-for="(activity, activityIndex) in activities" :key="activityIndex" class="mb-8">
-          <!-- Boucle sur chaque activité -->
-          <!-- En-tête de l'activité -->
-          <div class="mb-4">
+          <div class="mb-4 w-100 d-flex justify-lg-space-between align-center">
             <h3 class="text-h6">Mon activité N° {{ activityIndex + 1 }} : {{ activity }}</h3>
+            <Icon
+              icon="solar:trash-bin-trash-line-duotone"
+              style="height: 40px; width: 25px"
+              class="mt-1 cursor-pointer"
+              color="rgb(var(--v-theme-error))"
+              @click="deleteActivity(activity, activityIndex)"
+            >
+            </Icon>
           </div>
 
-          <!-- Question générale -->
           <h4 class="mb-3">{{ getServiceBySector.questions[activityIndex] }}</h4>
 
-          <!-- Services pour cette activité -->
           <div class="mb-6">
             <v-chip
               v-for="service in getServiceBySector.responseServices[activityIndex]"
@@ -31,14 +34,12 @@
             </v-chip>
           </div>
 
-          <!-- ✅ CORRECTION 1 : Wrapper v-expansion-panels manquant -->
           <v-expansion-panels
             v-if="getKeywordsByCategory[activityIndex]"
             variant="accordion"
             multiple
             class="mb-4"
           >
-            <!-- ✅ CORRECTION 2 : Boucle sur les questions, pas sur l'objet entier -->
             <v-expansion-panel
               v-for="(question, questionIndex) in getKeywordsByCategory[activityIndex]?.questions"
               :key="questionIndex"
@@ -46,13 +47,11 @@
               <v-expansion-panel-title>
                 <div class="d-flex align-center">
                   <v-icon class="mr-2" size="20">mdi-help-circle-outline</v-icon>
-                  <!-- ✅ CORRECTION 3 : Afficher la question directement -->
                   <span>{{ question }}</span>
                 </div>
               </v-expansion-panel-title>
 
               <v-expansion-panel-text>
-                <!-- ✅ CORRECTION 4 : Accéder aux keywords avec le bon index -->
                 <div class="keyword-chips">
                   <v-chip
                     v-for="keyword in getKeywordsByCategory[activityIndex]?.keywords[questionIndex]"
@@ -66,7 +65,6 @@
                   </v-chip>
                 </div>
 
-                <!-- Message si aucun keyword -->
                 <p
                   v-if="!getKeywordsByCategory[activityIndex]?.keywords[questionIndex]?.length"
                   class="text-caption text-grey mt-2"
@@ -77,7 +75,6 @@
             </v-expansion-panel>
           </v-expansion-panels>
 
-          <!-- Message si pas de questions/keywords -->
           <v-alert v-else type="info" variant="tonal" class="mb-4">
             Aucune question disponible pour cette activité
           </v-alert>
@@ -86,7 +83,6 @@
         </div>
       </v-card-text>
 
-      <!-- Actions -->
       <v-card-actions class="px-6 pb-4">
         <v-spacer />
         <v-btn variant="outlined" @click="openModificationModal = false"> Annuler </v-btn>
@@ -98,10 +94,12 @@
 
 <script setup lang="ts">
 import questionnairePresta from '@/data/questionnaire-presta.json';
+import { Icon } from '@iconify/vue/dist/iconify.js';
 import { storeToRefs } from 'pinia';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { useProfessionalService } from '~/composables/professional-services/UseProfessionalService';
 import type { Services } from '~/models/professionalService/Services';
+import { useProfessionalStore } from '~/stores/professionalStore';
 import { useSectorStore } from '~/stores/sectorStore';
 import { useUserStore } from '~/stores/userStore';
 import { useToaster } from '~/utils/toaster';
@@ -110,11 +108,64 @@ const openModificationModal = defineModel<boolean>('openModificationModal', { de
 
 const { professionalActivities, professionalUuid } = storeToRefs(useUserStore());
 const { services, sectors, keywords } = storeToRefs(useSectorStore());
-const { professionalServices } = useProfessionalService();
+const { createProfessionalServices } = useProfessionalService();
 const { addError, addSuccess } = useToaster();
+const { professionalServices } = storeToRefs(useProfessionalStore());
 
-const selectedServices = ref<Record<number, Services>>({});
-const selectedKeywordsArray = ref<Record<number, string[]>>([]);
+const localSelectedServices = ref<Record<number, Services>>({});
+const localSelectedKeywords = ref<Record<number, string[]>>({});
+
+const selectedServices = computed<Record<number, Services>>(() => {
+  const result: Record<number, Services> = {};
+  activities.value.forEach((activity, activityIndex) => {
+    const sector = sectors.value.find((s) => s.name === activity);
+    if (!sector) return;
+    // console.log(sector, 'sector found for activity:');
+
+    const professionalService = professionalServices.value.find((ps) => {
+      return ps.sector?.uuid === sector.uuid;
+    });
+
+    if (!professionalService) return;
+
+    console.log(professionalService.serviceUuid, 'ProService');
+
+    const service = services.value.find((s) => s.uuid === professionalService.serviceUuid);
+    console.log(service, 'selectedServices service found for activity:');
+    console.log('----------------------');
+
+    if (service) {
+      result[activityIndex] = service;
+    }
+  });
+
+  return result;
+});
+
+const selectedKeywordsArray = computed<Record<number, string[]>>(() => {
+  const result: Record<number, string[]> = {};
+
+  activities.value.forEach((activity, activityIndex) => {
+    const sector = sectors.value.find((s) => s.name === activity);
+    if (!sector) return;
+
+    const professionalService = professionalServices.value.find((ps) => {
+      return ps.sector?.uuid === sector.uuid;
+    });
+
+    if (professionalService?.keywordsUuid) {
+      result[activityIndex] = professionalService.keywordsUuid;
+    }
+  });
+
+  return result;
+});
+
+const initializeLocalData = () => {
+  localSelectedServices.value = { ...selectedServices.value };
+  localSelectedKeywords.value = { ...selectedKeywordsArray.value };
+};
+
 //TODO: Savoir ce qu'est un record
 
 const activities = computed(() => {
@@ -130,12 +181,15 @@ const getSectorUuid = computed(() => {
 const getServiceBySector = computed(() => {
   const questions = activities.value.map((activity) => {
     const questionnaire = questionnairePresta.find((s) => s.sector === activity);
+    console.log(questionnaire, 'questionnaire for activity: ', activity);
     return questionnaire?.general?.questions[0]?.question || 'Aucune question disponible';
   });
 
   const servicesChip = getSectorUuid.value.map((sectorUuid: string) => {
     return services.value.filter((s) => s.sectorUuid === sectorUuid);
   });
+
+  console.log(servicesChip, '--- servicesChip ---');
 
   return {
     questions,
@@ -167,27 +221,27 @@ const getKeywordsByCategory = computed(() => {
 });
 
 const isServiceSelected = (activityIndex: number, serviceUuid: string): boolean => {
-  return selectedServices.value[activityIndex]?.uuid === serviceUuid;
+  return localSelectedServices.value[activityIndex]?.uuid === serviceUuid;
 };
 
 const selectServices = (activityIndex: number, service: Services) => {
-  if (selectedServices.value[activityIndex]?.uuid === service.uuid) {
-    selectedServices.value[activityIndex] = {} as Services;
+  if (localSelectedServices.value[activityIndex]?.uuid === service.uuid) {
+    localSelectedServices.value[activityIndex] = {} as Services;
   } else {
-    selectedServices.value[activityIndex] = service;
+    localSelectedServices.value[activityIndex] = service;
   }
 };
 
 const isKeywordSelected = (activityIndex: number, keywordUuid: string): boolean => {
-  return selectedKeywordsArray.value[activityIndex]?.includes(keywordUuid) ?? false;
+  return localSelectedKeywords.value[activityIndex]?.includes(keywordUuid) ?? false;
 };
 
 const toggleKeywordArray = (activityIndex: number, keyword: any) => {
-  if (!selectedKeywordsArray.value[activityIndex]) {
-    selectedKeywordsArray.value[activityIndex] = [];
+  if (!localSelectedKeywords.value[activityIndex]) {
+    localSelectedKeywords.value[activityIndex] = [];
   }
 
-  const keywordArray = selectedKeywordsArray.value[activityIndex];
+  const keywordArray = localSelectedKeywords.value[activityIndex];
   const index = keywordArray.indexOf(keyword.uuid);
 
   if (index !== -1) {
@@ -200,8 +254,8 @@ const toggleKeywordArray = (activityIndex: number, keyword: any) => {
 const saveAnswers = async () => {
   const responses = activities.value
     .map((activity, index) => {
-      const service = selectedServices.value[index];
-      const keywordsArray = selectedKeywordsArray.value[index] || [];
+      const service = localSelectedServices.value[index];
+      const keywordsArray = localSelectedKeywords.value[index] || [];
 
       if (!service?.uuid) {
         addError({ message: `Aucun service sélectionné pour ${activity}` });
@@ -222,7 +276,7 @@ const saveAnswers = async () => {
 
   // Envoyer les réponses une par une avec un délai de 500ms entre chaque pour éviter la saturation de Resend
   for (let i = 0; i < responses.length; i++) {
-    await professionalServices(responses[i]);
+    await createProfessionalServices(responses[i]);
 
     if (i < responses.length - 1) {
       await new Promise((resolve) => setTimeout(resolve, 500));
@@ -231,6 +285,24 @@ const saveAnswers = async () => {
   addSuccess('Vos services ont été mis à jour avec succès !');
   openModificationModal.value = false;
 };
+
+const deleteActivity = (activity: string, activityIndex: number) => {
+  // TO DO: Supprimer aussi le service en base de données
+
+  const serviceToDelete = activities.value.filter((a) => a === activity);
+  console.log(serviceToDelete, 'serviceToDelete');
+
+  // professionalActivities.value.splice(activityIndex, 1);
+};
+
+const handleModalOpen = (isOpen: boolean) => {
+  if (isOpen) {
+    initializeLocalData();
+  }
+};
+
+// Observer l'ouverture du modal
+watch(() => openModificationModal.value, handleModalOpen);
 </script>
 
 <style scoped>

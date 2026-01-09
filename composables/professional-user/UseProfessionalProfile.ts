@@ -9,11 +9,6 @@ export const useProfessionalProfile = () => {
   const { getListProfessionalServiceByProfessional, removeProfessionalService } =
     useProfessionalServiceService();
 
-  const listProfessionalServiceByProfessional = async () => {
-    const listProService = await getListProfessionalServiceByProfessional();
-    setProfessionalServices(listProService);
-  };
-
   const removeServiceFromProfessionalProfile = async (serviceUuid: string) => {
     const res = await removeProfessionalService(serviceUuid);
 
@@ -25,7 +20,6 @@ export const useProfessionalProfile = () => {
   };
 
   return {
-    listProfessionalServiceByProfessional,
     removeServiceFromProfessionalProfile,
   };
 };

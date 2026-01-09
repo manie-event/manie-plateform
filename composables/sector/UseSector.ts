@@ -23,8 +23,9 @@ export const useSector = () => {
   };
 
   const getServicesList = async () => {
-    const services = await preloadServices();
-    setServiceList(services);
+    services.value = [];
+    const servicesList = await preloadServices();
+    setServiceList(servicesList);
   };
 
   const allKeywords = async () => {

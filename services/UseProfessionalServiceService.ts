@@ -1,6 +1,12 @@
 import type { AxiosError } from 'axios';
+import { storeToRefs } from 'pinia';
+import { useApi } from '~/composables/UseApi';
 import { useDisplayErrorMessage } from '~/composables/UseDisplayErrorMessage';
 import type { ProfessionalServiceCreate } from '~/models/professionalService/professionalServiceCreate';
+import { useProfessionalStore } from '~/stores/professionalStore';
+import { useSectorStore } from '~/stores/sectorStore';
+import { useUserStore } from '~/stores/userStore';
+import { useToaster } from '~/utils/toaster';
 
 export const useProfessionalServiceService = () => {
   const { addError } = useToaster();
@@ -36,13 +42,12 @@ export const useProfessionalServiceService = () => {
     const { data } = await api.get(
       `/professional-service/list-by-professional/${professionalUser.value.uuid}`
     );
-    const proServices = data.data;
-    const allServices = services.value;
-    const allSectors = sectors.value;
 
-    const proServicesWithSector = proServices.map((proService) => {
-      const matchingService = allServices.find((s) => s.uuid === proService.serviceUuid);
-      const findSector = allSectors.find((sector) => sector.uuid === matchingService?.sectorUuid);
+    const proServicesWithSector = data.data.map((proService) => {
+      const matchingService = services.value.find((s) => proService.serviceUuid === s.uuid);
+      const findSector = sectors.value.find(
+        (sector) => sector.uuid === matchingService?.sectorUuid
+      );
       return {
         ...proService,
         sector: findSector,

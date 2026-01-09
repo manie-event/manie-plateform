@@ -113,8 +113,8 @@ import { useProfessionalProfileService } from '@/services/UseProfessionalProfile
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { computed, onMounted, ref } from 'vue';
+import { useProfessionalService } from '~/composables/professional-services/UseProfessionalService';
 import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
-import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
 import { useProfessionalStore } from '~/stores/professionalStore';
 import { useUserStore } from '~/stores/userStore';
 import { useToaster } from '~/utils/toaster';
@@ -124,7 +124,7 @@ const { professionalUser, user, isProfileCreated, initials, professionalActiviti
   storeToRefs(useUserStore());
 const { changeProfessionalBannerPicture, getProfessionalProfile } = useProfessionalProfileService();
 const { getJetonQuantity } = usePaiementJeton();
-const { listProfessionalServiceByProfessional } = useProfessionalProfile();
+const { listProfessionalServiceByProfessional } = useProfessionalService();
 const { getServicesList, getListSector, selectSectors } = useSector();
 const { professionalServices } = storeToRefs(useProfessionalStore());
 const { addSuccess } = useToaster();
@@ -176,6 +176,7 @@ onMounted(async () => {
 
   loadKeywordsByActivity();
   await getListSector();
+  await getServicesList();
   await listProfessionalServiceByProfessional();
   await getJetonQuantity();
 });
