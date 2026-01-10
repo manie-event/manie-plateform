@@ -3,6 +3,7 @@ import { storeToRefs } from 'pinia';
 import { useApi } from '~/composables/UseApi';
 import { useDisplayErrorMessage } from '~/composables/UseDisplayErrorMessage';
 import type { ProfessionalServiceCreate } from '~/models/professionalService/professionalServiceCreate';
+import type { ProfessionalServiceUpdate } from '~/models/professionalService/professionalServiceUuid';
 import { useProfessionalStore } from '~/stores/professionalStore';
 import { useProfilStore } from '~/stores/profilStore';
 import { useSectorStore } from '~/stores/sectorStore';
@@ -59,7 +60,10 @@ export const useProfessionalServiceService = () => {
     return proServicesWithSector;
   };
 
-  const updateProfessionalServices = async (serviceUuid: string, payload) => {
+  const updateProfessionalServices = async (
+    serviceUuid: string,
+    payload: ProfessionalServiceUpdate
+  ) => {
     try {
       if (!api || !professionalUser.value?.uuid) return;
       const { data } = await api.patch(`/professional-service/update/${serviceUuid}`, payload, {

@@ -132,8 +132,6 @@ const localSelectedKeywords = ref<Record<number, string[]>>({});
 const selectedServices = computed<Record<number, Services>>(() => {
   const result: Record<number, Services> = {};
 
-  console.log(professionalActivities.value, 'professionalActivities.value');
-
   professionalActivities.value.forEach((activity, activityIndex) => {
     const sector = sectors.value.find((s) => s.name === activity);
     if (!sector) return;
@@ -141,12 +139,10 @@ const selectedServices = computed<Record<number, Services>>(() => {
     const professionalService = professionalServices.value.find((ps) => {
       return ps.sector?.uuid === sector.uuid;
     });
-    console.log(professionalService, 'professionalService');
 
     if (!professionalService) return;
 
     const service = services.value.find((s) => s.uuid === professionalService.serviceUuid);
-    console.log(service, 'service');
 
     if (service) {
       result[activityIndex] = service;
@@ -180,16 +176,6 @@ const initializeLocalData = () => {
   localSelectedKeywords.value = { ...selectedKeywordsArray.value };
 };
 
-//TODO: Savoir ce qu'est un record
-
-const getSectorUuid = computed(() => {
-  console.log(professionalActivities.value, 'professionalActivities.value');
-
-  return sectors.value
-    .filter((sector) => professionalActivities.value.includes(sector.name))
-    .map((sector) => sector.uuid);
-});
-
 const getServiceBySector = computed(() => {
   // Créer un tableau avec le bon ordre
   const data = professionalActivities.value.map((activity) => {
@@ -215,8 +201,6 @@ const getServiceBySector = computed(() => {
 const getKeywordsByCategory = computed(() => {
   return professionalActivities.value.map((activity) => {
     const sector = questionnairePresta.find((s) => s.sector === activity);
-
-    console.log(sector, 'sector');
 
     if (!sector?.servicesSection?.questions) {
       return { questions: [], keywords: [] };
@@ -269,8 +253,6 @@ const toggleKeywordArray = (activityIndex: number, keyword: any) => {
 };
 
 const saveAnswers = async () => {
-  console.log(professionalServices.value, 'professionalServices before saveAnswers');
-
   const responses = professionalActivities.value
     .map((activity, index) => {
       const service = localSelectedServices.value[index];
@@ -287,6 +269,7 @@ const saveAnswers = async () => {
       }
 
       return {
+        name: service.name,
         serviceUuid: service.uuid,
         professionalUuid: professionalUuid.value!,
         keywordsUuid: keywordsArray,
@@ -297,16 +280,17 @@ const saveAnswers = async () => {
 
   // Envoyer les réponses une par une avec un délai de 500ms entre chaque pour éviter la saturation de Resend
   for (let i = 0; i < responses.length; i++) {
-    console.log(responses[i], 'response i');
-
     if (responses[i]?.isVerified === undefined) {
       await createProfessionalServices(responses[i]);
       addSuccess(
         "Vos services doivent être vérifiés avant de pouvoir être modifiés. Nous revenons vers vous dès que c'est fait !"
       );
     } else {
-      console.log(responses[i].serviceUuid, 'responses[i].serviceUuid');
-      await changeProfessionalServices(responses[i].serviceUuid, responses[i]);
+      // TODO: Envoyer le serviceUuid du service déjà sélectionné
+      const professionalServiceUuid = professionalServices.value[i].uuid;
+      console.log(selectedServices.value[i].uuid, 'selectedServices.value[i].uuid');
+
+      await changeProfessionalServices(professionalServiceUuid, responses[i]);
       addSuccess('Vos services ont été mis à jour avec succès !');
     }
     if (i < responses.length - 1) {
