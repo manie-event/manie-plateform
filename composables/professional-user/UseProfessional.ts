@@ -20,7 +20,6 @@ export const useProfessional = () => {
     console.log(newProfile, 'newProfile');
 
     const updatedProfile = await patchProfessionalProfileDetails(newProfile);
-    console.log(updatedProfile, 'updatedProfile');
 
     setProfessionalUser(updatedProfile);
   };

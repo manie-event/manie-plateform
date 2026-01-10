@@ -549,9 +549,6 @@ watch(openModal, (isOpen) => {
     initializeProfessionalUser();
   }
 });
-onMounted(() => {
-  console.log(professionalUser.value, 'professionalUser.value');
-});
 </script>
 
 <style lang="scss" scoped>

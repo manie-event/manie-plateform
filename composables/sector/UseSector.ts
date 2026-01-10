@@ -14,8 +14,10 @@ export const useSector = () => {
   };
 
   const selectSectors = async (selectedSector: string) => {
+    services.value = [];
+    keywords.value = [];
+
     const elementListBySector = await getSectors(selectedSector);
-    //esthétique
     setServiceList(elementListBySector.services);
     setKeywordList(elementListBySector.keywords);
   };

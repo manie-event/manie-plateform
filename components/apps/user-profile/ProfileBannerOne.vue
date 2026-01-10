@@ -116,7 +116,6 @@ import { computed, onMounted, ref } from 'vue';
 import { useProfessionalService } from '~/composables/professional-services/UseProfessionalService';
 import { usePaiementJeton } from '~/composables/UsePaiementJeton';
 import type { ProfessionalServiceUpdate } from '~/models/professionalService/professionalServiceUpdate';
-import { useProfessionalStore } from '~/stores/professionalStore';
 import { useProfilStore } from '~/stores/profilStore';
 import { useToaster } from '~/utils/toaster';
 import { useSector } from '../../../composables/sector/UseSector';
@@ -125,10 +124,10 @@ const { professionalUser, user, isProfileCreated, initials, professionalActiviti
   storeToRefs(useProfilStore());
 const { changeProfessionalBannerPicture, getProfessionalProfile } = useProfessionalProfileService();
 const { getJetonQuantity } = usePaiementJeton();
-const { listProfessionalServiceByProfessional } = useProfessionalService();
+const { listProfessionalServiceByProfessional, professionalServiceFilteredByVerification } =
+  useProfessionalService();
 const { getServicesList, getListSector, selectSectors } = useSector();
 const { sectors } = storeToRefs(useSectorStore());
-const { professionalServices } = storeToRefs(useProfessionalStore());
 const { addSuccess } = useToaster();
 
 const openModal = ref(false);
@@ -153,7 +152,9 @@ const changeBannerPhoto = async (e: Event) => {
 };
 
 const getServiceValues = computed(() =>
-  professionalServices.value?.length ? professionalServices.value.map((s) => s.name) : []
+  professionalServiceFilteredByVerification.value?.length
+    ? professionalServiceFilteredByVerification.value.map((s) => s.name)
+    : []
 );
 
 const displayedEmail = computed(
@@ -178,7 +179,7 @@ const isServiceVerified = computed(() => {
     const sector = sectors.value.find((s) => s.name === activity);
     if (!sector) return;
 
-    professionalService.value = professionalServices.value.find((ps) => {
+    professionalService.value = professionalServiceFilteredByVerification.value.find((ps) => {
       return ps.sector?.uuid === sector.uuid;
     });
   });

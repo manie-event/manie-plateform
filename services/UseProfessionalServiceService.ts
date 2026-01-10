@@ -10,7 +10,7 @@ import { useSectorStore } from '~/stores/sectorStore';
 import { useToaster } from '~/utils/toaster';
 
 export const useProfessionalServiceService = () => {
-  const { addError } = useToaster();
+  const { addError, addSuccess } = useToaster();
   const { setServicesFiltered } = useSectorStore();
 
   const { setProfessionalServices } = useProfessionalStore();

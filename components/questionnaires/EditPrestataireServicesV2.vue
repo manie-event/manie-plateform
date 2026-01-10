@@ -110,7 +110,6 @@ import { computed } from 'vue';
 import { useProfessionalService } from '~/composables/professional-services/UseProfessionalService';
 import { useProfessional } from '~/composables/professional-user/UseProfessional';
 import type { Services } from '~/models/professionalService/Services';
-import { useProfessionalStore } from '~/stores/professionalStore';
 import { useProfilStore } from '~/stores/profilStore';
 import { useSectorStore } from '~/stores/sectorStore';
 import { useToaster } from '~/utils/toaster';
@@ -120,11 +119,14 @@ const openModificationModal = defineModel<boolean>('openModificationModal', { de
 const { professionalActivities, professionalUuid, professionalUser } =
   storeToRefs(useProfilStore());
 const { services, sectors, keywords } = storeToRefs(useSectorStore());
-const { createProfessionalServices, changeProfessionalServices, deleteProfessionalServices } =
-  useProfessionalService();
+const {
+  createProfessionalServices,
+  changeProfessionalServices,
+  deleteServiceAndActivity,
+  professionalServiceFilteredByVerification,
+} = useProfessionalService();
 const { editProfessionalProfileDetails } = useProfessional();
 const { addError, addSuccess } = useToaster();
-const { professionalServices } = storeToRefs(useProfessionalStore());
 
 const localSelectedServices = ref<Record<number, Services>>({});
 const localSelectedKeywords = ref<Record<number, string[]>>({});
@@ -136,7 +138,7 @@ const selectedServices = computed<Record<number, Services>>(() => {
     const sector = sectors.value.find((s) => s.name === activity);
     if (!sector) return;
 
-    const professionalService = professionalServices.value.find((ps) => {
+    const professionalService = professionalServiceFilteredByVerification.value.find((ps) => {
       return ps.sector?.uuid === sector.uuid;
     });
 
@@ -159,7 +161,7 @@ const selectedKeywordsArray = computed<Record<number, string[]>>(() => {
     const sector = sectors.value.find((s) => s.name === activity);
     if (!sector) return;
 
-    const professionalService = professionalServices.value.find((ps) => {
+    const professionalService = professionalServiceFilteredByVerification.value.find((ps) => {
       return ps.sector?.uuid === sector.uuid;
     });
 
@@ -177,7 +179,6 @@ const initializeLocalData = () => {
 };
 
 const getServiceBySector = computed(() => {
-  // Créer un tableau avec le bon ordre
   const data = professionalActivities.value.map((activity) => {
     const questionnaire = questionnairePresta.find((s) => s.sector === activity);
     const question = questionnaire?.general?.questions[0]?.question || 'Aucune question disponible';
@@ -206,13 +207,18 @@ const getKeywordsByCategory = computed(() => {
       return { questions: [], keywords: [] };
     }
 
+    console.log(sector, 'sector');
+
     const questions = sector.servicesSection.questions.map((q) => q.question);
+    console.log(questions, 'questions');
 
     const categories = sector.servicesSection.questions.map((q) => q.category);
+    console.log(categories, 'categories');
 
     const keywordsByCategory = categories.map((category) => {
       return keywords.value.filter((k) => k.category === category);
     });
+    console.log(keywords.value, 'keywords.value');
 
     return {
       questions,
@@ -257,7 +263,7 @@ const saveAnswers = async () => {
     .map((activity, index) => {
       const service = localSelectedServices.value[index];
       const keywordsArray = localSelectedKeywords.value[index] || [];
-      const isVerified = professionalServices.value[index]?.isVerified;
+      const isVerified = professionalServiceFilteredByVerification.value[index]?.isVerified;
 
       if (!service?.uuid) {
         addError({ message: `Aucun service sélectionné pour ${activity}` });
@@ -286,12 +292,10 @@ const saveAnswers = async () => {
         "Vos services doivent être vérifiés avant de pouvoir être modifiés. Nous revenons vers vous dès que c'est fait !"
       );
     } else {
-      // TODO: Envoyer le serviceUuid du service déjà sélectionné
-      const professionalServiceUuid = professionalServices.value[i].uuid;
-      console.log(selectedServices.value[i].uuid, 'selectedServices.value[i].uuid');
+      const professionalServiceUuid = professionalServiceFilteredByVerification.value[i].uuid;
 
       await changeProfessionalServices(professionalServiceUuid, responses[i]);
-      addSuccess('Vos services ont été mis à jour avec succès !');
+      addSuccess("Vos services viennent de d' être misent à jour!");
     }
     if (i < responses.length - 1) {
       await new Promise((resolve) => setTimeout(resolve, 500));
@@ -300,23 +304,22 @@ const saveAnswers = async () => {
   openModificationModal.value = false;
 };
 
-const deleteActivity = (activityIndex: number) => {
-  const proServiceUuid = professionalServices.value.find((ps) => {
+const deleteActivity = async (activityIndex: number) => {
+  const proServiceUuid = professionalServiceFilteredByVerification.value.find((ps) => {
     return ps.serviceUuid === localSelectedServices.value[activityIndex].uuid;
   })?.uuid;
 
-  if (proServiceUuid) {
-    const base = professionalUser.value ? { ...professionalUser.value } : {};
-    const payload: any =
-      activityIndex === 0
-        ? { ...base, mainActivity: '' }
-        : activityIndex === 1
-          ? { ...base, secondActivity: null }
-          : { ...base, thirdActivity: null };
+  if (!proServiceUuid) {
+    addError({ message: 'Service introuvable' });
+    return;
+  }
 
-    editProfessionalProfileDetails(payload);
-    professionalActivities.value.splice(activityIndex, 1);
-    deleteProfessionalServices(proServiceUuid);
+  const result = await deleteServiceAndActivity(proServiceUuid, activityIndex);
+
+  if (result.success) {
+    addSuccess('Activité supprimée avec succès');
+  } else {
+    addError({ message: 'Erreur lors de la suppression' });
   }
 };
 
@@ -326,7 +329,6 @@ const handleModalOpen = (isOpen: boolean) => {
   }
 };
 
-// Observer l'ouverture du modal
 watch(() => openModificationModal.value, handleModalOpen);
 </script>
 
