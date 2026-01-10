@@ -9,7 +9,7 @@ import errorToaster from '../common/errorToaster.vue';
 // import facebook from "/images/svgs/icon-facebook.svg";
 
 const { sendLogin } = useAuthentification();
-const userStore = useUserStore();
+const userStore = useProfilStore();
 const { setUserAccepted } = userStore;
 const { isStoringUserAccepeted } = storeToRefs(userStore);
 

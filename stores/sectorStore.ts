@@ -13,12 +13,10 @@ export const useSectorStore = defineStore('sector', () => {
 
   const setAllSectors = (newSectors: Sectors[]) => {
     sectors.value.push(...newSectors);
-    console.log(sectors.value, '--- sectors in sectorStore ---');
   };
 
   const setServiceList = (newServices: Services[]) => {
     services.value.push(...newServices);
-    console.log(services.value, '--- services in sectorStore ---');
   };
 
   const setKeywordList = (newKeyword: Keywords[]) => {

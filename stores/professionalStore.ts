@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
-import type { ProfessionalServiceUuid } from '~/models/professionalService/professionalServiceUuid';
+import type { ProfessionalServiceUpdate } from '~/models/professionalService/professionalServiceUuid';
 
 export const useProfessionalStore = defineStore('professional-service', () => {
-  const professionalServices = ref<ProfessionalServiceUuid[]>([]);
+  const professionalServices = ref<ProfessionalServiceUpdate[]>([]);
 
-  const setProfessionalServices = (newProfessionalService: ProfessionalServiceUuid[]) => {
+  const setProfessionalServices = (newProfessionalService: ProfessionalServiceUpdate[]) => {
     professionalServices.value = newProfessionalService;
   };
 

@@ -82,13 +82,13 @@
               Mon profil
             </v-btn>
             <v-btn
-              :disabled="isFirstConnection"
+              :disabled="!isServiceVerified"
               color="rgb(var(--v-theme-darkbg))"
               style="color: rgb(var(--v-theme-background))"
               class="w-100"
               @click="openModificationModal = true"
             >
-              {{ isFirstConnection ? 'Votre service doit être vérifié' : 'Mon activité' }}
+              {{ !isServiceVerified ? 'Votre service doit être vérifié' : 'Mon activité' }}
             </v-btn>
           </template>
         </v-col>
@@ -114,18 +114,20 @@ import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { computed, onMounted, ref } from 'vue';
 import { useProfessionalService } from '~/composables/professional-services/UseProfessionalService';
-import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
+import { usePaiementJeton } from '~/composables/UsePaiementJeton';
+import type { ProfessionalServiceUpdate } from '~/models/professionalService/professionalServiceUpdate';
 import { useProfessionalStore } from '~/stores/professionalStore';
-import { useUserStore } from '~/stores/userStore';
+import { useProfilStore } from '~/stores/profilStore';
 import { useToaster } from '~/utils/toaster';
 import { useSector } from '../../../composables/sector/UseSector';
 
 const { professionalUser, user, isProfileCreated, initials, professionalActivities } =
-  storeToRefs(useUserStore());
+  storeToRefs(useProfilStore());
 const { changeProfessionalBannerPicture, getProfessionalProfile } = useProfessionalProfileService();
 const { getJetonQuantity } = usePaiementJeton();
 const { listProfessionalServiceByProfessional } = useProfessionalService();
 const { getServicesList, getListSector, selectSectors } = useSector();
+const { sectors } = storeToRefs(useSectorStore());
 const { professionalServices } = storeToRefs(useProfessionalStore());
 const { addSuccess } = useToaster();
 
@@ -150,8 +152,6 @@ const changeBannerPhoto = async (e: Event) => {
   }
 };
 
-const isFirstConnection = computed(() => (professionalUser.value?.uuid ? false : true));
-
 const getServiceValues = computed(() =>
   professionalServices.value?.length ? professionalServices.value.map((s) => s.name) : []
 );
@@ -160,21 +160,37 @@ const displayedEmail = computed(
   () => professionalUser.value?.email || professionalEmail.value || null
 );
 
-const loadKeywordsByActivity = () => {
-  if (professionalUser.value?.mainActivity) {
-    professionalActivities.value.filter(Boolean).forEach((activity) => {
+const loadKeywordsByActivity = async () => {
+  if (professionalUser.value?.mainActivity && professionalActivities.value?.length) {
+    for (const activity of professionalActivities.value) {
       if (activity) {
-        selectSectors(activity);
+        await selectSectors(activity);
       }
-    });
+    }
   }
 };
+
+const isServiceVerified = computed(() => {
+  const professionalService = ref<ProfessionalServiceUpdate>();
+  // Pour chaque activité professionnelle, vérifier si le service est vérifié
+
+  professionalActivities.value.forEach((activity, activityIndex) => {
+    const sector = sectors.value.find((s) => s.name === activity);
+    if (!sector) return;
+
+    professionalService.value = professionalServices.value.find((ps) => {
+      return ps.sector?.uuid === sector.uuid;
+    });
+  });
+
+  return professionalService.value?.isVerified === null ? false : true;
+});
 
 onMounted(async () => {
   const professional = await getProfessionalProfile();
   professionalEmail.value = professional.email;
 
-  loadKeywordsByActivity();
+  await loadKeywordsByActivity();
   await getListSector();
   await getServicesList();
   await listProfessionalServiceByProfessional();

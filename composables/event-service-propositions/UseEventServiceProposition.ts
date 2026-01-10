@@ -1,5 +1,5 @@
 import { useProfessionalServiceService } from '@/services/UseProfessionalServiceService';
-import type { ProfessionalServiceUuid } from '~/models/professionalService/professionalServiceUuid';
+import type { ProfessionalServiceUpdate } from '~/models/professionalService/professionalServiceUuid';
 import { useEventService } from '~/services/UseEventService';
 import { useProfessionalProposition } from '~/services/UseProfessionalProposition';
 
@@ -87,8 +87,6 @@ export const useEventServiceProposition = () => {
     try {
       const professionalServices = await getListProfessionalServiceByProfessional();
 
-      console.log(professionalServices, 'professionalServices');
-
       // ✅ On s'assure d'avoir un tableau
       const servicesArray = Array.isArray(professionalServices)
         ? professionalServices
@@ -100,16 +98,13 @@ export const useEventServiceProposition = () => {
       }
 
       const allPropositions = await Promise.all(
-        servicesArray.map(async (service: ProfessionalServiceUuid) => {
+        servicesArray.map(async (service: ProfessionalServiceUpdate) => {
           const propositionList = await getListProfessionalProposition(service.uuid);
-          console.log(propositionList, 'propositionList');
 
           const propositionsWithEvents = await Promise.all(
             (propositionList ?? []).map(async (prop) => {
               try {
                 const event = await getListEventServiceProposition(prop.uuid);
-
-                console.log(event, 'EVENT');
 
                 if (!event) {
                   console.warn(`⚠️ Pas d'événement pour la proposition ${prop.uuid}`);

@@ -4,8 +4,8 @@ import { useApi } from '~/composables/UseApi';
 import { useDisplayErrorMessage } from '~/composables/UseDisplayErrorMessage';
 import type { ProfessionalServiceCreate } from '~/models/professionalService/professionalServiceCreate';
 import { useProfessionalStore } from '~/stores/professionalStore';
+import { useProfilStore } from '~/stores/profilStore';
 import { useSectorStore } from '~/stores/sectorStore';
-import { useUserStore } from '~/stores/userStore';
 import { useToaster } from '~/utils/toaster';
 
 export const useProfessionalServiceService = () => {
@@ -14,7 +14,7 @@ export const useProfessionalServiceService = () => {
 
   const { setProfessionalServices } = useProfessionalStore();
   const { services, sectors } = storeToRefs(useSectorStore());
-  const { professionalUser } = storeToRefs(useUserStore());
+  const { professionalUser } = storeToRefs(useProfilStore());
   const api = useApi();
 
   /**
@@ -54,6 +54,8 @@ export const useProfessionalServiceService = () => {
       };
     });
 
+    setProfessionalServices(proServicesWithSector);
+
     return proServicesWithSector;
   };
 
@@ -82,8 +84,6 @@ export const useProfessionalServiceService = () => {
   };
 
   const sendProfessionalServices = async (services: ProfessionalServiceCreate) => {
-    console.log(services, '--- services to sendProfessionalServices ---');
-
     try {
       if (!api) throw new Error('API non initialisée');
       const { data } = await api.post('/professional-service/create', services);

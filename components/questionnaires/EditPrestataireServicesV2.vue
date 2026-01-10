@@ -6,7 +6,11 @@
       style="padding: 35px; background: rgb(var(--v-theme-background))"
     >
       <v-card-text>
-        <div v-for="(activity, activityIndex) in activities" :key="activityIndex" class="mb-8">
+        <div
+          v-for="(activity, activityIndex) in professionalActivities"
+          :key="activityIndex"
+          class="mb-8"
+        >
           <div class="mb-4 w-100 d-flex justify-lg-space-between align-center">
             <h3 class="text-h6">Mon activité N° {{ activityIndex + 1 }} : {{ activity }}</h3>
             <Icon
@@ -14,7 +18,7 @@
               style="height: 40px; width: 25px"
               class="mt-1 cursor-pointer"
               color="rgb(var(--v-theme-error))"
-              @click="deleteActivity(activity, activityIndex)"
+              @click="deleteActivity(activityIndex)"
             >
             </Icon>
           </div>
@@ -79,14 +83,20 @@
             Aucune question disponible pour cette activité
           </v-alert>
 
-          <v-divider v-if="activityIndex < activities.length - 1" class="my-6" />
+          <v-divider v-if="activityIndex < professionalActivities.length - 1" class="my-6" />
         </div>
       </v-card-text>
 
-      <v-card-actions class="px-6 pb-4">
-        <v-spacer />
+      <v-card-actions class="px-6 pb-4 d-flex gap-4">
         <v-btn variant="outlined" @click="openModificationModal = false"> Annuler </v-btn>
-        <v-btn color="primary" variant="flat" @click="saveAnswers"> Enregistrer </v-btn>
+        <v-btn
+          color="rgb(var(--v-theme-acier))"
+          class="text-white"
+          variant="flat"
+          @click="saveAnswers"
+        >
+          Enregistrer
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -98,17 +108,21 @@ import { Icon } from '@iconify/vue/dist/iconify.js';
 import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
 import { useProfessionalService } from '~/composables/professional-services/UseProfessionalService';
+import { useProfessional } from '~/composables/professional-user/UseProfessional';
 import type { Services } from '~/models/professionalService/Services';
 import { useProfessionalStore } from '~/stores/professionalStore';
+import { useProfilStore } from '~/stores/profilStore';
 import { useSectorStore } from '~/stores/sectorStore';
-import { useUserStore } from '~/stores/userStore';
 import { useToaster } from '~/utils/toaster';
 
 const openModificationModal = defineModel<boolean>('openModificationModal', { default: false });
 
-const { professionalActivities, professionalUuid } = storeToRefs(useUserStore());
+const { professionalActivities, professionalUuid, professionalUser } =
+  storeToRefs(useProfilStore());
 const { services, sectors, keywords } = storeToRefs(useSectorStore());
-const { createProfessionalServices } = useProfessionalService();
+const { createProfessionalServices, changeProfessionalServices, deleteProfessionalServices } =
+  useProfessionalService();
+const { editProfessionalProfileDetails } = useProfessional();
 const { addError, addSuccess } = useToaster();
 const { professionalServices } = storeToRefs(useProfessionalStore());
 
@@ -117,22 +131,22 @@ const localSelectedKeywords = ref<Record<number, string[]>>({});
 
 const selectedServices = computed<Record<number, Services>>(() => {
   const result: Record<number, Services> = {};
-  activities.value.forEach((activity, activityIndex) => {
+
+  console.log(professionalActivities.value, 'professionalActivities.value');
+
+  professionalActivities.value.forEach((activity, activityIndex) => {
     const sector = sectors.value.find((s) => s.name === activity);
     if (!sector) return;
-    // console.log(sector, 'sector found for activity:');
 
     const professionalService = professionalServices.value.find((ps) => {
       return ps.sector?.uuid === sector.uuid;
     });
+    console.log(professionalService, 'professionalService');
 
     if (!professionalService) return;
 
-    console.log(professionalService.serviceUuid, 'ProService');
-
     const service = services.value.find((s) => s.uuid === professionalService.serviceUuid);
-    console.log(service, 'selectedServices service found for activity:');
-    console.log('----------------------');
+    console.log(service, 'service');
 
     if (service) {
       result[activityIndex] = service;
@@ -145,7 +159,7 @@ const selectedServices = computed<Record<number, Services>>(() => {
 const selectedKeywordsArray = computed<Record<number, string[]>>(() => {
   const result: Record<number, string[]> = {};
 
-  activities.value.forEach((activity, activityIndex) => {
+  professionalActivities.value.forEach((activity, activityIndex) => {
     const sector = sectors.value.find((s) => s.name === activity);
     if (!sector) return;
 
@@ -168,38 +182,41 @@ const initializeLocalData = () => {
 
 //TODO: Savoir ce qu'est un record
 
-const activities = computed(() => {
-  return professionalActivities.value.filter(Boolean);
-});
-
 const getSectorUuid = computed(() => {
+  console.log(professionalActivities.value, 'professionalActivities.value');
+
   return sectors.value
-    .filter((sector) => activities.value.includes(sector.name))
+    .filter((sector) => professionalActivities.value.includes(sector.name))
     .map((sector) => sector.uuid);
 });
 
 const getServiceBySector = computed(() => {
-  const questions = activities.value.map((activity) => {
+  // Créer un tableau avec le bon ordre
+  const data = professionalActivities.value.map((activity) => {
     const questionnaire = questionnairePresta.find((s) => s.sector === activity);
-    console.log(questionnaire, 'questionnaire for activity: ', activity);
-    return questionnaire?.general?.questions[0]?.question || 'Aucune question disponible';
-  });
+    const question = questionnaire?.general?.questions[0]?.question || 'Aucune question disponible';
 
-  const servicesChip = getSectorUuid.value.map((sectorUuid: string) => {
-    return services.value.filter((s) => s.sectorUuid === sectorUuid);
-  });
+    const sector = sectors.value.find((s) => s.name === activity);
+    const sectorUuid = sector?.uuid;
 
-  console.log(servicesChip, '--- servicesChip ---');
+    const servicesForSector = sectorUuid
+      ? services.value.filter((s) => s.sectorUuid === sectorUuid)
+      : [];
+
+    return { question, services: servicesForSector };
+  });
 
   return {
-    questions,
-    responseServices: servicesChip,
+    questions: data.map((d) => d.question),
+    responseServices: data.map((d) => d.services),
   };
 });
 
 const getKeywordsByCategory = computed(() => {
-  return activities.value.map((activity) => {
+  return professionalActivities.value.map((activity) => {
     const sector = questionnairePresta.find((s) => s.sector === activity);
+
+    console.log(sector, 'sector');
 
     if (!sector?.servicesSection?.questions) {
       return { questions: [], keywords: [] };
@@ -252,10 +269,13 @@ const toggleKeywordArray = (activityIndex: number, keyword: any) => {
 };
 
 const saveAnswers = async () => {
-  const responses = activities.value
+  console.log(professionalServices.value, 'professionalServices before saveAnswers');
+
+  const responses = professionalActivities.value
     .map((activity, index) => {
       const service = localSelectedServices.value[index];
       const keywordsArray = localSelectedKeywords.value[index] || [];
+      const isVerified = professionalServices.value[index]?.isVerified;
 
       if (!service?.uuid) {
         addError({ message: `Aucun service sélectionné pour ${activity}` });
@@ -270,29 +290,50 @@ const saveAnswers = async () => {
         serviceUuid: service.uuid,
         professionalUuid: professionalUuid.value!,
         keywordsUuid: keywordsArray,
+        isVerified: isVerified ?? undefined,
       };
     })
     .filter(Boolean);
 
   // Envoyer les réponses une par une avec un délai de 500ms entre chaque pour éviter la saturation de Resend
   for (let i = 0; i < responses.length; i++) {
-    await createProfessionalServices(responses[i]);
+    console.log(responses[i], 'response i');
 
+    if (responses[i]?.isVerified === undefined) {
+      await createProfessionalServices(responses[i]);
+      addSuccess(
+        "Vos services doivent être vérifiés avant de pouvoir être modifiés. Nous revenons vers vous dès que c'est fait !"
+      );
+    } else {
+      console.log(responses[i].serviceUuid, 'responses[i].serviceUuid');
+      await changeProfessionalServices(responses[i].serviceUuid, responses[i]);
+      addSuccess('Vos services ont été mis à jour avec succès !');
+    }
     if (i < responses.length - 1) {
       await new Promise((resolve) => setTimeout(resolve, 500));
     }
   }
-  addSuccess('Vos services ont été mis à jour avec succès !');
   openModificationModal.value = false;
 };
 
-const deleteActivity = (activity: string, activityIndex: number) => {
-  // TO DO: Supprimer aussi le service en base de données
+const deleteActivity = (activityIndex: number) => {
+  const proServiceUuid = professionalServices.value.find((ps) => {
+    return ps.serviceUuid === localSelectedServices.value[activityIndex].uuid;
+  })?.uuid;
 
-  const serviceToDelete = activities.value.filter((a) => a === activity);
-  console.log(serviceToDelete, 'serviceToDelete');
+  if (proServiceUuid) {
+    const base = professionalUser.value ? { ...professionalUser.value } : {};
+    const payload: any =
+      activityIndex === 0
+        ? { ...base, mainActivity: '' }
+        : activityIndex === 1
+          ? { ...base, secondActivity: null }
+          : { ...base, thirdActivity: null };
 
-  // professionalActivities.value.splice(activityIndex, 1);
+    editProfessionalProfileDetails(payload);
+    professionalActivities.value.splice(activityIndex, 1);
+    deleteProfessionalServices(proServiceUuid);
+  }
 };
 
 const handleModalOpen = (isOpen: boolean) => {

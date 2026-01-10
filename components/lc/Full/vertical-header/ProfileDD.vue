@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { clientMenu, professionalProfile } from '@/_mockApis/headerData';
+import { getInitials } from '@/utils/text-utils';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { useDisplay } from 'vuetify';
-import { useAuthentification } from '~/composables/UseAuthentification';
 import { useClientProfil } from '~/composables/client-user/UseClientProfil';
-import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
+import { useAuthentification } from '~/composables/UseAuthentification';
+import { usePaiementJeton } from '~/composables/UsePaiementJeton';
 import { useProfessionalProfileService } from '~/services/UseProfessionalProfileService';
-import { useUserStore } from '~/stores/userStore';
+import { useProfilStore } from '~/stores/profilStore';
 
 const { sendLogout } = useAuthentification();
 const { getJetonQuantity } = usePaiementJeton();
@@ -15,8 +16,8 @@ const { getProfessionalProfileDetails, getProfessionalProfile } = useProfessiona
 const { getClientProfil } = useClientProfil();
 const { mdAndDown } = useDisplay();
 
-const userStore = useUserStore();
-const { isProfessional, category, displayName, initials } = storeToRefs(userStore);
+const userStore = useProfilStore();
+const { isProfessional, category, displayName } = storeToRefs(userStore);
 const { cartQuantity } = storeToRefs(useCartStore());
 </script>
 
@@ -25,7 +26,7 @@ const { cartQuantity } = storeToRefs(useCartStore());
     <template #activator="{ props }">
       <div class="text-left px-0 cursor-pointer" v-bind="props">
         <div class="d-flex align-center">
-          <div class="avatar">{{ initials }}</div>
+          <div class="avatar">{{ getInitials(displayName ?? '') }}</div>
           <div class="ml-md-4 d-md-block d-none">
             <h6 class="text-h6 text-black font-weight-semibold">{{ displayName }}</h6>
             <span class="text-subtitle-2 font-weight-medium text-grey100">{{ category }}</span>
@@ -43,7 +44,7 @@ const { cartQuantity } = storeToRefs(useCartStore());
 
         <div class="d-flex align-center mt-5 pb-6">
           <div class="avatar">
-            {{ initials }}
+            {{ getInitials(displayName ?? '') }}
           </div>
           <div class="ml-5">
             <h6 class="text-h6 text-black font-weight-semibold">{{ displayName }}</h6>

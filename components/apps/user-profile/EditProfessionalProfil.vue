@@ -288,7 +288,6 @@
 </template>
 
 <script setup lang="ts">
-import { useUserStore } from '@/stores/userStore';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { useForm } from 'vee-validate';
@@ -298,10 +297,11 @@ import errorToaster from '~/components/common/errorToaster.vue';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { ProfessionalProfile } from '~/models/user/UserModel';
 import { useProfessionalProfileService } from '~/services/UseProfessionalProfileService';
+import { useProfilStore } from '~/stores/profilStore';
 import { useToaster } from '~/utils/toaster';
 import ModalRedirection from './ModalRedirection.vue';
 
-const userStore = useUserStore();
+const userStore = useProfilStore();
 const { professionalUser, isProfilUpdate, isProfileCreated } = storeToRefs(userStore);
 const { setProfessionalUser } = userStore;
 const { createProfessionalProfile, patchProfessionalProfileDetails } =
@@ -548,6 +548,9 @@ watch(openModal, (isOpen) => {
   if (isOpen) {
     initializeProfessionalUser();
   }
+});
+onMounted(() => {
+  console.log(professionalUser.value, 'professionalUser.value');
 });
 </script>
 

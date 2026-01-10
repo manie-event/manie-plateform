@@ -11,7 +11,7 @@ export const useAuthentification = () => {
   const config = useRuntimeConfig();
   const router = useRouter();
   const { addError, addSuccess } = useToaster();
-  const userStore = useUserStore();
+  const userStore = useProfilStore();
   const { setUser } = userStore;
   const { isProfessional } = storeToRefs(userStore);
   const { getProfessionalProfile, getProfessionalProfileDetails } = useProfessionalProfileService();

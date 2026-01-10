@@ -1,14 +1,14 @@
 import type { AxiosError } from 'axios';
 import { storeToRefs } from 'pinia';
 import type { ClientModel } from '~/models/user/ClientModel';
-import { useUserStore } from '~/stores/userStore';
+import { useProfilStore } from '~/stores/profilStore';
 import { useToaster } from '~/utils/toaster';
 import { useApi } from '../UseApi';
 
 export const useClientProfil = () => {
   const { addError, addSuccess } = useToaster();
   const token = useCookie('token');
-  const userStore = useUserStore();
+  const userStore = useProfilStore();
   const { setClientProfile } = userStore;
   const { clientProfile, isProfileCreated } = storeToRefs(userStore);
   const config = useRuntimeConfig();
@@ -18,8 +18,6 @@ export const useClientProfil = () => {
     const response = await api?.get(`${config.public.apiUrl}/organisator`);
 
     if (response) {
-      console.log(response.data, 'CLIENT PROFILE');
-
       setClientProfile(response.data);
       return response.data;
     }

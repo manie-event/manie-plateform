@@ -184,7 +184,6 @@
 import RemovingProfessionalServiceModal from '@/components/apps/user-profile/RemovingProfessionalServiceModal.vue';
 import questionnairePresta from '@/data/questionnaire-presta.json';
 import { useProfessionalServiceService } from '@/services/UseProfessionalServiceService';
-import { useUserStore } from '@/stores/userStore';
 import { useToaster } from '@/utils/toaster';
 import { Icon } from '@iconify/vue';
 import type { AxiosError } from 'axios';
@@ -196,10 +195,11 @@ import type { Keywords } from '~/models/professionalService/Keywords';
 import type { ProfessionalServicePayload } from '~/models/professionalService/ProfessionalServicePayload';
 import type { QuestionnaireItem } from '~/models/professionalService/QuestionnairePresta';
 import type { Services } from '~/models/professionalService/Services';
+import { useProfilStore } from '~/stores/profilStore';
 import ModalRedirection from '../apps/user-profile/ModalRedirection.vue';
 
 const serviceModal = defineModel<boolean>('openModificationModal', { default: false });
-const userStore = useUserStore();
+const userStore = useProfilStore();
 const { professionalUser } = storeToRefs(userStore);
 
 const sectorStore = useSectorStore();

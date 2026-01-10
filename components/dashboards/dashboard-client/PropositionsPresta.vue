@@ -222,7 +222,7 @@ const { getServicePropositionForClient, propositionAcceptedByClient, proposition
   useEventServiceProposition();
 const { getServicesList } = useSector();
 const { getProfessionalProfileForCustomer } = useProfessionalProfileService();
-const { professionalProfileForCustomer } = storeToRefs(useUserStore());
+const { professionalProfileForCustomer } = storeToRefs(useProfilStore());
 const { mdAndDown } = useDisplay();
 
 const isAcceptedByClient = ref(false);

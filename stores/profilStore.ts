@@ -3,8 +3,8 @@ import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 import type { Services } from '~/models/professionalService/Services';
 
-export const useUserStore = defineStore(
-  'userStore',
+export const useProfilStore = defineStore(
+  'profilStore',
   () => {
     // --- état principal ---
     const isProfileCreated = ref(false);
@@ -41,7 +41,7 @@ export const useUserStore = defineStore(
         professionalUser.value?.mainActivity,
         professionalUser.value?.secondActivity,
         professionalUser.value?.thirdActivity,
-      ];
+      ].filter(Boolean);
     });
 
     // --- setters ---

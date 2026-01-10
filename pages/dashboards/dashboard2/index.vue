@@ -40,11 +40,11 @@ import WelcomeCard from '@/components/dashboards/dashboard2/WelcomeCard.vue';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
 import { storeToRefs } from 'pinia';
 import { useEventServiceProposition } from '~/composables/event-service-propositions/UseEventServiceProposition';
-import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
+import { usePaiementJeton } from '~/composables/UsePaiementJeton';
 import { useProfessionalProfileService } from '~/services/UseProfessionalProfileService';
-import { useUserStore } from '~/stores/userStore';
+import { useProfilStore } from '~/stores/profilStore';
 
-const userStore = useUserStore();
+const userStore = useProfilStore();
 const { isProfileCreated } = storeToRefs(userStore);
 const { getProfessionalProfileDetails, getProfessionalProfile } = useProfessionalProfileService();
 const { getServicePropositionForProfessional } = useEventServiceProposition();
@@ -52,6 +52,7 @@ const { getJetonQuantity } = usePaiementJeton();
 
 onMounted(async () => {
   await Promise.all([
+    getProfessionalProfile(),
     getProfessionalProfileDetails(),
     getServicePropositionForProfessional(),
     getJetonQuantity(),

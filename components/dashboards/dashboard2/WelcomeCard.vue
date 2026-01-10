@@ -34,7 +34,7 @@ import { capitalizeFirst } from '@/utils/text-utils';
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
 import ProfessionalMarketPlace from './ProfessionalMarketPlace.vue';
 
-const { professionalUser, proName } = storeToRefs(useUserStore());
+const { professionalUser, proName } = storeToRefs(useProfilStore());
 const { serviceEventProposition } = storeToRefs(usePropositionStore());
 
 const openMarketModal = ref(false);

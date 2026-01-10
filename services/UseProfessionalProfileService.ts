@@ -3,14 +3,12 @@ import type { ProfessionalProfile } from '~/models/user/UserModel';
 
 export const useProfessionalProfileService = () => {
   const { addError, addSuccess } = useToaster();
-  const userStore = useUserStore();
+  const userStore = useProfilStore();
   const { setProfessionalUser, sendProfessionalProfileForCustomer } = userStore;
   const { professionalUser, professionalUuid } = storeToRefs(userStore);
   const api = useApi();
 
   const createProfessionalProfile = async (professionalProfil: ProfessionalProfile) => {
-    console.log(professionalProfil, 'createProfessionalProfile');
-
     try {
       if (!api) return;
       const { data } = await api.post('/professional/create', professionalProfil);
@@ -69,9 +67,9 @@ export const useProfessionalProfileService = () => {
 
       const { data } = await api.patch(`/professional/${professionalUuid.value}`, mergedProfile);
       const updatedProfile = data.newPro || data;
+      console.log(data, 'patchProfessionalProfileDetails');
 
       if (updatedProfile && updatedProfile.uuid) {
-        setProfessionalUser(updatedProfile);
         addSuccess('Profil professionnel mis à jour !');
       } else {
         console.warn('⚠️ Réponse incomplète après mise à jour du profil:', data);

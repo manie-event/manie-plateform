@@ -64,5 +64,5 @@
   </v-card>
 </template>
 <script setup lang="ts">
-const { user } = storeToRefs(useUserStore());
+const { user } = storeToRefs(useProfilStore());
 </script>

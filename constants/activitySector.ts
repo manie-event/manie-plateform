@@ -1,4 +1,5 @@
 export const ACTIVITY_ITEMS = [
+  { label: 'Choisissez votre activité', value: null },
   { label: 'Animation (jeux, performeurs, art, bien-être)', value: 'animation' },
   { label: 'Beauté (coiffure, maquillage)', value: 'beauté' },
   { label: 'Boisson (mixologue, bar mobile, fournisseur...)', value: 'boisson' },

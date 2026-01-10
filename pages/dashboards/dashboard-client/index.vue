@@ -7,9 +7,9 @@ import BaseEmptyState from '~/components/common/BaseEmptyState.vue';
 import { useClientProfil } from '~/composables/client-user/UseClientProfil';
 import { useEventServiceProposition } from '~/composables/event-service-propositions/UseEventServiceProposition';
 import { useEventService } from '~/services/UseEventService';
-import { useUserStore } from '~/stores/userStore';
+import { useProfilStore } from '~/stores/profilStore';
 
-const userStore = useUserStore();
+const userStore = useProfilStore();
 const { isProfileCreated, isProfessional } = storeToRefs(userStore);
 const { getClientProfil } = useClientProfil();
 const { events } = storeToRefs(useEventsStore());

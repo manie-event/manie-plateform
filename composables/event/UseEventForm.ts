@@ -6,7 +6,7 @@ import { useAddNewEventService } from '../event-service/UseAddNewEventService';
 import { useSector } from '../sector/UseSector';
 
 export const useEventForm = () => {
-  const { clientProfile } = storeToRefs(useUserStore());
+  const { clientProfile } = storeToRefs(useProfilStore());
   const { keywords, sectors, servicesFiltered, services } = storeToRefs(useSectorStore());
   const { sectorFiltered } = useAddNewEventService();
   const { selectSectors } = useSector();
@@ -188,15 +188,6 @@ export const useEventForm = () => {
   };
 
   const toggleKeywordForService = (index: number, keywordUuid: string) => {
-    console.log(index, 'toggleKeywordForService index');
-    console.log(keywordUuid, 'toggleKeywordForService keywordUuid');
-    console.log(event.value.eventServices[0], 'EVENT SERVICE ----- ');
-
-    // on m'envoie l'index du keyword
-    // on m'envoie l'uuid du keyword
-    // ---
-    //
-
     const service = event.value.eventServices[index];
     const keywordsList = service.keywordsUuid;
     const pos = keywordsList.indexOf(keywordUuid);
