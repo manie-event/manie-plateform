@@ -129,6 +129,7 @@ const { listProfessionalServiceByProfessional, professionalServiceFilteredByVeri
 const { getServicesList, getListSector, selectSectors } = useSector();
 const { sectors } = storeToRefs(useSectorStore());
 const { addSuccess } = useToaster();
+const { professionalServices } = storeToRefs(useProfessionalStore());
 
 const openModal = ref(false);
 const openServiceModal = ref(false);
@@ -151,11 +152,15 @@ const changeBannerPhoto = async (e: Event) => {
   }
 };
 
-const getServiceValues = computed(() =>
-  professionalServiceFilteredByVerification.value?.length
-    ? professionalServiceFilteredByVerification.value.map((s) => s.name)
-    : []
-);
+const getServiceValues = computed(() => {
+  console.log(professionalServices.value, 'professionalServices.value');
+
+  return professionalServices.value?.length
+    ? professionalServices.value
+        .filter((service) => service.isVerified !== false)
+        .map((s) => s.name)
+    : [];
+});
 
 const displayedEmail = computed(
   () => professionalUser.value?.email || professionalEmail.value || null
@@ -179,7 +184,7 @@ const isServiceVerified = computed(() => {
     const sector = sectors.value.find((s) => s.name === activity);
     if (!sector) return;
 
-    professionalService.value = professionalServiceFilteredByVerification.value.find((ps) => {
+    professionalService.value = professionalServices.value.find((ps) => {
       return ps.sector?.uuid === sector.uuid;
     });
   });
@@ -196,6 +201,7 @@ onMounted(async () => {
   await getServicesList();
   await listProfessionalServiceByProfessional();
   await getJetonQuantity();
+  professionalServiceFilteredByVerification();
 });
 </script>
 

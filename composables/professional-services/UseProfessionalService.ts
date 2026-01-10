@@ -61,14 +61,16 @@ export const useProfessionalService = () => {
     }
   };
 
-  const professionalServiceFilteredByVerification = computed(() =>
-    professionalServices.value.filter((service, index) => {
+  const professionalServiceFilteredByVerification = () => {
+    return professionalServices.value.map((service, index) => {
+      console.log(service, '%%%%%%%%%%%%%%%%%');
+
       console.log('PASSE PAR LA');
-      if (service.isVerified == false) {
+      if (service.isVerified === false) {
         deleteServiceAndActivity(service.uuid, index);
       }
-    })
-  );
+    });
+  };
 
   return {
     createProfessionalServices,
