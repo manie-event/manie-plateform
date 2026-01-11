@@ -12,15 +12,15 @@ export const useSectorStore = defineStore('sector', () => {
   const servicesFiltered = ref<ServicesFiltered[]>([]);
 
   const setAllSectors = (newSectors: Sectors[]) => {
-    sectors.value.push(...newSectors);
+    sectors.value = newSectors;
   };
 
   const setServiceList = (newServices: Services[]) => {
-    services.value.push(...newServices);
+    services.value = newServices;
   };
 
   const setKeywordList = (newKeyword: Keywords[]) => {
-    keywords.value.push(...newKeyword);
+    keywords.value = newKeyword;
   };
 
   const setServicesFiltered = (newServicesFiltered: ServicesFiltered[]) => {

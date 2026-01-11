@@ -19,7 +19,7 @@
               <p><b>A quelle date:</b> {{ formatDate(proposition.date) }}</p>
               <p><b>Le budget global:</b> {{ proposition.budget }}€</p>
               <v-chip
-                v-for="word in getKeywordValues(proposition.keywordsUuid)"
+                v-for="word in getKeywordValues(proposition.keywordsUuids)"
                 :key="word"
                 class="ma-1"
               >
@@ -58,7 +58,7 @@
       </v-card-text>
       <div class="text-center">
         <v-pagination
-          v-if="paginatedEvents.length > 3"
+          v-if="paginatedEvents.length > 5"
           v-model="currentPage"
           :length="getPropositionBy3"
           next-icon="mdi-menu-right"
@@ -89,6 +89,7 @@
 import BaseEmptyState from '@/components/common/BaseEmptyState.vue';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
 import { getEventBackground } from '@/utils/card-utils';
+import { formatDate } from '@/utils/date-utils';
 import type { EventModelForProposition } from '~/models/events/eventModelForProposition';
 import PropositionAccepted from './PropositionAccepted.vue';
 
@@ -96,11 +97,11 @@ const props = defineProps<{ propositionFiltered: EventModelForProposition[] }>()
 const openPropositionPro = defineModel<boolean>('openPropositionPro', { default: false });
 
 const { professionalServices } = storeToRefs(useProfessionalStore());
-const { keywords } = storeToRefs(useUserStore());
+const { keywords } = storeToRefs(useSectorStore());
 const propositionUuid = ref('');
 const isAccepted = ref(false);
 const currentPage = ref(1);
-const itemsPerPage = ref(3);
+const itemsPerPage = ref(5);
 const token = ref(0);
 
 const getPropositionBy3 = computed(() =>

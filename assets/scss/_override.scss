@@ -207,3 +207,10 @@ html {
 .v-row {
   margin: unset !important;
 }
+
+.v-col,
+.v-col-6,
+.v-col-12 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}

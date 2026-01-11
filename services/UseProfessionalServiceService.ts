@@ -1,13 +1,21 @@
 import type { AxiosError } from 'axios';
-import type { ProfessionalServiceUuid } from '~/models/professionalService/professionalServiceUuid';
+import { storeToRefs } from 'pinia';
+import { useApi } from '~/composables/UseApi';
+import { useDisplayErrorMessage } from '~/composables/UseDisplayErrorMessage';
+import type { ProfessionalServiceCreate } from '~/models/professionalService/professionalServiceCreate';
+import type { ProfessionalServiceUpdate } from '~/models/professionalService/professionalServiceUuid';
+import { useProfessionalStore } from '~/stores/professionalStore';
+import { useProfilStore } from '~/stores/profilStore';
+import { useSectorStore } from '~/stores/sectorStore';
+import { useToaster } from '~/utils/toaster';
 
 export const useProfessionalServiceService = () => {
-  const { addError } = useToaster();
+  const { addError, addSuccess } = useToaster();
   const { setServicesFiltered } = useSectorStore();
 
   const { setProfessionalServices } = useProfessionalStore();
   const { services, sectors } = storeToRefs(useSectorStore());
-  const { professionalUser } = storeToRefs(useUserStore());
+  const { professionalUser } = storeToRefs(useProfilStore());
   const api = useApi();
 
   /**
@@ -19,6 +27,8 @@ export const useProfessionalServiceService = () => {
       const { data } = await api.get(
         '/professional-service/show-selected-services-for-professional'
       );
+
+      console.log(data, 'getProfessionalService');
 
       setServicesFiltered(data);
       return data ?? [];
@@ -35,23 +45,27 @@ export const useProfessionalServiceService = () => {
     const { data } = await api.get(
       `/professional-service/list-by-professional/${professionalUser.value.uuid}`
     );
-    const proServices = data.data;
-    const allServices = services.value;
-    const allSectors = sectors.value;
 
-    const proServicesWithSector = proServices.map((proService) => {
-      const matchingService = allServices.find((s) => s.uuid === proService.serviceUuid);
-      const findSector = allSectors.find((sector) => sector.uuid === matchingService?.sectorUuid);
+    const proServicesWithSector = data.data.map((proService) => {
+      const matchingService = services.value.find((s) => proService.serviceUuid === s.uuid);
+      const findSector = sectors.value.find(
+        (sector) => sector.uuid === matchingService?.sectorUuid
+      );
       return {
         ...proService,
         sector: findSector,
       };
     });
 
+    setProfessionalServices(proServicesWithSector);
+
     return proServicesWithSector;
   };
 
-  const updateProfessionalServices = async (serviceUuid: string, payload) => {
+  const updateProfessionalServices = async (
+    serviceUuid: string,
+    payload: ProfessionalServiceUpdate
+  ) => {
     try {
       if (!api || !professionalUser.value?.uuid) return;
       const { data } = await api.patch(`/professional-service/update/${serviceUuid}`, payload, {
@@ -75,10 +89,10 @@ export const useProfessionalServiceService = () => {
     return data.data ?? [];
   };
 
-  const sendProfessionalServices = async (servicesPayload: ProfessionalServiceUuid) => {
+  const sendProfessionalServices = async (services: ProfessionalServiceCreate) => {
     try {
       if (!api) throw new Error('API non initialisée');
-      const { data } = await api.post('/professional-service/create', servicesPayload);
+      const { data } = await api.post('/professional-service/create', services);
 
       return data;
     } catch (error) {

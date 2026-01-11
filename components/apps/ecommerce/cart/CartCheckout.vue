@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
+import { usePaiementJeton } from '~/composables/UsePaiementJeton';
 import StepFirst from './steps/StepFirst.vue';
 
 const store = useCartStore();

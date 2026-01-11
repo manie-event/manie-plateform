@@ -48,12 +48,7 @@
           "category": "régimes",
           "type": "checkbox",
           "required": true
-        }
-      ]
-    },
-    "habitudes": "VOS HABITUDES ",
-    "habitudesSection": {
-      "questions": [
+        },
         {
           "id": "food-keywords-6",
           "question": "Vos habitudes responsables : ",
@@ -133,12 +128,7 @@
 
           "type": "checkbox",
           "required": true
-        }
-      ]
-    },
-    "habitudes": "VOS HABITUDES ",
-    "habitudesSection": {
-      "questions": [
+        },
         {
           "id": "lieux-keywords-8",
           "question": "Vos habitudes responsables : ",
@@ -186,15 +176,10 @@
 
           "type": "checkbox",
           "required": true
-        }
-      ]
-    },
-    "habitudes": "VOS HABITUDES ",
-    "habitudesSection": {
-      "questions": [
+        },
         {
           "id": "boisson-keywords-4",
-          "question": "Vos habitudes responsables : ",
+          "question": "Vos habitudes responsables ? ",
           "category": "écoresp-boisson",
           "type": "checkbox",
           "required": true
@@ -230,12 +215,7 @@
           "category": "matériel serveur",
           "type": "checkbox",
           "required": true
-        }
-      ]
-    },
-    "habitudes": "VOS HABITUDES ",
-    "habitudesSection": {
-      "questions": [
+        },
         {
           "id": "service-keywords-3",
           "question": "Vos petites habitudes responsabiles ?  ",
@@ -315,15 +295,10 @@
 
           "type": "checkbox",
           "required": true
-        }
-      ]
-    },
-    "habitudes": "VOS HABITUDES ",
-    "habitudesSection": {
-      "questions": [
+        },
         {
           "id": "musique-keywords-8",
-          "question": "Vos petites habitudes responsables ?  ",
+          "question": "Vos petites habitudes responsables ?",
           "category": "écoresp-musique",
           "type": "checkbox",
           "required": true
@@ -376,12 +351,7 @@
 
           "type": "checkbox",
           "required": true
-        }
-      ]
-    },
-    "habitudes": "VOS HABITUDES ",
-    "habitudesSection": {
-      "questions": [
+        },
         {
           "id": "animation-keywords-5",
           "question": "Vos petits gestes responsables ?",
@@ -437,12 +407,7 @@
 
           "type": "checkbox",
           "required": true
-        }
-      ]
-    },
-    "habitudes": "VOS HABITUDES ",
-    "habitudesSection": {
-      "questions": [
+        },
         {
           "id": "audiovisuel-keywords-5",
           "question": "Quelles sont vos habitudes en matière d'éco-responsabilité ?  ",
@@ -477,7 +442,7 @@
         },
         {
           "id": "décoration-keywords-2",
-          "question": "Décorations végétales proposées : ",
+          "question": "Décorations végétales proposées ? ",
           "category": "végétaux",
 
           "type": "checkbox",
@@ -530,12 +495,7 @@
 
           "type": "checkbox",
           "required": true
-        }
-      ]
-    },
-    "habitudes": "VOS HABITUDES ",
-    "habitudesSection": {
-      "questions": [
+        },
         {
           "id": "décoration-keywords-9",
           "question": "Vos petites habitudes responsables ? ",
@@ -567,12 +527,7 @@
           "category": "proposition",
           "type": "checkbox",
           "required": true
-        }
-      ]
-    },
-    "habitudes": "VOS HABITUDES ",
-    "habitudesSection": {
-      "questions": [
+        },
         {
           "id": "logistique-keywords-2",
           "question": "Vos petites habitudes responsables ? ",
@@ -636,12 +591,7 @@
 
           "type": "checkbox",
           "required": true
-        }
-      ]
-    },
-    "habitudes": "VOS HABITUDES ",
-    "habitudesSection": {
-      "questions": [
+        },
         {
           "id": "transport-keywords-6",
           "question": "Vos petites habitudes responsables ?  ",
@@ -689,12 +639,7 @@
 
           "type": "checkbox",
           "required": true
-        }
-      ]
-    },
-    "habitudes": "VOS HABITUDES ",
-    "habitudesSection": {
-      "questions": [
+        },
         {
           "id": "look-keywords-4",
           "question": "Quelles sont vos habitudes en matière d'éco-responsabilité ?  ",
@@ -775,12 +720,7 @@
 
           "type": "checkbox",
           "required": true
-        }
-      ]
-    },
-    "habitudes": "VOS HABITUDES ",
-    "habitudesSection": {
-      "questions": [
+        },
         {
           "id": "loueur-keywords-9",
           "question": "Vos petites habitudes responsables ?  ",
@@ -820,12 +760,7 @@
 
           "type": "checkbox",
           "required": true
-        }
-      ]
-    },
-    "habitudes": "VOS HABITUDES ",
-    "habitudesSection": {
-      "questions": [
+        },
         {
           "id": "esthétique-keywords-3",
           "question": "Vos petites habitudes responsables ? ",
@@ -874,12 +809,7 @@
 
           "type": "checkbox",
           "required": true
-        }
-      ]
-    },
-    "habitudes": "VOS HABITUDES ",
-    "habitudesSection": {
-      "questions": [
+        },
         {
           "id": "humain-keywords-5",
           "question": "Vos petites habitudes responsables ? ",
@@ -916,7 +846,6 @@
           "id": "beauté-keywords-2",
           "question": "Vos prestations coiffure : ",
           "category": "presta coiffure",
-
           "type": "checkbox",
           "required": true
         },
@@ -948,12 +877,7 @@
           "category": "adaptabilité",
           "type": "checkbox",
           "required": true
-        }
-      ]
-    },
-    "habitudes": "VOS HABITUDES ",
-    "habitudesSection": {
-      "questions": [
+        },
         {
           "id": "beauté-keywords-3",
           "question": "Vos petites habitudes responsables ? ",

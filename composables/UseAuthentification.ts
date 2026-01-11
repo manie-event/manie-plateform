@@ -4,19 +4,15 @@ import type { AuthentificationModel } from '~/models/authentification/authentifi
 import type { RegisterModel } from '~/models/authentification/registerModel';
 import type { registerNewPasswordModel } from '~/models/authentification/registerNewPasswordModel';
 import { useProfessionalProfileService } from '../services/UseProfessionalProfileService';
-import { useClientProfil } from './client-user/UseClientProfil';
-import { useEventServiceProposition } from './event-service-propositions/UseEventServiceProposition';
 
 export const useAuthentification = () => {
   const config = useRuntimeConfig();
   const router = useRouter();
-  const { addError, addSuccess } = useToaster();
-  const userStore = useUserStore();
+  const { addSuccess } = useToaster();
+  const userStore = useProfilStore();
   const { setUser } = userStore;
   const { isProfessional } = storeToRefs(userStore);
-  const { getProfessionalProfile, getProfessionalProfileDetails } = useProfessionalProfileService();
-  const { getClientProfil } = useClientProfil();
-  const { getServicePropositionForProfessional } = useEventServiceProposition();
+  const { getProfessionalProfile } = useProfessionalProfileService();
 
   const { token } = useAuthCookies();
   const { refreshToken } = useRefreshToken();
@@ -67,9 +63,7 @@ export const useAuthentification = () => {
       } else {
         addSuccess('Connexion réussie.');
         await router.push({ path: '/dashboards/dashboard2' });
-        await getProfessionalProfile();
-        await getProfessionalProfileDetails();
-        await getServicePropositionForProfessional();
+        isProfessional.value = true;
       }
     } catch (err) {
       useDisplayErrorMessage(err as AxiosError);

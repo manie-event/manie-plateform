@@ -1,457 +1,330 @@
 <template>
-  <v-dialog v-model="serviceModal" max-width="800" transition="dialog-bottom-transition">
+  <v-dialog v-model="openModificationModal" max-width="800">
     <v-card
-      v-if="professionalUser?.uuid"
+      v-if="professionalActivities.length > 0"
       max-width="800"
       style="padding: 35px; background: rgb(var(--v-theme-background))"
     >
-      <v-btn icon class="close-btn" @click="serviceModal = false" variant="text">
-        <Icon icon="mdi:close" width="20" height="20" />
-      </v-btn>
-      <div class="questionnaires-container">
+      <v-card-text>
         <div
-          v-for="(questionnaire, index) in questionnaires"
-          :key="questionnaire.id"
-          class="questionnaire-section mb-8"
+          v-for="(activity, activityIndex) in professionalActivities"
+          :key="activityIndex"
+          class="mb-8"
         >
-          <div class="d-flex justify-space-between align-center mb-2">
-            <h3 class="text-subtitle1 font-weight-medium">Mon activité</h3>
-
-            <v-btn
-              v-if="questionnaires.length > 1"
-              icon
-              variant="text"
-              @click="openRemoveModalWithServiceUuid(questionnaire.linkUuid ?? '')"
+          <div class="mb-4 w-100 d-flex justify-lg-space-between align-center">
+            <h3 class="text-h6">Mon activité N° {{ activityIndex + 1 }} : {{ activity }}</h3>
+            <Icon
+              v-if="activityIndex !== 0"
+              icon="solar:trash-bin-trash-line-duotone"
+              style="height: 40px; width: 25px"
+              class="mt-1 cursor-pointer"
+              color="rgb(var(--v-theme-error))"
+              @click="deleteActivity(activityIndex)"
             >
-              <Icon icon="mdi:trash" width="20" height="20" />
-            </v-btn>
+            </Icon>
           </div>
 
-          <div v-if="index > 0" class="mb-6">
-            <v-select
-              :label="`Votre ${index + 1}ème activité ?`"
-              v-model="questionnaire.sector"
-              :items="activityItems"
-              item-title="label"
-              item-value="value"
-              style="background: rgb(var(--v-theme-background))"
-              @update:model-value="updateQuestionnaireSector(questionnaire, $event)"
+          <h4 class="mb-3">{{ getServiceBySector.questions[activityIndex] }}</h4>
+
+          <div class="mb-6">
+            <v-chip
+              v-for="service in getServiceBySector.responseServices[activityIndex]"
+              :key="service.uuid"
               variant="outlined"
-            />
-          </div>
-
-          <div v-if="questionnaire.questionnaireData && questionnaire.services.length > 0">
-            <v-divider class="mt-6">
-              <span class="text-h6 px-4">
-                {{ questionnaire.questionnaireData.general.questions[0].question }}
-              </span>
-            </v-divider>
-
-            <div class="service-chips mt-4">
-              <v-chip
-                v-for="service in questionnaire.services"
-                :key="service.uuid"
-                variant="outlined"
-                class="ma-1"
-                @click="selectService(service, questionnaire)"
-                :class="{ 'selected-chip': questionnaire.selectedServiceUuid === service.uuid }"
-              >
-                {{ service.name }}
-              </v-chip>
-            </div>
-
-            <div v-if="questionnaire.questionnaireData.servicesSection" class="mt-6">
-              <v-divider>
-                <span class="text-h6 px-4">
-                  {{
-                    questionnaire.questionnaireData.servicesSection.title || 'Services détaillés'
-                  }}
-                </span>
-              </v-divider>
-
-              <div class="mt-4">
-                <v-expansion-panels variant="accordion" multiple>
-                  <v-expansion-panel
-                    v-for="serviceQuestion in questionnaire.questionnaireData.servicesSection
-                      .questions"
-                    :key="serviceQuestion.category"
-                    :title="serviceQuestion.question"
-                  >
-                    <v-expansion-panel-text>
-                      <div class="keyword-chips">
-                        <v-chip
-                          v-for="keyword in questionnaire.keywordsByCategory[
-                            serviceQuestion.category
-                          ] || []"
-                          :key="keyword.uuid"
-                          variant="outlined"
-                          class="ma-1"
-                          @click="selectKeyword(keyword, questionnaire)"
-                          :class="{
-                            'selected-chip': questionnaire.selectedKeywords.has(keyword.uuid),
-                          }"
-                        >
-                          {{ keyword.value }}
-                        </v-chip>
-                      </div>
-                    </v-expansion-panel-text>
-                  </v-expansion-panel>
-                </v-expansion-panels>
-              </div>
-            </div>
-
-            <div v-if="questionnaire.questionnaireData.habitudesSection" class="mt-6">
-              <v-divider>
-                <span class="text-h6 px-4">
-                  {{
-                    questionnaire.questionnaireData.habitudesSection.title ||
-                    'Habitudes et pratiques'
-                  }}
-                </span>
-              </v-divider>
-
-              <div class="mt-4">
-                <v-expansion-panels variant="accordion" multiple>
-                  <v-expansion-panel
-                    v-for="habitude in questionnaire.questionnaireData.habitudesSection.questions"
-                    :key="habitude.category"
-                    :title="habitude.question"
-                  >
-                    <v-expansion-panel-text>
-                      <div class="keyword-chips">
-                        <v-chip
-                          v-for="keyword in questionnaire.keywordsByCategory[habitude.category] ||
-                          []"
-                          :key="keyword.uuid"
-                          variant="outlined"
-                          class="ma-1"
-                          :color="
-                            questionnaire.selectedKeywords.has(keyword.uuid) ? 'success' : 'default'
-                          "
-                          @click="selectKeyword(keyword, questionnaire)"
-                          :class="{
-                            'selected-chip': questionnaire.selectedKeywords.has(keyword.uuid),
-                          }"
-                        >
-                          {{ keyword.value }}
-                        </v-chip>
-                      </div>
-                    </v-expansion-panel-text>
-                  </v-expansion-panel>
-                </v-expansion-panels>
-              </div>
-            </div>
-          </div>
-
-          <div v-else-if="index === 0" class="text-center py-8">
-            <v-progress-circular indeterminate color="primary" class="mb-4" />
-            <p>Chargement des services et mots-clés...</p>
-          </div>
-
-          <div v-else-if="index > 0 && !questionnaire.sector" class="text-center py-4">
-            <p class="text-grey">
-              Sélectionnez un secteur d'activité pour afficher les services disponibles
-            </p>
-          </div>
-        </div>
-
-        <div class="d-flex align-center justify-flex-end w-100">
-          <div>
-            <v-btn
-              style="background: rgb(var(--v-theme-darkbg)); color: white"
-              class="px-4"
-              @click="submitAllQuestionnaires()"
+              class="ma-1"
+              :color="isServiceSelected(activityIndex, service.uuid) ? 'primary' : undefined"
+              @click="selectServices(activityIndex, service)"
             >
-              Valider ma sélection
-            </v-btn>
+              {{ service.name }}
+            </v-chip>
           </div>
+
+          <v-expansion-panels
+            v-if="getKeywordsByCategory[activityIndex]"
+            variant="accordion"
+            multiple
+            class="mb-4"
+          >
+            <v-expansion-panel
+              v-for="(question, questionIndex) in getKeywordsByCategory[activityIndex]?.questions"
+              :key="questionIndex"
+            >
+              <v-expansion-panel-title>
+                <div class="d-flex align-center">
+                  <v-icon class="mr-2" size="20">mdi-help-circle-outline</v-icon>
+                  <span>{{ question }}</span>
+                </div>
+              </v-expansion-panel-title>
+
+              <v-expansion-panel-text>
+                <div class="keyword-chips">
+                  <v-chip
+                    v-for="keyword in getKeywordsByCategory[activityIndex]?.keywords[questionIndex]"
+                    :key="keyword.uuid"
+                    variant="outlined"
+                    class="ma-1"
+                    :color="isKeywordSelected(activityIndex, keyword.uuid) ? 'primary' : undefined"
+                    @click="toggleKeywordArray(activityIndex, keyword)"
+                  >
+                    {{ keyword.value }}
+                  </v-chip>
+                </div>
+
+                <p
+                  v-if="!getKeywordsByCategory[activityIndex]?.keywords[questionIndex]?.length"
+                  class="text-caption text-grey mt-2"
+                >
+                  Aucun mot-clé disponible pour cette catégorie
+                </p>
+              </v-expansion-panel-text>
+            </v-expansion-panel>
+          </v-expansion-panels>
+
+          <v-alert v-else type="info" variant="tonal" class="mb-4">
+            Aucune question disponible pour cette activité
+          </v-alert>
+
+          <v-divider v-if="activityIndex < professionalActivities.length - 1" class="my-6" />
         </div>
-      </div>
+      </v-card-text>
+
+      <v-card-actions class="px-6 pb-4 d-flex gap-4">
+        <v-btn variant="outlined" @click="openModificationModal = false"> Annuler </v-btn>
+        <v-btn
+          color="rgb(var(--v-theme-acier))"
+          class="text-white"
+          variant="flat"
+          @click="saveAnswers"
+        >
+          Enregistrer
+        </v-btn>
+      </v-card-actions>
     </v-card>
   </v-dialog>
-
-  <Teleport to="body">
-    <ModalRedirection :redirection="'dashboard2'" v-model="isProfilUpdate" />
-    <RemovingProfessionalServiceModal
-      v-model:open-service-modal="isServiceModalOpen"
-      :service-uuid="serviceUuidFromProfil"
-      @close-modal-on-removing-service="handleCloseModalOnRemovingService()"
-    />
-  </Teleport>
 </template>
 
 <script setup lang="ts">
-import RemovingProfessionalServiceModal from '@/components/apps/user-profile/RemovingProfessionalServiceModal.vue';
 import questionnairePresta from '@/data/questionnaire-presta.json';
-import { useProfessionalServiceService } from '@/services/UseProfessionalServiceService';
-import { useUserStore } from '@/stores/userStore';
-import { useToaster } from '@/utils/toaster';
-import { Icon } from '@iconify/vue';
-import type { AxiosError } from 'axios';
+import { Icon } from '@iconify/vue/dist/iconify.js';
 import { storeToRefs } from 'pinia';
-import { ref, Teleport, watch } from 'vue';
-import { useSector } from '~/composables/sector/UseSector';
-import { ACTIVITY_ITEMS } from '~/constants/activitySector';
-import type { Keywords } from '~/models/professionalService/Keywords';
-import type { ProfessionalServicePayload } from '~/models/professionalService/ProfessionalServicePayload';
-import type { QuestionnaireItem } from '~/models/professionalService/QuestionnairePresta';
+import { computed } from 'vue';
+import { useProfessionalService } from '~/composables/professional-services/UseProfessionalService';
 import type { Services } from '~/models/professionalService/Services';
-import ModalRedirection from '../apps/user-profile/ModalRedirection.vue';
+import { useProfessionalProfileService } from '~/services/UseProfessionalProfileService';
+import { useProfilStore } from '~/stores/profilStore';
+import { useSectorStore } from '~/stores/sectorStore';
+import { useToaster } from '~/utils/toaster';
 
-const serviceModal = defineModel<boolean>('openModificationModal', { default: false });
-const userStore = useUserStore();
-const { professionalUser } = storeToRefs(userStore);
+const openModificationModal = defineModel<boolean>('openModificationModal', { default: false });
 
-const sectorStore = useSectorStore();
-const { services, keywords } = storeToRefs(sectorStore);
-const { selectSectors } = useSector();
-const { addSuccess, addError } = useToaster();
-const { updateProfessionalServices } = useProfessionalServiceService();
+const { professionalActivities, professionalUuid } = storeToRefs(useProfilStore());
+const { services, sectors, keywords } = storeToRefs(useSectorStore());
+const { createProfessionalServices, changeProfessionalServices, deleteServiceAndActivity } =
+  useProfessionalService();
+const { addError, addSuccess } = useToaster();
 const { professionalServices } = storeToRefs(useProfessionalStore());
+const { getProfessionalProfile } = useProfessionalProfileService();
 
-const questionnaires = ref<QuestionnaireItem[]>([]);
-const activityItems = ref(ACTIVITY_ITEMS);
+const localSelectedServices = ref<Record<number, Services>>({});
+const localSelectedKeywords = ref<Record<number, string[]>>({});
 
-const payloadArray = ref<ProfessionalServicePayload[]>([]);
-const isProfilUpdate = ref(false);
-const isServiceModalOpen = ref(false);
-const serviceUuidFromProfil = ref('');
-const sectorsLoaded = ref(false);
-
-const openRemoveModalWithServiceUuid = (serviceUuid: string) => {
-  serviceUuidFromProfil.value = serviceUuid;
-  isServiceModalOpen.value = true;
+const initializeLocalData = () => {
+  localSelectedServices.value = { ...selectedServices.value };
+  localSelectedKeywords.value = { ...selectedKeywordsArray.value };
 };
 
-const handleCloseModalOnRemovingService = () => {
-  isServiceModalOpen.value = false;
-  serviceModal.value = false;
-};
+const selectedServices = computed<Record<number, Services>>(() => {
+  const result: Record<number, Services> = {};
 
-const calculateKeywordsByCategory = (
-  questionnaireData: any,
-  sector: string
-): Record<string, Keywords[]> => {
-  if (!questionnaireData || !keywords.value?.length) return {};
-  const grouped: Record<string, Keywords[]> = {};
-  const categories: string[] = [];
+  professionalActivities.value.forEach((activity, activityIndex) => {
+    const sector = sectors.value.find((s) => s.name === activity);
+    if (!sector) return;
 
-  if (questionnaireData.servicesSection) {
-    categories.push(
-      ...(questionnaireData.servicesSection.questions?.map((q: any) => q.category) || [])
-    );
-  }
-  if (questionnaireData.habitudesSection) {
-    categories.push(
-      ...(questionnaireData.habitudesSection.questions?.map((q: any) => q.category) || [])
-    );
-  }
-
-  categories.forEach((category) => {
-    const filtered = keywords.value.filter(
-      (k) =>
-        k.category === category && (k.sector.toLowerCase() === sector.toLowerCase() || !k.sector)
-    );
-    grouped[category] = filtered.filter(
-      (kw, i, arr) => arr.findIndex((x) => x.uuid === kw.uuid) === i
-    );
-  });
-
-  return grouped;
-};
-
-const createQuestionnaire = (sector: string): QuestionnaireItem => {
-  const data = questionnairePresta.find((q) => q.sector.toLowerCase() === sector.toLowerCase());
-  return {
-    sector,
-    questionnaireData: data,
-    services: [...(services.value || [])],
-    keywordsByCategory: calculateKeywordsByCategory(data, sector),
-    selectedServiceUuid: null,
-    selectedKeywords: new Set<string>(),
-  };
-};
-
-const selectService = (service: Services, q: QuestionnaireItem) => {
-  q.selectedServiceUuid = q.selectedServiceUuid === service.uuid ? null : service.uuid;
-  updatePayloadArray();
-};
-
-const selectKeyword = (keyword: Keywords, q: QuestionnaireItem) => {
-  q.selectedKeywords.has(keyword.uuid)
-    ? q.selectedKeywords.delete(keyword.uuid)
-    : q.selectedKeywords.add(keyword.uuid);
-  updatePayloadArray();
-};
-
-const updateQuestionnaireSector = async (q: QuestionnaireItem, newSector: string) => {
-  if (!newSector) return;
-
-  // Reset
-  Object.assign(q, {
-    questionnaireData: null,
-    services: [],
-    keywordsByCategory: {},
-    selectedServiceUuid: null,
-    selectedKeywords: new Set<string>(),
-  });
-
-  await selectSectors(newSector);
-
-  // Maintenant que selectSectors a mis à jour les valeurs globales,
-  // on peut directement les injecter
-  const data = questionnairePresta.find(
-    (item) => item.sector.toLowerCase() === newSector.toLowerCase()
-  );
-
-  q.sector = newSector;
-  q.questionnaireData = data;
-  q.services = [...services.value];
-  q.keywordsByCategory = calculateKeywordsByCategory(data, newSector);
-};
-
-const updatePayloadArray = () => {
-  payloadArray.value = questionnaires.value
-    .filter((q) => q.linkUuid) // on ne touche qu'aux services existants
-    .filter((q) => {
-      const serviceChanged = q.selectedServiceUuid !== q.original?.serviceUuid;
-      const originalKeywordsArray = q.original?.keywords
-        ? Array.isArray(q.original.keywords)
-          ? q.original.keywords
-          : Array.from(q.original.keywords)
-        : [];
-      const keywordsChanged =
-        JSON.stringify(Array.from(q.selectedKeywords || [])) !==
-        JSON.stringify(originalKeywordsArray);
-      return serviceChanged || keywordsChanged;
-    })
-    .map((q) => {
-      // 🔍 Trouver le service sélectionné pour récupérer son name
-      const selectedService = q.services.find((s) => s.uuid === q.selectedServiceUuid);
-
-      return {
-        linkUuid: q.linkUuid,
-        name: selectedService?.name || '',
-        serviceUuid: q.selectedServiceUuid!,
-        professionalUuid: professionalUser.value!.uuid,
-        keywordsUuid: Array.from(q.selectedKeywords),
-      };
+    const professionalService = professionalServices.value.find((ps) => {
+      return ps.sector?.uuid === sector.uuid;
     });
+
+    if (!professionalService) return;
+
+    const service = services.value.find((s) => s.uuid === professionalService.serviceUuid);
+
+    if (service) {
+      result[activityIndex] = service;
+    }
+  });
+
+  return result;
+});
+
+const selectedKeywordsArray = computed<Record<number, string[]>>(() => {
+  const result: Record<number, string[]> = {};
+
+  professionalActivities.value.forEach((activity, activityIndex) => {
+    const sector = sectors.value.find((s) => s.name === activity);
+    if (!sector) return;
+
+    const professionalService = professionalServices.value.find((ps) => {
+      return ps.sector?.uuid === sector.uuid;
+    });
+
+    if (professionalService?.keywordsUuid) {
+      result[activityIndex] = professionalService.keywordsUuid;
+    }
+  });
+
+  return result;
+});
+
+const getServiceBySector = computed(() => {
+  const data = professionalActivities.value.map((activity) => {
+    const questionnaire = questionnairePresta.find((s) => s.sector === activity);
+    const question = questionnaire?.general?.questions[0]?.question || 'Aucune question disponible';
+
+    const sector = sectors.value.find((s) => s.name === activity);
+    const sectorUuid = sector?.uuid;
+
+    const servicesForSector = sectorUuid
+      ? services.value.filter((s) => s.sectorUuid === sectorUuid)
+      : [];
+
+    return { question, services: servicesForSector };
+  });
+
+  return {
+    questions: data.map((d) => d.question),
+    responseServices: data.map((d) => d.services),
+  };
+});
+
+const getKeywordsByCategory = computed(() => {
+  return professionalActivities.value.map((activity) => {
+    const sector = questionnairePresta.find((s) => s.sector === activity);
+
+    if (!sector?.servicesSection?.questions) {
+      return { questions: [], keywords: [] };
+    }
+
+    const questions = sector.servicesSection.questions.map((q) => q.question);
+
+    const categories = sector.servicesSection.questions.map((q) => q.category);
+
+    const keywordsByCategory = categories.map((category) => {
+      return keywords.value.filter((k) => k.category === category);
+    });
+
+    return {
+      questions,
+      keywords: keywordsByCategory,
+    };
+  });
+});
+
+const isServiceSelected = (activityIndex: number, serviceUuid: string): boolean => {
+  return localSelectedServices.value[activityIndex]?.uuid === serviceUuid;
 };
 
-const submitAllQuestionnaires = async () => {
-  updatePayloadArray();
-
-  if (!payloadArray.value.length) {
-    addError({ message: 'Veuillez sélectionner au moins un service.' });
-    return;
-  }
-
-  try {
-    const selected = questionnaires.value
-      .filter((q) => q.sector && q.selectedServiceUuid)
-      .map((q) => q.sector);
-
-    await Promise.all(
-      payloadArray.value.map((p) => {
-        return updateProfessionalServices(p.linkUuid!, {
-          name: p.name,
-          serviceUuid: p.serviceUuid,
-          keywordsUuid: p.keywordsUuid,
-        });
-      })
-    );
-
-    addSuccess('service(s) modifié(s) avec succès !');
-    serviceModal.value = false;
-    isProfilUpdate.value = true;
-  } catch (err) {
-    useDisplayErrorMessage(err as AxiosError);
+const selectServices = (activityIndex: number, service: Services) => {
+  if (localSelectedServices.value[activityIndex]?.uuid === service.uuid) {
+    localSelectedServices.value[activityIndex] = {} as Services;
+  } else {
+    localSelectedServices.value[activityIndex] = service;
   }
 };
 
-watch(
-  () => serviceModal.value,
-  async (open) => {
-    if (!open || !professionalUser.value?.uuid) return;
+const isKeywordSelected = (activityIndex: number, keywordUuid: string): boolean => {
+  return localSelectedKeywords.value[activityIndex]?.includes(keywordUuid) ?? false;
+};
 
-    // 🔁 Réinitialisation complète
-    questionnaires.value = [];
-    sectorsLoaded.value = false;
+const toggleKeywordArray = (activityIndex: number, keyword: any) => {
+  if (!localSelectedKeywords.value[activityIndex]) {
+    localSelectedKeywords.value[activityIndex] = [];
+  }
 
-    try {
-      const tempQuestionnaires: QuestionnaireItem[] = [];
+  const keywordArray = localSelectedKeywords.value[activityIndex];
+  const index = keywordArray.indexOf(keyword.uuid);
 
-      if (professionalServices.value.length) {
-        // Cas où le pro a déjà des services validés
-        for (const srv of professionalServices.value) {
-          const sector = srv.sector.name;
-          await selectSectors(sector);
+  if (index !== -1) {
+    keywordArray.splice(index, 1);
+  } else {
+    keywordArray.push(keyword.uuid);
+  }
+};
 
-          const qData = questionnairePresta.find(
-            (q) => q.sector.toLowerCase() === sector.toLowerCase()
-          );
+const saveAnswers = async () => {
+  const responses = professionalActivities.value
+    .map((activity, index) => {
+      const service = localSelectedServices.value[index];
+      const keywordsArray = localSelectedKeywords.value[index] || [];
+      const isVerified = professionalServices.value[index]?.isVerified;
 
-          tempQuestionnaires.push({
-            linkUuid: srv.uuid,
-            sector,
-            questionnaireData: qData,
-            services: [...(services.value || [])],
-            keywordsByCategory: calculateKeywordsByCategory(qData, sector),
-
-            selectedServiceUuid: srv.serviceUuid,
-            selectedKeywords: new Set(
-              (srv.keywordsUuid || []).map((k: any) => (typeof k === 'string' ? k : k.uuid))
-            ),
-
-            // snapshot
-            original: {
-              serviceUuid: srv.serviceUuid,
-              keywords: new Set(
-                (srv.keywordsUuid || []).map((k: any) => (typeof k === 'string' ? k : k.uuid))
-              ),
-            },
-          });
-        }
-      } else {
-        const user = professionalUser.value;
-        const sectors = [user.mainActivity, user.secondActivity, user.thirdActivity].filter(
-          Boolean
-        );
-
-        for (const sector of sectors) {
-          await selectSectors(sector!);
-          tempQuestionnaires.push(createQuestionnaire(sector!));
-        }
+      if (!service?.uuid) {
+        addError({ message: `Aucun service sélectionné pour ${activity}` });
+        return null;
+      }
+      if (keywordsArray.length === 0) {
+        addError({ message: `Veuillez sélectionner au moins un mot clé pour ${activity}` });
+        return null;
       }
 
-      // ✅ On injecte tout d’un coup, une fois les chargements terminés
-      questionnaires.value = tempQuestionnaires;
-      sectorsLoaded.value = true;
-    } catch (e) {
-      console.error('Erreur lors du préremplissage :', e);
-      addError({ message: 'Erreur lors du chargement des services existants.' });
+      return {
+        name: service.name,
+        serviceUuid: service.uuid,
+        professionalUuid: professionalUuid.value!,
+        keywordsUuid: keywordsArray,
+        isVerified: isVerified ?? undefined,
+      };
+    })
+    .filter(Boolean);
+
+  // Envoyer les réponses une par une avec un délai de 500ms entre chaque pour éviter la saturation de Resend
+  for (let i = 0; i < responses.length; i++) {
+    if (responses[i]?.isVerified === undefined) {
+      await createProfessionalServices(responses[i]);
+      addSuccess(
+        "Vos services doivent être vérifiés avant de pouvoir être modifiés. Nous revenons vers vous dès que c'est fait !"
+      );
+      await getProfessionalProfile();
+    } else {
+      const professionalServiceUuid = professionalServices.value[i].uuid;
+
+      await changeProfessionalServices(professionalServiceUuid, responses[i]);
+      addSuccess("Vos services viennent d'être mis à jour !");
+      await getProfessionalProfile();
+    }
+    if (i < responses.length - 1) {
+      await new Promise((resolve) => setTimeout(resolve, 500));
     }
   }
-);
+  openModificationModal.value = false;
+};
+
+const deleteActivity = async (activityIndex: number) => {
+  const result = await deleteServiceAndActivity(
+    localSelectedServices.value[activityIndex].uuid,
+    activityIndex
+  );
+
+  if (result.success) {
+    addSuccess('Activité supprimée');
+    await getProfessionalProfile();
+  } else {
+    addError({ message: result.error || 'Erreur lors de la suppression' });
+  }
+};
+
+const handleModalOpen = (isOpen: boolean) => {
+  if (isOpen) {
+    initializeLocalData();
+  }
+};
+
+watch(() => openModificationModal.value, handleModalOpen);
 </script>
 
-<style scoped lang="scss">
-.v-expansion-panel {
-  background: rgb(var(--v-theme-background));
-  border-bottom: 1px solid rgb(var(--v-theme-background));
-}
-
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: rgba(0, 0, 0, 0.54); /* adapte la couleur selon ton thème */
-  z-index: 1;
-}
-.selected-chip {
-  background: rgb(var(--v-theme-darkbg));
-  border: rgb(var(--v-theme-darkbg));
-  color: rgb(var(--v-theme-background));
+<style scoped>
+.keyword-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 </style>

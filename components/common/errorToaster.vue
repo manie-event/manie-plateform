@@ -41,7 +41,7 @@ const { errorMessageArray } = useToaster();
   left: 0;
   height: 4px;
   background-color: rgb(255, 255, 255);
-  animation: progressShrink 5s linear forwards;
+  animation: progressShrink 10s linear forwards;
 }
 
 @keyframes progressShrink {

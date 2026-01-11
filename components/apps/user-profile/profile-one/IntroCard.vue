@@ -18,8 +18,8 @@
   </v-row>
 </template>
 <script setup lang="ts">
-import { useUserStore } from '@/stores/userStore';
-const { professionalUser } = storeToRefs(useUserStore());
+import { useProfilStore } from '~/stores/profilStore';
+const { professionalUser } = storeToRefs(useProfilStore());
 </script>
 <style lang="scss" scoped>
 v-card-item {

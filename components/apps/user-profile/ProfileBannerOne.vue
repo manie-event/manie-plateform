@@ -1,150 +1,188 @@
 <template>
   <section class="profile-header">
-    <div class="profile-header__cover">
-      <img
-        :src="professionalUser?.picture || '/images/backgrounds/profilebg-2.jpg'"
-        alt="Bannière du profil"
-        class="profile-header__image"
-      />
-      <button @click="triggerClickFileInput" class="profile-header__edit">
-        <Icon icon="solar:camera-outline" width="20" height="20" />
-      </button>
-      <input type="file" ref="fileInput" @change="changeBannerPhoto" accept="image/*" hidden />
-      <NuxtLink
-        to="/dashboards/dashboard2"
-        class="profile-header__redirect-btn"
-        style="color: rgb(var(--v-theme-darkbg))"
-      >
-        Retour au tableau de bord
-      </NuxtLink>
+    <div v-if="isLoading">
+      <Loader class="d-flex align-center justify-center" />
     </div>
+    <div v-else>
+      <div class="profile-header__cover">
+        <img
+          :src="professionalUser?.picture || '/images/backgrounds/profilebg-2.jpg'"
+          alt="Bannière du profil"
+          class="profile-header__image"
+        />
+        <button @click="triggerClickFileInput" class="profile-header__edit">
+          <Icon icon="solar:camera-outline" width="20" height="20" />
+        </button>
+        <input type="file" ref="fileInput" @change="changeBannerPhoto" accept="image/*" hidden />
+        <NuxtLink
+          to="/dashboards/dashboard2"
+          class="profile-header__redirect-btn"
+          style="color: rgb(var(--v-theme-darkbg))"
+        >
+          Retour au tableau de bord
+        </NuxtLink>
+      </div>
 
-    <v-card elevation="8" class="profile-header__card">
-      <v-row class="w-100 pa-6 m-0">
-        <v-col cols="12" md="2">
-          <v-avatar size="100" class="profile-header__avatar">
-            <span>{{ initials }}</span>
-          </v-avatar>
-        </v-col>
-        <v-col cols="12" md="6">
-          <div class="d-flex flex-row gap-2">
-            <div v-for="service in getServiceValues" :key="service">
-              <div class="d-flex gap-2">
-                <v-chip color="rgb(var(--v-theme-darkbg))" variant="outlined" size="x-small">{{
-                  service
-                }}</v-chip>
+      <v-card elevation="8" class="profile-header__card">
+        <v-row class="w-100 pa-6 m-0">
+          <v-col cols="12" md="2">
+            <v-avatar size="100" class="profile-header__avatar">
+              <span>{{ initials }}</span>
+            </v-avatar>
+          </v-col>
+          <v-col cols="12" md="6">
+            <div class="d-flex flex-row gap-2">
+              <div v-for="service in getServiceValues" :key="service">
+                <div class="d-flex gap-2">
+                  <v-chip color="rgb(var(--v-theme-darkbg))" variant="outlined" size="x-small">{{
+                    service
+                  }}</v-chip>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div>
-            <h2 class="profile-header__name w-100">
-              {{ professionalUser?.name || user?.username }}
-            </h2>
-            <div class="d-flex align-center">
-              <Icon
-                icon="ci:phone"
-                height="18"
-                width="18"
-                class="mr-1 profile-header__phone-icone"
-              />
-              <p class="profile-header__phone">
-                {{ professionalUser?.telephone || 'Définissez votre téléphone' }}
-              </p>
+            <div>
+              <h2 class="profile-header__name w-100">
+                {{ professionalUser?.name || user?.username }}
+              </h2>
+              <div class="d-flex align-center">
+                <Icon
+                  icon="ci:phone"
+                  height="18"
+                  width="18"
+                  class="mr-1 profile-header__phone-icone"
+                />
+                <p class="profile-header__phone">
+                  {{ professionalUser?.telephone || 'Définissez votre téléphone' }}
+                </p>
+              </div>
+              <div class="d-flex align-center">
+                <Icon
+                  icon="ci:mail"
+                  height="18"
+                  width="18"
+                  class="mr-1 profile-header__phone-icone"
+                />
+                <p class="profile-header__phone">
+                  {{ displayedEmail || 'Définissez votre email' }}
+                </p>
+              </div>
             </div>
-            <div class="d-flex align-center">
-              <Icon
-                icon="ci:mail"
-                height="18"
-                width="18"
-                class="mr-1 profile-header__phone-icone"
-              />
-              <p class="profile-header__phone">
-                {{ displayedEmail || 'Définissez votre email' }}
-              </p>
-            </div>
-          </div>
-        </v-col>
-        <v-col cols="12" md="4" class="w-100 d-flex gap-2 flex-column">
-          <v-btn v-if="!isProfileCreated" color="primary" class="w-100" @click="openModal = true">
-            Créer mon profil
-          </v-btn>
+          </v-col>
+          <v-col cols="12" md="4" class="w-100 d-flex gap-2 flex-column">
+            <v-btn v-if="!isProfileCreated" color="primary" class="w-100" @click="openModal = true">
+              Créer mon profil
+            </v-btn>
 
-          <template v-else>
+            <template v-else>
+              <v-btn
+                style="
+                  border: 1px solid rgb(var(--v-theme-darkbg));
+                  color: rgb(var(--v-theme-darkbg));
+                "
+                class="w-100"
+                @click="openModal = true"
+              >
+                Mon profil
+              </v-btn>
+              <v-btn
+                :disabled="!isServiceVerified"
+                color="rgb(var(--v-theme-darkbg))"
+                style="color: rgb(var(--v-theme-background))"
+                class="w-100"
+                @click="openModificationModal = true"
+              >
+                {{ !isServiceVerified ? 'Votre service doit être vérifié' : 'Mon activité' }}
+              </v-btn>
+            </template>
+          </v-col>
+        </v-row>
+      </v-card>
+
+      <Teleport to="body">
+        <EditerProfessionalProfile v-model:openModal="openModal" />
+        <EditPrestataireServices
+          v-model:openModificationModal="openModificationModal"
+          class="mt-6"
+        />
+        <RefusCollaboration v-model:open-refus-modal="openRefusModal">
+          <template #text>
+            <div class="text-body-1">
+              <p class="mb-6">Merci pour ton inscription sur Manie✨</p>
+
+              <p class="mb-6">
+                Après étude de ton profil, il semblerait que ton activité ne corresponde (pour le
+                moment) pas aux critères définis pour rejoindre la communauté 🌱
+              </p>
+
+              <p class="mb-0">
+                Les critères pouvant évoluer, n'hésite pas à nous suivre pour rester informé.
+              </p>
+              <p class="mb-6">
+                Et si tu as la moindre question ou que tu ne comprends pas cette décision, tu peux
+                me contacter par mail à l'adresse suivante :
+                <a href="mailto:contact@manie.fr" class="text-primary text-decoration-none">
+                  contact@manie.fr
+                </a>
+                💌
+              </p>
+
+              <p class="mb-0">À bientôt 👋</p>
+              <p class="mb-6">Léonore</p>
+            </div>
+          </template>
+
+          <template #actions>
             <v-btn
-              style="
-                border: 1px solid rgb(var(--v-theme-darkbg));
-                color: rgb(var(--v-theme-darkbg));
-              "
-              class="w-100"
-              @click="openModal = true"
-            >
-              Mon profil
-            </v-btn>
-            <v-btn
-              :disabled="isFirstConnection"
               color="rgb(var(--v-theme-darkbg))"
-              style="color: rgb(var(--v-theme-background))"
-              class="w-100"
-              @click="openModificationModal = true"
+              class="text-white d-flex justify-end"
+              @click="openRefusModal = false"
             >
-              {{ isFirstConnection ? 'Votre service doit être vérifié' : 'Mon activité' }}
-            </v-btn>
-            <v-btn
-              :disabled="isFirstConnection || professionalServices.length === 3"
-              color="rgb(var(--v-theme-darkbg))"
-              style="color: rgb(var(--v-theme-background))"
-              class="w-100"
-              @click="openServiceModal = true"
-            >
-              {{
-                isFirstConnection
-                  ? 'Nous vérifions votre nouveau service sous 48h'
-                  : professionalServices.length === 3
-                    ? 'Vous détenez le maximum de service possible'
-                    : 'Ajouter une activité'
-              }}
+              Fermer
             </v-btn>
           </template>
-        </v-col>
-      </v-row>
-    </v-card>
-
-    <Teleport to="body">
-      <EditerProfessionalProfile v-model:openModal="openModal" />
-      <EditPrestataireServices v-model:openModificationModal="openModificationModal" class="mt-6" />
-      <CreatePrestataireServices v-model:openCreateServiceModal="openServiceModal" class="mt-6" />
-    </Teleport>
+        </RefusCollaboration>
+      </Teleport>
+    </div>
   </section>
 </template>
 
 <script setup lang="ts">
 import { NuxtLink } from '#components';
 import EditerProfessionalProfile from '@/components/apps/user-profile/EditProfessionalProfil.vue';
+import Loader from '@/components/common/Loader.vue';
+import EditPrestataireServices from '@/components/questionnaires/EditPrestataireServices.vue';
 import { useProfessionalProfileService } from '@/services/UseProfessionalProfileService';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { computed, onMounted, ref } from 'vue';
-import EditPrestataireServices from '~/components/questionnaires/EditPrestataireServices.vue';
-import CreatePrestataireServices from '~/components/questionnaires/ServicesPrestataire.vue';
-import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
-import { useProfessionalProfile } from '~/composables/professional-user/UseProfessionalProfile';
-import { useUserStore } from '~/stores/userStore';
+import RefusCollaboration from '~/components/common/RefusCollaboration.vue';
+import { useProfessionalService } from '~/composables/professional-services/UseProfessionalService';
+import { usePaiementJeton } from '~/composables/UsePaiementJeton';
+import type { ProfessionalServiceUpdate } from '~/models/professionalService/professionalServiceUuid';
+import { useProfilStore } from '~/stores/profilStore';
+import { useToaster } from '~/utils/toaster';
 import { useSector } from '../../../composables/sector/UseSector';
 
-const { professionalUser, user, isProfileCreated, initials } = storeToRefs(useUserStore());
+const { professionalUser, user, isProfileCreated, initials, professionalActivities } =
+  storeToRefs(useProfilStore());
 const { changeProfessionalBannerPicture, getProfessionalProfile } = useProfessionalProfileService();
 const { getJetonQuantity } = usePaiementJeton();
-const { listProfessionalServiceByProfessional } = useProfessionalProfile();
-const { getServicesList, getListSector } = useSector();
-const { professionalServices } = storeToRefs(useProfessionalStore());
+const { listProfessionalServiceByProfessional, professionalServiceFilteredByVerification } =
+  useProfessionalService();
+const { getServicesList, getListSector, allKeywords } = useSector();
+const { sectors } = storeToRefs(useSectorStore());
 const { addSuccess } = useToaster();
+const { professionalServices } = storeToRefs(useProfessionalStore());
 
 const openModal = ref(false);
 const openServiceModal = ref(false);
 const openModificationModal = ref(false);
 const fileInput = ref<HTMLInputElement | null>(null);
 const professionalEmail = ref();
+const openRefusModal = ref(true);
+const isLoading = ref(true);
+
 const triggerClickFileInput = () => fileInput.value?.click();
 const changeBannerPhoto = async (e: Event) => {
   const input = e.target as HTMLInputElement;
@@ -160,26 +198,57 @@ const changeBannerPhoto = async (e: Event) => {
   }
 };
 
-const getServiceValues = computed(() =>
-  professionalServices.value?.length ? professionalServices.value.map((s) => s.name) : []
-);
+const getServiceValues = computed(() => {
+  return professionalServices.value?.length
+    ? professionalServices.value.filter((service) => service.isVerified == true).map((s) => s.name)
+    : [];
+});
 
 const displayedEmail = computed(
   () => professionalUser.value?.email || professionalEmail.value || null
 );
 
-const isFirstConnection = computed(() =>
-  professionalServices.value.some((service) => service.isVerified === false)
-);
+const isServiceVerified = computed(() => {
+  openRefusModal.value = false;
+  if (!professionalServices.value?.length || !professionalActivities.value?.length) {
+    return false;
+  }
+
+  let filteredProService: ProfessionalServiceUpdate | undefined;
+
+  professionalActivities.value.forEach((activity, activityIndex) => {
+    const sector = sectors.value.find((s) => s.name === activity);
+    if (!sector) return;
+
+    filteredProService = professionalServices.value.find((ps) => {
+      return ps.sector?.uuid === sector.uuid;
+    });
+
+    if (activityIndex === 0 && filteredProService?.isVerified === false) {
+      openRefusModal.value = true;
+    }
+  });
+
+  return filteredProService?.isVerified !== null && filteredProService?.isVerified !== false;
+});
 
 onMounted(async () => {
   const professional = await getProfessionalProfile();
   professionalEmail.value = professional.email;
-
-  await getServicesList();
-  await getListSector();
-  await listProfessionalServiceByProfessional();
-  await getJetonQuantity();
+  try {
+    await Promise.all([
+      await allKeywords(),
+      await getListSector(),
+      await getServicesList(),
+      await listProfessionalServiceByProfessional(),
+      await getJetonQuantity(),
+      await professionalServiceFilteredByVerification(),
+    ]);
+  } catch (e) {
+    console.log(e);
+  } finally {
+    isLoading.value = false;
+  }
 });
 </script>
 

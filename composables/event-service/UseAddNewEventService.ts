@@ -105,7 +105,6 @@ export const useAddNewEventService = () => {
         const keywordsCategory = keywords.value.filter(
           (k) => k.category === section.category && k.sector === section.sector
         );
-
         return {
           ...section,
           answers: keywordsCategory,

@@ -8,7 +8,7 @@ export const useEventService = () => {
   const api = useApi();
   const eventStore = useEventsStore();
   const { resetForm } = useEventServiceStore();
-  const { clientProfile, clientUuid } = storeToRefs(useUserStore());
+  const { clientProfile, clientUuid } = storeToRefs(useProfilStore());
   const { setEventsByOrganisator, setQuestionnaireAnswers } = eventStore;
 
   const createEventService = async (payload: QuestionnaireClient) => {

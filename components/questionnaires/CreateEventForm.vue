@@ -253,7 +253,7 @@ const {
 } = useEventForm();
 
 const { addSuccess } = useToaster();
-const { clientUuid } = storeToRefs(useUserStore());
+const { clientUuid } = storeToRefs(useProfilStore());
 
 const handleSubmit = async () => {
   try {

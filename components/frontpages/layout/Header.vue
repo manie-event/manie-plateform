@@ -6,16 +6,16 @@ import { storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
 import { useDisplay } from 'vuetify';
 import Navigation from '~/components/landingpage/layout/Navigation.vue';
-import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
-import { useUserStore } from '~/stores/userStore';
+import { usePaiementJeton } from '~/composables/UsePaiementJeton';
+import { useProfilStore } from '~/stores/profilStore';
 
-const { isProfessional } = storeToRefs(useUserStore());
+const { isProfessional } = storeToRefs(useProfilStore());
 const { createTokenSession } = usePaiementJeton();
 const jetonAmount = ref(0);
 const stickyHeader = ref(false);
 const appsdrawer = ref(false);
 const { mdAndDown } = useDisplay();
-const { isProfileCreated } = storeToRefs(useUserStore());
+const { isProfileCreated } = storeToRefs(useProfilStore());
 
 const totalPriceJeton = computed(() => `${jetonAmount.value * 5} €`);
 </script>

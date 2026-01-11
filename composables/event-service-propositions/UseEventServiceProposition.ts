@@ -1,5 +1,5 @@
 import { useProfessionalServiceService } from '@/services/UseProfessionalServiceService';
-import type { ProfessionalServiceUuid } from '~/models/professionalService/professionalServiceUuid';
+import type { ProfessionalServiceUpdate } from '~/models/professionalService/professionalServiceUuid';
 import { useEventService } from '~/services/UseEventService';
 import { useProfessionalProposition } from '~/services/UseProfessionalProposition';
 
@@ -98,7 +98,7 @@ export const useEventServiceProposition = () => {
       }
 
       const allPropositions = await Promise.all(
-        servicesArray.map(async (service: ProfessionalServiceUuid) => {
+        servicesArray.map(async (service: ProfessionalServiceUpdate) => {
           const propositionList = await getListProfessionalProposition(service.uuid);
 
           const propositionsWithEvents = await Promise.all(
