@@ -9,10 +9,10 @@
         <WelcomeCard />
       </v-col>
       <!---Text cards-->
-      <v-col cols="12" sm="12" lg="6" class="d-flex">
+      <v-col cols="12" sm="12" lg="6" class="d-flex px-0">
         <TextCards />
       </v-col>
-      <v-col cols="12" sm="12" lg="12">
+      <v-col cols="12" sm="12" lg="12" class="mt-6">
         <PayingTable />
       </v-col>
       <!---Profit Expanse-->
@@ -26,8 +26,8 @@
           <template #description>
             <h2 class="text-h5">Bienvenue sur Manie</h2>
             <p class="text-subtitle-1">
-              Veuillez compléter votre profil professionnel pour accéder à toutes les
-              fonctionnalités.
+              Une fois les informations de votre profil complétées, vous devrez ajouter votre
+              activité professionnelle afin d'être visible par nos clients.
             </p>
             <NuxtLink to="/apps/userprofile/one" class="nuxt-link mt-6"
               >Editer mon profil Professionnel</NuxtLink
@@ -63,13 +63,11 @@ const isLoading = ref(true);
 
 const initializeProfil = async () => {
   try {
-    await Promise.all([
-      getProfessionalProfile(),
-      getProfessionalDetails(),
-      getServicePropositionForProfessional(),
-      getJetonQuantity(),
-    ]);
-    console.log('Toutes les données sont chargées');
+    (await getProfessionalProfile(),
+      await getProfessionalDetails(),
+      await getServicePropositionForProfessional(),
+      await getJetonQuantity());
+    console.log('🎉 Toutes les données sont chargées');
   } catch (error) {
     console.error('Erreur lors du chargement:', error);
   } finally {
@@ -78,7 +76,7 @@ const initializeProfil = async () => {
 };
 
 onMounted(async () => {
-  initializeProfil();
+  await initializeProfil();
 });
 </script>
 <style lang="scss" scoped>

@@ -264,18 +264,6 @@
       "question": "Y aura t-il des régimes spéciaux ?"
     },
     {
-      "sector": "loueur",
-      "isService": false,
-      "category": "culinaire",
-      "question": "Souhaitez-vous louer du matériel culinaire ?"
-    },
-    {
-      "sector": "loueur",
-      "isService": false,
-      "category": "table",
-      "question": "Souhaitez-vous louer du matériel de table ?"
-    },
-    {
       "sector": "lieux",
       "isService": true,
       "category": null,
@@ -462,12 +450,6 @@
       "question": "Des préférences sur technologie utilisée ?"
     },
     {
-      "sector": "loueur",
-      "isService": false,
-      "category": "audiovisuel",
-      "question": "Vous souhaitez louer du matériel audiovisuel ?"
-    },
-    {
       "sector": "décoration",
       "isService": true,
       "category": null,
@@ -506,6 +488,12 @@
     {
       "sector": "loueur",
       "isService": false,
+      "category": "audiovisuel",
+      "question": "Vous souhaitez louer du matériel audiovisuel ?"
+    },
+    {
+      "sector": "loueur",
+      "isService": false,
       "category": "ambiance",
       "question": "Souhaitez-vous du matériel d'ambiance ?"
     },
@@ -518,8 +506,14 @@
     {
       "sector": "loueur",
       "isService": false,
+      "category": "culinaire",
+      "question": "Souhaitez-vous louer du matériel culinaire ?"
+    },
+    {
+      "sector": "loueur",
+      "isService": false,
       "category": "table",
-      "question": "Souhaitez-vous du matériel de table ?"
+      "question": "Souhaitez-vous louer du matériel de table ?"
     },
     {
       "sector": "transport",

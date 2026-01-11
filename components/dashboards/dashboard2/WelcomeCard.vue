@@ -1,6 +1,6 @@
 <template>
-  <v-card elevation="10" class="overflow-visible">
-    <v-card-text class="position-relative pb-5">
+  <v-card elevation="10">
+    <v-card-text class="position-relative pb-5" style="min-height: 208px">
       <h5 class="text-h6 mb-1 font-weight-semibold">
         {{
           professionalUser?.name

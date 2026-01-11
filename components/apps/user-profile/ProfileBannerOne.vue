@@ -200,9 +200,7 @@ const changeBannerPhoto = async (e: Event) => {
 
 const getServiceValues = computed(() => {
   return professionalServices.value?.length
-    ? professionalServices.value
-        .filter((service) => service.isVerified !== false)
-        .map((s) => s.name)
+    ? professionalServices.value.filter((service) => service.isVerified == true).map((s) => s.name)
     : [];
 });
 
@@ -211,6 +209,7 @@ const displayedEmail = computed(
 );
 
 const isServiceVerified = computed(() => {
+  openRefusModal.value = false;
   if (!professionalServices.value?.length || !professionalActivities.value?.length) {
     return false;
   }

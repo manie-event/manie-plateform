@@ -63,7 +63,6 @@ export const useAuthentification = () => {
       } else {
         addSuccess('Connexion réussie.');
         await router.push({ path: '/dashboards/dashboard2' });
-        await getProfessionalProfile();
         isProfessional.value = true;
       }
     } catch (err) {
