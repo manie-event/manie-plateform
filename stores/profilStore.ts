@@ -65,7 +65,6 @@ export const useProfilStore = defineStore(
         uuid: newProfessionalUser.uuid?.replace(/[""]/g, '') || '',
         category: 'professional',
       };
-      console.log(professionalUser.value, 'professionalUser.value');
 
       proName.value = professionalUser.value.name ?? null;
       professionalUuid.value = professionalUser.value.uuid ?? null;

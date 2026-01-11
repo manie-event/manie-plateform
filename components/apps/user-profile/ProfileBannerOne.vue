@@ -97,10 +97,7 @@
 
     <Teleport to="body">
       <EditerProfessionalProfile v-model:openModal="openModal" />
-      <EditPrestataireServicesV2
-        v-model:openModificationModal="openModificationModal"
-        class="mt-6"
-      />
+      <EditPrestataireServices v-model:openModificationModal="openModificationModal" class="mt-6" />
       <RefusCollaboration v-model:open-refus-modal="openRefusModal">
         <template #text>
           <div class="text-body-1">
@@ -145,7 +142,7 @@
 <script setup lang="ts">
 import { NuxtLink } from '#components';
 import EditerProfessionalProfile from '@/components/apps/user-profile/EditProfessionalProfil.vue';
-import EditPrestataireServicesV2 from '@/components/questionnaires/EditPrestataireServicesV2.vue';
+import EditPrestataireServices from '@/components/questionnaires/EditPrestataireServices.vue';
 import { useProfessionalProfileService } from '@/services/UseProfessionalProfileService';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
