@@ -1,6 +1,6 @@
 <template>
-  <v-dialog v-model="openModal" max-width="600" transition="dialog-bottom-transition">
-    <v-card max-width="600" class="rounded edit-professional">
+  <v-dialog v-model="openModal" max-width="800" transition="dialog-bottom-transition">
+    <v-card max-width="800" class="rounded edit-professional">
       <Icon
         icon="ri:close-fill"
         size="22"
@@ -18,25 +18,25 @@
             class="mt-6"
             label="Le nom de votre entreprise ?"
             v-model="professionalUser.name"
-            :error-messages="showErrors ? errors.name : undefined"
+            :error-messages="errors.name"
           />
 
           <v-text-field
             label="Le nom complet de l'interlocuteur principal ?"
             v-model="professionalUser.mainInterlocutor"
-            :error-messages="showErrors ? errors.mainInterlocutor : undefined"
+            :error-messages="errors.mainInterlocutor"
           />
 
           <v-text-field
             label="Votre Numéro De Siret ?"
             v-model="professionalUser.siret"
-            :error-messages="showErrors ? errors.siret : undefined"
+            :error-messages="errors.siret"
           />
 
           <v-text-field
             label="L'adresse complète du siège social ?"
             v-model="professionalUser.address"
-            :error-messages="showErrors ? errors.address : undefined"
+            :error-messages="errors.address"
           />
 
           <v-divider class="border-opacity-50 mb-6">
@@ -49,7 +49,7 @@
             :items="activityItems"
             item-title="label"
             item-value="value"
-            :error-messages="showErrors ? errors.mainActivity : undefined"
+            :error-messages="errors.mainActivity"
           />
 
           <v-select
@@ -73,7 +73,7 @@
             label="Une courte description de votre activité ?"
             placeholder="Veuillez renseigner votre activité ici"
             counter="1000"
-            :error-messages="showErrors ? errors.bio : undefined"
+            :error-messages="errors.bio"
           />
 
           <v-number-input
@@ -81,7 +81,7 @@
             v-model="professionalUser.experience"
             control-variant="hidden"
             :min="0"
-            :error-messages="showErrors ? errors.experience : undefined"
+            :error-messages="errors.experience"
           />
 
           <!-- Certifications -->
@@ -128,7 +128,7 @@
             :min="0"
             label="Votre délai de réservation minimum (en semaine) ?"
             v-model="reservationDelayInWeeks"
-            :error-messages="showErrors ? errors.minimumReservationPeriod : undefined"
+            :error-messages="errors.minimumReservationPeriod"
           />
 
           <!-- Acompte -->
@@ -144,7 +144,7 @@
             :step="5"
             label="Quel est le montant (en pourcentage)?"
             v-model="professionalUser.depositAmount"
-            :error-messages="showErrors ? errors.depositAmount : undefined"
+            :error-messages="errors.depositAmount"
           />
 
           <!-- Période de facturation -->
@@ -172,7 +172,7 @@
           <v-text-field
             label="Votre numéro de téléphone ?"
             v-model="professionalUser.telephone"
-            :error-messages="showErrors ? errors.telephone : undefined"
+            :error-messages="errors.telephone"
           />
 
           <!-- Liens réseaux sociaux -->
@@ -309,7 +309,6 @@ const { editProfessionalProfileDetails, createProfessional } = useProfessional()
 
 const openModal = defineModel<boolean>('openModal', { default: false });
 
-const showErrors = ref(false);
 const { addError, addSuccess } = useToaster();
 const activityItems = ref(ACTIVITY_ITEMS);
 
@@ -369,7 +368,7 @@ const validationSchema = yup.object({
   billingPeriod: yup.string().required('La période de facturation est requise'),
 });
 
-const { errors } = useForm({
+const { errors, validate } = useForm({
   validationSchema,
   validateOnMount: false,
 });
@@ -477,16 +476,10 @@ const sanitizePayload = (): ProfessionalProfile => {
 // Validation
 const validateAndShowErrors = async (): Promise<boolean> => {
   try {
-    await validationSchema.validate(professionalUser.value, { abortEarly: true });
-    showErrors.value = false;
-    return true;
+    const result = await validate();
+    return result.valid;
   } catch (err) {
-    if (err) {
-      showErrors.value = true;
-      useDisplayErrorMessage(err as AxiosError);
-      return false;
-    }
-    addError({ message: 'Une erreur est survenue lors de la validation' });
+    useDisplayErrorMessage(err as AxiosError);
     return false;
   }
 };
@@ -502,11 +495,10 @@ const createProfile = async () => {
 
     if (response.message === 'Professional created') {
       addSuccess('Votre profil a été créé avec succès');
-      showErrors.value = false;
       openModal.value = false;
     }
   } catch (error: any) {
-    useDisplayErrorMessage(err as AxiosError);
+    useDisplayErrorMessage(error as AxiosError);
   }
 };
 
@@ -519,7 +511,6 @@ const modifyProfile = async () => {
     const payload = sanitizePayload();
     const updateProfil = await editProfessionalProfileDetails(payload);
     addSuccess('Votre profil a été modifié avec succès');
-    showErrors.value = false;
     openModal.value = false;
   } catch (error: any) {
     useDisplayErrorMessage(err as AxiosError);
@@ -528,7 +519,6 @@ const modifyProfile = async () => {
 
 // Fermer le modal
 const closeModal = () => {
-  showErrors.value = false;
   openModal.value = false;
 };
 
@@ -542,18 +532,18 @@ watch(openModal, (isOpen) => {
 
 <style lang="scss" scoped>
 .edit-professional {
-  background: rgb(var(--v-theme-background));
+  // background: rgb(var(--v-theme-background));
 
   .v-text-field,
   .v-select,
   .v-number-input {
-    background: rgb(var(--v-theme-background));
+    // background: rgb(var(--v-theme-background));
     border-radius: 10px;
 
     .v-field__input,
     .v-input__control {
       font-size: 0.95rem;
-      color: rgb(var(--v-theme-on-surface));
+      // color: rgb(var(--v-theme-on-surface));
     }
 
     .v-label {

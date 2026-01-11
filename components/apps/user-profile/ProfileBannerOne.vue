@@ -221,24 +221,26 @@ const loadKeywordsByActivity = async () => {
 };
 
 const isServiceVerified = computed(() => {
-  const filteredProService = ref<ProfessionalServiceUpdate>();
-  console.log(professionalActivities.value);
+  if (!professionalServices.value?.length || !professionalActivities.value?.length) {
+    return false;
+  }
+
+  let filteredProService: ProfessionalServiceUpdate | undefined;
 
   professionalActivities.value.forEach((activity, activityIndex) => {
     const sector = sectors.value.find((s) => s.name === activity);
     if (!sector) return;
 
-    console.log(professionalServices.value, 'professionalServices.value');
-
-    filteredProService.value = professionalServices.value.find((ps) => {
+    filteredProService = professionalServices.value.find((ps) => {
       return ps.sector?.uuid === sector.uuid;
     });
 
-    if (activityIndex === 0 && filteredProService.value?.isVerified === false) {
+    if (activityIndex === 0 && filteredProService?.isVerified === false) {
       openRefusModal.value = true;
     }
   });
-  return filteredProService.value?.isVerified === null ? false : true;
+
+  return filteredProService?.isVerified !== null && filteredProService?.isVerified !== false;
 });
 
 onMounted(async () => {
@@ -251,7 +253,7 @@ onMounted(async () => {
       await getServicesList(),
       await listProfessionalServiceByProfessional(),
       await getJetonQuantity(),
-      // await professionalServiceFilteredByVerification(),
+      await professionalServiceFilteredByVerification(),
     ]);
   } catch (e) {
     console.log(e);
