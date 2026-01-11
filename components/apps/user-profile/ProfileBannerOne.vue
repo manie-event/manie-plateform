@@ -101,6 +101,43 @@
         v-model:openModificationModal="openModificationModal"
         class="mt-6"
       />
+      <RefusCollaboration v-model:open-refus-modal="openRefusModal">
+        <template #text>
+          <div class="text-body-1">
+            <p class="mb-6">Merci pour ton inscription sur Manie✨</p>
+
+            <p class="mb-6">
+              Après étude de ton profil, il semblerait que ton activité ne corresponde (pour le
+              moment) pas aux critères définis pour rejoindre la communauté 🌱
+            </p>
+
+            <p class="mb-0">
+              Les critères pouvant évoluer, n'hésite pas à nous suivre pour rester informé.
+            </p>
+            <p class="mb-6">
+              Et si tu as la moindre question ou que tu ne comprends pas cette décision, tu peux me
+              contacter par mail à l'adresse suivante :
+              <a href="mailto:contact@manie.fr" class="text-primary text-decoration-none">
+                contact@manie.fr
+              </a>
+              💌
+            </p>
+
+            <p class="mb-0">À bientôt 👋</p>
+            <p class="mb-6">Léonore</p>
+          </div>
+        </template>
+
+        <template #actions>
+          <v-btn
+            color="rgb(var(--v-theme-darkbg))"
+            class="text-white d-flex justify-end"
+            @click="openRefusModal = false"
+          >
+            Fermer
+          </v-btn>
+        </template>
+      </RefusCollaboration>
     </Teleport>
   </section>
 </template>
@@ -113,9 +150,10 @@ import { useProfessionalProfileService } from '@/services/UseProfessionalProfile
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { computed, onMounted, ref } from 'vue';
+import RefusCollaboration from '~/components/common/RefusCollaboration.vue';
 import { useProfessionalService } from '~/composables/professional-services/UseProfessionalService';
 import { usePaiementJeton } from '~/composables/UsePaiementJeton';
-import type { ProfessionalServiceUpdate } from '~/models/professionalService/professionalServiceUpdate';
+import type { ProfessionalServiceUpdate } from '~/models/professionalService/professionalServiceUuid';
 import { useProfilStore } from '~/stores/profilStore';
 import { useToaster } from '~/utils/toaster';
 import { useSector } from '../../../composables/sector/UseSector';
@@ -136,6 +174,7 @@ const openServiceModal = ref(false);
 const openModificationModal = ref(false);
 const fileInput = ref<HTMLInputElement | null>(null);
 const professionalEmail = ref();
+const openRefusModal = ref(true);
 
 const triggerClickFileInput = () => fileInput.value?.click();
 const changeBannerPhoto = async (e: Event) => {
@@ -153,8 +192,6 @@ const changeBannerPhoto = async (e: Event) => {
 };
 
 const getServiceValues = computed(() => {
-  console.log(professionalServices.value, 'professionalServices.value');
-
   return professionalServices.value?.length
     ? professionalServices.value
         .filter((service) => service.isVerified !== false)
@@ -177,19 +214,20 @@ const loadKeywordsByActivity = async () => {
 };
 
 const isServiceVerified = computed(() => {
-  const professionalService = ref<ProfessionalServiceUpdate>();
-  // Pour chaque activité professionnelle, vérifier si le service est vérifié
-
+  const filteredProService = ref<ProfessionalServiceUpdate>();
   professionalActivities.value.forEach((activity, activityIndex) => {
     const sector = sectors.value.find((s) => s.name === activity);
     if (!sector) return;
 
-    professionalService.value = professionalServices.value.find((ps) => {
+    filteredProService.value = professionalServices.value.find((ps) => {
       return ps.sector?.uuid === sector.uuid;
     });
-  });
 
-  return professionalService.value?.isVerified === null ? false : true;
+    if (activityIndex === 0 && filteredProService.value?.isVerified === false) {
+      openRefusModal.value = true;
+    }
+  });
+  return filteredProService.value?.isVerified === null ? false : true;
 });
 
 onMounted(async () => {
@@ -201,7 +239,7 @@ onMounted(async () => {
   await getServicesList();
   await listProfessionalServiceByProfessional();
   await getJetonQuantity();
-  professionalServiceFilteredByVerification();
+  await professionalServiceFilteredByVerification();
 });
 </script>
 

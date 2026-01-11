@@ -128,17 +128,22 @@ const localSelectedKeywords = ref<Record<number, string[]>>({});
 const selectedServices = computed<Record<number, Services>>(() => {
   const result: Record<number, Services> = {};
 
+  console.log(professionalActivities.value, 'professionalActivities.value');
+
   professionalActivities.value.forEach((activity, activityIndex) => {
     const sector = sectors.value.find((s) => s.name === activity);
     if (!sector) return;
+    console.log(sector, 'sector');
 
     const professionalService = professionalServices.value.find((ps) => {
       return ps.sector?.uuid === sector.uuid;
     });
+    console.log(professionalService, 'professionalService');
 
     if (!professionalService) return;
 
     const service = services.value.find((s) => s.uuid === professionalService.serviceUuid);
+    console.log(service, 'service');
 
     if (service) {
       result[activityIndex] = service;
@@ -294,21 +299,16 @@ const saveAnswers = async () => {
 };
 
 const deleteActivity = async (activityIndex: number) => {
-  const proServiceUuid = professionalServices.value.find((ps) => {
-    return ps.serviceUuid === localSelectedServices.value[activityIndex].uuid;
-  })?.uuid;
-
-  if (!proServiceUuid) {
-    addError({ message: 'Service introuvable' });
-    return;
-  }
-
-  const result = await deleteServiceAndActivity(proServiceUuid, activityIndex);
+  // ✅ Passer le state local au composable
+  const result = await deleteServiceAndActivity(
+    localSelectedServices.value[activityIndex].uuid,
+    activityIndex
+  );
 
   if (result.success) {
-    addSuccess('Activité supprimée avec succès');
+    addSuccess('Activité supprimée');
   } else {
-    addError({ message: 'Erreur lors de la suppression' });
+    addError({ message: result.error || 'Erreur lors de la suppression' });
   }
 };
 

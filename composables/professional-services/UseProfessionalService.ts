@@ -1,6 +1,7 @@
 import { useProfessionalServiceService } from '@/services/UseProfessionalServiceService';
 import type { ProfessionalServiceCreate } from '~/models/professionalService/professionalServiceCreate';
 import type { ProfessionalServiceUpdate } from '~/models/professionalService/professionalServiceUuid';
+import { useProfessionalProfileService } from '~/services/UseProfessionalProfileService';
 import { useProfessionalStore } from '~/stores/professionalStore';
 import { useProfessional } from '../professional-user/UseProfessional';
 
@@ -16,6 +17,7 @@ export const useProfessionalService = () => {
   const { professionalServices } = storeToRefs(proServiceStore);
   const { professionalUser, professionalActivities } = storeToRefs(useProfilStore());
   const { editProfessionalProfileDetails } = useProfessional();
+  const { getProfessionalProfile } = useProfessionalProfileService();
 
   const createProfessionalServices = async (service: ProfessionalServiceCreate) => {
     await sendProfessionalServices(service);
@@ -44,7 +46,7 @@ export const useProfessionalService = () => {
       const base = professionalUser.value ? { ...professionalUser.value } : {};
       const payload =
         activityIndex === 0
-          ? { ...base, mainActivity: '' }
+          ? { ...base, mainActivity: null }
           : activityIndex === 1
             ? { ...base, secondActivity: null }
             : { ...base, thirdActivity: null };
@@ -54,6 +56,7 @@ export const useProfessionalService = () => {
 
       professionalActivities.value.splice(activityIndex, 1);
 
+      await getProfessionalProfile();
       return { success: true };
     } catch (error) {
       console.error('Erreur lors de la suppression:', error);
@@ -61,13 +64,11 @@ export const useProfessionalService = () => {
     }
   };
 
-  const professionalServiceFilteredByVerification = () => {
-    return professionalServices.value.map((service, index) => {
-      console.log(service, '%%%%%%%%%%%%%%%%%');
-
-      console.log('PASSE PAR LA');
+  const professionalServiceFilteredByVerification = async () => {
+    return professionalServices.value.map(async (service, index) => {
       if (service.isVerified === false) {
-        deleteServiceAndActivity(service.uuid, index);
+        await deleteServiceAndActivity(service.uuid, index);
+        await getProfessionalProfile();
       }
     });
   };
