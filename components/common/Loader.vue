@@ -1,6 +1,6 @@
 <template>
   <div class="loader__container">
-    <img :src="Loader" alt="" class="loader__img" />
+    <Loader alt="" class="loader__img" />
   </div>
 </template>
 <script setup lang="ts">
