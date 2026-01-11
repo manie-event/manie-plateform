@@ -128,6 +128,11 @@ const { getProfessionalProfile } = useProfessionalProfileService();
 const localSelectedServices = ref<Record<number, Services>>({});
 const localSelectedKeywords = ref<Record<number, string[]>>({});
 
+const initializeLocalData = () => {
+  localSelectedServices.value = { ...selectedServices.value };
+  localSelectedKeywords.value = { ...selectedKeywordsArray.value };
+};
+
 const selectedServices = computed<Record<number, Services>>(() => {
   const result: Record<number, Services> = {};
 
@@ -169,11 +174,6 @@ const selectedKeywordsArray = computed<Record<number, string[]>>(() => {
 
   return result;
 });
-
-const initializeLocalData = () => {
-  localSelectedServices.value = { ...selectedServices.value };
-  localSelectedKeywords.value = { ...selectedKeywordsArray.value };
-};
 
 const getServiceBySector = computed(() => {
   const data = professionalActivities.value.map((activity) => {
@@ -299,7 +299,6 @@ const saveAnswers = async () => {
 };
 
 const deleteActivity = async (activityIndex: number) => {
-  // ✅ Passer le state local au composable
   const result = await deleteServiceAndActivity(
     localSelectedServices.value[activityIndex].uuid,
     activityIndex

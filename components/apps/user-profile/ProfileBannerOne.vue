@@ -170,7 +170,7 @@ const { changeProfessionalBannerPicture, getProfessionalProfile } = useProfessio
 const { getJetonQuantity } = usePaiementJeton();
 const { listProfessionalServiceByProfessional, professionalServiceFilteredByVerification } =
   useProfessionalService();
-const { getServicesList, getListSector, selectSectors } = useSector();
+const { getServicesList, getListSector, allKeywords } = useSector();
 const { sectors } = storeToRefs(useSectorStore());
 const { addSuccess } = useToaster();
 const { professionalServices } = storeToRefs(useProfessionalStore());
@@ -210,16 +210,6 @@ const displayedEmail = computed(
   () => professionalUser.value?.email || professionalEmail.value || null
 );
 
-const loadKeywordsByActivity = async () => {
-  if (professionalUser.value?.mainActivity && professionalActivities.value?.length) {
-    for (const activity of professionalActivities.value) {
-      if (activity) {
-        await selectSectors(activity);
-      }
-    }
-  }
-};
-
 const isServiceVerified = computed(() => {
   if (!professionalServices.value?.length || !professionalActivities.value?.length) {
     return false;
@@ -248,7 +238,7 @@ onMounted(async () => {
   professionalEmail.value = professional.email;
   try {
     await Promise.all([
-      await loadKeywordsByActivity(),
+      await allKeywords(),
       await getListSector(),
       await getServicesList(),
       await listProfessionalServiceByProfessional(),

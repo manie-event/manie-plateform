@@ -18,25 +18,25 @@
             class="mt-6"
             label="Le nom de votre entreprise ?"
             v-model="professionalUser.name"
-            :error-messages="errors.name"
+            :error-messages="showErrors ? errors.name : undefined"
           />
 
           <v-text-field
             label="Le nom complet de l'interlocuteur principal ?"
             v-model="professionalUser.mainInterlocutor"
-            :error-messages="errors.mainInterlocutor"
+            :error-messages="showErrors ? errors.mainInterlocutor : undefined"
           />
 
           <v-text-field
             label="Votre Numéro De Siret ?"
             v-model="professionalUser.siret"
-            :error-messages="errors.siret"
+            :error-messages="showErrors ? errors.siret : undefined"
           />
 
           <v-text-field
             label="L'adresse complète du siège social ?"
             v-model="professionalUser.address"
-            :error-messages="errors.address"
+            :error-messages="showErrors ? errors.address : undefined"
           />
 
           <v-divider class="border-opacity-50 mb-6">
@@ -49,7 +49,7 @@
             :items="activityItems"
             item-title="label"
             item-value="value"
-            :error-messages="errors.mainActivity"
+            :error-messages="showErrors ? errors.mainActivity : undefined"
           />
 
           <v-select
@@ -73,7 +73,7 @@
             label="Une courte description de votre activité ?"
             placeholder="Veuillez renseigner votre activité ici"
             counter="1000"
-            :error-messages="errors.bio"
+            :error-messages="showErrors ? errors.bio : undefined"
           />
 
           <v-number-input
@@ -81,7 +81,7 @@
             v-model="professionalUser.experience"
             control-variant="hidden"
             :min="0"
-            :error-messages="errors.experience"
+            :error-messages="showErrors ? errors.experience : undefined"
           />
 
           <!-- Certifications -->
@@ -128,7 +128,7 @@
             :min="0"
             label="Votre délai de réservation minimum (en semaine) ?"
             v-model="reservationDelayInWeeks"
-            :error-messages="errors.minimumReservationPeriod"
+            :error-messages="showErrors ? errors.minimumReservationPeriod : undefined"
           />
 
           <!-- Acompte -->
@@ -144,7 +144,7 @@
             :step="5"
             label="Quel est le montant (en pourcentage)?"
             v-model="professionalUser.depositAmount"
-            :error-messages="errors.depositAmount"
+            :error-messages="showErrors ? errors.depositAmount : undefined"
           />
 
           <!-- Période de facturation -->
@@ -172,7 +172,7 @@
           <v-text-field
             label="Votre numéro de téléphone ?"
             v-model="professionalUser.telephone"
-            :error-messages="errors.telephone"
+            :error-messages="showErrors ? errors.telephone : undefined"
           />
 
           <!-- Liens réseaux sociaux -->
@@ -309,8 +309,10 @@ const { editProfessionalProfileDetails, createProfessional } = useProfessional()
 
 const openModal = defineModel<boolean>('openModal', { default: false });
 
+const showErrors = ref(false);
 const { addError, addSuccess } = useToaster();
 const activityItems = ref(ACTIVITY_ITEMS);
+const errors = ref<Record<string, string>>({});
 
 // Gestion des questions FAQ (tableau des clés)
 const faqQuestions = ref<string[]>([]);
@@ -368,7 +370,7 @@ const validationSchema = yup.object({
   billingPeriod: yup.string().required('La période de facturation est requise'),
 });
 
-const { errors, validate } = useForm({
+const { errors: formErrors } = useForm({
   validationSchema,
   validateOnMount: false,
 });
@@ -476,13 +478,32 @@ const sanitizePayload = (): ProfessionalProfile => {
 // Validation
 const validateAndShowErrors = async (): Promise<boolean> => {
   try {
-    const result = await validate();
-    return result.valid;
-  } catch (err) {
-    useDisplayErrorMessage(err as AxiosError);
+    await validationSchema.validate(professionalUser.value, { abortEarly: true });
+    errors.value = {}; // Réinitialiser les erreurs
+    return true;
+  } catch (err: any) {
+    // Afficher seulement la première erreur rencontrée
+    if (err.path && err.message) {
+      errors.value = {
+        [err.path]: err.message,
+      };
+
+      // Optionnel : afficher un toast pour la première erreur
+      addError({ message: err.message });
+
+      // Scroll vers le champ en erreur
+      setTimeout(() => {
+        const errorField = document.querySelector('.v-input--error');
+        if (errorField) {
+          errorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 100);
+    }
     return false;
   }
 };
+
+// Déclarer errors comme ref
 
 // Création du profil
 const createProfile = async () => {
@@ -495,6 +516,7 @@ const createProfile = async () => {
 
     if (response.message === 'Professional created') {
       addSuccess('Votre profil a été créé avec succès');
+      showErrors.value = false;
       openModal.value = false;
     }
   } catch (error: any) {
@@ -509,16 +531,20 @@ const modifyProfile = async () => {
 
   try {
     const payload = sanitizePayload();
-    const updateProfil = await editProfessionalProfileDetails(payload);
+    await editProfessionalProfileDetails(payload);
     addSuccess('Votre profil a été modifié avec succès');
+    showErrors.value = false;
     openModal.value = false;
   } catch (error: any) {
-    useDisplayErrorMessage(err as AxiosError);
+    console.log(error, 'ERROR');
+
+    useDisplayErrorMessage(error as AxiosError);
   }
 };
 
 // Fermer le modal
 const closeModal = () => {
+  showErrors.value = false;
   openModal.value = false;
 };
 
@@ -532,18 +558,18 @@ watch(openModal, (isOpen) => {
 
 <style lang="scss" scoped>
 .edit-professional {
-  // background: rgb(var(--v-theme-background));
+  background: rgb(var(--v-theme-background));
 
   .v-text-field,
   .v-select,
   .v-number-input {
-    // background: rgb(var(--v-theme-background));
+    background: rgb(var(--v-theme-background));
     border-radius: 10px;
 
     .v-field__input,
     .v-input__control {
       font-size: 0.95rem;
-      // color: rgb(var(--v-theme-on-surface));
+      color: rgb(var(--v-theme-on-surface));
     }
 
     .v-label {
