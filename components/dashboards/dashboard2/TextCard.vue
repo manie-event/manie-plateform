@@ -1,6 +1,6 @@
 <template>
   <v-row class="d-flex">
-    <v-col v-for="item in statistiques" :key="item.title" class="d-flex">
+    <v-col v-for="item in statistiques" :key="item.title" class="d-flex py-0">
       <v-card elevation="10" color="rgb(var(--v-theme-acier))">
         <v-card-text class="pl-5 pr-7">
           <span class="shape" :style="{ backgroundColor: item.color }"></span>
