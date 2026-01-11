@@ -1,11 +1,11 @@
 import type { AxiosError } from 'axios';
 import { PRICE_PER_TOKEN } from '~/constants/prixToken';
-import { useProfessionalProfileService } from '../../services/UseProfessionalProfileService';
+import { useProfessionalProfileService } from '../services/UseProfessionalProfileService';
 
 export const usePaiementJeton = () => {
   const route = useRoute();
-  const userStore = useUserStore();
-  const { professionalUser, professionalUuid } = storeToRefs(userStore);
+  const profilStore = useProfilStore();
+  const { professionalUser, professionalUuid } = storeToRefs(profilStore);
   const cartStore = useCartStore();
   const { getProfessionalProfile } = useProfessionalProfileService();
   const { initializeTokenBalance, setJetonQuantity } = cartStore;

@@ -1,10 +1,9 @@
 import type { ProfessionalProfile, User, clientProfile } from '@/models/user/UserModel';
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
-import type { Services } from '~/models/professionalService/Services';
 
-export const useUserStore = defineStore(
-  'userStore',
+export const useProfilStore = defineStore(
+  'profilStore',
   () => {
     // --- état principal ---
     const isProfileCreated = ref(false);
@@ -19,7 +18,6 @@ export const useUserStore = defineStore(
     const clientProfile = ref<clientProfile>();
     const isProfilUpdate = ref(false);
     const isStoringUserAccepted = ref(false);
-    const professionalServices = ref<Services[]>([]);
     const professionalProfileForCustomer = ref<ProfessionalProfile>();
 
     // --- computed ---
@@ -34,6 +32,14 @@ export const useUserStore = defineStore(
     const initials = computed(() => {
       const name = String(displayName.value || '');
       return name.charAt(0).toUpperCase() || '?';
+    });
+
+    const professionalActivities = computed(() => {
+      return [
+        professionalUser.value?.mainActivity,
+        professionalUser.value?.secondActivity,
+        professionalUser.value?.thirdActivity,
+      ].filter(Boolean);
     });
 
     // --- setters ---
@@ -84,7 +90,6 @@ export const useUserStore = defineStore(
       isStoringUserAccepted.value = false;
       professionalUuid.value = null;
       clientUuid.value = null;
-      professionalServices.value = [];
       professionalProfileForCustomer.value = undefined;
     };
 
@@ -103,6 +108,7 @@ export const useUserStore = defineStore(
       category,
       displayName,
       initials,
+      professionalActivities,
       setUserAccepted,
       setUser,
       setProfessionalUser,

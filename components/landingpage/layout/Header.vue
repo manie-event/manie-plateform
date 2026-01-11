@@ -6,13 +6,13 @@ import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 import { useDisplay } from 'vuetify';
 import Navigation from '~/components/landingpage/layout/Navigation.vue';
-import { useUserStore } from '~/stores/userStore';
+import { useProfilStore } from '~/stores/profilStore';
 
-const { isProfessional } = storeToRefs(useUserStore());
+const { isProfessional } = storeToRefs(useProfilStore());
 const appsdrawer = ref(false);
 const { mdAndDown } = useDisplay();
 
-const { isProfileCreated } = storeToRefs(useUserStore());
+const { isProfileCreated } = storeToRefs(useProfilStore());
 </script>
 
 <template>

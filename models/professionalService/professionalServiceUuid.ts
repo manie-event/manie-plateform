@@ -1,7 +1,7 @@
 import type { SectorsDto } from '../dto/sectorsDto';
-export interface ProfessionalServiceUuid {
+
+export interface ProfessionalServiceUpdate {
   uuid: string;
-  linkUuid: string;
   name: string;
   serviceUuid: string;
   professionalUuid: string;

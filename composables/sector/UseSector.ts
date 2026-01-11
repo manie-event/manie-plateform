@@ -1,4 +1,6 @@
+import { storeToRefs } from 'pinia';
 import { useSectorService } from '~/services/UseSectorService';
+import { useSectorStore } from '~/stores/sectorStore';
 
 export const useSector = () => {
   const { getAllSectors, getSectors, preloadServices, getKeywords } = useSectorService();
@@ -13,16 +15,16 @@ export const useSector = () => {
 
   const selectSectors = async (selectedSector: string) => {
     keywords.value = [];
-    services.value = [];
 
-    const elementListBySector = await getSectors(selectedSector); //esthétique
+    const elementListBySector = await getSectors(selectedSector);
     setServiceList(elementListBySector.services);
     setKeywordList(elementListBySector.keywords);
   };
 
   const getServicesList = async () => {
-    const services = await preloadServices();
-    setServiceList(services);
+    services.value = [];
+    const servicesList = await preloadServices();
+    setServiceList(servicesList);
   };
 
   const allKeywords = async () => {

@@ -120,9 +120,9 @@ import errorToaster from '~/components/common/errorToaster.vue';
 import SuccessToaster from '~/components/common/successToaster.vue';
 import { useClientProfil } from '~/composables/client-user/UseClientProfil';
 import type { ClientModel } from '~/models/user/ClientModel';
-import { useUserStore } from '~/stores/userStore';
+import { useProfilStore } from '~/stores/profilStore';
 
-const userStore = useUserStore();
+const userStore = useProfilStore();
 const { clientProfile, isProfileCreated } = storeToRefs(userStore);
 const { patchClientProfil, getClientProfil } = useClientProfil();
 const { addSuccess, addError } = useToaster();

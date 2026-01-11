@@ -73,11 +73,11 @@ import profileBg from '@/public/images/backgrounds/client-profil-bg.png';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
-import { useUserStore } from '~/stores/userStore';
+import { useProfilStore } from '~/stores/profilStore';
 import EditClientProfil from './EditClientProfil.vue';
 import ModalRedirection from './ModalRedirection.vue';
 
-const { isProfilUpdate, clientProfile, user, initials } = storeToRefs(useUserStore());
+const { isProfilUpdate, clientProfile, user, initials } = storeToRefs(useProfilStore());
 
 const openModal = ref(false);
 const openEditProfilModal = () => {

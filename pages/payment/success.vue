@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { usePaiementJeton } from '~/composables/professional-user/UsePaiementJeton';
+import { usePaiementJeton } from '~/composables/UsePaiementJeton';
 
 // Métadonnées de la page
 definePageMeta({
@@ -34,7 +34,7 @@ definePageMeta({
 const route = useRoute();
 const router = useRouter();
 const { processStripeReturn } = usePaiementJeton();
-const userStore = useUserStore();
+const userStore = useProfilStore();
 const { ProfessionalProfile } = storeToRefs(userStore);
 
 const sessionId = computed(() => route.query.session_id);

@@ -16,7 +16,7 @@ import { ref } from 'vue';
 import CreateEventForm from '~/components/questionnaires/CreateEventForm.vue';
 import { useSector } from '~/composables/sector/UseSector';
 
-const { clientName, user } = storeToRefs(useUserStore());
+const { clientName, user } = storeToRefs(useProfilStore());
 const openModal = ref(false);
 
 const { getListSector } = useSector();
