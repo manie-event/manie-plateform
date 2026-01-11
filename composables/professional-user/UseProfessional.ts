@@ -13,18 +13,20 @@ export const useProfessional = () => {
 
   const { setProfessionalUser } = useProfilStore();
 
-  const createProfessional = async () => {};
+  const createProfessional = async (professionalProfil: ProfessionalProfile) => {
+    await createProfessionalProfile(professionalProfil);
+  };
   const getProfessional = async () => {};
-  const getProfessionalDetails = async () => {};
+  const getProfessionalDetails = async () => {
+    const profilDetails = await getProfessionalProfileDetails();
+    setProfessionalUser(profilDetails);
+  };
   const editProfessionalProfileDetails = async (newProfile: ProfessionalProfile) => {
-    console.log(newProfile, 'newProfile');
-
     const updatedProfile = await patchProfessionalProfileDetails(newProfile);
-
     setProfessionalUser(updatedProfile);
   };
   const getProfessionalProfileForClient = async () => {};
-  const updateProfessionalBannerPicture = async () => {};
+  const updateProfessionalBannerPicture = async (updatedProfil: ProfessionalProfile) => {};
 
-  return { editProfessionalProfileDetails };
+  return { createProfessional, getProfessionalDetails, editProfessionalProfileDetails };
 };

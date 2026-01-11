@@ -289,14 +289,15 @@
 
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
+import type { AxiosError } from 'axios';
 import { storeToRefs } from 'pinia';
 import { useForm } from 'vee-validate';
 import { computed, ref, watch } from 'vue';
 import * as yup from 'yup';
 import errorToaster from '~/components/common/errorToaster.vue';
+import { useProfessional } from '~/composables/professional-user/UseProfessional';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import type { ProfessionalProfile } from '~/models/user/UserModel';
-import { useProfessionalProfileService } from '~/services/UseProfessionalProfileService';
 import { useProfilStore } from '~/stores/profilStore';
 import { useToaster } from '~/utils/toaster';
 import ModalRedirection from './ModalRedirection.vue';
@@ -304,8 +305,7 @@ import ModalRedirection from './ModalRedirection.vue';
 const userStore = useProfilStore();
 const { professionalUser, isProfilUpdate, isProfileCreated } = storeToRefs(userStore);
 const { setProfessionalUser } = userStore;
-const { createProfessionalProfile, patchProfessionalProfileDetails } =
-  useProfessionalProfileService();
+const { editProfessionalProfileDetails, createProfessional } = useProfessional();
 
 const openModal = defineModel<boolean>('openModal', { default: false });
 
@@ -386,7 +386,7 @@ const initializeProfessionalUser = () => {
       bio: '',
       mainActivity: 'Veuillez choisir votre activité',
       mainInterlocutor: '',
-      experience: 0,
+      experience: 2010,
       certification: [''],
       geographicArea: '',
       picture: '',
@@ -481,9 +481,9 @@ const validateAndShowErrors = async (): Promise<boolean> => {
     showErrors.value = false;
     return true;
   } catch (err) {
-    if (err instanceof yup.ValidationError) {
+    if (err) {
       showErrors.value = true;
-      addError({ message: err.message });
+      useDisplayErrorMessage(err as AxiosError);
       return false;
     }
     addError({ message: 'Une erreur est survenue lors de la validation' });
@@ -498,7 +498,7 @@ const createProfile = async () => {
 
   try {
     const payload = sanitizePayload();
-    const response = await createProfessionalProfile(payload);
+    const response = await createProfessional(payload);
 
     if (response.message === 'Professional created') {
       addSuccess('Votre profil a été créé avec succès');
@@ -506,12 +506,7 @@ const createProfile = async () => {
       openModal.value = false;
     }
   } catch (error: any) {
-    const dbError = error.response?.data?.error || error.response?.data?.message;
-    if (dbError?.includes('duplicate') || dbError?.includes('unique')) {
-      addError({ message: 'Ce SIRET ou email existe déjà' });
-    } else {
-      addError({ message: error.response?.data?.message || 'Erreur lors de la création' });
-    }
+    useDisplayErrorMessage(err as AxiosError);
   }
 };
 
@@ -522,18 +517,12 @@ const modifyProfile = async () => {
 
   try {
     const payload = sanitizePayload();
-    const response = await patchProfessionalProfileDetails(payload);
-    setProfessionalUser(response.newPro || response);
+    const updateProfil = await editProfessionalProfileDetails(payload);
     addSuccess('Votre profil a été modifié avec succès');
     showErrors.value = false;
     openModal.value = false;
   } catch (error: any) {
-    const dbError = error.response?.data?.error || error.response?.data?.message;
-    if (dbError?.includes('duplicate') || dbError?.includes('unique')) {
-      addError({ message: 'Ce SIRET existe déjà' });
-    } else {
-      addError({ message: error.response?.data?.message || 'Erreur lors de la modification' });
-    }
+    useDisplayErrorMessage(err as AxiosError);
   }
 };
 

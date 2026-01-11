@@ -32,6 +32,7 @@ export const useProfessionalService = () => {
     newProfessionalService: ProfessionalServiceUpdate
   ) => {
     await updateProfessionalServices(serviceUuid, newProfessionalService);
+    await listProfessionalServiceByProfessional();
   };
 
   const listProfessionalServiceByProfessional = async () => {
@@ -51,12 +52,11 @@ export const useProfessionalService = () => {
             ? { ...base, secondActivity: null }
             : { ...base, thirdActivity: null };
 
-      console.log(payload, 'PAYLOAD');
       await editProfessionalProfileDetails(payload);
 
       professionalActivities.value.splice(activityIndex, 1);
 
-      await getProfessionalProfile();
+      await listProfessionalServiceByProfessional();
       return { success: true };
     } catch (error) {
       console.error('Erreur lors de la suppression:', error);
@@ -68,7 +68,7 @@ export const useProfessionalService = () => {
     return professionalServices.value.map(async (service, index) => {
       if (service.isVerified === false) {
         await deleteServiceAndActivity(service.uuid, index);
-        await getProfessionalProfile();
+        await listProfessionalServiceByProfessional();
       }
     });
   };

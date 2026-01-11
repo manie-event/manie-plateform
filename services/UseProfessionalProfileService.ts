@@ -14,7 +14,7 @@ export const useProfessionalProfileService = () => {
       const { data } = await api.post('/professional/create', professionalProfil);
 
       addSuccess('Profil professionnel créé avec succès !');
-      await getProfessionalProfile(); // rafraîchit les infos locales
+      await getProfessionalProfile();
       return data;
     } catch (err) {
       useDisplayErrorMessage(err as AxiosError);
@@ -36,20 +36,8 @@ export const useProfessionalProfileService = () => {
   const getProfessionalProfileDetails = async () => {
     try {
       if (!api || !professionalUuid.value) return;
-
       const { data } = await api.get(`/professional/${professionalUuid.value}`);
-
-      // 🧩 Compatibilité avec anciens retours { newPro: {...} }
-      const profile = data.newPro || data;
-
-      // 🧩 On s'assure que les relations et champs essentiels existent
-      if (profile && profile.uuid) {
-        setProfessionalUser(profile);
-      } else {
-        console.warn('⚠️ Réponse incomplète du profil professionnel:', data);
-      }
-
-      return profile;
+      return data;
     } catch (err: any) {
       useDisplayErrorMessage(err as AxiosError);
     }
@@ -58,28 +46,13 @@ export const useProfessionalProfileService = () => {
   const patchProfessionalProfileDetails = async (newProfile: ProfessionalProfile) => {
     try {
       if (!api || !professionalUuid.value) return;
-
-      // 🧩 On fusionne sans écraser les champs backend (comme picture)
-      const mergedProfile = {
-        ...professionalUser.value,
-        ...newProfile,
-      };
-
-      const { data } = await api.patch(`/professional/${professionalUuid.value}`, mergedProfile);
-      const updatedProfile = data.newPro || data;
-      console.log(data, 'patchProfessionalProfileDetails');
-
-      if (updatedProfile && updatedProfile.uuid) {
-        addSuccess('Profil professionnel mis à jour !');
-      } else {
-        console.warn('⚠️ Réponse incomplète après mise à jour du profil:', data);
-      }
-
-      return updatedProfile;
+      const { data } = await api.patch(`/professional/${professionalUuid.value}`, newProfile);
+      return data;
     } catch (err) {
       useDisplayErrorMessage(err as AxiosError);
     }
   };
+
   const changeProfessionalBannerPicture = async (file: File) => {
     if (!api || !professionalUuid.value) return;
 

@@ -47,23 +47,25 @@ import WelcomeCard from '@/components/dashboards/dashboard2/WelcomeCard.vue';
 import EmptyState from '@/public/images/empty-state/profil-vide.png';
 import { storeToRefs } from 'pinia';
 import { useEventServiceProposition } from '~/composables/event-service-propositions/UseEventServiceProposition';
+import { useProfessional } from '~/composables/professional-user/UseProfessional';
 import { usePaiementJeton } from '~/composables/UsePaiementJeton';
 import { useProfessionalProfileService } from '~/services/UseProfessionalProfileService';
 import { useProfilStore } from '~/stores/profilStore';
 
 const userStore = useProfilStore();
-const { isProfileCreated } = storeToRefs(userStore);
-const { getProfessionalProfileDetails, getProfessionalProfile } = useProfessionalProfileService();
+const { isProfileCreated, professionalUser } = storeToRefs(userStore);
+const { getProfessionalProfile } = useProfessionalProfileService();
 const { getServicePropositionForProfessional } = useEventServiceProposition();
 const { getJetonQuantity } = usePaiementJeton();
+const { getProfessionalDetails } = useProfessional();
 
 const isLoading = ref(true);
 
-onMounted(async () => {
+const initializeProfil = async () => {
   try {
     await Promise.all([
       getProfessionalProfile(),
-      getProfessionalProfileDetails(),
+      getProfessionalDetails(),
       getServicePropositionForProfessional(),
       getJetonQuantity(),
     ]);
@@ -73,6 +75,10 @@ onMounted(async () => {
   } finally {
     isLoading.value = false;
   }
+};
+
+onMounted(async () => {
+  initializeProfil();
 });
 </script>
 <style lang="scss" scoped>

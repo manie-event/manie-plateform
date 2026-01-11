@@ -222,9 +222,13 @@ const loadKeywordsByActivity = async () => {
 
 const isServiceVerified = computed(() => {
   const filteredProService = ref<ProfessionalServiceUpdate>();
+  console.log(professionalActivities.value);
+
   professionalActivities.value.forEach((activity, activityIndex) => {
     const sector = sectors.value.find((s) => s.name === activity);
     if (!sector) return;
+
+    console.log(professionalServices.value, 'professionalServices.value');
 
     filteredProService.value = professionalServices.value.find((ps) => {
       return ps.sector?.uuid === sector.uuid;
@@ -247,7 +251,7 @@ onMounted(async () => {
       await getServicesList(),
       await listProfessionalServiceByProfessional(),
       await getJetonQuantity(),
-      await professionalServiceFilteredByVerification(),
+      // await professionalServiceFilteredByVerification(),
     ]);
   } catch (e) {
     console.log(e);

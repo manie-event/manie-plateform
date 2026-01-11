@@ -3,18 +3,10 @@ import { clientMenu, professionalProfile } from '@/_mockApis/headerData';
 import { getInitials } from '@/utils/text-utils';
 import { Icon } from '@iconify/vue';
 import { storeToRefs } from 'pinia';
-import { useDisplay } from 'vuetify';
-import { useClientProfil } from '~/composables/client-user/UseClientProfil';
 import { useAuthentification } from '~/composables/UseAuthentification';
-import { usePaiementJeton } from '~/composables/UsePaiementJeton';
-import { useProfessionalProfileService } from '~/services/UseProfessionalProfileService';
 import { useProfilStore } from '~/stores/profilStore';
 
 const { sendLogout } = useAuthentification();
-const { getJetonQuantity } = usePaiementJeton();
-const { getProfessionalProfileDetails, getProfessionalProfile } = useProfessionalProfileService();
-const { getClientProfil } = useClientProfil();
-const { mdAndDown } = useDisplay();
 
 const userStore = useProfilStore();
 const { isProfessional, category, displayName } = storeToRefs(userStore);

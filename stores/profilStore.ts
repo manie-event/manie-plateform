@@ -1,7 +1,6 @@
 import type { ProfessionalProfile, User, clientProfile } from '@/models/user/UserModel';
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
-import type { Services } from '~/models/professionalService/Services';
 
 export const useProfilStore = defineStore(
   'profilStore',
@@ -19,7 +18,6 @@ export const useProfilStore = defineStore(
     const clientProfile = ref<clientProfile>();
     const isProfilUpdate = ref(false);
     const isStoringUserAccepted = ref(false);
-    const professionalServices = ref<Services[]>([]);
     const professionalProfileForCustomer = ref<ProfessionalProfile>();
 
     // --- computed ---
@@ -92,7 +90,6 @@ export const useProfilStore = defineStore(
       isStoringUserAccepted.value = false;
       professionalUuid.value = null;
       clientUuid.value = null;
-      professionalServices.value = [];
       professionalProfileForCustomer.value = undefined;
     };
 
