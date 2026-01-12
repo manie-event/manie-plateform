@@ -46,7 +46,6 @@ export interface ProfessionalProfile {
   experience: number;
   certification: string[];
   category?: string;
-  geographicArea: string;
   picture: string;
   professionalServices: Services[];
   faq: Faq;

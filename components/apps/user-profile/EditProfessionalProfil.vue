@@ -378,7 +378,7 @@ const { errors: formErrors } = useForm({
 // Initialisation du professionalUser si vide
 const initializeProfessionalUser = () => {
   if (!professionalUser.value) {
-    setProfessionalUser({
+    professionalUser.value = {
       name: '',
       email: '',
       siret: '',
@@ -389,7 +389,6 @@ const initializeProfessionalUser = () => {
       mainInterlocutor: '',
       experience: 2010,
       certification: [''],
-      geographicArea: '',
       picture: '',
       professionalServices: [],
       faq: {},
@@ -398,7 +397,7 @@ const initializeProfessionalUser = () => {
       depositAmount: 0,
       billingPeriod: 'beforeEvent',
       links: [{ type: 'Facebook', value: '' }],
-    } as ProfessionalProfile);
+    } as ProfessionalProfile;
   }
 
   // Initialiser les questions FAQ
@@ -479,31 +478,19 @@ const sanitizePayload = (): ProfessionalProfile => {
 const validateAndShowErrors = async (): Promise<boolean> => {
   try {
     await validationSchema.validate(professionalUser.value, { abortEarly: true });
-    errors.value = {}; // Réinitialiser les erreurs
+    errors.value = {};
     return true;
   } catch (err: any) {
-    // Afficher seulement la première erreur rencontrée
     if (err.path && err.message) {
       errors.value = {
         [err.path]: err.message,
       };
 
-      // Optionnel : afficher un toast pour la première erreur
       addError({ message: err.message });
-
-      // Scroll vers le champ en erreur
-      setTimeout(() => {
-        const errorField = document.querySelector('.v-input--error');
-        if (errorField) {
-          errorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }, 100);
     }
     return false;
   }
 };
-
-// Déclarer errors comme ref
 
 // Création du profil
 const createProfile = async () => {

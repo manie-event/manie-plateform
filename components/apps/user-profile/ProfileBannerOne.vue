@@ -176,7 +176,6 @@ const { addSuccess } = useToaster();
 const { professionalServices } = storeToRefs(useProfessionalStore());
 
 const openModal = ref(false);
-const openServiceModal = ref(false);
 const openModificationModal = ref(false);
 const fileInput = ref<HTMLInputElement | null>(null);
 const professionalEmail = ref();
@@ -210,31 +209,35 @@ const displayedEmail = computed(
 
 const isServiceVerified = computed(() => {
   openRefusModal.value = false;
-  if (!professionalServices.value?.length || !professionalActivities.value?.length) {
-    return false;
-  }
+  if (isProfileCreated) {
+    if (!professionalServices.value?.length || !professionalActivities.value?.length) {
+      return false;
+    }
 
-  let filteredProService: ProfessionalServiceUpdate | undefined;
+    let filteredProService: ProfessionalServiceUpdate | undefined;
 
-  professionalActivities.value.forEach((activity, activityIndex) => {
-    const sector = sectors.value.find((s) => s.name === activity);
-    if (!sector) return;
+    professionalActivities.value.forEach((activity, activityIndex) => {
+      const sector = sectors.value.find((s) => s.name === activity);
+      if (!sector) return;
 
-    filteredProService = professionalServices.value.find((ps) => {
-      return ps.sector?.uuid === sector.uuid;
+      filteredProService = professionalServices.value.find((ps) => {
+        return ps.sector?.uuid === sector.uuid;
+      });
+
+      if (activityIndex === 0 && filteredProService?.isVerified === false) {
+        openRefusModal.value = true;
+      }
     });
 
-    if (activityIndex === 0 && filteredProService?.isVerified === false) {
-      openRefusModal.value = true;
-    }
-  });
-
-  return filteredProService?.isVerified !== null && filteredProService?.isVerified !== false;
+    return filteredProService?.isVerified !== null && filteredProService?.isVerified !== false;
+  }
 });
 
 onMounted(async () => {
   const professional = await getProfessionalProfile();
-  professionalEmail.value = professional.email;
+  if (professional) {
+    professionalEmail.value = professional.email;
+  }
   try {
     await Promise.all([
       await allKeywords(),
