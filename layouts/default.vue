@@ -84,6 +84,7 @@ useHead({
 </template>
 <style lang="scss" scoped>
 .dashboard-position {
+  display: flex;
   width: 100vw;
   justify-content: center;
   top: -40px;
