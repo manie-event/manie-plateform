@@ -179,7 +179,7 @@ const openModal = ref(false);
 const openModificationModal = ref(false);
 const fileInput = ref<HTMLInputElement | null>(null);
 const professionalEmail = ref();
-const openRefusModal = ref(true);
+const openRefusModal = ref(false);
 const isLoading = ref(true);
 
 const triggerClickFileInput = () => fileInput.value?.click();
@@ -209,13 +209,13 @@ const displayedEmail = computed(
 
 const isServiceVerified = computed(() => {
   openRefusModal.value = false;
-  if (isProfileCreated) {
-    if (!professionalServices.value?.length || !professionalActivities.value?.length) {
-      return false;
-    }
+  if (!professionalServices.value?.length || !professionalActivities.value?.length) {
+    return true;
+  }
 
-    let filteredProService: ProfessionalServiceUpdate | undefined;
+  let filteredProService: ProfessionalServiceUpdate | undefined;
 
+  if (isProfileCreated && professionalServices.value.length) {
     professionalActivities.value.forEach((activity, activityIndex) => {
       const sector = sectors.value.find((s) => s.name === activity);
       if (!sector) return;

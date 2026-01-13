@@ -68,6 +68,15 @@
             item-value="value"
           />
 
+          <v-select
+            label="Votre secteur géographique ?"
+            v-model="professionalUser.geographicArea"
+            :items="geographicActivity"
+            item-title="label"
+            item-value="value"
+            :error-messages="showErrors ? errors.geographicArea : undefined"
+          />
+
           <v-textarea
             v-model="professionalUser.bio"
             label="Une courte description de votre activité ?"
@@ -219,7 +228,14 @@
                 @update:model-value="updateFaqQuestion(index, $event)"
               />
               <v-textarea
-                v-model="professionalUser.faq[faqQuestions[index]]"
+                :model-value="professionalUser?.faq?.[faqQuestions[index]] ?? ''"
+                @update:model-value="
+                  (value) => {
+                    if (professionalUser?.faq) {
+                      professionalUser.faq[faqQuestions[index]] = value;
+                    }
+                  }
+                "
                 label="Renseignez la réponse à la question"
                 variant="outlined"
                 placeholder="Veuillez renseigner votre réponse ici"
@@ -297,6 +313,7 @@ import * as yup from 'yup';
 import errorToaster from '~/components/common/errorToaster.vue';
 import { useProfessional } from '~/composables/professional-user/UseProfessional';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
+import { GEOGRAPHIC_ACTIVITY } from '~/constants/geographicActivity';
 import type { ProfessionalProfile } from '~/models/user/UserModel';
 import { useProfilStore } from '~/stores/profilStore';
 import { useToaster } from '~/utils/toaster';
@@ -312,6 +329,7 @@ const openModal = defineModel<boolean>('openModal', { default: false });
 const showErrors = ref(false);
 const { addError, addSuccess } = useToaster();
 const activityItems = ref(ACTIVITY_ITEMS);
+const geographicActivity = ref(GEOGRAPHIC_ACTIVITY);
 const errors = ref<Record<string, string>>({});
 
 // Gestion des questions FAQ (tableau des clés)
@@ -390,6 +408,7 @@ const initializeProfessionalUser = () => {
       experience: 2010,
       certification: [''],
       picture: '',
+      geographicArea: 'Auvergne-Rhône-Alpes',
       professionalServices: [],
       faq: {},
       minimumReservationPeriod: 0,
@@ -499,15 +518,16 @@ const createProfile = async () => {
 
   try {
     const payload = sanitizePayload();
-    const response = await createProfessional(payload);
+    console.log(payload, 'payload');
 
-    if (response.message === 'Professional created') {
-      addSuccess('Votre profil a été créé avec succès');
-      showErrors.value = false;
-      openModal.value = false;
-    }
+    await createProfessional(payload);
+    addSuccess('Votre profil a été créé avec succès');
+    showErrors.value = false;
+    openModal.value = false;
   } catch (error: any) {
-    useDisplayErrorMessage(error as AxiosError);
+    console.log(error, 'error');
+
+    useDisplayErrorMessage(error);
   }
 };
 
