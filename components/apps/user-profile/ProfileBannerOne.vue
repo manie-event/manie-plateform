@@ -1,5 +1,5 @@
 <template>
-  <section class="profile-header">
+  <div class="profile-header">
     <div v-if="isLoading">
       <Loader class="d-flex align-center justify-center" />
     </div>
@@ -144,7 +144,7 @@
         </RefusCollaboration>
       </Teleport>
     </div>
-  </section>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -365,7 +365,7 @@ onMounted(async () => {
 
 @media screen and (max-width: 900px) {
   .profile-header {
-    width: 90vw;
+    // width: 90vw;
     margin: 0 auto;
 
     &__actions {

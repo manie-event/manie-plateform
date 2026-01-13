@@ -63,11 +63,15 @@ const isLoading = ref(true);
 
 const initializeProfil = async () => {
   try {
-    (await getProfessionalProfile(),
-      await getProfessionalDetails(),
-      await getServicePropositionForProfessional(),
-      await getJetonQuantity());
-    console.log('🎉 Toutes les données sont chargées');
+    console.log(isProfileCreated.value, 'isProfileCreated');
+
+    if (isProfileCreated.value) {
+      (await getProfessionalProfile(),
+        await getProfessionalDetails(),
+        await getServicePropositionForProfessional(),
+        await getJetonQuantity());
+      console.log('🎉 Toutes les données sont chargées');
+    }
   } catch (error) {
     console.error('Erreur lors du chargement:', error);
   } finally {
