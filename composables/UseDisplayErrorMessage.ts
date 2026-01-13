@@ -4,9 +4,8 @@ const { addError } = useToaster();
 
 export const useDisplayErrorMessage = (error: AxiosError<any>) => {
   const message =
-    error.response?.data?.errors[0]?.message ??
-    error.response?.data?.errors.message ??
-    'Une erreur est survenue.';
+    error.response?.data?.errors[0]?.message ?? error.response?.data?.errors.message ?? error;
+  ('Une erreur est survenue.');
 
   addError({ message });
 };
