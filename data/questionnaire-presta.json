@@ -24,7 +24,7 @@
         {
           "id": "food-keywords-2",
           "question": "Les formats proposés : ",
-          "category": "format",
+          "category": "format-food",
           "type": "checkbox",
           "required": true
         },
@@ -244,7 +244,7 @@
         {
           "id": "musique-keywords-1",
           "question": "Quel format proposez-vous ? ",
-          "category": "format",
+          "category": "format-musique",
           "type": "checkbox",
           "required": true
         },
@@ -312,7 +312,7 @@
       "questions": [
         {
           "id": "animation-general-1",
-          "question": "Vous êtes ?",
+          "question": "Vous faites partie de la catégorie animation :",
           "type": "checkbox",
           "required": true
         }
@@ -323,14 +323,14 @@
       "questions": [
         {
           "id": "animation-keywords-1",
-          "question": "Animation bien-être : ",
+          "question": "Bien-être : ",
           "category": "bien-être",
           "type": "checkbox",
           "required": true
         },
         {
           "id": "animation-keywords-2",
-          "question": "Animation jeux : ",
+          "question": "Jeu et spectacle : ",
           "category": "jeux",
 
           "type": "checkbox",
@@ -338,7 +338,7 @@
         },
         {
           "id": "animation-keywords-3",
-          "question": "Animation art visuel : ",
+          "question": "Art visuel : ",
           "category": "art visuel",
 
           "type": "checkbox",
@@ -346,7 +346,7 @@
         },
         {
           "id": "animation-keywords-4",
-          "question": "Animation performers : ",
+          "question": "Performer : ",
           "category": "performers",
 
           "type": "checkbox",

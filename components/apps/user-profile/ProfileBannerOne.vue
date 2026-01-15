@@ -70,7 +70,13 @@
             </div>
           </v-col>
           <v-col cols="12" md="4" class="w-100 d-flex gap-2 flex-column">
-            <v-btn v-if="!isProfileCreated" color="primary" class="w-100" @click="openModal = true">
+            <v-btn
+              v-if="!isProfileCreated"
+              color="rgb(var(--v-theme-darkbg))"
+              style="color: rgb(var(--v-theme-background))"
+              class="w-100"
+              @click="openModal = true"
+            >
               Créer mon profil
             </v-btn>
 
@@ -198,6 +204,8 @@ const changeBannerPhoto = async (e: Event) => {
 };
 
 const getServiceValues = computed(() => {
+  console.log(professionalServices.value, 'professionalServices.value');
+
   return professionalServices.value?.length
     ? professionalServices.value.filter((service) => service.isVerified == true).map((s) => s.name)
     : [];

@@ -124,6 +124,7 @@ const { createProfessionalServices, changeProfessionalServices, deleteServiceAnd
 const { addError, addSuccess } = useToaster();
 const { professionalServices } = storeToRefs(useProfessionalStore());
 const { getProfessionalProfile } = useProfessionalProfileService();
+const { listProfessionalServiceByProfessional } = useProfessionalService();
 
 const localSelectedServices = ref<Record<number, Services>>({});
 const localSelectedKeywords = ref<Record<number, string[]>>({});
@@ -283,32 +284,48 @@ const saveAnswers = async () => {
       addSuccess(
         "Vos services doivent être vérifiés avant de pouvoir être modifiés. Nous revenons vers vous dès que c'est fait !"
       );
-      await getProfessionalProfile();
     } else {
       const professionalServiceUuid = professionalServices.value[i].uuid;
 
       await changeProfessionalServices(professionalServiceUuid, responses[i]);
       addSuccess("Vos services viennent d'être mis à jour !");
-      await getProfessionalProfile();
     }
     if (i < responses.length - 1) {
       await new Promise((resolve) => setTimeout(resolve, 500));
     }
   }
+  await getProfessionalProfile();
+  await listProfessionalServiceByProfessional();
   openModificationModal.value = false;
 };
 
 const deleteActivity = async (activityIndex: number) => {
-  const result = await deleteServiceAndActivity(
-    localSelectedServices.value[activityIndex].uuid,
-    activityIndex
+  const activity = professionalActivities.value[activityIndex];
+  const sector = sectors.value.find((s) => s.name === activity);
+
+  if (!sector) {
+    addError({ message: 'Secteur introuvable' });
+    return;
+  }
+
+  const professionalService = professionalServices.value.find(
+    (ps) => ps.sector?.uuid === sector.uuid
   );
 
-  if (result.success) {
-    addSuccess('Activité supprimée');
-    await getProfessionalProfile();
-  } else {
-    addError({ message: result.error || 'Erreur lors de la suppression' });
+  if (!professionalService?.uuid) {
+    addError({ message: 'Service professionnel introuvable' });
+    return;
+  }
+  if (professionalService) {
+    const result = await deleteServiceAndActivity(professionalService.uuid, activityIndex);
+
+    if (result.success) {
+      addSuccess('Activité supprimée');
+      await getProfessionalProfile();
+      openModificationModal.value = false;
+    } else {
+      addError({ message: result.error || 'Erreur lors de la suppression' });
+    }
   }
 };
 

@@ -36,11 +36,15 @@ export const useProfessionalService = () => {
   };
 
   const listProfessionalServiceByProfessional = async () => {
+    console.log('recharge proService');
+
     const listProService = await getListProfessionalServiceByProfessional();
     setProfessionalServices(listProService);
   };
 
   const deleteServiceAndActivity = async (serviceUuid: string, activityIndex: number) => {
+    console.log(activityIndex, 'activityIndex');
+
     try {
       await deleteProfessionalServices(serviceUuid);
 
@@ -54,8 +58,8 @@ export const useProfessionalService = () => {
 
       await editProfessionalProfileDetails(payload);
 
-      professionalActivities.value.splice(activityIndex, 1);
-
+      // professionalActivities.value.splice(activityIndex, 1);
+      await getProfessionalProfile();
       await listProfessionalServiceByProfessional();
       return { success: true };
     } catch (error) {
