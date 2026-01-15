@@ -524,27 +524,15 @@ const validateAndShowErrors = async (): Promise<boolean> => {
 const createProfile = async () => {
   const isValid = await validateAndShowErrors();
   if (!isValid) return;
-  console.log(isValid, 'isValid');
 
   try {
     const payload = sanitizePayload();
-    console.log('📦 Payload:', payload);
-
-    console.log('🔄 Appel editProfessionalProfileDetails...');
     await createProfessional(payload);
-    console.log('✅ editProfessionalProfileDetails terminé');
-
-    console.log('🔄 Appel listProfessionalServiceByProfessional...');
     await listProfessionalServiceByProfessional();
-    console.log('✅ listProfessionalServiceByProfessional terminé');
-    console.log(await createProfessional(payload), '');
-
     addSuccess('Votre profil a été créé avec succès');
     showErrors.value = false;
     openModal.value = false;
   } catch (error: any) {
-    console.log(error, 'error');
-
     useDisplayErrorMessage(error);
   }
 };
@@ -556,16 +544,8 @@ const modifyProfile = async () => {
 
   try {
     const payload = sanitizePayload();
-    console.log('📦 Payload:', payload);
-
-    console.log('🔄 Appel editProfessionalProfileDetails...');
     await editProfessionalProfileDetails(payload);
-    console.log('✅ editProfessionalProfileDetails terminé');
-
-    console.log('🔄 Appel listProfessionalServiceByProfessional...');
     await listProfessionalServiceByProfessional();
-    console.log('✅ listProfessionalServiceByProfessional terminé');
-
     addSuccess('Votre profil a été modifié avec succès');
     showErrors.value = false;
     openModal.value = false;

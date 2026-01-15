@@ -36,15 +36,11 @@ export const useProfessionalService = () => {
   };
 
   const listProfessionalServiceByProfessional = async () => {
-    console.log('recharge proService');
-
     const listProService = await getListProfessionalServiceByProfessional();
     setProfessionalServices(listProService);
   };
 
   const deleteServiceAndActivity = async (serviceUuid: string, activityIndex: number) => {
-    console.log(activityIndex, 'activityIndex');
-
     try {
       await deleteProfessionalServices(serviceUuid);
 

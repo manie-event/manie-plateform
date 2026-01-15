@@ -204,8 +204,6 @@ const changeBannerPhoto = async (e: Event) => {
 };
 
 const getServiceValues = computed(() => {
-  console.log(professionalServices.value, 'professionalServices.value');
-
   return professionalServices.value?.length
     ? professionalServices.value.filter((service) => service.isVerified == true).map((s) => s.name)
     : [];
