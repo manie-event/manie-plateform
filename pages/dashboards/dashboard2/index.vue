@@ -63,8 +63,6 @@ const isLoading = ref(true);
 
 const initializeProfil = async () => {
   try {
-    console.log(isProfileCreated.value, 'isProfileCreated');
-
     if (isProfileCreated.value) {
       (await getProfessionalProfile(),
         await getProfessionalDetails(),

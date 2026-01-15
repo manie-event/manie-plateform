@@ -28,8 +28,6 @@ export const useProfessionalServiceService = () => {
         '/professional-service/show-selected-services-for-professional'
       );
 
-      console.log(data, 'getProfessionalService');
-
       setServicesFiltered(data);
       return data ?? [];
     } catch (err) {

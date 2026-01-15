@@ -186,6 +186,9 @@
 
           <!-- Liens réseaux sociaux -->
           <div class="mt-4">
+            <v-divider class="mb-6 edit-professional__divider">
+              <p class="mb-6">Vos Réseaux</p>
+            </v-divider>
             <div v-for="(link, index) in professionalUser.links" :key="index">
               <v-select
                 v-model="link.type"
@@ -220,7 +223,11 @@
           </div>
 
           <!-- FAQ -->
+
           <div class="my-8">
+            <v-divider class="mb-6 edit-professional__divider">
+              <p class="mb-6">Votre Foire Aux Questions (FAQ)</p>
+            </v-divider>
             <div v-for="(question, index) in faqQuestions" :key="index">
               <v-text-field
                 v-model="faqQuestions[index]"
@@ -311,6 +318,7 @@ import { useForm } from 'vee-validate';
 import { computed, ref, watch } from 'vue';
 import * as yup from 'yup';
 import errorToaster from '~/components/common/errorToaster.vue';
+import { useProfessionalService } from '~/composables/professional-services/UseProfessionalService';
 import { useProfessional } from '~/composables/professional-user/UseProfessional';
 import { ACTIVITY_ITEMS } from '~/constants/activitySector';
 import { GEOGRAPHIC_ACTIVITY } from '~/constants/geographicActivity';
@@ -323,6 +331,7 @@ const userStore = useProfilStore();
 const { professionalUser, isProfilUpdate, isProfileCreated } = storeToRefs(userStore);
 const { setProfessionalUser } = userStore;
 const { editProfessionalProfileDetails, createProfessional } = useProfessional();
+const { listProfessionalServiceByProfessional } = useProfessionalService();
 
 const openModal = defineModel<boolean>('openModal', { default: false });
 
@@ -518,15 +527,12 @@ const createProfile = async () => {
 
   try {
     const payload = sanitizePayload();
-    console.log(payload, 'payload');
-
     await createProfessional(payload);
+    await listProfessionalServiceByProfessional();
     addSuccess('Votre profil a été créé avec succès');
     showErrors.value = false;
     openModal.value = false;
   } catch (error: any) {
-    console.log(error, 'error');
-
     useDisplayErrorMessage(error);
   }
 };
@@ -539,6 +545,7 @@ const modifyProfile = async () => {
   try {
     const payload = sanitizePayload();
     await editProfessionalProfileDetails(payload);
+    await listProfessionalServiceByProfessional();
     addSuccess('Votre profil a été modifié avec succès');
     showErrors.value = false;
     openModal.value = false;

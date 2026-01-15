@@ -54,8 +54,8 @@ export const useProfessionalService = () => {
 
       await editProfessionalProfileDetails(payload);
 
-      professionalActivities.value.splice(activityIndex, 1);
-
+      // professionalActivities.value.splice(activityIndex, 1);
+      await getProfessionalProfile();
       await listProfessionalServiceByProfessional();
       return { success: true };
     } catch (error) {
