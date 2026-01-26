@@ -221,7 +221,6 @@ const linksList = computed(() => {
     overflow: hidden;
 
     &::after {
-      // dégradé sombre en bas pour rendre le texte lisible
       content: '';
       position: absolute;
       inset: 0;
