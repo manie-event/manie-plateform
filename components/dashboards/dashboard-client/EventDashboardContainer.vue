@@ -157,6 +157,7 @@ import Product from '~/components/dashboards/dashboard-client/EventBudget.vue';
 import EditEventForm from '~/components/questionnaires/EditEventForm.vue';
 import { useSector } from '~/composables/sector/UseSector';
 import type { eventModel } from '~/models/events/eventModel';
+import type { ClientServiceProposition } from '~/models/propositions/client-service-proposition';
 import PricingChoice from './PricingChoice.vue';
 const props = defineProps<{
   events: eventModel[];
@@ -185,18 +186,24 @@ const getPropositionsByEvent = computed(() => {
   const eventUuid = currentEvent.value.uuid;
   const eventServiceUuids = currentEvent.value.eventServices?.map((es: any) => es.uuid) || [];
 
-  return professionalResponseProposition.value.filter((proposition) => {
-    const prop = proposition as unknown as Record<string, any>;
+  console.log(professionalResponseProposition.value, 'professionalResponseProposition.value');
 
-    // Vérifier si la proposition correspond directement à l'événement
-    const matchesEvent = prop.eventUuid === eventUuid;
+  const test = professionalResponseProposition.value.filter(
+    (proposition: ClientServiceProposition) => {
+      // Vérifier si la proposition correspond directement à l'événement
+      const matchesEvent = proposition.eventUuid === eventUuid;
 
-    // Vérifier si la proposition correspond à l'un des services de l'événement
-    const matchesEventService =
-      prop.eventServiceUuid && eventServiceUuids.includes(prop.eventServiceUuid);
+      // Vérifier si la proposition correspond à l'un des services de l'événement
+      const matchesEventService =
+        proposition.eventServiceUuid && eventServiceUuids.includes(proposition.eventServiceUuid);
 
-    return matchesEvent || matchesEventService;
-  });
+      console.log(matchesEventService, 'matchesEventService');
+
+      return matchesEvent || matchesEventService;
+    }
+  );
+  console.log(test, 'test');
+  return test;
 });
 
 onMounted(async () => {

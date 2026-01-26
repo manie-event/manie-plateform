@@ -63,9 +63,10 @@ const isLoading = ref(true);
 
 const initializeProfil = async () => {
   try {
+    await getProfessionalProfile();
+
     if (isProfileCreated.value) {
-      (await getProfessionalProfile(),
-        await getProfessionalDetails(),
+      (await getProfessionalDetails(),
         await getServicePropositionForProfessional(),
         await getJetonQuantity());
       console.log('🎉 Toutes les données sont chargées');

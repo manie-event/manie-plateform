@@ -144,36 +144,37 @@
             :key="index"
             class="mt-4"
           >
-            <h4 class="mb-2">{{ question.question }}</h4>
+            <div v-if="question.answers">
+              <h4 class="mb-2">{{ question.question }}</h4>
+              <div v-if="question.isService">
+                <v-btn
+                  v-for="answer in question.answers"
+                  :key="answer.uuid"
+                  color="rgb(var(--v-theme-mimosa))"
+                  :style="
+                    service.serviceUuid === answer.uuid
+                      ? { color: 'white' }
+                      : { color: 'rgb(var(v-theme-darkbg))' }
+                  "
+                  :variant="service.serviceUuid === answer.uuid ? 'flat' : 'outlined'"
+                  class="ma-1"
+                  @click="selectServiceForIndex(i, answer.uuid)"
+                >
+                  {{ answer.name }}
+                </v-btn>
+              </div>
 
-            <div v-if="question.isService">
-              <v-btn
-                v-for="answer in question.answers"
-                :key="answer.uuid"
-                color="rgb(var(--v-theme-mimosa))"
-                :style="
-                  service.serviceUuid === answer.uuid
-                    ? { color: 'white' }
-                    : { color: 'rgb(var(v-theme-darkbg))' }
-                "
-                :variant="service.serviceUuid === answer.uuid ? 'flat' : 'outlined'"
-                class="ma-1"
-                @click="selectServiceForIndex(i, answer.uuid)"
-              >
-                {{ answer.name }}
-              </v-btn>
-            </div>
-
-            <div v-else>
-              <v-chip
-                v-for="answer in question.answers"
-                :key="answer.uuid"
-                :variant="service.keywordsUuid.includes(answer.uuid) ? 'flat' : 'outlined'"
-                class="ma-1"
-                @click="toggleKeywordForService(i, answer.uuid)"
-              >
-                {{ answer.value }}
-              </v-chip>
+              <div v-else>
+                <v-chip
+                  v-for="answer in question.answers"
+                  :key="answer.uuid"
+                  :variant="service.keywordsUuid.includes(answer.uuid) ? 'flat' : 'outlined'"
+                  class="ma-1"
+                  @click="toggleKeywordForService(i, answer.uuid)"
+                >
+                  {{ answer.value }}
+                </v-chip>
+              </div>
             </div>
           </div>
         </div>
@@ -224,7 +225,7 @@ import { useEventForm } from '~/composables/event/UseEventForm';
 import { useEventsStore } from '~/stores/events';
 
 const open = defineModel<boolean>('open-customer-form');
-const { submitEvent: createEvent } = UseEvent();
+const { submitEvent } = UseEvent();
 const eventStore = useEventsStore();
 const { event } = storeToRefs(eventStore);
 const { resetForm } = eventStore;
@@ -271,7 +272,7 @@ const handleSubmit = async () => {
       })),
       formule: event.value.formule || 'gratuit',
     };
-    await createEvent(newEvent);
+    await submitEvent(newEvent);
 
     addSuccess('Évènement mis à jour avec succès !');
     open.value = false;

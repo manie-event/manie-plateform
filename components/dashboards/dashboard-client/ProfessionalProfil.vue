@@ -3,7 +3,17 @@
     <v-card class="pp-card">
       <!-- Image de couverture -->
       <div class="pp-card__image-container">
-        <img :src="props.pprofile.picture" alt="Image du prestataire" class="pp-card__image" />
+        <div v-if="props.pprofile.picture">
+          <img :src="props.pprofile.picture" alt="Image du prestataire" class="pp-card__image" />
+        </div>
+        <div v-else>
+          <img
+            :src="photoDefault"
+            alt="Image du prestataire"
+            class="pp-card__image"
+            style="object-position: bottom"
+          />
+        </div>
         <v-card-title class="pp-card__title text-white">
           {{ props.pprofile.name }}
         </v-card-title>
@@ -72,8 +82,6 @@
               <v-chip
                 v-for="(cert, index) in props.pprofile.certification"
                 :key="index"
-                color="success"
-                variant="elevated"
                 class="ma-1"
                 label
               >
@@ -114,8 +122,8 @@
 </template>
 
 <script setup lang="ts">
+import photoDefault from '@/public/images/backgrounds/photoDefaultProposition.png';
 import type { ProfessionalProfile } from '~/models/user/UserModel';
-
 const props = defineProps<{
   pprofile: ProfessionalProfile;
 }>();
@@ -208,8 +216,8 @@ const linksList = computed(() => {
   &__image-container {
     position: relative;
     width: 100%;
-    height: 350px;
-    max-height: 350px;
+    height: 250px;
+    max-height: 250px;
     overflow: hidden;
 
     &::after {
@@ -217,15 +225,14 @@ const linksList = computed(() => {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6));
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
     }
   }
 
   &__image {
     width: 100%;
-    height: 100%;
+    height: 250px;
     object-fit: cover;
-    display: block;
   }
 
   &__title {

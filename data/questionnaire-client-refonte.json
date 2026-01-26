@@ -202,7 +202,8 @@
           "event-type": "particulier",
           "type": [
             { "value": "meal", "label": "Le temps d'un repas" },
-            { "value": "day", "label": "Une journée / une soirée" },
+            { "value": "day", "label": "Une journée" },
+            { "value": "night", "label": "une soirée" },
             { "value": "stay", "label": "Un séjour (min 1 nuit)" }
           ]
         },
@@ -211,6 +212,7 @@
           "type": [
             { "value": "demi_journee", "label": "Une demi-journée" },
             { "value": "journee", "label": "Une journée" },
+            { "value": "repas_soiree", "label": "un repas / une soirée" },
             { "value": "seminaire_court", "label": "2-3 jours" },
             { "value": "seminaire_long", "label": "Plus de 3 jours" }
           ]

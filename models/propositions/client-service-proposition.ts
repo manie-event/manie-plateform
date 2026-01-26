@@ -16,9 +16,17 @@ export interface ClientServiceProposition {
   location: string;
   people: string;
   name: string;
+  theme?: string;
   date: string;
   eventServices: eventService[];
   serviceEngage: string;
+  groupType: string;
+  duration: string;
+  organizedFor: string;
+  formule: string;
+  typeEvent: string;
+  eventName: string;
+  eventUuid: string;
 }
 
 export interface eventService   {
@@ -28,6 +36,7 @@ export interface eventService   {
       professionalServiceUuid: string;
       serviceUuid: string;
       status: string;
+      sectorName: string;
       createdAt: string;
       updatedAt: string;
       keywordsUuid: [string];

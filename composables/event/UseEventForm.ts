@@ -19,7 +19,7 @@ export const useEventForm = () => {
   const isBudgetGlobale = ref(false);
   const budgetInput = ref(0);
   const today = new Date().toISOString().split('T')[0];
-
+  const keyWordsLoaded = ref(false);
   // const selectedServices = ref([
   //   {
   //     selectedSector: undefined,
@@ -70,7 +70,7 @@ export const useEventForm = () => {
 
   const schemaPage2 = yup.object({
     organized_for: yup.string().required('Veuillez indiquer pour qui est organisé l’événement'),
-    theme: yup.string().required('Veuillez définir un thème'),
+    theme: yup.string(),
     people: yup.number().positive('Le nombre de participants doit être > 0'),
     budget: yup.number().positive('Le budget doit être > 0'),
   });
@@ -196,6 +196,7 @@ export const useEventForm = () => {
   };
 
   const mapSectionsWithServices = (selectedSector?: string | SectorsDto) => {
+    keyWordsLoaded.value = false;
     const findSelectedSectorUuid = sectors.value.find((s) => s.name === selectedSector);
 
     const findServicesForSelectedSector = servicesFiltered.value.filter(
@@ -243,6 +244,7 @@ export const useEventForm = () => {
     budgetInput,
     dateStart,
     dateEnd,
+    keyWordsLoaded,
 
     // computed
     chooseEventTypeDependingOnUserCategory,
