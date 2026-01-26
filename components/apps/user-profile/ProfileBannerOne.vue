@@ -13,7 +13,7 @@
         <button @click="triggerClickFileInput" class="profile-header__edit">
           <Icon icon="solar:camera-outline" width="20" height="20" />
         </button>
-        <input type="file" ref="fileInput" @change="changeBannerPhoto" accept="image/*" hidden />
+        <input type="file" ref="fileInput" @change="handleFileSelection" accept="image/*" hidden />
         <NuxtLink
           to="/dashboards/dashboard2"
           class="profile-header__redirect-btn"
@@ -148,6 +148,11 @@
             </v-btn>
           </template>
         </RefusCollaboration>
+        <ImageCropperModal
+          v-model="showCropperModal"
+          :image-src="selectedImageSrc"
+          @save="uploadCroppedImage"
+        />
       </Teleport>
     </div>
   </div>
@@ -156,6 +161,7 @@
 <script setup lang="ts">
 import { NuxtLink } from '#components';
 import EditerProfessionalProfile from '@/components/apps/user-profile/EditProfessionalProfil.vue';
+import ImageCropperModal from '@/components/common/ImageCropper.vue';
 import Loader from '@/components/common/Loader.vue';
 import EditPrestataireServices from '@/components/questionnaires/EditPrestataireServices.vue';
 import { useProfessionalProfileService } from '@/services/UseProfessionalProfileService';
@@ -187,8 +193,51 @@ const fileInput = ref<HTMLInputElement | null>(null);
 const professionalEmail = ref();
 const openRefusModal = ref(false);
 const isLoading = ref(true);
+const showCropperModal = ref(false);
+const selectedImageSrc = ref<string | null>(null);
 
 const triggerClickFileInput = () => fileInput.value?.click();
+
+const handleFileSelection = (e: Event) => {
+  const input = e.target as HTMLInputElement;
+  if (!input.files?.length) return;
+
+  const file = input.files[0];
+
+  // Créer une URL pour l'aperçu
+  selectedImageSrc.value = URL.createObjectURL(file);
+
+  // Ouvrir le modal de cropper
+  showCropperModal.value = true;
+};
+
+const uploadCroppedImage = async (blob: Blob) => {
+  try {
+    // Convertir le blob en File
+    const file = new File([blob], 'banner.jpg', { type: 'image/jpeg' });
+
+    // Utiliser votre fonction existante
+    await changeProfessionalBannerPicture(file);
+
+    addSuccess('La photo de couverture a été mise à jour avec succès');
+    await getProfessionalProfile();
+
+    // Nettoyer
+    if (selectedImageSrc.value) {
+      URL.revokeObjectURL(selectedImageSrc.value);
+      selectedImageSrc.value = null;
+    }
+
+    // Réinitialiser l'input file
+    if (fileInput.value) {
+      fileInput.value.value = '';
+    }
+  } catch (err) {
+    console.error('Erreur lors du changement de bannière :', err);
+    addError('Erreur lors de la mise à jour de la photo');
+  }
+};
+
 const changeBannerPhoto = async (e: Event) => {
   const input = e.target as HTMLInputElement;
   if (!input.files?.length) return;
